@@ -1,6 +1,6 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-06-03T13:03:08-04:00",
+  "generated_at": "2026-06-03T13:06:20-04:00",
   "portfolio": {
     "starting_balance": 2000.0,
     "cash": 903.07,
@@ -13,107 +13,97 @@
     "wins": 5,
     "losses": 6
   },
-  "active_strategy": "V23 VIX>=12 MR (74.3% WR)",
-  "market_regime": "BULL (SPY $755 > 200d SMA $680)",
-  "vix_level": 16.37,
+  "active_strategy": "V23 VIX>=12 MR",
+  "market_regime": "BULL",
   "open_positions": [
     {
       "ticker": "XLC",
       "direction": "long",
       "qty": 1,
       "entry_price": 112.5,
+      "entry_date": "2026-06-03",
       "current_price": 154.8,
-      "pnl": 42.3,
-      "pnl_pct": 37.6,
-      "strategy": "mean_reversion",
-      "entry_date": "?"
+      "pnl": 37.6,
+      "pnl_usd": 42.3,
+      "strategy": "mean_reversion"
     },
     {
       "ticker": "CNQ.TO",
       "direction": "long",
       "qty": 2,
       "entry_price": 90.25,
+      "entry_date": "2026-06-03",
       "current_price": 92.16,
-      "pnl": 3.82,
-      "pnl_pct": 2.1,
-      "strategy": "sector_rotation",
-      "entry_date": "?"
+      "pnl": 2.12,
+      "pnl_usd": 3.82,
+      "strategy": "sector_rotation"
     },
     {
       "ticker": "TLT",
       "direction": "long",
       "qty": 1,
       "entry_price": 116.86,
+      "entry_date": "2026-05-25",
       "current_price": 117.62,
-      "pnl": 0.76,
-      "pnl_pct": 0.7,
-      "strategy": "macro_hedge",
-      "entry_date": "?"
+      "pnl": 0.65,
+      "pnl_usd": 0.76,
+      "strategy": "macro_hedge"
     },
     {
       "ticker": "XLP",
       "direction": "long",
       "qty": 1,
       "entry_price": 113.2,
+      "entry_date": "2026-06-02",
       "current_price": 113.88,
-      "pnl": 0.68,
-      "pnl_pct": 0.6,
-      "strategy": "sector_rotation",
-      "entry_date": "?"
+      "pnl": 0.6,
+      "pnl_usd": 0.68,
+      "strategy": "sector_rotation"
     },
     {
       "ticker": "TD",
       "direction": "long",
       "qty": 1,
       "entry_price": 155.72,
+      "entry_date": "2026-05-26",
       "current_price": 156.13,
-      "pnl": 0.41,
-      "pnl_pct": 0.3,
-      "strategy": "value_investing",
-      "entry_date": "?"
+      "pnl": 0.26,
+      "pnl_usd": 0.41,
+      "strategy": "value_investing"
     },
     {
       "ticker": "SLV",
       "direction": "long",
       "qty": 1,
       "entry_price": 92.95,
+      "entry_date": "2026-06-01",
       "current_price": 91.75,
-      "pnl": -1.2,
-      "pnl_pct": -1.3,
-      "strategy": "mean_reversion",
-      "entry_date": "?"
+      "pnl": -1.29,
+      "pnl_usd": -1.2,
+      "strategy": "mean_reversion"
     },
     {
       "ticker": "EFA",
       "direction": "long",
       "qty": 1,
       "entry_price": 144.76,
+      "entry_date": "2026-05-26",
       "current_price": 143.84,
-      "pnl": -0.92,
-      "pnl_pct": -0.6,
-      "strategy": "value_investing",
-      "entry_date": "?"
+      "pnl": -0.64,
+      "pnl_usd": -0.92,
+      "strategy": "value_investing"
     },
     {
       "ticker": "XLU",
       "direction": "long",
       "qty": 2,
       "entry_price": 62.58,
+      "entry_date": "2026-05-25",
       "current_price": 60.92,
-      "pnl": -3.32,
-      "pnl_pct": -2.7,
-      "strategy": "sector_rotation",
-      "entry_date": "?"
+      "pnl": -2.65,
+      "pnl_usd": -3.32,
+      "strategy": "sector_rotation"
     }
   ],
-  "recent_trades": [
-    {
-      "ticker": "XLC",
-      "direction": "long",
-      "pnl": 42.3,
-      "strategy": "mean_reversion",
-      "entry_date": "?",
-      "exit_date": ""
-    }
-  ]
+  "recent_trades": []
 }
