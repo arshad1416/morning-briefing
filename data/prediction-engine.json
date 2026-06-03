@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-03T11:51:30-04:00",
+  "generated_at": "2026-06-03T12:05:09-04:00",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -665,10 +665,466 @@
           "profit_factor": 0
         }
       }
+    },
+    "V51 SPY/QQQ Pairs": {
+      "tag": "backtest-v51",
+      "total_trades": 219,
+      "description": "Pairs trading: SPY vs QQQ spread MR. Short overvalued, long undervalued.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V55 AAPL/MSFT Pairs": {
+      "tag": "backtest-v55",
+      "total_trades": 222,
+      "description": "Pairs trading: AAPL vs MSFT spread MR. Mega-cap tech pair.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V56 Options MR Safe": {
+      "tag": "backtest-v56",
+      "total_trades": 83,
+      "description": "Options-based: MR with VIX<20 for safe put credit spreads.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V57 Options Deep": {
+      "tag": "backtest-v57",
+      "total_trades": 47,
+      "description": "Deep MR + VIX 15-25 for elevated premium put selling.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V58 Options LowVol": {
+      "tag": "backtest-v58",
+      "total_trades": 30,
+      "description": "Low VIX < 15 MR for cheap, high-probability put credit spreads.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V59 Options HighVol": {
+      "tag": "backtest-v59",
+      "total_trades": 287,
+      "description": "High VIX >= 25 MR. Expensive puts during fear spikes.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V60 Crash Protection": {
+      "tag": "backtest-v60",
+      "total_trades": 406,
+      "description": "3d decline + VIX spike >= 22. Crash protection put signals.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V61 Multi RiskOn": {
+      "tag": "backtest-v61",
+      "total_trades": 18,
+      "description": "MR in risk-on regime (bonds down, VIX<20).",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V62 Multi Growth": {
+      "tag": "backtest-v62",
+      "total_trades": 41,
+      "description": "MR in growth regime (bonds up, gold up).",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V64 Bond Confirmed": {
+      "tag": "backtest-v64",
+      "total_trades": 199,
+      "description": "MR confirmed by flight-to-safety (TLT > SMA20).",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V65 Triple Confirm": {
+      "tag": "backtest-v65",
+      "total_trades": 26,
+      "description": "All three confirm: bonds + gold + VIX 12-22.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V66 Breadth 2+": {
+      "tag": "backtest-v66",
+      "total_trades": 46,
+      "description": "Market breadth >= 2 (SPY/QQQ/IWM above SMA20).",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V68 Narrow Tech": {
+      "tag": "backtest-v68",
+      "total_trades": 3,
+      "description": "Only tech confirms (QQQ up, SPY/IWM down). Contrarian MR.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V71 BearMomentum": {
+      "tag": "backtest-v71",
+      "total_trades": 239,
+      "description": "Bear market momentum: RSI>55 in SPY<200d regime. Contrarian.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V72 BullFlag": {
+      "tag": "backtest-v72",
+      "total_trades": 1780,
+      "description": "Bull flag breakout: consolidation + volume expansion.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V73 GapFill": {
+      "tag": "backtest-v73",
+      "total_trades": 843,
+      "description": "Gap fill MR: small gap down + oversold.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V75 Sector Rotation": {
+      "tag": "backtest-v75",
+      "total_trades": 3531,
+      "description": "Sector rotation: XLF/XLK/XLE/XLV relative strength.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V76 MomentumAccel": {
+      "tag": "backtest-v76",
+      "total_trades": 895,
+      "description": "Momentum acceleration: RSI rising >5pts in 5 days.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V77 SupportBounce": {
+      "tag": "backtest-v77",
+      "total_trades": 345,
+      "description": "200d SMA support bounce with oversold RSI.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V78 VolumeClimax": {
+      "tag": "backtest-v78",
+      "total_trades": 112,
+      "description": "Volume climax reversal: VR>3.0 + RSI<30.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V79 VolSqueeze": {
+      "tag": "backtest-v79",
+      "total_trades": 22,
+      "description": "Low vol squeeze: ATR<0.7x + RSI>55 + volume spike.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V80 CrashBounce": {
+      "tag": "backtest-v80",
+      "total_trades": 98,
+      "description": "Post-crash bounce: VIX>=30 + RSI<20.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V81 Engulfing": {
+      "tag": "backtest-v81",
+      "total_trades": 1898,
+      "description": "Bullish engulfing candle pattern in uptrend.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V82 DojiReversal": {
+      "tag": "backtest-v82",
+      "total_trades": 897,
+      "description": "Doji candle after 3d decline. Indecision + trend reversal.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V83 InsideDay": {
+      "tag": "backtest-v83",
+      "total_trades": 370,
+      "description": "Inside day breakout: narrow range + volume expansion.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V84 VWAPDeviation": {
+      "tag": "backtest-v84",
+      "total_trades": 1259,
+      "description": "Price >5% from 20d MA with oversold RSI.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V85 TripleBottom": {
+      "tag": "backtest-v85",
+      "total_trades": 214,
+      "description": "Triple bottom: 3 tests of same support level.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V86 SeasonalMR": {
+      "tag": "backtest-v86",
+      "total_trades": 75,
+      "description": "Seasonal MR: Nov-Dec, Mar-Apr, Jul-Aug strong months.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V91 RiskParity": {
+      "tag": "backtest-v91",
+      "total_trades": 4335,
+      "description": "Risk parity portfolio: equal-weight MR + momentum.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V92 KellySizing": {
+      "tag": "backtest-v92",
+      "total_trades": 4331,
+      "description": "Kelly-optimal sizing: scale position by confidence score (6-10).",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V93 AllWeather": {
+      "tag": "backtest-v93",
+      "total_trades": 137,
+      "description": "All-weather MR: works in any market regime.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V94 RegimeEnsemble": {
+      "tag": "backtest-v94",
+      "total_trades": 2225,
+      "description": "Regime-switching ensemble: momentum in bull, MR in bear.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V95 TrendMR": {
+      "tag": "backtest-v95",
+      "total_trades": 130,
+      "description": "Trend + MR hybrid: rising 200dMA + short-term oversold.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V96 BestMR": {
+      "tag": "backtest-v96",
+      "total_trades": 133,
+      "description": "V23 best: VIX>=12 MR. Most proven single strategy.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V97 BearMR": {
+      "tag": "backtest-v97",
+      "total_trades": 462,
+      "description": "V26 bear MR: SPY<SMA200 + RSI<25. 80% WR strategy.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V98 CombinedBest": {
+      "tag": "backtest-v98",
+      "total_trades": 578,
+      "description": "Combined V23 + V26: bull MR (VIX>=12) OR bear MR.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V99 UltraConservative": {
+      "tag": "backtest-v99",
+      "total_trades": 858,
+      "description": "Ultra-conservative: confidence >= 8/10 required.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V100 FinalConviction": {
+      "tag": "backtest-v100",
+      "total_trades": 18,
+      "description": "Full conviction: all proven conditions met simultaneously. 18 trades/25yr.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
     }
   },
   "summary": {
-    "total_backtest_trades": 135016,
+    "total_backtest_trades": 162428,
     "tickers_tested": 59,
     "date_range": "2000-01-01 to 2026-06-03",
     "strategies_tested": [
@@ -680,7 +1136,7 @@
     "holding_period": "21 trading days (~1 calendar month)",
     "data_source": "Yahoo Finance (yfinance)",
     "exit_simulation": "Held for 21 trading days, exit simulated at close price",
-    "versions_completed": 50,
+    "versions_completed": 100,
     "versions_designed": 2,
     "v5_target_win_rate": "95%+",
     "council_members_used": [
