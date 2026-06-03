@@ -8,12 +8,9 @@ compatibility_date = "2026-06-01"
 
 [vars]
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-OPENROUTER_MODEL = "deepseek/deepseek-v4-pro"  # our go-to reasoning model
+OPENROUTER_MODEL = "deepseek/deepseek-v4-pro"
 RATE_LIMIT_PER_MIN = 10
 ALLOWED_ORIGIN = "*"
-
-[env.production]
-# Will use Pages domain; workers.dev URL works in the meantime
 
 # Deployment: npx wrangler deploy
 # Secrets: npx wrangler secret put OPENROUTER_API_KEY

@@ -216,6 +216,83 @@ tr:last-child td { border-bottom: none; }
 .chat-output .loading-dots::after { content: '...'; animation: dots 1.5s steps(4, end) infinite; }
 @keyframes dots { 0%, 20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%, 100% { content: '...'; } }
 
+/* Quick ticker buttons */
+.quick-ticker {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font-family);
+}
+.quick-ticker:hover {
+  background: var(--bg-hover);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ELI5 toggle switch */
+.eli5-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 0 8px;
+  user-select: none;
+}
+.eli5-toggle input { display: none; }
+.eli5-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: all 0.15s;
+  font-weight: 500;
+}
+.eli5-toggle input:checked + .eli5-label {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+/* Chat loading animation */
+.chat-loading {
+  text-align: center;
+  padding: 32px 0;
+}
+.chat-loading-dots {
+  display: inline-flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.chat-loading-dots span {
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: bounce 1.4s ease-in-out infinite both;
+}
+.chat-loading-dots span:nth-child(1) { animation-delay: 0s; }
+.chat-loading-dots span:nth-child(2) { animation-delay: 0.16s; }
+.chat-loading-dots span:nth-child(3) { animation-delay: 0.32s; }
+.chat-loading-dots span:nth-child(4) { animation-delay: 0.48s; }
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+.chat-loading-text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Live data card colors */
+.live-data-card .positive { color: var(--green); }
+.live-data-card .negative { color: var(--red); }
+
 /* Error state */
 .error-card {
   background: var(--red-bg);
