@@ -22,7 +22,7 @@ const PaperTrades = {
         html += `<tr>
           <td><strong>${t.ticker}</strong></td>
           <td class="${t.direction === 'long' ? 'positive' : 'negative'}">${t.direction}</td>
-          <td>${t.entry_date}</td>
+          <td>${t.entry_date || '—'}</td>
           <td>$${t.entry_price.toFixed(2)}</td>
           <td>${t.current_price ? '$' + t.current_price.toFixed(2) : '—'}</td>
           <td class="${pnlCls}" style="font-weight:700">${t.pnl >= 0 ? '+' : ''}${t.pnl.toFixed(2)}%</td>
