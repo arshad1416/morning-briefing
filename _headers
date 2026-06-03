@@ -8,4 +8,4 @@
   Cache-Control: public, max-age=86400, immutable
 
 /* Allow chat worker to be called from this domain */
-/content-security-policy: default-src 'self'; connect-src 'self' https://chat-api.yourdomain.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:
+/content-security-policy: default-src 'self'; connect-src 'self' https://morning-briefing-chat.rcobwq7u.workers.dev; style-src 'self' 'unsafe-inline'; img-src 'self' data:
