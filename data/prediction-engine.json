@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-03T11:41:36-04:00",
+  "generated_at": "2026-06-03T11:51:30-04:00",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -509,10 +509,166 @@
           "profit_factor": 1.72
         }
       }
+    },
+    "V32 VIX Sweet": {
+      "tag": "backtest-v32",
+      "total_trades": 88,
+      "description": "VIX 12-22 MR: best VIX range for mean reversion. 88 trades in 25 years.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V33 Score\u22658": {
+      "tag": "backtest-v33",
+      "total_trades": 19,
+      "description": "Score-weighted \u22658/10 + VIX 12-22. Very selective \u2014 19 trades.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V34 VIX\u226512": {
+      "tag": "backtest-v34",
+      "total_trades": 133,
+      "description": "VIX >= 12 only (no upper bound). V23 variant with more trades (133).",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V36 Volume Tight": {
+      "tag": "backtest-v36",
+      "total_trades": 49,
+      "description": "VR < 1.0 (tighter volume exhaustion). Only 49 trades \u2014 high conviction.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V37 RSI<22": {
+      "tag": "backtest-v37",
+      "total_trades": 80,
+      "description": "RSI < 22 (deeper oversold). 80 trades \u2014 3.2/year average.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V39 Low VIX": {
+      "tag": "backtest-v39",
+      "total_trades": 30,
+      "description": "VIX < 15 (low volatility MR). Only 30 trades.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V41 RSI Sweet": {
+      "tag": "backtest-v41",
+      "total_trades": 54,
+      "description": "RSI 23-27 sweet spot (not too deep). 54 trades.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V42 3-Day Decline": {
+      "tag": "backtest-v42",
+      "total_trades": 85,
+      "description": "3-day consecutive decline + base MR. 85 trades.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V43 Near Support": {
+      "tag": "backtest-v43",
+      "total_trades": 52,
+      "description": "Within 0.5% of 50-day support. 52 trades.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V47 Bull MR": {
+      "tag": "backtest-v47",
+      "total_trades": 133,
+      "description": "Bull market MR (price > SMA200, VIX>=12). 133 trades \u2014 most balanced.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V48 High ATR": {
+      "tag": "backtest-v48",
+      "total_trades": 83,
+      "description": "High volatility bounce plays (ATR > median). 83 trades.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V49 Low ATR": {
+      "tag": "backtest-v49",
+      "total_trades": 11,
+      "description": "Low volatility quiet MR (ATR < 0.8\u00d7 median). Only 11 trades.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
+    },
+    "V50 Full Conviction": {
+      "tag": "backtest-v50",
+      "total_trades": 1,
+      "description": "Ultra-strict: RSI<22 + VR<0.8 + 3d decline + VIX 12-22 + 50d support. Only 1 trade in 25 years.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0,
+          "win_rate": 0,
+          "profit_factor": 0
+        }
+      }
     }
   },
   "summary": {
-    "total_backtest_trades": 157007,
+    "total_backtest_trades": 135016,
     "tickers_tested": 59,
     "date_range": "2000-01-01 to 2026-06-03",
     "strategies_tested": [
@@ -524,7 +680,7 @@
     "holding_period": "21 trading days (~1 calendar month)",
     "data_source": "Yahoo Finance (yfinance)",
     "exit_simulation": "Held for 21 trading days, exit simulated at close price",
-    "versions_completed": 10,
+    "versions_completed": 50,
     "versions_designed": 2,
     "v5_target_win_rate": "95%+",
     "council_members_used": [
