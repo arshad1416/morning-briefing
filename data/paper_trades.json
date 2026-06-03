@@ -1,6 +1,7 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-06-03T13:06:20-04:00",
+  "generated_at": "2026-06-03T13:13:38-04:00",
+  "price_source": "Pi paper trading (CAD prices, USD shown where available)",
   "portfolio": {
     "starting_balance": 2000.0,
     "cash": 903.07,
@@ -18,91 +19,99 @@
   "open_positions": [
     {
       "ticker": "XLC",
-      "direction": "long",
       "qty": 1,
       "entry_price": 112.5,
-      "entry_date": "2026-06-03 09:32",
-      "current_price": 154.8,
-      "pnl": 37.6,
-      "pnl_usd": 42.3,
-      "strategy": "mean_reversion"
+      "current_price": 154.92,
+      "price_usd": 112.26,
+      "pnl": 42.42,
+      "pnl_pct": 37.7,
+      "strategy": "mean_reversion",
+      "entry_date": "2026-06-03",
+      "currency": "CAD"
+    },
+    {
+      "ticker": "MSTR",
+      "qty": 1,
+      "entry_price": 180.02,
+      "current_price": 179.91,
+      "price_usd": 130.37,
+      "pnl": -0.11,
+      "pnl_pct": -0.1,
+      "strategy": "mean_reversion",
+      "entry_date": "2026-06-03",
+      "currency": "CAD"
     },
     {
       "ticker": "CNQ.TO",
-      "direction": "long",
       "qty": 2,
       "entry_price": 90.25,
-      "entry_date": "2026-06-03 09:45",
-      "current_price": 92.16,
-      "pnl": 2.12,
-      "pnl_usd": 3.82,
-      "strategy": "sector_rotation"
+      "current_price": 91.94,
+      "price_usd": null,
+      "pnl": 3.38,
+      "pnl_pct": 1.9,
+      "strategy": "sector_rotation",
+      "entry_date": "2026-06-03",
+      "currency": "CAD"
     },
     {
       "ticker": "TLT",
-      "direction": "long",
       "qty": 1,
       "entry_price": 116.86,
-      "entry_date": "2026-05-25 10:15",
       "current_price": 117.62,
-      "pnl": 0.65,
-      "pnl_usd": 0.76,
-      "strategy": "macro_hedge"
-    },
-    {
-      "ticker": "XLP",
-      "direction": "long",
-      "qty": 1,
-      "entry_price": 113.2,
-      "entry_date": "2026-06-02 11:30",
-      "current_price": 113.88,
-      "pnl": 0.6,
-      "pnl_usd": 0.68,
-      "strategy": "sector_rotation"
+      "price_usd": 85.23,
+      "pnl": 0.76,
+      "pnl_pct": 0.7,
+      "strategy": "macro_hedge",
+      "entry_date": "2026-05-25",
+      "currency": "CAD"
     },
     {
       "ticker": "TD",
-      "direction": "long",
       "qty": 1,
       "entry_price": 155.72,
-      "entry_date": "2026-05-26 14:20",
-      "current_price": 156.13,
-      "pnl": 0.26,
-      "pnl_usd": 0.41,
-      "strategy": "value_investing"
+      "current_price": 156.19,
+      "price_usd": null,
+      "pnl": 0.47,
+      "pnl_pct": 0.3,
+      "strategy": "value_investing",
+      "entry_date": "2026-05-26",
+      "currency": "CAD"
+    },
+    {
+      "ticker": "XLP",
+      "qty": 1,
+      "entry_price": 113.2,
+      "current_price": 114.0,
+      "price_usd": 82.61,
+      "pnl": 0.8,
+      "pnl_pct": 0.7,
+      "strategy": "sector_rotation",
+      "entry_date": "2026-06-02",
+      "currency": "CAD"
     },
     {
       "ticker": "SLV",
-      "direction": "long",
       "qty": 1,
       "entry_price": 92.95,
-      "entry_date": "2026-06-01 09:50",
-      "current_price": 91.75,
-      "pnl": -1.29,
-      "pnl_usd": -1.2,
-      "strategy": "mean_reversion"
+      "current_price": 91.74,
+      "price_usd": 66.48,
+      "pnl": -1.21,
+      "pnl_pct": -1.3,
+      "strategy": "mean_reversion",
+      "entry_date": "2026-06-01",
+      "currency": "CAD"
     },
     {
       "ticker": "EFA",
-      "direction": "long",
       "qty": 1,
       "entry_price": 144.76,
-      "entry_date": "2026-05-26 13:10",
-      "current_price": 143.84,
-      "pnl": -0.64,
-      "pnl_usd": -0.92,
-      "strategy": "value_investing"
-    },
-    {
-      "ticker": "XLU",
-      "direction": "long",
-      "qty": 2,
-      "entry_price": 62.58,
-      "entry_date": "2026-05-25 10:30",
-      "current_price": 60.92,
-      "pnl": -2.65,
-      "pnl_usd": -3.32,
-      "strategy": "sector_rotation"
+      "current_price": 143.82,
+      "price_usd": 104.22,
+      "pnl": -0.94,
+      "pnl_pct": -0.6,
+      "strategy": "value_investing",
+      "entry_date": "2026-05-26",
+      "currency": "CAD"
     }
   ],
   "recent_trades": []
