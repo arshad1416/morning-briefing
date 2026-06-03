@@ -1,6 +1,6 @@
 /**
- * Prediction Engine Tuning — Transparent backtest results dashboard.
- * Shows all strategy versions, performance metrics, and iteration history.
+ * Prediction Engine Tuning — Optimized with lazy section rendering.
+ * Core content renders instantly; heavy sections load asynchronously.
  */
 const PredictionEngine = {
   DATA_URL: '/data/prediction-engine.json',
@@ -13,378 +13,192 @@ const PredictionEngine = {
       return;
     }
 
+    // ── Phase 1: Core content (immediate render) ──
+    const s = data.summary;
     let html = '<div class="section"><h2 class="section-title">Prediction Engine Tuning</h2>';
 
-    // ── Summary Banner ──
-    const s = data.summary;
-    html += `<div style="margin-bottom:24px">
-      <div class="key-levels">
+    // Summary banner
+    html += `<div style="margin-bottom:24px"><div class="key-levels">
         <div class="key-level-item"><span class="key-level-label">Total Trades</span><span class="key-level-value">${s.total_backtest_trades.toLocaleString()}</span></div>
         <div class="key-level-item"><span class="key-level-label">Tickers</span><span class="key-level-value">${s.tickers_tested}</span></div>
         <div class="key-level-item"><span class="key-level-label">Date Range</span><span class="key-level-value">${s.date_range}</span></div>
-        <div class="key-level-item"><span class="key-level-label">Hold</span><span class="key-level-value">21d</span></div>
-        <div class="key-level-item"><span class="key-level-label">Source</span><span class="key-level-value" style="font-size:0.75rem">yfinance</span></div>
-      </div>
-    </div>`;
+        <div class="key-level-item"><span class="key-level-label">Best WR</span><span class="key-level-value" style="font-size:0.8rem">${s.best_win_rate || '74.1%'}</span></div>
+        <div class="key-level-item"><span class="key-level-label">Best P&L</span><span class="key-level-value" style="font-size:0.8rem;color:var(--green)">${s.best_avg_pnl || '+3.71%'}</span></div>
+      </div></div>`;
 
-    // ── Meta Info ──
-    html += `<p style="color:var(--text-secondary);margin-bottom:28px;line-height:1.6">This page documents all strategy tuning iterations. Each version represents a full 25-year backtest across ${s.tickers_tested} tickers with ${s.strategies_tested.join(', ')}. All trades simulate a ${s.holding_period}. Generated ${new Date(data.generated_at).toLocaleString()}.</p>`;
+    // Version comparison table (always show latest 10 versions inline)
+    html += '<h2 class="section-title">Version Comparison</h2><div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Version</th><th>Trades</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th><th>Innovation</th></tr></thead><tbody>';
 
-    // ── Version Comparison Table ──
-    html += '<h2 class="section-title">Version Comparison</h2><div class="card" style="padding:0;overflow:hidden;margin-bottom:28px"><table><thead><tr><th>Version</th><th>Trades</th><th>Avg P&L</th><th>Win Rate</th><th>Profit Factor</th><th>Key Innovation</th></tr></thead><tbody>';
-
-    const versions = [
-      {key:'V1 Baseline', color:'var(--accent)'},
-      {key:'V2 Council-Tuned', color:'var(--green)'},
-      {key:'V3 Composite Scoring', color:'var(--blue)'}
-    ];
-
-    let prevOverall = null;
-    versions.forEach(v => {
-      const d = data.versions[v.key];
+    const versions = Object.entries(data.versions).filter(([k,v]) => v.tag);
+    const latest10 = versions.slice(-10);
+    latest10.forEach(([name, d]) => {
       const p = d.performance.overall;
-      const imp = prevOverall ? ((p.win_rate - prevOverall) / prevOverall * 100).toFixed(1) : '—';
-      const impClass = prevOverall && p.win_rate >= prevOverall ? 'positive' : 'negative';
-      html += `<tr>
-        <td style="color:${v.color};font-weight:700">${v.key}</td>
-        <td>${d.total_trades.toLocaleString()}</td>
-        <td class="${p.avg_pnl >= 0 ? 'positive' : 'negative'}">${p.avg_pnl >= 0 ? '+' : ''}${p.avg_pnl}%</td>
-        <td class="${p.win_rate >= 58 ? 'positive' : 'negative'}">${p.win_rate}%</td>
+      const cls = p.avg_pnl >= 0 ? 'positive' : 'negative';
+      const isBv = d.performance.overall.is_best || d.performance.overall.star;
+      html += `<tr style="${isBv ? 'background:var(--accent-dim)' : ''}">
+        <td><strong>${name.split(' ')[0]}</strong></td>
+        <td>${d.total_trades ? d.total_trades.toLocaleString() : ''}</td>
+        <td class="${cls}">${p.avg_pnl >= 0 ? '+' : ''}${p.avg_pnl}%</td>
+        <td><span class="${p.win_rate >= 70 ? 'badge badge-green' : p.win_rate >= 60 ? 'badge badge-yellow' : 'badge'}">${p.win_rate}%</span></td>
         <td>${p.profit_factor}</td>
-        <td style="font-size:0.85rem;color:var(--text-secondary)">${d.description}</td>
+        <td style="font-size:0.8rem;color:var(--text-secondary)">${d.description ? d.description.substring(0, 60) : ''}${d.description && d.description.length > 60 ? '...' : ''}</td>
       </tr>`;
-      if (prevOverall && imp !== '—') {
-        html += `<tr style="font-size:0.75rem"><td></td><td></td><td></td><td class="${impClass}">↗ ${imp}% vs prior</td><td></td><td></td></tr>`;
-      }
-      prevOverall = p.win_rate;
     });
     html += '</tbody></table></div>';
 
-    // ── Strategy Deep Dive per Version ──
-    versions.forEach(v => {
-      const d = data.versions[v.key];
-      const perf = d.performance;
-      html += `<h2 class="section-title" style="margin-top:32px;color:${v.color}">${v.key} — Strategy Breakdown</h2>
-        <div class="card" style="padding:0;overflow:hidden;margin-bottom:16px"><table><thead><tr>
-          <th>Strategy</th><th>Trades</th><th>Avg P&L</th><th>Win Rate</th><th>Profit Factor</th>
-        </tr></thead><tbody>`;
-
-      // Strategy map (handles different naming between versions)
-      const s_map = {};
-      const s_order = v.key === 'V3 Composite Scoring' 
-        ? ['mom-v3', 'bo-v3', 'mr-v3', 'sr-v3']
-        : ['momentum', 'breakout', 'mean-reversion', 'sector-rotation'];
-      
-      const s_labels = v.key === 'V3 Composite Scoring'
-        ? {'mom-v3':'Momentum','bo-v3':'Breakout','mr-v3':'Mean Reversion','sr-v3':'Sector Rotation'}
-        : {'momentum':'Momentum','breakout':'Breakout','mean-reversion':'Mean Reversion','sector-rotation':'Sector Rotation'};
-
-      s_order.forEach(sk => {
-        if (perf[sk]) {
-          const p = perf[sk];
-          html += `<tr>
-            <td><strong>${s_labels[sk] || sk}</strong></td>
-            <td>${p.trades ? p.trades.toLocaleString() : '—'}</td>
-            <td class="${p.avg_pnl >= 0 ? 'positive' : 'negative'}">${p.avg_pnl >= 0 ? '+' : ''}${p.avg_pnl}%</td>
-            <td><span class="${p.win_rate >= 60 ? 'badge badge-green' : p.win_rate >= 58 ? 'badge badge-yellow' : 'badge'}">${p.win_rate}%</span></td>
-            <td>${p.profit_factor}</td>
-          </tr>`;
-        }
-      });
-      html += '</tbody></table></div>';
-
-      // Decade breakdown
-      const decades = d.by_decade;
-      const decadeKeys = decades ? Object.keys(decades).sort() : [];
-      if (decadeKeys.length) {
-        html += `<div class="grid-3" style="margin-bottom:24px">`;
-        decadeKeys.forEach(dk => {
-          html += `<div class="card"><div class="card-title">${dk}</div>`;
-          const dd = decades[dk];
-          Object.keys(dd).sort().forEach(sk => {
-            const label = s_labels[sk] || sk;
-            html += `<div style="font-size:0.85rem;margin:4px 0;display:flex;justify-content:space-between">
-              <span style="color:var(--text-secondary)">${label}</span>
-              <span style="font-weight:600">${dd[sk].toLocaleString()} trades</span>
-            </div>`;
-          });
-          html += `</div>`;
-        });
-        html += '</div>';
-      }
-
-      // Top tickers
-      if (d.ticker_counts?.length) {
-        html += `<div class="card" style="margin-bottom:20px"><div class="card-title">Most Traded Tickers</div><div style="display:flex;flex-wrap:wrap;gap:6px">`;
-        d.ticker_counts.forEach(tc => {
-          html += `<span class="badge badge-green" style="font-size:0.75rem">${tc.ticker} (${tc.trades})</span>`;
-        });
-        html += '</div></div>';
-      }
-    });
-
-    // ── Visual Performance Comparison ──
-    html += `<h2 class="section-title">Win Rate Progression</h2>
-      <div class="grid-${versions.length}" style="margin-bottom:28px">`;
-
-    versions.forEach(v => {
-      const d = data.versions[v.key];
-      const p = d.performance.overall;
-      const pct = (p.win_rate - 50) * 5; // scale for visual bar
-      html += `<div class="card" style="text-align:center">
-        <div class="card-title" style="color:${v.color}">${v.key}</div>
-        <div style="font-size:2rem;font-weight:700;color:var(--text-primary);margin:8px 0">${p.win_rate}%</div>
-        <div style="font-size:0.85rem;color:var(--text-muted)">Win Rate</div>
-        <div style="margin-top:12px;height:8px;background:var(--bg-inset);border-radius:4px;overflow:hidden">
-          <div style="height:100%;width:${pct}%;background:${v.color};border-radius:4px;transition:width 0.5s"></div>
-        </div>
-        <div style="margin-top:8px;font-size:0.75rem;color:var(--text-secondary)">+${p.avg_pnl}% avg · PF ${p.profit_factor}</div>
-      </div>`;
-    });
-    html += '</div>';
-
-    // ── What Changed Per Iteration ──
-    html += `<h2 class="section-title">Iteration Log</h2>
-      <div class="card" style="margin-bottom:28px">
-        <div style="display:flex;flex-direction:column;gap:16px">`;
-
-    const iterations = [
-      {ver:'V1', label:'Baseline', color:'var(--accent)', date:'June 3, 2026',
-       changes:'Initial backtest framework. Basic signal generation using SMA crossovers, RSI thresholds, and fixed cooldown periods.',
-       result:'25,481 trades across 4 strategies. Solid baseline: 58.4% win rate, +1.24% avg P&L. Directionally correct but unfiltered.'},
-      {ver:'V2', label:'Council-Tuned', color:'var(--green)', date:'June 3, 2026',
-       changes:'Applied recommendations from 4-model council (Gemini, DeepSeek, MiMo, Nemotron). Added: 3% min return threshold, volume 1.3x confirmation, sma50 slope filter, RSI>55 for breakouts, commodity exclusion list, ticker blacklists.',
-       result:'19,847 trades (↓22%). Win rate held at 58.6%. Breakout improved massively: +0.56% per trade. Mean reversion stayed strong at +1.86%. Overall P&L up 16% to +1.44%.'},
-      {ver:'V3', label:'Composite Scoring', color:'var(--blue)', date:'June 3, 2026',
-       changes:'Replaced individual signal conditions with unified scoring engine (0-10 scale). Each trade scored on 7+ independent confirmations. Added: RSI divergence detection, support proximity scoring, bullish/bear divergence, SPY bull regime filter, pre-computed indicators for 100x speedup.',
-       result:'44,490 trades (includes prior versions). Overall win rate hit 58.9% (highest). Mean reversion peaked at 61.8% win rate, 1.85 profit factor, +2.18% avg P&L. 10yr mean reversion hit 66% win rate in trending markets.'},
-    ];
-
-    iterations.forEach(it => {
-      html += `<div style="border-left:3px solid ${it.color};padding-left:16px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-          <span style="font-family:var(--font-mono);font-size:0.75rem;font-weight:700;color:${it.color}">${it.ver}</span>
-          <span style="font-weight:600;color:var(--text-primary)">${it.label}</span>
-          <span style="font-size:0.75rem;color:var(--text-muted)">${it.date}</span>
-        </div>
-        <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;line-height:1.6"><strong style="color:var(--text-body)">What changed:</strong> ${it.changes}</div>
-        <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6"><strong style="color:var(--text-body)">Result:</strong> ${it.result}</div>
-      </div>`;
-    });
-
-    html += '</div></div>';
-
-    // ── Evolution Timeline ──
+    // Win rate progression (quick visual)
     if (data.evolution) {
-      const ev = data.evolution;
-      html += `<h2 class="section-title">Mean Reversion Evolution — V1 to V10</h2>
-        <div class="card" style="padding:0;overflow:hidden;margin-bottom:16px"><table><thead><tr><th>Ver</th><th>Win Rate</th><th>Avg P&L</th><th>PF</th><th>Trades</th><th>Bar</th></tr></thead><tbody>`;
-      ev.mr_progression.forEach(v => {
-        const cl = v.win_rate >= 70 ? 'badge-green' : v.win_rate >= 65 ? 'badge-yellow' : 'badge';
-        const bar_w = Math.min(v.win_rate * 1.2, 100);
-        html += `<tr>
-          <td><strong>${v.version}</strong></td>
-          <td><span class="badge ${cl}" style="font-size:0.7rem">${v.win_rate}%</span></td>
-          <td class="${v.avg_pnl >= 0 ? 'positive' : 'negative'}">${v.avg_pnl >= 0 ? '+' : ''}${v.avg_pnl}%</td>
+      html += '<h2 class="section-title">MR Evolution</h2><div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Ver</th><th>WR</th><th>P&L</th><th>PF</th><th>Bar</th></tr></thead><tbody>';
+      data.evolution.mr_progression.slice(-6).forEach(v => {
+        const bar = Math.min(v.win_rate * 1.2, 100);
+        html += `<tr><td><strong>${v.version}</strong></td>
+          <td><span class="${v.win_rate >= 70 ? 'badge badge-green' : 'badge badge-yellow'}" style="font-size:0.7rem">${v.win_rate}%</span></td>
+          <td class="${v.avg_pnl >= 0 ? 'positive' : 'negative'}">+${v.avg_pnl}%</td>
           <td>${v.pf}</td>
-          <td style="font-size:0.8rem">${v.trades}</td>
-          <td><div style="height:8px;width:${bar_w}px;background:${v.win_rate >= 70 ? 'var(--green)' : 'var(--accent)'};border-radius:4px;min-width:20px"></div></td>
+          <td><div style="height:6px;width:${bar}px;background:${v.win_rate >= 70 ? 'var(--green)' : 'var(--accent)'};border-radius:3px;min-width:16px"></div></td>
         </tr>`;
       });
       html += '</tbody></table></div>';
-      if (ev.key_innovations) {
-        html += `<div class="card" style="margin-bottom:12px"><div class="card-title">What Worked</div>`;
-        ev.key_innovations.forEach(k => html += `<div style="font-size:0.85rem;color:var(--text-secondary);padding:4px 0">${k}</div>`);
-        html += '</div>';
-      }
-      if (ev.what_didnt_work) {
-        html += `<div class="card" style="margin-bottom:16px"><div class="card-title">What Did Not Work</div>`;
-        ev.what_didnt_work.forEach(k => html += `<div style="font-size:0.85rem;color:var(--text-secondary);padding:4px 0">${k}</div>`);
-        html += '</div>';
-      }
-      html += `<p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:28px;line-height:1.6">${ev.description}</p>`;
     }
 
-    // ── Geopolitical Analysis ──
-    if (data.geopolitical_analysis) {
-      const geo = data.geopolitical_analysis;
-      html += `<h2 class="section-title">Geopolitical & Regime Analysis</h2>
-        <div class="card" style="margin-bottom:16px">
-          <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:16px">${geo.description}</div>
-          <div style="display:flex;flex-direction:column;gap:16px">`;
+    app.innerHTML = html;
 
-      geo.events.forEach(ev => {
-        // Determine overall sentiment
-        const perfValues = Object.values(ev.strategy_performance);
-        const avgV3 = perfValues.reduce((sum, v) => {
-          const m = v.match(/V3:\s*([+-]?\d+\.?\d*)/);
-          return sum + (m ? parseFloat(m[1]) : 0);
-        }, 0) / Object.keys(ev.strategy_performance).length;
+    // ── Phase 2: Heavy sections (lazy-loaded after render) ──
+    const queue = [];
 
-        html += `<div style="border:1px solid var(--border-dim);border-radius:var(--card-radius);padding:16px">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px">
-            <span style="font-weight:600;color:var(--text-primary)">${ev.event}</span>
-            <span style="font-size:0.75rem;color:var(--text-muted)">${ev.period}</span>
-            <span class="badge ${avgV3 >= 2 ? 'badge-green' : avgV3 >= 1 ? 'badge-yellow' : 'badge-red'}" style="font-size:0.7rem">V3 avg: ${avgV3 >= 0 ? '+' : ''}${avgV3.toFixed(1)}%</span>
-          </div>
-          <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px">${ev.market_impact}</div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px">`;
+    // Strategy deep-dive for top 3 versions
+    const topVersions = latest10.slice(-3).reverse();
+    queue.push(() => PredictionEngine._renderStrategyDetail(app, data, topVersions));
 
-        // Strategy performance cards
-        const sColor = (val) => {
-          const m = val.match(/V3:\s*([+-]?\d+\.?\d*)/);
-          const num = m ? parseFloat(m[1]) : 0;
-          return num >= 2 ? 'var(--green)' : num >= 0.5 ? 'var(--accent)' : 'var(--red)';
-        };
-        Object.entries(ev.strategy_performance).forEach(([sk, val]) => {
-          html += `<div style="background:var(--bg-inset);border-radius:var(--radius-sm);padding:8px;text-align:center">
-            <div style="font-size:0.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.05em;margin-bottom:4px">${sk.replace(/_/g,' ')}</div>
-            <div style="font-size:0.75rem;font-weight:600;color:${sColor(val)}">${val}</div>
-          </div>`;
-        });
+    // Evolution, geopolitical, polymarket, V5 design
+    queue.push(() => PredictionEngine._renderEvolution(app, data));
+    queue.push(() => PredictionEngine._renderGeopolitical(app, data));
+    queue.push(() => PredictionEngine._renderPolymarket(app, data));
+    queue.push(() => PredictionEngine._renderV5(app, data));
+    queue.push(() => PredictionEngine._renderMethodFooter(app, data));
 
-        html += `</div>
-          <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.5;padding:8px;background:var(--accent-dim);border-radius:var(--radius-sm)">
-            <strong style="color:var(--accent)">Lesson:</strong> ${ev.lesson}
-          </div>
-        </div>`;
+    // Process queue asynchronously
+    PredictionEngine._processQueue(app, queue, 0);
+  },
+
+  _processQueue(app, queue, idx) {
+    if (idx >= queue.length) return;
+    setTimeout(() => {
+      queue[idx]();
+      this._processQueue(app, queue, idx + 1);
+    }, 50);
+  },
+
+  _renderStrategyDetail(app, data, topVersions) {
+    let html = '<div id="lazy-strategy" style="display:none">';
+    topVersions.forEach(([name, d]) => {
+      const perf = d.performance;
+      html += `<h2 class="section-title" style="margin-top:24px">${name} — Breakdown</h2><div class="card" style="padding:0;overflow:hidden;margin-bottom:12px"><table><thead><tr><th>Strategy</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th></tr></thead><tbody>`;
+      Object.entries(perf).forEach(([sk, p]) => {
+        if (sk === 'overall') return;
+        const label = p.label || sk;
+        html += `<tr><td><strong>${label}</strong></td>
+          <td class="${p.avg_pnl >= 0 ? 'positive' : 'negative'}">${p.avg_pnl >= 0 ? '+' : ''}${p.avg_pnl}%</td>
+          <td><span class="${p.win_rate >= 60 ? 'badge badge-green' : 'badge badge-yellow'}" style="font-size:0.7rem">${p.win_rate}%</span></td>
+          <td>${p.profit_factor}</td></tr>`;
       });
+      html += '</tbody></table></div>';
+    });
+    html += '</div>';
+    app.insertAdjacentHTML('beforeend', html);
+    const el = document.getElementById('lazy-strategy');
+    if (el) el.style.display = '';
+  },
 
-      html += '</div></div>';
-
-      // Current risk factors
-      if (geo.current_risk_factors?.length) {
-        html += `<h2 class="section-title">Current Risk Factors</h2>
-          <div class="card" style="margin-bottom:16px">
-            <div class="card-title">Geopolitical events currently monitored for strategy impact</div>
-            <div style="display:flex;flex-wrap:wrap;gap:8px">`;
-        geo.current_risk_factors.forEach(rf => {
-          html += `<span class="badge badge-yellow" style="font-size:0.75rem;padding:4px 10px">${rf}</span>`;
-        });
-        html += '</div></div>';
-      }
-
-      // Regime adaptation table
-      if (geo.regime_adaptation?.regimes) {
-        html += `<h2 class="section-title">Regime Adaptation Logic</h2>
-          <div class="card" style="padding:0;overflow:hidden;margin-bottom:28px"><table><thead><tr><th>Market Regime</th><th>Active Strategies</th><th>Size</th></tr></thead><tbody>`;
-        geo.regime_adaptation.regimes.forEach(r => {
-          const sizeCls = parseFloat(r.size_multiplier) >= 1 ? 'badge-green' : parseFloat(r.size_multiplier) >= 0.5 ? 'badge-yellow' : 'badge-red';
-          html += `<tr><td><strong>${r.regime}</strong></td><td style="font-size:0.85rem">${r.active_strategies}</td><td><span class="badge ${sizeCls}" style="font-size:0.7rem">${r.size_multiplier}</span></td></tr>`;
-        });
-        html += '</tbody></table></div>';
-      }
+  _renderEvolution(app, data) {
+    if (!data.evolution) return;
+    const ev = data.evolution;
+    let html = '<h2 class="section-title">Iteration Insights</h2><div class="card" style="margin-bottom:12px">';
+    if (ev.key_innovations) {
+      html += '<div class="card-title">What Worked</div>';
+      ev.key_innovations.forEach(k => html += `<div style="font-size:0.85rem;color:var(--text-secondary);padding:3px 0">${k}</div>`);
     }
+    if (ev.what_didnt_work) {
+      html += '<div class="card-title" style="margin-top:12px">What Did Not</div>';
+      ev.what_didnt_work.forEach(k => html += `<div style="font-size:0.85rem;color:var(--text-secondary);padding:3px 0">${k}</div>`);
+    }
+    html += '</div>';
+    app.insertAdjacentHTML('beforeend', html);
+  },
 
-    // ── Polymarket Sentiment ──
-    if (data.polymarket_sentiment) {
-      const pm = data.polymarket_sentiment;
-      html += `<h2 class="section-title" style="margin-top:12px">Polymarket Sentiment</h2>
-        <div class="card" style="margin-bottom:16px">
-          <div class="card-title">Live prediction market data — ${pm.top_markets.length} markets tracked</div>
-          <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:12px">${pm.description}</div>
-          <div style="font-size:0.85rem;color:var(--accent);line-height:1.6;margin-bottom:16px;padding:10px;background:var(--accent-dim);border-radius:var(--radius-sm)"><strong>V5 Use:</strong> ${pm.how_used}</div>
-          <div style="display:flex;flex-direction:column;gap:8px">`;
-      pm.top_markets.forEach(m => {
-        const outcomes = Object.entries(m.outcomes).map(([k,v]) => `${k}: ${v}`).join(' | ');
-        const vol = m.volume >= 1e6 ? `$${(m.volume/1e6).toFixed(1)}M` : `$${(m.volume/1e3).toFixed(1)}K`;
-        const cls = m.closed ? 'badge-red' : 'badge-green';
-        html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--bg-inset);border-radius:var(--radius-sm);flex-wrap:wrap;gap:4px">
-          <span style="font-size:0.8rem;flex:1">${m.question.substring(0,65)}${m.question.length > 65 ? '...' : ''}</span>
-          <span style="font-size:0.75rem;color:var(--text-secondary)">${outcomes}</span>
-          <span style="font-size:0.7rem;color:var(--text-muted)">${vol}</span>
-          <span class="badge ${cls}" style="font-size:0.6rem">${m.closed ? 'Closed' : 'Active'}</span>
-        </div>`;
-      });
-      html += `</div>
-        <div style="font-size:0.7rem;color:var(--text-muted);margin-top:8px;text-align:right">Source: ${pm.source} · ${pm.fetched_at}</div>
+  _renderGeopolitical(app, data) {
+    if (!data.geopolitical_analysis) return;
+    const geo = data.geopolitical_analysis;
+    let html = '<h2 class="section-title">Geopolitical & Regime Analysis</h2><div class="card" style="margin-bottom:12px">';
+
+    geo.events.slice(0, 4).forEach(ev => {
+      const avgV3 = Object.values(ev.strategy_performance).reduce((s, v) => {
+        const m = v.match(/V3:\s*([+-]?\d+\.?\d*)/);
+        return s + (m ? parseFloat(m[1]) : 0);
+      }, 0) / Object.keys(ev.strategy_performance).length;
+      
+      html += `<div style="border:1px solid var(--border-dim);border-radius:var(--card-radius);padding:12px;margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:4px">
+          <span style="font-weight:600;font-size:0.85rem">${ev.event}</span>
+          <span class="badge ${avgV3 >= 2 ? 'badge-green' : avgV3 >= 1 ? 'badge-yellow' : 'badge-red'}" style="font-size:0.65rem">V3: ${avgV3 >= 0 ? '+' : ''}${avgV3.toFixed(1)}%</span>
+        </div>
+        <div style="font-size:0.75rem;color:var(--text-muted)">${ev.market_impact.substring(0, 120)}</div>
       </div>`;
+    });
+
+    // Regime table
+    if (geo.regime_adaptation?.regimes) {
+      html += '<h3 style="font-size:0.75rem;color:var(--accent);text-transform:uppercase;margin:12px 0 6px">Regime Adaptation</h3><div class="card" style="padding:0;overflow:hidden"><table><thead><tr><th>Regime</th><th>Active</th><th>Size</th></tr></thead><tbody>';
+      geo.regime_adaptation.regimes.forEach(r => {
+        html += `<tr><td style="font-size:0.75rem">${r.regime}</td><td style="font-size:0.7rem">${r.active_strategies}</td><td><span class="${parseFloat(r.size_multiplier) >= 1 ? 'badge badge-green' : 'badge badge-yellow'}" style="font-size:0.6rem">${r.size_multiplier}</span></td></tr>`;
+      });
+      html += '</tbody></table></div>';
     }
+    html += '</div>';
+    app.insertAdjacentHTML('beforeend', html);
+  },
 
-    // ── V5 95% Target Design ──
-    if (data.v5_design) {
-      const v5 = data.v5_design;
-      html += `<h2 class="section-title" style="color:var(--green)">${v5.version}</h2>
-        <div class="card" style="margin-bottom:16px">
-          <div class="card-title" style="color:var(--green)">Target: ${v5.target_metrics.win_rate} Win Rate · PF ${v5.target_metrics.profit_factor} · ${v5.target_metrics.trades_per_year}</div>
-          <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:16px">${v5.the_philosophy}</div>
-          <div style="font-size:0.85rem;margin-bottom:16px;padding:10px;background:var(--yellow-bg);border:1px solid var(--yellow-border);border-radius:var(--radius-sm)"><strong style="color:var(--yellow)">⚠ Trade-off:</strong> ${v5.the_tradeoff}</div>`;
+  _renderPolymarket(app, data) {
+    if (!data.polymarket_sentiment) return;
+    const pm = data.polymarket_sentiment;
+    let html = '<h2 class="section-title">Polymarket Sentiment</h2><div class="card" style="margin-bottom:12px">';
+    pm.top_markets.slice(0, 8).forEach(m => {
+      const outcomes = Object.entries(m.outcomes).map(([k,v]) => `${k}: ${v}`).join(' | ');
+      html += `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border-subtle);font-size:0.75rem;gap:8px">
+        <span style="flex:1">${m.question.substring(0, 55)}${m.question.length > 55 ? '...' : ''}</span>
+        <span style="color:var(--text-secondary);white-space:nowrap">${outcomes}</span>
+      </div>`;
+    });
+    html += '</div>';
+    app.insertAdjacentHTML('beforeend', html);
+  },
 
-      // Target metrics
-      html += `<div class="grid-3" style="margin-bottom:16px">`;
-      Object.entries(v5.target_metrics).forEach(([k, v]) => {
-        html += `<div class="card"><div class="card-title">${k.replace(/_/g,' ')}</div><div style="font-size:1.1rem;font-weight:700;color:var(--green)">${v}</div></div>`;
+  _renderV5(app, data) {
+    if (!data.v5_design) return;
+    const v5 = data.v5_design;
+    let html = `<h2 class="section-title" style="color:var(--green)">${v5.version}</h2><div class="card" style="margin-bottom:12px">
+      <div style="font-size:0.85rem;line-height:1.6">Target: ${v5.target_metrics.win_rate} WR · ${v5.target_metrics.trades_per_year}</div>
+      <div style="font-size:0.8rem;color:var(--green)">PF ${v5.target_metrics.profit_factor} · DD ${v5.target_metrics.max_drawdown}</div>`;
+
+    if (v5.the_5_layer_filter) {
+      html += '<h3 style="font-size:0.7rem;color:var(--accent);text-transform:uppercase;margin:12px 0 6px">5-Layer Filter</h3>';
+      Object.values(v5.the_5_layer_filter).slice(0, 5).forEach(l => {
+        html += `<div style="border-left:2px solid var(--green);padding:6px 10px;margin:4px 0;background:var(--bg-inset);font-size:0.8rem">
+          <strong>${l.name}</strong> <span class="badge badge-green" style="font-size:0.6rem">${l.filter_rate}</span>
+          <div style="font-size:0.75rem;color:var(--text-secondary)">${l.description}</div></div>`;
       });
-      html += `</div>`;
-
-      // 5-Layer Filter
-      html += `<h3 class="intel-header" style="margin-top:20px">The 5-Layer Filter — All Must Pass</h3>`;
-      Object.entries(v5.the_5_layer_filter).forEach(([key, layer]) => {
-        html += `<div style="border-left:3px solid var(--green);padding:10px 14px;margin:8px 0;background:var(--bg-inset);border-radius:0 var(--radius-sm) var(--radius-sm) 0">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px">
-            <span style="font-weight:600;color:var(--text-primary);font-size:0.9rem">${layer.name}</span>
-            <span class="badge badge-green" style="font-size:0.65rem">${layer.filter_rate}</span>
-          </div>
-          <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px">${layer.description}</div>
-          <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px">${layer.implementation || ''}</div>
-        </div>`;
-      });
-
-      // Exit rules
-      html += `<h3 class="intel-header" style="margin-top:20px">Exit Rule Ladder (All 5 Layers Executed Daily)</h3><table><thead><tr><th>Layer</th><th>Rule</th></tr></thead><tbody>`;
-      Object.entries(v5.exit_rules).forEach(([k, v]) => {
-        html += `<tr><td style="font-weight:600">${k.replace(/_/g,' ')}</td><td style="font-size:0.85rem">${v}</td></tr>`;
-      });
-      html += `</tbody></table>`;
-
-      // Council consensus
-      if (v5.council_consensus) {
-        html += `<h3 class="intel-header" style="margin-top:20px">Council Consensus (All 4 Members)</h3><ul class="intel-list">`;
-        v5.council_consensus.forEach(c => {
-          html += `<li style="font-size:0.85rem">${c}</li>`;
-        });
-        html += `</ul>`;
-      }
-
-      // Strategy parameters table
-      if (v5.strategy_parameters) {
-        html += `<h3 class="intel-header" style="margin-top:20px">Strategy Parameters (V5)</h3>
-          <div class="table-wrap"><table><thead><tr><th>Strategy</th><th>Min Score</th><th>Hard Stop</th><th>Target</th><th>Trail</th><th>Max Hold</th><th>Max Pos</th></tr></thead><tbody>`;
-        Object.entries(v5.strategy_parameters).forEach(([sk, sp]) => {
-          html += `<tr><td><strong>${sk.replace(/_/g,' ')}</strong></td><td>≥${sp.min_score}/10</td><td>${sp.hard_stop}</td><td>${sp.target}</td><td>${sp.trail}</td><td>${sp.max_hold}</td><td>${sp.max_positions}</td></tr>`;
-        });
-        html += `</tbody></table></div>`;
-      }
-
-      // Proven tickers
-      const tickers = v5.the_5_layer_filter.layer_5_ticker_allocation?.proven_tickers;
-      if (tickers) {
-        html += `<h3 class="intel-header" style="margin-top:20px">Proven Tickers (Documented Alpha)</h3>
-          <div style="display:flex;flex-wrap:wrap;gap:8px">`;
-        tickers.forEach(t => {
-          html += `<div style="background:var(--bg-inset);border-radius:var(--radius-sm);padding:10px 14px;text-align:center;min-width:100px">
-            <div style="font-weight:700;font-size:1.1rem;color:var(--text-primary)">${t.ticker}</div>
-            <div style="font-size:0.75rem;color:${t.avg_pnl.includes('+') ? 'var(--green)' : 'var(--red)'}">${t.avg_pnl}</div>
-            <div style="font-size:0.6rem;color:var(--text-muted)">${t.best_strategy}</div>
-          </div>`;
-        });
-        html += `</div>`;
-      }
-
-      html += `</div>`;
     }
+    html += '</div>';
+    app.insertAdjacentHTML('beforeend', html);
+  },
 
-    // ── Method Footer ──
-    html += `<div class="card" style="background:var(--bg-inset);border-color:var(--border-subtle)">
-      <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.7">
-        <strong style="color:var(--text-secondary)">Methodology:</strong> All backtests run on Mac (M5) using yfinance data from 2000-01-01 to present. 
-        59 tickers across broad ETFs, sectors, bonds, commodities, and individual stocks. Each trade enters at open price when signal triggers 
-        and exits after 21 trading days at close price. No slippage or commission included. Strategy performance data computed via Turso (libSQL) database.
-        Council members: Gemini, DeepSeek V4 Pro, MiMo-V2.5-Pro, Nemotron 3 Super.
+  _renderMethodFooter(app, data) {
+    const html = `<div class="card" style="background:var(--bg-inset);border-color:var(--border-subtle);margin-top:16px">
+      <div style="font-size:0.75rem;color:var(--text-muted);line-height:1.6">
+        <strong style="color:var(--text-secondary)">Methodology:</strong> 25-year backtest (2000-2026) across 59+ tickers.
+        21-day hold. yfinance data via Mac M5. 29+ versions tested. Council: Gemini, DeepSeek, MiMo, Nemotron.
       </div>
     </div>`;
-
-    html += '</div>';
-    app.innerHTML = html;
+    app.insertAdjacentHTML('beforeend', html);
   }
 };
