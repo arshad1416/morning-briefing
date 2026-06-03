@@ -122,5 +122,17 @@
     }
   ],
   "date_range": "2000-01-01 to 2026-06-03",
-  "data_source": "yfinance, 59+ tickers, 21-day hold, Turso, 100 versions"
+  "data_source": "yfinance, 59+ tickers, 21-day hold, Turso, 100 versions",
+  "live_portfolio": {
+    "status": "LIVE",
+    "balance": 1987.25,
+    "cash": 903.07,
+    "return_pct": -0.64,
+    "win_rate": 45.5,
+    "open_positions": 8,
+    "total_trades": 11,
+    "active_strategy": "V23 VIX>=12 MR",
+    "market_regime": "BULL (SPY $755 > 200d SMA)",
+    "vix": 16.37
+  }
 }
