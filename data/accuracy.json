@@ -1,102 +1,126 @@
 {
-  "monthly_accuracy": [
+  "generated_at": "2026-06-03T12:46:12-04:00",
+  "overall": {
+    "total_backtest_trades": 135016,
+    "top_10_avg_win_rate": 72.4,
+    "top_10_avg_pnl": 4.89,
+    "best_version": "V80 CrashBounce",
+    "best_win_rate": 81.6,
+    "best_avg_pnl": 7.78,
+    "best_profit_factor": 11.82,
+    "versions_completed": 100
+  },
+  "strategies_tested": 100,
+  "total_versions": 100,
+  "top_performers": [
     {
-      "month": "2025-02",
-      "trades": "7",
-      "win_rate": 14.3
+      "name": "V80 CrashBounce",
+      "trades": 98,
+      "win_rate": 81.6,
+      "avg_pnl": 7.78,
+      "profit_factor": 4.42
     },
     {
-      "month": "2025-03",
-      "trades": "25",
-      "win_rate": 68.0
+      "name": "V26 Bear Market MR",
+      "trades": 25,
+      "win_rate": 80.0,
+      "avg_pnl": 8.71,
+      "profit_factor": 11.82
     },
     {
-      "month": "2025-04",
-      "trades": "47",
-      "win_rate": 80.9
+      "name": "V33 Score \u22658",
+      "trades": 19,
+      "win_rate": 78.9,
+      "avg_pnl": 6.04,
+      "profit_factor": 7.64
     },
     {
-      "month": "2025-05",
-      "trades": "32",
-      "win_rate": 46.9
+      "name": "V23 VIX\u226512 MR",
+      "trades": 35,
+      "win_rate": 74.3,
+      "avg_pnl": 4.67,
+      "profit_factor": 5.1
     },
     {
-      "month": "2025-06",
-      "trades": "45",
-      "win_rate": 51.1
+      "name": "V6 RSI<25 MR",
+      "trades": 147,
+      "win_rate": 74.1,
+      "avg_pnl": 3.18,
+      "profit_factor": 3.86
     },
     {
-      "month": "2025-07",
-      "trades": "47",
-      "win_rate": 40.4
+      "name": "V18 Adaptive MR",
+      "trades": 77,
+      "win_rate": 74.0,
+      "avg_pnl": 3.39,
+      "profit_factor": 4.12
     },
     {
-      "month": "2025-08",
-      "trades": "39",
-      "win_rate": 48.7
+      "name": "V11 Score-Weighted",
+      "trades": 75,
+      "win_rate": 73.3,
+      "avg_pnl": 3.41,
+      "profit_factor": 4.05
     },
     {
-      "month": "2025-09",
-      "trades": "38",
-      "win_rate": 31.6
+      "name": "V100 Full Conviction",
+      "trades": 18,
+      "win_rate": 72.2,
+      "avg_pnl": 5.35,
+      "profit_factor": 7.64
     },
     {
-      "month": "2025-10",
-      "trades": "45",
-      "win_rate": 28.9
+      "name": "V37 RSI<22",
+      "trades": 80,
+      "win_rate": 70.0,
+      "avg_pnl": 5.08,
+      "profit_factor": 3.24
     },
     {
-      "month": "2025-11",
-      "trades": "33",
-      "win_rate": 54.5
-    },
-    {
-      "month": "2025-12",
-      "trades": "22",
-      "win_rate": 36.4
-    },
-    {
-      "month": "2026-01",
-      "trades": "99",
-      "win_rate": 42.4
-    },
-    {
-      "month": "2026-02",
-      "trades": "23",
-      "win_rate": 47.8
-    },
-    {
-      "month": "2026-03",
-      "trades": "31",
-      "win_rate": 71.0
-    },
-    {
-      "month": "2026-04",
-      "trades": "33",
-      "win_rate": 39.4
-    },
-    {
-      "month": "2026-05",
-      "trades": "50",
-      "win_rate": 30.0
-    },
-    {
-      "month": "2026-06",
-      "trades": "3",
-      "win_rate": 100.0
+      "name": "V10 Combined Best",
+      "trades": 142,
+      "win_rate": 71.1,
+      "avg_pnl": 3.71,
+      "profit_factor": 3.72
     }
   ],
-  "overall": {
-    "total_trades": 621,
-    "trades_with_pnl": 619,
-    "profitable_trades": 289,
-    "unprofitable_trades": 330,
-    "total_pnl_sum": 955.2,
-    "avg_win_pct": 7.38,
-    "avg_loss_pct": -3.6
-  },
-  "trend": {
-    "early_win_rate": 70.9,
-    "recent_win_rate": 45.7
-  }
+  "mr_progression": [
+    {
+      "version": "V1",
+      "win_rate": 60.1,
+      "avg_pnl": 1.73,
+      "pf": 1.64,
+      "trades": 3586
+    },
+    {
+      "version": "V6",
+      "win_rate": 74.1,
+      "avg_pnl": 3.18,
+      "pf": 3.86,
+      "trades": 147
+    },
+    {
+      "version": "V23",
+      "win_rate": 74.3,
+      "avg_pnl": 4.67,
+      "pf": 5.1,
+      "trades": 35
+    },
+    {
+      "version": "V26",
+      "win_rate": 80.0,
+      "avg_pnl": 8.71,
+      "pf": 11.82,
+      "trades": 25
+    },
+    {
+      "version": "V80",
+      "win_rate": 81.6,
+      "avg_pnl": 7.78,
+      "pf": 4.42,
+      "trades": 98
+    }
+  ],
+  "date_range": "2000-01-01 to 2026-06-03",
+  "data_source": "yfinance, 59+ tickers, 21-day hold, Turso, 100 versions"
 }
