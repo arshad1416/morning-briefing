@@ -42,10 +42,83 @@ const Utils = {
     }
   },
 
+  /**
+   * renderMarkdown(text)
+   * Converts the AI-generated markdown narrative into clean HTML.
+   * Handles the specific patterns produced by the Pi briefing agent:
+   *   **🔷 SECTION HEADER**  → styled <h3> with emoji
+   *   **bold text**           → <strong>
+   *   • bullet line           → <li> inside <ul>
+   *   blank line              → paragraph break
+   *
+   * Does NOT use any external libraries — pure regex transforms.
+   */
+  renderMarkdown(text) {
+    if (!text) return '';
+
+    // Normalise line endings
+    let t = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+    // Split into lines for processing
+    const lines = t.split('\n');
+    const out = [];
+    let inList = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i];
+
+      // ── Section headers: **[emoji] HEADING** or **[emoji] HEADING**
+      const headerMatch = line.match(/^\*{1,2}\s*([\p{Emoji}\u{1F300}-\u{1FFFF}\u{2600}-\u{27BF}]?\s*[A-Z][A-Z\s\/\-&()0-9]*)\*{1,2}\s*$/u);
+      if (headerMatch) {
+        if (inList) { out.push('</ul>'); inList = false; }
+        out.push(`<h3 class="intel-header">${headerMatch[1].trim()}</h3>`);
+        continue;
+      }
+
+      // ── Bullet lines: start with •, -, *, or – 
+      const bulletMatch = line.match(/^[•\-\*–]\s+(.+)/);
+      if (bulletMatch) {
+        if (!inList) { out.push('<ul class="intel-list">'); inList = true; }
+        const content = Utils._inlineBold(bulletMatch[1]);
+        out.push(`<li>${content}</li>`);
+        continue;
+      }
+
+      // ── Close list on non-bullet line
+      if (inList && line.trim() !== '') {
+        out.push('</ul>');
+        inList = false;
+      }
+
+      // ── Empty line → paragraph spacer
+      if (line.trim() === '') {
+        if (inList) { out.push('</ul>'); inList = false; }
+        out.push('<div class="intel-spacer"></div>');
+        continue;
+      }
+
+      // ── Regular paragraph line
+      const content = Utils._inlineBold(line);
+      out.push(`<p class="intel-para">${content}</p>`);
+    }
+
+    if (inList) out.push('</ul>');
+
+    return out.join('\n');
+  },
+
+  /** Convert **bold** and *italic* inline markers to HTML */
+  _inlineBold(text) {
+    // **bold** → <strong>
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // *italic* (single asterisk, not already consumed)
+    text = text.replace(/\*([^*\s][^*]*[^*\s]|\S)\*/g, '<em>$1</em>');
+    return text;
+  },
+
   /** Render markdown tables to HTML (simple regex-based) */
   renderTable(markdown) {
     if (!markdown) return '';
-    // Match markdown tables: header | separator | rows
     let html = markdown;
     const tableRegex = /\|(.+)\|\n\|[-| :]+\|\n((?:\|.+\|\n?)*)/g;
     html = html.replace(tableRegex, (match, headerLine, bodyLines) => {

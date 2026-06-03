@@ -1,21 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Morning Briefing</title>
+
+  <!--
+    Apply saved theme BEFORE the stylesheet renders to prevent
+    a flash of the wrong theme on load. This tiny inline script
+    runs synchronously in <head>, before any paint.
+  -->
+  <script>
+    (function() {
+      var saved = localStorage.getItem('mb-theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = saved || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+
   <link rel="stylesheet" href="/assets/css/style.css?v=2">
 </head>
 <body>
   <nav class="nav-bar">
     <a href="#/" class="nav-brand">Morning Briefing</a>
     <div class="nav-links">
-      <a href="#/" class="nav-link">Dashboard</a>
+      <a href="#/"          class="nav-link">Dashboard</a>
       <a href="#/watchlist" class="nav-link">Watchlist</a>
-      <a href="#/archive" class="nav-link">Archive</a>
-      <a href="#/trades" class="nav-link">Trades</a>
-      <a href="#/chat" class="nav-link">AI Analysis</a>
+      <a href="#/archive"   class="nav-link">Archive</a>
+      <a href="#/trades"    class="nav-link">Trades</a>
+      <a href="#/chat"      class="nav-link">AI Analysis</a>
     </div>
+    <button
+      id="theme-toggle"
+      class="theme-toggle"
+      aria-label="Toggle light/dark mode"
+      type="button"
+    >
+      <span class="theme-toggle-icon" aria-hidden="true"></span>
+      <span class="theme-toggle-label"></span>
+    </button>
   </nav>
 
   <main id="app">

@@ -10,6 +10,30 @@ const Dashboard = {
       return;
     }
 
+    let html = this._buildHTML(data);
+    app.innerHTML = html;
+  },
+
+  /** Render dashboard with pre-fetched data (for archive detail view) */
+  renderWithData(app, data, title) {
+    if (!data) {
+      app.innerHTML = '<div class="error-card">No data available.</div>';
+      return;
+    }
+
+    let html = '';
+
+    // Archive context banner
+    if (title) {
+      html += '<div class="stale-banner" style="margin-bottom:16px">📂 ' + title + ' · <a href="#/archive" style="color:var(--accent);text-decoration:underline">← Back to Archive</a></div>';
+    }
+
+    html += this._buildHTML(data);
+    app.innerHTML = html;
+  },
+
+  /** Shared HTML builder */
+  _buildHTML(data) {
     let html = '';
 
     // Stale warning
@@ -39,9 +63,10 @@ const Dashboard = {
     });
     html += '</div></div>';
 
-    // ── NARRATIVE ──
+    // ── NARRATIVE / MARKET INTEL ──
     if (data.narrative?.summary_paragraph) {
-      html += '<div class="section"><div class="card narrative-card"><div class="narrative-body">' + data.narrative.summary_paragraph.replace(/\n/g, '<br>') + '</div></div></div>';
+      const rendered = Utils.renderMarkdown(data.narrative.summary_paragraph);
+      html += `<div class="section"><div class="card narrative-card"><div class="intel-body">${rendered}</div></div></div>`;
     }
 
     // ── CENTRAL BANKS ──
@@ -50,7 +75,7 @@ const Dashboard = {
       ['fed', 'boc'].forEach(bank => {
         const label = bank === 'fed' ? 'Federal Reserve' : 'Bank of Canada';
         const text = data.central_banks[bank];
-        if (text) html += `<div class="card"><div class="card-title">${label}</div><div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6">${text.substring(0, 300)}</div></div>`;
+        if (text) html += `<div class="card"><div class="card-title">${label}</div><div style="font-size:0.875rem;color:var(--text-secondary);line-height:1.65">${text.substring(0, 300)}</div></div>`;
       });
       html += '</div></div>';
     }
@@ -60,7 +85,7 @@ const Dashboard = {
       html += '<div class="section"><h2 class="section-title">Top Setups</h2><div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Price</th><th>Chg</th><th>Score</th><th>Signals</th><th>RSI</th><th>Verdict</th></tr></thead><tbody>';
       data.premarket_top_setups.forEach(s => {
         const cls = s.change_pct != null ? Utils.changeClass(s.change_pct) : '';
-        const signals = (s.signals || []).map(sig => `<span class="badge ${sig.includes('bear')||sig.includes('over')?'badge-red':'badge-green'}" style="margin:1px">${sig.replace(/_/g,' ')}</span>`).join(' ');
+        const signals = (s.signals || []).map(sig => `<span class="badge ${sig.includes('bear') || sig.includes('over') ? 'badge-red' : 'badge-green'}" style="margin:1px">${sig.replace(/_/g, ' ')}</span>`).join(' ');
         const vBadge = s.council_verdict === 'bullish' ? 'badge-green' : s.council_verdict === 'bearish' ? 'badge-red' : 'badge-yellow';
         html += `<tr><td><a href="#/ticker/${s.ticker}">${s.ticker}</a></td><td>${Utils.formatPrice(s.price)}</td><td class="${cls}">${Utils.formatPct(s.change_pct)}</td><td>${Utils.scoreBadge(s.score)}</td><td style="max-width:250px">${signals}</td><td>${s.rsi != null ? s.rsi : '—'}</td><td><span class="badge ${vBadge}">${s.council_verdict || '—'}</span></td></tr>`;
       });
@@ -90,7 +115,7 @@ const Dashboard = {
     if (data.congress?.recent_trades?.length) {
       const cong = data.congress;
       html += '<div class="section"><h2 class="section-title">Congress Trading</h2>';
-      if (cong.summary) html += `<div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px">${cong.summary}</div>`;
+      if (cong.summary) html += `<div style="font-size:0.875rem;color:var(--text-secondary);margin-bottom:12px">${cong.summary}</div>`;
       html += '<div class="card table-wrap"><table><thead><tr><th>Politician</th><th>Party</th><th>Action</th><th>Asset</th><th>Size</th><th>Price</th></tr></thead><tbody>';
       cong.recent_trades.forEach(t => {
         const partyCls = t.party === 'D' ? 'badge-green' : t.party === 'R' ? 'badge-red' : 'badge-yellow';
@@ -104,14 +129,14 @@ const Dashboard = {
     if (data.market_news?.headlines?.length) {
       html += '<div class="section"><h2 class="section-title">Market News</h2><div class="card">';
       data.market_news.headlines.forEach(n => {
-        html += `<div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:0.9rem"><a href="${n.url || '#'}" target="_blank" style="color:var(--text-primary);text-decoration:none">${n.title}</a><div style="color:var(--text-muted);font-size:0.75rem;margin-top:2px">${n.source || ''} ${n.category ? '· ' + n.category : ''}</div></div>`;
+        html += `<div style="padding:10px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem"><a href="${n.url || '#'}" target="_blank" style="color:var(--text-primary);text-decoration:none;font-weight:500">${n.title}</a><div style="color:var(--text-muted);font-size:0.75rem;margin-top:3px">${n.source || ''} ${n.category ? '· ' + n.category : ''}</div></div>`;
       });
       html += '</div></div>';
     }
 
     // ── UNUSUAL WHALES ──
     if (data.unusual_whales?.summary) {
-      html += '<div class="section"><h2 class="section-title">🐋 Market Signals</h2><div class="card"><div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;white-space:pre-wrap">' + data.unusual_whales.summary.substring(0, 1000) + '</div></div></div>';
+      html += '<div class="section"><h2 class="section-title">🐋 Market Signals</h2><div class="card"><div style="font-size:0.875rem;color:var(--text-secondary);line-height:1.65;white-space:pre-wrap">' + data.unusual_whales.summary.substring(0, 1000) + '</div></div></div>';
     }
 
     // ── EARNINGS ──
@@ -128,99 +153,6 @@ const Dashboard = {
       html += '<div style="text-align:center;color:var(--text-muted);font-size:0.8rem;padding:16px">Generated ' + new Date(data.generated_at).toLocaleString() + '</div>';
     }
 
-    app.innerHTML = html;
-  },
-
-  /** Render dashboard with pre-fetched data (for archive view) */
-  renderWithData(app, data, title) {
-    if (!data) {
-      app.innerHTML = '<div class="error-card">No data available.</div>';
-      return;
-    }
-
-    let html = '';
-
-    // Title (optional, for archive browsing)
-    if (title) {
-      html += '<div class="stale-banner" style="margin-bottom:16px">📂 ' + title + ' · <a href="#/archive" style="color:var(--accent)">← Back to Archive</a></div>';
-    }
-
-    // Stale warning
-    if (data.generated_at && State.isStale(data.generated_at)) {
-      html += '<div class="stale-banner">⚠ Data from ' + new Date(data.generated_at).toLocaleTimeString() + ' — may be stale</div>';
-    }
-
-    const ms = data.market_summary || {};
-
-    // ── INDICES ──
-    if (ms.indices?.length) {
-      html += '<div class="section"><h2 class="section-title">Market Indices</h2><div class="grid-4">';
-      ms.indices.forEach(idx => {
-        const cls = Utils.changeClass(idx.change_pct);
-        html += `<div class="card index-card"><div class="index-ticker">${idx.ticker}</div><div class="index-price">${Utils.formatPrice(idx.price)}</div><div class="index-change ${cls}">${Utils.formatPct(idx.change_pct)}</div></div>`;
-      });
-      html += '</div></div>';
-    }
-
-    // ── CONDITIONS ──
-    if (ms.vix != null || ms.ten_year_yield != null) {
-      html += '<div class="section"><h2 class="section-title">Market Conditions</h2><div class="grid-4">';
-      if (ms.vix != null) html += `<div class="card"><div class="index-ticker">VIX</div><div class="index-price">${ms.vix}</div></div>`;
-      if (ms.ten_year_yield != null) html += `<div class="card"><div class="index-ticker">10Y YIELD</div><div class="index-price">${ms.ten_year_yield}%</div></div>`;
-      if (ms.fx_rates?.length) {
-        ms.fx_rates.forEach(f => {
-          html += `<div class="card"><div class="index-ticker">${f.pair.replace('/', '/')}</div><div class="index-price">${f.price}</div><div class="index-change ${Utils.changeClass(f.change_pct)}">${Utils.formatPct(f.change_pct)}</div></div>`;
-        });
-      }
-      html += '</div></div>';
-    }
-
-    // ── NARRATIVE ──
-    if (data.narrative?.summary_paragraph) {
-      html += '<div class="section narrative">' + Utils.renderTable(data.narrative.summary_paragraph) + '</div>';
-    }
-
-    // ── CENTRAL BANKS ──
-    if (data.central_banks) {
-      html += '<div class="section"><h2 class="section-title">Central Banks</h2>';
-      if (data.central_banks.fed) html += '<div class="card"><strong>FEDERAL RESERVE</strong><p style="margin-top:8px">' + data.central_banks.fed + '</p></div>';
-      if (data.central_banks.boc) html += '<div class="card" style="margin-top:8px"><strong>BANK OF CANADA</strong><p style="margin-top:8px">' + data.central_banks.boc + '</p></div>';
-      html += '</div>';
-    }
-
-    // ── PREMARKET SETUPS ──
-    if (data.premarket_top_setups?.length) {
-      html += '<div class="section"><h2 class="section-title">Top Setups</h2><div class="table-wrap"><table><thead><tr><th>TICKER</th><th>PRICE</th><th>CHG</th><th>SCORE</th><th>SIGNALS</th><th>RSI</th><th>VERDICT</th></tr></thead><tbody>';
-      data.premarket_top_setups.forEach(s => {
-        html += `<tr><td><a href="#/ticker/${s.ticker}" class="ticker-link">${s.ticker}</a></td><td>${Utils.formatPrice(s.price)}</td><td class="${Utils.changeClass(s.change_pct)}">${Utils.formatPct(s.change_pct)}</td><td><span class="score-badge">${s.score}</span></td><td style="font-size:0.8rem">${s.signals}</td><td>${s.rsi}</td><td>${s.council_verdict || s.verdict || '—'}</td></tr>`;
-      });
-      html += '</tbody></table></div></div>';
-    }
-
-    // ── ANALYST RATINGS ──
-    if (data.market_news?.analyst_ratings?.length) {
-      html += '<div class="section"><h2 class="section-title">Analyst Ratings</h2><div class="table-wrap"><table><thead><tr><th>TICKER</th><th>STRONG BUY</th><th>BUY</th><th>HOLD</th><th>SELL</th><th>STRONG SELL</th></tr></thead><tbody>';
-      data.market_news.analyst_ratings.forEach(r => {
-        html += `<tr><td><strong>${r.ticker}</strong></td><td><span class="badge bullish">${r.strongBuy || r.strong_buy || 0}</span></td><td><span class="badge" style="background:var(--green)">${r.buy || 0}</span></td><td><span class="badge" style="background:var(--warning)">${r.hold || 0}</span></td><td><span class="badge" style="background:var(--orange)">${r.sell || 0}</span></td><td><span class="badge bearish">${r.strongSell || r.strong_sell || 0}</span></td></tr>`;
-      });
-      html += '</tbody></table></div></div>';
-    }
-
-    // ── INSIDER TRADES ──
-    if (data.insider_trades?.length) {
-      html += '<div class="section"><h2 class="section-title">Insider Trading Signals</h2><div class="table-wrap"><table><thead><tr><th>TICKER</th><th>SIGNAL</th><th>CONFIDENCE</th><th>RATIO</th><th>BUY/SELL</th><th>SUMMARY</th></tr></thead><tbody>';
-      data.insider_trades.forEach(t => {
-        const sigClass = t.signal?.includes('BULLISH') ? 'bullish' : t.signal?.includes('BEARISH') ? 'bearish' : '';
-        html += `<tr><td><strong>${t.ticker}</strong></td><td class="${sigClass}">${t.signal}</td><td>${t.confidence}</td><td>${t.ratio}</td><td>${t.buys || ''}B ${t.sells || ''}S</td><td style="font-size:0.85rem">${t.summary}</td></tr>`;
-      });
-      html += '</tbody></table></div></div>';
-    }
-
-    // ── TIMESTAMP ──
-    if (data.generated_at) {
-      html += '<div style="text-align:center;color:var(--text-muted);font-size:0.8rem;padding:16px">Generated ' + new Date(data.generated_at).toLocaleString() + '</div>';
-    }
-
-    app.innerHTML = html;
+    return html;
   }
 };
