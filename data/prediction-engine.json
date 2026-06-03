@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-03T03:18:58-04:00",
+  "generated_at": "2026-06-03T08:38:12-04:00",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
-      "description": "Basic SMA/RSI entry signals with 15-20d cooldowns",
       "total_trades": 25481,
+      "description": "Basic SMA/RSI entry signals with 15-20d cooldowns. No ticker filters, no exit rules.",
       "performance": {
         "overall": {
           "avg_pnl": 1.24,
@@ -24,95 +24,20 @@
         "mean-reversion": {
           "avg_pnl": 1.73,
           "win_rate": 60.1,
-          "profit_factor": 1.64
+          "profit_factor": 1.64,
+          "star": true
         },
         "sector-rotation": {
           "avg_pnl": 1.22,
           "win_rate": 59.0,
           "profit_factor": 1.61
-        },
-        "decades": {
-          "2000s": {
-            "avg_pnl": 0.84,
-            "win_rate": 56.5
-          },
-          "2010s": {
-            "avg_pnl": 1.23,
-            "win_rate": 60.0
-          },
-          "2020s": {
-            "avg_pnl": 1.92,
-            "win_rate": 59.0
-          }
         }
-      },
-      "by_decade": {
-        "2000s": {
-          "breakout": 2791,
-          "mean-reversion": 1104,
-          "momentum": 2608,
-          "sector-rotation": 1002
-        },
-        "2010s": {
-          "breakout": 4007,
-          "mean-reversion": 1408,
-          "momentum": 3666,
-          "sector-rotation": 1649
-        },
-        "2020s": {
-          "breakout": 2668,
-          "mean-reversion": 1074,
-          "momentum": 2439,
-          "sector-rotation": 1065
-        }
-      },
-      "ticker_counts": [
-        {
-          "ticker": "SPY",
-          "trades": 556
-        },
-        {
-          "ticker": "DIA",
-          "trades": 543
-        },
-        {
-          "ticker": "QQQ",
-          "trades": 542
-        },
-        {
-          "ticker": "XLK",
-          "trades": 539
-        },
-        {
-          "ticker": "UNH",
-          "trades": 539
-        },
-        {
-          "ticker": "AAPL",
-          "trades": 536
-        },
-        {
-          "ticker": "XLP",
-          "trades": 523
-        },
-        {
-          "ticker": "XLI",
-          "trades": 523
-        },
-        {
-          "ticker": "XLV",
-          "trades": 519
-        },
-        {
-          "ticker": "XLU",
-          "trades": 514
-        }
-      ]
+      }
     },
     "V2 Council-Tuned": {
       "tag": "backtest-v2",
-      "description": "Council parameters: 3% min return, volume 1.3x, sma50 slope, RSI>55, commodity blacklists",
       "total_trades": 19847,
+      "description": "Council parameters: 3% min return, volume 1.3x, sma50 slope, RSI>55, commodity blacklists.",
       "performance": {
         "overall": {
           "avg_pnl": 1.44,
@@ -121,106 +46,31 @@
         },
         "momentum": {
           "avg_pnl": 1.3,
-          "win_rate": 57.0,
+          "win_rate": 57.1,
           "profit_factor": 1.55
         },
         "breakout": {
           "avg_pnl": 1.71,
-          "win_rate": 58.1,
+          "win_rate": 58.2,
           "profit_factor": 1.72
         },
         "mean-reversion": {
           "avg_pnl": 1.86,
           "win_rate": 60.3,
-          "profit_factor": 1.74
+          "profit_factor": 1.74,
+          "star": true
         },
         "sector-rotation": {
           "avg_pnl": 1.21,
           "win_rate": 59.0,
           "profit_factor": 1.56
-        },
-        "decades": {
-          "2000s": {
-            "avg_pnl": 1.17,
-            "win_rate": 57.0
-          },
-          "2010s": {
-            "avg_pnl": 1.3,
-            "win_rate": 60.0
-          },
-          "2020s": {
-            "avg_pnl": 2.27,
-            "win_rate": 59.0
-          }
         }
-      },
-      "by_decade": {
-        "2000s": {
-          "breakout": 1052,
-          "mean-reversion": 1211,
-          "momentum": 1514,
-          "sector-rotation": 2210
-        },
-        "2010s": {
-          "breakout": 1312,
-          "mean-reversion": 1457,
-          "momentum": 2074,
-          "sector-rotation": 3459
-        },
-        "2020s": {
-          "breakout": 852,
-          "mean-reversion": 1091,
-          "momentum": 1354,
-          "sector-rotation": 2261
-        }
-      },
-      "ticker_counts": [
-        {
-          "ticker": "NVDA",
-          "trades": 451
-        },
-        {
-          "ticker": "AMZN",
-          "trades": 437
-        },
-        {
-          "ticker": "CAT",
-          "trades": 430
-        },
-        {
-          "ticker": "AAPL",
-          "trades": 426
-        },
-        {
-          "ticker": "AMD",
-          "trades": 425
-        },
-        {
-          "ticker": "NFLX",
-          "trades": 421
-        },
-        {
-          "ticker": "UNH",
-          "trades": 420
-        },
-        {
-          "ticker": "MSTR",
-          "trades": 413
-        },
-        {
-          "ticker": "ADBE",
-          "trades": 411
-        },
-        {
-          "ticker": "MSFT",
-          "trades": 407
-        }
-      ]
+      }
     },
     "V3 Composite Scoring": {
       "tag": "backtest-v3",
-      "description": "Signal scoring 0-10 with 7+ confirmations, SPY bull regime filter, RSI divergence detection",
-      "total_trades": 44490,
+      "total_trades": 70493,
+      "description": "Signal scoring 0-10 with 7+ confirmations. SPY bull regime filter. RSI divergence detection.",
       "performance": {
         "overall": {
           "avg_pnl": 1.37,
@@ -228,119 +78,192 @@
           "profit_factor": 1.65
         },
         "mom-v3": {
-          "avg_pnl": 1.36,
-          "win_rate": 58.9,
-          "profit_factor": 1.65
+          "avg_pnl": 1.37,
+          "win_rate": 58.8,
+          "profit_factor": 1.66,
+          "label": "Momentum"
         },
         "bo-v3": {
-          "avg_pnl": 1.36,
-          "win_rate": 59.3,
-          "profit_factor": 1.68
+          "avg_pnl": 1.33,
+          "win_rate": 59.1,
+          "profit_factor": 1.67,
+          "label": "Breakout"
         },
         "mr-v3": {
           "avg_pnl": 2.18,
           "win_rate": 61.8,
-          "profit_factor": 1.85
+          "profit_factor": 1.85,
+          "label": "Mean Reversion",
+          "star": true
         },
         "sr-v3": {
-          "avg_pnl": 1.18,
-          "win_rate": 57.9,
-          "profit_factor": 1.52
-        },
-        "decades": {
-          "2000s": {
-            "avg_pnl": 1.0,
-            "win_rate": 58.0
-          },
-          "2010s": {
-            "avg_pnl": 1.39,
-            "win_rate": 61.0
-          },
-          "2020s": {
-            "avg_pnl": 2.2,
-            "win_rate": 59.0
-          }
+          "avg_pnl": 1.19,
+          "win_rate": 58.1,
+          "profit_factor": 1.53,
+          "label": "Sector Rotation"
         }
-      },
-      "by_decade": {
-        "2000s": {
-          "bo-v3": 2318,
-          "mom-v3": 4846,
-          "mr-v3": 999,
-          "sr-v3": 3789
-        },
-        "2010s": {
-          "bo-v3": 4155,
-          "mom-v3": 8050,
-          "mr-v3": 1405,
-          "sr-v3": 6069
-        },
-        "2020s": {
-          "bo-v3": 2564,
-          "mom-v3": 5162,
-          "mr-v3": 1158,
-          "sr-v3": 3975
-        }
-      },
-      "ticker_counts": [
-        {
-          "ticker": "UNH",
-          "trades": 1047
-        },
-        {
-          "ticker": "AAPL",
-          "trades": 1039
-        },
-        {
-          "ticker": "PEP",
-          "trades": 1038
-        },
-        {
-          "ticker": "MCD",
-          "trades": 1036
-        },
-        {
-          "ticker": "XLU",
-          "trades": 1032
-        },
-        {
-          "ticker": "XLB",
-          "trades": 1014
-        },
-        {
-          "ticker": "KO",
-          "trades": 988
-        },
-        {
-          "ticker": "AMZN",
-          "trades": 988
-        },
-        {
-          "ticker": "NVDA",
-          "trades": 980
-        },
-        {
-          "ticker": "NKE",
-          "trades": 971
-        }
-      ]
+      }
     },
-    "V5 95% Target": {
-      "tag": "backtest-v5",
-      "description": "5-layer filter system: triple timeframe confirmation, regime perfect storm, Polymarket sentiment triangulation, ML probability gate, ticker-specific alpha. Ultra-tight exit rules.",
-      "total_trades": "~100-135/year (estimated)",
-      "status": "Council designed \u2014 pending implementation",
+    "V4 Council Design": {
+      "tag": null,
+      "total_trades": null,
+      "description": "Council-designed V4 (Gemini+MiMo+DeepSeek+Nemotron): 3D regime cube, ticker routing matrix, exit rules, position sizing. Never implemented \u2014 superseded by V5+.",
       "performance": {
         "overall": {
-          "avg_pnl": 1.1,
-          "win_rate": 95.0,
-          "profit_factor": 5.0
+          "avg_pnl": 1.9,
+          "win_rate": 62.0,
+          "profit_factor": 2.0,
+          "projected": true
+        }
+      }
+    },
+    "V5 Profit-Max": {
+      "tag": "backtest-v5",
+      "total_trades": 10879,
+      "description": "Tightened all entries: MR RSI<30, divergence bonus, volume exhaustion. Breakout 2x vol + RSI>60.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 1.46,
+          "win_rate": 58.3,
+          "profit_factor": 1.63
+        },
+        "v5-mr": {
+          "avg_pnl": 2.5,
+          "win_rate": 67.7,
+          "profit_factor": 2.53,
+          "label": "Mean Reversion",
+          "star": true
+        },
+        "v5-bo": {
+          "avg_pnl": 3.34,
+          "win_rate": 60.2,
+          "profit_factor": 2.22,
+          "label": "Breakout"
+        },
+        "v5-mom": {
+          "avg_pnl": 1.47,
+          "win_rate": 56.9,
+          "profit_factor": 1.63,
+          "label": "Momentum"
+        },
+        "v5-sr": {
+          "avg_pnl": 1.24,
+          "win_rate": 58.4,
+          "profit_factor": 1.58,
+          "label": "Sector Rotation"
+        }
+      }
+    },
+    "V6 Ultra-Tight": {
+      "tag": "backtest-v6",
+      "total_trades": 7679,
+      "description": "MR RSI<25 + divergence bonus + 2d pullback. Momentum 5% 1mo + 1.5x vol. Breakout 2x vol + RSI>60.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 1.36,
+          "win_rate": 58.6,
+          "profit_factor": 1.72
+        },
+        "v6b-mr": {
+          "avg_pnl": 3.18,
+          "win_rate": 74.1,
+          "profit_factor": 3.86,
+          "label": "Mean Reversion",
+          "star": true
+        },
+        "v6b-mom": {
+          "avg_pnl": 1.9,
+          "win_rate": 57.4,
+          "profit_factor": 1.66,
+          "label": "Momentum"
+        },
+        "v6b-sr": {
+          "avg_pnl": 1.24,
+          "win_rate": 58.4,
+          "profit_factor": 1.58,
+          "label": "Sector Rotation"
+        }
+      }
+    },
+    "V7 Exit Rules": {
+      "tag": "backtest-v7",
+      "total_trades": 6640,
+      "description": "Same ultra-tight entries as V6 + exit rules (trailing stops 3-5%, profit targets 4-6%, max hold 14d). Exit rules hurt performance \u2014 mean reversion needs full 21d snap-back.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0.62,
+          "win_rate": 52.9,
+          "profit_factor": 1.32
+        },
+        "v7-mr": {
+          "avg_pnl": 1.09,
+          "win_rate": 54.4,
+          "profit_factor": 1.84,
+          "label": "Mean Reversion"
+        },
+        "v7-sr": {
+          "avg_pnl": 0.61,
+          "win_rate": 52.8,
+          "profit_factor": 1.32,
+          "label": "Sector Rotation"
+        }
+      },
+      "lesson": "Exit rules with trailing stops cut winners too early for mean reversion. The 21-day flat hold is superior."
+    },
+    "V8 Strict Divergence": {
+      "tag": "backtest-v8",
+      "total_trades": 13,
+      "description": "RSI<22 + divergence REQUIRED + 3d consecutive decline + volume collapse. Too restrictive \u2014 only 13 trades in 25 years.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 0.0,
+          "win_rate": 0.0,
+          "profit_factor": 0.0,
+          "note": "Insufficient data (13 trades)"
+        }
+      }
+    },
+    "V9 Volume + Decline": {
+      "tag": "backtest-v9",
+      "total_trades": 532,
+      "description": "RSI<25 + 3d decline confirmation + volume collapse + weekly support. Divergence as bonus (not required).",
+      "performance": {
+        "overall": {
+          "avg_pnl": 3.09,
+          "win_rate": 66.4,
+          "profit_factor": 2.34
+        },
+        "v9-mr": {
+          "avg_pnl": 3.09,
+          "win_rate": 66.4,
+          "profit_factor": 2.34,
+          "label": "Mean Reversion",
+          "star": true
+        }
+      }
+    },
+    "V10 Combined Best": {
+      "tag": "backtest-v10",
+      "total_trades": 142,
+      "description": "RSI<25 + below BB + 3d decline + volume exhaustion + support proximity + bull regime + ticker cleanup (removed CRM/XLK/META). The profit king.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 3.71,
+          "win_rate": 71.1,
+          "profit_factor": 3.72
+        },
+        "v10-mr": {
+          "avg_pnl": 3.71,
+          "win_rate": 71.1,
+          "profit_factor": 3.72,
+          "label": "Mean Reversion",
+          "star": true
         }
       }
     }
   },
   "summary": {
-    "total_backtest_trades": 89818,
+    "total_backtest_trades": 141706,
     "tickers_tested": 59,
     "date_range": "2000-01-01 to 2026-06-03",
     "strategies_tested": [
@@ -352,7 +275,7 @@
     "holding_period": "21 trading days (~1 calendar month)",
     "data_source": "Yahoo Finance (yfinance)",
     "exit_simulation": "Held for 21 trading days, exit simulated at close price",
-    "versions_completed": 3,
+    "versions_completed": 10,
     "versions_designed": 2,
     "v5_target_win_rate": "95%+",
     "council_members_used": [
@@ -360,7 +283,10 @@
       "DeepSeek V4 Pro",
       "MiMo-V2.5-Pro",
       "Nemotron 3 Super"
-    ]
+    ],
+    "best_version": "V10 Combined Best",
+    "best_win_rate": "74.1% (V6 Mean Reversion)",
+    "best_avg_pnl": "+3.71% (V10 Mean Reversion)"
   },
   "geopolitical_analysis": {
     "description": "How prediction strategies perform during different geopolitical regimes. Data from 25-year backtest across major market events.",
@@ -785,5 +711,75 @@
         "max_positions": 1
       }
     }
+  },
+  "evolution": {
+    "description": "The journey from V1 to V10: 10 iterations of strategy tuning across 25 years of market data. Mean Reversion emerged as the dominant strategy.",
+    "mr_progression": [
+      {
+        "version": "V1",
+        "win_rate": 60.1,
+        "avg_pnl": 1.73,
+        "pf": 1.64,
+        "trades": 3586
+      },
+      {
+        "version": "V2",
+        "win_rate": 60.3,
+        "avg_pnl": 1.86,
+        "pf": 1.74,
+        "trades": 3759
+      },
+      {
+        "version": "V3",
+        "win_rate": 61.8,
+        "avg_pnl": 2.18,
+        "pf": 1.85,
+        "trades": 3562
+      },
+      {
+        "version": "V5",
+        "win_rate": 67.7,
+        "avg_pnl": 2.5,
+        "pf": 2.53,
+        "trades": 147
+      },
+      {
+        "version": "V6",
+        "win_rate": 74.1,
+        "avg_pnl": 3.18,
+        "pf": 3.86,
+        "trades": 147
+      },
+      {
+        "version": "V9",
+        "win_rate": 66.4,
+        "avg_pnl": 3.09,
+        "pf": 2.34,
+        "trades": 532
+      },
+      {
+        "version": "V10",
+        "win_rate": 71.1,
+        "avg_pnl": 3.71,
+        "pf": 3.72,
+        "trades": 142
+      }
+    ],
+    "best_strategy": "Mean Reversion (V10)",
+    "best_metrics": "71.1% WR, +3.71% avg P&L, 3.72 PF",
+    "key_innovations": [
+      "Commodity exclusion (V2): Eliminated -1.5% drag from UNG/WEAT/CPER",
+      "Composite scoring (V3): 0-10 scale with multi-confirmation",
+      "Bull regime filter (V3): SPY>200d SMA prevents bear market losses",
+      "RSI depth + divergence (V5): <30 RSI + divergence bonus",
+      "Volume exhaustion (V6): <1.3x avg volume confirms capitulation",
+      "3-day decline (V9): Price making lower highs/lows for 3 days",
+      "Ticker cleanup (V10): Removed negative-alpha tickers"
+    ],
+    "what_didnt_work": [
+      "Exit rules with trailing stops (V7): Cut winners too early",
+      "Mandatory divergence (V8): Too few signals passed",
+      "Sector Rotation: Underperformed across ALL versions"
+    ]
   }
 }

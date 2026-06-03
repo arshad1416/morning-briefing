@@ -174,6 +174,37 @@ const PredictionEngine = {
 
     html += '</div></div>';
 
+    // ── Evolution Timeline ──
+    if (data.evolution) {
+      const ev = data.evolution;
+      html += `<h2 class="section-title">Mean Reversion Evolution — V1 to V10</h2>
+        <div class="card" style="padding:0;overflow:hidden;margin-bottom:16px"><table><thead><tr><th>Ver</th><th>Win Rate</th><th>Avg P&L</th><th>PF</th><th>Trades</th><th>Bar</th></tr></thead><tbody>`;
+      ev.mr_progression.forEach(v => {
+        const cl = v.win_rate >= 70 ? 'badge-green' : v.win_rate >= 65 ? 'badge-yellow' : 'badge';
+        const bar_w = Math.min(v.win_rate * 1.2, 100);
+        html += `<tr>
+          <td><strong>${v.version}</strong></td>
+          <td><span class="badge ${cl}" style="font-size:0.7rem">${v.win_rate}%</span></td>
+          <td class="${v.avg_pnl >= 0 ? 'positive' : 'negative'}">${v.avg_pnl >= 0 ? '+' : ''}${v.avg_pnl}%</td>
+          <td>${v.pf}</td>
+          <td style="font-size:0.8rem">${v.trades}</td>
+          <td><div style="height:8px;width:${bar_w}px;background:${v.win_rate >= 70 ? 'var(--green)' : 'var(--accent)'};border-radius:4px;min-width:20px"></div></td>
+        </tr>`;
+      });
+      html += '</tbody></table></div>';
+      if (ev.key_innovations) {
+        html += `<div class="card" style="margin-bottom:12px"><div class="card-title">What Worked</div>`;
+        ev.key_innovations.forEach(k => html += `<div style="font-size:0.85rem;color:var(--text-secondary);padding:4px 0">${k}</div>`);
+        html += '</div>';
+      }
+      if (ev.what_didnt_work) {
+        html += `<div class="card" style="margin-bottom:16px"><div class="card-title">What Did Not Work</div>`;
+        ev.what_didnt_work.forEach(k => html += `<div style="font-size:0.85rem;color:var(--text-secondary);padding:4px 0">${k}</div>`);
+        html += '</div>';
+      }
+      html += `<p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:28px;line-height:1.6">${ev.description}</p>`;
+    }
+
     // ── Geopolitical Analysis ──
     if (data.geopolitical_analysis) {
       const geo = data.geopolitical_analysis;
