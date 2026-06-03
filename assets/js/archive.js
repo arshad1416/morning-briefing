@@ -19,17 +19,30 @@ const Archive = {
       // Lazy-load each archive row summary from the individual file
       const brief = await State.get(`archive:${date}`, `/data/archive/${date}.json`);
 
-      let indices = '—';
-      if (brief?.market_summary?.indices) {
-        indices = brief.market_summary.indices.map(i =>
-          `${i.ticker}: ${Utils.formatPrice(i.price)} (${Utils.formatPct(i.change_pct)})`
-        ).join(' | ');
+      // Core stock indices only — filter out bond yields and noise
+      const coreTickers = ['S&P 500', 'Dow Jones', 'NASDAQ', 'TSX'];
+      const allIndices = brief?.market_summary?.indices || [];
+      const core = allIndices.filter(i => coreTickers.includes(i.ticker));
+
+      let indicesHtml = '—';
+      if (core.length) {
+        indicesHtml = core.map(i => {
+          const cls = Utils.changeClass(i.change_pct);
+          return `<span class="badge" style="font-size:0.8rem;margin:1px 2px">${i.ticker}: ${Utils.formatPrice(i.price)} <span class="${cls}">${Utils.formatPct(i.change_pct)}</span></span>`;
+        }).join('');
       }
+
+      // Compact secondary indicators
+      let meta = '';
+      const vix = brief?.market_summary?.vix;
+      const y10 = brief?.market_summary?.ten_year_yield;
+      if (vix != null) meta += `VIX ${vix} `;
+      if (y10 != null) meta += `10Y ${y10}%`;
 
       html += `<tr>
         <td><a href="#/archive/${date}" class="archive-date">${date}</a></td>
-        <td style="color:var(--text-muted);font-size:0.85rem">${brief?.generated_at ? new Date(brief.generated_at).toLocaleTimeString() : '—'}</td>
-        <td style="color:var(--text-secondary);font-size:0.85rem">${indices}</td>
+        <td style="color:var(--text-muted);font-size:0.8rem">${brief?.generated_at ? new Date(brief.generated_at).toLocaleTimeString() : '—'}</td>
+        <td>${indicesHtml}${meta ? `<div style="color:var(--text-muted);font-size:0.75rem;margin-top:3px">${meta}</div>` : ''}</td>
       </tr>`;
     }
 
