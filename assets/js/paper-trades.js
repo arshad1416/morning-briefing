@@ -176,21 +176,24 @@ const PaperTrades = {
       data.open_positions.forEach(t => {
         const pnlCls = t.pnl_pct > 0 ? 'positive' : t.pnl_pct < 0 ? 'negative' : '';
         const status = t.pnl_pct > 5 ? '✅ In Profit' : t.pnl_pct > 2 ? '✅ Profitable' : t.pnl_pct > 0 ? '⏳ Pending' : t.pnl_pct > -3 ? '⏳ Watching' : t.pnl_pct > -7 ? '⚠️ At Risk' : '🔴 Stop Zone';
-        // Entry price with currency
-        let entryDisplay = '$' + t.entry_price.toFixed(2) + ' ' + (t.currency || 'CAD');
-        // Current price with USD equivalent
-        let currDisplay = t.current_price ? '$' + t.current_price.toFixed(2) + ' ' + (t.currency || 'CAD') : '—';
-        if (t.price_usd_text) {
-          entryDisplay += '<br><span style="font-size:0.7rem;color:var(--text-muted)">≈ ' + t.price_usd_text + '</span>';
-          currDisplay += '<br><span style="font-size:0.7rem;color:var(--text-muted)">' + t.price_usd_text + '</span>';
+        // Entry: CAD + USD
+        let entryDisplay = t.entry_display || '$' + t.entry_price.toFixed(2) + ' CAD';
+        if (t.entry_usd_text) entryDisplay += '<br><span style="font-size:0.7rem;color:var(--text-muted)">' + t.entry_usd_text + '</span>';
+        // Current: CAD + USD
+        let currDisplay = t.current_display || '$' + t.current_price.toFixed(2) + ' CAD';
+        if (t.current_usd_text) currDisplay += '<br><span style="font-size:0.7rem;color:var(--text-muted)">' + t.current_usd_text + '</span>';
+        // P&L: amount + %, show both currencies if available
+        let pnlDisplay = '$' + t.pnl.toFixed(2) + ' (' + (t.pnl_pct >= 0 ? '+' : '') + t.pnl_pct.toFixed(1) + '%)';
+        if (t.pnl_usd !== null && t.pnl_usd !== undefined) {
+          pnlDisplay += '<br><span style="font-size:0.65rem;color:var(--text-muted)">$' + t.pnl_usd.toFixed(2) + ' USD</span>';
         }
         html += `<tr>
           <td><strong>${t.ticker}</strong></td>
-          <td><span class="badge ${t.asset_type === 'Stock' ? 'badge-green' : t.asset_type === 'ETF' ? 'badge-yellow' : 'badge'}" style="font-size:0.65rem">${t.asset_type || 'Other'}</span></td>
+          <td><span class="badge ${t.type === 'Stock' ? 'badge-green' : t.type === 'ETF' ? 'badge-yellow' : 'badge'}" style="font-size:0.65rem">${t.type || 'Other'}</span></td>
           <td style="font-size:0.85rem">${t.entry_date || '—'}</td>
           <td style="font-size:0.85rem">${entryDisplay}</td>
           <td style="font-size:0.85rem">${currDisplay}</td>
-          <td class="${pnlCls}" style="font-weight:700">${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct.toFixed(2)}%</td>
+          <td class="${pnlCls}" style="font-weight:700;font-size:0.85rem">${pnlDisplay}</td>
           <td style="font-size:0.8rem">${this._strategyLink(t.strategy)}</td>
           <td><span class="badge ${t.pnl_pct > 0 ? 'badge-green' : t.pnl_pct < -3 ? 'badge-red' : 'badge-yellow'}" style="font-size:0.65rem">${status}</span></td>
         </tr>`;
