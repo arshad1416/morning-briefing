@@ -245,6 +245,104 @@ const PredictionEngine = {
       }
     }
 
+    // ── Polymarket Sentiment ──
+    if (data.polymarket_sentiment) {
+      const pm = data.polymarket_sentiment;
+      html += `<h2 class="section-title" style="margin-top:12px">Polymarket Sentiment</h2>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title">Live prediction market data — ${pm.top_markets.length} markets tracked</div>
+          <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:12px">${pm.description}</div>
+          <div style="font-size:0.85rem;color:var(--accent);line-height:1.6;margin-bottom:16px;padding:10px;background:var(--accent-dim);border-radius:var(--radius-sm)"><strong>V5 Use:</strong> ${pm.how_used}</div>
+          <div style="display:flex;flex-direction:column;gap:8px">`;
+      pm.top_markets.forEach(m => {
+        const outcomes = Object.entries(m.outcomes).map(([k,v]) => `${k}: ${v}`).join(' | ');
+        const vol = m.volume >= 1e6 ? `$${(m.volume/1e6).toFixed(1)}M` : `$${(m.volume/1e3).toFixed(1)}K`;
+        const cls = m.closed ? 'badge-red' : 'badge-green';
+        html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--bg-inset);border-radius:var(--radius-sm);flex-wrap:wrap;gap:4px">
+          <span style="font-size:0.8rem;flex:1">${m.question.substring(0,65)}${m.question.length > 65 ? '...' : ''}</span>
+          <span style="font-size:0.75rem;color:var(--text-secondary)">${outcomes}</span>
+          <span style="font-size:0.7rem;color:var(--text-muted)">${vol}</span>
+          <span class="badge ${cls}" style="font-size:0.6rem">${m.closed ? 'Closed' : 'Active'}</span>
+        </div>`;
+      });
+      html += `</div>
+        <div style="font-size:0.7rem;color:var(--text-muted);margin-top:8px;text-align:right">Source: ${pm.source} · ${pm.fetched_at}</div>
+      </div>`;
+    }
+
+    // ── V5 95% Target Design ──
+    if (data.v5_design) {
+      const v5 = data.v5_design;
+      html += `<h2 class="section-title" style="color:var(--green)">${v5.version}</h2>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title" style="color:var(--green)">Target: ${v5.target_metrics.win_rate} Win Rate · PF ${v5.target_metrics.profit_factor} · ${v5.target_metrics.trades_per_year}</div>
+          <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:16px">${v5.the_philosophy}</div>
+          <div style="font-size:0.85rem;margin-bottom:16px;padding:10px;background:var(--yellow-bg);border:1px solid var(--yellow-border);border-radius:var(--radius-sm)"><strong style="color:var(--yellow)">⚠ Trade-off:</strong> ${v5.the_tradeoff}</div>`;
+
+      // Target metrics
+      html += `<div class="grid-3" style="margin-bottom:16px">`;
+      Object.entries(v5.target_metrics).forEach(([k, v]) => {
+        html += `<div class="card"><div class="card-title">${k.replace(/_/g,' ')}</div><div style="font-size:1.1rem;font-weight:700;color:var(--green)">${v}</div></div>`;
+      });
+      html += `</div>`;
+
+      // 5-Layer Filter
+      html += `<h3 class="intel-header" style="margin-top:20px">The 5-Layer Filter — All Must Pass</h3>`;
+      Object.entries(v5.the_5_layer_filter).forEach(([key, layer]) => {
+        html += `<div style="border-left:3px solid var(--green);padding:10px 14px;margin:8px 0;background:var(--bg-inset);border-radius:0 var(--radius-sm) var(--radius-sm) 0">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px">
+            <span style="font-weight:600;color:var(--text-primary);font-size:0.9rem">${layer.name}</span>
+            <span class="badge badge-green" style="font-size:0.65rem">${layer.filter_rate}</span>
+          </div>
+          <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px">${layer.description}</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px">${layer.implementation || ''}</div>
+        </div>`;
+      });
+
+      // Exit rules
+      html += `<h3 class="intel-header" style="margin-top:20px">Exit Rule Ladder (All 5 Layers Executed Daily)</h3><table><thead><tr><th>Layer</th><th>Rule</th></tr></thead><tbody>`;
+      Object.entries(v5.exit_rules).forEach(([k, v]) => {
+        html += `<tr><td style="font-weight:600">${k.replace(/_/g,' ')}</td><td style="font-size:0.85rem">${v}</td></tr>`;
+      });
+      html += `</tbody></table>`;
+
+      // Council consensus
+      if (v5.council_consensus) {
+        html += `<h3 class="intel-header" style="margin-top:20px">Council Consensus (All 4 Members)</h3><ul class="intel-list">`;
+        v5.council_consensus.forEach(c => {
+          html += `<li style="font-size:0.85rem">${c}</li>`;
+        });
+        html += `</ul>`;
+      }
+
+      // Strategy parameters table
+      if (v5.strategy_parameters) {
+        html += `<h3 class="intel-header" style="margin-top:20px">Strategy Parameters (V5)</h3>
+          <div class="table-wrap"><table><thead><tr><th>Strategy</th><th>Min Score</th><th>Hard Stop</th><th>Target</th><th>Trail</th><th>Max Hold</th><th>Max Pos</th></tr></thead><tbody>`;
+        Object.entries(v5.strategy_parameters).forEach(([sk, sp]) => {
+          html += `<tr><td><strong>${sk.replace(/_/g,' ')}</strong></td><td>≥${sp.min_score}/10</td><td>${sp.hard_stop}</td><td>${sp.target}</td><td>${sp.trail}</td><td>${sp.max_hold}</td><td>${sp.max_positions}</td></tr>`;
+        });
+        html += `</tbody></table></div>`;
+      }
+
+      // Proven tickers
+      const tickers = v5.the_5_layer_filter.layer_5_ticker_allocation?.proven_tickers;
+      if (tickers) {
+        html += `<h3 class="intel-header" style="margin-top:20px">Proven Tickers (Documented Alpha)</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">`;
+        tickers.forEach(t => {
+          html += `<div style="background:var(--bg-inset);border-radius:var(--radius-sm);padding:10px 14px;text-align:center;min-width:100px">
+            <div style="font-weight:700;font-size:1.1rem;color:var(--text-primary)">${t.ticker}</div>
+            <div style="font-size:0.75rem;color:${t.avg_pnl.includes('+') ? 'var(--green)' : 'var(--red)'}">${t.avg_pnl}</div>
+            <div style="font-size:0.6rem;color:var(--text-muted)">${t.best_strategy}</div>
+          </div>`;
+        });
+        html += `</div>`;
+      }
+
+      html += `</div>`;
+    }
+
     // ── Method Footer ──
     html += `<div class="card" style="background:var(--bg-inset);border-color:var(--border-subtle)">
       <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.7">
