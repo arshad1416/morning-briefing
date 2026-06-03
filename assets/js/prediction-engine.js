@@ -174,6 +174,77 @@ const PredictionEngine = {
 
     html += '</div></div>';
 
+    // ── Geopolitical Analysis ──
+    if (data.geopolitical_analysis) {
+      const geo = data.geopolitical_analysis;
+      html += `<h2 class="section-title">Geopolitical & Regime Analysis</h2>
+        <div class="card" style="margin-bottom:16px">
+          <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:16px">${geo.description}</div>
+          <div style="display:flex;flex-direction:column;gap:16px">`;
+
+      geo.events.forEach(ev => {
+        // Determine overall sentiment
+        const perfValues = Object.values(ev.strategy_performance);
+        const avgV3 = perfValues.reduce((sum, v) => {
+          const m = v.match(/V3:\s*([+-]?\d+\.?\d*)/);
+          return sum + (m ? parseFloat(m[1]) : 0);
+        }, 0) / Object.keys(ev.strategy_performance).length;
+
+        html += `<div style="border:1px solid var(--border-dim);border-radius:var(--card-radius);padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+            <span style="font-weight:600;color:var(--text-primary)">${ev.event}</span>
+            <span style="font-size:0.75rem;color:var(--text-muted)">${ev.period}</span>
+            <span class="badge ${avgV3 >= 2 ? 'badge-green' : avgV3 >= 1 ? 'badge-yellow' : 'badge-red'}" style="font-size:0.7rem">V3 avg: ${avgV3 >= 0 ? '+' : ''}${avgV3.toFixed(1)}%</span>
+          </div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px">${ev.market_impact}</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px">`;
+
+        // Strategy performance cards
+        const sColor = (val) => {
+          const m = val.match(/V3:\s*([+-]?\d+\.?\d*)/);
+          const num = m ? parseFloat(m[1]) : 0;
+          return num >= 2 ? 'var(--green)' : num >= 0.5 ? 'var(--accent)' : 'var(--red)';
+        };
+        Object.entries(ev.strategy_performance).forEach(([sk, val]) => {
+          html += `<div style="background:var(--bg-inset);border-radius:var(--radius-sm);padding:8px;text-align:center">
+            <div style="font-size:0.65rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.05em;margin-bottom:4px">${sk.replace(/_/g,' ')}</div>
+            <div style="font-size:0.75rem;font-weight:600;color:${sColor(val)}">${val}</div>
+          </div>`;
+        });
+
+        html += `</div>
+          <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.5;padding:8px;background:var(--accent-dim);border-radius:var(--radius-sm)">
+            <strong style="color:var(--accent)">Lesson:</strong> ${ev.lesson}
+          </div>
+        </div>`;
+      });
+
+      html += '</div></div>';
+
+      // Current risk factors
+      if (geo.current_risk_factors?.length) {
+        html += `<h2 class="section-title">Current Risk Factors</h2>
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-title">Geopolitical events currently monitored for strategy impact</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">`;
+        geo.current_risk_factors.forEach(rf => {
+          html += `<span class="badge badge-yellow" style="font-size:0.75rem;padding:4px 10px">${rf}</span>`;
+        });
+        html += '</div></div>';
+      }
+
+      // Regime adaptation table
+      if (geo.regime_adaptation?.regimes) {
+        html += `<h2 class="section-title">Regime Adaptation Logic</h2>
+          <div class="card" style="padding:0;overflow:hidden;margin-bottom:28px"><table><thead><tr><th>Market Regime</th><th>Active Strategies</th><th>Size</th></tr></thead><tbody>`;
+        geo.regime_adaptation.regimes.forEach(r => {
+          const sizeCls = parseFloat(r.size_multiplier) >= 1 ? 'badge-green' : parseFloat(r.size_multiplier) >= 0.5 ? 'badge-yellow' : 'badge-red';
+          html += `<tr><td><strong>${r.regime}</strong></td><td style="font-size:0.85rem">${r.active_strategies}</td><td><span class="badge ${sizeCls}" style="font-size:0.7rem">${r.size_multiplier}</span></td></tr>`;
+        });
+        html += '</tbody></table></div>';
+      }
+    }
+
     // ── Method Footer ──
     html += `<div class="card" style="background:var(--bg-inset);border-color:var(--border-subtle)">
       <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.7">
