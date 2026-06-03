@@ -1,0 +1,19 @@
+name = "morning-briefing-chat"
+main = "src/index.js"
+compatibility_date = "2026-06-01"
+
+# The API key is set via `npx wrangler secret put OPENROUTER_API_KEY`
+# NEVER hardcode it here.
+# vars.OPENROUTER_MODEL is a public-safe config value.
+
+[vars]
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+OPENROUTER_MODEL = "openai/gpt-4o-mini"  # cheap + fast for ticker analysis
+RATE_LIMIT_PER_MIN = 10
+ALLOWED_ORIGIN = "https://briefing.yourdomain.com"
+
+[env.production]
+route = "chat-api.yourdomain.com/chat"
+
+# Deployment: npx wrangler deploy
+# Secrets: npx wrangler secret put OPENROUTER_API_KEY

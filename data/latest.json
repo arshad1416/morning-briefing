@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-06-03T06:45:00-04:00",
+  "market_summary": {
+    "indices": [
+      {"ticker": "SPY", "price": 545.32, "change_pct": 0.42},
+      {"ticker": "QQQ", "price": 488.15, "change_pct": 0.67},
+      {"ticker": "DIA", "price": 412.80, "change_pct": -0.08},
+      {"ticker": "IWM", "price": 218.45, "change_pct": 0.23},
+      {"ticker": "VIX", "price": 14.22, "change_pct": -3.12}
+    ],
+    "vix": 14.22,
+    "ten_year_yield": 4.32,
+    "market_breadth": {
+      "advancers": 287,
+      "decliners": 213,
+      "advance_decline_ratio": 1.35
+    }
+  },
+  "narrative": {
+    "headline": "Pre-market: Futures flat to slightly green ahead of ISM Services data",
+    "summary_paragraph": "Markets are extending last week's gains with tech leading on continued AI optimism. NVDA continues to show institutional accumulation with notable call sweeps. The 10Y yield is holding below 4.35%, providing a tailwind for growth stocks. ISM Services PMI due at 10:00 AM ET — consensus at 51.2.",
+    "key_levels": {
+      "SPY_support": 542,
+      "SPY_resistance": 548,
+      "QQQ_support": 484,
+      "QQQ_resistance": 492,
+      "VIX_floor": 13.5,
+      "VIX_ceiling": 15.5
+    },
+    "sectors": {
+      "leading": ["Technology", "Consumer Cyclical", "Communications"],
+      "lagging": ["Utilities", "Real Estate", "Consumer Defensive"]
+    }
+  },
+  "economic_calendar": [
+    {"time": "8:15 AM", "event": "ADP Employment Change", "forecast": "185K", "previous": "192K", "impact": "high"},
+    {"time": "10:00 AM", "event": "ISM Services PMI", "forecast": "51.2", "previous": "50.8", "impact": "high"},
+    {"time": "10:30 AM", "event": "Crude Oil Inventories", "forecast": "-1.2M", "previous": "-2.8M", "impact": "medium"},
+    {"time": "2:00 PM", "event": "Fed Beige Book", "forecast": null, "previous": null, "impact": "medium"}
+  ],
+  "top_movers": [
+    {"ticker": "NVDA", "change_pct": 2.15, "reason": "Bullish options flow, analyst upgrade"},
+    {"ticker": "MSTR", "change_pct": 3.42, "reason": "Bitcoin above $68K, institutional buying"},
+    {"ticker": "TSLA", "change_pct": -1.85, "reason": "Delivery numbers mixed, analyst downgrade"},
+    {"ticker": "AAPL", "change_pct": 0.85, "reason": "Services revenue growth, buyback momentum"}
+  ],
+  "watchlist_summary": {
+    "total_scanned": 24,
+    "green_count": 14,
+    "red_count": 10
+  },
+  "premarket_top_setups": [
+    {
+      "ticker": "NVDA", "price": 128.45, "change_pct": 2.15, "score": 8,
+      "signals": ["momentum", "volume_spike", "bullish_flow"],
+      "rsi": 62, "council_verdict": "bullish",
+      "council_summary": "Strong momentum with institutional accumulation. 3 large call sweeps detected. Support at $125, resistance at $135."
+    },
+    {
+      "ticker": "MSTR", "price": 1820.50, "change_pct": 3.42, "score": 7,
+      "signals": ["breakout", "volume_spike", "btc_correlation"],
+      "rsi": 58, "council_verdict": "bullish",
+      "council_summary": "Bitcoin momentum + MSTR premium expansion. New $1.5B ATM filed."
+    },
+    {
+      "ticker": "AMD", "price": 168.30, "change_pct": 1.25, "score": 6,
+      "signals": ["near_sma20", "momentum"],
+      "rsi": 52, "council_verdict": "neutral",
+      "council_summary": "Recovering from support at $162. Needs volume confirmation above $170."
+    },
+    {
+      "ticker": "QQQ", "price": 488.15, "change_pct": 0.67, "score": 6,
+      "signals": ["above_sma20", "above_sma50", "momentum"],
+      "rsi": 55, "council_verdict": "bullish",
+      "council_summary": "Tech leading the market. Above both SMAs. 484 support level."
+    }
+  ]
+}
