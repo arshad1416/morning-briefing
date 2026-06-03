@@ -2,7 +2,7 @@
  * Chat — AI ticker analysis via Cloudflare Worker.
  */
 const Chat = {
-  WORKER_URL: 'https://chat-api.yourdomain.com/chat',
+  WORKER_URL: 'https://morning-briefing-chat.rcobwq7u.workers.dev',
   _loading: false,
   _history: [],
 
