@@ -1,6 +1,6 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-06-03 16:06:14",
+  "generated_at": "2026-06-03 16:06:42",
   "price_source": "yfinance historical closes \u2014 no CAD/USD math",
   "portfolio": {
     "starting_balance": 2000.0,
@@ -76,10 +76,10 @@
       "type": "Stock",
       "entry_date": "2026-06-03",
       "entry_price": 90.25,
-      "current_price": 66.36,
+      "current_price": 90.25,
       "currency": "CAD",
-      "pnl": -23.89,
-      "pnl_pct": -26.47,
+      "pnl": 0.0,
+      "pnl_pct": 0.0,
       "strategy": "sector_rotation",
       "direction": "long"
     },
@@ -88,10 +88,10 @@
       "type": "Stock",
       "entry_date": "2026-06-03",
       "entry_price": 94.53,
-      "current_price": 126.54,
+      "current_price": 94.53,
       "currency": "USD",
-      "pnl": 32.01,
-      "pnl_pct": 33.86,
+      "pnl": 0.0,
+      "pnl_pct": 0.0,
       "strategy": "mean_reversion",
       "direction": "long"
     }
