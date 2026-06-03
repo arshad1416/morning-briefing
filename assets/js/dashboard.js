@@ -129,5 +129,98 @@ const Dashboard = {
     }
 
     app.innerHTML = html;
+  },
+
+  /** Render dashboard with pre-fetched data (for archive view) */
+  renderWithData(app, data, title) {
+    if (!data) {
+      app.innerHTML = '<div class="error-card">No data available.</div>';
+      return;
+    }
+
+    let html = '';
+
+    // Title (optional, for archive browsing)
+    if (title) {
+      html += '<div class="stale-banner" style="margin-bottom:16px">📂 ' + title + ' · <a href="#/archive" style="color:var(--accent)">← Back to Archive</a></div>';
+    }
+
+    // Stale warning
+    if (data.generated_at && State.isStale(data.generated_at)) {
+      html += '<div class="stale-banner">⚠ Data from ' + new Date(data.generated_at).toLocaleTimeString() + ' — may be stale</div>';
+    }
+
+    const ms = data.market_summary || {};
+
+    // ── INDICES ──
+    if (ms.indices?.length) {
+      html += '<div class="section"><h2 class="section-title">Market Indices</h2><div class="grid-4">';
+      ms.indices.forEach(idx => {
+        const cls = Utils.changeClass(idx.change_pct);
+        html += `<div class="card index-card"><div class="index-ticker">${idx.ticker}</div><div class="index-price">${Utils.formatPrice(idx.price)}</div><div class="index-change ${cls}">${Utils.formatPct(idx.change_pct)}</div></div>`;
+      });
+      html += '</div></div>';
+    }
+
+    // ── CONDITIONS ──
+    if (ms.vix != null || ms.ten_year_yield != null) {
+      html += '<div class="section"><h2 class="section-title">Market Conditions</h2><div class="grid-4">';
+      if (ms.vix != null) html += `<div class="card"><div class="index-ticker">VIX</div><div class="index-price">${ms.vix}</div></div>`;
+      if (ms.ten_year_yield != null) html += `<div class="card"><div class="index-ticker">10Y YIELD</div><div class="index-price">${ms.ten_year_yield}%</div></div>`;
+      if (ms.fx_rates?.length) {
+        ms.fx_rates.forEach(f => {
+          html += `<div class="card"><div class="index-ticker">${f.pair.replace('/', '/')}</div><div class="index-price">${f.price}</div><div class="index-change ${Utils.changeClass(f.change_pct)}">${Utils.formatPct(f.change_pct)}</div></div>`;
+        });
+      }
+      html += '</div></div>';
+    }
+
+    // ── NARRATIVE ──
+    if (data.narrative?.summary_paragraph) {
+      html += '<div class="section narrative">' + Utils.renderTable(data.narrative.summary_paragraph) + '</div>';
+    }
+
+    // ── CENTRAL BANKS ──
+    if (data.central_banks) {
+      html += '<div class="section"><h2 class="section-title">Central Banks</h2>';
+      if (data.central_banks.fed) html += '<div class="card"><strong>FEDERAL RESERVE</strong><p style="margin-top:8px">' + data.central_banks.fed + '</p></div>';
+      if (data.central_banks.boc) html += '<div class="card" style="margin-top:8px"><strong>BANK OF CANADA</strong><p style="margin-top:8px">' + data.central_banks.boc + '</p></div>';
+      html += '</div>';
+    }
+
+    // ── PREMARKET SETUPS ──
+    if (data.premarket_top_setups?.length) {
+      html += '<div class="section"><h2 class="section-title">Top Setups</h2><div class="table-wrap"><table><thead><tr><th>TICKER</th><th>PRICE</th><th>CHG</th><th>SCORE</th><th>SIGNALS</th><th>RSI</th><th>VERDICT</th></tr></thead><tbody>';
+      data.premarket_top_setups.forEach(s => {
+        html += `<tr><td><a href="#/ticker/${s.ticker}" class="ticker-link">${s.ticker}</a></td><td>${Utils.formatPrice(s.price)}</td><td class="${Utils.changeClass(s.change_pct)}">${Utils.formatPct(s.change_pct)}</td><td><span class="score-badge">${s.score}</span></td><td style="font-size:0.8rem">${s.signals}</td><td>${s.rsi}</td><td>${s.council_verdict || s.verdict || '—'}</td></tr>`;
+      });
+      html += '</tbody></table></div></div>';
+    }
+
+    // ── ANALYST RATINGS ──
+    if (data.market_news?.analyst_ratings?.length) {
+      html += '<div class="section"><h2 class="section-title">Analyst Ratings</h2><div class="table-wrap"><table><thead><tr><th>TICKER</th><th>STRONG BUY</th><th>BUY</th><th>HOLD</th><th>SELL</th><th>STRONG SELL</th></tr></thead><tbody>';
+      data.market_news.analyst_ratings.forEach(r => {
+        html += `<tr><td><strong>${r.ticker}</strong></td><td><span class="badge bullish">${r.strongBuy || r.strong_buy || 0}</span></td><td><span class="badge" style="background:var(--green)">${r.buy || 0}</span></td><td><span class="badge" style="background:var(--warning)">${r.hold || 0}</span></td><td><span class="badge" style="background:var(--orange)">${r.sell || 0}</span></td><td><span class="badge bearish">${r.strongSell || r.strong_sell || 0}</span></td></tr>`;
+      });
+      html += '</tbody></table></div></div>';
+    }
+
+    // ── INSIDER TRADES ──
+    if (data.insider_trades?.length) {
+      html += '<div class="section"><h2 class="section-title">Insider Trading Signals</h2><div class="table-wrap"><table><thead><tr><th>TICKER</th><th>SIGNAL</th><th>CONFIDENCE</th><th>RATIO</th><th>BUY/SELL</th><th>SUMMARY</th></tr></thead><tbody>';
+      data.insider_trades.forEach(t => {
+        const sigClass = t.signal?.includes('BULLISH') ? 'bullish' : t.signal?.includes('BEARISH') ? 'bearish' : '';
+        html += `<tr><td><strong>${t.ticker}</strong></td><td class="${sigClass}">${t.signal}</td><td>${t.confidence}</td><td>${t.ratio}</td><td>${t.buys || ''}B ${t.sells || ''}S</td><td style="font-size:0.85rem">${t.summary}</td></tr>`;
+      });
+      html += '</tbody></table></div></div>';
+    }
+
+    // ── TIMESTAMP ──
+    if (data.generated_at) {
+      html += '<div style="text-align:center;color:var(--text-muted);font-size:0.8rem;padding:16px">Generated ' + new Date(data.generated_at).toLocaleString() + '</div>';
+    }
+
+    app.innerHTML = html;
   }
 };
