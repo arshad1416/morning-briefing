@@ -48,7 +48,7 @@ Keep it friendly and educational.`;
 
 async function handleRequest(request, env) {
   const url = new URL(request.url), path = url.pathname;
-  if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: { 'Access-Control-Allow-Origin': '*' } });
+  if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type', 'Access-Control-Max-Age': '86400' } });
 
   // ── Turso proxy ──
   if (path === '/turso' && request.method === 'POST') {
