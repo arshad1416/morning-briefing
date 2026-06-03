@@ -1,6 +1,6 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-06-03 16:04:59",
+  "generated_at": "2026-06-03 16:06:14",
   "price_source": "yfinance historical closes \u2014 no CAD/USD math",
   "portfolio": {
     "starting_balance": 2000.0,
@@ -75,11 +75,11 @@
       "ticker": "CNQ.TO",
       "type": "Stock",
       "entry_date": "2026-06-03",
-      "entry_price": 66.36,
+      "entry_price": 90.25,
       "current_price": 66.36,
       "currency": "CAD",
-      "pnl": 0.0,
-      "pnl_pct": 0.0,
+      "pnl": -23.89,
+      "pnl_pct": -26.47,
       "strategy": "sector_rotation",
       "direction": "long"
     },
@@ -87,11 +87,11 @@
       "ticker": "MSTR",
       "type": "Stock",
       "entry_date": "2026-06-03",
-      "entry_price": 126.54,
+      "entry_price": 94.53,
       "current_price": 126.54,
       "currency": "USD",
-      "pnl": 0.0,
-      "pnl_pct": 0.0,
+      "pnl": 32.01,
+      "pnl_pct": 33.86,
       "strategy": "mean_reversion",
       "direction": "long"
     }
