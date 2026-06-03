@@ -172,19 +172,23 @@ const PaperTrades = {
     // ── Live Open Positions ──
     html += '<h2 class="section-title" style="margin-top:24px">Open Positions</h2>';
     if (data?.open_positions?.length) {
-      html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Direction</th><th>Entry</th><th>Entry Price</th><th>Current</th><th>P&L</th><th>Strategy</th><th>Status</th></tr></thead><tbody>';
+      html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Type</th><th>Direction</th><th>Entry</th><th>P&L</th><th>Strategy</th><th>Status</th></tr></thead><tbody>';
       data.open_positions.forEach(t => {
         const pnlCls = t.pnl > 0 ? 'positive' : t.pnl < 0 ? 'negative' : '';
-        const status = t.pnl > 2 ? '✅ In Profit' : t.pnl < -2 ? '⚠️ At Risk' : t.pnl < -5 ? '🔴 Stop Zone' : '⏳ Pending';
+        const status = t.pnl_pct > 5 ? '✅ In Profit' : t.pnl_pct > 2 ? '✅ Profitable' : t.pnl_pct > 0 ? '⏳ Pending' : t.pnl_pct > -3 ? '⏳ Watching' : t.pnl_pct > -7 ? '⚠️ At Risk' : '🔴 Stop Zone';
+        // Format entry price with currency
+        let entryDisplay = '$' + t.entry_price.toFixed(2) + ' ' + (t.currency || 'CAD');
+        if (t.price_usd_text) {
+          entryDisplay += '<br><span style="font-size:0.7rem;color:var(--text-muted)">' + t.price_usd_text + '</span>';
+        }
         html += `<tr>
           <td><strong>${t.ticker}</strong></td>
+          <td><span class="badge ${t.asset_type === 'Stock' ? 'badge-green' : t.asset_type === 'ETF' ? 'badge-yellow' : 'badge'}" style="font-size:0.65rem">${t.asset_type || 'Other'}</span></td>
           <td class="${t.direction === 'long' ? 'positive' : 'negative'}">${t.direction}</td>
-          <td>${t.entry_date || '—'}</td>
-          <td>$${t.entry_price.toFixed(2)}</td>
-          <td>${t.current_price ? '$' + t.current_price.toFixed(2) : '—'}</td>
-          <td class="${pnlCls}" style="font-weight:700">${t.pnl >= 0 ? '+' : ''}${t.pnl.toFixed(2)}%</td>
+          <td style="font-size:0.85rem">${entryDisplay}</td>
+          <td class="${pnlCls}" style="font-weight:700">${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct.toFixed(2)}%</td>
           <td style="font-size:0.8rem">${this._strategyLink(t.strategy)}</td>
-          <td><span class="badge ${t.pnl > 0 ? 'badge-green' : t.pnl < -3 ? 'badge-red' : 'badge-yellow'}" style="font-size:0.65rem">${status}</span></td>
+          <td><span class="badge ${t.pnl_pct > 0 ? 'badge-green' : t.pnl_pct < -3 ? 'badge-red' : 'badge-yellow'}" style="font-size:0.65rem">${status}</span></td>
         </tr>`;
       });
       html += '</tbody></table></div>';
