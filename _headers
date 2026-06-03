@@ -1,5 +1,5 @@
-/* Cloudflare Pages headers */
-/* Security headers + caching for static assets */
+# Cloudflare Pages headers
+# Security headers + caching for static assets
 
 /data/*
   Cache-Control: public, max-age=300, stale-while-revalidate=3600
@@ -7,5 +7,5 @@
 /assets/*
   Cache-Control: public, max-age=86400, immutable
 
-/* Allow chat worker to be called from this domain */
-/content-security-policy: default-src 'self'; connect-src 'self' https://morning-briefing-chat.rcobwq7u.workers.dev; style-src 'self' 'unsafe-inline'; img-src 'self' data:
+/*
+  Content-Security-Policy: default-src 'self'; connect-src 'self' https://morning-briefing-chat.rcobwq7u.workers.dev; style-src 'self' 'unsafe-inline'; img-src 'self' data:

@@ -8,7 +8,7 @@ const Chat = {
   _history: [],
 
   async render(app) {
-    let html = '<div class="section"><h2 class="section-title">AI Ticker Analysis</h2>';
+    let html = '<div class="section"><h2 class="section-title">AI Analysis</h2>';
     html += '<p style="color:var(--text-secondary);margin-bottom:16px">Enter a ticker to get live analysis with data tables.</p>';
 
     html += '<div class="chat-container">';
