@@ -1340,7 +1340,28 @@ button, [role="button"], input, select, textarea {
   main { padding: 12px 10px 72px; }
 }
 
-/* ── Safe area insets (iPhone notch/home bar) ── */
+/* ─────────────────────────────────────────────────────────────
+   MODAL (Strategy Info Popup)
+   ───────────────────────────────────────────────────────────── */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-content {
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-content::-webkit-scrollbar { width: 4px; }
+.modal-content::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 2px; }
+
+.strategy-link {
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.12s;
+}
+.strategy-link:hover { color: var(--accent-bright); }
+
+/* ─────────────────────────────────────────────────────────────
+   SAFE AREA INSETS
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
   main {
     padding-bottom: calc(64px + env(safe-area-inset-bottom));
