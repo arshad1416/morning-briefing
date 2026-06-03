@@ -95,7 +95,7 @@ const PredictionEngine = {
 
       // Decade breakdown
       const decades = d.by_decade;
-      const decadeKeys = Object.keys(decades).sort();
+      const decadeKeys = decades ? Object.keys(decades).sort() : [];
       if (decadeKeys.length) {
         html += `<div class="grid-3" style="margin-bottom:24px">`;
         decadeKeys.forEach(dk => {
