@@ -49,6 +49,7 @@
   Router.register('/watchlist',     function (app)         { Watchlist.render(app); });
   Router.register('/archive',       function (app)         { Archive.render(app); });
   Router.register('/trades',        function (app)         { PaperTrades.render(app); });
+  Router.register('/prediction-engine', function (app)    { PredictionEngine.render(app); });
   Router.register('/chat',          function (app)         { Chat.render(app); });
   Router.register('/ticker/:ticker',function (app, params) { TickerDetail.render(app, params); });
   Router.register('/archive/:date', function (app, params) { Archive.renderDate(app, params); });
