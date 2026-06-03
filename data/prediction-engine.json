@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-03T08:38:12-04:00",
+  "generated_at": "2026-06-03T08:47:15-04:00",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -260,6 +260,93 @@
           "star": true
         }
       }
+    },
+    "V11 Score-Weighted": {
+      "tag": "backtest-v11",
+      "total_trades": 75,
+      "description": "Score-weighted \u22658/10 only (skips 7/10 signals). RSI<25 + divergence + 3d decline + support + ATL. Quality over quantity.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 3.41,
+          "win_rate": 73.3,
+          "profit_factor": 4.05,
+          "is_best": true
+        }
+      }
+    },
+    "V12 Ticker Routing": {
+      "tag": "backtest-v12",
+      "total_trades": 174,
+      "description": "Ticker routing by regime: SPY/QQQ MR in bull only, GLD/SLV in all regimes, stocks require SMA200 filter.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 3.21,
+          "win_rate": 69.5,
+          "profit_factor": 3.04
+        }
+      }
+    },
+    "V14 Signal Stacking": {
+      "tag": "backtest-v14",
+      "total_trades": 317,
+      "description": "Signal stacking: MR + relative strength confirmation (3m return > -10%). Must have divergence OR 3-day decline.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 2.83,
+          "win_rate": 66.6,
+          "profit_factor": 2.69
+        }
+      }
+    },
+    "V15 VIX Filter": {
+      "tag": "backtest-v15",
+      "total_trades": 65,
+      "description": "V11 base + VIX < 25 filter. Removes trades during high-volatility regimes.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 2.98,
+          "win_rate": 70.8,
+          "profit_factor": 3.45
+        }
+      }
+    },
+    "V17 Sector Limit": {
+      "tag": "backtest-v17",
+      "total_trades": 76,
+      "description": "V11 base + max 2 same-sector trades per month. Reduces correlated position risk.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 3.3,
+          "win_rate": 73.7,
+          "profit_factor": 3.99
+        }
+      }
+    },
+    "V18 Adaptive": {
+      "tag": "backtest-v18",
+      "total_trades": 77,
+      "description": "Adaptive threshold: threshold=7 when recent WR>75%, threshold=8 otherwise. Self-calibrating system.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 3.39,
+          "win_rate": 74.0,
+          "profit_factor": 4.12,
+          "is_best": true
+        }
+      }
+    },
+    "V19 Best Tickers": {
+      "tag": "backtest-v19",
+      "total_trades": 37,
+      "description": "V11 on top 20 historical MR performers only (SPY/QQQ/AVGO/NVDA/AMD/AAPL/MSFT/AMZN/GOOGL/PLTR/TSLA/UNH/V/MA/JPM/GS/CAT/LLY/ABBV/NKE). Highest avg P&L (+3.86%).",
+      "performance": {
+        "overall": {
+          "avg_pnl": 3.86,
+          "win_rate": 70.3,
+          "profit_factor": 3.36,
+          "note": "Highest avg P&L of any version"
+        }
+      }
     }
   },
   "summary": {
@@ -284,9 +371,9 @@
       "MiMo-V2.5-Pro",
       "Nemotron 3 Super"
     ],
-    "best_version": "V10 Combined Best",
+    "best_version": "V18 Adaptive",
     "best_win_rate": "74.1% (V6 Mean Reversion)",
-    "best_avg_pnl": "+3.71% (V10 Mean Reversion)"
+    "best_avg_pnl": "+3.86% (V19 Best Tickers)"
   },
   "geopolitical_analysis": {
     "description": "How prediction strategies perform during different geopolitical regimes. Data from 25-year backtest across major market events.",
@@ -723,25 +810,11 @@
         "trades": 3586
       },
       {
-        "version": "V2",
-        "win_rate": 60.3,
-        "avg_pnl": 1.86,
-        "pf": 1.74,
-        "trades": 3759
-      },
-      {
         "version": "V3",
         "win_rate": 61.8,
         "avg_pnl": 2.18,
         "pf": 1.85,
         "trades": 3562
-      },
-      {
-        "version": "V5",
-        "win_rate": 67.7,
-        "avg_pnl": 2.5,
-        "pf": 2.53,
-        "trades": 147
       },
       {
         "version": "V6",
@@ -751,22 +824,30 @@
         "trades": 147
       },
       {
-        "version": "V9",
-        "win_rate": 66.4,
-        "avg_pnl": 3.09,
-        "pf": 2.34,
-        "trades": 532
+        "version": "V11",
+        "win_rate": 73.3,
+        "avg_pnl": 3.41,
+        "pf": 4.05,
+        "trades": 75
       },
       {
-        "version": "V10",
-        "win_rate": 71.1,
-        "avg_pnl": 3.71,
-        "pf": 3.72,
-        "trades": 142
+        "version": "V18",
+        "win_rate": 74.0,
+        "avg_pnl": 3.39,
+        "pf": 4.12,
+        "trades": 77,
+        "star": true
+      },
+      {
+        "version": "V19",
+        "win_rate": 70.3,
+        "avg_pnl": 3.86,
+        "pf": 3.36,
+        "trades": 37
       }
     ],
-    "best_strategy": "Mean Reversion (V10)",
-    "best_metrics": "71.1% WR, +3.71% avg P&L, 3.72 PF",
+    "best_strategy": "V18 Adaptive (74.0% WR, 4.12 PF)",
+    "best_metrics": "V19 Highest avg P&L: +3.86%",
     "key_innovations": [
       "Commodity exclusion (V2): Eliminated -1.5% drag from UNG/WEAT/CPER",
       "Composite scoring (V3): 0-10 scale with multi-confirmation",
@@ -774,12 +855,19 @@
       "RSI depth + divergence (V5): <30 RSI + divergence bonus",
       "Volume exhaustion (V6): <1.3x avg volume confirms capitulation",
       "3-day decline (V9): Price making lower highs/lows for 3 days",
-      "Ticker cleanup (V10): Removed negative-alpha tickers"
+      "Ticker cleanup (V10): Removed negative-alpha tickers",
+      "Adaptive threshold (V18): Self-calibrating entry requirements",
+      "Score-weighted entry (V11): Only \u22658/10 signals, skip marginal 7/10",
+      "Sector correlation limits (V17): Max 2 same-sector trades per month",
+      "Ticker routing by regime (V12): Route instruments to optimal market conditions"
     ],
     "what_didnt_work": [
       "Exit rules with trailing stops (V7): Cut winners too early",
       "Mandatory divergence (V8): Too few signals passed",
-      "Sector Rotation: Underperformed across ALL versions"
+      "Sector Rotation: Underperformed across ALL versions",
+      "Weekly RSI > 30 (V13): Too restrictive, 5 trades in 25 years",
+      "Weekly MA alignment (V16): Only 2 trades passed price > 50d + 200d SMA filters",
+      "Ultimate hybrid (V20): Zero trades passed all filters simultaneously"
     ]
   }
 }
