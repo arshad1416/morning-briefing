@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-03T12:05:09-04:00",
+  "generated_at": "2026-06-03T12:21:28-04:00",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -516,9 +516,9 @@
       "description": "VIX 12-22 MR: best VIX range for mean reversion. 88 trades in 25 years.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 0.42,
+          "win_rate": 48.9,
+          "profit_factor": 1.12
         }
       }
     },
@@ -528,9 +528,9 @@
       "description": "Score-weighted \u22658/10 + VIX 12-22. Very selective \u2014 19 trades.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 6.04,
+          "win_rate": 78.9,
+          "profit_factor": 7.64
         }
       }
     },
@@ -540,9 +540,9 @@
       "description": "VIX >= 12 only (no upper bound). V23 variant with more trades (133).",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 3.66,
+          "win_rate": 60.9,
+          "profit_factor": 2.42
         }
       }
     },
@@ -552,9 +552,9 @@
       "description": "VR < 1.0 (tighter volume exhaustion). Only 49 trades \u2014 high conviction.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": -0.24,
+          "win_rate": 55.1,
+          "profit_factor": 0.94
         }
       }
     },
@@ -564,9 +564,9 @@
       "description": "RSI < 22 (deeper oversold). 80 trades \u2014 3.2/year average.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 5.08,
+          "win_rate": 70.0,
+          "profit_factor": 3.24
         }
       }
     },
@@ -576,9 +576,9 @@
       "description": "VIX < 15 (low volatility MR). Only 30 trades.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": -0.46,
+          "win_rate": 46.7,
+          "profit_factor": 0.9
         }
       }
     },
@@ -588,9 +588,9 @@
       "description": "RSI 23-27 sweet spot (not too deep). 54 trades.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 1.96,
+          "win_rate": 53.7,
+          "profit_factor": 1.71
         }
       }
     },
@@ -600,9 +600,9 @@
       "description": "3-day consecutive decline + base MR. 85 trades.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 2.41,
+          "win_rate": 55.3,
+          "profit_factor": 1.89
         }
       }
     },
@@ -612,9 +612,9 @@
       "description": "Within 0.5% of 50-day support. 52 trades.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 4.86,
+          "win_rate": 65.4,
+          "profit_factor": 3.77
         }
       }
     },
@@ -624,9 +624,9 @@
       "description": "Bull market MR (price > SMA200, VIX>=12). 133 trades \u2014 most balanced.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 3.66,
+          "win_rate": 60.9,
+          "profit_factor": 2.42
         }
       }
     },
@@ -636,9 +636,9 @@
       "description": "High volatility bounce plays (ATR > median). 83 trades.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 4.83,
+          "win_rate": 62.7,
+          "profit_factor": 4.01
         }
       }
     },
@@ -648,9 +648,9 @@
       "description": "Low volatility quiet MR (ATR < 0.8\u00d7 median). Only 11 trades.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 4.47,
+          "win_rate": 63.6,
+          "profit_factor": 2.67
         }
       }
     },
@@ -660,9 +660,9 @@
       "description": "Ultra-strict: RSI<22 + VR<0.8 + 3d decline + VIX 12-22 + 50d support. Only 1 trade in 25 years.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": -2.37,
+          "win_rate": 0.0,
+          "profit_factor": 0.0
         }
       }
     },
@@ -696,9 +696,9 @@
       "description": "Options-based: MR with VIX<20 for safe put credit spreads.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 0.38,
+          "win_rate": 51.8,
+          "profit_factor": 1.11
         }
       }
     },
@@ -708,9 +708,9 @@
       "description": "Deep MR + VIX 15-25 for elevated premium put selling.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 1.43,
+          "win_rate": 57.4,
+          "profit_factor": 1.48
         }
       }
     },
@@ -720,9 +720,9 @@
       "description": "Low VIX < 15 MR for cheap, high-probability put credit spreads.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": -0.46,
+          "win_rate": 46.7,
+          "profit_factor": 0.9
         }
       }
     },
@@ -732,9 +732,9 @@
       "description": "High VIX >= 25 MR. Expensive puts during fear spikes.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 4.21,
+          "win_rate": 65.5,
+          "profit_factor": 2.17
         }
       }
     },
@@ -744,9 +744,9 @@
       "description": "3d decline + VIX spike >= 22. Crash protection put signals.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 3.56,
+          "win_rate": 64.5,
+          "profit_factor": 2.07
         }
       }
     },
@@ -756,9 +756,9 @@
       "description": "MR in risk-on regime (bonds down, VIX<20).",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": -0.53,
+          "win_rate": 44.4,
+          "profit_factor": 0.84
         }
       }
     },
@@ -768,9 +768,9 @@
       "description": "MR in growth regime (bonds up, gold up).",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 3.76,
+          "win_rate": 63.4,
+          "profit_factor": 2.35
         }
       }
     },
@@ -780,9 +780,9 @@
       "description": "MR confirmed by flight-to-safety (TLT > SMA20).",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 3.65,
+          "win_rate": 62.3,
+          "profit_factor": 2.18
         }
       }
     },
@@ -792,9 +792,9 @@
       "description": "All three confirm: bonds + gold + VIX 12-22.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 1.99,
+          "win_rate": 61.5,
+          "profit_factor": 1.65
         }
       }
     },
@@ -804,9 +804,9 @@
       "description": "Market breadth >= 2 (SPY/QQQ/IWM above SMA20).",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 1.45,
+          "win_rate": 45.7,
+          "profit_factor": 1.38
         }
       }
     },
@@ -816,9 +816,9 @@
       "description": "Only tech confirms (QQQ up, SPY/IWM down). Contrarian MR.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 3.11,
+          "win_rate": 33.3,
+          "profit_factor": 3.05
         }
       }
     },
@@ -828,9 +828,9 @@
       "description": "Bear market momentum: RSI>55 in SPY<200d regime. Contrarian.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 1.64,
+          "win_rate": 53.6,
+          "profit_factor": 1.44
         }
       }
     },
@@ -840,9 +840,9 @@
       "description": "Bull flag breakout: consolidation + volume expansion.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 1.76,
+          "win_rate": 61.1,
+          "profit_factor": 1.84
         }
       }
     },
@@ -852,9 +852,9 @@
       "description": "Gap fill MR: small gap down + oversold.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 2.67,
+          "win_rate": 58.5,
+          "profit_factor": 1.68
         }
       }
     },
@@ -864,9 +864,9 @@
       "description": "Sector rotation: XLF/XLK/XLE/XLV relative strength.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 1.96,
+          "win_rate": 61.1,
+          "profit_factor": 1.84
         }
       }
     },
@@ -876,9 +876,9 @@
       "description": "Momentum acceleration: RSI rising >5pts in 5 days.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 2.63,
+          "win_rate": 60.1,
+          "profit_factor": 2.02
         }
       }
     },
@@ -888,9 +888,9 @@
       "description": "200d SMA support bounce with oversold RSI.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 2.3,
+          "win_rate": 60.3,
+          "profit_factor": 1.98
         }
       }
     },
@@ -900,9 +900,9 @@
       "description": "Volume climax reversal: VR>3.0 + RSI<30.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 4.44,
+          "win_rate": 58.0,
+          "profit_factor": 2.35
         }
       }
     },
@@ -912,9 +912,9 @@
       "description": "Low vol squeeze: ATR<0.7x + RSI>55 + volume spike.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 3.56,
+          "win_rate": 59.1,
+          "profit_factor": 3.37
         }
       }
     },
@@ -924,9 +924,9 @@
       "description": "Post-crash bounce: VIX>=30 + RSI<20.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 7.78,
+          "win_rate": 81.6,
+          "profit_factor": 4.42
         }
       }
     },
@@ -936,9 +936,9 @@
       "description": "Bullish engulfing candle pattern in uptrend.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 1.95,
+          "win_rate": 62.2,
+          "profit_factor": 1.87
         }
       }
     },
@@ -948,9 +948,9 @@
       "description": "Doji candle after 3d decline. Indecision + trend reversal.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 1.69,
+          "win_rate": 56.7,
+          "profit_factor": 1.55
         }
       }
     },
@@ -960,9 +960,9 @@
       "description": "Inside day breakout: narrow range + volume expansion.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 2.91,
+          "win_rate": 59.5,
+          "profit_factor": 2.23
         }
       }
     },
@@ -972,9 +972,9 @@
       "description": "Price >5% from 20d MA with oversold RSI.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 2.96,
+          "win_rate": 60.8,
+          "profit_factor": 1.81
         }
       }
     },
@@ -984,9 +984,9 @@
       "description": "Triple bottom: 3 tests of same support level.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 2.76,
+          "win_rate": 65.9,
+          "profit_factor": 2.91
         }
       }
     },
@@ -996,9 +996,9 @@
       "description": "Seasonal MR: Nov-Dec, Mar-Apr, Jul-Aug strong months.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 5.34,
+          "win_rate": 61.3,
+          "profit_factor": 4.38
         }
       }
     },
@@ -1008,9 +1008,9 @@
       "description": "Risk parity portfolio: equal-weight MR + momentum.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 2.09,
+          "win_rate": 60.2,
+          "profit_factor": 1.87
         }
       }
     },
@@ -1020,9 +1020,9 @@
       "description": "Kelly-optimal sizing: scale position by confidence score (6-10).",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 2.19,
+          "win_rate": 59.3,
+          "profit_factor": 1.77
         }
       }
     },
@@ -1032,9 +1032,9 @@
       "description": "All-weather MR: works in any market regime.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 3.53,
+          "win_rate": 60.6,
+          "profit_factor": 2.35
         }
       }
     },
@@ -1044,9 +1044,9 @@
       "description": "Regime-switching ensemble: momentum in bull, MR in bear.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 2.0,
+          "win_rate": 59.8,
+          "profit_factor": 1.84
         }
       }
     },
@@ -1056,9 +1056,9 @@
       "description": "Trend + MR hybrid: rising 200dMA + short-term oversold.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 3.97,
+          "win_rate": 62.3,
+          "profit_factor": 2.64
         }
       }
     },
@@ -1068,9 +1068,9 @@
       "description": "V23 best: VIX>=12 MR. Most proven single strategy.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 3.66,
+          "win_rate": 60.9,
+          "profit_factor": 2.42
         }
       }
     },
@@ -1080,9 +1080,9 @@
       "description": "V26 bear MR: SPY<SMA200 + RSI<25. 80% WR strategy.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 2.83,
+          "win_rate": 58.4,
+          "profit_factor": 1.81
         }
       }
     },
@@ -1092,9 +1092,9 @@
       "description": "Combined V23 + V26: bull MR (VIX>=12) OR bear MR.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 2.92,
+          "win_rate": 59.3,
+          "profit_factor": 1.89
         }
       }
     },
@@ -1104,9 +1104,9 @@
       "description": "Ultra-conservative: confidence >= 8/10 required.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 2.02,
+          "win_rate": 58.4,
+          "profit_factor": 1.7
         }
       }
     },
@@ -1116,9 +1116,9 @@
       "description": "Full conviction: all proven conditions met simultaneously. 18 trades/25yr.",
       "performance": {
         "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
+          "avg_pnl": 5.35,
+          "win_rate": 72.2,
+          "profit_factor": 7.64
         }
       }
     }
