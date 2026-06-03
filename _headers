@@ -1,11 +1,14 @@
 # Cloudflare Pages headers
-# Security headers + caching for static assets
+# HTML: always check for freshness (max-age=0 + must-revalidate)
+# Assets: cache long-term, rely on ?v=N for cache-busting
+# Data: short TTL for live market data
+
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+  Content-Security-Policy: default-src 'self'; connect-src 'self' https://morning-briefing-chat.rcobwq7u.workers.dev; style-src 'self' 'unsafe-inline'; img-src 'self' data:
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
 
 /data/*
   Cache-Control: public, max-age=300, stale-while-revalidate=3600
-
-/assets/*
-  Cache-Control: public, max-age=86400, immutable
-
-/*
-  Content-Security-Policy: default-src 'self'; connect-src 'self' https://morning-briefing-chat.rcobwq7u.workers.dev; style-src 'self' 'unsafe-inline'; img-src 'self' data:
