@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-03T08:51:59-04:00",
+  "generated_at": "2026-06-03T11:41:36-04:00",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -484,10 +484,35 @@
           "profit_factor": 1.66
         }
       }
+    },
+    "V31 ML RandomForest": {
+      "tag": "backtest-v31",
+      "total_trades": 16,
+      "description": "ML-filtered MR: RandomForest trained on V3 trade features (12 dimensions: RSI, VR, ATR, BB dist, support dist, VIX, momentum). Only takes trades ML predicts as winners with >55% probability.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 4.74,
+          "win_rate": 56.2,
+          "profit_factor": 2.83,
+          "note": "Small sample (16 trades)"
+        }
+      }
+    },
+    "V35 ML GradientBoost": {
+      "tag": "backtest-v35",
+      "total_trades": 8973,
+      "description": "ML Gradient Boosting on all V3 MR signals: 60.6% WR, +1.96% avg. GB threshold=0.30 was too permissive \u2014 approved 8973 trades but diluted quality.",
+      "performance": {
+        "overall": {
+          "avg_pnl": 1.96,
+          "win_rate": 60.6,
+          "profit_factor": 1.72
+        }
+      }
     }
   },
   "summary": {
-    "total_backtest_trades": 141706,
+    "total_backtest_trades": 157007,
     "tickers_tested": 59,
     "date_range": "2000-01-01 to 2026-06-03",
     "strategies_tested": [
@@ -945,28 +970,32 @@
         "win_rate": 60.1,
         "avg_pnl": 1.73,
         "pf": 1.64,
-        "trades": 3586
+        "trades": 3586,
+        "tier": 1
       },
       {
         "version": "V3",
         "win_rate": 61.8,
         "avg_pnl": 2.18,
         "pf": 1.85,
-        "trades": 3562
+        "trades": 3562,
+        "tier": 1
       },
       {
         "version": "V6",
         "win_rate": 74.1,
         "avg_pnl": 3.18,
         "pf": 3.86,
-        "trades": 147
+        "trades": 147,
+        "tier": 2
       },
       {
         "version": "V18",
         "win_rate": 74.0,
         "avg_pnl": 3.39,
         "pf": 4.12,
-        "trades": 77
+        "trades": 77,
+        "tier": 2
       },
       {
         "version": "V23",
@@ -974,6 +1003,7 @@
         "avg_pnl": 4.67,
         "pf": 5.1,
         "trades": 35,
+        "tier": 3,
         "star": true
       },
       {
@@ -982,11 +1012,29 @@
         "avg_pnl": 8.71,
         "pf": 11.82,
         "trades": 25,
-        "star": true,
-        "note": "Bear MR only"
+        "tier": 3,
+        "star": true
+      },
+      {
+        "version": "V28",
+        "win_rate": 61.6,
+        "avg_pnl": 2.05,
+        "pf": 1.89,
+        "trades": 2625,
+        "tier": 2,
+        "note": "Bull momentum regime"
+      },
+      {
+        "version": "V35",
+        "win_rate": 60.6,
+        "avg_pnl": 1.96,
+        "pf": 1.72,
+        "trades": 8973,
+        "tier": 1,
+        "note": "ML Gradient Boost"
       }
     ],
-    "best_strategy": "V23 VIX-Filtered MR (74.3% WR, 5.10 PF) / V26 Bear MR (80% WR, 11.82 PF)",
+    "best_strategy": "V23 (VIX>12 MR) + V26 (Bear MR) + V28 (Bull Momentum)",
     "best_metrics": "V23: +4.67% avg, 5.10 PF | V26 Bear: +8.71% avg, 11.82 PF",
     "key_innovations": [
       "Commodity exclusion (V2): Eliminated -1.5% drag from UNG/WEAT/CPER",
@@ -1014,6 +1062,7 @@
       "Ultimate hybrid (V20): Zero trades passed all filters simultaneously",
       "Calendar effects (V21): Removing Monday/Friday/month-end missed too many good trades",
       "Ultimate optimizer (V30): Too many stacked filters killed all signals"
-    ]
+    ],
+    "ml_findings": "ML models (RF/GB) trained on V3 features showed test accuracy ~65% but overfit on small signal sets. Best use: as an additional confirmation layer, not primary decision maker."
   }
 }
