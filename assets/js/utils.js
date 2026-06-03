@@ -67,11 +67,15 @@ const Utils = {
     for (let i = 0; i < lines.length; i++) {
       let line = lines[i];
 
-      // ── Section headers: **[emoji] HEADING** or **[emoji] HEADING**
+      // ── Section headers: **HEADING** (Pi format) or ## HEADING (standard markdown)
+      const h2Match = line.match(/^##\s+(.+)/);
+      const h3Match = line.match(/^###\s+(.+)/);
       const headerMatch = line.match(/^\*{1,2}\s*([\p{Emoji}\u{1F300}-\u{1FFFF}\u{2600}-\u{27BF}]?\s*[A-Z][A-Z\s\/\-&()0-9]*)\*{1,2}\s*$/u);
-      if (headerMatch) {
+      if (h2Match || h3Match || headerMatch) {
         if (inList) { out.push('</ul>'); inList = false; }
-        out.push(`<h3 class="intel-header">${headerMatch[1].trim()}</h3>`);
+        const label = h2Match ? h2Match[1].trim() : h3Match ? h3Match[1].trim() : headerMatch[1].trim();
+        const isH2 = !!h2Match;
+        out.push(`<h3 class="intel-header" style="${isH2 ? 'font-size:0.85rem;margin-top:24px' : ''}">${label}</h3>`);
         continue;
       }
 
@@ -94,6 +98,20 @@ const Utils = {
       if (line.trim() === '') {
         if (inList) { out.push('</ul>'); inList = false; }
         out.push('<div class="intel-spacer"></div>');
+        continue;
+      }
+
+      // ── Tables: | header | header |
+      if (line.trim().startsWith('|') && i + 1 < lines.length && lines[i + 1].trim().startsWith('|') && lines[i + 1].match(/^\|[-| :]+\|/)) {
+        // Collect all lines of the table
+        let tableLines = [line];
+        i++;
+        while (i < lines.length && lines[i].trim().startsWith('|')) {
+          tableLines.push(lines[i]);
+          i++;
+        }
+        i--; // loop will increment
+        out.push(Utils.renderTable(tableLines.join('\n')));
         continue;
       }
 

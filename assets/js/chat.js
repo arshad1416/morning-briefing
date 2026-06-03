@@ -100,8 +100,8 @@ const Chat = {
       // Render context block (live data badge)
       let fullHtml = data.contextBlock || '';
 
-      // Render the analysis markdown → HTML with tables
-      fullHtml += Utils.renderTable(data.content);
+      // Render the analysis markdown → HTML using full markdown processor
+      fullHtml += Utils.renderMarkdown(data.content);
 
       // Model info
       if (data.model) {
