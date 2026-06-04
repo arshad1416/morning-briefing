@@ -141,12 +141,15 @@ const Dashboard = {
 
     // ── EARNINGS ──
     if (data.market_news?.earnings?.length) {
-      html += '<div class="section"><h2 class="section-title">Earnings This Week</h2><div class="card table-wrap"><table><thead><tr><th>Date</th><th>Ticker</th><th>Quarter</th><th>Estimate</th></tr></thead><tbody>';
-      data.market_news.earnings.forEach(e => {
-        html += `<tr><td>${e.date || ''}</td><td><strong>${e.symbol || e.ticker || ''}</strong></td><td>${e.quarter || ''}</td><td>${e.epsEstimate != null ? '$' + e.epsEstimate.toFixed(2) : (e.estimate || e.epsEstimated || '—')}</td></tr>`;
-      });
-      html += '</tbody></table></div></div>';
-    }
+      // Filter to only earnings with actual estimates
+      const hasEstimates = data.market_news.earnings.filter(e => e.epsEstimate != null);
+      if (hasEstimates.length) {
+        html += '<div class="section"><h2 class="section-title">Earnings This Week</h2><div class="card table-wrap"><table><thead><tr><th>Date</th><th>Ticker</th><th>Quarter</th><th>Estimate</th></tr></thead><tbody>';
+        hasEstimates.forEach(e => {
+          html += '<tr><td>' + (e.date || '') + '</td><td><strong>' + (e.symbol || e.ticker || '') + '</strong></td><td>' + (e.quarter || '') + '</td><td>' + (e.epsEstimate != null ? '$' + Number(e.epsEstimate).toFixed(2) : '—') + '</td></tr>';
+        });
+        html += '</tbody></table></div></div>';
+      }
 
     // Timestamp
     if (data.generated_at) {
