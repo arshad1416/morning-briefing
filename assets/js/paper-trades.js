@@ -286,19 +286,19 @@ const PaperTrades = {
     html += '</div></div>';
 
     // ── All Trades ──
-    const allTrades = data?.closed_trades?.map(t => ({ ...t, _isClosed: true })) || [];
+    const allTrades = data?.recent_trades?.map(t => ({ ...t, _isClosed: true })) || [];
     if (allTrades.length) {
       html += '<h2 class="section-title" style="margin-top:24px">Trade History</h2>';
       html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Type</th><th>Entry</th><th>Exit</th><th>Entry Price</th><th>Exit Price</th><th>P&L</th><th>P&L %</th><th>Status</th></tr></thead><tbody>';
-      allTrades.forEach(t => {
+      allTrades.slice(0, 30).forEach(t => {
         const cls = (t.pnl_pct > 0 || t.pnl_usd > 0) ? 'positive' : (t.pnl_pct < 0 || t.pnl_usd < 0) ? 'negative' : '';
-        const status = t.exit_date || t._isClosed ? 'Closed' : 'Open';
-        const statusCls = t.exit_date || t._isClosed ? 'badge-green' : 'badge-yellow';
+        const status = 'Closed';
+        const statusCls = 'badge-green';
         const cur = t.currency || 'USD';
         const entryStr = t.entry_price ? `$${t.entry_price.toFixed(2)} ${cur}` : '—';
         const exitStr = t.exit_price ? `$${t.exit_price.toFixed(2)} ${cur}` : '—';
-        const entryDT = t.entry_date ? (() => { try { var d = new Date(t.entry_date.replace('Z','').replace('T',' ')); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '<br><span style=\"font-size:0.7rem;color:var(--text-muted)\">' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) + '</span>'; } catch(e) { return t.entry_date.slice(0,10); } })() : '—';
-        const exitDT = t.exit_date ? (() => { try { var d = new Date(t.exit_date.replace('Z','').replace('T',' ')); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '<br><span style=\"font-size:0.7rem;color:var(--text-muted)\">' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) + '</span>'; } catch(e) { return t.exit_date.slice(0,10); } })() : '—';
+        const entryDT = t.entry_date ? (() => { try { var d = new Date(t.entry_date.replace('Z','').replace('T',' ')); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '<br><span style=\"font-size:0.7rem;color:var(--text-muted)\">' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '</span>'; } catch(e) { return t.entry_date.slice(0,10); } })() : '—';
+        const exitDT = t.exit_date ? (() => { try { var d = new Date(t.exit_date.replace('Z','').replace('T',' ')); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '<br><span style=\"font-size:0.7rem;color:var(--text-muted)\">' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '</span>'; } catch(e) { return t.exit_date.slice(0,10); } })() : '—';
         const reason = (t.reason || t.rationale || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         const pnlDisplay = t.pnl_pct != null ? `${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct}%` : (t.pnl_usd != null ? `$${t.pnl_usd.toFixed(2)}` : '---');
         const hoverReason = (t.reason || t.rationale || '').replace(/"/g, '&quot;');
