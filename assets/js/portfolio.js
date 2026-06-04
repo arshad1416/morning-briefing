@@ -11,10 +11,10 @@ const Portfolio = {
 
     if (tier === 'free') {
       html += '<div class="card" style="text-align:center;padding:40px">';
-      html += '<div style="font-size:2rem;margin-bottom:12px">🔒</div>';
-      html += '<h3 style="margin-bottom:8px">Portfolio Tracking Requires Pro</h3>';
-      html += '<p style="color:var(--text-muted);margin-bottom:16px">Upgrade to track your holdings, get AI-powered rebalancing, and API access.</p>';
-      html += '<a href="#/maplegamma" class="mg-btn mg-btn-primary" style="display:inline-block;padding:10px 24px;text-decoration:none">View Pricing →</a>';
+      html += '<div style="font-size:2rem;margin-bottom:12px">📊</div>';
+      html += '<h3 style="margin-bottom:8px">Portfolio Tracker</h3>';
+      html += '<p style="color:var(--text-muted);margin-bottom:16px">Track your holdings with live prices. Included in Pro ($150 CAD/mo).<br>Upgrade for AI-powered rebalancing and P&L tracking.</p>';
+      html += '<a href="#/maplegamma" class="mg-btn mg-btn-primary" style="display:inline-block;padding:10px 24px;text-decoration:none">View Pro →</a>';
       html += '</div>';
       app.innerHTML = html;
       return;
