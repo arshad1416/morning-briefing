@@ -1,28 +1,16 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-06-04 13:00:41",
+  "generated_at": "2026-06-04 13:08:39",
   "price_source": "yfinance historical closes \u2014 no CAD/USD math",
   "portfolio": {
     "starting_balance": 2000.0,
-    "cash": 961.1,
+    "cash": 1438.54,
     "total_balance": 2000.0,
-    "win_rate": 50.0,
-    "total_trades": 14
+    "win_rate": 58.8,
+    "total_trades": 17
   },
   "active_strategy": "V23 VIX>=12 MR",
   "open_positions": [
-    {
-      "ticker": "TLT",
-      "type": "ETF",
-      "entry_date": "2026-05-25",
-      "entry_price": 84.68,
-      "current_price": 85.54,
-      "currency": "USD",
-      "pnl": 0.86,
-      "pnl_pct": 1.02,
-      "strategy": "macro_hedge",
-      "direction": "long"
-    },
     {
       "ticker": "TD.TO",
       "type": "Stock",
@@ -36,38 +24,14 @@
       "direction": "long"
     },
     {
-      "ticker": "SLV",
-      "type": "ETF",
-      "entry_date": "2026-06-01",
-      "entry_price": 67.67,
-      "current_price": 66.76,
-      "currency": "USD",
-      "pnl": -0.91,
-      "pnl_pct": -1.34,
-      "strategy": "mean_reversion",
-      "direction": "long"
-    },
-    {
-      "ticker": "XLP",
-      "type": "ETF",
-      "entry_date": "2026-06-02",
-      "entry_price": 81.83,
-      "current_price": 82.43,
-      "currency": "USD",
-      "pnl": 0.6,
-      "pnl_pct": 0.73,
-      "strategy": "sector_rotation",
-      "direction": "long"
-    },
-    {
       "ticker": "CNQ.TO",
       "type": "Stock",
       "entry_date": "2026-06-03",
       "entry_price": 66.36,
-      "current_price": 66.21,
+      "current_price": 66.18,
       "currency": "CAD",
-      "pnl": -0.15,
-      "pnl_pct": -0.23,
+      "pnl": -0.18,
+      "pnl_pct": -0.27,
       "strategy": "sector_rotation",
       "direction": "long"
     },
@@ -76,10 +40,10 @@
       "type": "Stock",
       "entry_date": "2026-06-03",
       "entry_price": 126.55,
-      "current_price": 127.26,
+      "current_price": 127.01,
       "currency": "USD",
-      "pnl": 0.71,
-      "pnl_pct": 0.56,
+      "pnl": 0.46,
+      "pnl_pct": 0.36,
       "strategy": "mean_reversion",
       "direction": "long"
     },
@@ -290,6 +254,45 @@
       "strategy": "value_investing",
       "entry_date": "2026-05-26T13:00:02.496095",
       "exit_date": "2026-06-04T09:33:16.779878"
+    },
+    {
+      "ticker": "TLT",
+      "type": "ETF",
+      "direction": "long",
+      "pnl_pct": 92.47,
+      "pnl_usd": 56.74,
+      "entry_price": 61.36,
+      "exit_price": 118.1,
+      "currency": "USD",
+      "strategy": "macro_hedge",
+      "entry_date": "2026-05-25T07:32:32.485285",
+      "exit_date": "2026-06-04T13:04:52.639817"
+    },
+    {
+      "ticker": "XLP",
+      "type": "ETF",
+      "direction": "long",
+      "pnl_pct": 91.3,
+      "pnl_usd": 54.27,
+      "entry_price": 59.44,
+      "exit_price": 113.71,
+      "currency": "USD",
+      "strategy": "sector_rotation",
+      "entry_date": "2026-06-02T07:35:18.510318",
+      "exit_date": "2026-06-04T13:04:52.640979"
+    },
+    {
+      "ticker": "SLV",
+      "type": "ETF",
+      "direction": "long",
+      "pnl_pct": 88.96,
+      "pnl_usd": 43.42,
+      "entry_price": 48.81,
+      "exit_price": 92.23,
+      "currency": "USD",
+      "strategy": "mean_reversion",
+      "entry_date": "2026-06-01T11:07:23.667284",
+      "exit_date": "2026-06-04T13:04:52.642217"
     }
   ]
 }
