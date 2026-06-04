@@ -36,7 +36,7 @@ const MapleGamma = {
           </p>
           <div class="mg-hero-actions">
             <a href="#/mg" class="mg-btn mg-btn-primary">Try Dashboard Free →</a>
-            <a href="#mg-pricing" class="mg-btn mg-btn-secondary">View Pricing ↓</a>
+            <a href="javascript:void(0)" class="mg-btn mg-btn-secondary" onclick="document.getElementById('mg-pricing').scrollIntoView({behavior:'smooth'})">View Pricing ↓</a>
           </div>
 
           <!-- Live preview stats -->
