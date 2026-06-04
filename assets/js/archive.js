@@ -19,23 +19,49 @@ const Archive = {
 
     for (const date of dates) {
       const brief = await State.get(`archive:${date}`, `/data/archive/${date}.json`);
-      const indices = brief?.market_summary?.indices || [];
       
-      // Show S&P, Dow, NASDAQ, TSX compactly
+      // Try market_summary indices first, fall back to parsing narrative
       let summaryHtml = '';
-      const core = indices.filter(i => ['S&P 500','Dow Jones','NASDAQ','TSX'].includes(i.ticker));
-      if (core.length) {
-        summaryHtml = core.map(i => {
-          const cls = Utils.changeClass(i.change_pct);
-          return `<span class="badge" style="font-size:0.75rem;margin:1px">${i.ticker}: ${Utils.formatPrice(i.price)} <span class="${cls}">${Utils.formatPct(i.change_pct)}</span></span>`;
-        }).join('');
+      let coreTickers = ['S&P 500', 'Dow Jones', 'NASDAQ', 'TSX'];
+      let indices = brief?.market_summary?.indices || [];
+      
+      if (indices.length) {
+        var core = indices.filter(i => coreTickers.includes(i.ticker));
+        if (core.length) {
+          summaryHtml = core.map(i => {
+            var cls = Utils.changeClass(i.change_pct);
+            return `<span class="badge" style="font-size:0.75rem;margin:1px">${i.ticker}: ${Utils.formatPrice(i.price)} <span class="${cls}">${Utils.formatPct(i.change_pct)}</span></span>`;
+          }).join('');
+        }
       }
       
-      // Add VIX and 10Y as secondary
-      const vix = brief?.market_summary?.vix;
-      const y10 = brief?.market_summary?.ten_year_yield;
-      if (vix) summaryHtml += ` <span class="badge" style="font-size:0.7rem">VIX ${vix}</span>`;
-      if (y10) summaryHtml += ` <span class="badge" style="font-size:0.7rem">10Y ${y10}%</span>`;
+      // Fall back to parsing key data from narrative
+      if (!summaryHtml) {
+        var narr = brief?.narrative || '';
+        if (typeof narr === 'string') {
+          // Extract S&P, Dow, NASDAQ, TSX from markdown
+          var spMatch = narr.match(/S&amp;P 500[:\s]+([0-9,]+\.?\d*)/);
+          var dowMatch = narr.match(/Dow Jones[:\s]+([0-9,]+\.?\d*)/);
+          var nasMatch = narr.match(/NASDAQ[:\s]+([0-9,]+\.?\d*)/);
+          var tsxMatch = narr.match(/TSX[:\s]+([0-9,]+\.?\d*)/);
+          if (spMatch) summaryHtml += '<span class="badge" style="font-size:0.75rem;margin:1px">S&P: ' + spMatch[1] + '</span>';
+          if (dowMatch) summaryHtml += '<span class="badge" style="font-size:0.75rem;margin:1px">DOW: ' + dowMatch[1] + '</span>';
+          if (nasMatch) summaryHtml += '<span class="badge" style="font-size:0.75rem;margin:1px">NAS: ' + nasMatch[1] + '</span>';
+          if (tsxMatch) summaryHtml += '<span class="badge" style="font-size:0.75rem;margin:1px">TSX: ' + tsxMatch[1] + '</span>';
+          
+          // VIX from narrative
+          var vixMatch = narr.match(/VIX[:\s]+([0-9]+\.?\d*)/);
+          if (vixMatch) summaryHtml += ' <span class="badge" style="font-size:0.7rem">VIX ' + vixMatch[1] + '</span>';
+        }
+      }
+      
+      // VIX/10Y from market_summary fields
+      if (!summaryHtml) {
+        var vix = brief?.market_summary?.vix;
+        var y10 = brief?.market_summary?.ten_year_yield;
+        if (vix) summaryHtml += '<span class="badge" style="font-size:0.7rem">VIX ' + vix + '</span>';
+        if (y10) summaryHtml += '<span class="badge" style="font-size:0.7rem">10Y ' + y10 + '%</span>';
+      }
 
       const timeStr = brief?.generated_at ? new Date(brief.generated_at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '—';
       
