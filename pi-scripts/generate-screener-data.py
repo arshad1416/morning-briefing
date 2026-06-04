@@ -327,7 +327,7 @@ def main():
             results.append(data)
         else:
             failed += 1
-        time.sleep(0.2)  # Rate limit: 5 req/sec
+        time.sleep(0.1)  # Rate limit: 10 req/sec
 
     output = {
         "generated_at": datetime.now(timezone.utc).isoformat(),

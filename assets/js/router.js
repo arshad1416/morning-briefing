@@ -26,12 +26,19 @@ const Router = {
       link.classList.toggle('active', link.getAttribute('href') === `#${hash}`);
     });
 
-    // Find matching route
     const app = document.getElementById('app');
+    if (!app) return;
+
+    // Clear stale content before routing
+    app.innerHTML = '<div class="loading">Loading...</div>';
 
     // Try exact match first
     if (this.routes[hash]) {
-      this.routes[hash](app);
+      try {
+        this.routes[hash](app);
+      } catch(e) {
+        app.innerHTML = `<div class="error-card">Error loading page: ${e.message}</div>`;
+      }
       return;
     }
 
@@ -51,7 +58,11 @@ const Router = {
           }
         }
         if (match) {
-          handler(app, params);
+          try {
+            handler(app, params);
+          } catch(e) {
+            app.innerHTML = `<div class="error-card">Error loading page: ${e.message}</div>`;
+          }
           return;
         }
       }

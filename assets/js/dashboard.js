@@ -4,6 +4,7 @@
 const Dashboard = {
   async render(app) {
     app.innerHTML = '<div class="loading">Loading market data...</div>';
+    State.invalidate('latest'); // Force fresh fetch on every visit
     const data = await State.get('latest', '/data/latest.json');
     if (!data) {
       app.innerHTML = '<div class="error-card">Failed to load market data.</div>';
