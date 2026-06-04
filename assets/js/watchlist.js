@@ -23,8 +23,26 @@ const Watchlist = {
       </div>`;
     }
 
-    // Top setups table
-    if (data.premarket_top_setups?.length) {
+    // All scanned tickers
+    if (data.premarket_all_scanned?.length) {
+      html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Price</th><th>Change</th><th>Score</th><th>Signals</th><th>RSI</th></tr></thead><tbody>';
+      data.premarket_all_scanned.forEach(s => {
+        const cls = Utils.changeClass(s.change_pct);
+        const signals = (s.signals || []).map(sig => {
+          const badgeClass = sig.includes('bear') || sig.includes('over') ? 'badge-red' : 'badge-green';
+          return `<span class="badge ${badgeClass}" style="margin:2px">${sig.replace(/_/g, ' ')}</span>`;
+        }).join(' ');
+        html += `<tr>
+          <td><a href="#/ticker/${s.ticker}" class="archive-date">${s.ticker}</a></td>
+          <td>${Utils.formatPrice(s.price)}</td>
+          <td class="${cls}">${Utils.formatPct(s.change_pct)}</td>
+          <td>${Utils.scoreBadge(s.score)}</td>
+          <td style="max-width:300px">${signals || '—'}</td>
+          <td>${s.rsi != null ? s.rsi : '—'}</td>
+        </tr>`;
+      });
+      html += '</tbody></table></div>';
+    } else if (data.premarket_top_setups?.length) {
       html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Price</th><th>Change</th><th>Score</th><th>Signals</th><th>RSI</th><th>Verdict</th></tr></thead><tbody>';
       data.premarket_top_setups.forEach(s => {
         const cls = Utils.changeClass(s.change_pct);
