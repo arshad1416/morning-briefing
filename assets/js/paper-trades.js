@@ -181,7 +181,7 @@ const PaperTrades = {
         const currDisplay = '$' + t.current_price.toFixed(2) + ' ' + cur;
         const pnlDisplay = '$' + t.pnl.toFixed(2) + ' (' + (t.pnl_pct >= 0 ? '+' : '') + t.pnl_pct.toFixed(1) + '%)';
         html += `<tr>
-          <td><strong>${t.ticker}</strong></td>
+          <td><strong>${Utils.esc(t.ticker)}</strong></td>
           <td><span class="badge ${t.type === 'Stock' ? 'badge-green' : t.type === 'ETF' ? 'badge-yellow' : 'badge'}" style="font-size:0.65rem">${t.type || 'Other'}</span></td>
           <td style="font-size:0.85rem">${t.entry_date || '—'}</td>
           <td style="font-size:0.85rem">${entryDisplay}</td>
@@ -302,8 +302,8 @@ const PaperTrades = {
         const reason = Utils.esc(t.reason || t.rationale || '');
         const pnlDisplay = t.pnl_pct != null ? `${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct}%` : (t.pnl_usd != null ? `$${t.pnl_usd.toFixed(2)}` : '---');
         const hoverReason = Utils.esc(t.reason || t.rationale || '');
-        html += `<tr class="trade-row" title="${hoverReason}" data-ticker="${t.ticker}" style="cursor:pointer">
-          <td><strong>${t.ticker}</strong></td>
+        html += `<tr class="trade-row" title="${hoverReason}" data-ticker="${Utils.esc(t.ticker)}" style="cursor:pointer">
+          <td><strong>${Utils.esc(t.ticker)}</strong></td>
           <td><span class="badge ${t.type === 'Stock' ? 'badge-green' : 'badge-yellow'}" style="font-size:0.65rem">${t.type || '—'}</span></td>
           <td style="font-size:0.8rem">${entryDT}</td>
           <td style="font-size:0.8rem">${exitDT}</td>
