@@ -1,40 +1,60 @@
 {
-  "generated_at": "2026-06-03T15:52:05-04:00",
+  "generated_at": "2026-06-04T07:15:01-04:00",
   "market_summary": {
     "indices": [
       {
         "ticker": "S&P 500",
-        "price": 755.29,
-        "change_pct": -0.56
+        "price": 7562.72,
+        "change_pct": -0.62
       },
       {
         "ticker": "Dow Jones",
-        "price": 509.3,
-        "change_pct": -0.92
+        "price": 50872.12,
+        "change_pct": -0.85
       },
       {
         "ticker": "NASDAQ",
-        "price": 743.93,
-        "change_pct": -0.3
+        "price": 26834.66,
+        "change_pct": -0.96
       },
       {
         "ticker": "TSX",
-        "price": 39.19,
-        "change_pct": 0.67
+        "price": 34931.91,
+        "change_pct": -0.68
+      },
+      {
+        "ticker": "2Y Yield",
+        "price": 4.08,
+        "change_pct": -0.07
+      },
+      {
+        "ticker": "30Y Yield",
+        "price": 5.0,
+        "change_pct": 0.58
+      },
+      {
+        "ticker": "_fetched_at",
+        "price": 0,
+        "change_pct": 0
       }
     ],
-    "vix": 16.17,
-    "ten_year_yield": 4.497,
+    "vix": 16.26,
+    "ten_year_yield": 4.493,
     "fx_rates": [
       {
         "pair": "USD/CAD",
-        "price": 1.3886
+        "price": 1.38
+      },
+      {
+        "pair": "DXY",
+        "price": 0,
+        "change_pct": 0
       }
     ],
     "yield_curve": []
   },
   "narrative": {
-    "summary_paragraph": "📊 **Market Intel — June 03, 2026**\n\n**🔹 MARKET SNAPSHOT**\n• S&P 500: 7,609.14 +0.12%\n• Dow Jones: 51,318.87 +0.47%\n• NASDAQ: 27,078.48 -0.03%\n• TSX: 35,083.91 +1.00%\n• VIX: 15.76\n\n**🔹 YIELD CURVE**\n• 10Y Yield: 4.455%\n• USD/CAD: 1.38\n• DXY: N/A\n\n**Market Summary:** Mixed session with S&P and Dow posting gains while NASDAQ edges slightly lower. TSX outperforms with a solid rally. Volatility remains contained with VIX in the mid-teens. The yield curve remains steep and supportive for risk assets."
+    "summary_paragraph": "\ud83d\udcca **Market Intel \u2014 May 26, 2026**\n\n**\ud83d\udd39 MARKET SNAPSHOT**\n  \u2022 S&P 500: 7,473.47 +27.75 +0.37%\n  \u2022 Dow Jones: 50,579.70 +294.04 +0.58%\n  \u2022 NASDAQ: 26,343.97 +50.872 +0.19%\n  \u2022 TSX: 34,830.89 UNCH UNCH\n  \u2022 VIX: 16.62 +0.03 +0.18%\n\n**\ud83d\udd39 YIELD CURVE**\n  \u2022 2Y Yield: 4.05 -0.074 +0.1406%\n  \u2022 10Y Yield: 4.49 -0.085 -1.8591%\n  \u2022 30Y Yield: 5.01 -0.074 -1.4561%\n  \u2022 Spread (10y-2y): +43bp\n\n**\ud83d\udd39 CURRENCIES**\n  \u2022 USD/CAD: 1.38\n  \u2022 DXY: N/A\n\n**\ud83d\udd39 FEDERAL RESERVE**\n  In support of its goals, the Committee decided to maintain the target range for the federal funds rate at 3\u20111/2 to 3\u20113/4 percent. In considering the extent and timing of additional adjustments to the target range for the federal funds rate, the Committee will carefully assess incoming data, the evolving outlook, and the balance of risks. The Committee is strongly committed to supporting maximum employment and returning inflation to its 2 percent objective.\n\n**\ud83d\udd39 BANK OF CANADA**\n  April 29, 2026 Bank of Canada maintains policy rate at 2\u00bc% Media Relations Ottawa, Ontario The Bank of Canada today held its target for the overnight rate at 2.25%, with the Bank Rate at 2.5% and the deposit rate at 2.20%. Content Type(s) : Press , Press releases April 20, 2026 Bank of Canada announces the appointment of two Deputy Governors Media Relations Ottawa, Ontario The Board of Directors of the Bank of Canada today announced the appointment of Marc-Andr\u00e9 Gosselin and Nicolas Vincent as D\n\n**\ud83d\udd39 ECONOMIC DATA (FRED)**\n  \u2022 GDP 31,856.3 | Nonfarm Payro"
   },
   "watchlist_summary": {
     "total_scanned": 24,
@@ -87,89 +107,81 @@
       "council_summary": ""
     }
   ],
+  "premarket_all_scanned": [],
   "congress": {
-    "summary": "📋 **Congress Trading — Capitol Trades**\n  Total trades: 9 (2 buys / 7 sells / 0 other)\n  Hot tickers: $PINS(4), $AAPL(1), $GOOGL(1)\n  Dems: 1 buys / 5 sells | Reps: 1 buys / 2 sells",
+    "summary": "\ud83d\udccb **Congress Trading \u2014 Capitol Trades**\n  Total trades: 8 (1 buys / 5 sells / 2 other)\n  Hot tickers: $CTRA(1), $DVN(1), $ARLP(1), $ORCL(1), $NVDA(1), $REXR(1)\n  Dems: 0 buys / 3 sells | Reps: 1 buys / 2 sells",
     "recent_trades": [
+      {
+        "politician": "Kevin Hern",
+        "party": "R",
+        "action": "Exchange",
+        "ticker": "CTRA",
+        "size": "15K\u201350K",
+        "price": null,
+        "date": "13:02 Today"
+      },
+      {
+        "politician": "Kevin Hern",
+        "party": "R",
+        "action": "Exchange",
+        "ticker": "DVN",
+        "size": "15K\u201350K",
+        "price": 45.61,
+        "date": "13:02 Today"
+      },
+      {
+        "politician": "Kevin Hern",
+        "party": "R",
+        "action": "Sell",
+        "ticker": "N/A",
+        "size": "1M\u20135M",
+        "price": null,
+        "date": "13:02 Today"
+      },
+      {
+        "politician": "Virginia Foxx",
+        "party": "R",
+        "action": "Buy",
+        "ticker": "ARLP",
+        "size": "1K\u201315K",
+        "price": 25.13,
+        "date": "13:02 Today"
+      },
+      {
+        "politician": "Sheldon Whitehouse",
+        "party": "D",
+        "action": "Sell",
+        "ticker": "ORCL",
+        "size": "15K\u201350K",
+        "price": 194.59,
+        "date": "17:15 Yesterday"
+      },
+      {
+        "politician": "Sheldon Whitehouse",
+        "party": "D",
+        "action": "Sell",
+        "ticker": "NVDA",
+        "size": "100K\u2013250K",
+        "price": 215.2,
+        "date": "17:15 Yesterday"
+      },
+      {
+        "politician": "Daniel Webster",
+        "party": "R",
+        "action": "Sell",
+        "ticker": "REXR",
+        "size": "15K\u201350K",
+        "price": 40.45,
+        "date": "13:01 Yesterday"
+      },
       {
         "politician": "Christian Menefee",
         "party": "D",
         "action": "Sell",
         "ticker": "Berkshire Hathaway Inc",
-        "size": "1K–15K",
+        "size": "1K\u201315K",
         "price": 500.3,
-        "date": "13:01 Today"
-      },
-      {
-        "politician": "Christian Menefee",
-        "party": "D",
-        "action": "Sell",
-        "ticker": "PINS",
-        "size": "15K–50K",
-        "price": 20.65,
-        "date": "13:01 Today"
-      },
-      {
-        "politician": "Christian Menefee",
-        "party": "D",
-        "action": "Sell",
-        "ticker": "PINS",
-        "size": "15K–50K",
-        "price": null,
-        "date": "13:01 Today"
-      },
-      {
-        "politician": "Christian Menefee",
-        "party": "D",
-        "action": "Sell",
-        "ticker": "PINS",
-        "size": "1K–15K",
-        "price": 15.51,
-        "date": "13:01 Today"
-      },
-      {
-        "politician": "Christian Menefee",
-        "party": "D",
-        "action": "Sell",
-        "ticker": "PINS",
-        "size": "15K–50K",
-        "price": 16.69,
-        "date": "13:01 Today"
-      },
-      {
-        "politician": "Max Miller",
-        "party": "R",
-        "action": "Buy",
-        "ticker": "N/A",
-        "size": "1K–15K",
-        "price": null,
-        "date": "13:02 Yesterday"
-      },
-      {
-        "politician": "Max Miller",
-        "party": "R",
-        "action": "Sell",
-        "ticker": "N/A",
-        "size": "1K–15K",
-        "price": null,
-        "date": "13:02 Yesterday"
-      },
-      {
-        "politician": "Ed Case",
-        "party": "D",
-        "action": "Buy",
-        "ticker": "AAPL",
-        "size": "1K–15K",
-        "price": 298.21,
-        "date": "13:02 Yesterday"
-      },
-      {
-        "politician": "David Taylor",
-        "party": "R",
-        "action": "Sell",
-        "ticker": "GOOGL",
-        "size": "15K–50K",
-        "price": 396.78,
-        "date": "29 May 2026"
+        "date": "13:01 Yesterday"
       }
     ]
   },
@@ -248,42 +260,42 @@
     }
   ],
   "unusual_whales": {
-    "summary": "🐋 **Unusual Whales — Latest Signals**\n  • BREAKING: We just gave Claude full access to the options, equities, and prediction markets. The Unusual Whales MCP Server plugs into any AI and streams live, structured market data on demand. Build tr ❤️4,768\n  • Goldman Sachs CEO Solomon: Inflation, in the short term, is a bigger focus than employment. [](https://xcancel.com/unusual_whales/status/2061889838346080726#m) unusual_whales@unusual_whales\n  • Poland to ban phones in schools, per Reuters [](https://xcancel.com/unusual_whales/status/2061884805378183299#m) unusual_whales@unusual_whales\n  • The Unusual Whales platform subscription grants access to a variety of feeds with detailed options flow data, including... 1) options flow screener - data on every options contract 2) options flow fee\n  •",
+    "summary": "\ud83d\udc0b **Unusual Whales \u2014 Latest Signals**\n  \u2022 BREAKING: We just gave Claude full access to the options, equities, and prediction markets. The Unusual Whales MCP Server plugs into any AI and streams live, structured market data on demand. Build tr \u2764\ufe0f4,759\n  \u2022 Trump\u2019s Iran war drains US oil supplies to lowest level since 2004, per FT [](https://xcancel.com/unusual_whales/status/2062252162244292711#m) unusual_whales@unusual_whales\n  \u2022 BREAKING: Trump has compared the UFC arena at the White House to the Eiffel Tower, and says it could be permanent, per ABC [](https://xcancel.com/unusual_whales/status/2062247193138827533#m) unusual_w \u2764\ufe0f539\n  \u2022 Monterey Park has become the first city in the US to permanently ban data centers, per Los Angeles Times. [](https://xcancel.com/unusual_whales/status/206224",
     "recent": [
       {
         "text": "BREAKING: We just gave Claude full access to the options, equities, and prediction markets. The Unusual Whales MCP Server plugs into any AI and streams live, structured market data on demand. Build tr",
         "date": "",
-        "likes": 4768,
+        "likes": 4759,
         "retweets": 0
       },
       {
-        "text": "Goldman Sachs CEO Solomon: Inflation, in the short term, is a bigger focus than employment. [](https://xcancel.com/unusual_whales/status/2061889838346080726#m) unusual_whales@unusual_whales",
+        "text": "Trump\u2019s Iran war drains US oil supplies to lowest level since 2004, per FT [](https://xcancel.com/unusual_whales/status/2062252162244292711#m) unusual_whales@unusual_whales",
         "date": "",
-        "likes": 342,
+        "likes": 318,
         "retweets": 0
       },
       {
-        "text": "Poland to ban phones in schools, per Reuters [](https://xcancel.com/unusual_whales/status/2061884805378183299#m) unusual_whales@unusual_whales",
+        "text": "BREAKING: Trump has compared the UFC arena at the White House to the Eiffel Tower, and says it could be permanent, per ABC [](https://xcancel.com/unusual_whales/status/2062247193138827533#m) unusual_w",
         "date": "",
-        "likes": 375,
+        "likes": 539,
         "retweets": 0
       },
       {
-        "text": "The Unusual Whales platform subscription grants access to a variety of feeds with detailed options flow data, including... 1) options flow screener - data on every options contract 2) options flow fee",
+        "text": "Monterey Park has become the first city in the US to permanently ban data centers, per Los Angeles Times. [](https://xcancel.com/unusual_whales/status/2062240203482517819#m) unusual_whales@unusual_wha",
         "date": "",
-        "likes": 230,
+        "likes": 594,
         "retweets": 0
       },
       {
-        "text": "A proposal for a one-year data center moratorium has been introduced in New York, per MorePerfectUnion [](https://xcancel.com/unusual_whales/status/2061874738960757089#m) unusual_whales@unusual_whales",
+        "text": "\"Senate Republicans have officially ditched an effort to fund Trump's White House ballroom,\" per HuffPost [](https://xcancel.com/unusual_whales/status/2062237126809591906#m) unusual_whales@unusual_wha",
         "date": "",
-        "likes": 954,
+        "likes": 2665,
         "retweets": 0
       },
       {
-        "text": "BREAKING: In the past 24 hours, 196,530 traders in crypto were liquidated, with the total liquidations coming in at $1.23 billion, per CoinGlass. [](https://xcancel.com/unusual_whales/status/206186970",
+        "text": "Tennessee has passed a law requiring both prospective and current data center owners to bear the entire cost of their necessary utility infrastructure, per WKRN [](https://xcancel.com/unusual_whales/s",
         "date": "",
-        "likes": 864,
+        "likes": 1039,
         "retweets": 0
       }
     ]
@@ -291,88 +303,88 @@
   "market_news": {
     "headlines": [
       {
-        "title": "Energy bills in Britain to jump 13% on impact of Iran war - Reuters",
+        "title": "Gulf tensions escalate as Iran hits Kuwait, US strikes near Hormuz - Reuters",
         "source": "Reuters",
-        "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPU09xbER6aTRzTVV0MW16TkZIQUxzQWY3ZGtaSmNHdkNKanlOQ2FmT1FkOE5oeTNjelZqMVBsbmxuQTVkQUMwUEpEcElFTzM0MHNjVjNFcGZ5bkptU0hMNVdySkNVMm9zdHd0Mnlxa0JacFBEYzd6WkdaYmc0QVhlOFU5M2ExY1B1dDU5VC0zU29aMXpEWGVOdm8yNm9HcUhnOGpVdC1B?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOa0pCM2JwVC1jclluOW5wcnktSUJHZ2ZLUUxwMnY5c3F6VWhuSVFLQ29mbmc0cHdhSWkyTzNyVzJvWnBxNjlVWnhqQ0FOUUpiY2YtTld2b3hWWmpYTzJueElSOUVmeTBweDFYWUwxcnZhdVlzYTNvZXp2SXJNcnNhdGh6TElzTWtzUDlvNlBQS3pQREk4a0cwb1NXa1YzWG5jb3lOaC1jZDNRT2JZQkNxbA?oc=5",
         "category": "business",
-        "datetime": 1779876232
+        "datetime": 1780469220
       },
       {
-        "title": "South Korea says attack on ship in Strait of Hormuz likely involved an Iranian missile - Reuters",
+        "title": "One killed in Iranian attack on Kuwait, airport terminal damaged - Reuters",
         "source": "Reuters",
-        "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQU0FvelZ2cHpUUW5qS3FpQ1NJMUVha1YtR2owWnJ1OEROem1MekVoQkVtWEMtTmxuOGFUQ3Q3QW9XVHd6bENOVjVsMVZ3Y2FFT0RYYkJpWHBfbG9meWxwM2tOck1GaTF1djA2Tnd6alNncGVmclhGNkZQX21YRmkzTWFpWU9QeV93OFk5eUhCMTRnc1Bwc0ZGbmJmckp2Q3BWZ2lDR1pGM1F6cHZFU2NkNnlfd05oZUJSd2VlcHVQMWdIZmhCZWhRT0NmS1c?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNejlTQXJhWnlNVk5SNmNHVG0xMnpKcm5mT0wzMFNwbjdsVGNRX0hPZ3U1dk8xRks4OXUxd3RIU0ZmSHFWdG1nTHViVERvenVrSF84b3VJT2Y5ZFNianltSUtHd2xJSEZsZ2pVMmxIdHlzZGpyTFNEQ1NnNF9DUGZ4bFRiclNfVmVfY052NmJ1T1IxZ3FfUzJjbUh1MXNOT1hGNDVaMnpHWFkyd1UwLUcwVGgtUmEtcjc1QXdvQVNyQQ?oc=5",
         "category": "business",
-        "datetime": 1779875546
+        "datetime": 1780467600
       },
       {
-        "title": "Taiwan chip stocks climb after Nvidia announces $150 billion spending plans",
+        "title": "European shares head for negative open as White House proposes fresh tariffs on EU",
         "source": "CNBC",
-        "url": "https://www.cnbc.com/2026/05/27/nvidia-taiwan-investment-150-billion-spending.html",
+        "url": "https://www.cnbc.com/2026/06/03/europe-markets-trump-eu-tariffs-zara-inditex.html",
         "category": "top news",
-        "datetime": 1779874874
+        "datetime": 1780466828
       },
       {
-        "title": "Treasury yields fall as investors remain optimistic on Iran peace deal prospects despite U.S. strikes",
+        "title": "CBS fires veteran correspondent Scott Pelley amid turmoil over direction of '60 Minutes'",
         "source": "CNBC",
-        "url": "https://www.cnbc.com/2026/05/27/treasury-yields-investor-optimism-ceasefire-prospects-rise.html",
+        "url": "https://www.cnbc.com/2026/06/03/cbs-fires-scott-pelley-amid-turmoil-over-direction-of-60-minutes.html",
         "category": "top news",
-        "datetime": 1779874287
+        "datetime": 1780465193
       },
       {
-        "title": "Iran war splits global markets into clear winners and losers - Reuters",
+        "title": "Indian shares resume slide as high oil prices, IT selloff weigh - Reuters",
         "source": "Reuters",
-        "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPU3JBNm9iSW1POHNTQjJuVUFsOWFMSEU2T1ZLSEpQRHhPNkc3WWV5WEM2Z1ZBd1BTeTl3ZzVITEg4VjFsd0hGb1pzRG94N1E0STQwUTRVZnh6cDRYUGVuRUxJODAwelh4V0FJVmdBbFd1SWF4RnNSb1JaR3VvQW5JQl96bVBHLVpD?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOZ3NXSTV1QkRlSEVDSlZ2eFB1NmZZWjcwN0lXMGJSWms1SDlIWWFrNjRJVDc2SHIzYjBpQVhvY3ZzMUZtbkRjMGNMNlRrVklPeEY1OERjNnRKRTZ0OUJBU1FuYkNQU08waHNoRUxRQnV6TUQ0WGZKV2FBdDhScWgya0prdVdfaktzZDBNa09ta2xKaGxRbldNTHZyM0JKcHJaNG1leG9YUS0tWURTOTd2NW05OHBpb183S0JV?oc=5",
         "category": "business",
-        "datetime": 1779872281
+        "datetime": 1780453980
       },
       {
-        "title": "European stocks set for modest gains as Iran war dampens outlook, poll shows - Reuters",
+        "title": "Stocks dip on new Iran attacks as oil prices rise - Reuters",
         "source": "Reuters",
-        "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPc28yMU9SQzFya282NTE4eHBQYTJpRURKMm5SaThiZjVmSkM2OEVDVU1NQTJTSC1Tc2RDLVBHT3duWkNibVUzX1RXUWY2anZIeDBTaFhhYVVQUDYyRmdfb0hORTZTX0JPZXk4V0RNUFo5d3ctdnpRWWl6N08xdmNuZ1kyUU9RdU9mY0ZHaDhRMVNsM1p1eDdGMWhMdWhIWXRMUUEzRXdobl9LOFlJZ2k5ZzIxNVNNXzVxdkVJMXBB?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQeVllVU5TSEVpajhKb3hSRUx6NDY3bWU2cDJpaUtOMllscG9lckFqZzJrMEowQ0IxSENhamFtNjZuOXVGb2Ywd0VfSUhlTnUzRkR5dlJlNHI1ME02YnhJV1RWRk5PZml5QlRIRlRQWEZIMzNUYlBmQ183aGEzNXFZU3V3ZFFXb0dw?oc=5",
         "category": "business",
-        "datetime": 1779868091
+        "datetime": 1780452840
       },
       {
-        "title": "CNBC Daily Open: The $1 trillion club just got bigger",
-        "source": "CNBC",
-        "url": "https://www.cnbc.com/2026/05/27/sk-hynix-micron-join-1-trillion-club-cnbc-daily-open.html",
-        "category": "top news",
-        "datetime": 1779860102
-      },
-      {
-        "title": "Breakingviews - Iran war deals blow to global markets’ ‘Gulf put’ - Reuters",
+        "title": "Gold falls on stronger dollar, oil amid renewed Middle East hostilities - Reuters",
         "source": "Reuters",
-        "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOMlhfMkVFQXlOMjFCcGx0RXdUSEZpc2NrTkxWRTF6cnBrQlpYWFlqTFFvcHROdFhFZkl6UTZjVUttaWFQRVZUN3JSV0xJakJCVXRBLTRsQlYyNmczbU9HNWJGYVRUbHhFWjZ4YzFXdWhNbXdhWEt5LU14NmtYUVUybHp1dFFGSm9JRjl1M2FYM2pyYXVxNzhJ?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOZWktXzNXcDhfMDBUY0x6UVFFcE8xX090ZC1xY3BHN0ZZaUhCNUxvS0FFaDFOTHAxUTFjTHpmdmhnN1pBaXhxVUkyX0JubHBXQVlXQ2NFM0x6M19hZWFEVkxncVhkOTNsanY4SHBHTnE5VWQycWd0NlV6WWJwaGVhTkU4UjRGb3FRNnA5a2pFSWxOb3Bwa2NZM3BCYTFhcEQwaXc?oc=5",
         "category": "business",
-        "datetime": 1779858000
+        "datetime": 1780450020
+      },
+      {
+        "title": "Yen falls to 160 level, prompting warnings from Japanese officials - Reuters",
+        "source": "Reuters",
+        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPdlBCenZ0QjFsZWdEem9ZT2tncUc5S29ra3RNOGZFVDJCQ1Fud2N3aEtyRXRIaUpEcUlzOTEtcHEydjRuZ1dzRlNQZ050MTJVN1AyM1RET2tTY3Y1MjI0dDNDaElYOTNwdlcwWHBQZmxEMzdwaGhxMnB6NEloajhWX2EtelpQb0dha21xSjJZZnBqajBTYTNLaWY4bWY3T242SzhGVUt2YzVWXzJr?oc=5",
+        "category": "business",
+        "datetime": 1780447560
       }
     ],
     "analyst_ratings": [
       {
         "ticker": "AAPL",
         "buy": 24,
-        "hold": 13,
-        "period": "2026-05-01",
+        "hold": 15,
+        "period": "2026-06-01",
         "sell": 2,
-        "strongBuy": 15,
+        "strongBuy": 14,
         "strongSell": 0,
         "symbol": "AAPL"
       },
       {
         "ticker": "MSFT",
-        "buy": 36,
-        "hold": 6,
-        "period": "2026-05-01",
+        "buy": 38,
+        "hold": 5,
+        "period": "2026-06-01",
         "sell": 0,
-        "strongBuy": 24,
+        "strongBuy": 23,
         "strongSell": 0,
         "symbol": "MSFT"
       },
       {
         "ticker": "NVDA",
-        "buy": 42,
+        "buy": 39,
         "hold": 4,
-        "period": "2026-05-01",
+        "period": "2026-06-01",
         "sell": 1,
         "strongBuy": 24,
         "strongSell": 0,
@@ -380,9 +392,9 @@
       },
       {
         "ticker": "AMZN",
-        "buy": 50,
-        "hold": 6,
-        "period": "2026-05-01",
+        "buy": 49,
+        "hold": 5,
+        "period": "2026-06-01",
         "sell": 0,
         "strongBuy": 22,
         "strongSell": 0,
@@ -390,29 +402,29 @@
       },
       {
         "ticker": "GOOGL",
-        "buy": 41,
-        "hold": 8,
-        "period": "2026-05-01",
+        "buy": 42,
+        "hold": 9,
+        "period": "2026-06-01",
         "sell": 0,
-        "strongBuy": 21,
+        "strongBuy": 19,
         "strongSell": 0,
         "symbol": "GOOGL"
       },
       {
         "ticker": "META",
-        "buy": 40,
+        "buy": 41,
         "hold": 9,
-        "period": "2026-05-01",
+        "period": "2026-06-01",
         "sell": 0,
-        "strongBuy": 24,
+        "strongBuy": 22,
         "strongSell": 0,
         "symbol": "META"
       },
       {
         "ticker": "TSLA",
         "buy": 20,
-        "hold": 24,
-        "period": "2026-05-01",
+        "hold": 23,
+        "period": "2026-06-01",
         "sell": 7,
         "strongBuy": 9,
         "strongSell": 1,
@@ -420,140 +432,140 @@
       },
       {
         "ticker": "AMD",
-        "buy": 30,
-        "hold": 13,
-        "period": "2026-05-01",
+        "buy": 32,
+        "hold": 11,
+        "period": "2026-06-01",
         "sell": 0,
-        "strongBuy": 15,
-        "strongSell": 1,
+        "strongBuy": 14,
+        "strongSell": 0,
         "symbol": "AMD"
       },
       {
         "ticker": "PLTR",
-        "buy": 15,
+        "buy": 14,
         "hold": 10,
-        "period": "2026-05-01",
+        "period": "2026-06-01",
         "sell": 1,
-        "strongBuy": 11,
+        "strongBuy": 12,
         "strongSell": 1,
         "symbol": "PLTR"
       }
     ],
     "earnings": [
       {
-        "date": "2026-06-03",
+        "date": "2026-06-10",
         "epsActual": null,
-        "epsEstimate": null,
+        "epsEstimate": -0.0098,
         "hour": "",
         "quarter": 1,
         "revenueActual": null,
-        "revenueEstimate": null,
-        "symbol": "NTSK",
-        "year": 2026
-      },
-      {
-        "date": "2026-06-03",
-        "epsActual": null,
-        "epsEstimate": null,
-        "hour": "",
-        "quarter": 1,
-        "revenueActual": null,
-        "revenueEstimate": null,
-        "symbol": "RENT",
+        "revenueEstimate": 209379163,
+        "symbol": "NAVN",
         "year": 2027
       },
       {
-        "date": "2026-06-03",
+        "date": "2026-06-10",
         "epsActual": null,
         "epsEstimate": null,
         "hour": "",
-        "quarter": 1,
+        "quarter": 2,
         "revenueActual": null,
         "revenueEstimate": null,
-        "symbol": "YB",
+        "symbol": "IDWM",
         "year": 2026
       },
       {
-        "date": "2026-06-03",
+        "date": "2026-06-10",
+        "epsActual": null,
+        "epsEstimate": null,
+        "hour": "",
+        "quarter": 2,
+        "revenueActual": null,
+        "revenueEstimate": null,
+        "symbol": "NOBH",
+        "year": 2026
+      },
+      {
+        "date": "2026-06-10",
+        "epsActual": null,
+        "epsEstimate": null,
+        "hour": "",
+        "quarter": 2,
+        "revenueActual": null,
+        "revenueEstimate": null,
+        "symbol": "IVDN",
+        "year": 2026
+      },
+      {
+        "date": "2026-06-10",
+        "epsActual": null,
+        "epsEstimate": null,
+        "hour": "",
+        "quarter": 4,
+        "revenueActual": null,
+        "revenueEstimate": null,
+        "symbol": "IEHC",
+        "year": 2025
+      },
+      {
+        "date": "2026-06-10",
         "epsActual": null,
         "epsEstimate": null,
         "hour": "",
         "quarter": 1,
         "revenueActual": null,
         "revenueEstimate": null,
-        "symbol": "BWTL",
+        "symbol": "MSB",
         "year": 2027
       },
       {
-        "date": "2026-06-03",
+        "date": "2026-06-10",
+        "epsActual": null,
+        "epsEstimate": null,
+        "hour": "",
+        "quarter": 3,
+        "revenueActual": null,
+        "revenueEstimate": null,
+        "symbol": "MAYS",
+        "year": 2026
+      },
+      {
+        "date": "2026-06-10",
         "epsActual": null,
         "epsEstimate": null,
         "hour": "",
         "quarter": 1,
         "revenueActual": null,
         "revenueEstimate": null,
-        "symbol": "IGPK",
-        "year": 2026
-      },
-      {
-        "date": "2026-06-03",
-        "epsActual": null,
-        "epsEstimate": -0.0714,
-        "hour": "",
-        "quarter": 1,
-        "revenueActual": null,
-        "revenueEstimate": 202145323,
-        "symbol": "NTSK",
+        "symbol": "FRD",
         "year": 2027
       },
       {
-        "date": "2026-06-03",
+        "date": "2026-06-10",
         "epsActual": null,
         "epsEstimate": null,
         "hour": "",
         "quarter": 1,
         "revenueActual": null,
         "revenueEstimate": null,
-        "symbol": "HMBL",
+        "symbol": "YRD",
         "year": 2026
       },
       {
-        "date": "2026-06-03",
+        "date": "2026-06-10",
         "epsActual": null,
         "epsEstimate": null,
         "hour": "",
-        "quarter": 1,
+        "quarter": 2,
         "revenueActual": null,
         "revenueEstimate": null,
-        "symbol": "ALOT",
-        "year": 2027
-      },
-      {
-        "date": "2026-06-03",
-        "epsActual": null,
-        "epsEstimate": null,
-        "hour": "",
-        "quarter": 1,
-        "revenueActual": null,
-        "revenueEstimate": null,
-        "symbol": "FTII",
-        "year": 2026
-      },
-      {
-        "date": "2026-06-03",
-        "epsActual": null,
-        "epsEstimate": null,
-        "hour": "",
-        "quarter": 1,
-        "revenueActual": null,
-        "revenueEstimate": null,
-        "symbol": "KEN",
+        "symbol": "BRRE",
         "year": 2026
       }
     ]
   },
   "central_banks": {
-    "fed": "In support of its goals, the Committee decided to maintain the target range for the federal funds rate at 3‑1/2 to 3‑3/4 percent. In considering the extent and timing of additional adjustments to the target range for the federal funds rate, the Committee will carefully assess incoming data, the evolving outlook, and the balance of risks. The Committee is strongly committed to supporting maximum employment and returning inflation to its 2 percent objective.",
-    "boc": "April 29, 2026 Bank of Canada maintains policy rate at 2¼% Media Relations Ottawa, Ontario The Bank of Canada today held its target for the overnight rate at 2.25%, with the Bank Rate at 2.5% and the deposit rate at 2.20%. Content Type(s) : Press , Press releases April 20, 2026 Bank of Canada announces the appointment of two Deputy Governors Media Relations Ottawa, Ontario The Board of Directors of the Bank of Canada today announced the appointment of Marc-André Gosselin and Nicolas Vincent as D"
+    "fed": "In support of its goals, the Committee decided to maintain the target range for the federal funds rate at 3\u20111/2 to 3\u20113/4 percent. In considering the extent and timing of additional adjustments to the target range for the federal funds rate, the Committee will carefully assess incoming data, the evolving outlook, and the balance of risks. The Committee is strongly committed to supporting maximum employment and returning inflation to its 2 percent objective.",
+    "boc": "April 29, 2026 Bank of Canada maintains policy rate at 2\u00bc% Media Relations Ottawa, Ontario The Bank of Canada today held its target for the overnight rate at 2.25%, with the Bank Rate at 2.5% and the deposit rate at 2.20%. Content Type(s) : Press , Press releases April 20, 2026 Bank of Canada announces the appointment of two Deputy Governors Media Relations Ottawa, Ontario The Board of Directors of the Bank of Canada today announced the appointment of Marc-Andr\u00e9 Gosselin and Nicolas Vincent as D"
   }
 }
