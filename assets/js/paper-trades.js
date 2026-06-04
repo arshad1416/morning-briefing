@@ -173,15 +173,23 @@ const PaperTrades = {
     if (data?.portfolio) {
       const p = data.portfolio;
       const genAt = data.generated_at ? new Date(data.generated_at).toLocaleString() : '';
+      const pnlCls = (p.total_pnl || 0) >= 0 ? 'var(--positive)' : 'var(--negative)';
+      const retCls = (p.return_pct || 0) >= 0 ? 'var(--positive)' : 'var(--negative)';
       html += '<div class="card" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px;margin-bottom:16px">'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Status</div>'
-        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">' + Utils.esc(data.status || '—') + '</div></div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:var(--positive)">' + Utils.esc(data.status || '—') + '</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Starting</div>'
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">$' + Utils.formatPrice(p.starting_balance) + '</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Cash</div>'
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">$' + Utils.formatPrice(p.cash) + '</div></div>'
+        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Invested</div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">$' + Utils.formatPrice(p.invested || 0) + '</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Total Value</div>'
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">$' + Utils.formatPrice(p.total_balance) + '</div></div>'
+        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">P&L $</div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + pnlCls + '">' + ((p.total_pnl || 0) >= 0 ? '+' : '') + '$' + Utils.formatPrice(Math.abs(p.total_pnl || 0)) + '</div></div>'
+        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">P&L %</div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + retCls + '">' + ((p.return_pct || 0) >= 0 ? '+' : '') + p.return_pct + '%</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Win Rate</div>'
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + (p.win_rate >= 50 ? 'var(--positive)' : 'var(--negative)') + '">' + p.win_rate + '%</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Trades</div>'
