@@ -300,8 +300,8 @@ const PaperTrades = {
         const cur = t.currency || 'USD';
         const entryStr = t.entry_price ? `$${t.entry_price.toFixed(2)} ${cur}` : '—';
         const exitStr = t.exit_price ? `$${t.exit_price.toFixed(2)} ${cur}` : '—';
-        const entryDT = t.entry_date ? t.entry_date.replace('T',' ').slice(0,10) : '—';
-        const exitDT = t.exit_date ? t.exit_date.replace('T',' ').slice(0,10) : '—';
+        const entryDT = t.entry_date ? (() => { try { var d = new Date(t.entry_date.replace('Z','').replace('T',' ')); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '<br><span style=\"font-size:0.7rem;color:var(--text-muted)\">' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) + '</span>'; } catch(e) { return t.entry_date.slice(0,10); } })() : '—';
+        const exitDT = t.exit_date ? (() => { try { var d = new Date(t.exit_date.replace('Z','').replace('T',' ')); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '<br><span style=\"font-size:0.7rem;color:var(--text-muted)\">' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) + '</span>'; } catch(e) { return t.exit_date.slice(0,10); } })() : '—';
         const reason = (t.reason || t.rationale || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         const pnlDisplay = t.pnl_pct != null ? `${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct}%` : (t.pnl_usd != null ? `$${t.pnl_usd.toFixed(2)}` : '---');
         html += `<tr class="trade-row" data-reason="${reason}" data-ticker="${t.ticker}" style="cursor:pointer">
@@ -348,7 +348,13 @@ const PaperTrades = {
         const body = document.getElementById('trade-modal-body');
         const close = document.getElementById('trade-modal-close');
         if (!modal || !body) return;
-        body.innerHTML = '<div style="margin-bottom:8px"><strong style="font-size:1rem">' + ticker + '</strong></div><div style="font-size:0.85rem;line-height:1.6;color:var(--text-secondary)">' + reason + '</div>';
+        body.innerHTML = '<div style="border-bottom:1px solid var(--border-dim);padding-bottom:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="font-size:1.1rem;font-weight:700;color:var(--text-primary)">' + ticker + '</span>' +
+          '<span class="badge badge-green" style="font-size:0.65rem">Trade Reason</span>' +
+        '</div>' +
+        '<div style="font-size:0.9rem;line-height:1.7;color:var(--text-secondary);background:var(--bg-inset);padding:16px;border-radius:var(--radius-lg);border-left:3px solid var(--accent)">' +
+          (reason || 'No reason recorded') +
+        '</div>';
         modal.style.display = 'flex';
         if (close) close.onclick = function() { modal.style.display = 'none'; };
         modal.onclick = function(e) { if (e.target === modal) modal.style.display = 'none'; };
