@@ -30,6 +30,13 @@ const Utils = {
     return `<span class="badge badge-red">${score}</span>`;
   },
 
+  /** Sanitize a string for safe innerHTML injection */
+  esc(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  },
+
   /** Safe JSON fetch with error handling */
   async fetchJSON(url) {
     try {

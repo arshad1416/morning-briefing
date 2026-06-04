@@ -151,7 +151,7 @@ const Dashboard = {
         });
         html += '</tbody></table></div></div>';
       }
-
+    }
     // Timestamp
     if (data.generated_at) {
       html += '<div style="text-align:center;color:var(--text-muted);font-size:0.8rem;padding:16px">Generated ' + new Date(data.generated_at).toLocaleString() + '</div>';

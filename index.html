@@ -67,21 +67,34 @@
     <div class="loading">Loading...</div>
   </main>
 
-  <script src="/assets/js/utils.js"></script>
-  <script src="/assets/js/state.js"></script>
-  <script src="/assets/js/dashboard.js"></script>
-  <script src="/assets/js/watchlist.js"></script>
-  <script src="/assets/js/ticker-detail.js"></script>
-  <script src="/assets/js/archive.js"></script>
-  <script src="/assets/js/paper-trades.js"></script>
-  <script src="/assets/js/prediction-engine.js"></script>
-  <script src="/assets/js/chat.js"></script>
-  <script src="/assets/js/maplegamma.js"></script>
-  <script src="/assets/js/backtest-research.js"></script>
-  <script src="/assets/js/portfolio.js"></script>
-  <script src="/assets/js/simulation.js"></script>
-  <script src="/assets/js/screener.js"></script>
-  <script src="/assets/js/router.js"></script>
-  <script src="/assets/js/app.js"></script>
+  <script>
+    (function() {
+      var v = Date.now().toString(36);
+      var scripts = [
+        '/assets/js/utils.js',
+        '/assets/js/state.js',
+        '/assets/js/dashboard.js',
+        '/assets/js/watchlist.js',
+        '/assets/js/ticker-detail.js',
+        '/assets/js/archive.js',
+        '/assets/js/paper-trades.js',
+        '/assets/js/prediction-engine.js',
+        '/assets/js/chat.js',
+        '/assets/js/maplegamma.js',
+        '/assets/js/backtest-research.js',
+        '/assets/js/portfolio.js',
+        '/assets/js/simulation.js',
+        '/assets/js/screener.js',
+        '/assets/js/router.js',
+        '/assets/js/app.js'
+      ];
+      scripts.forEach(function(src) {
+        var s = document.createElement('script');
+        s.src = src + '?v=' + v;
+        s.async = false;
+        document.body.appendChild(s);
+      });
+    })();
+  </script>
 </body>
 </html>
