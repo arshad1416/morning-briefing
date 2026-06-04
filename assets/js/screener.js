@@ -99,6 +99,18 @@ const Screener = {
       '</div>' +
 
       '<div class="filter-group">' +
+        '<label>Universe</label>' +
+        '<select id="filter-universe">' +
+          '<option value="">All Universes</option>' +
+          '<option value="S&P 500">S&P 500</option>' +
+          '<option value="TSX 60">TSX 60</option>' +
+          '<option value="Tech & Growth">Tech & Growth</option>' +
+          '<option value="High Dividend">High Dividend</option>' +
+          '<option value="Fixed Income & Commodities">Fixed Income & Commodities</option>' +
+        '</select>' +
+      '</div>' +
+
+      '<div class="filter-group">' +
         '<label>Sector</label>' +
         '<select id="filter-sector">' +
           '<option value="">All Sectors</option>' +
@@ -208,7 +220,7 @@ const Screener = {
   /** Wire up all filter event handlers */
   _wireFilters(allTickers) {
     const filterIds = ['filter-pe', 'filter-mcap', 'filter-div', 'filter-rsi',
-                       'filter-sector', 'filter-volume', 'filter-52w', 'filter-sma',
+                       'filter-universe', 'filter-sector', 'filter-volume', 'filter-52w', 'filter-sma',
                        'filter-score', 'filter-sort', 'filter-search'];
 
     // Attach change/input handlers
@@ -283,6 +295,12 @@ const Screener = {
 
       // Sector
       if (sectorFilter && t.sector !== sectorFilter) return false;
+
+      // Universe
+      if (sectorFilter === '') {
+        var universeFilter = val('filter-universe');
+        if (universeFilter && t.universe !== universeFilter) return false;
+      }
 
       // Min Score
       if (scoreFilter && (t.score || 0) < scoreFilter) return false;

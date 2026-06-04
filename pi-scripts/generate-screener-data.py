@@ -17,30 +17,75 @@ import os
 import sys
 from datetime import datetime, timezone
 
-# ── Ticker Universe (100 tickers) ──────────────────────────────
-TICKERS = [
-    # Major Indices (4)
-    "SPY", "QQQ", "IWM", "DIA",
-    # Sector ETFs (12)
-    "XLF", "XLK", "XLE", "XLV", "XLI", "XLB", "XLU", "XLRE", "XLY", "XLP", "XLC", "XLG",
-    # Large Cap US (25)
-    "AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META", "TSLA", "BRK-B", "JPM", "V",
-    "JNJ", "WMT", "MA", "PG", "UNH", "HD", "DIS", "NFLX", "ADBE", "CRM",
-    "AMD", "INTC", "BAC", "PFE", "KO",
-    # Mid Cap / High Volume (20)
-    "PLTR", "MSTR", "TSM", "AVGO", "COST", "ABNB", "UBER", "SNAP", "DDOG", "CRWD",
-    "PANW", "SHOP", "SQ", "MCD", "NKE", "BA", "CAT", "GE", "IBM", "ORCL",
-    # Top Gainers / High Beta / Popular (15)
-    "MARA", "COIN", "RKLB", "ASTS", "SOFI", "HOOD", "RDDT", "CVNA", "DKNG", "TTD",
-    "CMG", "LULU", "SBUX", "TGT", "LOW",
-    # Canadian (14)
-    "XIU.TO", "TD.TO", "RY.TO", "SHOP.TO", "ENB.TO", "BNS.TO", "BMO.TO", "CNQ.TO",
-    "SU.TO", "CP.TO", "CNR.TO", "TRP.TO", "FTS.TO", "POW.TO",
-    # Fixed Income / Commodity ETFs (6)
-    "TLT", "AGG", "BND", "GLD", "SLV", "USO",
-    # Bitcoin proxies (4)
-    "IBIT", "FBTC", "BITB", "GBTC",
-]
+# ── Ticker Universe (500+ tickers) ──────────────────────────────
+UNIVERSES = {
+    "S&P 500": [
+        "AAPL","MSFT","NVDA","AMZN","GOOGL","META","TSLA","BRK-B","JPM","V",
+        "JNJ","WMT","MA","PG","UNH","HD","DIS","NFLX","ADBE","CRM",
+        "AMD","INTC","BAC","PFE","KO","MCD","NKE","BA","CAT","GE",
+        "IBM","ORCL","CSCO","QCOM","TXN","AMGN","GILD","SBUX","LOW","TGT",
+        "CMG","LULU","MDLZ","COST","ABNB","UBER","NOW","ISRG","BKNG","BLK",
+        "AXP","GS","MS","SCHW","C","CB","MMC","AIG","MET","PRU",
+        "TMO","DHR","ABT","MDT","SYK","BSX","EW","ILMN","VRTX","REGN",
+        "HON","UPS","RTX","LMT","GD","NOC","WM","RSG","COP","EOG",
+        "SLB","HAL","CVX","XOM","OXY","MPC","PSX","VLO","DUK","SO",
+        "NEE","AEP","EXC","SRE","PEG","D","CCI","AMT","PLD","EQIX",
+        "SPG","WELL","O","DLR","AVB","MAA","EQR","ESS","UDR","INVH",
+        "SBAC","CSGP","CBRE","IRM","HST","DOC","VTR","PEAK","OHI","MPW",
+    ],
+    "S&P 500 (continued)": [
+        "ADP","PAYX","CTAS","ROP","ECL","WAT","MKC","SJM","CPB","GIS",
+        "K","KHC","CAG","HRL","TSN","MO","PM","BTI","STZ","DEO",
+        "BF-B","CL","CHD","PG","KVUE","EL","NCLH","CCL","RCL","DAL",
+        "AAL","UAL","LUV","SAVE","ALK","JBLU","CPRT","GPC","AZO","ORLY",
+        "TSCO","ROST","DG","DLTR","WBA","CVS","CI","HUM","CNC","MOH",
+        "ELV","ANTM","UNM","AFL","PFG","SLM","NAVI","OMF","SYF","COF",
+        "DFS","ALLY","JPM","BAC","WFC","USB","PNC","TFC","KEY","RF",
+        "HBAN","FITB","STT","NTRS","CBOE","CME","ICE","MCO","MSCI","S&P",
+        "NDAQ","FDS","AJG","BRO","WTW","AON","MMC","MKL","TRV","ALL",
+        "PGR","CB","L","THG","AFG","ERIE","KNSL","RLI","AGO","RGA",
+    ],
+    "TSX 60": [
+        "XIU.TO","TD.TO","RY.TO","BNS.TO","BMO.TO","CM.TO","NA.TO","SLF.TO","MFC.TO","GWO.TO",
+        "SHOP.TO","ENB.TO","TRP.TO","PPL.TO","KEY.TO","IPL.TO","GEI.TO","FTS.TO","H.TO","EMA.TO",
+        "CNQ.TO","SU.TO","CVE.TO","IMO.TO","TOU.TO","ARX.TO","VRN.TO","CPG.TO","CNR.TO","CP.TO",
+        "TFII.TO","WCN.TO","RCI-B.TO","T.TO","BCE.TO","QBR-B.TO","TRI.TO","GIB-A.TO","L.TO","ATD-B.TO",
+        "DOL.TO","WN.TO","MRU.TO","LNF.TO","CTC-A.TO","SAP.TO","CSU.TO","KXS.TO","OTEX.TO","DSG.TO",
+        "AQN.TO","BEPC.TO","BLX.TO","HBM.TO","IVN.TO","AGI.TO","WPM.TO","FNV.TO","CCO.TO","TECK-B.TO",
+    ],
+    "Tech & Growth": [
+        "PLTR","MSTR","SNOW","DDOG","CRWD","PANW","ZS","NET","OKTA","ESTC",
+        "MDB","MRNA","SQ","AFRM","HOOD","COIN","RIVN","LCID","CHWY","DASH",
+        "RDDT","CVNA","DKNG","TTD","WDAY","HUBS","ZM","PINS","SNAP","U",
+        "PATH","CFLT","GTLB","FROG","SMAR","DOMO","BILL","TOST","FOUR","PYPL",
+        "RBLX","SE","MELI","CPNG","WISE","STNE","NU","SOFI","UPST","LC",
+        "RKLB","ASTS","GSAT","IRDM","SPCE","ASTS","IONQ","RGTI","QUBT","QBTS",
+        "MARA","CLSK","RIOT","WULF","CIFR","HUT","IREN","BTBT","CAN","HIVE",
+    ],
+    "High Dividend": [
+        "T","VZ","PFE","ABBV","MRK","CVX","XOM","KO","PEP","JNJ",
+        "O","MAIN","AGNC","STAG","WPC","ADC","BRX","FRT","KIM","REG",
+        "EPR","LAMR","GLPI","VICI","WY","IRM","SBRA","DOC","PEAK","OHI",
+        "MPW","HR","WELL","VTR","EXR","PSA","CUBE","NSA","UDR","EQR",
+        "AVA","BKH","ALE","PNW","POR","SJW","CWT","AWR","MSEX","YORW",
+        "ENB","TRP","PPL","FTS","EMA","H","KEY","GEI","IPL","ACO-X",
+        "PD","BIP-UN","GRT-UN","REI-UN","SRU-UN","CAR-UN","AP-UN","HR-UN","SOT-UN","DIR-UN",
+    ],
+    "Fixed Income & Commodities": [
+        "TLT","IEF","SHY","AGG","BND","BIV","BSV","VCIT","VCSH","MUB",
+        "LQD","HYG","JNK","EMB","PCY","BWX","WIP","TIP","VTIP","STIP",
+        "GLD","SLV","IAU","SGOL","PHYS","PSLV","USO","UNG","DBC","GSG",
+        "DBA","CORN","WEAT","SOYB","LIT","REMX","URA","NLR","PICK","XME",
+        "KRE","KBE","XBI","IBB","IYR","XLRE","VNQ","ICF","SCHH","REET",
+        "IBIT","FBTC","BITB","GBTC","ARKB","BITO","BTF","MAXI","SATO","WGMI",
+    ],
+}
+TICKERS = []
+TICKER_UNIVERSE = {}
+for universe, tickers in UNIVERSES.items():
+    for t in tickers:
+        TICKERS.append(t)
+        TICKER_UNIVERSE[t] = universe
 
 
 # ── Metrics Computation ────────────────────────────────────────
@@ -108,10 +153,11 @@ def fetch_ticker_data(ticker):
             inst_pct = round(inst_pct * 100, 1)
         else:
             inst_pct = None
-
+        # Add computed signals
         return {
             "ticker": ticker,
-            "name": info.get("longName", ""),
+            "name": ticker_name,
+            "universe": TICKER_UNIVERSE.get(ticker, "Other"),
             "price": round(price, 2),
             "change_pct": change_pct,
             "pe": info.get("trailingPE"),
