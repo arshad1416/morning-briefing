@@ -23,7 +23,7 @@
   <script>
     (function() {
       var v = Date.now().toString(36);
-      var sheets = ['/assets/css/style.css', '/assets/css/maplegamma.css'];
+      var sheets = ['/assets/css/style.css', '/assets/css/maplegamma.css', '/assets/css/screener.css'];
       sheets.forEach(function(href) {
         var l = document.createElement('link');
         l.rel = 'stylesheet';
@@ -49,6 +49,7 @@
       <a href="#/portfolio" class="nav-link">Portfolio</a>
       <a href="#/simulation" class="nav-link">Simulation</a>
       <a href="#/prediction-engine" class="nav-link">Predictions</a>
+      <a href="#/screener"  class="nav-link">Screener</a>
       <a href="#/chat"      class="nav-link">AI Analysis</a>
     </div>
     <button
@@ -79,6 +80,7 @@
   <script src="/assets/js/backtest-research.js"></script>
   <script src="/assets/js/portfolio.js"></script>
   <script src="/assets/js/simulation.js"></script>
+  <script src="/assets/js/screener.js"></script>
   <script src="/assets/js/router.js"></script>
   <script src="/assets/js/app.js"></script>
 </body>
