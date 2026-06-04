@@ -139,7 +139,7 @@ const MapleGamma = {
           </div>
 
           <!-- Add-ons -->
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px">
             <div class="mg-pricing-card" style="padding:16px;text-align:center">
               <div style="font-size:1.5rem;margin-bottom:6px">🍁</div>
               <div style="font-weight:600;font-size:0.9rem">Canadian Data</div>
