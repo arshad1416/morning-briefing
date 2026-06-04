@@ -299,9 +299,9 @@ const PaperTrades = {
         const exitStr = t.exit_price ? `$${t.exit_price.toFixed(2)} ${cur}` : '—';
         const entryDT = t.entry_date ? (() => { try { var d = new Date(t.entry_date.replace('Z','').replace('T',' ')); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '<br><span style=\"font-size:0.7rem;color:var(--text-muted)\">' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '</span>'; } catch(e) { return t.entry_date.slice(0,10); } })() : '—';
         const exitDT = t.exit_date ? (() => { try { var d = new Date(t.exit_date.replace('Z','').replace('T',' ')); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '<br><span style=\"font-size:0.7rem;color:var(--text-muted)\">' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '</span>'; } catch(e) { return t.exit_date.slice(0,10); } })() : '—';
-        const reason = (t.reason || t.rationale || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        const reason = Utils.esc(t.reason || t.rationale || '');
         const pnlDisplay = t.pnl_pct != null ? `${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct}%` : (t.pnl_usd != null ? `$${t.pnl_usd.toFixed(2)}` : '---');
-        const hoverReason = (t.reason || t.rationale || '').replace(/"/g, '&quot;');
+        const hoverReason = Utils.esc(t.reason || t.rationale || '');
         html += `<tr class="trade-row" title="${hoverReason}" data-ticker="${t.ticker}" style="cursor:pointer">
           <td><strong>${t.ticker}</strong></td>
           <td><span class="badge ${t.type === 'Stock' ? 'badge-green' : 'badge-yellow'}" style="font-size:0.65rem">${t.type || '—'}</span></td>

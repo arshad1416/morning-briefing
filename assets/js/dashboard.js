@@ -134,7 +134,7 @@ const Dashboard = {
     if (data.market_news?.headlines?.length) {
       html += '<div class="section"><h2 class="section-title">Market News</h2><div class="card">';
       data.market_news.headlines.forEach(n => {
-        html += `<div style="padding:10px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem"><a href="${Utils.esc(n.url || '#')}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(n.title)}</a><div style="color:var(--text-muted);font-size:0.75rem;margin-top:3px">${Utils.esc(n.source || '')} ${n.category ? '· ' + Utils.esc(n.category) : ''}</div></div>`;
+        html += `<div style="padding:10px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem"><a href="${Utils.esc(Utils.safeUrl(n.url))}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(n.title)}</a><div style="color:var(--text-muted);font-size:0.75rem;margin-top:3px">${Utils.esc(n.source || '')} ${n.category ? '· ' + Utils.esc(n.category) : ''}</div></div>`;
       });
       html += '</div></div>';
     }

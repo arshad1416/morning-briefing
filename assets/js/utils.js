@@ -30,11 +30,24 @@ const Utils = {
     return `<span class="badge badge-red">${score}</span>`;
   },
 
-  /** Sanitize a string for safe innerHTML injection */
+  /** Sanitize string for safe innerHTML injection (text + attribute contexts) */
   esc(str) {
-    var div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
+    if (str == null) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  },
+
+  /** Validate URL — only http/https allowed, blocks javascript: */
+  safeUrl(url) {
+    if (!url) return '#';
+    try {
+      var u = new URL(url, location.origin);
+      return ['http:', 'https:'].includes(u.protocol) ? url : '#';
+    } catch { return '#'; }
   },
 
   /** Safe JSON fetch with error handling */
