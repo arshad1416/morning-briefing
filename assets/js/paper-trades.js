@@ -302,9 +302,9 @@ const PaperTrades = {
         const exitStr = t.exit_price ? `$${t.exit_price.toFixed(2)} ${cur}` : '—';
         const entryDT = t.entry_date ? t.entry_date.replace('T',' ').slice(0,10) : '—';
         const exitDT = t.exit_date ? t.exit_date.replace('T',' ').slice(0,10) : '—';
-        const reason = (t.reason || t.rationale || '').replace(/"/g, '&quot;');
-        const pnlDisplay = t.pnl_pct != null ? `${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct}%` : (t.pnl_usd != null ? `$${t.pnl_usd.toFixed(2)}` : '—');
-        html += `<tr title="${reason}" style="cursor:help">
+        const reason = (t.reason || t.rationale || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        const pnlDisplay = t.pnl_pct != null ? `${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct}%` : (t.pnl_usd != null ? `$${t.pnl_usd.toFixed(2)}` : '---');
+        html += `<tr class="trade-row" data-reason="${reason}" data-ticker="${t.ticker}" style="cursor:pointer">
           <td><strong>${t.ticker}</strong></td>
           <td><span class="badge ${t.type === 'Stock' ? 'badge-green' : 'badge-yellow'}" style="font-size:0.65rem">${t.type || '—'}</span></td>
           <td style="font-size:0.8rem">${entryDT}</td>
@@ -320,6 +320,14 @@ const PaperTrades = {
     }
 
     html += '</div>';
+
+    // Modal for trade reason
+    html += '<div id="trade-modal" class="modal-overlay" style="display:none">';
+    html += '  <div class="modal-content" style="max-width:500px"><span class="modal-close" id="trade-modal-close">&times;</span>';
+    html += '    <div id="trade-modal-body" style="min-height:60px">Loading...</div>';
+    html += '  </div>';
+    html += '</div>';
+
     app.innerHTML = html;
 
     // ── Wire up strategy link clicks ──
@@ -328,6 +336,22 @@ const PaperTrades = {
         e.preventDefault();
         const strategy = el.dataset.strategy || el.textContent.trim();
         this._showModal(strategy);
+      });
+    });
+
+    // ── Wire up trade row clicks for reason modal ──
+    app.querySelectorAll('.trade-row').forEach(el => {
+      el.addEventListener('click', function() {
+        const reason = this.dataset.reason || 'No reason recorded';
+        const ticker = this.dataset.ticker || '';
+        const modal = document.getElementById('trade-modal');
+        const body = document.getElementById('trade-modal-body');
+        const close = document.getElementById('trade-modal-close');
+        if (!modal || !body) return;
+        body.innerHTML = '<div style="margin-bottom:8px"><strong style="font-size:1rem">' + ticker + '</strong></div><div style="font-size:0.85rem;line-height:1.6;color:var(--text-secondary)">' + reason + '</div>';
+        modal.style.display = 'flex';
+        if (close) close.onclick = function() { modal.style.display = 'none'; };
+        modal.onclick = function(e) { if (e.target === modal) modal.style.display = 'none'; };
       });
     });
   }
