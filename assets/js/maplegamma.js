@@ -250,9 +250,9 @@ const MapleGamma = {
 
     let html = `<div class="mg-dashboard">`;
 
-    // ── Stale warning ──
-    if (data.generated_at && State.isStale(data.generated_at)) {
-      html += `<div class="mg-stale-banner">⚠ Data from ${new Date(data.generated_at).toLocaleTimeString()} — market may be closed</div>`;
+    // ── Data refresh timestamp ──
+    if (data.generated_at) {
+      html += `<div class="mg-stale-banner">📡 Data refreshed: ${new Date(data.generated_at).toLocaleString('en-CA', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' })}</div>`;
     }
 
     // ── WIDGET 1: Metics Bar ──

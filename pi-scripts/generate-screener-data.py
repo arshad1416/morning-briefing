@@ -50,11 +50,20 @@ def fetch_ticker_data(ticker):
     try:
         t = yf.Ticker(ticker)
         info = t.info
+    except Exception as e:
+        print(f"Error getting info for {ticker}: {type(e).__name__}: {e}", file=sys.stderr)
+        return None
+
+    try:
+        ticker_name = info.get('shortName') or info.get('longName') or ticker
 
         # Get 1 year of daily data for technicals
         hist = t.history(period="1y")
         if hist.empty:
             return None
+        # Flatten MultiIndex columns if present
+        if isinstance(hist.columns, pd.MultiIndex):
+            hist.columns = hist.columns.get_level_values(0)
 
         price = hist['Close'][-1]
 
