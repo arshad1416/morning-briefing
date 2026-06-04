@@ -66,23 +66,20 @@
     <div class="loading">Loading...</div>
   </main>
 
-  <!-- Scripts loaded dynamically with auto cache-bust version -->
-  <script>
-    (function() {
-      var v = Date.now().toString(36);
-      var scripts = [
-        'utils', 'state', 'dashboard', 'watchlist', 'ticker-detail',
-        'archive', 'paper-trades', 'prediction-engine', 'chat',
-        'maplegamma', 'backtest-research', 'portfolio', 'simulation',
-        'router', 'app'
-      ];
-      scripts.forEach(function(name) {
-        var s = document.createElement('script');
-        s.src = '/assets/js/' + name + '.js?v=' + v;
-        s.async = false;
-        document.body.appendChild(s);
-      });
-    })();
-  </script>
+  <script src="/assets/js/utils.js"></script>
+  <script src="/assets/js/state.js"></script>
+  <script src="/assets/js/dashboard.js"></script>
+  <script src="/assets/js/watchlist.js"></script>
+  <script src="/assets/js/ticker-detail.js"></script>
+  <script src="/assets/js/archive.js"></script>
+  <script src="/assets/js/paper-trades.js"></script>
+  <script src="/assets/js/prediction-engine.js"></script>
+  <script src="/assets/js/chat.js"></script>
+  <script src="/assets/js/maplegamma.js"></script>
+  <script src="/assets/js/backtest-research.js"></script>
+  <script src="/assets/js/portfolio.js"></script>
+  <script src="/assets/js/simulation.js"></script>
+  <script src="/assets/js/router.js"></script>
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>
