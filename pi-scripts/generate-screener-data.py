@@ -40,10 +40,55 @@ UNIVERSES = {
         "AAL","UAL","LUV","SAVE","ALK","JBLU","CPRT","GPC","AZO","ORLY",
         "TSCO","ROST","DG","DLTR","WBA","CVS","CI","HUM","CNC","MOH",
         "ELV","ANTM","UNM","AFL","PFG","SLM","NAVI","OMF","SYF","COF",
-        "DFS","ALLY","JPM","BAC","WFC","USB","PNC","TFC","KEY","RF",
-        "HBAN","FITB","STT","NTRS","CBOE","CME","ICE","MCO","MSCI","S&P",
-        "NDAQ","FDS","AJG","BRO","WTW","AON","MMC","MKL","TRV","ALL",
-        "PGR","CB","L","THG","AFG","ERIE","KNSL","RLI","AGO","RGA",
+        "DFS","ALLY","WFC","USB","PNC","TFC","KEY","RF",
+        "HBAN","FITB","STT","NTRS","CBOE","CME","ICE","MCO","MSCI",
+        "NDAQ","FDS","AJG","BRO","WTW","AON","MKL","TRV","ALL",
+        "PGR","L","THG","AFG","ERIE","KNSL","RLI","AGO","RGA",
+    ],
+    "S&P 500 (continued 2)": [
+        "A","AEE","AES","AFL","ALB","ALGN","ALK","ALL","ALLE","AMAT",
+        "AMCR","AME","ANET","ANSS","AOS","APA","APD","APH","ARE","ATO",
+        "AVY","AWK","AXON","AZO","BALL","BAX","BBY","BEN","BF-B","BIIB",
+        "BIO","BK","BKNG","BKR","BLDR","BR","BRO","BWA","BX","BXP",
+        "CAG","CAH","CARR","CBOE","CBRE","CCI","CCL","CDNS","CDW","CE",
+        "CF","CFG","CHD","CHRW","CHTR","CINF","CL","CLX","CMA","CMG",
+        "CMI","CMS","CNC","CNP","COF","COO","CPB","CPRT","CPT","CRL",
+        "CSGP","CSL","CSX","CTAS","CTLT","CTSH","CTVA","CUBE","CVS","D",
+        "DAL","DAY","DD","DE","DFS","DG","DGX","DHI","DHR","DIS",
+        "DLR","DLTR","DOC","DOV","DOW","DRE","DRI","DTE","DUK","DVA",
+        "DVN","DXC","EA","EBAY","ECL","ED","EFX","EG","EIX","EL",
+        "EMN","EMR","ENPH","EOG","EPAM","EQT","ERIE","ES","ESS","ETN",
+        "ETR","EVRG","EW","EXC","EXPD","EXPE","EXR","F","FANG","FAST",
+        "FCX","FDS","FFIV","FIS","FITB","FMC","FNF","FOX","FOXA","FRT",
+        "FSLR","FTNT","FTV","GD","GE","GEHC","GEN","GILD","GIS","GL",
+        "GLW","GM","GNRC","GOOG","GOOGL","GPC","GPN","GRMN","GS","GWW",
+        "HAL","HAS","HBAN","HCA","HD","HES","HIG","HII","HLT","HOLX",
+        "HON","HPE","HRL","HSIC","HST","HSY","HUBB","HUM","IBM","ICE",
+        "IDXX","IEX","IFF","INCY","IP","IPG","IQV","IR","IRM","ISRG",
+        "IT","ITW","IVZ","J","JBHT","JKHY","JNPR","JPM","K","KDP",
+        "KEY","KEYS","KHC","KIM","KKR","KLAC","KMB","KMI","KMX","KO",
+        "KR","KVUE","L","LDOS","LEN","LH","LHX","LII","LIN","LKQ",
+        "LLY","LMT","LNT","LOW","LUV","LVS","LW","LYB","LYV","MA",
+        "MAA","MAR","MAS","MCD","MCHP","MCK","MCO","MKC","MKTX","MLM",
+        "MMC","MMM","MNST","MO","MOH","MOS","MPC","MPWR","MRK","MRNA",
+        "MS","MSCI","MSI","MTB","MTCH","MTD","MU","NCLH","NDAQ","NDSN",
+        "NEE","NEM","NFLX","NI","NKE","NOC","NOV","NRG","NSC","NTAP",
+        "NTRS","NUE","NVDA","NVR","NXPI","O","ODFL","OGE","OKE","OMC",
+        "ON","ORCL","ORLY","OTIS","OXY","PARA","PAYC","PAYX","PCAR","PCG",
+        "PEG","PEP","PFE","PFG","PG","PGR","PH","PHM","PKG","PLD",
+        "PLTR","PM","PNC","PNR","PNW","PODD","POOL","PPG","PPL","PRU",
+        "PSA","PSX","PTC","PVH","QRVO","RCL","REG","REGN","RF","RJF",
+        "RL","RMD","ROK","ROL","ROP","ROST","RS","RSG","RTX","RVTY",
+        "SJM","SNA","SBAC","SBUX","SCHW","SHW","SJM","SLB","SLG","SNA",
+        "SNAP","SO","SPG","SPGI","SRE","STLD","STT","STX","STZ","SWK",
+        "SWKS","SYF","SYK","SYY","T","TAP","TECH","TEL","TER","TFC",
+        "TFX","TGT","TJX","TMO","TMUS","TPR","TRGP","TROW","TRV","TSCO",
+        "TSLA","TSN","TTC","TTWO","TXN","TXT","TYL","UA","UAA","UAL",
+        "UBER","UDR","UHS","ULTA","UNH","UNP","UPS","URI","USB","V",
+        "VFC","VICI","VLO","VLTO","VMC","VRSK","VRSN","VRTX","VST","VTR",
+        "VZ","WAB","WAT","WBA","WBD","WDC","WEC","WELL","WFC","WHR",
+        "WM","WMB","WMT","WRB","WST","WTW","WU","WY","WYNN","XEL",
+        "XOM","XYL","YUM","ZBRA","ZION","ZTS",
     ],
     "TSX 60": [
         "XIU.TO","TD.TO","RY.TO","BNS.TO","BMO.TO","CM.TO","NA.TO","SLF.TO","MFC.TO","GWO.TO",
@@ -82,10 +127,13 @@ UNIVERSES = {
 }
 TICKERS = []
 TICKER_UNIVERSE = {}
+seen = set()
 for universe, tickers in UNIVERSES.items():
     for t in tickers:
-        TICKERS.append(t)
-        TICKER_UNIVERSE[t] = universe
+        if t not in seen:
+            TICKERS.append(t)
+            TICKER_UNIVERSE[t] = universe
+            seen.add(t)
 
 
 # ── Metrics Computation ────────────────────────────────────────
@@ -238,12 +286,17 @@ def compute_score(data):
 
     # 5. Value: P/E < 20 and positive = undervalued
     pe_val = data.get('pe')
-    if pe_val is not None and pe_val is not None and 0 < pe_val < 15:
-        score += 1
-        reasons.append("value_pe")
-    elif pe_val is not None and pe_val > 30:
-        score -= 1
-        reasons.append("premium_pe")
+    if pe_val is not None:
+        try:
+            pe_val = float(pe_val)
+            if 0 < pe_val < 15:
+                score += 1
+                reasons.append("value_pe")
+            elif pe_val > 30:
+                score -= 1
+                reasons.append("premium_pe")
+        except (ValueError, TypeError):
+            pass
 
     # 6. Analyst recommendation
     rec = data.get('recommendation', '')

@@ -299,7 +299,15 @@ const Screener = {
       // Universe
       if (sectorFilter === '') {
         var universeFilter = val('filter-universe');
-        if (universeFilter && t.universe !== universeFilter) return false;
+        if (universeFilter) {
+          // Consolidate S&P 500 variant universes into one
+          var tickerUniverse = t.universe || '';
+          if (universeFilter === 'S&P 500' && tickerUniverse.startsWith('S&P 500')) {
+            // match
+          } else if (tickerUniverse !== universeFilter) {
+            return false;
+          }
+        }
       }
 
       // Min Score
