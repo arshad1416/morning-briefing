@@ -285,53 +285,35 @@ const PaperTrades = {
     });
     html += '</div></div>';
 
-    // ── Recent Live Trades ──
-    if (data?.recent_trades?.length) {
-      html += '<h2 class="section-title" style="margin-top:24px">Recent Trades</h2>';
-      html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Type</th><th>Entry</th><th>Exit</th><th>Entry Price</th><th>Exit Price</th><th>P&L</th><th>Strategy</th><th>Status</th></tr></thead><tbody>';
-      data.recent_trades.slice(0, 20).forEach(t => {
-        const cls = t.pnl_pct > 0 ? 'positive' : t.pnl_pct < 0 ? 'negative' : '';
-        const status = t.exit_date ? '✅ Closed' : '⏳ Open';
-        const statusCls = t.exit_date ? 'badge-green' : 'badge-yellow';
+    // ── All Trades (Recent + Closed combined) ──
+    const allTrades = [
+      ...(data?.recent_trades?.slice(0, 30) || []),
+      ...(data?.closed_trades?.map(t => ({ ...t, _isClosed: true })) || [])
+    ];
+    if (allTrades.length) {
+      html += '<h2 class="section-title" style="margin-top:24px">Trade History</h2>';
+      html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Type</th><th>Entry</th><th>Exit</th><th>Entry Price</th><th>Exit Price</th><th>P&L</th><th>P&L %</th><th>Status</th></tr></thead><tbody>';
+      allTrades.forEach(t => {
+        const cls = (t.pnl_pct > 0 || t.pnl_usd > 0) ? 'positive' : (t.pnl_pct < 0 || t.pnl_usd < 0) ? 'negative' : '';
+        const status = t.exit_date || t._isClosed ? 'Closed' : 'Open';
+        const statusCls = t.exit_date || t._isClosed ? 'badge-green' : 'badge-yellow';
         const cur = t.currency || 'USD';
         const entryStr = t.entry_price ? `$${t.entry_price.toFixed(2)} ${cur}` : '—';
         const exitStr = t.exit_price ? `$${t.exit_price.toFixed(2)} ${cur}` : '—';
-        const entryDT = t.entry_date ? t.entry_date.replace('T',' ').slice(0,16) : '—';
-        const exitDT = t.exit_date ? t.exit_date.replace('T',' ').slice(0,16) : '—';
-        html += `<tr>
+        const entryDT = t.entry_date ? t.entry_date.replace('T',' ').slice(0,10) : '—';
+        const exitDT = t.exit_date ? t.exit_date.replace('T',' ').slice(0,10) : '—';
+        const reason = (t.reason || t.rationale || '').replace(/"/g, '&quot;');
+        const pnlDisplay = t.pnl_pct != null ? `${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct}%` : (t.pnl_usd != null ? `$${t.pnl_usd.toFixed(2)}` : '—');
+        html += `<tr title="${reason}" style="cursor:help">
           <td><strong>${t.ticker}</strong></td>
           <td><span class="badge ${t.type === 'Stock' ? 'badge-green' : 'badge-yellow'}" style="font-size:0.65rem">${t.type || '—'}</span></td>
           <td style="font-size:0.8rem">${entryDT}</td>
           <td style="font-size:0.8rem">${exitDT}</td>
           <td style="font-size:0.85rem">${entryStr}</td>
           <td style="font-size:0.85rem">${exitStr}</td>
-          <td class="${cls}" style="font-weight:700">${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct}%</td>
-          <td style="font-size:0.8rem">${this._strategyLink(t.strategy)}</td>
+          <td class="${cls}" style="font-weight:700">${pnlDisplay}</td>
+          <td class="${cls}" style="font-size:0.85rem">${t.pnl_pct != null ? (t.pnl_pct >= 0 ? '+' : '') + t.pnl_pct + '%' : '—'}</td>
           <td><span class="badge ${statusCls}" style="font-size:0.65rem">${status}</span></td>
-        </tr>`;
-      });
-      html += '</tbody></table></div>';
-    }
-
-    // ── Closed Trades All ──
-    if (data?.closed_trades?.length) {
-      html += '<h2 class="section-title" style="margin-top:24px">Closed Trades History</h2>';
-      html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Type</th><th>Entry Date</th><th>Exit Date</th><th>Entry Price</th><th>Exit Price</th><th>P&L</th><th>P&L %</th><th>Strategy</th><th>Reason</th></tr></thead><tbody>';
-      data.closed_trades.forEach(t => {
-        const cls = t.pnl_usd > 0 ? 'positive' : t.pnl_usd < 0 ? 'negative' : '';
-        const arrow = t.pnl_usd > 0 ? '🟢' : '🔴';
-        const cur = t.currency || 'USD';
-        html += `<tr>
-          <td><strong>${t.ticker}</strong></td>
-          <td><span class="badge ${t.type === 'Stock' ? 'badge-green' : 'badge-yellow'}" style="font-size:0.65rem">${t.type}</span></td>
-          <td style="font-size:0.8rem">${t.entry_date}</td>
-          <td style="font-size:0.8rem">${t.exit_date}</td>
-          <td style="font-size:0.85rem">$${t.entry_price.toFixed(2)} ${cur}</td>
-          <td style="font-size:0.85rem">$${t.exit_price.toFixed(2)} ${cur}</td>
-          <td class="${cls}" style="font-weight:700">${arrow} $${t.pnl_usd.toFixed(2)}</td>
-          <td class="${cls}">${t.pnl_pct > 0 ? '+' : ''}${t.pnl_pct}%</td>
-          <td style="font-size:0.8rem">${this._strategyLink(t.strategy)}</td>
-          <td style="font-size:0.75rem;color:var(--text-muted)">${t.reason}</td>
         </tr>`;
       });
       html += '</tbody></table></div>';
