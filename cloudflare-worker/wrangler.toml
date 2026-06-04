@@ -12,13 +12,8 @@ OPENROUTER_MODEL = "deepseek/deepseek-v4-pro"
 RATE_LIMIT_PER_MIN = 10
 
 # KV namespace for rate limiting
-# Create with: npx wrangler kv:namespace create "RATE_LIMIT_KV"
-# Then update the id below and run: npx wrangler kv:namespace create "RATE_LIMIT_KV" --preview
-# for preview_id
-[[kv_namespaces]]
-binding = "RATE_LIMIT_KV"
-id = "RATE_LIMIT_KV"    # ← REPLACE with actual ID from `wrangler kv:namespace create`
-preview_id = "RATE_LIMIT_KV_PREVIEW"  # ← REPLACE with preview ID
+# Rate limiting is configured via Cloudflare dashboard (WAF).
+# No KV required.
 
 # Deployment: npx wrangler deploy
 # Secrets: npx wrangler secret put OPENROUTER_API_KEY

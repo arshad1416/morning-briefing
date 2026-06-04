@@ -89,30 +89,9 @@ async function handleRequest(request, env) {
     });
   }
 
-  // ── KV-based Rate Limiting ──
-  if (env?.RATE_LIMIT_KV) {
-    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
-    const key = `rl:${ip}`;
-    const now = Date.now();
-    const windowMs = 60000; // 1 minute
-    const maxReqs = env?.RATE_LIMIT_PER_MIN || 10;
-
-    const entry = await env.RATE_LIMIT_KV.get(key, { type: 'json' }).catch(() => null);
-    let count = 1;
-    if (entry && now - entry.reset < windowMs) {
-      count = entry.count + 1;
-    }
-    // Atomically update
-    await env.RATE_LIMIT_KV.put(
-      key,
-      JSON.stringify({ count, reset: now }),
-      { expirationTtl: 120 },
-    ).catch(() => {});
-
-    if (count > maxReqs) {
-      return json({ error: 'Rate limit exceeded. Try again in a minute.' }, 429, request);
-    }
-  }
+  // Rate limiting uses Cloudflare dashboard rules (WAF).
+  // See Cloudflare dashboard → Security → Rate Limiting for configuration.
+  // Recommended: 10 requests per 60 seconds per IP on /chat endpoint.
 
   // ── Chat only ──
   if ((path === '/' || path === '/chat') && request.method === 'POST') {
