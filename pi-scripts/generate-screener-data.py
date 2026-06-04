@@ -65,7 +65,7 @@ def fetch_ticker_data(ticker):
         if isinstance(hist.columns, pd.MultiIndex):
             hist.columns = hist.columns.get_level_values(0)
 
-        price = hist['Close'][-1]
+        price = hist['Close'].iloc[-1]
 
         # RSI (14-day)
         delta = hist['Close'].diff()
@@ -83,7 +83,7 @@ def fetch_ticker_data(ticker):
         sma50 = round(hist['Close'].rolling(50).mean().iloc[-1], 2)
 
         # Volume
-        volume = int(hist['Volume'][-1])
+        volume = int(hist['Volume'].iloc[-1])
         avg_vol = int(hist['Volume'].rolling(50).mean().iloc[-1])
 
         # 52-week high/low
@@ -139,7 +139,7 @@ def fetch_ticker_data(ticker):
             "volume_ratio": round(volume / avg_vol, 2) if avg_vol else 1.0,
         }
     except Exception as e:
-        print(f"Error fetching {ticker}: {e}", file=sys.stderr)
+        print(f"Error fetching {ticker}: {type(e).__name__}: {e}", file=sys.stderr)
         return None
 
 

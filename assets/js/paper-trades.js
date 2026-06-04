@@ -292,7 +292,7 @@ const PaperTrades = {
     ];
     if (allTrades.length) {
       html += '<h2 class="section-title" style="margin-top:24px">Trade History</h2>';
-      html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Type</th><th>Entry</th><th>Exit</th><th>Entry Price</th><th>Exit Price</th><th>P&L</th><th>P&L %</th><th>Status</th></tr></thead><tbody>';
+      html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Type</th><th>Entry</th><th>Exit</th><th>Entry Price</th><th>Exit Price</th><th>P&L</th><th>P&L %</th><th>Status</th><th>Reason</th></tr></thead><tbody>';
       allTrades.forEach(t => {
         const cls = (t.pnl_pct > 0 || t.pnl_usd > 0) ? 'positive' : (t.pnl_pct < 0 || t.pnl_usd < 0) ? 'negative' : '';
         const status = t.exit_date || t._isClosed ? 'Closed' : 'Open';
@@ -314,6 +314,7 @@ const PaperTrades = {
           <td class="${cls}" style="font-weight:700">${pnlDisplay}</td>
           <td class="${cls}" style="font-size:0.85rem">${t.pnl_pct != null ? (t.pnl_pct >= 0 ? '+' : '') + t.pnl_pct + '%' : '—'}</td>
           <td><span class="badge ${statusCls}" style="font-size:0.65rem">${status}</span></td>
+          <td style="font-size:0.75rem;color:var(--text-muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${reason}">${reason || '—'}</td>
         </tr>`;
       });
       html += '</tbody></table></div>';
