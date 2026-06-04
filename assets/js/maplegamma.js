@@ -123,20 +123,58 @@ const MapleGamma = {
         <div class="mg-pricing" id="mg-pricing">
           <div class="mg-pricing-card">
             <div class="plan-name">MapleGamma Pro</div>
-            <div class="price">$150 <span style="font-size:1rem;color:var(--text-muted)">CAD/month — Pro</span></div>
+            <div class="price">$150 <span style="font-size:1rem;color:var(--text-muted)">CAD/month</span></div>
             <div class="price-note">Includes portfolio tracker + ticker watchlist</div>
             <ul class="features">
-              <li>Real-time GEX/DEX/VEX for SPX &amp; TSX</li>
+              <li>Real-time GEX/DEX/VEX for SPX</li>
               <li>Gamma profile charts with floor/ceiling zones</li>
               <li>Full gamma table — exportable to CSV</li>
               <li>Unusual options flow + whale alerts</li>
               <li>AI market narrative + gamma interpretation</li>
-              <li>Portfolio gamma tracking</li>
+              <li>Portfolio tracker with live prices</li>
               <li>Discord community access</li>
             </ul>
             <a href="#/mg" class="mg-btn mg-btn-primary" style="width:100%;justify-content:center">Subscribe Now →</a>
             <div class="guarantee">14-day money-back guarantee. Cancel anytime.</div>
           </div>
+
+          <!-- Add-ons -->
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px">
+            <div class="mg-pricing-card" style="padding:16px;text-align:center">
+              <div style="font-size:1.5rem;margin-bottom:6px">🍁</div>
+              <div style="font-weight:600;font-size:0.9rem">Canadian Data</div>
+              <div class="price" style="font-size:1.2rem">+$50</div>
+              <div style="font-size:0.7rem;color:var(--text-muted)">CAD/month</div>
+              <ul class="features" style="margin-top:8px">
+                <li>TSX, TSX-V, TSX60 gamma</li>
+                <li>Canadian options chains</li>
+                <li>Cross-border analysis</li>
+              </ul>
+            </div>
+            <div class="mg-pricing-card" style="padding:16px;text-align:center">
+              <div style="font-size:1.5rem;margin-bottom:6px">🤖</div>
+              <div style="font-weight:600;font-size:0.9rem">AI Rebalance</div>
+              <div class="price" style="font-size:1.2rem">+$50</div>
+              <div style="font-size:0.7rem;color:var(--text-muted)">CAD/month</div>
+              <ul class="features" style="margin-top:8px">
+                <li>Full P&amp;L tracking</li>
+                <li>AI portfolio analysis</li>
+                <li>Rebalance suggestions</li>
+              </ul>
+            </div>
+            <div class="mg-pricing-card" style="padding:16px;text-align:center">
+              <div style="font-size:1.5rem;margin-bottom:6px">🔑</div>
+              <div style="font-weight:600;font-size:0.9rem">API Access</div>
+              <div class="price" style="font-size:1.2rem">+$100</div>
+              <div style="font-size:0.7rem;color:var(--text-muted)">CAD/month</div>
+              <ul class="features" style="margin-top:8px">
+                <li>REST API access</li>
+                <li>Self-serve API keys</li>
+                <li>Unlimited queries</li>
+              </ul>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:12px;font-size:0.85rem;color:var(--accent);font-weight:600">Full Stack: $350 CAD/mo — Everything included</div>
         </div>
 
         <!-- Comparison -->
