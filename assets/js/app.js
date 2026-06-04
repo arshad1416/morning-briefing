@@ -3,6 +3,7 @@
  */
 (function () {
   'use strict';
+  console.log('app.js started');
 
   // ── Theme toggle ────────────────────────────────────────────
   // The <head> inline script already applied the saved/OS theme
