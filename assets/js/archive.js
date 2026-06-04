@@ -1,5 +1,5 @@
 /**
- * Archive — Browse past briefings.
+ * Archive — Browse past briefings with modal detail view.
  */
 const Archive = {
   async render(app) {
@@ -16,10 +16,7 @@ const Archive = {
     html += '<div class="card table-wrap"><table><thead><tr><th>Date</th><th>Generated</th><th>Indices</th></tr></thead><tbody>';
 
     for (const date of dates) {
-      // Lazy-load each archive row summary from the individual file
       const brief = await State.get(`archive:${date}`, `/data/archive/${date}.json`);
-
-      // Core stock indices only — filter out bond yields and noise
       const coreTickers = ['S&P 500', 'Dow Jones', 'NASDAQ', 'TSX'];
       const allIndices = brief?.market_summary?.indices || [];
       const core = allIndices.filter(i => coreTickers.includes(i.ticker));
@@ -32,43 +29,54 @@ const Archive = {
         }).join('');
       }
 
-      // Compact secondary indicators
       let meta = '';
       const vix = brief?.market_summary?.vix;
       const y10 = brief?.market_summary?.ten_year_yield;
       if (vix != null) meta += `VIX ${vix} `;
       if (y10 != null) meta += `10Y ${y10}%`;
 
-      html += `<tr>
-        <td><a href="#/archive/${date}" class="archive-date">${date}</a></td>
+      // Store data on click — modal instead of navigation
+      const safeDate = date.replace(/'/g, "\\'");
+      html += `<tr style="cursor:pointer" onclick="Archive._showModal('${safeDate}')">
+        <td class="archive-date">${date}</td>
         <td style="color:var(--text-muted);font-size:0.8rem">${brief?.generated_at ? new Date(brief.generated_at).toLocaleTimeString() : '—'}</td>
         <td>${indicesHtml}${meta ? `<div style="color:var(--text-muted);font-size:0.75rem;margin-top:3px">${meta}</div>` : ''}</td>
       </tr>`;
     }
 
     html += '</tbody></table></div></div>';
+
+    // Modal container
+    html += '<div id="archive-modal" class="modal-overlay" style="display:none" onclick="if(event.target===this)Archive._closeModal()">';
+    html += '  <div class="modal-content"><span class="modal-close" onclick="Archive._closeModal()">&times;</span>';
+    html += '    <div id="archive-modal-body">Loading...</div>';
+    html += '  </div>';
+    html += '</div>';
+
     app.innerHTML = html;
   },
 
-  /** Render a single archived briefing */
-  async renderDate(app, params) {
-    const date = params?.date;
-    if (!date) {
-      app.innerHTML = '<div class="error-card">No date specified.</div>';
-      return;
-    }
+  async _showModal(date) {
+    const modal = document.getElementById('archive-modal');
+    const body = document.getElementById('archive-modal-body');
+    if (!modal || !body) return;
 
-    app.innerHTML = '<div class="loading">Loading briefing...</div>';
+    modal.style.display = 'flex';
+    body.innerHTML = '<div class="loading">Loading briefing...</div>';
+
     const data = await State.get(`archive:${date}`, `/data/archive/${date}.json`);
-
     if (!data) {
-      app.innerHTML = `<div class="error-card">Briefing for ${date} not found.</div>`;
+      body.innerHTML = '<div class="error-card">Briefing not found.</div>';
       return;
     }
 
-    // Reuse dashboard rendering with the archived data
-    // Store data temporarily in State for Dashboard renderer
-    State._cache['archive_detail'] = data;
-    Dashboard.renderWithData(app, data, `Archive: ${date}`);
+    // Reuse dashboard rendering in the modal
+    State._cache['modal_detail'] = data;
+    Dashboard.renderWithData(body, data, `Briefing: ${date}`);
+  },
+
+  _closeModal() {
+    const modal = document.getElementById('archive-modal');
+    if (modal) modal.style.display = 'none';
   }
 };
