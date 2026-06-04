@@ -84,11 +84,15 @@ const Chat = {
     </div>`;
 
     try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 30000);
       const res = await fetch(this.WORKER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ticker, eli5: isELI5 })
+        body: JSON.stringify({ ticker, eli5: isELI5 }),
+        signal: controller.signal
       });
+      clearTimeout(timeout);
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
