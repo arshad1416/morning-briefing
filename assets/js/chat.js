@@ -108,9 +108,10 @@ const Chat = {
       fullHtml += Utils.renderMarkdown(data.content);
 
       // Model info
-      if (data.model) {
-        fullHtml += `<div style="text-align:right;font-size:0.75rem;color:var(--text-muted);margin-top:16px">via ${data.model}</div>`;
-      }
+      // Model info (hidden — not useful to users)
+      // if (data.model) {
+      //   fullHtml += `<div style="text-align:right;font-size:0.75rem;color:var(--text-muted);margin-top:16px">via ${data.model}</div>`;
+      // }
 
       // Add to history
       this._history.unshift({ ticker, html: fullHtml, ts: new Date().toLocaleTimeString(), mode: isELI5 ? 'ELI5' : 'Full' });
