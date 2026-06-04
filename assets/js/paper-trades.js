@@ -169,6 +169,30 @@ const PaperTrades = {
 
     let html = '<div class="section"><h2 class="section-title">📊 Trading Performance</h2>';
 
+    // ── Portfolio Summary ──
+    if (data?.portfolio) {
+      const p = data.portfolio;
+      const genAt = data.generated_at ? new Date(data.generated_at).toLocaleString() : '';
+      html += '<div class="card" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px;margin-bottom:16px">'
+        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Status</div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">' + Utils.esc(data.status || '—') + '</div></div>'
+        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Starting</div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">$' + Utils.formatPrice(p.starting_balance) + '</div></div>'
+        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Cash</div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">$' + Utils.formatPrice(p.cash) + '</div></div>'
+        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Total Value</div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">$' + Utils.formatPrice(p.total_balance) + '</div></div>'
+        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Win Rate</div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + (p.win_rate >= 50 ? 'var(--positive)' : 'var(--negative)') + '">' + p.win_rate + '%</div></div>'
+        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Trades</div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">' + p.total_trades + '</div></div>'
+        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Active Strategy</div>'
+        + '<div style="font-size:0.9rem;font-weight:600;margin-top:4px">' + Utils.esc(data.active_strategy || '—') + '</div></div>'
+        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Last Updated</div>'
+        + '<div style="font-size:0.8rem;font-weight:500;margin-top:4px">' + Utils.esc(genAt) + '</div></div>'
+        + '</div>';
+    }
+
     // ── Live Open Positions ──
     html += '<h2 class="section-title" style="margin-top:24px">Open Positions</h2>';
     if (data?.open_positions?.length) {

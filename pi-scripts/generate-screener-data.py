@@ -202,7 +202,7 @@ def fetch_ticker_data(ticker):
         else:
             inst_pct = None
         # Add computed signals
-        return {
+        result = {
             "ticker": ticker,
             "name": ticker_name,
             "universe": TICKER_UNIVERSE.get(ticker, "Other"),
@@ -214,7 +214,7 @@ def fetch_ticker_data(ticker):
             "divYield": div_yield,
             "sector": info.get("sector"),
             "industry": info.get("industry"),
-            "recommendation": (info.get("recommendationKey") or "").upper(),
+            "recommendation": info.get("recommendationKey"),
             "targetPrice": info.get("targetMeanPrice"),
             "beta": info.get("beta"),
             "volume": volume,
@@ -232,6 +232,15 @@ def fetch_ticker_data(ticker):
             "below_52w_low_pct": round((price / low_52w - 1) * 100, 1) if low_52w else None,
             "volume_ratio": round(volume / avg_vol, 2) if avg_vol else 1.0,
         }
+        # Replace NaN with None for valid JSON
+        for k, v in result.items():
+            if isinstance(v, float) and (v != v):  # NaN check (NaN != NaN)
+                result[k] = None
+            elif isinstance(v, float) and v == float('inf'):
+                result[k] = None
+            elif isinstance(v, float) and v == float('-inf'):
+                result[k] = None
+        return result
     except Exception as e:
         print(f"Error fetching {ticker}: {type(e).__name__}: {e}", file=sys.stderr)
         return None
