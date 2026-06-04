@@ -78,14 +78,10 @@ async function handleRequest(request, env) {
     }
     ctx.push(isELI5 ? 'Explain simply.' : 'Provide detailed analysis with tables.');
     try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 25000);
       const resp = await fetch(`${baseUrl}/chat/completions`, {
         method: 'POST', headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json', 'HTTP-Referer': 'https://briefing.arshadkazi.ca', 'X-Title': 'Morning Briefing Chat' },
         body: JSON.stringify({ model, messages: [{ role: 'system', content: isELI5 ? PROMPT_ELI5 : PROMPT_NORMAL }, { role: 'user', content: ctx.join('\n') }], temperature: 0.3, max_tokens: 2000 }),
-        signal: controller.signal,
       });
-      clearTimeout(timeout);
       if (!resp.ok) return json({ error: `OpenRouter error: ${resp.status}` }, 502);
       const result = await resp.json();
       const content = result?.choices?.[0]?.message?.content || 'No analysis.';
