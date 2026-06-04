@@ -1,12 +1,11 @@
 # Cloudflare Pages headers
 # HTML: always check for freshness
-# JS/CSS: always revalidate — no aggressive caching (these change per-deploy)
-# Images: cache long-term (rarely change)
-# Data: short TTL for live market data
+# JS/CSS: always revalidate
+# Images: cache long-term
+# Data: short TTL
 
 /*
   Cache-Control: public, max-age=0, must-revalidate
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://morning-briefing-chat.rcobwq7u.workers.dev; style-src 'self' 'unsafe-inline'; img-src 'self' data:
 
 /assets/js/*
   Cache-Control: public, no-cache, must-revalidate

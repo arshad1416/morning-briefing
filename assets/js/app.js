@@ -44,39 +44,21 @@
     });
   }
 
-  // ── Routes ── Register handlers with direct references ───────────
-  // Store module references at registration time (not closure-delayed)
-  var _routes = {
-    '/':                Dashboard,
-    '/watchlist':       Watchlist,
-    '/archive':         Archive,
-    '/trades':          PaperTrades,
-    '/prediction-engine': PredictionEngine,
-    '/chat':            Chat,
-    '/maplegamma':      MapleGamma,
-    '/mg':              MapleGamma,
-    '/backtest-research': BacktestResearch,
-    '/portfolio':        Portfolio,
-    '/simulation':       Simulation,
-    '/screener':         Screener,
-    '/ticker/:ticker':  TickerDetail,
-    '/archive/:date':   Archive,
-  };
-  for (var path in _routes) {
-    if (_routes[path]) {
-      (function(mod, p) {
-        if (p === '/mg') {
-          Router.register(p, function (app) { mod.renderDashboard(app); });
-        } else if (p === '/maplegamma') {
-          Router.register(p, function (app) { mod.renderLanding(app); });
-        } else if (p.indexOf(':') >= 0) {
-          Router.register(p, function (app, params) { mod.render(app, params); });
-        } else {
-          Router.register(p, function (app) { mod.render(app); });
-        }
-      })(_routes[path], path);
-    }
-  }
+  // ── Routes ──────────────────────────────────────────────────
+  Router.register('/',              function (app)         { Dashboard.render(app); });
+  Router.register('/watchlist',     function (app)         { Watchlist.render(app); });
+  Router.register('/archive',       function (app)         { Archive.render(app); });
+  Router.register('/trades',        function (app)         { PaperTrades.render(app); });
+  Router.register('/prediction-engine', function (app)    { PredictionEngine.render(app); });
+  Router.register('/chat',          function (app)         { Chat.render(app); });
+  Router.register('/maplegamma',   function (app)         { MapleGamma.renderLanding(app); });
+  Router.register('/mg',           function (app)         { MapleGamma.renderDashboard(app); });
+  Router.register('/backtest-research', function (app)    { BacktestResearch.render(app); });
+  Router.register('/portfolio',      function (app)         { Portfolio.render(app); });
+  Router.register('/simulation',     function (app)         { Simulation.render(app); });
+  Router.register('/screener',       function (app)         { Screener.render(app); });
+  Router.register('/ticker/:ticker',function (app, params) { TickerDetail.render(app, params); });
+  Router.register('/archive/:date', function (app, params) { Archive.renderDate(app, params); });
 
   // ── Start ────────────────────────────────────────────────────
   Router.init();
