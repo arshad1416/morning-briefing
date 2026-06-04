@@ -285,11 +285,8 @@ const PaperTrades = {
     });
     html += '</div></div>';
 
-    // ── All Trades (Recent + Closed combined) ──
-    const allTrades = [
-      ...(data?.recent_trades?.slice(0, 30) || []),
-      ...(data?.closed_trades?.map(t => ({ ...t, _isClosed: true })) || [])
-    ];
+    // ── All Trades ──
+    const allTrades = data?.closed_trades?.map(t => ({ ...t, _isClosed: true })) || [];
     if (allTrades.length) {
       html += '<h2 class="section-title" style="margin-top:24px">Trade History</h2>';
       html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Type</th><th>Entry</th><th>Exit</th><th>Entry Price</th><th>Exit Price</th><th>P&L</th><th>P&L %</th><th>Status</th><th>Reason</th></tr></thead><tbody>';
