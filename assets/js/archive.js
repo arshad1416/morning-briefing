@@ -89,30 +89,43 @@ const Archive = {
 
     // Render full dashboard-style briefing in modal
     State._cache['modal_detail'] = data;
-    // Build a compact briefing view
-    let html = `<div style="margin-bottom:12px;display:flex;justify-content:space-between;align-items:center">
-      <h3 style="margin:0;font-size:1.1rem">Briefing: ${date}</h3>
-      <span style="font-size:0.75rem;color:var(--text-muted)">${data.generated_at ? new Date(data.generated_at).toLocaleString() : ''}</span>
-    </div>`;
+    // Build full briefing view from emailed content
+    let html = '<div style="margin-bottom:12px;display:flex;justify-content:space-between;align-items:center">';
+    html += '<h3 style="margin:0;font-size:1.1rem">Morning Briefing: ' + date + '</h3>';
+    html += '<span style="font-size:0.75rem;color:var(--text-muted)">' + (data.generated_at ? new Date(data.generated_at).toLocaleString() : '') + '</span></div>';
 
-    // Core indices
-    const indices = data.market_summary?.indices || [];
+    // Core indices strip
+    var indices = data.market_summary?.indices || [];
     if (indices.length) {
-      html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">';
-      indices.forEach(i => {
-        const cls = Utils.changeClass(i.change_pct);
-        html += `<div class="card" style="padding:8px 12px;text-align:center;min-width:80px">
-          <div style="font-size:0.65rem;font-weight:600;color:var(--text-muted);text-transform:uppercase">${i.ticker}</div>
-          <div style="font-size:0.9rem;font-weight:700">${Utils.formatPrice(i.price)}</div>
-          <div class="${cls}" style="font-size:0.75rem">${Utils.formatPct(i.change_pct)}</div>
-        </div>`;
+      html += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">';
+      indices.forEach(function(i) {
+        var cls = Utils.changeClass(i.change_pct);
+        html += '<div class="card" style="padding:6px 10px;text-align:center;min-width:70px">';
+        html += '<div style="font-size:0.6rem;font-weight:600;color:var(--text-muted);text-transform:uppercase">' + i.ticker + '</div>';
+        html += '<div style="font-size:0.85rem;font-weight:700">' + Utils.formatPrice(i.price) + '</div>';
+        html += '<div class="' + cls + '" style="font-size:0.7rem">' + Utils.formatPct(i.change_pct) + '</div></div>';
       });
       html += '</div>';
     }
 
-    // Narrative
-    if (data.narrative?.summary_paragraph) {
-      html += `<div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:12px;padding:12px;background:var(--bg-inset);border-radius:var(--radius-sm)">${data.narrative.summary_paragraph}</div>`;
+    // Render the emailed narrative as HTML (convert markdown to basic HTML)
+    var narrative = data.narrative || data.narrative?.summary_paragraph || '';
+    if (typeof narrative === 'string') {
+      // Convert markdown to simple HTML
+      var converted = narrative
+        .replace(/### /g, '<h3 style="font-size:0.9rem;margin:12px 0 6px;color:var(--text-primary)">')
+        .replace(/## /g, '<h2 style="font-size:1rem;margin:14px 0 6px;color:var(--accent)">')
+        .replace(/# /g, '<h1 style="font-size:1.1rem;margin:14px 0 6px;color:var(--accent)">')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n\* /g, '<br>• ')
+        .replace(/• /g, '<br>• ')
+        .replace(/\n\n/g, '</p><p style="font-size:0.85rem;line-height:1.6;color:var(--text-secondary)">')
+        .replace(/\n/g, '<br>');
+      html += '<div class="card" style="margin-top:8px;padding:16px;font-size:0.85rem;line-height:1.6;color:var(--text-secondary)">';
+      html += '<p style="font-size:0.85rem;line-height:1.6;color:var(--text-secondary)">' + converted + '</p>';
+      html += '</div>';
+    } else if (narrative && narrative.summary_paragraph) {
+      html += '<div class="card" style="margin-top:8px;padding:16px;font-size:0.85rem;line-height:1.6;color:var(--text-secondary)">' + narrative.summary_paragraph + '</div>';
     }
 
     body.innerHTML = html;
