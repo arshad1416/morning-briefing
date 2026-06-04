@@ -32,7 +32,7 @@ const PredictionEngine = {
     // Version comparison — only show major impact versions
     // Filter to versions that had measurable strategy changes
     const versions = Object.entries(data.versions).filter(([k,v]) => v.tag);
-    // Show versions that added real value: V1, V2, V3, V5, V6, V10, V18, V23, V26, V30, V50
+    html += '<h2 class="section-title">Methodology Comparison</h2><div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Methodology</th><th>Trades</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th><th>Innovation</th></tr></thead><tbody>';
     let majorVersions = versions.filter(([name]) => {
       const num = parseInt(name.split(' ')[0].replace('V',''));
       return [1,2,3,5,6,10,18,23,26,30,50].includes(num);
@@ -43,8 +43,9 @@ const PredictionEngine = {
       const p = d.performance.overall;
       const cls = p.avg_pnl >= 0 ? 'positive' : 'negative';
       const isBv = d.performance.overall.is_best || d.performance.overall.star;
+      const methName = name.replace('V', 'M').replace('Baseline', '0 Baseline');
       html += `<tr style="${isBv ? 'background:var(--accent-dim)' : ''}">
-        <td><strong>${name.split(' ')[0]}</strong></td>
+        <td><strong>${methName.split(' ')[0]}</strong></td>
         <td>${d.total_trades ? d.total_trades.toLocaleString() : ''}</td>
         <td class="${cls}">${p.avg_pnl >= 0 ? '+' : ''}${p.avg_pnl}%</td>
         <td><span class="${p.win_rate >= 70 ? 'badge badge-green' : p.win_rate >= 60 ? 'badge badge-yellow' : 'badge'}">${p.win_rate}%</span></td>

@@ -690,8 +690,8 @@ tr:last-child td { border-bottom: none; }
   display: flex;
   gap: 10px;
   margin-bottom: 22px;
-  background: var(--bg-card);
-  border: 2px solid var(--border-dim);  /* 2px for 3:1 UI component ✅ */
+  background: transparent;
+  border: none;
   border-radius: var(--radius-lg);
   padding: 8px 8px 8px 18px;
   transition: border-color 0.15s, box-shadow 0.15s;

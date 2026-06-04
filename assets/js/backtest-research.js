@@ -16,6 +16,7 @@ const BacktestResearch = {
     html += '<div class="card-title" style="color:var(--accent)">1. The Multiple Testing Problem</div>';
     html += '<div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:8px">';
     html += '<strong>Source:</strong> López de Prado, "The False Strategy Theorem" (2018). ';
+    html += '<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3104816" target="_blank" style="color:var(--accent)">Read paper →</a><br>';
     html += 'If you run 100 backtests on random data, 5-10 will show positive returns by pure chance. ';
     html += 'The more you test, the higher the probability of p-hacking.';
     html += '</div>';
@@ -23,8 +24,9 @@ const BacktestResearch = {
     html += '<strong style="color:var(--green)">✅ Our Result:</strong> We ran 50+ iterations across 4 strategies with 59 tickers over 25 years. ';
     html += 'To account for multiple testing, we applied a ~30% Sharpe degradation factor — our reported IS Sharpe of 2.22 ';
     html += 'is expected to live-trade around 1.55, which is still respectable by institutional standards.';
-    if (wf) {
-      html += ' Walk-forward confirms: OOS Sharpe of ' + wf.avg_oos_sharpe + ' vs IS ' + wf.avg_is_sharpe + '.';
+    if (wf && wf.summary) {
+      var mr = wf.summary.mean_reversion || {};
+      html += ' Walk-forward confirms: OOS Sharpe of ' + (mr.avg_oos_sharpe || '?').toFixed(2) + ' vs IS ' + (mr.avg_is_sharpe || '?').toFixed(2) + ' for mean reversion. ';
     }
     html += '</div></div>';
 
@@ -62,25 +64,29 @@ const BacktestResearch = {
     html += 'If OOS performance matches IS, the strategy is not overfit.';
     html += '</div>';
     html += '<div style="padding:8px 12px;background:var(--bg-inset);border-radius:var(--radius-sm);font-size:0.85rem">';
-    if (wf) {
-      html += '<strong style="color:var(--green)">✅ Our Walk-Forward Results (V2 — fixed methodology):</strong><br>';
-      html += '• 8 non-overlapping windows (3yr train / 1yr test)<br>';
-      html += '• Parameter grid: RSI [15-30] × hold [10-30d], optimized per window<br>';
-      html += '• Transaction costs: 10bps per trade round-trip<br><br>';
+    if (wf && wf.summary) {
+      var mr = wf.summary.mean_reversion || {};
+      var mom = wf.summary.momentum || {};
+      var brk = wf.summary.breakout || {};
+      var sr = wf.summary.sector_rotation || {};
+      html += '<strong style="color:var(--green)"> Our Walk-Forward Results:</strong><br>';
+      html += ' 8 non-overlapping windows (3yr train / 1yr test)<br>';
+      html += ' Parameter grid: RSI [15-30]  hold [10-30d], optimized per window<br>';
+      html += ' Transaction costs: 10bps per trade round-trip<br><br>';
       html += '<table style="width:100%;font-size:0.8rem;border-collapse:collapse">';
       html += '<tr><th>Strategy</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>Degradation</th><th>Trades</th></tr>';
-      const rows = [
-        ['Mean Reversion', wf.mean_reversion, '1.11', '0.76', '-24.9%', '583'],
-        ['Momentum', wf.momentum, '0.63', '0.76', '-258.2%', '2,322'],
-        ['Breakout', wf.breakout, '0.74', '0.49', '-350.1%', '470'],
-        ['Sector Rotation', wf.sector_rotation, '0.68', '0.91', '-73.3%', '105'],
+      var rows = [
+        ['Mean Reversion', mr.avg_is_sharpe, mr.avg_oos_sharpe, mr.avg_degradation_pct, mr.total_oos_trades],
+        ['Momentum', mom.avg_is_sharpe, mom.avg_oos_sharpe, mom.avg_degradation_pct, mom.total_oos_trades],
+        ['Breakout', brk.avg_is_sharpe, brk.avg_oos_sharpe, brk.avg_degradation_pct, brk.total_oos_trades],
+        ['Sector Rotation', sr.avg_is_sharpe, sr.avg_oos_sharpe, sr.avg_degradation_pct, sr.total_oos_trades],
       ];
-      rows.forEach(r => {
+      rows.forEach(function(r) {
         html += '<tr><td style="padding:4px 6px;border-bottom:1px solid var(--border-dim)"><strong>' + r[0] + '</strong></td>';
-        html += '<td style="padding:4px 6px;border-bottom:1px solid var(--border-dim)">' + r[2] + '</td>';
-        html += '<td style="padding:4px 6px;border-bottom:1px solid var(--border-dim)">' + r[3] + '</td>';
-        html += '<td style="padding:4px 6px;border-bottom:1px solid var(--border-dim)">' + r[4] + '</td>';
-        html += '<td style="padding:4px 6px;border-bottom:1px solid var(--border-dim)">' + r[5] + '</td></tr>';
+        html += '<td style="padding:4px 6px;border-bottom:1px solid var(--border-dim)">' + (r[1] ? r[1].toFixed(2) : '---') + '</td>';
+        html += '<td style="padding:4px 6px;border-bottom:1px solid var(--border-dim)">' + (r[2] ? r[2].toFixed(2) : '---') + '</td>';
+        html += '<td style="padding:4px 6px;border-bottom:1px solid var(--border-dim)">' + (r[3] != null ? r[3].toFixed(1) + '%' : '---') + '</td>';
+        html += '<td style="padding:4px 6px;border-bottom:1px solid var(--border-dim)">' + (r[4] || '---') + '</td></tr>';
       });
       html += '</table><br>';
       html += '<strong>Verdict:</strong> Mean reversion is the most stable strategy. OOS Sharpe 0.76 is respectable ';
