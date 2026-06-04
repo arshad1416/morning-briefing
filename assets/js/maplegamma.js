@@ -121,7 +121,7 @@ const MapleGamma = {
 
         <!-- Pricing -->
         <div class="mg-pricing" id="mg-pricing">
-          <div class="mg-pricing-card">
+          <div class="mg-pricing-card most-popular">
             <div class="plan-name">MapleGamma Pro</div>
             <div class="price">$150 <span style="font-size:1rem;color:var(--text-muted)">CAD/month</span></div>
             <div class="price-note">Includes portfolio tracker + ticker watchlist</div>

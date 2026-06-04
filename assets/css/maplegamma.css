@@ -266,8 +266,11 @@
   position: relative;
 }
 
-.mg-pricing-card::before {
+.mg-pricing-card.most-popular::before {
   content: 'Most Popular';
+}
+.mg-pricing-card::before {
+  content: 'ADD-ON';
   position: absolute;
   top: -12px;
   left: 50%;
