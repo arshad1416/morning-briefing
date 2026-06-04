@@ -24,9 +24,9 @@ const MapleGamma = {
       <div class="mg-landing">
         <!-- Hero -->
         <div class="mg-hero">
-          <div class="mg-hero-eyebrow" style="display:flex;align-items:center;gap:10px;font-size:1rem">
-            <img src="/assets/img/maplegamma-logo.svg" alt="MapleGamma" height="36" style="height:36px">
-            <span style="font-weight:600;letter-spacing:-0.3px">MapleGamma</span>
+          <div class="mg-hero-eyebrow" style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:8px">
+            <img src="/assets/img/maplegamma-logo.svg" alt="MapleGamma" height="52" style="height:52px">
+            <span style="font-weight:700;font-size:1.3rem;letter-spacing:-0.5px;color:var(--accent)">MapleGamma</span>
           </div>
           <h1 class="mg-hero-title">
             Gamma Intelligence<br>
