@@ -19,8 +19,19 @@
     })();
   </script>
 
-  <link rel="stylesheet" href="/assets/css/style.css?v=4">
-  <link rel="stylesheet" href="/assets/css/maplegamma.css?v=2">
+  <!-- CSS loaded dynamically with auto cache-bust version -->
+  <script>
+    (function() {
+      var v = Date.now().toString(36);
+      var sheets = ['/assets/css/style.css', '/assets/css/maplegamma.css'];
+      sheets.forEach(function(href) {
+        var l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = href + '?v=' + v;
+        document.head.appendChild(l);
+      });
+    })();
+  </script>
 </head>
 <body>
   <nav class="nav-bar">
@@ -55,20 +66,23 @@
     <div class="loading">Loading...</div>
   </main>
 
-  <script src="/assets/js/utils.js?v=3"></script>
-  <script src="/assets/js/state.js?v=3"></script>
-  <script src="/assets/js/dashboard.js?v=3"></script>
-  <script src="/assets/js/watchlist.js?v=3"></script>
-  <script src="/assets/js/ticker-detail.js?v=3"></script>
-  <script src="/assets/js/archive.js?v=3"></script>
-  <script src="/assets/js/paper-trades.js?v=3"></script>
-  <script src="/assets/js/prediction-engine.js?v=3"></script>
-  <script src="/assets/js/chat.js?v=3"></script>
-  <script src="/assets/js/maplegamma.js?v=2"></script>
-  <script src="/assets/js/backtest-research.js?v=2"></script>
-  <script src="/assets/js/portfolio.js?v=2"></script>
-  <script src="/assets/js/simulation.js?v=2"></script>
-  <script src="/assets/js/router.js?v=5"></script>
-  <script src="/assets/js/app.js?v=5"></script>
+  <!-- Scripts loaded dynamically with auto cache-bust version -->
+  <script>
+    (function() {
+      var v = Date.now().toString(36);
+      var scripts = [
+        'utils', 'state', 'dashboard', 'watchlist', 'ticker-detail',
+        'archive', 'paper-trades', 'prediction-engine', 'chat',
+        'maplegamma', 'backtest-research', 'portfolio', 'simulation',
+        'router', 'app'
+      ];
+      scripts.forEach(function(name) {
+        var s = document.createElement('script');
+        s.src = '/assets/js/' + name + '.js?v=' + v;
+        s.async = false;
+        document.body.appendChild(s);
+      });
+    })();
+  </script>
 </body>
 </html>
