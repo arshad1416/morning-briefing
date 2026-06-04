@@ -55,6 +55,7 @@
   Router.register('/mg',           function (app)         { MapleGamma.renderDashboard(app); });
   Router.register('/backtest-research', function (app)    { BacktestResearch.render(app); });
   Router.register('/portfolio',      function (app)         { Portfolio.render(app); });
+  Router.register('/simulation',     function (app)         { Simulation.render(app); });
   Router.register('/ticker/:ticker',function (app, params) { TickerDetail.render(app, params); });
   Router.register('/archive/:date', function (app, params) { Archive.renderDate(app, params); });
 

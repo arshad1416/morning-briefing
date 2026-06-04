@@ -173,8 +173,19 @@ const MapleGamma = {
                 <li>Unlimited queries</li>
               </ul>
             </div>
+            <div class="mg-pricing-card" style="padding:16px;text-align:center">
+              <div style="font-size:1.5rem;margin-bottom:6px">🎮</div>
+              <div style="font-weight:600;font-size:0.9rem">Simulation</div>
+              <div class="price" style="font-size:1.2rem">+$50</div>
+              <div style="font-size:0.7rem;color:var(--text-muted)">CAD/month</div>
+              <ul class="features" style="margin-top:8px">
+                <li>AI portfolio builder</li>
+                <li>Live P&amp;L tracking</li>
+                <li>Rebalance signals</li>
+              </ul>
+            </div>
           </div>
-          <div style="text-align:center;margin-top:12px;font-size:0.85rem;color:var(--accent);font-weight:600">Full Stack: $350 CAD/mo — Everything included</div>
+          <div style="text-align:center;margin-top:12px;font-size:0.85rem;color:var(--accent);font-weight:600">Full Stack: $400 CAD/mo — Everything included</div>
         </div>
 
         <!-- Comparison -->
