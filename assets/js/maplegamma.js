@@ -682,7 +682,7 @@ const MapleGamma = {
       <div class="mg-flow-card">
         <div class="mg-flow-header">
           <div class="mg-flow-title">🐋 Unusual Options Flow</div>
-          <a href="#" class="mg-flow-link">View All Flow →</a>
+          <a href="javascript:void(0)" class="mg-flow-link" onclick="MapleGamma._toggleFlow()">View All Flow →</a>
         </div>
         <div style="overflow-x:auto">
           <table class="mg-flow-table">
@@ -968,6 +968,24 @@ const MapleGamma = {
   /* ─────────────────────────────────────────────────────────────
      HELPERS
      ───────────────────────────────────────────────────────────── */
+  _toggleFlow() {
+    const table = document.querySelector('.mg-flow-table');
+    if (!table) return;
+    const allRows = table.querySelectorAll('tr');
+    const hidden = table.querySelector('.mg-flow-hidden');
+    if (hidden) {
+      // Show all rows
+      allRows.forEach(r => r.style.display = '');
+      hidden.remove();
+      this._toggleFlowBtn = 'Collapse';
+    } else {
+      // Hide all but first 5, add expand button
+      const link = document.querySelector('.mg-flow-link');
+      allRows.forEach((r, i) => { if (i > 4 && !i === allRows.length - 1) r.style.display = 'none'; });
+      if (link) link.textContent = '^ Collapse';
+    }
+  },
+
   _fmtGex(val) {
     if (val == null) return '—';
     const abs = Math.abs(val);
