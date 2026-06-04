@@ -90,39 +90,62 @@ const Archive = {
     // Render full dashboard-style briefing in modal
     State._cache['modal_detail'] = data;
     // Build full briefing view from emailed content
-    let html = '<div style="margin-bottom:12px;display:flex;justify-content:space-between;align-items:center">';
-    html += '<h3 style="margin:0;font-size:1.1rem">Morning Briefing: ' + date + '</h3>';
+    let html = '<div style="margin-bottom:16px">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">';
+    html += '<h3 style="margin:0;font-size:1.1rem;color:var(--text-primary)">Morning Briefing: ' + date + '</h3>';
     html += '<span style="font-size:0.75rem;color:var(--text-muted)">' + (data.generated_at ? new Date(data.generated_at).toLocaleString() : '') + '</span></div>';
 
-    // Core indices strip
+    // Core indices as a proper grid
     var indices = data.market_summary?.indices || [];
     if (indices.length) {
-      html += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">';
+      html += '<div class="key-levels" style="margin-bottom:16px">';
       indices.forEach(function(i) {
         var cls = Utils.changeClass(i.change_pct);
-        html += '<div class="card" style="padding:6px 10px;text-align:center;min-width:70px">';
-        html += '<div style="font-size:0.6rem;font-weight:600;color:var(--text-muted);text-transform:uppercase">' + i.ticker + '</div>';
-        html += '<div style="font-size:0.85rem;font-weight:700">' + Utils.formatPrice(i.price) + '</div>';
-        html += '<div class="' + cls + '" style="font-size:0.7rem">' + Utils.formatPct(i.change_pct) + '</div></div>';
+        html += '<div class="key-level-item" style="padding:8px 12px">';
+        html += '<span class="key-level-label" style="font-size:0.65rem">' + i.ticker + '</span>';
+        html += '<span class="key-level-value" style="font-size:1rem">' + Utils.formatPrice(i.price) + '</span>';
+        html += '<span class="' + cls + '" style="font-size:0.75rem">' + Utils.formatPct(i.change_pct) + '</span></div>';
       });
       html += '</div>';
     }
 
-    // Render the emailed narrative as HTML (convert markdown to basic HTML)
-    var narrative = data.narrative || data.narrative?.summary_paragraph || '';
-    if (typeof narrative === 'string') {
-      // Convert markdown to simple HTML
+    // Render the emailed narrative as formatted HTML
+    var narrative = data.narrative || '';
+    if (typeof narrative === 'string' && narrative.length > 20) {
+      // Convert markdown to clean HTML with proper table handling
       var converted = narrative
-        .replace(/### /g, '<h3 style="font-size:0.9rem;margin:12px 0 6px;color:var(--text-primary)">')
-        .replace(/## /g, '<h2 style="font-size:1rem;margin:14px 0 6px;color:var(--accent)">')
-        .replace(/# /g, '<h1 style="font-size:1.1rem;margin:14px 0 6px;color:var(--accent)">')
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\n\* /g, '<br>• ')
-        .replace(/• /g, '<br>• ')
-        .replace(/\n\n/g, '</p><p style="font-size:0.85rem;line-height:1.6;color:var(--text-secondary)">')
+        // Convert markdown tables first (before other replacements)
+        .replace(/\|(.+)\|/g, function(match) {
+          if (match.includes('---')) return '<tr style="border:none"><td colspan="10" style="border-bottom:1px solid var(--border-dim);padding:0"></td></tr>';
+          var cells = match.split('|').filter(function(c) { return c.trim(); });
+          var rowHtml = '<tr>';
+          cells.forEach(function(c) {
+            var trimmed = c.trim();
+            var isHeader = trimmed.startsWith('**') && trimmed.endsWith('**');
+            if (isHeader) {
+              rowHtml += '<th style="text-align:left;padding:6px 8px;font-size:0.8rem;font-weight:600;color:var(--text-primary);border-bottom:1px solid var(--border-dim)">' + trimmed.replace(/\*\*/g,'') + '</th>';
+            } else {
+              rowHtml += '<td style="text-align:left;padding:6px 8px;font-size:0.8rem;color:var(--text-secondary);border-bottom:1px solid var(--border-dim)">' + trimmed + '</td>';
+            }
+          });
+          return rowHtml + '</tr>';
+        })
+        // Headers
+        .replace(/### /g, '</div><div style="font-size:0.9rem;font-weight:600;margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border-dim);color:var(--text-primary)">')
+        .replace(/## /g, '</div><div style="font-size:1rem;font-weight:700;margin:18px 0 8px;color:var(--accent)">')
+        .replace(/# /g, '</div><div style="font-size:1.1rem;font-weight:700;margin:20px 0 10px;color:var(--accent)">')
+        // Bold
+        .replace(/\*\*(.*?)\*\*/g, '<strong style="color:var(--text-primary)">$1</strong>')
+        // Lists
+        .replace(/\n\* /g, '\n<span style="display:block;padding:2px 0 2px 16px;position:relative">• </span><span style="display:inline">')
+        .replace(/\n• /g, '\n<span style="display:block;padding:2px 0 2px 16px;position:relative">• </span><span style="display:inline">')
+        // Line breaks
+        .replace(/\n\n/g, '</span></div><div style="margin:8px 0;line-height:1.7;color:var(--text-secondary);font-size:0.85rem">')
         .replace(/\n/g, '<br>');
-      html += '<div class="card" style="margin-top:8px;padding:16px;font-size:0.85rem;line-height:1.6;color:var(--text-secondary)">';
-      html += '<p style="font-size:0.85rem;line-height:1.6;color:var(--text-secondary)">' + converted + '</p>';
+      
+      // Wrap in styled container
+      html += '<div class="card" style="padding:20px;font-size:0.85rem;line-height:1.7;color:var(--text-secondary)">';
+      html += '<div style="margin:0;line-height:1.7;color:var(--text-secondary);font-size:0.85rem">' + converted + '</div>';
       html += '</div>';
     } else if (narrative && narrative.summary_paragraph) {
       html += '<div class="card" style="margin-top:8px;padding:16px;font-size:0.85rem;line-height:1.6;color:var(--text-secondary)">' + narrative.summary_paragraph + '</div>';
