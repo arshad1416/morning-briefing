@@ -29,8 +29,16 @@ const PredictionEngine = {
     // Version comparison table (always show latest 10 versions inline)
     html += '<h2 class="section-title">Version Comparison</h2><div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Version</th><th>Trades</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th><th>Innovation</th></tr></thead><tbody>';
 
+    // Version comparison — only show major impact versions
+    // Filter to versions that had measurable strategy changes
     const versions = Object.entries(data.versions).filter(([k,v]) => v.tag);
-    const latest10 = versions.slice(-10);
+    // Show versions that added real value: V1, V2, V3, V5, V6, V10, V18, V23, V26, V30, V50
+    let majorVersions = versions.filter(([name]) => {
+      const num = parseInt(name.split(' ')[0].replace('V',''));
+      return [1,2,3,5,6,10,18,23,26,30,50].includes(num);
+    });
+    if (!majorVersions.length) majorVersions = versions.slice(-5);
+    const latest10 = majorVersions.slice(-10);
     latest10.forEach(([name, d]) => {
       const p = d.performance.overall;
       const cls = p.avg_pnl >= 0 ? 'positive' : 'negative';

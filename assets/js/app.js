@@ -53,6 +53,7 @@
   Router.register('/chat',          function (app)         { Chat.render(app); });
   Router.register('/maplegamma',   function (app)         { MapleGamma.renderLanding(app); });
   Router.register('/mg',           function (app)         { MapleGamma.renderDashboard(app); });
+  Router.register('/backtest-research', function (app)    { BacktestResearch.render(app); });
   Router.register('/ticker/:ticker',function (app, params) { TickerDetail.render(app, params); });
   Router.register('/archive/:date', function (app, params) { Archive.renderDate(app, params); });
 
