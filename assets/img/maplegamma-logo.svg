@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" width="180" height="40">
+  <defs>
+    <linearGradient id="mg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2a84a"/>
+      <stop offset="100%" stop-color="#d4862b"/>
+    </linearGradient>
+    <linearGradient id="mg-grad-g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2a84a" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#e2a84a" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Gamma symbol (Γ) as main icon -->
+  <g transform="translate(4, 4)">
+    <rect x="0" y="0" width="32" height="32" rx="6" fill="url(#mg-grad)" opacity="0.15"/>
+    <text x="16" y="24" font-family="Georgia, serif" font-size="24" font-weight="700" fill="url(#mg-grad)" text-anchor="middle">Γ</text>
+  </g>
+
+  <!-- Maple leaf accent dot -->
+  <circle cx="28" cy="10" r="2" fill="#e2a84a" opacity="0.6"/>
+
+  <!-- Text -->
+  <text x="44" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="var(--text-primary, #f1f5f9)" letter-spacing="-0.3">Maple</text>
+  <text x="88" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="400" fill="var(--text-secondary, #94a3b8)" letter-spacing="-0.3">Gamma</text>
+</svg>
