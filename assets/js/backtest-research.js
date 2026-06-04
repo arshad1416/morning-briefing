@@ -16,7 +16,7 @@ const BacktestResearch = {
     html += '<div class="card-title" style="color:var(--accent)">1. The Multiple Testing Problem</div>';
     html += '<div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:8px">';
     html += '<strong>Source:</strong> López de Prado, "The False Strategy Theorem" (2018). ';
-    html += '<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3104816" target="_blank" style="color:var(--accent)">Read paper →</a><br>';
+    html += '<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3104816" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">Read paper →</a><br>';
     html += 'If you run 100 backtests on random data, 5-10 will show positive returns by pure chance. ';
     html += 'The more you test, the higher the probability of p-hacking.';
     html += '</div>';
@@ -35,7 +35,7 @@ const BacktestResearch = {
     html += '<div class="card-title" style="color:var(--accent)">2. Minimum Sample Size</div>';
     html += '<div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:8px">';
     html += '<strong>Source:</strong> Aronson, "Evidence-Based Technical Analysis" (2007). ';
-    html += '<a href="https://amzn.to/3Skxb53" target="_blank" style="color:var(--accent)">US →</a> <a href="https://amzn.to/3Skxehf" target="_blank" style="color:var(--accent)">Canada →</a><br>';
+    html += '<a href="https://amzn.to/3Skxb53" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">US →</a> <a href="https://amzn.to/3Skxehf" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">Canada →</a><br>';
     html += 'Need at least 100 trades for statistical significance. 500+ is better.';
     html += '</div>';
     html += '<div style="padding:8px 12px;background:var(--bg-inset);border-radius:var(--radius-sm);font-size:0.85rem">';
@@ -49,7 +49,7 @@ const BacktestResearch = {
     html += '<div class="card-title" style="color:var(--accent)">3. Sharpe Ratio Degradation</div>';
     html += '<div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:8px">';
     html += '<strong>Source:</strong> Bailey & López de Prado, "The Sharpe Ratio Efficient Frontier" (2012). ';
-    html += '<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1821643" target="_blank" style="color:var(--accent)">Read paper →</a><br>';
+    html += '<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1821643" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">Read paper →</a><br>';
     html += '<strong>Empirical rule:</strong> Backtest Sharpe typically degrades ~50% in live trading. A 1.8 backtest Sharpe ';
     html += 'becomes ~0.9 live. Reasons: slippage, liquidity gaps, regime changes, execution differences.';
     html += '</div>';
@@ -64,7 +64,7 @@ const BacktestResearch = {
     html += '<div class="card-title" style="color:var(--accent)">4. Walk-Forward Analysis</div>';
     html += '<div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:8px">';
     html += '<strong>Source:</strong> Pardo, "The Evaluation and Optimization of Trading Strategies" (2nd ed, 2011). ';
-    html += '<a href="https://amzn.to/4uRRtBz" target="_blank" style="color:var(--accent)">US →</a> <a href="https://amzn.to/4o7h8DH" target="_blank" style="color:var(--accent)">Canada →</a><br>';
+    html += '<a href="https://amzn.to/4uRRtBz" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">US →</a> <a href="https://amzn.to/4o7h8DH" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">Canada →</a><br>';
     html += '<strong>Method:</strong> Train parameters on period A, test on unseen period B. Slide forward and repeat. ';
     html += 'If OOS performance matches IS, the strategy is not overfit.';
     html += '</div>';

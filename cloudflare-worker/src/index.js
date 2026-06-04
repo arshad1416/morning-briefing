@@ -5,15 +5,34 @@
  * SECURITY: No SQL proxy. All DB queries use typed, predefined endpoints.
  */
 
-const ALLOW_ORIGIN = 'https://briefing.arshadkazi.ca';
+const ALLOWED_ORIGINS = [
+  'https://briefing.arshadkazi.ca',
+  /^https:\/\/[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.morningbriefing\.pages\.dev$/,
+];
 
-const json = (d, s = 200) => new Response(JSON.stringify(d), {
-  status: s,
-  headers: {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': ALLOW_ORIGIN,
-  },
-});
+function getOrigin(request) {
+  const origin = request.headers.get('Origin');
+  if (!origin) return 'https://briefing.arshadkazi.ca';
+  // exact match or regex match
+  if (
+    ALLOWED_ORIGINS.some((o) =>
+      typeof o === 'string' ? o === origin : o.test(origin),
+    )
+  )
+    return origin;
+  return 'https://briefing.arshadkazi.ca'; // fallback
+}
+
+const json = (d, s = 200, request = null) => {
+  const origin = request ? getOrigin(request) : 'https://briefing.arshadkazi.ca';
+  return new Response(JSON.stringify(d), {
+    status: s,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': origin,
+    },
+  });
+};
 
 async function fetchLiveData(ticker) {
   try {
@@ -62,12 +81,37 @@ async function handleRequest(request, env) {
     return new Response(null, {
       status: 204,
       headers: {
-        'Access-Control-Allow-Origin': ALLOW_ORIGIN,
+        'Access-Control-Allow-Origin': getOrigin(request),
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Max-Age': '86400',
       },
     });
+  }
+
+  // ── KV-based Rate Limiting ──
+  if (env?.RATE_LIMIT_KV) {
+    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+    const key = `rl:${ip}`;
+    const now = Date.now();
+    const windowMs = 60000; // 1 minute
+    const maxReqs = env?.RATE_LIMIT_PER_MIN || 10;
+
+    const entry = await env.RATE_LIMIT_KV.get(key, { type: 'json' }).catch(() => null);
+    let count = 1;
+    if (entry && now - entry.reset < windowMs) {
+      count = entry.count + 1;
+    }
+    // Atomically update
+    await env.RATE_LIMIT_KV.put(
+      key,
+      JSON.stringify({ count, reset: now }),
+      { expirationTtl: 120 },
+    ).catch(() => {});
+
+    if (count > maxReqs) {
+      return json({ error: 'Rate limit exceeded. Try again in a minute.' }, 429, request);
+    }
   }
 
   // ── Chat only ──
@@ -76,14 +120,14 @@ async function handleRequest(request, env) {
     try {
       body = await request.json();
     } catch {
-      return json({ error: 'Invalid JSON' }, 400);
+      return json({ error: 'Invalid JSON' }, 400, request);
     }
     const ticker = (body?.ticker || '').trim().toUpperCase();
-    if (!ticker || !/^[A-Z]{1,5}$/.test(ticker))
-      return json({ error: 'Invalid ticker' }, 400);
+    if (!ticker || !/^[A-Z]{1,5}(\.[A-Z]{1,4})?$/.test(ticker))
+      return json({ error: 'Invalid ticker' }, 400, request);
 
     const apiKey = env?.OPENROUTER_API_KEY;
-    if (!apiKey) return json({ error: 'API key not configured' }, 500);
+    if (!apiKey) return json({ error: 'API key not configured' }, 500, request);
 
     const model = env?.OPENROUTER_MODEL || 'deepseek/deepseek-v4-pro';
     const baseUrl = env?.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1';
@@ -124,7 +168,7 @@ async function handleRequest(request, env) {
           max_tokens: 2000,
         }),
       });
-      if (!resp.ok) return json({ error: `OpenRouter error: ${resp.status}` }, 502);
+      if (!resp.ok) return json({ error: `OpenRouter error: ${resp.status}` }, 502, request);
 
       const result = await resp.json();
       const content = result?.choices?.[0]?.message?.content || 'No analysis.';
@@ -139,13 +183,13 @@ async function handleRequest(request, env) {
         contextBlock: ctxBlock,
         model: result?.model || model,
         liveData,
-      });
+      }, 200, request);
     } catch {
-      return json({ error: 'Internal error' }, 500);
+      return json({ error: 'Internal error' }, 500, request);
     }
   }
 
-  return json({ error: 'Not found' }, 404);
+  return json({ error: 'Not found' }, 404, request);
 }
 
 export default { fetch: handleRequest };

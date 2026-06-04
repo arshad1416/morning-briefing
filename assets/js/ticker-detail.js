@@ -10,7 +10,7 @@ const TickerDetail = {
       return;
     }
 
-    app.innerHTML = `<div class="loading">Loading ${ticker} data...</div>`;
+    app.innerHTML = `<div class="loading">Loading ${Utils.esc(ticker)} data...</div>`;
 
     // Try fetching from the latest.json first (faster, but may not have per-ticker detail)
     const latest = await State.get('latest', '/data/latest.json');
@@ -20,7 +20,7 @@ const TickerDetail = {
     const tickerData = await State.get(`ticker:${ticker}`, `/data/tickers/${ticker}.json`);
 
     if (!tickerData && !scanEntry) {
-      app.innerHTML = `<div class="error-card">No data available for ${ticker}.</div>`;
+      app.innerHTML = `<div class="error-card">No data available for ${Utils.esc(ticker)}.</div>`;
       return;
     }
 

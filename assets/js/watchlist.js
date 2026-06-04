@@ -30,10 +30,10 @@ const Watchlist = {
         const cls = Utils.changeClass(s.change_pct);
         const signals = (s.signals || []).map(sig => {
           const badgeClass = sig.includes('bear') || sig.includes('over') ? 'badge-red' : 'badge-green';
-          return `<span class="badge ${badgeClass}" style="margin:2px">${sig.replace(/_/g, ' ')}</span>`;
+          return `<span class="badge ${badgeClass}" style="margin:2px">${Utils.esc(sig.replace(/_/g, ' '))}</span>`;
         }).join(' ');
         html += `<tr>
-          <td><a href="#/ticker/${s.ticker}" class="archive-date">${s.ticker}</a></td>
+          <td><a href="#/ticker/${Utils.esc(s.ticker)}" class="archive-date">${Utils.esc(s.ticker)}</a></td>
           <td>${Utils.formatPrice(s.price)}</td>
           <td class="${cls}">${Utils.formatPct(s.change_pct)}</td>
           <td>${Utils.scoreBadge(s.score)}</td>
@@ -48,20 +48,20 @@ const Watchlist = {
         const cls = Utils.changeClass(s.change_pct);
         const signals = (s.signals || []).map(sig => {
           const badgeClass = sig.includes('bear') || sig.includes('over') ? 'badge-red' : 'badge-green';
-          return `<span class="badge ${badgeClass}" style="margin:2px">${sig.replace(/_/g, ' ')}</span>`;
+          return `<span class="badge ${badgeClass}" style="margin:2px">${Utils.esc(sig.replace(/_/g, ' '))}</span>`;
         }).join(' ');
         const verdictBadge = s.council_verdict === 'bullish' ? 'badge-green' :
                             s.council_verdict === 'bearish' ? 'badge-red' : 'badge-yellow';
-        const councilSummary = s.council_summary ? ` title="${s.council_summary}"` : '';
+        const councilSummary = s.council_summary ? ` title="${Utils.esc(s.council_summary)}"` : '';
 
         html += `<tr>
-          <td><a href="#/ticker/${s.ticker}" class="archive-date">${s.ticker}</a></td>
+          <td><a href="#/ticker/${Utils.esc(s.ticker)}" class="archive-date">${Utils.esc(s.ticker)}</a></td>
           <td>${Utils.formatPrice(s.price)}</td>
           <td class="${cls}">${Utils.formatPct(s.change_pct)}</td>
           <td>${Utils.scoreBadge(s.score)}</td>
           <td style="max-width:300px">${signals}</td>
           <td>${s.rsi != null ? s.rsi : '—'}</td>
-          <td><span class="badge ${verdictBadge}"${councilSummary}>${s.council_verdict || '—'}</span></td>
+          <td><span class="badge ${verdictBadge}"${councilSummary}>${Utils.esc(s.council_verdict || '—')}</span></td>
         </tr>`;
       });
       html += '</tbody></table></div>';

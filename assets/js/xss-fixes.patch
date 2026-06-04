@@ -1,0 +1,108 @@
+*** Begin Patch
+*** Update File: /Users/arshadkazi/morning-briefing/assets/js/dashboard.js
+@@ dashboard.js _buildHTML - FX rates string fields @@
+-      html += `<div class="card"><div class="card-title">${fx.pair}</div><div class="index-price">${fx.price}</div>${fx.change_pct != null ? `<div class="index-change ${cls}">${Utils.formatPct(fx.change_pct)}</div>` : ''}</div>`;
++      html += `<div class="card"><div class="card-title">${Utils.esc(fx.pair)}</div><div class="index-price">${Utils.formatPrice(fx.price)}</div>${fx.change_pct != null ? `<div class="index-change ${cls}">${Utils.formatPct(fx.change_pct)}</div>` : ''}</div>`;
+
+@@ dashboard.js _buildHTML - Central banks text @@
+-        if (text) html += `<div class="card"><div class="card-title">${label}</div><div style="font-size:0.875rem;color:var(--text-secondary);line-height:1.65">${text.substring(0, 300)}</div></div>`;
++        if (text) html += `<div class="card"><div class="card-title">${label}</div><div style="font-size:0.875rem;color:var(--text-secondary);line-height:1.65">${Utils.esc(text.substring(0, 300))}</div></div>`;
+
+@@ dashboard.js _buildHTML - Premarket setups ticker + verdict @@
+-        html += `<tr><td><a href="#/ticker/${s.ticker}">${s.ticker}</a></td><td>${Utils.formatPrice(s.price)}</td><td class="${cls}">${Utils.formatPct(s.change_pct)}</td><td>${Utils.scoreBadge(s.score)}</td><td style="max-width:250px">${signals}</td><td>${s.rsi != null ? s.rsi : '—'}</td><td><span class="badge ${vBadge}">${s.council_verdict || '—'}</span></td></tr>`;
++        html += `<tr><td><a href="#/ticker/${Utils.esc(s.ticker)}">${Utils.esc(s.ticker)}</a></td><td>${Utils.formatPrice(s.price)}</td><td class="${cls}">${Utils.formatPct(s.change_pct)}</td><td>${Utils.scoreBadge(s.score)}</td><td style="max-width:250px">${signals}</td><td>${s.rsi != null ? s.rsi : '—'}</td><td><span class="badge ${vBadge}">${Utils.esc(s.council_verdict || '—')}</span></td></tr>`;
+
+@@ dashboard.js _buildHTML - Premarket signals @@
+-        const signals = (s.signals || []).map(sig => `<span class="badge ${sig.includes('bear') || sig.includes('over') ? 'badge-red' : 'badge-green'}" style="margin:1px">${sig.replace(/_/g, ' ')}</span>`).join(' ');
++        const signals = (s.signals || []).map(sig => `<span class="badge ${sig.includes('bear') || sig.includes('over') ? 'badge-red' : 'badge-green'}" style="margin:1px">${Utils.esc(sig.replace(/_/g, ' '))}</span>`).join(' ');
+
+@@ dashboard.js _buildHTML - Analyst ratings ticker @@
+-        html += `<tr><td><strong>${a.ticker}</strong></td><td><span class="badge badge-green">${a.strongBuy || 0}</span></td><td style="color:var(--green)">${a.buy || 0}</td><td style="color:var(--yellow)">${a.hold || 0}</td><td style="color:var(--red)">${a.sell || 0}</td><td><span class="badge badge-red">${a.strongSell || 0}</span></td></tr>`;
++        html += `<tr><td><strong>${Utils.esc(a.ticker)}</strong></td><td><span class="badge badge-green">${a.strongBuy || 0}</span></td><td style="color:var(--green)">${a.buy || 0}</td><td style="color:var(--yellow)">${a.hold || 0}</td><td style="color:var(--red)">${a.sell || 0}</td><td><span class="badge badge-red">${a.strongSell || 0}</span></td></tr>`;
+
+@@ dashboard.js _buildHTML - Insider trades ticker, signal, summary @@
+-        html += `<tr><td><strong>${i.ticker}</strong></td><td><span class="badge ${sigCls}">${i.signal}</span></td><td>${i.confidence || '—'}</td><td>${i.ratio?.toFixed(1) || '—'}</td><td><span class="badge badge-green">${i.buys}B</span> <span class="badge badge-red">${i.sells}S</span></td><td style="font-size:0.8rem;color:var(--text-secondary)">${i.summary || ''}</td></tr>`;
++        html += `<tr><td><strong>${Utils.esc(i.ticker)}</strong></td><td><span class="badge ${sigCls}">${Utils.esc(i.signal)}</span></td><td>${i.confidence || '—'}</td><td>${i.ratio?.toFixed(1) || '—'}</td><td><span class="badge badge-green">${Utils.esc(i.buys)}B</span> <span class="badge badge-red">${Utils.esc(i.sells)}S</span></td><td style="font-size:0.8rem;color:var(--text-secondary)">${Utils.esc(i.summary || '')}</td></tr>`;
+
+@@ dashboard.js _buildHTML - Congress summary @@
+-      if (cong.summary) html += `<div style="font-size:0.875rem;color:var(--text-secondary);margin-bottom:12px">${cong.summary}</div>`;
++      if (cong.summary) html += `<div style="font-size:0.875rem;color:var(--text-secondary);margin-bottom:12px">${Utils.esc(cong.summary)}</div>`;
+
+@@ dashboard.js _buildHTML - Congress trades politician, action, ticker @@
+-        html += `<tr><td>${t.politician}</td><td><span class="badge ${partyCls}">${t.party || '—'}</span></td><td class="${actionCls}">${t.action}</td><td>${t.ticker || '—'}</td><td>${t.size || '—'}</td><td>${Utils.formatPrice(t.price)}</td></tr>`;
++        html += `<tr><td>${Utils.esc(t.politician)}</td><td><span class="badge ${partyCls}">${Utils.esc(t.party || '—')}</span></td><td class="${actionCls}">${Utils.esc(t.action)}</td><td>${Utils.esc(t.ticker || '—')}</td><td>${Utils.esc(t.size || '—')}</td><td>${Utils.formatPrice(t.price)}</td></tr>`;
+
+@@ dashboard.js _buildHTML - News title, source, category @@
+-        html += `<div style="padding:10px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem"><a href="${n.url || '#'}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:none;font-weight:500">${n.title}</a><div style="color:var(--text-muted);font-size:0.75rem;margin-top:3px">${n.source || ''} ${n.category ? '· ' + n.category : ''}</div></div>`;
++        html += `<div style="padding:10px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem"><a href="${Utils.esc(n.url || '#')}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(n.title)}</a><div style="color:var(--text-muted);font-size:0.75rem;margin-top:3px">${Utils.esc(n.source || '')} ${n.category ? '· ' + Utils.esc(n.category) : ''}</div></div>`;
+
+@@ dashboard.js _buildHTML - Unusual whales summary @@
+-      html += '<div class="section"><h2 class="section-title">🐋 Market Signals</h2><div class="card"><div style="font-size:0.875rem;color:var(--text-secondary);line-height:1.65;white-space:pre-wrap">' + data.unusual_whales.summary.substring(0, 1000) + '</div></div></div>';
++      html += '<div class="section"><h2 class="section-title">🐋 Market Signals</h2><div class="card"><div style="font-size:0.875rem;color:var(--text-secondary);line-height:1.65;white-space:pre-wrap">' + Utils.esc(data.unusual_whales.summary.substring(0, 1000)) + '</div></div></div>';
+
+@@ dashboard.js _buildHTML - Earnings symbol/ticker @@
+-          html += '<tr><td>' + (e.date || '') + '</td><td><strong>' + (e.symbol || e.ticker || '') + '</strong></td><td>' + (e.quarter || '') + '</td><td>' + (e.epsEstimate != null ? '$' + Number(e.epsEstimate).toFixed(2) : '—') + '</td></tr>';
++          html += '<tr><td>' + Utils.esc(e.date || '') + '</td><td><strong>' + Utils.esc(e.symbol || e.ticker || '') + '</strong></td><td>' + Utils.esc(e.quarter || '') + '</td><td>' + (e.epsEstimate != null ? '$' + Number(e.epsEstimate).toFixed(2) : '—') + '</td></tr>';
+
+@@ dashboard.js renderWithData - title @@
+-      html += '<div class="stale-banner" style="margin-bottom:16px">📂 ' + title + ' · <a href="#/archive" style="color:var(--accent);text-decoration:underline">← Back to Archive</a></div>';
++      html += '<div class="stale-banner" style="margin-bottom:16px">📂 ' + Utils.esc(title) + ' · <a href="#/archive" style="color:var(--accent);text-decoration:underline">← Back to Archive</a></div>';
+*** End Patch
+
+*** Begin Patch
+*** Update File: /Users/arshadkazi/morning-briefing/assets/js/watchlist.js
+@@ watchlist.js - Setups ticker @@
+-          <td><a href="#/ticker/${s.ticker}" class="archive-date">${s.ticker}</a></td>
++          <td><a href="#/ticker/${Utils.esc(s.ticker)}" class="archive-date">${Utils.esc(s.ticker)}</a></td>
+
+@@ watchlist.js - Signals text @@
+-          return `<span class="badge ${badgeClass}" style="margin:2px">${sig.replace(/_/g, ' ')}</span>`;
++          return `<span class="badge ${badgeClass}" style="margin:2px">${Utils.esc(sig.replace(/_/g, ' '))}</span>`;
+
+@@ watchlist.js - Council verdict text @@
+-          <td><span class="badge ${verdictBadge}"${councilSummary}>${s.council_verdict || '—'}</span></td>
++          <td><span class="badge ${verdictBadge}"${councilSummary}>${Utils.esc(s.council_verdict || '—')}</span></td>
+
+@@ watchlist.js - Council summary in title attr @@
+-        const councilSummary = s.council_summary ? ` title="${s.council_summary}"` : '';
++        const councilSummary = s.council_summary ? ` title="${Utils.esc(s.council_summary)}"` : '';
+*** End Patch
+
+*** Begin Patch
+*** Update File: /Users/arshadkazi/morning-briefing/assets/js/paper-trades.js
+@@ paper-trades.js - Open positions ticker @@
+-          <td><strong>${t.ticker}</strong></td>
++          <td><strong>${Utils.esc(t.ticker)}</strong></td>
+
+@@ paper-trades.js - Status text @@
+-        const status = t.pnl_pct > 5 ? '✅ In Profit' : t.pnl_pct > 2 ? '✅ Profitable' : t.pnl_pct > 0 ? '⏳ Pending' : t.pnl_pct > -3 ? '⏳ Watching' : t.pnl_pct > -7 ? '⚠️ At Risk' : '🔴 Stop Zone';
++        const status = t.pnl_pct > 5 ? Utils.esc('✅ In Profit') : t.pnl_pct > 2 ? Utils.esc('✅ Profitable') : t.pnl_pct > 0 ? Utils.esc('⏳ Pending') : t.pnl_pct > -3 ? Utils.esc('⏳ Watching') : t.pnl_pct > -7 ? Utils.esc('⚠️ At Risk') : Utils.esc('🔴 Stop Zone');
+
+@@ paper-trades.js - Currency display @@
+-        const entryDisplay = '$' + t.entry_price.toFixed(2) + ' ' + cur;
+-        const currDisplay = '$' + t.current_price.toFixed(2) + ' ' + cur;
+-        const pnlDisplay = '$' + t.pnl.toFixed(2) + ' (' + (t.pnl_pct >= 0 ? '+' : '') + t.pnl_pct.toFixed(1) + '%)';
++        const entryDisplay = '$' + t.entry_price.toFixed(2) + ' ' + Utils.esc(cur);
++        const currDisplay = '$' + t.current_price.toFixed(2) + ' ' + Utils.esc(cur);
++        const pnlDisplay = '$' + t.pnl.toFixed(2) + ' (' + (t.pnl_pct >= 0 ? '+' : '') + t.pnl_pct.toFixed(1) + '%)';
+
+@@ paper-trades.js - Type badge @@
+-          <td><span class="badge ${t.type === 'Stock' ? 'badge-green' : t.type === 'ETF' ? 'badge-yellow' : 'badge'}" style="font-size:0.65rem">${t.type || 'Other'}</span></td>
++          <td><span class="badge ${t.type === 'Stock' ? 'badge-green' : t.type === 'ETF' ? 'badge-yellow' : 'badge'}" style="font-size:0.65rem">${Utils.esc(t.type || 'Other')}</span></td>
+
+@@ paper-trades.js - Strategy link @@
+-        const info = this._getStrategyInfo(strategy);
+-        if (!info) return strategy.replace(/_/g, ' ');
+-        return `<a href="#" class="strategy-link" data-strategy="${strategy}" style="color:var(--accent);text-decoration:underline;cursor:pointer">${strategy.replace(/_/g, ' ')}</a>`;
++        const info = this._getStrategyInfo(strategy);
++        if (!info) return Utils.esc(strategy.replace(/_/g, ' '));
++        return `<a href="#" class="strategy-link" data-strategy="${Utils.esc(strategy)}" style="color:var(--accent);text-decoration:underline;cursor:pointer">${Utils.esc(strategy.replace(/_/g, ' '))}</a>`;
+
+@@ paper-trades.js - Trade reason hover @@
+-        const reason = (t.reason || t.rationale || '').replace(/\"/g, '&quot;').replace(/'/g, '&#39;');
++        const reason = Utils.esc(t.reason || t.rationale || '');
+
+@@ paper-trades.js - Title attr on trade row @@
+-        const hoverReason = (t.reason || t.rationale || '').replace(/\"/g, '&quot;');
++        const hoverReason = Utils.esc(t.reason || t.rationale || '');
+*** End Patch

@@ -347,11 +347,11 @@ const PaperTrades = {
         const close = document.getElementById('trade-modal-close');
         if (!modal || !body) return;
         body.innerHTML = '<div style="border-bottom:1px solid var(--border-dim);padding-bottom:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center">' +
-          '<span style="font-size:1.1rem;font-weight:700;color:var(--text-primary)">' + ticker + '</span>' +
+          '<span style="font-size:1.1rem;font-weight:700;color:var(--text-primary)">' + Utils.esc(ticker) + '</span>' +
           '<span class="badge badge-green" style="font-size:0.65rem">Trade Reason</span>' +
         '</div>' +
         '<div style="font-size:0.9rem;line-height:1.7;color:var(--text-secondary);background:var(--bg-inset);padding:16px;border-radius:var(--radius-lg);border-left:3px solid var(--accent)">' +
-          (reason || 'No reason recorded') +
+          Utils.esc(reason || 'No reason recorded') +
         '</div>';
         modal.style.display = 'flex';
         if (close) close.onclick = function() { modal.style.display = 'none'; };

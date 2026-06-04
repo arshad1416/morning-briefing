@@ -47,8 +47,8 @@ const Chat = {
     const analyze = () => {
       const ticker = input.value.trim().toUpperCase();
       if (!ticker || this._loading) return;
-      if (!/^[A-Z]{1,5}$/.test(ticker)) {
-        output.innerHTML = '<div class="error-card">Invalid ticker. Use 1-5 letters.</div>';
+      if (!/^[A-Z]{1,5}(\.[A-Z]{1,4})?$/.test(ticker)) {
+        output.innerHTML = '<div class="error-card">Invalid ticker. Use 1-5 letters, optionally with exchange suffix (.TO, .X).</div>';
         return;
       }
       this.fetchAnalysis(ticker, eli5.checked, output, history);
@@ -80,7 +80,7 @@ const Chat = {
       <div class="chat-loading-dots">
         <span></span><span></span><span></span><span></span>
       </div>
-      <div class="chat-loading-text">Fetching live data for <strong>${ticker}</strong>...</div>
+      <div class="chat-loading-text">Fetching live data for <strong>${Utils.esc(ticker)}</strong>...</div>
     </div>`;
 
     try {
@@ -119,7 +119,7 @@ const Chat = {
 
       outputEl.innerHTML = fullHtml;
     } catch (err) {
-      outputEl.innerHTML = `<div class="error-card">${err.message}</div>`;
+      outputEl.innerHTML = `<div class="error-card">${Utils.esc(err.message)}</div>`;
     } finally {
       this._loading = false;
       const btnNow = document.getElementById('chat-btn');
@@ -133,8 +133,8 @@ const Chat = {
     if (!this._history.length) { container.innerHTML = ''; return; }
     let html = '<div style="margin-bottom:12px;display:flex;gap:6px;flex-wrap:wrap">';
     this._history.forEach(item => {
-      html += `<span class="badge" style="background:var(--bg-hover);cursor:pointer" title="${item.mode}">
-        ${item.ticker} <span style="color:var(--text-muted);font-size:0.7rem">${item.ts}</span>
+      html += `<span class="badge" style="background:var(--bg-hover);cursor:pointer" title="${Utils.esc(item.mode)}">
+        ${Utils.esc(item.ticker)} <span style="color:var(--text-muted);font-size:0.7rem">${Utils.esc(item.ts)}</span>
       </span>`;
     });
     html += '</div>';

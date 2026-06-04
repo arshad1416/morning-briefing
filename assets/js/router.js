@@ -37,7 +37,7 @@ const Router = {
       try {
         this.routes[hash](app);
       } catch(e) {
-        app.innerHTML = `<div class="error-card">Error loading page: ${e.message}</div>`;
+        app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
       }
       return;
     }
@@ -61,7 +61,7 @@ const Router = {
           try {
             handler(app, params);
           } catch(e) {
-            app.innerHTML = `<div class="error-card">Error loading page: ${e.message}</div>`;
+            app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
           }
           return;
         }
