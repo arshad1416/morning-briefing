@@ -23,8 +23,10 @@ const Simulation = {
 
     // Load saved simulation state
     let sim = JSON.parse(localStorage.getItem('mg-simulation') || '{"capital":50000,"assets":["stocks"],"portfolio":[],"created":null}');
-    // Read tab from query string (?tab=tracker) — router strips hash query, so use location.search
-    const qs = new URLSearchParams(window.location.search);
+    // Read tab from query string in hash — router strips it, but we parse from full hash
+    const fullHash = window.location.hash || '';
+    const hashQuery = fullHash.split('?')[1] || '';
+    const qs = new URLSearchParams(hashQuery);
     const tab = qs.get('tab') || 'builder';
 
     let html = '<div class="section"><h2 class="section-title">Portfolio Simulator</h2>';
