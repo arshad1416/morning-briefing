@@ -212,7 +212,9 @@ const PaperTrades = {
         const entryDisplay = '$' + t.entry_price.toFixed(2) + ' ' + cur;
         const currDisplay = '$' + t.current_price.toFixed(2) + ' ' + cur;
         const pnlDisplay = '$' + t.pnl.toFixed(2) + ' (' + (t.pnl_pct >= 0 ? '+' : '') + t.pnl_pct.toFixed(1) + '%)';
-        html += `<tr>
+        const hoverReason = Utils.esc(t.rationale || t.strategy || '');
+        const hoverTip = t.rationale ? 'Decision: ' + Utils.esc(t.rationale) : '';
+        html += `<tr class="trade-row open-trade" title="${hoverTip}" data-ticker="${Utils.esc(t.ticker)}" data-rationale="${Utils.esc(t.rationale || '')}" data-exit-rationale="" style="cursor:pointer">
           <td><strong>${Utils.esc(t.ticker)}</strong></td>
           <td><span class="badge ${t.type === 'Stock' ? 'badge-green' : t.type === 'ETF' ? 'badge-yellow' : 'badge'}" style="font-size:0.65rem">${t.type || 'Other'}</span></td>
           <td style="font-size:0.85rem">${t.entry_date || '—'}</td>
@@ -331,10 +333,11 @@ const PaperTrades = {
         const exitStr = t.exit_price ? `$${t.exit_price.toFixed(2)} ${cur}` : '—';
         const entryDT = t.entry_date ? (() => { try { var d = new Date(t.entry_date.replace('Z','').replace('T',' ')); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '<br><span style=\"font-size:0.7rem;color:var(--text-muted)\">' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '</span>'; } catch(e) { return t.entry_date.slice(0,10); } })() : '—';
         const exitDT = t.exit_date ? (() => { try { var d = new Date(t.exit_date.replace('Z','').replace('T',' ')); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '<br><span style=\"font-size:0.7rem;color:var(--text-muted)\">' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '</span>'; } catch(e) { return t.exit_date.slice(0,10); } })() : '—';
-        const reason = Utils.esc(t.reason || t.rationale || '');
-        const pnlDisplay = t.pnl_pct != null ? `${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct}%` : (t.pnl_usd != null ? `$${t.pnl_usd.toFixed(2)}` : '---');
         const hoverReason = Utils.esc(t.reason || t.rationale || '');
-        html += `<tr class="trade-row" title="${hoverReason}" data-ticker="${Utils.esc(t.ticker)}" style="cursor:pointer">
+        const hoverExit = Utils.esc(t.exit_rationale || '');
+        const tipText = (hoverReason ? 'Entry: ' + hoverReason : '') + (hoverReason && hoverExit ? ' | ' : '') + (hoverExit ? 'Exit: ' + hoverExit : '');
+        const pnlDisplay = t.pnl_pct != null ? `${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct}%` : (t.pnl_usd != null ? `$${t.pnl_usd.toFixed(2)}` : '---');
+        html += `<tr class="trade-row" title="${tipText}" data-ticker="${Utils.esc(t.ticker)}" data-rationale="${hoverReason}" data-exit-rationale="${hoverExit}" style="cursor:pointer">
           <td><strong>${Utils.esc(t.ticker)}</strong></td>
           <td><span class="badge ${t.type === 'Stock' ? 'badge-green' : 'badge-yellow'}" style="font-size:0.65rem">${t.type || '—'}</span></td>
           <td style="font-size:0.8rem">${entryDT}</td>
@@ -372,19 +375,45 @@ const PaperTrades = {
     // ── Wire up trade row clicks for reason modal ──
     app.querySelectorAll('.trade-row').forEach(el => {
       el.addEventListener('click', function() {
-        const reason = this.title || 'No reason recorded';
         const ticker = this.dataset.ticker || '';
+        const rationale = this.dataset.rationale || '';
+        const exitRationale = this.dataset.exitRationale || '';
+        const isOpen = this.classList.contains('open-trade');
         const modal = document.getElementById('trade-modal');
         const body = document.getElementById('trade-modal-body');
         const close = document.getElementById('trade-modal-close');
         if (!modal || !body) return;
-        body.innerHTML = '<div style="border-bottom:1px solid var(--border-dim);padding-bottom:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center">' +
+
+        let content = '<div style="border-bottom:1px solid var(--border-dim);padding-bottom:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center">' +
           '<span style="font-size:1.1rem;font-weight:700;color:var(--text-primary)">' + Utils.esc(ticker) + '</span>' +
-          '<span class="badge badge-green" style="font-size:0.65rem">Trade Reason</span>' +
-        '</div>' +
-        '<div style="font-size:0.9rem;line-height:1.7;color:var(--text-secondary);background:var(--bg-inset);padding:16px;border-radius:var(--radius-lg);border-left:3px solid var(--accent)">' +
-          Utils.esc(reason || 'No reason recorded') +
+          '<span class="badge ' + (isOpen ? 'badge-green' : 'badge-yellow') + '" style="font-size:0.65rem">' + (isOpen ? '🟢 Open Position' : '✅ Closed Trade') + '</span>' +
         '</div>';
+
+        // Entry rationale
+        if (rationale) {
+          content += '<div style="margin-bottom:12px">' +
+            '<div style="font-size:0.7rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">📋 Entry Decision</div>' +
+            '<div style="font-size:0.85rem;line-height:1.7;color:var(--text-body);background:var(--bg-inset);padding:14px;border-radius:var(--radius-lg);border-left:3px solid var(--green)">' +
+              Utils.esc(rationale) +
+            '</div></div>';
+        }
+
+        // Exit rationale (only for closed trades)
+        if (exitRationale) {
+          content += '<div style="margin-bottom:8px">' +
+            '<div style="font-size:0.7rem;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">📊 Exit Reason</div>' +
+            '<div style="font-size:0.85rem;line-height:1.7;color:var(--text-body);background:var(--bg-inset);padding:14px;border-radius:var(--radius-lg);border-left:3px solid var(--yellow)">' +
+              Utils.esc(exitRationale) +
+            '</div></div>';
+        }
+
+        if (!rationale && !exitRationale) {
+          content += '<div style="font-size:0.85rem;line-height:1.7;color:var(--text-muted);background:var(--bg-inset);padding:16px;border-radius:var(--radius-lg)">' +
+            'No decision details recorded for this trade.' +
+          '</div>';
+        }
+
+        body.innerHTML = content;
         modal.style.display = 'flex';
         if (close) close.onclick = function() { modal.style.display = 'none'; };
         modal.onclick = function(e) { if (e.target === modal) modal.style.display = 'none'; };
