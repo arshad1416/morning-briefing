@@ -23,7 +23,9 @@ const Simulation = {
 
     // Load saved simulation state
     let sim = JSON.parse(localStorage.getItem('mg-simulation') || '{"capital":50000,"assets":["stocks"],"portfolio":[],"created":null}');
-    const tab = window.location.hash.split('?')[1] || 'builder';
+    // Read tab from query string (?tab=tracker) — router strips hash query, so use location.search
+    const qs = new URLSearchParams(window.location.search);
+    const tab = qs.get('tab') || 'builder';
 
     let html = '<div class="section"><h2 class="section-title">Portfolio Simulator</h2>';
 
@@ -35,9 +37,9 @@ const Simulation = {
 
     // Tab nav
     html += '<div style="display:flex;gap:6px;margin-bottom:16px;border-bottom:1px solid var(--border-dim);padding-bottom:8px">';
-    html += '<a href="#/simulation?builder" class="nav-link ' + (tab === 'builder' ? 'active' : '') + '">Portfolio Builder</a>';
-    html += '<a href="#/simulation?tracker" class="nav-link ' + (tab === 'tracker' ? 'active' : '') + '">Tracker</a>';
-    html += '<a href="#/simulation?rebalance" class="nav-link ' + (tab === 'rebalance' ? 'active' : '') + '">Rebalance</a>';
+    html += '<a href="#/simulation?tab=builder" class="nav-link ' + (tab === 'builder' ? 'active' : '') + '">Portfolio Builder</a>';
+    html += '<a href="#/simulation?tab=tracker" class="nav-link ' + (tab === 'tracker' ? 'active' : '') + '">Tracker</a>';
+    html += '<a href="#/simulation?tab=rebalance" class="nav-link ' + (tab === 'rebalance' ? 'active' : '') + '">Rebalance</a>';
     html += '</div>';
 
     if (tab === 'builder') html += this._renderBuilder(sim);
