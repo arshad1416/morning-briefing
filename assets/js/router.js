@@ -18,12 +18,14 @@ const Router = {
   },
 
   handleRoute() {
-    const hash = window.location.hash.slice(1) || '/';
+    const fullHash = window.location.hash.slice(1) || '/';
+    const hash = fullHash.split('?')[0]; // Strip query string from hash
     this.currentHash = hash;
 
     // Update active nav link
     this.navLinks.forEach(link => {
-      link.classList.toggle('active', link.getAttribute('href') === `#${hash}`);
+      const linkHash = link.getAttribute('href')?.slice(1).split('?')[0] || '';
+      link.classList.toggle('active', linkHash === hash);
     });
 
     const app = document.getElementById('app');
