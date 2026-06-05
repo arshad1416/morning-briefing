@@ -64,7 +64,7 @@ const Simulation = {
     html += '<label style="display:block;font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--text-primary)">Available Capital</label>';
     html += '<div style="display:flex;align-items:center;gap:8px">';
     html += '<span style="font-size:1.2rem;color:var(--text-muted)">$</span>';
-    html += '<input type="number" id="sim-capital" value="' + (sim.capital || 50000) + '" min="1000" step="1000" style="flex:1;max-width:200px;padding:10px 14px;border:1px solid var(--border-dim);border-radius:var(--radius-sm);background:var(--bg-inset);color:var(--text-primary);font-size:1.1rem">';
+    html += '<input type="number" id="sim-capital" value="' + (sim.capital || 50000) + '" min="1000" step="1000" autocomplete="off" style="flex:1;max-width:200px;padding:10px 14px;border:1px solid var(--border-dim);border-radius:var(--radius-sm);background:var(--bg-inset);color:var(--text-primary);font-size:1.1rem">';
     html += '<span style="font-size:0.85rem;color:var(--text-muted)">CAD</span>';
     html += '</div></div>';
 
