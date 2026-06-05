@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-05 13:00:21",
+  "generated_at": "2026-06-05 13:08:38",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -1678,14 +1678,14 @@
     "ml_findings": "ML models (RF/GB) trained on V3 features showed test accuracy ~65% but overfit on small signal sets. Best use: as an additional confirmation layer, not primary decision maker."
   },
   "live_trading": {
-    "generated_at": "2026-06-05 13:00:21",
+    "generated_at": "2026-06-05 13:08:38",
     "summary": {
       "total_trades": 26,
-      "closed_trades": 19,
-      "open_positions": 5,
+      "closed_trades": 20,
+      "open_positions": 4,
       "winning_trades": 12,
-      "losing_trades": 7,
-      "win_rate": 63.2,
+      "losing_trades": 8,
+      "win_rate": 60.0,
       "total_pnl_cad": 254.85,
       "starting_balance": 2000.0,
       "current_balance": 1391.94,
@@ -1775,23 +1775,24 @@
       },
       {
         "strategy": "sector_rotation",
-        "closed_trades": 3,
+        "closed_trades": 4,
         "wins": 2,
-        "losses": 1,
-        "win_rate": 66.7,
-        "avg_pnl_pct": 29.78,
+        "losses": 2,
+        "win_rate": 50.0,
+        "avg_pnl_pct": 22.0,
         "best_trade_pnl": 91.3,
         "worst_trade_pnl": -2.7,
         "tickers_traded": [
           "JETS",
+          "XLE",
           "XLP",
           "XLU"
         ],
-        "open_positions": 3,
+        "open_positions": 2,
         "backtest_predicted_wr": "72%",
         "backtest_predicted_avg_pnl": "+1.8%",
         "prediction_source": "V75 Sector Rotation (71.2% WR)",
-        "accuracy_vs_prediction": "UNDERPERFORMING by -5.3pp"
+        "accuracy_vs_prediction": "UNDERPERFORMING by -22.0pp"
       },
       {
         "strategy": "value_investing",
