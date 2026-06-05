@@ -90,11 +90,11 @@ const Dashboard = {
       html += '<div class="section"><h2 class="section-title">🌍 Geopolitical Risks & Global News</h2>';
       html += '<div class="card"><div style="display:grid;gap:10px">';
       data.geopolitical.slice(0, 8).forEach(g => {
-        const url = g.url || '#';
+        const url = Utils.safeUrl(g.url || '#');
         const date = g.date ? g.date.slice(0, 10) : '';
         html += `<div style="padding:10px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem">
-          <a href="${url}" target="_blank" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(g.title)}</a>
-          <div style="color:var(--text-muted);font-size:0.75rem;margin-top:3px">${g.source} · ${date}</div>
+          <a href="${Utils.esc(url)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(g.title)}</a>
+          <div style="color:var(--text-muted);font-size:0.75rem;margin-top:3px">${Utils.esc(g.source)} · ${date}</div>
           ${g.summary ? `<div style="color:var(--text-secondary);font-size:0.8rem;margin-top:4px">${Utils.esc(g.summary)}</div>` : ''}
         </div>`;
       });
