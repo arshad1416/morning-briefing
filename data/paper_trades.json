@@ -1,14 +1,14 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-06-05 11:10:02",
+  "generated_at": "2026-06-05 11:11:25",
   "price_source": "yfinance historical closes \u2014 no CAD/USD math",
   "portfolio": {
     "starting_balance": 2000.0,
     "cash": 1066.53,
-    "invested": 731.53,
+    "invested": 731.63,
     "total_balance": 2000.0,
     "total_pnl": 0.0,
-    "unrealized_pnl": -8.2,
+    "unrealized_pnl": -8.28,
     "return_pct": -0.41,
     "win_rate": 58.8,
     "total_trades": 17
@@ -20,12 +20,13 @@
       "type": "Stock",
       "entry_date": "2026-05-26",
       "entry_price": 155.44,
-      "current_price": 158.48,
+      "current_price": 158.47,
       "currency": "CAD",
-      "pnl": 3.04,
-      "pnl_pct": 1.96,
+      "pnl": 3.03,
+      "pnl_pct": 1.95,
       "strategy": "value_investing",
-      "direction": "long"
+      "direction": "long",
+      "rationale": "Canadian bank pick \u2014 council consensus. 11x P/E, steepening curve beneficiary, 5% yield, no FX cost in TFSA."
     },
     {
       "ticker": "CNQ.TO",
@@ -37,31 +38,34 @@
       "pnl": -1.26,
       "pnl_pct": -1.9,
       "strategy": "sector_rotation",
-      "direction": "long"
+      "direction": "long",
+      "rationale": "Iran-IRGC escalation oil 6 Canadian energy beneficiary TSX up strong volume above MAs"
     },
     {
       "ticker": "MSTR",
       "type": "Stock",
       "entry_date": "2026-06-03",
       "entry_price": 126.55,
-      "current_price": 119.21,
+      "current_price": 119.17,
       "currency": "USD",
-      "pnl": -7.34,
-      "pnl_pct": -5.8,
+      "pnl": -7.38,
+      "pnl_pct": -5.83,
       "strategy": "mean_reversion",
-      "direction": "long"
+      "direction": "long",
+      "rationale": "V23 MR setup: VIX 16.26>=12, RSI 21.4<25, below lower BB. MSTR deeply oversold at $130.80USD. Target: reversion to 20MA ($167USD). Stop: $120USD support break."
     },
     {
       "ticker": "XLC",
       "type": "ETF",
       "entry_date": "2026-06-04",
       "entry_price": 113.11,
-      "current_price": 112.43,
+      "current_price": 112.5,
       "currency": "USD",
-      "pnl": -0.68,
-      "pnl_pct": -0.6,
+      "pnl": -0.61,
+      "pnl_pct": -0.54,
       "strategy": "mean_reversion",
-      "direction": "long"
+      "direction": "long",
+      "rationale": "XLC oversold (RSI 26.8) near support. Communication Services deeply oversold, below lower BB. Mean reversion as safe-haven rotation may reverse. 4 bullish setups on screener score 28.8."
     },
     {
       "ticker": "FXY",
@@ -73,31 +77,34 @@
       "pnl": -0.07,
       "pnl_pct": -0.12,
       "strategy": "mean_reversion",
-      "direction": "long"
+      "direction": "long",
+      "rationale": "V23 MR: VIX 15.74>12, RSI 17.8 deeply oversold, near support 7.34, yen at extreme"
     },
     {
       "ticker": "XLE",
       "type": "ETF",
       "entry_date": "2026-06-05",
-      "entry_price": 58.46,
+      "entry_price": 58.47,
       "current_price": 58.75,
       "currency": "USD",
-      "pnl": 0.29,
-      "pnl_pct": 0.5,
+      "pnl": 0.28,
+      "pnl_pct": 0.48,
       "strategy": "sector_rotation",
-      "direction": "long"
+      "direction": "long",
+      "rationale": "Oil surging on ME escalation (Iran hit Kuwait/US Fleet). Energy sector benefits directly. XLE at support with oil pushing higher."
     },
     {
       "ticker": "XLV",
       "type": "ETF",
       "entry_date": "2026-06-05",
-      "entry_price": 154.26,
+      "entry_price": 154.35,
       "current_price": 152.08,
       "currency": "USD",
-      "pnl": -2.18,
-      "pnl_pct": -1.41,
+      "pnl": -2.27,
+      "pnl_pct": -1.47,
       "strategy": "sector_rotation",
-      "direction": "long"
+      "direction": "long",
+      "rationale": "ME escalation defensive rotation. XLV (healthcare) is a classic safe haven when geopolitical risk spikes. Provides portfolio ballast."
     }
   ],
   "recent_trades": [
@@ -112,7 +119,9 @@
       "currency": "USD",
       "strategy": "momentum",
       "entry_date": "2026-05-26T13:20:55.145425",
-      "exit_date": "2026-05-26T13:20:55.146392"
+      "exit_date": "2026-05-26T13:20:55.146392",
+      "rationale": "Test: confidence tracking \u2014 clean energy momentum",
+      "exit_rationale": "Test undo \u2014 removing test entry"
     },
     {
       "ticker": "JETS",
@@ -125,7 +134,9 @@
       "currency": "USD",
       "strategy": "sector_rotation",
       "entry_date": "2026-05-26T13:50:10.640006",
-      "exit_date": "2026-05-27T08:05:00.170253"
+      "exit_date": "2026-05-27T08:05:00.170253",
+      "rationale": "Oil down 2.9% = airline fuel costs plunging. 44% of fund managers expect Strait of Hormuz reopening June 2026. Even with today's US-Iran escalation, oil held its drop \u2014 market pricing eventual resolution. Airlines = direct beneficiary of lower energy input costs.",
+      "exit_rationale": "Iran deal COLLAPSED - US actively striking Iran, Hormuz missile attack. Oil surging makes airlines unprofitable. Thesis invalidated. Exiting at yesterday's close to avoid gap-down at open."
     },
     {
       "ticker": "JETS",
@@ -138,7 +149,9 @@
       "currency": "USD",
       "strategy": "momentum",
       "entry_date": "2026-05-26T13:51:06.629071",
-      "exit_date": "2026-05-27T08:05:00.171088"
+      "exit_date": "2026-05-27T08:05:00.171088",
+      "rationale": "Oil crash + Iran deal play. Oil -2.9% to 3.80 on deal optimism. JETS +3.39% today. Airlines directly benefit from lower fuel costs if deal signed \u2192 oil to 0-85",
+      "exit_rationale": "Same as above - Iran escalation invalidates oil-down thesis. Exiting both JETS positions before oil spike hits airline stocks at open."
     },
     {
       "ticker": "ON",
@@ -151,7 +164,9 @@
       "currency": "USD",
       "strategy": "momentum_options",
       "entry_date": "2026-05-26T15:16:09.243948",
-      "exit_date": "2026-05-27T08:05:00.172128"
+      "exit_date": "2026-05-27T08:05:00.172128",
+      "rationale": "ON $130 call May 29 \u2014 semi momentum play. ON +9% today, momentum could carry to $130+ by Friday. $404 max loss, defined risk.",
+      "exit_rationale": "Cutting ON $130 call loss. Theta -$87/day, only 2 days to expiry, stock at $127 needs $132.93 (+4.7% in 2 days). Iran macro chaos adds downside risk to semi sector. Delta 0.31. Preserve remaining capital."
     },
     {
       "ticker": "NKE",
@@ -164,7 +179,9 @@
       "currency": "USD",
       "strategy": "mean_reversion",
       "entry_date": "2026-05-26T07:31:52.334610",
-      "exit_date": "2026-05-27T11:02:50.408235"
+      "exit_date": "2026-05-27T11:02:50.408235",
+      "rationale": "Oil declining on Iran peace deal hopes (MarketWatch: 'hopes grow for peace deal'). NKE is a consumer discretionary name that benefits from lower oil prices (lower input/transportation costs + consumer spending power boost). Stock is beaten down at $61.64 - mean reversion opportunity. Complements existing XLU+TLT portfolio which covers defensive scenarios; NKE adds exposure to the Iran-deal-rally scenario (45% prob). r/stocks showing bearish sentiment (S&P 31.8x earnings) is contrarian bullish for consumer rebound plays.",
+      "exit_rationale": "Take profit at +3.8%. At resistance $46.59 USD, above upper Bollinger Band (%b=1.07). Consumer headwinds from Iran oil shock. 2-5% target range achieved."
     },
     {
       "ticker": "ON",
@@ -177,7 +194,9 @@
       "currency": "USD",
       "strategy": "momentum",
       "entry_date": "2026-05-26T13:00:02.003522",
-      "exit_date": "2026-05-28T11:36:17.868576"
+      "exit_date": "2026-05-28T11:36:17.868576",
+      "rationale": "Semi momentum \u2014 ON Semiconductor +8.9% today on AI/auto semi demand. Diversified semi play under $200 cap.",
+      "exit_rationale": "Guardrails flagged momentum as WEAK strategy (35.1% WR) \u2014 closing per rules"
     },
     {
       "ticker": "IBIT",
@@ -190,7 +209,9 @@
       "currency": "USD",
       "strategy": "mean_reversion",
       "entry_date": "2026-05-28T15:56:39.339583",
-      "exit_date": "2026-05-28T16:04:03.822008"
+      "exit_date": "2026-05-28T16:04:03.822008",
+      "rationale": "My call: Mean reversion on IBIT. RSI 29.1 oversold, proven strategy at 75.8% WR. Adding to existing position, cost averaging down.",
+      "exit_rationale": "Council blocked - risk/reward 0.90:1, crypto gap risk"
     },
     {
       "ticker": "IBIT",
@@ -203,7 +224,9 @@
       "currency": "USD",
       "strategy": "mean_reversion",
       "entry_date": "2026-05-28T11:40:44.655642",
-      "exit_date": "2026-06-01T09:32:52.663742"
+      "exit_date": "2026-06-01T09:32:52.663742",
+      "rationale": "RSI 27.9 oversold, below lower Bollinger Band, near support. Adding to mean reversion position with optimized params. Backtest confirms mean reversion as PREFERRED (75.8% WR).",
+      "exit_rationale": "Close averaging-down IBIT entry \u2014 Rule 5 violation (max 1 per ticker). Consolidating to single position for concentration risk management."
     },
     {
       "ticker": "IBIT",
@@ -216,7 +239,9 @@
       "currency": "USD",
       "strategy": "mean_reversion",
       "entry_date": "2026-05-29T15:07:18.735969",
-      "exit_date": "2026-06-01T09:32:52.664892"
+      "exit_date": "2026-06-01T09:32:52.664892",
+      "rationale": "RSI 28.6 oversold near support mean reversion",
+      "exit_rationale": "Close averaging-down IBIT entry \u2014 Rule 5 violation (max 1 per ticker). Consolidating to single position for concentration risk management."
     },
     {
       "ticker": "XLE",
@@ -229,7 +254,9 @@
       "currency": "USD",
       "strategy": "momentum",
       "entry_date": "2026-06-01T07:31:49.672767",
-      "exit_date": "2026-06-01T11:06:20.743319"
+      "exit_date": "2026-06-01T11:06:20.743319",
+      "rationale": "Oil surged to 0.67 (+3.79%) as Iran/Hormuz tensions escalate. Energy sector benefits from elevated oil prices and the failed Iran deal catalyst. Complementary position to defensive portfolio tilt.",
+      "exit_rationale": "Hard-blocked momentum strategy (35.1% WR). Taking +2.5% profit while green. XLE technicals bearish (price below 20/50MA, MACD negative). Strait of Hormuz spike is temporary."
     },
     {
       "ticker": "IBIT",
@@ -242,7 +269,9 @@
       "currency": "USD",
       "strategy": "mean_reversion",
       "entry_date": "2026-05-27T13:03:32.468776",
-      "exit_date": "2026-06-01T12:10:02.242720"
+      "exit_date": "2026-06-01T12:10:02.242720",
+      "rationale": "IBIT oversold RSI 29.6 - mean reversion to 20SMA ($44.56USD). Middle East escalation supports BTC as non-sovereign store of value. Low volume pullback, not panic selling. Near support at $42.27USD.",
+      "exit_rationale": "Close IBIT: -5.86% and still falling. BTC at $97.7K hasn't recovered. Mean reversion thesis hasn't materialized in 5 days. Pipeline recommended reducing exposure. Nearing -7% hard stop."
     },
     {
       "ticker": "XLU",
@@ -255,7 +284,9 @@
       "currency": "USD",
       "strategy": "sector_rotation",
       "entry_date": "2026-05-25T07:32:32.485682",
-      "exit_date": "2026-06-03T13:06:40.374085"
+      "exit_date": "2026-06-03T13:06:40.374085",
+      "rationale": "Defensive rotation play. SPX at 7,473 ATH with VIX at 16.63 (complacent). Iran deal uncertainty ('no deal imminent') means geopolitical premium persists. If talks drag or collapse, utilities outperform as money rotates from cyclicals. 2-5 day swing on geopolitical headlines.",
+      "exit_rationale": "Cutting XLU - bearish tech, below 20/50SMA, MACD negative. Reallocating to V23 MR setup on MSTR."
     },
     {
       "ticker": "XLC",
@@ -268,59 +299,69 @@
       "currency": "USD",
       "strategy": "mean_reversion",
       "entry_date": "2026-06-03T11:03:15.209794",
-      "exit_date": "2026-06-03T15:01:52.956097"
+      "exit_date": "2026-06-03T15:01:52.956097",
+      "rationale": "XLC oversold RSI 28, below lower BB, at support. Mean reversion on sector ETF.",
+      "exit_rationale": "Closing \u2014 XLC entry price was recorded incorrectly ($81USD vs actual $112-113USD). Real P&L is approximately flat. Clearing position and slot."
     },
     {
       "ticker": "EFA",
       "type": "ETF",
       "direction": "long",
-      "pnl_pct": -1.48,
-      "pnl_usd": -1.56,
+      "pnl_pct": -1.5,
+      "pnl_usd": -1.58,
       "entry_price": 105.13,
-      "exit_price": 103.57,
+      "exit_price": 103.55,
       "currency": "USD",
       "strategy": "value_investing",
       "entry_date": "2026-05-26T13:00:02.496095",
-      "exit_date": "2026-06-04T09:33:16.779878"
+      "exit_date": "2026-06-04T09:33:16.779878",
+      "rationale": "International developed at 13x P/E \u2014 35% discount to S&P 500. Currency tailwind from weak CAD. Value expert's top pick.",
+      "exit_rationale": "Near resistance R:105.52 with BB squeeze. Market selloff -0.85%. Locking in +$68.34 profit to free slot."
     },
     {
       "ticker": "TLT",
       "type": "ETF",
       "direction": "long",
-      "pnl_pct": 0.56,
-      "pnl_usd": 0.47,
+      "pnl_pct": 0.54,
+      "pnl_usd": 0.46,
       "entry_price": 84.68,
-      "exit_price": 85.15,
+      "exit_price": 85.14,
       "currency": "USD",
       "strategy": "macro_hedge",
       "entry_date": "2026-05-25T07:32:32.485285",
-      "exit_date": "2026-06-04T13:04:52.639817"
+      "exit_date": "2026-06-04T13:04:52.639817",
+      "rationale": "Iran says 'no deal imminent' contradicting Rubio optimism. Yields dipping \u2014 10Y down 0.57%, 30Y down 0.92%. Congress net selling (6:2 sell:buy ratio). SPX at ATH with complacent VIX 16.63 \u2014 any geopolitical disappointment triggers flight to safety into long bonds. 2-5 day hold on Iran deal headlines.",
+      "exit_rationale": "MIDDAY CLOSE: Take profit +92% (+$56.69) on 10-day macro_hedge. Iran deal negotiations resumed (Trump: 'final negotiations'). Bonds could sell off on risk-on rotation. Thesis played out 10x."
     },
     {
       "ticker": "XLP",
       "type": "ETF",
       "direction": "long",
-      "pnl_pct": 1.78,
-      "pnl_usd": 1.46,
+      "pnl_pct": 1.86,
+      "pnl_usd": 1.52,
       "entry_price": 81.83,
-      "exit_price": 83.29,
+      "exit_price": 83.35,
       "currency": "USD",
       "strategy": "sector_rotation",
       "entry_date": "2026-06-02T07:35:18.510318",
-      "exit_date": "2026-06-04T13:04:52.640979"
+      "exit_date": "2026-06-04T13:04:52.640979",
+      "rationale": "Consumer Staples stagflation hedge. XLP at support $81.68 USD, below lower Bollinger Band (mean reversion setup). UMich sentiment 49.8 confirms defensive rotation. Price point: $113.20 CAD / $82.03 USD. PPI surging +2.66% \u2014 staples have pricing power to pass through costs. Iran talks collapsed \u2014 risk-off favors defensives. 2-7 day hold.",
+      "exit_rationale": "MIDDAY CLOSE: Take profit +91% (+$54.30) on 2-day sector_rotation. Entered at support below BB, now massively overbought. Iran peace deal rotation out of defensives."
     },
     {
       "ticker": "SLV",
       "type": "ETF",
       "direction": "long",
-      "pnl_pct": -7.52,
-      "pnl_usd": -5.09,
+      "pnl_pct": -7.64,
+      "pnl_usd": -5.17,
       "entry_price": 67.67,
-      "exit_price": 62.58,
+      "exit_price": 62.5,
       "currency": "USD",
       "strategy": "mean_reversion",
       "entry_date": "2026-06-01T11:07:23.667284",
-      "exit_date": "2026-06-04T13:04:52.642217"
+      "exit_date": "2026-06-04T13:04:52.642217",
+      "rationale": "Silver RSI 28.4 extreme oversold + Strait of Hormuz attack escalates geopolitics. Safe-haven rotation already visible in gold. 2 shares = 85.90 CAD (9.6% of portfolio). Target: RSI 50+ (2 USD). Stop: 7.23 USD (-15%).",
+      "exit_rationale": "MIDDAY CLOSE: Take profit +89% (+$43.32) on 3-day mean_reversion. RSI was 28.4 oversold, target RSI 50+ hit. Peace deal reduces safe-haven demand for silver."
     }
   ]
 }
