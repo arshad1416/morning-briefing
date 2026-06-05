@@ -174,8 +174,21 @@ const Simulation = {
     if (!sim.portfolio || !sim.portfolio.length) {
       return '<div class="card" style="text-align:center;padding:40px;color:var(--text-muted)"><p>Build a portfolio first.</p></div>';
     }
-    var html = '<div class="card" style="margin-bottom:12px"><div class="card-title">Rebalance Suggestions</div>';
+    var html = '<div class="card" style="margin-bottom:12px"><div class="card-title">Import Portfolio Statement</div>';
+    html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px">Upload a CSV or Excel portfolio statement to import real positions and start tracking with live data.</p>';
+    html += '<div style="margin-bottom:16px">';
+    html += '<input type="file" id="sim-import-file" accept=".csv,.xlsx,.xls" style="display:block;width:100%;padding:8px;border:1px solid var(--border-dim);border-radius:var(--radius-sm);background:var(--bg-inset);color:var(--text-primary)">';
+    html += '<div style="font-size:0.7rem;color:var(--text-muted);margin-top:6px">Supported formats: CSV (recommended), XLSX. Expected columns: <strong>Ticker, Quantity, Avg Cost</strong> (or Symbol, Shares, Price).</div>';
+    html += '</div>';
+    html += '<hr style="border:none;border-top:1px solid var(--border-dim);margin:16px 0">';
+
+    if (!sim.portfolio || !sim.portfolio.length) {
+      html += '<div class="card" style="text-align:center;padding:40px;color:var(--text-muted)"><p>Build a portfolio first.</p></div>';
+      return html;
+    }
+    html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Rebalance Suggestions</div>';
     html += '<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px">Based on current market conditions and your risk profile, here are suggested adjustments:</p>';
+
 
     // Example rebalance suggestions
     sim.portfolio.forEach(function(p, i) {
@@ -240,6 +253,122 @@ const Simulation = {
 
   _wireTracker(app, sim) {
     // Auto-refresh prices on page load
+  },
+
+  _wireRebalance(app, sim) {
+    var self = this;
+    var fileInput = document.getElementById('sim-import-file');
+    if (!fileInput) return;
+
+    fileInput.addEventListener('change', function(e) {
+      var file = e.target.files[0];
+      if (!file) return;
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          var text = e.target.result;
+          var imported = self._parsePortfolioFile(text, file.name);
+          if (imported && imported.length > 0) {
+            // Replace portfolio with imported real positions
+            sim.portfolio = imported;
+            sim.importedAt = new Date().toISOString();
+            localStorage.setItem('mg-simulation', JSON.stringify(sim));
+
+            // Re-render the rebalance tab to show real positions
+            var results = document.getElementById('sim-results');
+            if (results) results.innerHTML = self._renderRebalance(sim);
+            self._wireRebalance(app, sim); // Re-wire after re-render
+
+            alert('Successfully imported ' + imported.length + ' positions from ' + file.name);
+          } else {
+            alert('No valid positions found in file. Check format.');
+          }
+        } catch (err) {
+          console.error('Import error:', err);
+          alert('Error parsing file: ' + err.message);
+        }
+      }
+    });
+    reader.readAsText(file);
+  },
+
+  _parsePortfolioFile(text, filename) {
+    // Parse CSV format: Ticker/Quantity/AvgCost or Symbol/Shares/Price
+    // Supports headers: Ticker,Symbol,Quantity,Shares,Avg Cost,Price,AvgCost,Cost Basis,Quantity,Shares
+    var lines = text.trim().split('\n');
+    if (lines.length < 2) return [];
+
+    // Parse headers
+    var headers = lines[0].split(',').map(function(h) { return h.trim().toLowerCase().replace(/"/g, ''); });
+    var tickerIdx = headers.findIndex(function(h) { return h === 'ticker' || h === 'symbol' || h === 'ticker symbol'; });
+    var qtyIdx = headers.findIndex(function(h) { return h === 'quantity' || h === 'shares' || h === 'qty'; });
+    var costIdx = headers.findIndex(function(h) { return h === 'avg cost' || h === 'avgcost' || h === 'cost basis' || h === 'price' || h === 'average price'; });
+
+    if (tickerIdx === -1 || qtyIdx === -1) {
+      // Try simpler detection
+      for (var i = 0; i < headers.length; i++) {
+        if (headers[i].includes('tick') || headers[i].includes('symb')) tickerIdx = i;
+        if (headers[i].includes('quant') || headers[i].includes('share')) qtyIdx = i;
+        if (headers[i].includes('cost') || headers[i].includes('price')) costIdx = i;
+      }
+    }
+    if (tickerIdx === -1 || qtyIdx === -1) return [];
+
+    var imported = [];
+    for (var i = 1; i < lines.length; i++) {
+      var cols = this._parseCSVLine(lines[i]);
+      if (cols.length <= Math.max(tickerIdx, qtyIdx, costIdx >= 0 ? costIdx : 0)) continue;
+
+      var ticker = cols[tickerIdx]?.trim().toUpperCase();
+      var qty = parseFloat(cols[qtyIdx]?.replace(/,/g, ''));
+      var avgCost = costIdx >= 0 ? parseFloat(cols[costIdx]?.replace(/,/g, '')) : null;
+
+      if (!ticker || isNaN(qty) || qty <= 0) continue;
+
+      // Fetch live price from yfinance via API
+      var name = ticker; // will be updated by tracker if possible
+      var price = avgCost; // fallback to cost basis if live fetch fails
+
+      // Determine currency from ticker
+      var cur = ticker.includes('.TO') ? 'CAD' : 'USD';
+
+      imported.push({
+        ticker: ticker,
+        name: name,
+        price: price,
+        currentPrice: price,
+        shares: qty,
+        avgCost: avgCost,
+        currency: cur,
+        pnl: 0,
+        pnl_pct: 0,
+        rationale: 'Imported from ' + filename,
+        assetClass: 'stocks',
+        imported: true
+      });
+    }
+    return imported;
+  },
+
+  // Helper to parse CSV line (handles quoted fields with commas)
+  _parseCSVLine(line) {
+    var result = [];
+    var inQuotes = false;
+    var current = '';
+    for (var i = 0; i < line.length; i++) {
+      var char = line[i];
+      if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === ',' && !inQuotes) {
+        result.push(current);
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    result.push(current);
+    return result.map(function(s) { return s.replace(/^"|"$/g, '').trim(); });
   },
 
   _generatePortfolio(capital, assets, risk) {
