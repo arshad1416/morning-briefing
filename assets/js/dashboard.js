@@ -85,6 +85,22 @@ const Dashboard = {
       html += '</div></div>';
     }
 
+    // ── GEOPOLITICAL RISKS ──
+    if (data.geopolitical?.length) {
+      html += '<div class="section"><h2 class="section-title">🌍 Geopolitical Risks & Global News</h2>';
+      html += '<div class="card"><div style="display:grid;gap:10px">';
+      data.geopolitical.slice(0, 8).forEach(g => {
+        const url = g.url || '#';
+        const date = g.date ? g.date.slice(0, 10) : '';
+        html += `<div style="padding:10px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem">
+          <a href="${url}" target="_blank" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(g.title)}</a>
+          <div style="color:var(--text-muted);font-size:0.75rem;margin-top:3px">${g.source} · ${date}</div>
+          ${g.summary ? `<div style="color:var(--text-secondary);font-size:0.8rem;margin-top:4px">${Utils.esc(g.summary)}</div>` : ''}
+        </div>`;
+      });
+      html += '</div></div></div>';
+    }
+
     // ── PREMARKET SETUPS ──
     if (data.premarket_top_setups?.length) {
       html += '<div class="section"><h2 class="section-title">Top Setups</h2><div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Price</th><th>Chg</th><th>Score</th><th>Signals</th><th>RSI</th><th>Verdict</th></tr></thead><tbody>';
