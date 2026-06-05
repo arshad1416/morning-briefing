@@ -26,6 +26,12 @@ const PredictionEngine = {
         <div class="key-level-item"><span class="key-level-label">Best P&L</span><span class="key-level-value" style="font-size:0.8rem;color:var(--green)">${s.best_avg_pnl || '+3.71%'}</span></div>
       </div></div>`;
 
+    // Live Trading Accuracy (if available)
+    const lt = data.live_trading;
+    if (lt) {
+      html += PredictionEngine._renderLiveTrading(lt);
+    }
+
     // Version comparison table (always show latest 10 versions inline)
     html += '<h2 class="section-title">Version Comparison</h2><div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Version</th><th>Trades</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th><th>Innovation</th></tr></thead><tbody>';
 
@@ -97,6 +103,87 @@ const PredictionEngine = {
       queue[idx]();
       this._processQueue(app, queue, idx + 1);
     }, 50);
+  },
+
+  _renderLiveTrading(lt) {
+    const s = lt.summary;
+    const wrColor = s.win_rate >= 60 ? 'var(--green)' : s.win_rate >= 40 ? 'var(--yellow)' : 'var(--red)';
+    const returnColor = s.return_pct >= 0 ? 'var(--green)' : 'var(--red)';
+
+    let html = '<div style="border:1px solid var(--border-dim);border-radius:var(--card-radius);padding:16px;margin-bottom:24px;background:var(--bg-inset)">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">';
+    html += '<div style="font-weight:600;font-size:0.9rem;color:var(--text-primary)">📊 Live Trading Accuracy</div>';
+    html += '<div style="font-size:0.7rem;color:var(--text-muted)">Updated: ' + (s.generated_at ? s.generated_at.substring(0, 16) : lt.generated_at) + '</div>';
+    html += '</div>';
+
+    // Summary metrics
+    html += '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px">';
+    html += '<div style="flex:1;min-width:80px;text-align:center;padding:8px;background:var(--bg);border-radius:var(--radius-sm)">';
+    html += '<div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase">Live WR</div>';
+    html += '<div style="font-size:1.1rem;font-weight:700;color:' + wrColor + '">' + s.win_rate + '%</div></div>';
+    html += '<div style="flex:1;min-width:80px;text-align:center;padding:8px;background:var(--bg);border-radius:var(--radius-sm)">';
+    html += '<div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase">Closed</div>';
+    html += '<div style="font-size:1.1rem;font-weight:700">' + s.closed_trades + '</div></div>';
+    html += '<div style="flex:1;min-width:80px;text-align:center;padding:8px;background:var(--bg);border-radius:var(--radius-sm)">';
+    html += '<div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase">W/L</div>';
+    html += '<div style="font-size:0.9rem;font-weight:600"><span style="color:var(--green)">' + s.winning_trades + 'W</span> / <span style="color:var(--red)">' + s.losing_trades + 'L</span></div></div>';
+    html += '<div style="flex:1;min-width:80px;text-align:center;padding:8px;background:var(--bg);border-radius:var(--radius-sm)">';
+    html += '<div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase">Return</div>';
+    html += '<div style="font-size:1.1rem;font-weight:700;color:' + returnColor + '">' + s.return_pct + '%</div></div>';
+    html += '<div style="flex:1;min-width:80px;text-align:center;padding:8px;background:var(--bg);border-radius:var(--radius-sm)">';
+    html += '<div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase">Days Active</div>';
+    html += '<div style="font-size:1.1rem;font-weight:700">' + s.trading_days_active + '</div></div>';
+    html += '<div style="flex:1;min-width:80px;text-align:center;padding:8px;background:var(--bg);border-radius:var(--radius-sm)">';
+    html += '<div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase">Open Positions</div>';
+    html += '<div style="font-size:1.1rem;font-weight:700">' + s.open_positions + '</div></div>';
+    html += '</div>';
+
+    // Per-strategy breakdown
+    if (lt.per_strategy && lt.per_strategy.length > 0) {
+      html += '<table style="width:100%;border-collapse:collapse;font-size:0.75rem"><thead><tr>';
+      html += '<th style="text-align:left;padding:6px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-muted)">Strategy</th>';
+      html += '<th style="text-align:center;padding:6px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-muted)">Trades</th>';
+      html += '<th style="text-align:center;padding:6px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-muted)">W/L</th>';
+      html += '<th style="text-align:center;padding:6px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-muted)">Live WR</th>';
+      html += '<th style="text-align:center;padding:6px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-muted)">Predicted</th>';
+      html += '<th style="text-align:center;padding:6px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-muted)">Status</th>';
+      html += '<th style="text-align:right;padding:6px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-muted)">Avg P&L</th></tr></thead><tbody>';
+
+      lt.per_strategy.forEach(p => {
+        const liveWR = p.win_rate;
+        const predStr = p.backtest_predicted_wr || 'N/A';
+        const predVal = parseFloat(predStr);
+        const isPredNumeric = !isNaN(predVal) && predVal > 0;
+        const statusColor = liveWR >= 60 ? 'var(--green)' : liveWR >= 40 ? 'var(--yellow)' : 'var(--red)';
+        const vsPred = (() => {
+          if (!isPredNumeric) return '';
+          const diff = liveWR - predVal;
+          if (diff > 5) return '🟢';
+          if (diff < -5) return '🔴';
+          return '⚪';
+        })();
+        const status = p.accuracy_vs_prediction || '';
+        const pnlColor = p.avg_pnl_pct >= 0 ? 'var(--green)' : 'var(--red)';
+
+        html += '<tr>';
+        html += '<td style="padding:5px 8px;border-bottom:1px solid var(--border-subtle)"><strong>' + p.strategy + '</strong></td>';
+        html += '<td style="text-align:center;padding:5px 8px;border-bottom:1px solid var(--border-subtle)">' + p.closed_trades + '</td>';
+        html += '<td style="text-align:center;padding:5px 8px;border-bottom:1px solid var(--border-subtle)"><span style="color:var(--green)">' + p.wins + '</span>/<span style="color:var(--red)">' + p.losses + '</span></td>';
+        html += '<td style="text-align:center;padding:5px 8px;border-bottom:1px solid var(--border-subtle);font-weight:600;color:' + statusColor + '">' + liveWR + '%</td>';
+        html += '<td style="text-align:center;padding:5px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-muted)">' + predStr + '</td>';
+        html += '<td style="text-align:center;padding:5px 8px;border-bottom:1px solid var(--border-subtle)">' + vsPred + ' <span style="font-size:0.65rem;color:var(--text-muted)">' + status.substring(0, 24) + '</span></td>';
+        html += '<td style="text-align:right;padding:5px 8px;border-bottom:1px solid var(--border-subtle);color:' + pnlColor + '">' + (p.avg_pnl_pct >= 0 ? '+' : '') + p.avg_pnl_pct + '%</td>';
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+    }
+
+    html += '<div style="font-size:0.65rem;color:var(--text-muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border-subtle)">';
+    html += '🟢 = Outperforming prediction · ⚪ = On track · 🔴 = Underperforming';
+    html += ' · Backtest predictions from V1-V100 walk-forward analysis';
+    html += '</div>';
+    html += '</div>';
+    return html;
   },
 
   _renderStrategyDetail(app, data, topVersions) {
