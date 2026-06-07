@@ -58,18 +58,18 @@ def get_watchdog_status():
 
 
 def get_skills_summary():
-    """Count skills by category using glob for nested structure."""
+    """Count skills by category."""
     if not SKILLS_DIR.exists():
         return {"total": 0, "by_category": {}}
     
     by_cat = {}
     total = 0
-    for f in SKILLS_DIR.rglob("SKILL.md"):
-        total += 1
-        cat = f.parent.parent.name  # e.g., finance/cost-tripwire/SKILL.md -> finance
-        if cat == ".git" or cat.startswith("."):
-            continue
-        by_cat[cat] = by_cat.get(cat, 0) + 1
+    for d in SKILLS_DIR.iterdir():
+        if d.is_dir() and (d / "SKILL.md").exists():
+            total += 1
+            # Category is the parent directory name or inferred from path
+            cat = d.parent.name if d.parent != SKILLS_DIR else "uncategorized"
+            by_cat[cat] = by_cat.get(cat, 0) + 1
     
     return {"total": total, "by_category": by_cat}
 
