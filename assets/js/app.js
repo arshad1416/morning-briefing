@@ -58,6 +58,7 @@
   Router.register('/portfolio',      function (app)         { Portfolio.render(app); });
   Router.register('/simulation',     function (app)         { Simulation.render(app); });
   Router.register('/screener',       function (app)         { Screener.render(app); });
+  Router.register('/agentic-os',    function (app)         { AgenticOS.render(app); });
   Router.register('/ticker/:ticker',function (app, params) { TickerDetail.render(app, params); });
   Router.register('/archive/:date', function (app, params) { Archive.renderDate(app, params); });
 
