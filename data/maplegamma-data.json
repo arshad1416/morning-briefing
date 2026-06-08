@@ -1,16 +1,19 @@
 {
-  "generated_at": "2026-06-08T16:32:42-04:00",
+  "generated_at": "2026-06-08T18:07:12-04:00",
   "market_overview": {
-    "vix": 0
+    "total_net_gex": 303083,
+    "total_oi": 28901,
+    "current_price": 7405.73,
+    "change_pct": 0.3
   },
   "tickers": {
     "SPX": {
       "current_price": 7405.73,
       "change_pct": 0.3,
       "gamma_regime": "bullish",
-      "total_gex": 301845,
-      "total_dex": -1568366,
-      "total_vex": 2262480,
+      "total_gex": 303083,
+      "total_dex": -1580596,
+      "total_vex": 2292174,
       "max_gex_strike": null,
       "max_gex_value": null,
       "neutral_range": [
@@ -19,96 +22,86 @@
       ],
       "gamma_profile": [
         {
-          "strike": 740.0,
-          "oi": 3054,
-          "call_gex": 0,
-          "put_gex": 13721,
-          "net_gex": -13721,
-          "dex": -158106,
-          "vex": 89976
-        },
-        {
           "strike": 735.0,
-          "oi": 2927,
           "call_gex": 0,
-          "put_gex": 10535,
-          "net_gex": -10535,
-          "dex": -93870,
-          "vex": 77447
+          "put_gex": 10497,
+          "net_gex": 10497,
+          "dex": -94084,
+          "vex": 77521,
+          "oi": 2927
+        },
+        {
+          "strike": 737.0,
+          "call_gex": 0,
+          "put_gex": 7315,
+          "net_gex": 7315,
+          "dex": -71166,
+          "vex": 51576,
+          "oi": 1816
+        },
+        {
+          "strike": 738.0,
+          "call_gex": 0,
+          "put_gex": 7761,
+          "net_gex": 7761,
+          "dex": -79312,
+          "vex": 53427,
+          "oi": 1839
         },
         {
           "strike": 740.0,
-          "oi": 2304,
-          "call_gex": 10468,
-          "put_gex": 0,
-          "net_gex": 10468,
-          "dex": 111063,
-          "vex": 67878
-        },
-        {
-          "strike": 755.0,
-          "oi": 7433,
-          "call_gex": 8481,
-          "put_gex": 0,
-          "net_gex": 8481,
-          "dex": 38960,
-          "vex": 58837
+          "call_gex": 10511,
+          "put_gex": 13610,
+          "net_gex": 24121,
+          "dex": -47010,
+          "vex": 157854,
+          "oi": 5358
         },
         {
           "strike": 743.0,
-          "oi": 1884,
-          "call_gex": 8351,
+          "call_gex": 8458,
           "put_gex": 0,
-          "net_gex": 8351,
-          "dex": 64238,
-          "vex": 51085
+          "net_gex": 8458,
+          "dex": 63788,
+          "vex": 50948,
+          "oi": 1884
         },
         {
           "strike": 745.0,
-          "oi": 2067,
           "call_gex": 8288,
-          "put_gex": 0,
-          "net_gex": 8288,
-          "dex": 51101,
-          "vex": 48267
+          "put_gex": 7381,
+          "net_gex": 15669,
+          "dex": -89915,
+          "vex": 94159,
+          "oi": 3976
         },
         {
           "strike": 750.0,
-          "oi": 3668,
           "call_gex": 7777,
           "put_gex": 0,
           "net_gex": 7777,
           "dex": 33606,
-          "vex": 44618
+          "vex": 44618,
+          "oi": 3668
         },
         {
-          "strike": 738.0,
-          "oi": 1839,
-          "call_gex": 0,
-          "put_gex": 7761,
-          "net_gex": -7761,
-          "dex": -79312,
-          "vex": 53427
-        },
-        {
-          "strike": 737.0,
-          "oi": 1816,
-          "call_gex": 0,
-          "put_gex": 7392,
-          "net_gex": -7392,
-          "dex": -70957,
-          "vex": 51533
-        },
-        {
-          "strike": 745.0,
-          "oi": 1909,
-          "call_gex": 0,
-          "put_gex": 7354,
-          "net_gex": -7354,
-          "dex": -140757,
-          "vex": 46014
+          "strike": 755.0,
+          "call_gex": 8481,
+          "put_gex": 0,
+          "net_gex": 8481,
+          "dex": 38960,
+          "vex": 58837,
+          "oi": 7433
         }
-      ]
+      ],
+      "floor_zone": null,
+      "ceiling_zone": {
+        "strike": 740.0,
+        "net_gex": 24121,
+        "total_gex": 24121,
+        "narrative": "Gamma ceiling at $740"
+      },
+      "narrative": "Net GEX: $+303,083 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
