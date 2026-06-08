@@ -246,6 +246,7 @@ const MapleGamma = {
     const tickers = Object.keys(data.tickers);
     const defaultTicker = 'SPX';
     this._selectedTicker = defaultTicker;
+    this._defaultTicker = defaultTicker;
     this._selectedOverlay = 'gex';
 
     let html = `<div class="mg-dashboard">`;
@@ -772,7 +773,7 @@ const MapleGamma = {
         document.querySelectorAll('.mg-expiry-pill').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
         const selectedExpiry = this.dataset.expiry;
-        const ticker = self._selectedTicker || defaultTicker;
+        const ticker = self._selectedTicker || self._defaultTicker;
         const tableContent = document.querySelector('#mg-table-content');
         if (tableContent) {
           tableContent.innerHTML = self._buildGammaTableHTML(data, ticker, selectedExpiry);
@@ -964,8 +965,8 @@ const MapleGamma = {
       'call_gex': p => p.call_gex,
       'put_gex': p => p.put_gex,
       'net_gex': p => p.net_gex,
-      'dex': p => p.dex,
-      'vex': p => p.vex,
+      'dex': p => p.dex || 0,
+      'vex': p => p.vex || 0,
       'oi': p => p.oi
     };
     const getVal = keyMap[key];
@@ -1012,7 +1013,7 @@ const MapleGamma = {
     const profile = data.tickers[ticker].gamma_profile;
     let csv = 'Strike,Calls GEX,Puts GEX,Net GEX,DEX,VEX,OI\n';
     profile.forEach(p => {
-      csv += `${p.strike},${p.call_gex},${p.put_gex},${p.net_gex},${p.dex},${p.vex},${p.oi}\n`;
+      csv += `${p.strike},${p.call_gex},${p.put_gex},${p.net_gex},${p.dex || 0},${p.vex || 0},${p.oi}\n`;
     });
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
