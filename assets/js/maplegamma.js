@@ -287,7 +287,7 @@ const MapleGamma = {
         <label><input type="radio" name="mg-mode" value="advanced"> ⚡ Advanced: Full Table</label>
       </div>
       <div id="mg-table-content">`; // simple mode = nothing extra shown
-    html += this._buildGammaTableHTML(data, defaultTicker);
+    html += this._buildGammaTableHTML(data, defaultTicker, 'all');
     html += `</div></div>`;
 
     // ── WIDGET 5: Net GEX by Expiration ──
@@ -620,9 +620,21 @@ const MapleGamma = {
   /* ─────────────────────────────────────────────────────────────
      WIDGET 4: FULL GAMMA TABLE
      ───────────────────────────────────────────────────────────── */
-  _buildGammaTableHTML(data, ticker) {
+  _buildGammaTableHTML(data, ticker, selectedExpiry) {
     const t = data.tickers[ticker];
-    const profile = t.gamma_profile;
+    // Determine which profile to use based on selected expiry
+    const expiryKey = selectedExpiry === 'Weekly' ? 'weekly'
+                   : selectedExpiry === 'Monthly' ? 'monthly'
+                   : 'all';
+    let profile;
+    let extraInfo = '';
+    if (t.expiry_data && t.expiry_data[expiryKey]) {
+        profile = t.expiry_data[expiryKey].gamma_profile;
+        const ec = t.expiry_data[expiryKey].expiry_count;
+        extraInfo = ` (${ec} expiries, GEX ${(t.expiry_data[expiryKey].total_gex/1000).toFixed(0)}K)`;
+    } else {
+        profile = t.gamma_profile;  // fallback
+    }
     const currentPrice = t.current_price;
     const strikeRange = profile.length > 1 ? profile[profile.length - 1].strike - profile[0].strike : 100;
     const threshold = Math.max(strikeRange * 0.001, 1);
@@ -648,7 +660,7 @@ const MapleGamma = {
     return `
       <div class="mg-table-card">
         <div class="mg-table-header">
-          <div class="mg-table-title">Gamma Exposure Table — ${ticker} — All Expirations</div>
+          <div class="mg-table-title">Gamma Exposure Table — ${ticker} — ${selectedExpiry || 'All Exp'}${extraInfo}</div>
           <div class="mg-table-actions">
             <button class="mg-table-btn" onclick="MapleGamma._exportCSV('${ticker}')">📥 Export CSV</button>
           </div>
@@ -851,7 +863,7 @@ const MapleGamma = {
 
     // Update chart narrative
     const narrativeEl = document.getElementById('mg-chart-narrative');
-    if (narrativeEl) narrativeEl.textContent = '▶ ' + t.narrative;
+    if (narrativeEl) narrativeEl.textContent = '▶ ' + (t.narrative || '');
 
     // Update chart
     this._drawGammaChart(data, ticker, this._selectedOverlay);
@@ -876,7 +888,10 @@ const MapleGamma = {
     document.querySelectorAll('.mg-zone-detail').forEach(d => d.dataset.loaded = '');
 
     // Update gamma table
-    document.getElementById('mg-table-content').innerHTML = this._buildGammaTableHTML(data, ticker);
+    // Read current expiry mode from active pill
+    const activeExpiryPill = document.querySelector('.mg-expiry-pill.active');
+    const currentExpiry = activeExpiryPill ? activeExpiryPill.dataset.expiry : 'All Exp';
+    document.getElementById('mg-table-content').innerHTML = this._buildGammaTableHTML(data, ticker, currentExpiry);
     // Re-wire table sort
     document.querySelectorAll('#mg-gamma-table thead th').forEach(th => {
       th.addEventListener('click', function () {
