@@ -1,0 +1,64 @@
+{
+  "generated_at": "2026-06-07T03:26:00-0400",
+  "generated_on": "raspberrypi",
+  "system": {
+    "model": "deepseek-v4-flash",
+    "provider": "gemini"
+  },
+  "watchdog": {
+    "status": "ok",
+    "age_s": 1234,
+    "broker_reachable": true,
+    "open_positions": 3,
+    "stops_armed": 3,
+    "unprotected": 0,
+    "last_heartbeat": 1780815926,
+    "consecutive_failures": 0,
+    "last_status": "ok"
+  },
+  "rec_cron": {
+    "status": "active",
+    "disabled": false,
+    "last_findings_sent": 0,
+    "hours_since_last_send": null,
+    "unacked_since": 0,
+    "kill_clock_running": false,
+    "hours_until_auto_disable": null
+  },
+  "skills": {
+    "total": 167,
+    "by_category": {
+      "data-science": 4,
+      "github": 6,
+      "email": 2,
+      "iptv": 1,
+      "creative": 20,
+      "media": 5,
+      "skills": 6,
+      "social-media": 1,
+      "autonomous-ai-agents": 10,
+      "finance": 13,
+      "sales": 3,
+      "gaming": 2,
+      "smart-home": 7,
+      "productivity": 18,
+      "devops": 20,
+      "apple": 5,
+      "model-routing": 1,
+      "red-teaming": 1,
+      "mcp": 1,
+      "research": 7,
+      "mlops": 1,
+      "inference": 3,
+      "models": 2,
+      "evaluation": 2,
+      "note-taking": 1,
+      "software-development": 18
+    }
+  },
+  "usage_7d": {
+    "days": 3,
+    "total_prompts": 779,
+    "total_commands": 2718
+  }
+}
