@@ -32,26 +32,18 @@ const PredictionEngine = {
       html += PredictionEngine._renderLiveTrading(lt);
     }
 
-    // Version comparison table (always show latest 10 versions inline)
-    html += '<h2 class="section-title">Version Comparison</h2><div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Version</th><th>Trades</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th><th>Innovation</th></tr></thead><tbody>';
+    // Version comparison table
+    html += '<h2 class="section-title">Version Comparison</h2>' + PredictionEngine._timestampBadge(data.generated_at);
+    html += '<div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Version</th><th>Trades</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th><th>Innovation</th></tr></thead><tbody>';
 
-    // Version comparison — only show major impact versions
-    // Filter to versions that had measurable strategy changes
-    const versions = Object.entries(data.versions).filter(([k,v]) => v.tag);
-    html += '<h2 class="section-title">Methodology Comparison</h2><div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Methodology</th><th>Trades</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th><th>Innovation</th></tr></thead><tbody>';
-    let majorVersions = versions.filter(([name]) => {
-      const num = parseInt(name.split(' ')[0].replace('V',''));
-      return [1,2,3,5,6,10,18,23,26,30,50].includes(num);
-    });
-    if (!majorVersions.length) majorVersions = versions.slice(-5);
-    const latest10 = majorVersions.slice(-10);
+    const allVersions = Object.entries(data.versions).filter(([k,v]) => v.tag);
+    const latest10 = allVersions.slice(-10).reverse();
     latest10.forEach(([name, d]) => {
       const p = d.performance.overall;
       const cls = p.avg_pnl >= 0 ? 'positive' : 'negative';
       const isBv = d.performance.overall.is_best || d.performance.overall.star;
-      const methName = name.replace('V', 'M').replace('Baseline', '0 Baseline');
       html += `<tr style="${isBv ? 'background:var(--accent-dim)' : ''}">
-        <td><strong>${methName.split(' ')[0]}</strong></td>
+        <td><strong>${name.split(' ')[0]}</strong></td>
         <td>${d.total_trades ? d.total_trades.toLocaleString() : ''}</td>
         <td class="${cls}">${p.avg_pnl >= 0 ? '+' : ''}${p.avg_pnl}%</td>
         <td><span class="${p.win_rate >= 70 ? 'badge badge-green' : p.win_rate >= 60 ? 'badge badge-yellow' : 'badge'}">${p.win_rate}%</span></td>
@@ -61,9 +53,33 @@ const PredictionEngine = {
     });
     html += '</tbody></table></div>';
 
+    // Methodology Comparison — key architectural milestones only
+    const milestoneNums = new Set([1, 2, 3, 5, 6, 10, 18, 23]);
+    const milestones = allVersions.filter(([name]) => {
+      const num = parseInt(name.split(' ')[0].replace('V',''));
+      return milestoneNums.has(num);
+    });
+    if (milestones.length) {
+      html += '<h2 class="section-title">Methodology Comparison</h2>' + PredictionEngine._timestampBadge(data.generated_at);
+      html += '<div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Milestone</th><th>Trades</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th><th>Innovation</th></tr></thead><tbody>';
+      milestones.forEach(([name, d]) => {
+        const p = d.performance.overall;
+        const cls = p.avg_pnl >= 0 ? 'positive' : 'negative';
+        html += `<tr>
+          <td><strong>${name.split(' ')[0]}</strong></td>
+          <td>${d.total_trades ? d.total_trades.toLocaleString() : ''}</td>
+          <td class="${cls}">${p.avg_pnl >= 0 ? '+' : ''}${p.avg_pnl}%</td>
+          <td><span class="${p.win_rate >= 70 ? 'badge badge-green' : p.win_rate >= 60 ? 'badge badge-yellow' : 'badge'}">${p.win_rate}%</span></td>
+          <td>${p.profit_factor}</td>
+          <td style="font-size:0.8rem;color:var(--text-secondary)">${d.description ? d.description.substring(0, 80) : ''}${d.description && d.description.length > 80 ? '...' : ''}</td>
+        </tr>`;
+      });
+      html += '</tbody></table></div>';
+    }
+
     // Win rate progression (quick visual)
     if (data.evolution) {
-      html += '<h2 class="section-title">MR Evolution</h2><div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Ver</th><th>WR</th><th>P&L</th><th>PF</th><th>Bar</th></tr></thead><tbody>';
+      html += '<h2 class="section-title">MR Evolution</h2>' + PredictionEngine._timestampBadge(data.generated_at) + '<div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Ver</th><th>WR</th><th>P&L</th><th>PF</th><th>Bar</th></tr></thead><tbody>';
       data.evolution.mr_progression.slice(-6).forEach(v => {
         const bar = Math.min(v.win_rate * 1.2, 100);
         html += `<tr><td><strong>${v.version}</strong></td>
@@ -103,6 +119,12 @@ const PredictionEngine = {
       queue[idx]();
       this._processQueue(app, queue, idx + 1);
     }, 50);
+  },
+
+  // Shared timestamp badge for data tables
+  _timestampBadge(ts) {
+    if (!ts) return '';
+    return '<div style="text-align:right;font-size:0.7rem;color:var(--text-muted);margin-bottom:4px">Updated ' + new Date(ts).toLocaleString() + '</div>';
   },
 
   _renderLiveTrading(lt) {
