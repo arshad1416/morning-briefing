@@ -42,6 +42,11 @@ const Dashboard = {
       html += '<div class="stale-banner">⚠ Data from ' + new Date(data.generated_at).toLocaleString() + ' — may be stale</div>';
     }
 
+    // Timestamp — top right
+    if (data.generated_at) {
+      html += '<div style="text-align:right;color:var(--text-muted);font-size:0.8rem;padding:4px 0 12px 0">Generated ' + new Date(data.generated_at).toLocaleString() + '</div>';
+    }
+
     const ms = data.market_summary || {};
 
     // ── INDICES ──
@@ -243,10 +248,7 @@ const Dashboard = {
         html += '</tbody></table></div></div>';
       }
     }
-    // Timestamp
-    if (data.generated_at) {
-      html += '<div style="text-align:center;color:var(--text-muted);font-size:0.8rem;padding:16px">Generated ' + new Date(data.generated_at).toLocaleString() + '</div>';
-    }
+    // Timestamp was moved to top
 
     return html;
   }
