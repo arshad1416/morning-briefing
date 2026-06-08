@@ -1,97 +1,112 @@
 {
-  "generated_at": "2026-06-08T15:59:09-04:00",
+  "generated_at": "2026-06-08T16:32:42-04:00",
+  "market_overview": {
+    "vix": 0
+  },
   "tickers": {
     "SPX": {
-      "current_price": 7407.42,
-      "total_gex": 297803,
-      "total_dex": -1488099,
-      "total_vex": 2348884,
+      "current_price": 7405.73,
+      "change_pct": 0.3,
+      "gamma_regime": "bullish",
+      "total_gex": 301845,
+      "total_dex": -1568366,
+      "total_vex": 2262480,
       "max_gex_strike": null,
       "max_gex_value": null,
       "neutral_range": [
         734.0,
         744.0
       ],
-      "strikes": [
+      "gamma_profile": [
         {
           "strike": 740.0,
-          "type": "P",
           "oi": 3054,
-          "gex": 13212,
-          "dex": -157519,
-          "vex": 89997
-        },
-        {
-          "strike": 740.0,
-          "type": "C",
-          "oi": 2304,
-          "gex": 10347,
-          "dex": 111383,
-          "vex": 67890
+          "call_gex": 0,
+          "put_gex": 13721,
+          "net_gex": -13721,
+          "dex": -158106,
+          "vex": 89976
         },
         {
           "strike": 735.0,
-          "type": "P",
           "oi": 2927,
-          "gex": 10272,
-          "dex": -95034,
-          "vex": 77846
+          "call_gex": 0,
+          "put_gex": 10535,
+          "net_gex": -10535,
+          "dex": -93870,
+          "vex": 77447
+        },
+        {
+          "strike": 740.0,
+          "oi": 2304,
+          "call_gex": 10468,
+          "put_gex": 0,
+          "net_gex": 10468,
+          "dex": 111063,
+          "vex": 67878
         },
         {
           "strike": 755.0,
-          "type": "C",
           "oi": 7433,
-          "gex": 8517,
-          "dex": 39173,
-          "vex": 59093
+          "call_gex": 8481,
+          "put_gex": 0,
+          "net_gex": 8481,
+          "dex": 38960,
+          "vex": 58837
         },
         {
           "strike": 743.0,
-          "type": "C",
           "oi": 1884,
-          "gex": 8312,
-          "dex": 64651,
-          "vex": 51211
+          "call_gex": 8351,
+          "put_gex": 0,
+          "net_gex": 8351,
+          "dex": 64238,
+          "vex": 51085
         },
         {
           "strike": 745.0,
-          "type": "C",
           "oi": 2067,
-          "gex": 8194,
-          "dex": 52426,
-          "vex": 48928
+          "call_gex": 8288,
+          "put_gex": 0,
+          "net_gex": 8288,
+          "dex": 51101,
+          "vex": 48267
         },
         {
           "strike": 750.0,
-          "type": "C",
           "oi": 3668,
-          "gex": 7944,
-          "dex": 35682,
-          "vex": 46636
+          "call_gex": 7777,
+          "put_gex": 0,
+          "net_gex": 7777,
+          "dex": 33606,
+          "vex": 44618
         },
         {
           "strike": 738.0,
-          "type": "P",
           "oi": 1839,
-          "gex": 7495,
-          "dex": -79526,
-          "vex": 53455
+          "call_gex": 0,
+          "put_gex": 7761,
+          "net_gex": -7761,
+          "dex": -79312,
+          "vex": 53427
+        },
+        {
+          "strike": 737.0,
+          "oi": 1816,
+          "call_gex": 0,
+          "put_gex": 7392,
+          "net_gex": -7392,
+          "dex": -70957,
+          "vex": 51533
         },
         {
           "strike": 745.0,
-          "type": "P",
           "oi": 1909,
-          "gex": 7325,
-          "dex": -140191,
-          "vex": 46280
-        },
-        {
-          "strike": 730.0,
-          "type": "P",
-          "oi": 2951,
-          "gex": 7181,
-          "dex": -57966,
-          "vex": 60413
+          "call_gex": 0,
+          "put_gex": 7354,
+          "net_gex": -7354,
+          "dex": -140757,
+          "vex": 46014
         }
       ]
     }
