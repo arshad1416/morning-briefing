@@ -306,6 +306,8 @@ const MapleGamma = {
       html += `<div class="card"><div class="mg-heatmap-wrap">`;
       html += this._buildOIHeatmapHTML(data, defaultTicker);
       html += `</div></div></div>`;
+    }
+
     // ═══════════════════════════════════════
     // WIDGET 7: Unusual Options Flow — ⚡ not rendered (conditional on data)
     // ═══════════════════════════════════════
