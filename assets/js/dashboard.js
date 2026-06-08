@@ -39,7 +39,7 @@ const Dashboard = {
 
     // Stale warning
     if (State.isStale(data.generated_at)) {
-      html += '<div class="stale-banner">⚠ Data from ' + new Date(data.generated_at).toLocaleTimeString() + ' — may be stale</div>';
+      html += '<div class="stale-banner">⚠ Data from ' + new Date(data.generated_at).toLocaleString() + ' — may be stale</div>';
     }
 
     const ms = data.market_summary || {};
