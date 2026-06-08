@@ -47,7 +47,6 @@
 
   // ── Routes ──────────────────────────────────────────────────
   Router.register('/',              function (app)         { Dashboard.render(app); });
-  Router.register('/watchlist',     function (app)         { Watchlist.render(app); });
   Router.register('/archive',       function (app)         { Archive.render(app); });
   Router.register('/trades',        function (app)         { PaperTrades.render(app); });
   Router.register('/prediction-engine', function (app)    { PredictionEngine.render(app); });
