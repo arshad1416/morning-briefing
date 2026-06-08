@@ -214,7 +214,7 @@ const PredictionEngine = {
       const perf = d.performance;
       const strategies = Object.keys(perf).filter(sk => sk !== 'overall');
       if (strategies.length === 0) return;  // Skip versions with no breakdown data
-      html += `<h2 class="section-title" style="margin-top:24px">${name} — Breakdown</h2><div class="card" style="padding:0;overflow:hidden;margin-bottom:12px"><table><thead><tr><th>Strategy</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th></tr></thead><tbody>`;
+      html += `<h2 class="section-title">${name} — Breakdown</h2><div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Strategy</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th></tr></thead><tbody>`;
       Object.entries(perf).forEach(([sk, p]) => {
         if (sk === 'overall') return;
         const label = p.label || sk;
@@ -234,7 +234,7 @@ const PredictionEngine = {
   _renderEvolution(app, data) {
     if (!data.evolution) return;
     const ev = data.evolution;
-    let html = '<h2 class="section-title">Iteration Insights</h2><div class="card" style="margin-bottom:12px">';
+    let html = '<h2 class="section-title">Iteration Insights</h2><div class="card" style="margin-bottom:20px">';
     if (ev.key_innovations) {
       html += '<div class="card-title">What Worked</div>';
       ev.key_innovations.forEach(k => html += `<div style="font-size:0.85rem;color:var(--text-secondary);padding:3px 0">${k}</div>`);
@@ -250,7 +250,7 @@ const PredictionEngine = {
   _renderGeopolitical(app, data) {
     if (!data.geopolitical_analysis) return;
     const geo = data.geopolitical_analysis;
-    let html = '<h2 class="section-title">Geopolitical & Regime Analysis</h2><div class="card" style="margin-bottom:12px">';
+    let html = '<h2 class="section-title">Geopolitical & Regime Analysis</h2><div class="card" style="margin-bottom:20px">';
 
     geo.events.slice(0, 4).forEach(ev => {
       const avgV3 = Object.values(ev.strategy_performance).reduce((s, v) => {
@@ -282,7 +282,7 @@ const PredictionEngine = {
   _renderPolymarket(app, data) {
     if (!data.polymarket_sentiment) return;
     const pm = data.polymarket_sentiment;
-    let html = '<h2 class="section-title">Polymarket Sentiment</h2><div class="card" style="margin-bottom:12px">';
+    let html = '<h2 class="section-title">Polymarket Sentiment</h2><div class="card" style="margin-bottom:20px">';
     pm.top_markets.slice(0, 8).forEach(m => {
       const outcomes = Object.entries(m.outcomes).map(([k,v]) => `${k}: ${v}`).join(' | ');
       html += `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border-subtle);font-size:0.75rem;gap:8px">
@@ -297,9 +297,7 @@ const PredictionEngine = {
   _renderV5(app, data) {
     if (!data.v5_design) return;
     const v5 = data.v5_design;
-    let html = `<h2 class="section-title" style="color:var(--green)">${v5.version}</h2><div class="card" style="margin-bottom:12px">
-      <div style="font-size:0.85rem;line-height:1.6">Target: ${v5.target_metrics.win_rate} WR · ${v5.target_metrics.trades_per_year}</div>
-      <div style="font-size:0.8rem;color:var(--green)">PF ${v5.target_metrics.profit_factor} · DD ${v5.target_metrics.max_drawdown}</div>`;
+    let html = `<h2 class="section-title" style="color:var(--green)">${v5.version}</h2><div class="card" style="margin-bottom:20px">\n      <div style="font-size:0.85rem;line-height:1.6">Target: ${v5.target_metrics.win_rate} WR · ${v5.target_metrics.trades_per_year}</div>\n      <div style="font-size:0.8rem;color:var(--green)">PF ${v5.target_metrics.profit_factor} · DD ${v5.target_metrics.max_drawdown}</div>`;
 
     if (v5.the_5_layer_filter) {
       html += '<h3 style="font-size:0.7rem;color:var(--accent);text-transform:uppercase;margin:12px 0 6px">5-Layer Filter</h3>';
@@ -408,8 +406,8 @@ const PredictionEngine = {
 
     const passed = checks.filter(c => c.pass).length;
     const scoreColor = passed >= 6 ? 'var(--green)' : passed >= 4 ? 'var(--yellow)' : 'var(--red)';
-    let html = '<h2 class="section-title" style="margin-top:20px">Backtest Validation</h2>';
-    html += '<div class="card" style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">';
+    let html = '<h2 class="section-title">Backtest Validation</h2>';
+    html += '<div class="card" style="margin-bottom:20px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">';
     html += '<span style="font-weight:600;font-size:0.9rem">Research Score: <span style="color:' + scoreColor + '">' + passed + '/7 Passed</span></span>';
     html += '<span style="font-size:0.7rem;color:var(--text-muted)">Per López de Prado / Aronson</span></div><div style="display:flex;flex-direction:column;gap:4px">';
 
@@ -422,7 +420,7 @@ const PredictionEngine = {
     });
 
     html += '</div></div>';
-    html += '<div class="card" style="background:var(--bg-inset);border-color:var(--border-subtle);margin-bottom:12px;font-size:0.75rem;line-height:1.6;color:var(--text-secondary)">';
+    html += '<div class="card" style="background:var(--bg-inset);border-color:var(--border-subtle);margin-bottom:20px;font-size:0.75rem;line-height:1.6;color:var(--text-secondary)">';
     html += '<strong style="color:var(--text-primary)">Research Context:</strong> Academic standards for backtest rigor (López de Prado 2018, Aronson 2007).<br>';
     html += 'Our 135K trades × 25 years × 59 tickers rank in top 1% of retail backtests. ✅<br>';
     html += '<span style="color:var(--green)">✅ Walk-forward validation confirms strategy robustness across 20 windows (2000-2024).</span></div>';
