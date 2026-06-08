@@ -1,141 +1,99 @@
 {
-  "generated_at": "2026-06-03T16:30:00-04:00",
+  "generated_at": "2026-06-08T12:50:29-04:00",
   "tickers": {
     "SPX": {
-      "current_price": 7609.14,
-      "change_pct": 0.12,
-      "gamma_regime": "bullish",
-      "total_gex": 1520000000,
-      "total_dex": -890000000,
-      "total_vex": 340000000,
-      "floor_zone": {
-        "label": "Gamma Floor",
-        "range_start": 5400,
-        "range_end": 5700,
-        "strength": "strong",
-        "total_gex": 1800000000,
-        "narrative": "This floor held on 3 of the last 5 touches. Strong put support from dealer hedging."
-      },
-      "ceiling_zone": {
-        "label": "Gamma Ceiling",
-        "range_start": 5850,
-        "range_end": 5950,
-        "strength": "moderate",
-        "total_gex": -900000000,
-        "narrative": "Call wall building at 5850. Watch for max pain. A break above could trigger rapid acceleration."
-      },
-      "narrative": "SPX is sitting between a gamma ceiling at 5,850 and a gamma floor at 5,700. The next big gamma wall is at 5,400 (put wall). A break above 5,850 could trigger rapid gamma-driven acceleration.",
-      "gamma_profile": [
-        {"strike": 5300, "call_gex": 50000000, "put_gex": -80000000, "net_gex": -30000000, "dex": -0.05, "vex": 12000000, "oi": 45000},
-        {"strike": 5350, "call_gex": 60000000, "put_gex": -120000000, "net_gex": -60000000, "dex": -0.10, "vex": 15000000, "oi": 52000},
-        {"strike": 5400, "call_gex": 80000000, "put_gex": -180000000, "net_gex": -100000000, "dex": -0.15, "vex": 18000000, "oi": 68000},
-        {"strike": 5450, "call_gex": 80000000, "put_gex": -240000000, "net_gex": -160000000, "dex": -0.28, "vex": 22000000, "oi": 75000},
-        {"strike": 5500, "call_gex": 200000000, "put_gex": -450000000, "net_gex": -250000000, "dex": -0.42, "vex": 28000000, "oi": 92000},
-        {"strike": 5550, "call_gex": 250000000, "put_gex": -350000000, "net_gex": -100000000, "dex": -0.18, "vex": 25000000, "oi": 85000},
-        {"strike": 5600, "call_gex": 350000000, "put_gex": -250000000, "net_gex": 100000000, "dex": 0.15, "vex": 30000000, "oi": 88000},
-        {"strike": 5650, "call_gex": 450000000, "put_gex": -200000000, "net_gex": 250000000, "dex": 0.35, "vex": 32000000, "oi": 95000},
-        {"strike": 5700, "call_gex": 550000000, "put_gex": -180000000, "net_gex": 370000000, "dex": 0.48, "vex": 35000000, "oi": 102000},
-        {"strike": 5750, "call_gex": 600000000, "put_gex": -150000000, "net_gex": 450000000, "dex": 0.55, "vex": 38000000, "oi": 110000},
-        {"strike": 5800, "call_gex": 500000000, "put_gex": -120000000, "net_gex": 380000000, "dex": 0.45, "vex": 36000000, "oi": 105000},
-        {"strike": 5850, "call_gex": 300000000, "put_gex": -200000000, "net_gex": 100000000, "dex": 0.12, "vex": 28000000, "oi": 88000},
-        {"strike": 5900, "call_gex": 150000000, "put_gex": -350000000, "net_gex": -200000000, "dex": -0.30, "vex": 26000000, "oi": 78000},
-        {"strike": 5950, "call_gex": 100000000, "put_gex": -400000000, "net_gex": -300000000, "dex": -0.45, "vex": 24000000, "oi": 72000},
-        {"strike": 6000, "call_gex": 80000000, "put_gex": -350000000, "net_gex": -270000000, "dex": -0.38, "vex": 22000000, "oi": 65000}
+      "current_price": 7439.49,
+      "total_gex": 294372,
+      "total_dex": -891457,
+      "total_vex": 2289925,
+      "max_gex_strike": null,
+      "max_gex_value": null,
+      "neutral_range": [
+        738.0,
+        748.0
       ],
-      "gex_by_expiration": [
-        {"bucket": "This Week", "net_gex": 800000000, "color": "green", "narrative": "Strong positive gamma this week — market-making is delta-hedging into strength"},
-        {"bucket": "Next Week", "net_gex": 300000000, "color": "green", "narrative": "Moderate positive gamma, continued support expected"},
-        {"bucket": "Month End", "net_gex": -500000000, "color": "red", "narrative": "Negative gamma building — could see increased volatility into OPEX"},
-        {"bucket": "Front Month", "net_gex": 1200000000, "color": "green", "narrative": "Most gamma concentration is in the front month — this week's OPEX could see increased volatility"}
-      ],
-      "oi_heatmap": {
-        "strikes": [5400, 5450, 5500, 5550, 5600, 5650, 5700, 5750, 5800, 5850, 5900, 5950, 6000],
-        "weeks": ["W1", "W2", "W3", "W4"],
-        "values": [
-          [25, 15, 10, 8],
-          [30, 22, 12, 10],
-          [45, 35, 20, 15],
-          [40, 38, 25, 18],
-          [55, 42, 30, 22],
-          [60, 48, 32, 25],
-          [75, 55, 40, 30],
-          [80, 60, 45, 35],
-          [70, 52, 38, 28],
-          [50, 40, 28, 20],
-          [35, 30, 22, 15],
-          [28, 22, 18, 12],
-          [20, 15, 10, 8]
-        ]
-      }
-    },
-    "TSX": {
-      "current_price": 35083.91,
-      "change_pct": 1.00,
-      "gamma_regime": "bullish",
-      "total_gex": 580000000,
-      "total_dex": -320000000,
-      "total_vex": 180000000,
-      "floor_zone": {
-        "label": "Gamma Floor",
-        "range_start": 34000,
-        "range_end": 34500,
-        "strength": "moderate",
-        "total_gex": 650000000,
-        "narrative": "TSX gamma support building in the 34,000–34,500 range. Moderate put wall."
-      },
-      "ceiling_zone": {
-        "label": "Gamma Ceiling",
-        "range_start": 35500,
-        "range_end": 36000,
-        "strength": "weak",
-        "total_gex": -200000000,
-        "narrative": "Thin call resistance above 35,500. TSX could run if momentum continues."
-      },
-      "narrative": "TSX is in a bullish gamma regime with support in the 34,000-34,500 zone. The ceiling above 35,500 is relatively weak — continued upside is likely.",
-      "gamma_profile": [
-        {"strike": 33500, "call_gex": 20000000, "put_gex": -40000000, "net_gex": -20000000, "dex": -0.03, "vex": 5000000, "oi": 12000},
-        {"strike": 34000, "call_gex": 40000000, "put_gex": -70000000, "net_gex": -30000000, "dex": -0.05, "vex": 8000000, "oi": 18000},
-        {"strike": 34500, "call_gex": 80000000, "put_gex": -60000000, "net_gex": 20000000, "dex": 0.03, "vex": 10000000, "oi": 22000},
-        {"strike": 35000, "call_gex": 120000000, "put_gex": -40000000, "net_gex": 80000000, "dex": 0.12, "vex": 15000000, "oi": 28000},
-        {"strike": 35500, "call_gex": 60000000, "put_gex": -80000000, "net_gex": -20000000, "dex": -0.03, "vex": 8000000, "oi": 20000},
-        {"strike": 36000, "call_gex": 30000000, "put_gex": -50000000, "net_gex": -20000000, "dex": -0.03, "vex": 6000000, "oi": 15000}
-      ],
-      "gex_by_expiration": [
-        {"bucket": "This Week", "net_gex": 350000000, "color": "green", "narrative": "Decent positive gamma for TSX this week"},
-        {"bucket": "Next Week", "net_gex": 150000000, "color": "green", "narrative": "Support expected to continue"},
-        {"bucket": "Month End", "net_gex": -80000000, "color": "red", "narrative": "Slight negative gamma building"},
-        {"bucket": "Front Month", "net_gex": 500000000, "color": "green", "narrative": "Front month concentration is positive"}
-      ],
-      "oi_heatmap": {
-        "strikes": [33500, 34000, 34500, 35000, 35500, 36000],
-        "weeks": ["W1", "W2", "W3", "W4"],
-        "values": [
-          [15, 10, 8, 5],
-          [22, 15, 10, 8],
-          [30, 22, 15, 12],
-          [35, 28, 20, 15],
-          [25, 18, 12, 10],
-          [15, 12, 8, 5]
-        ]
-      }
+      "strikes": [
+        {
+          "strike": 755.0,
+          "type": "C",
+          "oi": 7433,
+          "gex": 14278,
+          "dex": 76803,
+          "vex": 99219
+        },
+        {
+          "strike": 740.0,
+          "type": "P",
+          "oi": 3054,
+          "gex": 13160,
+          "dex": -110428,
+          "vex": 84985
+        },
+        {
+          "strike": 750.0,
+          "type": "C",
+          "oi": 3668,
+          "gex": 11786,
+          "dex": 86970,
+          "vex": 84127
+        },
+        {
+          "strike": 747.0,
+          "type": "P",
+          "oi": 2027,
+          "gex": 11519,
+          "dex": -155981,
+          "vex": 45766
+        },
+        {
+          "strike": 745.0,
+          "type": "P",
+          "oi": 1909,
+          "gex": 10994,
+          "dex": -117426,
+          "vex": 54190
+        },
+        {
+          "strike": 753.0,
+          "type": "C",
+          "oi": 4236,
+          "gex": 10375,
+          "dex": 61385,
+          "vex": 71676
+        },
+        {
+          "strike": 735.0,
+          "type": "P",
+          "oi": 2927,
+          "gex": 8307,
+          "dex": -62694,
+          "vex": 63379
+        },
+        {
+          "strike": 745.0,
+          "type": "C",
+          "oi": 2067,
+          "gex": 7520,
+          "dex": 88962,
+          "vex": 60309
+        },
+        {
+          "strike": 757.0,
+          "type": "C",
+          "oi": 5039,
+          "gex": 7455,
+          "dex": 37827,
+          "vex": 53013
+        },
+        {
+          "strike": 740.0,
+          "type": "C",
+          "oi": 2304,
+          "gex": 7005,
+          "dex": 137633,
+          "vex": 66222
+        }
+      ]
     }
-  },
-  "market_overview": {
-    "indices": [
-      {"ticker": "SPX", "price": 7609.14, "change_pct": 0.12, "gamma_regime": "bullish"},
-      {"ticker": "TSX", "price": 35083.91, "change_pct": 1.00, "gamma_regime": "bullish"},
-      {"ticker": "QQQ", "price": 198.45, "change_pct": -0.30, "gamma_regime": "neutral"},
-      {"ticker": "IWM", "price": 215.20, "change_pct": 0.55, "gamma_regime": "bullish"}
-    ],
-    "vix": 15.76,
-    "ten_year_yield": 4.455,
-    "usdcad": 1.3886
-  },
-  "unusual_flow": [
-    {"ticker": "SPX", "action": "Buy Call", "strike": 5850, "expiration": "2026-06-12", "premium": 2400000, "sentiment": "bullish", "timestamp": "2026-06-03T15:45:00-04:00"},
-    {"ticker": "TSLA", "action": "Sell Put", "strike": 175, "expiration": "2026-06-26", "premium": -1100000, "sentiment": "bearish", "timestamp": "2026-06-03T15:30:00-04:00"},
-    {"ticker": "AAPL", "action": "Buy Put", "strike": 190, "expiration": "2026-07-17", "premium": 800000, "sentiment": "bearish", "timestamp": "2026-06-03T15:15:00-04:00"},
-    {"ticker": "NVDA", "action": "Buy Call", "strike": 120, "expiration": "2026-06-19", "premium": 1500000, "sentiment": "bullish", "timestamp": "2026-06-03T14:55:00-04:00"},
-    {"ticker": "MSFT", "action": "Buy Call", "strike": 430, "expiration": "2026-07-17", "premium": 950000, "sentiment": "bullish", "timestamp": "2026-06-03T14:40:00-04:00"}
-  ]
+  }
 }
