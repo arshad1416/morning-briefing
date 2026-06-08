@@ -306,13 +306,13 @@ const MapleGamma = {
       html += `<div class="card"><div class="mg-heatmap-wrap">`;
       html += this._buildOIHeatmapHTML(data, defaultTicker);
       html += `</div></div></div>`;
-    }
-
-    // ── WIDGET 7: Unusual Options Flow ──
+    // ═══════════════════════════════════════
+    // WIDGET 7: Unusual Options Flow — ⚡ not rendered (conditional on data)
+    // ═══════════════════════════════════════
     if (data.unusual_flow && data.unusual_flow.length > 0) {
-      html += `<div class="mg-section">`;
+      html += '<div class="mg-section mg-section-flow">\n';
       html += this._buildFlowHTML(data);
-      html += `</div>`;
+      html += '</div>';
     }
 
     // Timestamp
