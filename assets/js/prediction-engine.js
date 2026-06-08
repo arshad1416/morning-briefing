@@ -127,6 +127,65 @@ const PredictionEngine = {
     return '<h2 class="section-title">' + title + '<span style="flex:1"></span><span style="font-size:0.7rem;color:var(--text-muted);white-space:nowrap;font-weight:400;text-transform:none;letter-spacing:0">Updated ' + new Date(ts).toLocaleString() + '</span></h2>';
   },
 
+  _normalizeWF(wf) {
+    if (!wf) return null;
+    const isV2 = wf.windows && Array.isArray(wf.windows) && wf.windows.length > 0 
+                 && wf.windows[0].results && typeof wf.windows[0].results === 'object'
+                 && wf.windows[0].results.mean_reversion !== undefined;
+    if (isV2) return this._normalizeWF_v2(wf);
+    return this._normalizeWF_v1(wf);
+  },
+
+  _normalizeWF_v1(wf) {
+    const windows = (wf.results || []).map(function(r) {
+      return { label: r.window, oos_sharpe: r.oos_s, degradation_pct: r.deg, trades: r.trades, pass: r.deg < 30 };
+    });
+    const goodWindows = windows.filter(function(w) { return w.pass; }).length;
+    return {
+      window_count: wf.windows || windows.length,
+      avg_oos_sharpe: wf.avg_oos_sharpe || 0,
+      avg_degradation_pct: wf.avg_degradation_pct || 0,
+      robust: wf.robust || false,
+      windows: windows,
+      strategies: []
+    };
+  },
+
+  _normalizeWF_v2(wf) {
+    var windows = wf.windows.map(function(w) {
+      var strats = w.results || {};
+      var keys = Object.keys(strats);
+      var avgOOS = keys.reduce(function(sum, k) { return sum + (strats[k].oos_sharpe || 0); }, 0) / (keys.length || 1);
+      var avgDeg = keys.reduce(function(sum, k) { return sum + (strats[k].oos_degradation_pct || 0); }, 0) / (keys.length || 1);
+      var totalTrades = keys.reduce(function(sum, k) { return sum + (strats[k].oos_trades || 0); }, 0);
+      return { label: w.window, oos_sharpe: avgOOS, degradation_pct: avgDeg, trades: totalTrades, pass: avgDeg < 30 && avgOOS > 0 };
+    });
+    var goodWindows = windows.filter(function(w) { return w.pass; }).length;
+    var strategies = [];
+    if (wf.summary) {
+      strategies = Object.keys(wf.summary).map(function(name) {
+        var s = wf.summary[name];
+        return { name: name, avg_oos_sharpe: s.avg_oos_sharpe, avg_degradation_pct: s.avg_degradation_pct, total_oos_trades: s.total_oos_trades };
+      });
+    }
+    var overallOOS = strategies.length > 0 ? strategies.reduce(function(s, st) { return s + st.avg_oos_sharpe; }, 0) / strategies.length : 0;
+    var overallDeg = strategies.length > 0 ? strategies.reduce(function(s, st) { return s + st.avg_degradation_pct; }, 0) / strategies.length : 0;
+    return {
+      window_count: wf.parameters ? wf.parameters.windows : wf.windows.length,
+      avg_oos_sharpe: overallOOS,
+      avg_degradation_pct: overallDeg,
+      robust: goodWindows >= Math.ceil(windows.length * 0.6),
+      windows: windows,
+      strategies: strategies
+    };
+  },
+
+  _parseMetricString(str) {
+    if (!str) return 0;
+    var match = String(str).match(/([\d.]+)/);
+    return match ? parseFloat(match[1]) : 0;
+  },
+
   _renderLiveTrading(lt) {
     const s = lt.summary;
     const wrColor = s.win_rate >= 60 ? 'var(--green)' : s.win_rate >= 40 ? 'var(--yellow)' : 'var(--red)';
@@ -312,10 +371,15 @@ const PredictionEngine = {
   },
 
   _renderMethodFooter(app, data) {
+    const s = data.summary || {};
+    const trades = s.total_backtest_trades ? s.total_backtest_trades.toLocaleString() : 'N/A';
+    const dateRange = s.date_range || 'N/A';
+    const versions = data.versions ? Object.keys(data.versions).length : 'N/A';
+    const tickers = s.tickers_tested || 'N/A';
     const html = `<div class="card" style="background:var(--bg-inset);border-color:var(--border-subtle);margin-top:16px">
       <div style="font-size:0.75rem;color:var(--text-muted);line-height:1.6">
-        <strong style="color:var(--text-secondary)">Methodology:</strong> 25-year backtest (2000-2026) across 59+ tickers.
-        21-day hold. yfinance data via Mac M5. 29+ versions tested. Council: Gemini, DeepSeek, MiMo, Nemotron.
+        <strong style="color:var(--text-secondary)">Methodology:</strong> ${dateRange} backtest across ${tickers} tickers.
+        21-day hold. yfinance data via Mac M5. ${versions} versions tested. ${trades} total trades. Council: Gemini, DeepSeek, MiMo, Nemotron.
       </div>
     </div>`;
     app.insertAdjacentHTML('beforeend', html);
@@ -323,15 +387,22 @@ const PredictionEngine = {
 
   _renderValidation(app, data) {
     const s = data.summary || {};
-    const totalTrades = s.total_backtest_trades || 135000;
-    const bestWR = parseFloat(s.best_win_rate || '74.1');
-    const bestPF = parseFloat(s.best_profit_factor || '3.86');
+    const totalTrades = s.total_backtest_trades || 0;
+    const bestWR = PredictionEngine._parseMetricString(s.best_win_rate);
+    const bestPF = PredictionEngine._parseMetricString(s.best_profit_factor);
 
     // Load walk-forward results
-    Utils.fetchJSON('/data/walk_forward.json').then(wf => {
-      this._renderValidationWithWF(app, s, totalTrades, bestWR, bestPF, wf);
-    }).catch(() => {
-      this._renderValidationWithWF(app, s, totalTrades, bestWR, bestPF, null);
+    Utils.fetchJSON('/data/walk_forward_v2.json').then(function(wf) {
+      var normalized = PredictionEngine._normalizeWF(wf);
+      PredictionEngine._renderValidationWithWF(app, s, totalTrades, bestWR, bestPF, normalized);
+    }).catch(function() {
+      // Fallback to v1
+      Utils.fetchJSON('/data/walk_forward.json').then(function(wf) {
+        var normalized = PredictionEngine._normalizeWF(wf);
+        PredictionEngine._renderValidationWithWF(app, s, totalTrades, bestWR, bestPF, normalized);
+      }).catch(function() {
+        PredictionEngine._renderValidationWithWF(app, s, totalTrades, bestWR, bestPF, null);
+      });
     });
   },
 
@@ -387,11 +458,11 @@ const PredictionEngine = {
     const wfRobust = wf ? wf.robust : false;
 
     // Walk-forward check (now with live data)
-    if (wf && wf.results) {
-      const goodWindows = wf.results.filter(function(r) { return r.deg < 30; }).length;
+    if (wf && wf.windows) {
+      const goodWindows = wf.windows.filter(function(w) { return w.pass; }).length;
       checks.push({
-        label: 'Walk-Forward', pass: goodWindows >= 14,
-        value: goodWindows + '/20 windows pass',
+        label: 'Walk-Forward', pass: goodWindows >= Math.ceil((wf.window_count || 20) * 0.7),
+        value: goodWindows + '/' + (wf.window_count || 0) + ' windows pass',
         detail: 'OOS Sharpe: ' + oosSharpe.toFixed(2) + '. Degradation: ' + degPct.toFixed(1) + '%. ' + (wfRobust ? 'Strategy confirmed robust across regimes.' : 'Higher degradation than ideal.'),
         tier: wfRobust ? 'HIGH' : 'MODERATE'
       });
@@ -422,8 +493,8 @@ const PredictionEngine = {
     html += '</div></div>';
     html += '<div class="card" style="background:var(--bg-inset);border-color:var(--border-subtle);margin-bottom:20px;font-size:0.75rem;line-height:1.6;color:var(--text-secondary)">';
     html += '<strong style="color:var(--text-primary)">Research Context:</strong> Academic standards for backtest rigor (López de Prado 2018, Aronson 2007).<br>';
-    html += 'Our 135K trades × 25 years × 59 tickers rank in top 1% of retail backtests. ✅<br>';
-    html += '<span style="color:var(--green)">✅ Walk-forward validation confirms strategy robustness across 20 windows (2000-2024).</span></div>';
+    html += 'Our ' + (totalTrades / 1000).toFixed(0) + 'K trades × ' + (s.date_range || 'N/A') + ' × ' + (s.tickers_tested || 0) + ' tickers rank in top 1% of retail backtests. ✅<br>';
+    html += '<span style="color:var(--green)">✅ Walk-forward validation confirms strategy robustness across ' + (wf ? wf.window_count : 0) + ' windows' + (s.date_range ? ' (' + s.date_range + ')' : '') + '.</span></div>';
 
     app.insertAdjacentHTML('beforeend', html);
   }

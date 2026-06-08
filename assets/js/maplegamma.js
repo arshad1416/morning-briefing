@@ -291,21 +291,29 @@ const MapleGamma = {
     html += `</div></div>`;
 
     // ── WIDGET 5: Net GEX by Expiration ──
-    html += `<div class="mg-section"><div class="mg-section-title">Net Gamma by Expiration — ${defaultTicker}</div>`;
-    html += `<div class="mg-expiry-grid" id="mg-expiry-grid">`;
-    html += this._buildExpiryHTML(data, defaultTicker);
-    html += `</div></div>`;
+    const expiryHTML = this._buildExpiryHTML(data, defaultTicker);
+    if (expiryHTML) {
+      html += `<div class="mg-section"><div class="mg-section-title">Net Gamma by Expiration — ${defaultTicker}</div>`;
+      html += `<div class="mg-expiry-grid" id="mg-expiry-grid">`;
+      html += expiryHTML;
+      html += `</div></div>`;
+    }
 
     // ── WIDGET 6: OI Heatmap ──
-    html += `<div class="mg-section"><div class="mg-section-title">Open Interest by Strike × Expiration — ${defaultTicker}</div>`;
-    html += `<div class="card"><div class="mg-heatmap-wrap">`;
-    html += this._buildOIHeatmapHTML(data, defaultTicker);
-    html += `</div></div></div>`;
+    const t_default = data.tickers[defaultTicker];
+    if (t_default && t_default.oi_heatmap) {
+      html += `<div class="mg-section"><div class="mg-section-title">Open Interest by Strike × Expiration — ${defaultTicker}</div>`;
+      html += `<div class="card"><div class="mg-heatmap-wrap">`;
+      html += this._buildOIHeatmapHTML(data, defaultTicker);
+      html += `</div></div></div>`;
+    }
 
     // ── WIDGET 7: Unusual Options Flow ──
-    html += `<div class="mg-section">`;
-    html += this._buildFlowHTML(data);
-    html += `</div>`;
+    if (data.unusual_flow && data.unusual_flow.length > 0) {
+      html += `<div class="mg-section">`;
+      html += this._buildFlowHTML(data);
+      html += `</div>`;
+    }
 
     // Timestamp
     html += `<div style="text-align:center;color:var(--text-muted);font-size:0.75rem;padding:16px">Generated ${new Date(data.generated_at).toLocaleString()}</div>`;
@@ -889,6 +897,12 @@ const MapleGamma = {
     const heatmapWrap = document.querySelector('.mg-heatmap-wrap');
     if (heatmapWrap && t.oi_heatmap) {
       heatmapWrap.innerHTML = this._buildOIHeatmapHTML(data, ticker);
+    }
+
+    // Update unusual flow section
+    const flowSection = document.querySelector('.mg-section-flow, [data-widget="flow"]');
+    if (flowSection && data.unusual_flow && data.unusual_flow.length > 0) {
+      flowSection.innerHTML = this._buildFlowHTML(data);
     }
   },
 
