@@ -262,7 +262,7 @@ const MapleGamma = {
     html += `<div class="mg-ticker-bar" id="mg-ticker-bar">`;
     html += tickers.map(t => `<button class="mg-ticker-pill ${t === defaultTicker ? 'active' : ''}" data-ticker="${t}">${t}</button>`).join('');
     html += `<span style="flex:1"></span>`;
-    html += [`All Exp`, `Weekly`, `Monthly`].map(e => `<button class="mg-expiry-pill ${e === 'All Exp' ? 'active' : ''}">${e}</button>`).join('');
+    html += [`All Exp`, `Weekly`, `Monthly`].map(e => `<button class="mg-expiry-pill ${e === 'All Exp' ? 'active' : ''}" data-expiry="${e}">${e}</button>`).join('');
     html += `</div>`;
 
     // ── WIDGET 2: Gamma Profile Chart ──
@@ -312,6 +312,9 @@ const MapleGamma = {
     html += `</div>`;
     app.innerHTML = html;
 
+    // ── Ensure Beginner mode renders correctly on first load ──
+    this._toggleTableMode(data, defaultTicker, 'simple');
+
     // ── Draw chart ──
     this._drawGammaChart(data, defaultTicker, 'gex');
 
@@ -354,7 +357,7 @@ const MapleGamma = {
         </div>
         <div class="mg-metric-card">
           <div class="mg-metric-label">Gamma Regime</div>
-          <div class="mg-metric-value"><span class="mg-regime-badge ${regimeCls}">${regimeCls === 'bullish' ? '🟢' : regimeCls === 'bearish' ? '🔴' : '🟡'} ${regimeCls}</span></div>
+          <div class="mg-metric-value"><span class="mg-regime-badge ${regimeCls || 'neutral'}">${regimeCls === 'bullish' ? '🟢' : regimeCls === 'bearish' ? '🔴' : '🟡'} ${regimeCls || 'neutral'}</span></div>
           <div class="mg-metric-sub"><span class="mg-live-dot"></span><span class="mg-live-label">LIVE</span></div>
         </div>
       </div>`;
@@ -625,7 +628,7 @@ const MapleGamma = {
         <td class="mg-gex-pos">${this._fmtGexShort(p.call_gex)}</td>
         <td class="mg-gex-neg">${this._fmtGexShort(p.put_gex)}</td>
         <td class="${netCls}">${this._fmtGexShort(p.net_gex)}</td>
-        <td>${p.dex >= 0 ? '+' : ''}${p.dex.toFixed(2)}</td>
+        <td>${(p.dex || 0) >= 0 ? '+' : ''}${(p.dex || 0).toFixed(2)}</td>
         <td>${this._fmtGexShort(p.vex)}</td>
         <td>${p.oi.toLocaleString()}</td>
       </tr>`;
@@ -768,8 +771,12 @@ const MapleGamma = {
       btn.addEventListener('click', function () {
         document.querySelectorAll('.mg-expiry-pill').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
-        // Future: filter chart/table by selected expiry bucket
-        // For now, visual selection only — data filtering is a feature enhancement
+        const selectedExpiry = this.dataset.expiry;
+        const ticker = self._selectedTicker || defaultTicker;
+        const tableContent = document.querySelector('#mg-table-content');
+        if (tableContent) {
+          tableContent.innerHTML = self._buildGammaTableHTML(data, ticker, selectedExpiry);
+        }
       });
     });
 
@@ -985,7 +992,7 @@ const MapleGamma = {
         <td class="mg-gex-pos">${this._fmtGexShort(p.call_gex)}</td>
         <td class="mg-gex-neg">${this._fmtGexShort(p.put_gex)}</td>
         <td class="${netCls}">${this._fmtGexShort(p.net_gex)}</td>
-        <td>${p.dex >= 0 ? '+' : ''}${p.dex.toFixed(2)}</td>
+        <td>${(p.dex || 0) >= 0 ? '+' : ''}${(p.dex || 0).toFixed(2)}</td>
         <td>${this._fmtGexShort(p.vex)}</td>
         <td>${p.oi.toLocaleString()}</td>
       </tr>`;
@@ -1032,7 +1039,7 @@ const MapleGamma = {
     } else {
       // Hide all but first 5, add expand button
       const link = document.querySelector('.mg-flow-link');
-      allRows.forEach((r, i) => { if (i > 4 && !i === allRows.length - 1) r.style.display = 'none'; });
+      allRows.forEach((r, i) => { if (i > 4 && i !== allRows.length - 1) r.style.display = 'none'; });
       if (link) link.textContent = '^ Collapse';
     }
   },
