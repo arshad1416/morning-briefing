@@ -33,7 +33,7 @@ const PredictionEngine = {
     }
 
     // Version comparison table
-    html += '<h2 class="section-title">Version Comparison</h2>' + PredictionEngine._timestampBadge(data.generated_at);
+    html += PredictionEngine._sectionTitle('Version Comparison', data.generated_at);
     html += '<div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Version</th><th>Trades</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th><th>Innovation</th></tr></thead><tbody>';
 
     const allVersions = Object.entries(data.versions).filter(([k,v]) => v.tag);
@@ -60,7 +60,7 @@ const PredictionEngine = {
       return milestoneNums.has(num);
     });
     if (milestones.length) {
-      html += '<h2 class="section-title">Methodology Comparison</h2>' + PredictionEngine._timestampBadge(data.generated_at);
+      html += PredictionEngine._sectionTitle('Methodology Comparison', data.generated_at);
       html += '<div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Milestone</th><th>Trades</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th><th>Innovation</th></tr></thead><tbody>';
       milestones.forEach(([name, d]) => {
         const p = d.performance.overall;
@@ -79,7 +79,7 @@ const PredictionEngine = {
 
     // Win rate progression (quick visual)
     if (data.evolution) {
-      html += '<h2 class="section-title">MR Evolution</h2>' + PredictionEngine._timestampBadge(data.generated_at) + '<div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Ver</th><th>WR</th><th>P&L</th><th>PF</th><th>Bar</th></tr></thead><tbody>';
+      html += PredictionEngine._sectionTitle('MR Evolution', data.generated_at) + '<div class="card" style="padding:0;overflow:hidden;margin-bottom:20px"><table><thead><tr><th>Ver</th><th>WR</th><th>P&L</th><th>PF</th><th>Bar</th></tr></thead><tbody>';
       data.evolution.mr_progression.slice(-6).forEach(v => {
         const bar = Math.min(v.win_rate * 1.2, 100);
         html += `<tr><td><strong>${v.version}</strong></td>
@@ -121,10 +121,10 @@ const PredictionEngine = {
     }, 50);
   },
 
-  // Shared timestamp badge for data tables
-  _timestampBadge(ts) {
-    if (!ts) return '';
-    return '<div style="text-align:right;font-size:0.7rem;color:var(--text-muted);margin-bottom:4px">Updated ' + new Date(ts).toLocaleString() + '</div>';
+  // Shared section title with inline timestamp
+  _sectionTitle(title, ts) {
+    if (!ts) return '<h2 class="section-title">' + title + '</h2>';
+    return '<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px"><h2 class="section-title" style="margin-bottom:0">' + title + '</h2><span style="font-size:0.7rem;color:var(--text-muted);white-space:nowrap">Updated ' + new Date(ts).toLocaleString() + '</span></div>';
   },
 
   _renderLiveTrading(lt) {
