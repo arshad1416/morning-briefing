@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-08T18:07:12-04:00",
+  "generated_at": "2026-06-08T18:10:42-04:00",
   "market_overview": {
     "total_net_gex": 303083,
     "total_oi": 28901,
@@ -94,13 +94,16 @@
           "oi": 7433
         }
       ],
-      "floor_zone": null,
-      "ceiling_zone": {
+      "floor_zone": {
         "strike": 740.0,
         "net_gex": 24121,
         "total_gex": 24121,
-        "narrative": "Gamma ceiling at $740"
+        "range_start": 735.0,
+        "range_end": 745.0,
+        "strength": "strong",
+        "narrative": "Gamma floor at $740"
       },
+      "ceiling_zone": null,
       "narrative": "Net GEX: $+303,083 \u2014 dealers are long gamma (range-bound)"
     }
   }
