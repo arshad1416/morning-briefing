@@ -124,7 +124,7 @@ const PredictionEngine = {
   // Shared section title with inline timestamp
   _sectionTitle(title, ts) {
     if (!ts) return '<h2 class="section-title">' + title + '</h2>';
-    return '<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border-dim)"><h2 class="section-title" style="margin-bottom:0;border-bottom:none;padding-bottom:0">' + title + '</h2><span style="font-size:0.7rem;color:var(--text-muted);white-space:nowrap">Updated ' + new Date(ts).toLocaleString() + '</span></div>';
+    return '<h2 class="section-title">' + title + '<span style="flex:1"></span><span style="font-size:0.7rem;color:var(--text-muted);white-space:nowrap;font-weight:400;text-transform:none;letter-spacing:0">Updated ' + new Date(ts).toLocaleString() + '</span></h2>';
   },
 
   _renderLiveTrading(lt) {
