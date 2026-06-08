@@ -1,6 +1,6 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-06-08 11:46:22",
+  "generated_at": "2026-06-08 11:48:22",
   "price_source": "yfinance historical closes \u2014 no CAD/USD math",
   "portfolio": {
     "starting_balance": 2000.0,
@@ -8,7 +8,7 @@
     "invested": 590.19,
     "total_balance": 2000.0,
     "total_pnl": 0.0,
-    "unrealized_pnl": 17.15,
+    "unrealized_pnl": 17.19,
     "return_pct": 0.86,
     "win_rate": 63.2,
     "total_trades": 19
@@ -20,9 +20,9 @@
       "type": "Stock",
       "entry_date": "2026-05-26",
       "entry_price": 155.44,
-      "current_price": 159.35,
+      "current_price": 159.36,
       "currency": "CAD",
-      "pnl": 3.91,
+      "pnl": 3.92,
       "pnl_pct": 2.52,
       "strategy": "value_investing",
       "direction": "long",
@@ -46,10 +46,10 @@
       "type": "ETF",
       "entry_date": "2026-06-04",
       "entry_price": 113.11,
-      "current_price": 111.11,
+      "current_price": 111.14,
       "currency": "USD",
-      "pnl": -2.0,
-      "pnl_pct": -1.77,
+      "pnl": -1.97,
+      "pnl_pct": -1.74,
       "strategy": "mean_reversion",
       "direction": "long",
       "rationale": "XLC oversold (RSI 26.8) near support. Communication Services deeply oversold, below lower BB. Mean reversion as safe-haven rotation may reverse. 4 bullish setups on screener score 28.8."
