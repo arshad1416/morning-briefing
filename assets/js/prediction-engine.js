@@ -212,6 +212,8 @@ const PredictionEngine = {
     let html = '<div id="lazy-strategy" style="display:none">';
     topVersions.forEach(([name, d]) => {
       const perf = d.performance;
+      const strategies = Object.keys(perf).filter(sk => sk !== 'overall');
+      if (strategies.length === 0) return;  // Skip versions with no breakdown data
       html += `<h2 class="section-title" style="margin-top:24px">${name} — Breakdown</h2><div class="card" style="padding:0;overflow:hidden;margin-bottom:12px"><table><thead><tr><th>Strategy</th><th>Avg P&L</th><th>Win Rate</th><th>PF</th></tr></thead><tbody>`;
       Object.entries(perf).forEach(([sk, p]) => {
         if (sk === 'overall') return;
