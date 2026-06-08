@@ -85,6 +85,22 @@ const Dashboard = {
       html += '</div></div>';
     }
 
+    // ── GEOPOLITICAL RISKS ──
+    if (data.geopolitical?.length) {
+      html += '<div class="section"><h2 class="section-title">🌍 Geopolitical Risks & Global News</h2>';
+      html += '<div class="card"><div style="display:grid;gap:10px">';
+      data.geopolitical.slice(0, 8).forEach(g => {
+        const url = Utils.safeUrl(g.url || '#');
+        const date = g.date ? g.date.slice(0, 10) : '';
+        html += `<div style="padding:10px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem">
+          <a href="${Utils.esc(url)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(g.title)}</a>
+          <div style="color:var(--text-muted);font-size:0.75rem;margin-top:3px">${Utils.esc(g.source)} · ${date}</div>
+          ${g.summary ? `<div style="color:var(--text-secondary);font-size:0.8rem;margin-top:4px">${Utils.esc(g.summary)}</div>` : ''}
+        </div>`;
+      });
+      html += '</div></div></div>';
+    }
+
     // ── PREMARKET SETUPS ──
     if (data.premarket_top_setups?.length) {
       html += '<div class="section"><h2 class="section-title">Top Setups</h2><div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Price</th><th>Chg</th><th>Score</th><th>Signals</th><th>RSI</th><th>Verdict</th></tr></thead><tbody>';
@@ -143,6 +159,77 @@ const Dashboard = {
     if (data.unusual_whales?.summary) {
       html += '<div class="section"><h2 class="section-title">🐋 Market Signals</h2><div class="card"><div style="font-size:0.875rem;color:var(--text-secondary);line-height:1.65;white-space:pre-wrap">' + Utils.esc(data.unusual_whales.summary.substring(0, 1000)) + '</div></div></div>';
     }
+
+    // ── REDDIT SENTIMENT ──
+    // Loaded from separate data file
+    (async () => {
+      try {
+        const reddit = await State.get('reddit', '/data/reddit-sentiment.json');
+        if (!reddit) return;
+        let rh = '<div class="section"><h2 class="section-title">Reddit Sentiment</h2>';
+
+        for (const [key, label] of [['wsb', 'r/wallstreetbets'], ['stocks', 'r/stocks']]) {
+          const src = reddit[key];
+          if (!src) continue;
+
+          const isBearish = src.sentiment_summary?.includes('BEARISH');
+          const isBullish = src.sentiment_summary?.includes('BULLISH');
+          const moodEmoji = isBearish ? '🔴' : isBullish ? '🟢' : '🟡';
+
+          rh += '<div class="card" style="margin-bottom:12px">';
+          rh += `<div class="card-title">${moodEmoji} ${label}</div>`;
+
+          // Sentiment summary
+          if (src.sentiment_summary) {
+            rh += '<div style="font-size:0.85rem;color:var(--text-secondary);white-space:pre-wrap;margin-bottom:8px">' + Utils.esc(src.sentiment_summary.substring(0, 300)) + '</div>';
+          }
+
+          // Top tickers
+          if (src.top_tickers?.length) {
+            rh += '<div style="font-size:0.85rem;margin-bottom:8px"><strong>Tickers:</strong> ';
+            rh += src.top_tickers.map(t =>
+              `<span class="badge badge-green" style="margin:1px">${Utils.esc(t.ticker)} (${t.count})</span>`
+            ).join(' ');
+            rh += '</div>';
+          }
+
+          // Sector focus (r/stocks only)
+          if (src.sector_focus?.length) {
+            rh += '<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:6px"><strong>Sectors:</strong> ';
+            rh += src.sector_focus.map(s => Utils.esc(s[0])).join(' · ');
+            rh += '</div>';
+          }
+
+          // Hot posts
+          if (src.hot_posts?.length) {
+            rh += '<div style="font-size:0.8rem;margin-top:6px">';
+            src.hot_posts.slice(0, 5).forEach((p, i) => {
+              const tics = (p.tickers || []).join(', ');
+              rh += `<div style="padding:6px 0;border-bottom:1px solid var(--border-subtle)">`;
+              rh += `<a href="${Utils.esc(p.url)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(p.title.substring(0, 90))}</a>`;
+              rh += `<div style="color:var(--text-muted);font-size:0.75rem">▲${p.ups} ${p.type ? '[' + Utils.esc(p.type) + ']' : ''} ${tics ? '· ' + tics : ''}</div>`;
+              rh += '</div>';
+            });
+            rh += '</div>';
+          }
+
+          rh += '</div>';
+        }
+
+        rh += '</div>';
+
+        // Append to page
+        const tsEl = document.querySelector('[style*="Generated"]');
+        if (tsEl) {
+          tsEl.insertAdjacentHTML('beforebegin', rh);
+        } else {
+          const mainEl = document.querySelector('#app');
+          if (mainEl) mainEl.innerHTML += rh;
+        }
+      } catch(e) {
+        // Silently fail — reddit data is optional
+      }
+    })();
 
     // ── EARNINGS ──
     if (data.market_news?.earnings?.length) {
