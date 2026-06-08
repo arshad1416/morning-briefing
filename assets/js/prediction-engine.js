@@ -406,7 +406,7 @@ const PredictionEngine = {
 
     const passed = checks.filter(c => c.pass).length;
     const scoreColor = passed >= 6 ? 'var(--green)' : passed >= 4 ? 'var(--yellow)' : 'var(--red)';
-    let html = '<h2 class="section-title">Backtest Validation</h2>';
+    let html = '<h2 class="section-title" style="margin-top:32px">Backtest Validation</h2>';
     html += '<div class="card" style="margin-bottom:20px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">';
     html += '<span style="font-weight:600;font-size:0.9rem">Research Score: <span style="color:' + scoreColor + '">' + passed + '/7 Passed</span></span>';
     html += '<span style="font-size:0.7rem;color:var(--text-muted)">Per López de Prado / Aronson</span></div><div style="display:flex;flex-direction:column;gap:4px">';
