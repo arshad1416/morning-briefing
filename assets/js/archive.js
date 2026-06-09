@@ -147,15 +147,58 @@ const Archive = {
     // ── Narrative ──
     const narrative = data.narrative || '';
     let narrativeHtml = '';
+    let text = '';
     if (typeof narrative === 'string' && narrative.length > 20) {
-      const clean = narrative
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\n• /g, '<br>  • ')
-        .replace(/\n\n/g, '<br><br>')
-        .replace(/\n/g, '<br>');
-      narrativeHtml = '<div style="font-size:13px;line-height:1.7;color:#94a3b8;padding:0">' + clean + '</div>';
+      text = narrative;
     } else if (narrative.summary_paragraph) {
-      narrativeHtml = '<div style="font-size:13px;line-height:1.7;color:#94a3b8;padding:0">' + narrative.summary_paragraph + '</div>';
+      text = narrative.summary_paragraph;
+    }
+
+    if (text) {
+      // Split into sections by bold headers
+      var sections = [];
+      var remaining = text;
+      
+      // Extract "Three quantitative insights" section
+      var insightMarker = '**Three quantitative insights**';
+      var insightIdx = remaining.indexOf(insightMarker);
+      var tiltMarker = '**Strategy tilt';
+      var watchlistMarker = '**Watchlist';
+      
+      if (insightIdx >= 0) {
+        var intro = remaining.substring(0, insightIdx).trim();
+        if (intro) sections.push({ heading: 'Portfolio Overview', text: intro });
+        
+        var afterInsight = remaining.substring(insightIdx + insightMarker.length);
+        var tiltIdx = afterInsight.indexOf(tiltMarker);
+        var insightsText = tiltIdx >= 0 ? afterInsight.substring(0, tiltIdx).trim() : afterInsight.trim();
+        sections.push({ heading: 'Key Insights', text: insightsText });
+        
+        if (tiltIdx >= 0) {
+          var afterTilt = afterInsight.substring(tiltIdx);
+          var watchIdx = afterTilt.indexOf(watchlistMarker);
+          var tiltText = watchIdx >= 0 ? afterTilt.substring(0, watchIdx).trim() : afterTilt.trim();
+          sections.push({ heading: 'Strategy Recommendations', text: tiltText });
+          
+          if (watchIdx >= 0) {
+            var watchText = afterTilt.substring(watchIdx).trim();
+            sections.push({ heading: 'Watchlist', text: watchText });
+          }
+        }
+      } else {
+        // No structured sections — treat as one blob
+        sections.push({ heading: 'Portfolio Analysis', text: text });
+      }
+      
+      // Render each section
+      narrativeHtml = sections.map(function(s) {
+        var cleaned = s.text
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\n• /g, '<br>  • ')
+          .replace(/\n\n/g, '<br><br>')
+          .replace(/\n/g, '<br>');
+        return '<div class="section"><h2>' + s.heading + '</h2><div style="font-size:13px;line-height:1.7;color:#94a3b8">' + cleaned + '</div></div>';
+      }).join('');
     }
 
     // ── Build full HTML matching email format ──
