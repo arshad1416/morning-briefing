@@ -1293,3 +1293,94 @@
 .mg-chart-header .mg-chart-title .mg-live-dot {
   margin-right: 6px;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   RESPONSIVE — GEX Page Mobile Breakpoints
+   ───────────────────────────────────────────────────────────── */
+
+/* Tablet: 768px and below */
+@media (max-width: 768px) {
+  .mg-metrics-bar {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .mg-metric-card {
+    padding: 10px 12px;
+  }
+  .mg-metric-card .mg-metric-value {
+    font-size: 1rem;
+  }
+  .mg-metric-card .mg-metric-label {
+    font-size: 8px;
+  }
+  .mg-chart-canvas-wrap {
+    height: 240px;
+  }
+  .mg-chart-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .mg-zone-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .mg-expiry-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .mg-ticker-bar {
+    gap: 4px;
+  }
+  .mg-ticker-pill,
+  .mg-expiry-pill {
+    padding: 6px 10px;
+    font-size: 0.7rem;
+    min-height: 36px;
+  }
+  .mg-gamma-table th,
+  .mg-gamma-table td {
+    padding: 6px 8px;
+    font-size: 0.65rem;
+  }
+  .mg-table-title {
+    font-size: 0.7rem;
+  }
+  .mg-stale-banner {
+    font-size: 0.65rem;
+    padding: 6px 10px;
+  }
+}
+
+/* Phone: 480px and below */
+@media (max-width: 480px) {
+  .mg-metrics-bar {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .mg-metric-card {
+    padding: 8px 10px;
+  }
+  .mg-metric-card .mg-metric-value {
+    font-size: 0.9rem;
+  }
+  .mg-chart-canvas-wrap {
+    height: 180px;
+  }
+  .mg-expiry-grid {
+    grid-template-columns: 1fr;
+  }
+  .mg-mode-toggle {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .mg-ticker-bar {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mg-ticker-pill {
+    flex-shrink: 0;
+  }
+}

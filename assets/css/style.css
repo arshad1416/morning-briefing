@@ -1171,7 +1171,7 @@ button, [role="button"], input, select, textarea {
 
   /* Show a single "MB" icon instead */
   .nav-brand::before {
-    content: 'MB';
+    content: 'MG';
     font-size: 0.65rem;
     font-weight: 700;
     font-family: var(--font-mono);
@@ -1197,6 +1197,15 @@ button, [role="button"], input, select, textarea {
   .nav-link {
     padding: 6px 10px;
     font-size: 0.75rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Theme toggle: bigger touch target */
+  .theme-toggle {
+    min-width: 44px;
+    min-height: 44px;
   }
 
   /* Main content */
@@ -1338,6 +1347,14 @@ button, [role="button"], input, select, textarea {
   .section:has(.grid-3) .grid-3 { grid-template-columns: 1fr; }
 
   main { padding: 12px 10px 72px; }
+
+  /* Touch targets: min 44px for interactive elements */
+  .nav-link, .badge, .chat-btn, .chat-input,
+  .theme-toggle, .screener-btn, .mg-btn,
+  .mg-ticker-pill, .mg-expiry-pill, .mg-chart-toggle,
+  .mg-table-btn, .mg-zone-card, .mg-mode-toggle input + label {
+    min-height: 44px;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────
