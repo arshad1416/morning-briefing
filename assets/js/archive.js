@@ -112,72 +112,159 @@ const Archive = {
       return;
     }
 
-    let html = '<div style="margin-bottom:16px">';
-    // Header
-    html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">';
-    html += '<h3 style="margin:0;font-size:1.1rem;color:var(--text-primary)">Morning Briefing — ' + date + '</h3>';
-    html += '<span style="font-size:0.75rem;color:var(--text-muted)">' + (data.generated_at ? new Date(data.generated_at).toLocaleString() : '') + '</span></div>';
-
-    // ── MARKET SNAPSHOT ──
     const ms = data.market_summary || {};
     const indices = ms.indices || [];
+    const fx = (ms.fx_rates || []).filter(f => f.price > 0);
     const vix = ms.vix;
     const y10 = ms.ten_year_yield;
-    const fx = (ms.fx_rates || []).filter(f => f.price > 0);
+    const dateObj = data.generated_at ? new Date(data.generated_at) : new Date();
+    const dateStr = dateObj.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+    const weekday = dateObj.getDay();
+    const marketStatus = (weekday >= 1 && weekday <= 5) ? '🟢 Markets Open' : '🔴 Markets Closed (Weekend)';
 
-    if (indices.length || vix || y10 || fx.length) {
-      html += '<div style="font-weight:600;font-size:0.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px">Market Snapshot</div>';
-      html += '<div class="grid-4" style="margin-bottom:16px">';
+    // ── Market indices rows ──
+    const indexMap = { 'S&P 500': 'S&P 500', 'Dow Jones': 'Dow Jones', 'NASDAQ': 'NASDAQ', 'TSX': 'TSX' };
+    let marketRows = '';
+    Object.values(indexMap).forEach(name => {
+      const idx = indices.find(i => i.ticker === name);
+      if (idx) {
+        const cls = (idx.change_pct || 0) >= 0 ? 'up' : 'down';
+        const arrow = (idx.change_pct || 0) >= 0 ? '&#9650;' : '&#9660;';
+        const price = '$' + Number(idx.price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        const chg = (idx.change_pct || 0).toFixed(2);
+        marketRows += `<tr><td class="label">${name}</td><td class="value">${price}</td><td class="${cls}">${arrow} ${chg}%</td></tr>`;
+      }
+    });
+    // FX as extra market rows
+    fx.forEach(f => {
+      const cls = (f.change_pct || 0) >= 0 ? 'up' : 'down';
+      const price = f.price.toFixed(2);
+      marketRows += `<tr><td class="label">${f.pair}</td><td class="value">${price}</td><td class="${cls}">—</td></tr>`;
+    });
+    if (vix) marketRows += `<tr><td class="label">VIX</td><td class="value">${vix}</td><td class="up">—</td></tr>`;
+    if (y10) marketRows += `<tr><td class="label">10Y Yield</td><td class="value">${y10}%</td><td class="up">—</td></tr>`;
 
-      // Core indices
-      const coreTickers = ['S&P 500', 'Dow Jones', 'NASDAQ', 'TSX'];
-      coreTickers.forEach(t => {
-        const idx = indices.find(i => i.ticker === t);
-        if (idx) {
-          const cls = Utils.changeClass(idx.change_pct);
-          html += `<div class="card" style="text-align:center;padding:10px">
-            <div style="font-size:0.65rem;color:var(--text-muted);text-transform:uppercase">${idx.ticker}</div>
-            <div style="font-size:1.2rem;font-weight:700">${Utils.formatPrice(idx.price)}</div>
-            <div style="font-size:0.75rem;${cls === 'positive' ? 'color:var(--green)' : 'color:var(--red)'}">${Utils.formatPct(idx.change_pct)}</div>
-          </div>`;
-        }
-      });
-
-      html += '</div>';
-
-      // Conditions row
-      html += '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px">';
-      if (vix) html += `<div class="card" style="padding:8px 14px;text-align:center"><div style="font-size:0.65rem;color:var(--text-muted)">VIX</div><div style="font-size:1.1rem;font-weight:700">${vix}</div></div>`;
-      if (y10) html += `<div class="card" style="padding:8px 14px;text-align:center"><div style="font-size:0.65rem;color:var(--text-muted)">10Y Yield</div><div style="font-size:1.1rem;font-weight:700">${y10}%</div></div>`;
-      fx.forEach(f => {
-        html += `<div class="card" style="padding:8px 14px;text-align:center"><div style="font-size:0.65rem;color:var(--text-muted)">${f.pair}</div><div style="font-size:1.1rem;font-weight:700">${f.price}</div></div>`;
-      });
-      html += '</div>';
-    }
-
-    // ── NARRATIVE ──
+    // ── Narrative ──
     const narrative = data.narrative || '';
+    let narrativeHtml = '';
     if (typeof narrative === 'string' && narrative.length > 20) {
-      // Rich markdown narrative
-      html += '<div style="font-weight:600;font-size:0.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px">Briefing</div>';
-      let converted = narrative
-        .replace(/### /g, '</div><div style="font-size:0.9rem;font-weight:600;margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border-dim);color:var(--text-primary)">')
-        .replace(/## /g, '</div><div style="font-size:1rem;font-weight:700;margin:18px 0 8px;color:var(--accent)">')
-        .replace(/# /g, '</div><div style="font-size:1.1rem;font-weight:700;margin:20px 0 10px;color:var(--accent)">')
-        .replace(/\*\*(.*?)\*\*/g, '<strong style="color:var(--text-primary)">$1</strong>')
-        .replace(/\n• /g, '\n<span style="display:block;padding:2px 0 2px 14px">• </span>')
-        .replace(/\n\n/g, '</div><div style="margin:8px 0;line-height:1.7;color:var(--text-secondary);font-size:0.85rem">')
+      const clean = narrative
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n• /g, '<br>  • ')
+        .replace(/\n\n/g, '<br><br>')
         .replace(/\n/g, '<br>');
-      html += '<div class="card" style="padding:20px;font-size:0.85rem;line-height:1.7;color:var(--text-secondary)">';
-      html += '<div style="margin:0;line-height:1.7;color:var(--text-secondary);font-size:0.85rem">' + converted + '</div>';
-      html += '</div>';
+      narrativeHtml = '<div style="font-size:13px;line-height:1.7;color:#94a3b8;padding:0">' + clean + '</div>';
     } else if (narrative.summary_paragraph) {
-      // Short portfolio narrative
-      html += '<div style="font-weight:600;font-size:0.8rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px">Portfolio Analysis</div>';
-      html += '<div class="card" style="padding:16px;font-size:0.85rem;line-height:1.6;color:var(--text-secondary)">' + narrative.summary_paragraph + '</div>';
+      narrativeHtml = '<div style="font-size:13px;line-height:1.7;color:#94a3b8;padding:0">' + narrative.summary_paragraph + '</div>';
     }
 
-    body.innerHTML = html;
+    // ── Build full HTML matching email format ──
+    const fullHtml = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  .header {
+    text-align: center;
+    padding: 24px 0 16px;
+    border-bottom: 1px solid #1e293b;
+  }
+  .header h1 {
+    font-size: 22px;
+    margin: 0;
+    color: #f8fafc;
+    font-weight: 700;
+  }
+  .header .date {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+  .header .status {
+    font-size: 12px;
+    margin-top: 8px;
+    padding: 4px 12px;
+    display: inline-block;
+    border-radius: 12px;
+    background: #1e293b;
+  }
+  .section {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0;
+  }
+  .section h2 {
+    font-size: 16px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #334155;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: left;
+    padding: 6px 8px;
+    color: #64748b;
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #334155;
+  }
+  td { padding: 6px 8px; border-bottom: 1px solid #1e293b; }
+  tr:last-child td { border-bottom: none; }
+  td.label { color: #94a3b8; }
+  td.value { font-weight: 600; color: #f8fafc; }
+  .up { color: #22c55e; }
+  .down { color: #ef4444; }
+  .footer {
+    text-align: center;
+    padding: 16px 0 20px;
+    font-size: 11px;
+    color: #475569;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>📈 Daily Briefing</h1>
+    <div class="date">${dateStr}</div>
+    <div class="status">${marketStatus}</div>
+  </div>
+
+  <div class="section">
+    <h2>Markets</h2>
+    <table>
+      <tr><th>Index</th><th>Value</th><th>Change</th></tr>
+      ${marketRows}
+    </table>
+  </div>
+
+  ${narrativeHtml ? `<div class="section">${narrativeHtml}</div>` : ''}
+
+  <div class="footer">
+    Generated by Hermes Agent &bull; Data from Yahoo Finance &bull; Not financial advice
+  </div>
+</div>
+</body>
+</html>`;
+
+    body.innerHTML = fullHtml;
   },
 
   _closeModal() {
