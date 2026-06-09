@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-09 13:02:21",
+  "generated_at": "2026-06-09 13:04:20",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -1678,18 +1678,18 @@
     "ml_findings": "ML models (RF/GB) trained on V3 features showed test accuracy ~65% but overfit on small signal sets. Best use: as an additional confirmation layer, not primary decision maker."
   },
   "live_trading": {
-    "generated_at": "2026-06-09 13:02:21",
+    "generated_at": "2026-06-09 13:04:20",
     "summary": {
       "total_trades": 34,
-      "closed_trades": 25,
-      "open_positions": 7,
+      "closed_trades": 26,
+      "open_positions": 6,
       "winning_trades": 15,
-      "losing_trades": 10,
-      "win_rate": 60.0,
-      "total_pnl_cad": 253.61,
+      "losing_trades": 11,
+      "win_rate": 57.7,
+      "total_pnl_cad": 248.57,
       "starting_balance": 2000.0,
-      "current_balance": 752.63,
-      "return_pct": -62.37,
+      "current_balance": 996.2,
+      "return_pct": -50.19,
       "trading_days_active": 16
     },
     "per_strategy": [
@@ -1755,6 +1755,22 @@
         "backtest_predicted_avg_pnl": "+2.1%",
         "prediction_source": "V28 Bull Momentum (61.6% WR)",
         "accuracy_vs_prediction": "OUTPERFORMING by +10.0pp"
+      },
+      {
+        "strategy": "momentum_breakout",
+        "closed_trades": 1,
+        "wins": 0,
+        "losses": 1,
+        "win_rate": 0.0,
+        "avg_pnl_pct": -5.11,
+        "best_trade_pnl": -5.11,
+        "worst_trade_pnl": -5.11,
+        "tickers_traded": [
+          "XLK"
+        ],
+        "open_positions": 1,
+        "backtest_predicted_wr": "N/A",
+        "prediction_source": "No backtest data"
       },
       {
         "strategy": "momentum_options",
