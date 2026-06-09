@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-09 14:04:21",
+  "generated_at": "2026-06-09 14:06:21",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -1678,18 +1678,18 @@
     "ml_findings": "ML models (RF/GB) trained on V3 features showed test accuracy ~65% but overfit on small signal sets. Best use: as an additional confirmation layer, not primary decision maker."
   },
   "live_trading": {
-    "generated_at": "2026-06-09 14:04:21",
+    "generated_at": "2026-06-09 14:06:21",
     "summary": {
       "total_trades": 34,
-      "closed_trades": 26,
-      "open_positions": 6,
-      "winning_trades": 15,
-      "losing_trades": 11,
-      "win_rate": 57.7,
-      "total_pnl_cad": 248.57,
+      "closed_trades": 29,
+      "open_positions": 3,
+      "winning_trades": 16,
+      "losing_trades": 13,
+      "win_rate": 55.2,
+      "total_pnl_cad": 236.52,
       "starting_balance": 2000.0,
-      "current_balance": 996.2,
-      "return_pct": -50.19,
+      "current_balance": 1598.92,
+      "return_pct": -20.05,
       "trading_days_active": 16
     },
     "per_strategy": [
@@ -1713,15 +1713,16 @@
       },
       {
         "strategy": "mean_reversion",
-        "closed_trades": 10,
-        "wins": 6,
-        "losses": 4,
-        "win_rate": 60.0,
-        "avg_pnl_pct": 26.73,
+        "closed_trades": 13,
+        "wins": 7,
+        "losses": 6,
+        "win_rate": 53.8,
+        "avg_pnl_pct": 20.2,
         "best_trade_pnl": 88.96,
         "worst_trade_pnl": -5.86,
         "tickers_traded": [
           "DBA",
+          "DBC",
           "FXY",
           "IBIT",
           "MSTR",
@@ -1729,11 +1730,11 @@
           "SLV",
           "XLC"
         ],
-        "open_positions": 4,
+        "open_positions": 1,
         "backtest_predicted_wr": "74.3%",
         "backtest_predicted_avg_pnl": "+2.4%",
         "prediction_source": "V23 VIX>=12 MR (74.3% WR)",
-        "accuracy_vs_prediction": "UNDERPERFORMING by -14.3pp"
+        "accuracy_vs_prediction": "UNDERPERFORMING by -20.5pp"
       },
       {
         "strategy": "momentum",
