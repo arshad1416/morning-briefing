@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-09 12:16:25",
+  "generated_at": "2026-06-09 12:18:20",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -1678,14 +1678,14 @@
     "ml_findings": "ML models (RF/GB) trained on V3 features showed test accuracy ~65% but overfit on small signal sets. Best use: as an additional confirmation layer, not primary decision maker."
   },
   "live_trading": {
-    "generated_at": "2026-06-09 12:16:25",
+    "generated_at": "2026-06-09 12:18:20",
     "summary": {
       "total_trades": 34,
       "closed_trades": 25,
       "open_positions": 7,
-      "winning_trades": 14,
-      "losing_trades": 11,
-      "win_rate": 56.0,
+      "winning_trades": 15,
+      "losing_trades": 10,
+      "win_rate": 60.0,
       "total_pnl_cad": 253.61,
       "starting_balance": 2000.0,
       "current_balance": 752.63,
@@ -1714,10 +1714,10 @@
       {
         "strategy": "mean_reversion",
         "closed_trades": 10,
-        "wins": 5,
-        "losses": 5,
-        "win_rate": 50.0,
-        "avg_pnl_pct": 22.84,
+        "wins": 6,
+        "losses": 4,
+        "win_rate": 60.0,
+        "avg_pnl_pct": 26.73,
         "best_trade_pnl": 88.96,
         "worst_trade_pnl": -5.86,
         "tickers_traded": [
@@ -1733,7 +1733,7 @@
         "backtest_predicted_wr": "74.3%",
         "backtest_predicted_avg_pnl": "+2.4%",
         "prediction_source": "V23 VIX>=12 MR (74.3% WR)",
-        "accuracy_vs_prediction": "UNDERPERFORMING by -24.3pp"
+        "accuracy_vs_prediction": "UNDERPERFORMING by -14.3pp"
       },
       {
         "strategy": "momentum",
