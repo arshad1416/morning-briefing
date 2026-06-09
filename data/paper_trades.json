@@ -1,7 +1,8 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-06-09 14:06:09",
-  "price_source": "yfinance historical closes \u2014 no CAD/USD math",
+  "generated_at": "2026-06-09 14:08:00",
+  "price_source": "yfinance historical closes — no CAD/USD math",
+  "strategy_summary": "DEFENSIVE PIVOT from V24 VX_CRASH_RISKON. VIX spiked from 18.19 open to 23.34 high today (+28%) — regime-change trigger. Closed risk-on/commodity positions (SLV -4.35%, XLC +0.14%, DBC -0.54%). Holding: TD.TO (bank momentum), XLI (industrials flat/in-line), XLP (defensive staples). Capital preservation mode. No entries in VIX >20 environment.",
   "portfolio": {
     "starting_balance": 2000.0,
     "cash": 1598.92,
@@ -13,7 +14,7 @@
     "win_rate": 57.1,
     "total_trades": 28
   },
-  "active_strategy": "V23 VIX>=12 MR",
+  "active_strategy": "V24 VX_CRASH_RISKON → DEFENSIVE PIVOT",
   "open_positions": [
     {
       "ticker": "TD.TO",
