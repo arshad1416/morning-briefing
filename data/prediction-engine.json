@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-10 13:01:05",
+  "generated_at": "2026-06-10 13:02:59",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -1678,18 +1678,18 @@
     "ml_findings": "ML models (RF/GB) trained on V3 features showed test accuracy ~65% but overfit on small signal sets. Best use: as an additional confirmation layer, not primary decision maker."
   },
   "live_trading": {
-    "generated_at": "2026-06-10 13:01:05",
+    "generated_at": "2026-06-10 13:02:59",
     "summary": {
       "total_trades": 30,
-      "closed_trades": 33,
-      "open_positions": 6,
-      "winning_trades": 17,
+      "closed_trades": 35,
+      "open_positions": 4,
+      "winning_trades": 19,
       "losing_trades": 16,
-      "win_rate": 51.5,
-      "total_pnl_cad": 241.17,
+      "win_rate": 54.3,
+      "total_pnl_cad": 242.18,
       "starting_balance": 2000.0,
-      "current_balance": 1437.31,
-      "return_pct": -28.13,
+      "current_balance": 1565.04,
+      "return_pct": -21.75,
       "trading_days_active": 17
     },
     "per_strategy": [
@@ -1796,12 +1796,28 @@
         "accuracy_vs_prediction": "UNDERPERFORMING by -55.0pp"
       },
       {
+        "strategy": "momentum_rotation",
+        "closed_trades": 1,
+        "wins": 1,
+        "losses": 0,
+        "win_rate": 100.0,
+        "avg_pnl_pct": 1.15,
+        "best_trade_pnl": 1.15,
+        "worst_trade_pnl": 1.15,
+        "tickers_traded": [
+          "XLF"
+        ],
+        "open_positions": 0,
+        "backtest_predicted_wr": "N/A",
+        "prediction_source": "No backtest data"
+      },
+      {
         "strategy": "sector_rotation",
-        "closed_trades": 8,
-        "wins": 4,
+        "closed_trades": 9,
+        "wins": 5,
         "losses": 4,
-        "win_rate": 50.0,
-        "avg_pnl_pct": 10.92,
+        "win_rate": 55.6,
+        "avg_pnl_pct": 9.72,
         "best_trade_pnl": 91.3,
         "worst_trade_pnl": -2.7,
         "tickers_traded": [
@@ -1812,11 +1828,11 @@
           "XLU",
           "XLV"
         ],
-        "open_positions": 1,
+        "open_positions": 0,
         "backtest_predicted_wr": "72%",
         "backtest_predicted_avg_pnl": "+1.8%",
         "prediction_source": "V75 Sector Rotation (71.2% WR)",
-        "accuracy_vs_prediction": "UNDERPERFORMING by -22.0pp"
+        "accuracy_vs_prediction": "UNDERPERFORMING by -16.4pp"
       },
       {
         "strategy": "value_investing",
