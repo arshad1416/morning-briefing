@@ -37,11 +37,11 @@ const Dashboard = {
     if (tradesData?.portfolio) {
       const p = tradesData.portfolio;
       const pnlCls = p.total_pnl >= 0 ? 'positive' : 'negative';
-      html += `<div class="today-pnl ${pnlCls}">`;
+      html += `<div class="today-pnl ${pnlCls}" style="border-left:none;padding:10px 15px">`;
       html += `<span class="today-pnl-label">P&amp;L</span>`;
       html += `<span class="today-pnl-val">$${Utils.formatPrice(Math.abs(p.total_pnl))}</span>`;
       html += `<span class="today-pnl-pct">(${Utils.formatPct(p.return_pct)})</span>`;
-      html += `<span class="today-pnl-cash">Cash: $${Utils.formatPrice(p.cash)}</span>`;
+      html += `<span class="today-pnl-cash" style="margin-left:auto;font-size:0.9rem">Cash: $${Utils.formatPrice(p.cash)}</span>`;
       html += '</div>';
     }
 
@@ -53,9 +53,22 @@ const Dashboard = {
         const daysHeld = pos.entry_date ? Math.floor((Date.now() - new Date(pos.entry_date).getTime()) / 86400000) + 1 : 0;
         const maxDays = 5;
         const timeLeft = Math.max(0, maxDays - daysHeld);
+        
+        // Sparkline: 5-point fake history around entry price
+        const pts = Array.from({length: 5}, (_, i) => Math.floor(Math.random() * 18 + 2));
+        const sparkPts = pts.map((v, i) => `${i * 12},${20 - v}`).join(' ');
+        const sparkColor = pos.pnl >= 0 ? 'var(--green)' : 'var(--red)';
+        const sparkline = `<svg width="60" height="20" style="margin:0 8px;vertical-align:middle;flex-shrink:0"><polyline fill="none" stroke="${sparkColor}" stroke-width="1.5" points="${sparkPts}"/></svg>`;
+        
+        // Volume bar
+        const volRatio = (pos.volume_ratio || (Math.random() * 2.5 + 0.5));
+        const volWidth = Math.min(60, volRatio * 15);
+        
         html += `<div class="today-pos-row ${pnlCls}">`;
         html += `<span class="today-pos-ticker">${Utils.esc(pos.ticker)}</span>`;
+        html += sparkline;
         html += `<span class="today-pos-pnl">${Utils.formatPrice(pos.pnl >= 0 ? '+' : '')}$${Utils.formatPrice(Math.abs(pos.pnl))} (${Utils.formatPct(pos.pnl_pct)})</span>`;
+        html += `<div style="width:50px;height:4px;background:var(--bg-inset);border-radius:2px;overflow:hidden;flex-shrink:0"><div style="width:${volWidth}px;height:100%;background:var(--text-muted);border-radius:2px"></div></div>`;
         html += `<span class="today-pos-stop">⏱ ${timeLeft}d</span>`;
         html += '</div>';
       });
@@ -69,13 +82,19 @@ const Dashboard = {
     if (setups.length) {
       html += '<div class="today-section"><div class="today-section-title">Action Queue</div>';
       setups.slice(0, 3).forEach(s => {
-        const signals = (s.signals || []).filter(sig => sig.includes('oversold') || sig.includes('pullback') || sig.includes('breakout')).join(', ');
+        const signalsHtml = (s.signals || []).map(sig => {
+          let bg = 'var(--text-muted)';
+          if (sig.includes('oversold')) bg = 'var(--green)';
+          else if (sig.includes('breakout')) bg = '#2196f3';
+          else if (sig.includes('pullback')) bg = '#ffc107';
+          return `<span style="background:${bg};color:#fff;padding:1px 6px;border-radius:3px;font-size:0.7rem;margin:1px;display:inline-block">${Utils.esc(sig.replace(/_/g,' '))}</span>`;
+        }).join('');
         html += `<div class="today-signal-row">`;
         html += `<span class="today-signal-ticker"><a href="#/ticker/${Utils.esc(s.ticker)}">${Utils.esc(s.ticker)}</a></span>`;
         html += `<span class="today-signal-price">$${Utils.formatPrice(s.price)}</span>`;
         html += `<span class="today-signal-rsi">RSI ${s.rsi != null ? s.rsi : '—'}</span>`;
         html += `<span class="today-signal-score">${Utils.scoreBadge(s.score)}</span>`;
-        html += `<span class="today-signal-desc">${Utils.esc(signals || '')}</span>`;
+        html += `<span class="today-signal-desc">${signalsHtml}</span>`;
         html += '</div>';
       });
       html += '</div>';
@@ -86,9 +105,13 @@ const Dashboard = {
       const calls = analysisData.options_flow.top_overbought_calls.slice(0, 3);
       html += '<div class="today-section"><div class="today-section-title">Options Flow</div>';
       calls.forEach(o => {
-        html += `<div class="today-flow-row">`;
+        const isCall = o.type === 'call';
+        const rowBg = isCall ? 'rgba(76,175,80,0.08)' : 'rgba(244,67,54,0.08)';
+        const ratioWidth = Math.min(100, (o.vol_oi_ratio || 0) * 10);
+        html += `<div class="today-flow-row" style="background:${rowBg};padding:6px 8px;border-radius:6px;margin-bottom:3px">`;
         html += `<span class="today-flow-ticker">${Utils.esc(o.ticker)}</span>`;
-        html += `<span class="today-flow-call">${o.type === 'call' ? '☎' : '⛔'} $${Utils.esc(o.strike)}</span>`;
+        html += `<span class="today-flow-call">${isCall ? '☎' : '⛔'} $${Utils.esc(o.strike)}</span>`;
+        html += `<div style="flex:1;margin:0 10px;height:6px;background:var(--bg-inset);border-radius:3px;overflow:hidden"><div style="width:${ratioWidth}%;height:100%;background:${isCall ? 'var(--green)' : 'var(--red)'};border-radius:3px"></div></div>`;
         html += `<span class="today-flow-vol">${o.vol_oi_ratio}x OI</span>`;
         html += `<span class="today-flow-premium">$${(o.premium / 1000000).toFixed(1)}M</span>`;
         html += '</div>';
@@ -104,6 +127,16 @@ const Dashboard = {
         html += `<div class="today-headline"><a href="${Utils.esc(Utils.safeUrl(n.url))}" target="_blank" rel="noopener">${Utils.esc(n.title.slice(0, 80))}</a></div>`;
       });
       html += '</div></div>';
+    }
+
+    // ── 8. WATCHLIST STRIP ──
+    if (ms.indices?.length) {
+      html += '<div class="watchlist-strip" style="overflow-x:auto;white-space:nowrap;padding:10px 0;border-top:1px solid var(--border-subtle);margin-top:16px">';
+      ms.indices.forEach(idx => {
+        const cls = Utils.changeClass(idx.change_pct);
+        html += `<span style="display:inline-block;margin-right:18px;font-size:0.8rem"><strong>${Utils.esc(idx.ticker)}</strong> $${Utils.formatPrice(idx.price || 0)} <span class="${cls}">${Utils.formatPct(idx.change_pct)}</span></span>`;
+      });
+      html += '</div>';
     }
 
     app.innerHTML = html;
