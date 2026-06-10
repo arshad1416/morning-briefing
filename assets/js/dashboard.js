@@ -129,16 +129,6 @@ const Dashboard = {
       html += '</div></div>';
     }
 
-    // ── 8. WATCHLIST STRIP ──
-    if (ms.indices?.length) {
-      html += '<div class="watchlist-strip" style="overflow-x:auto;white-space:nowrap;padding:10px 0;border-top:1px solid var(--border-subtle);margin-top:16px">';
-      ms.indices.forEach(idx => {
-        const cls = Utils.changeClass(idx.change_pct);
-        html += `<span style="display:inline-block;margin-right:18px;font-size:0.8rem"><strong>${Utils.esc(idx.ticker)}</strong> $${Utils.formatPrice(idx.price || 0)} <span class="${cls}">${Utils.formatPct(idx.change_pct)}</span></span>`;
-      });
-      html += '</div>';
-    }
-
     app.innerHTML = html;
   },
 
