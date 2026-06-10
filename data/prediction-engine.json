@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-10 15:17:08",
+  "generated_at": "2026-06-10 15:18:35",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -1678,11 +1678,11 @@
     "ml_findings": "ML models (RF/GB) trained on V3 features showed test accuracy ~65% but overfit on small signal sets. Best use: as an additional confirmation layer, not primary decision maker."
   },
   "live_trading": {
-    "generated_at": "2026-06-10 15:17:08",
+    "generated_at": "2026-06-10 15:18:35",
     "summary": {
       "total_trades": 24,
       "closed_trades": 36,
-      "open_positions": 5,
+      "open_positions": 6,
       "winning_trades": 8,
       "losing_trades": 28,
       "win_rate": 22.2,
@@ -1828,7 +1828,7 @@
           "XLU",
           "XLV"
         ],
-        "open_positions": 0,
+        "open_positions": 1,
         "backtest_predicted_wr": "72%",
         "backtest_predicted_avg_pnl": "+1.8%",
         "prediction_source": "V75 Sector Rotation (71.2% WR)",
