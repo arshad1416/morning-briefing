@@ -187,10 +187,10 @@ const Research = {
     }
     html += '</div></div>';
     if (wf && wf.summary) {
-      html += '<div class="card"><div class="card-title">Walk-Forward Results</div><div class="table-wrap"><table><thead><tr><th>Strategy</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>IS Return</th><th>OOS Return</th></tr></thead><tbody>';
+      html += '<div class="card"><div class="card-title">Walk-Forward Results</div><div class="table-wrap"><table><thead><tr><th>Strategy</th><th>IS Sharpe</th><th>OOS Sharpe</th><th>Degradation</th><th>OOS Trades</th></tr></thead><tbody>';
       Object.entries(wf.summary).forEach(([key, s]) => {
         if (s.avg_is_sharpe != null) {
-          html += `<tr><td><strong>${Utils.esc(key)}</strong></td><td>${s.avg_is_sharpe.toFixed(2)}</td><td>${s.avg_oos_sharpe.toFixed(2)}</td><td>${(s.avg_is_return * 100).toFixed(1)}%</td><td>${(s.avg_oos_return * 100).toFixed(1)}%</td></tr>`;
+          html += `<tr><td><strong>${Utils.esc(key)}</strong></td><td>${s.avg_is_sharpe.toFixed(2)}</td><td>${s.avg_oos_sharpe.toFixed(2)}</td><td class="${s.avg_degradation_pct >= 0 ? 'positive' : 'negative'}">${s.avg_degradation_pct != null ? s.avg_degradation_pct.toFixed(1) + '%' : '—'}</td><td>${s.total_oos_trades || '—'}</td></tr>`;
         }
       });
       html += '</tbody></table></div></div>';

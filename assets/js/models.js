@@ -85,7 +85,7 @@ const Models = {
     if (data.strategies?.length) {
       html += '<div class="card"><div class="card-title">Strategy Breakdown</div><div class="table-wrap"><table><thead><tr><th>Strategy</th><th>Return</th><th>Sharpe</th><th>Trades</th><th>Win Rate</th></tr></thead><tbody>';
       data.strategies.forEach(s => {
-        html += `<tr><td><strong>${Utils.esc(s.name)}</strong></td><td class="${s.return >= 0 ? 'positive' : 'negative'}">${(s.return * 100).toFixed(1)}%</td><td>${s.sharpe != null ? s.sharpe.toFixed(2) : '—'}</td><td>${s.trades || '—'}</td><td>${s.win_rate != null ? (s.win_rate * 100).toFixed(1) + '%' : '—'}</td></tr>`;
+        html += `<tr><td><strong>${Utils.esc(s.name)}</strong></td><td class="${s.return >= 0 ? 'positive' : 'negative'}">${s.return != null ? (s.return * 100).toFixed(1) + '%' : '—'}</td><td>${s.sharpe != null ? s.sharpe.toFixed(2) : '—'}</td><td>${s.trades || '—'}</td><td>${s.win_rate != null ? (s.win_rate * 100).toFixed(1) + '%' : '—'}</td></tr>`;
       });
       html += '</tbody></table></div></div>';
     }

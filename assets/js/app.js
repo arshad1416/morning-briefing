@@ -67,7 +67,7 @@
   Router.register('/chat',          function (app)         { window.location.hash = '#/research'; });
 
   Router.register('/ticker/:ticker',function (app, params) { TickerDetail.render(app, params); });
-  Router.register('/archive/:date', function (app, params) { Archive.renderDate(app, params); });
+  Router.register('/archive/:date', function (app, params) { window.location.hash = '#/research'; });
 
   // ── Start ────────────────────────────────────────────────────
   Router.init();
