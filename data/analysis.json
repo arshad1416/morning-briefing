@@ -1,0 +1,108 @@
+{
+  "generated_at": "2026-06-10 14:13:04",
+  "date": "2026-06-10",
+  "market_overview": {
+    "source": "Seeking Alpha Trending",
+    "top_headlines": [],
+    "hot_tickers": [],
+    "sentiment_by_ticker": {}
+  },
+  "options_flow": {
+    "total_unusual_contracts": 25,
+    "call_put_ratio": "12:13",
+    "top_overbought_calls": [
+      {
+        "ticker": "JNJ",
+        "strike": 190.0,
+        "expiration": "2026-06-12",
+        "volume": 1100,
+        "vol_oi_ratio": 1100.0,
+        "premium": 4829000
+      },
+      {
+        "ticker": "GLD",
+        "strike": 385.0,
+        "expiration": "2026-06-10",
+        "volume": 5535,
+        "vol_oi_ratio": 230.62,
+        "premium": 5535
+      },
+      {
+        "ticker": "META",
+        "strike": 577.5,
+        "expiration": "2026-06-10",
+        "volume": 4849,
+        "vol_oi_ratio": 134.69,
+        "premium": 290940
+      },
+      {
+        "ticker": "QQQ",
+        "strike": 701.0,
+        "expiration": "2026-06-10",
+        "volume": 84379,
+        "vol_oi_ratio": 120.37,
+        "premium": 5990909
+      },
+      {
+        "ticker": "JNJ",
+        "strike": 205.0,
+        "expiration": "2026-06-12",
+        "volume": 110,
+        "vol_oi_ratio": 110.0,
+        "premium": 318450
+      }
+    ],
+    "top_overbought_puts": [
+      {
+        "ticker": "KO",
+        "strike": 84.0,
+        "expiration": "2026-06-12",
+        "volume": 724,
+        "vol_oi_ratio": 724.0,
+        "premium": 63712
+      },
+      {
+        "ticker": "SPY",
+        "strike": 774.0,
+        "expiration": "2026-06-10",
+        "volume": 564,
+        "vol_oi_ratio": 564.0,
+        "premium": 1803672
+      },
+      {
+        "ticker": "AVGO",
+        "strike": 435.0,
+        "expiration": "2026-06-10",
+        "volume": 357,
+        "vol_oi_ratio": 357.0,
+        "premium": 1594005
+      },
+      {
+        "ticker": "BAC",
+        "strike": 59.0,
+        "expiration": "2026-06-12",
+        "volume": 318,
+        "vol_oi_ratio": 318.0,
+        "premium": 155820
+      },
+      {
+        "ticker": "NFLX",
+        "strike": 96.0,
+        "expiration": "2026-06-12",
+        "volume": 273,
+        "vol_oi_ratio": 273.0,
+        "premium": 380289
+      }
+    ]
+  },
+  "analysis_ideas": [
+    {
+      "type": "MOST_UNUSUAL_FLOW",
+      "tickers": [
+        "JNJ"
+      ],
+      "signal": "Vol/OI ratio: 1100.0x \u2014 calls at $190.0 strike",
+      "action": "Highest conviction call flow detected"
+    }
+  ]
+}
