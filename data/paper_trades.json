@@ -1,6 +1,6 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-06-10 11:04:25",
+  "generated_at": "2026-06-10 11:05:57",
   "price_source": "yfinance historical closes \u2014 no CAD/USD math",
   "portfolio": {
     "starting_balance": 2000.0,
@@ -13,7 +13,7 @@
     "win_rate": 53.3,
     "total_trades": 30
   },
-  "active_strategy": "V23 VIX>=12 MR",
+  "active_strategy": "V24_VX_MIXED",
   "open_positions": [
     {
       "ticker": "TD.TO",
@@ -60,7 +60,7 @@
       "entry_date": "2026-06-10",
       "entry_price": 77.67,
       "current_price": 111.3,
-      "currency": "CAD",
+      "currency": "USD",
       "pnl": 33.63,
       "pnl_pct": 43.3,
       "strategy": "mean_reversion",
@@ -73,7 +73,7 @@
       "entry_date": "2026-06-10",
       "entry_price": 43.99,
       "current_price": 61.13,
-      "currency": "CAD",
+      "currency": "USD",
       "pnl": 17.14,
       "pnl_pct": 38.96,
       "strategy": "mean_reversion",
@@ -421,5 +421,28 @@
       "rationale": "Industrials BULLISH risk-on play. XLI has positive trend structure (price > 20 > 50 SMA), MACD positive, RSI 61.1. Classic cyclical beneficiary of risk-on rotation as VIX crashes. Screener score 14.4 BULLISH.",
       "exit_rationale": "Closed momentum breakout - VIX 21, 2nd day selloff. Bear regime invalidates momentum. Freeing cash for defensive MR plays."
     }
-  ]
+  ],
+  "strategy_summary": "VIX at 20.92 - elevated but not panic. SPY -2.65% 5d, QQQ -5.31% 5d. Moving into defensive healthcare (XLV) while holding gold MR positions (GLD, IAU) for oversold bounce. Took a small loss on XLI momentum (below 20SMA, VIX elevated). Financials (XLF) and staples (XLP) holding well. Gold deeply oversold (RSI 21) - waiting for reversion. Mixed regime: not full risk-off, not full risk-on.",
+  "strategy_evolution": [
+    {
+      "date": "2026-06-10",
+      "change": "V23 MR dominat \u2192 V24_VX_MIXED",
+      "reason": "VIX has stayed elevated at 19-21 range for several days. SPY/QQQ in sustained pullback (-2.65%/-5.31% 5d). Pure MR strategy has mixed results (53.8% WR on 13 MR trades vs 74.3% expected). Maintaining gold MR positions for the extreme oversold setup, adding defensive rotation (XLV healthcare) which has trend momentum. Cut momentum_breakout (XLK, XLI both failed - 0% WR on 2 trades)."
+    }
+  ],
+  "risk_parameters": {
+    "max_open_positions": 8,
+    "position_sizing": "1-2 shares, ~$50-200 USD per position",
+    "per_position_stop": "-7% from entry (hard stop)",
+    "mean_reversion_take_profit": "+8% or RSI > 65 with >3% gain",
+    "momentum_take_profit": "+10% or below 20SMA",
+    "max_drawdown": "-25% from starting ($2,000 \u2192 $1,500)",
+    "current_drawdown": "0.0% (no drawdown event)",
+    "strategies_active": [
+      "mean_reversion",
+      "sector_rotation",
+      "value_investing",
+      "momentum_rotation"
+    ]
+  }
 }
