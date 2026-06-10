@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-10 13:05:10",
+  "generated_at": "2026-06-10 13:07:05",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -1678,18 +1678,18 @@
     "ml_findings": "ML models (RF/GB) trained on V3 features showed test accuracy ~65% but overfit on small signal sets. Best use: as an additional confirmation layer, not primary decision maker."
   },
   "live_trading": {
-    "generated_at": "2026-06-10 13:05:10",
+    "generated_at": "2026-06-10 13:07:05",
     "summary": {
       "total_trades": 30,
-      "closed_trades": 35,
+      "closed_trades": 36,
       "open_positions": 4,
       "winning_trades": 19,
-      "losing_trades": 16,
-      "win_rate": 54.3,
+      "losing_trades": 17,
+      "win_rate": 52.8,
       "total_pnl_cad": 242.18,
       "starting_balance": 2000.0,
-      "current_balance": 1565.04,
-      "return_pct": -21.75,
+      "current_balance": 2219.68,
+      "return_pct": 10.98,
       "trading_days_active": 17
     },
     "per_strategy": [
@@ -1713,13 +1713,13 @@
       },
       {
         "strategy": "mean_reversion",
-        "closed_trades": 16,
+        "closed_trades": 17,
         "wins": 8,
-        "losses": 8,
-        "win_rate": 50.0,
-        "avg_pnl_pct": 16.28,
+        "losses": 9,
+        "win_rate": 47.1,
+        "avg_pnl_pct": 13.67,
         "best_trade_pnl": 88.96,
-        "worst_trade_pnl": -5.86,
+        "worst_trade_pnl": -28.08,
         "tickers_traded": [
           "DBA",
           "DBC",
@@ -1733,11 +1733,11 @@
           "XLC",
           "XLP"
         ],
-        "open_positions": 3,
+        "open_positions": 2,
         "backtest_predicted_wr": "74.3%",
         "backtest_predicted_avg_pnl": "+2.4%",
         "prediction_source": "V23 VIX>=12 MR (74.3% WR)",
-        "accuracy_vs_prediction": "UNDERPERFORMING by -24.3pp"
+        "accuracy_vs_prediction": "UNDERPERFORMING by -27.2pp"
       },
       {
         "strategy": "momentum",
