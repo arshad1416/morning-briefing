@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-10 13:47:00",
+  "generated_at": "2026-06-10 13:49:10",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -1678,15 +1678,15 @@
     "ml_findings": "ML models (RF/GB) trained on V3 features showed test accuracy ~65% but overfit on small signal sets. Best use: as an additional confirmation layer, not primary decision maker."
   },
   "live_trading": {
-    "generated_at": "2026-06-10 13:47:00",
+    "generated_at": "2026-06-10 13:49:10",
     "summary": {
-      "total_trades": 30,
+      "total_trades": 24,
       "closed_trades": 36,
       "open_positions": 4,
-      "winning_trades": 19,
-      "losing_trades": 17,
-      "win_rate": 52.8,
-      "total_pnl_cad": 242.18,
+      "winning_trades": 8,
+      "losing_trades": 28,
+      "win_rate": 22.2,
+      "total_pnl_cad": -26.98,
       "starting_balance": 2000.0,
       "current_balance": 2219.68,
       "return_pct": 10.98,
@@ -1699,9 +1699,9 @@
         "wins": 1,
         "losses": 0,
         "win_rate": 100.0,
-        "avg_pnl_pct": 92.47,
-        "best_trade_pnl": 92.47,
-        "worst_trade_pnl": 92.47,
+        "avg_pnl_pct": 0.97,
+        "best_trade_pnl": 0.97,
+        "worst_trade_pnl": 0.97,
         "tickers_traded": [
           "TLT"
         ],
@@ -1714,12 +1714,12 @@
       {
         "strategy": "mean_reversion",
         "closed_trades": 17,
-        "wins": 8,
-        "losses": 9,
-        "win_rate": 47.1,
-        "avg_pnl_pct": 13.67,
-        "best_trade_pnl": 88.96,
-        "worst_trade_pnl": -28.08,
+        "wins": 3,
+        "losses": 14,
+        "win_rate": 17.6,
+        "avg_pnl_pct": -0.82,
+        "best_trade_pnl": 2.31,
+        "worst_trade_pnl": -4.83,
         "tickers_traded": [
           "DBA",
           "DBC",
@@ -1737,17 +1737,17 @@
         "backtest_predicted_wr": "74.3%",
         "backtest_predicted_avg_pnl": "+2.4%",
         "prediction_source": "V23 VIX>=12 MR (74.3% WR)",
-        "accuracy_vs_prediction": "UNDERPERFORMING by -27.2pp"
+        "accuracy_vs_prediction": "UNDERPERFORMING by -56.7pp"
       },
       {
         "strategy": "momentum",
         "closed_trades": 4,
-        "wins": 3,
-        "losses": 1,
-        "win_rate": 75.0,
-        "avg_pnl_pct": -6.27,
-        "best_trade_pnl": 2.54,
-        "worst_trade_pnl": -28.36,
+        "wins": 1,
+        "losses": 3,
+        "win_rate": 25.0,
+        "avg_pnl_pct": 0.09,
+        "best_trade_pnl": 2.9,
+        "worst_trade_pnl": -2.54,
         "tickers_traded": [
           "ICLN",
           "JETS",
@@ -1758,7 +1758,7 @@
         "backtest_predicted_wr": "65%",
         "backtest_predicted_avg_pnl": "+2.1%",
         "prediction_source": "V28 Bull Momentum (61.6% WR)",
-        "accuracy_vs_prediction": "OUTPERFORMING by +10.0pp"
+        "accuracy_vs_prediction": "UNDERPERFORMING by -40.0pp"
       },
       {
         "strategy": "momentum_breakout",
@@ -1766,9 +1766,9 @@
         "wins": 0,
         "losses": 2,
         "win_rate": 0.0,
-        "avg_pnl_pct": -2.92,
-        "best_trade_pnl": -0.72,
-        "worst_trade_pnl": -5.11,
+        "avg_pnl_pct": -1.67,
+        "best_trade_pnl": -1.49,
+        "worst_trade_pnl": -1.85,
         "tickers_traded": [
           "XLI",
           "XLK"
@@ -1783,9 +1783,9 @@
         "wins": 0,
         "losses": 1,
         "win_rate": 0.0,
-        "avg_pnl_pct": -27.65,
-        "best_trade_pnl": -27.65,
-        "worst_trade_pnl": -27.65,
+        "avg_pnl_pct": -1.66,
+        "best_trade_pnl": -1.66,
+        "worst_trade_pnl": -1.66,
         "tickers_traded": [
           "ON"
         ],
@@ -1801,9 +1801,9 @@
         "wins": 1,
         "losses": 0,
         "win_rate": 100.0,
-        "avg_pnl_pct": 1.15,
-        "best_trade_pnl": 1.15,
-        "worst_trade_pnl": 1.15,
+        "avg_pnl_pct": 0.06,
+        "best_trade_pnl": 0.06,
+        "worst_trade_pnl": 0.06,
         "tickers_traded": [
           "XLF"
         ],
@@ -1814,12 +1814,12 @@
       {
         "strategy": "sector_rotation",
         "closed_trades": 9,
-        "wins": 5,
-        "losses": 4,
-        "win_rate": 55.6,
-        "avg_pnl_pct": 9.72,
-        "best_trade_pnl": 91.3,
-        "worst_trade_pnl": -2.7,
+        "wins": 2,
+        "losses": 7,
+        "win_rate": 22.2,
+        "avg_pnl_pct": -0.36,
+        "best_trade_pnl": 2.9,
+        "worst_trade_pnl": -3.62,
         "tickers_traded": [
           "CNQ.TO",
           "JETS",
@@ -1832,17 +1832,17 @@
         "backtest_predicted_wr": "72%",
         "backtest_predicted_avg_pnl": "+1.8%",
         "prediction_source": "V75 Sector Rotation (71.2% WR)",
-        "accuracy_vs_prediction": "UNDERPERFORMING by -16.4pp"
+        "accuracy_vs_prediction": "UNDERPERFORMING by -49.8pp"
       },
       {
         "strategy": "value_investing",
         "closed_trades": 1,
-        "wins": 1,
-        "losses": 0,
-        "win_rate": 100.0,
-        "avg_pnl_pct": 37.63,
-        "best_trade_pnl": 37.63,
-        "worst_trade_pnl": 37.63,
+        "wins": 0,
+        "losses": 1,
+        "win_rate": 0.0,
+        "avg_pnl_pct": -0.17,
+        "best_trade_pnl": -0.17,
+        "worst_trade_pnl": -0.17,
         "tickers_traded": [
           "EFA"
         ],
@@ -1850,7 +1850,7 @@
         "backtest_predicted_wr": "68%",
         "backtest_predicted_avg_pnl": "+1.5%",
         "prediction_source": "V26 Bear MR (80% WR)",
-        "accuracy_vs_prediction": "OUTPERFORMING by +32.0pp"
+        "accuracy_vs_prediction": "UNDERPERFORMING by -68.0pp"
       }
     ]
   }
