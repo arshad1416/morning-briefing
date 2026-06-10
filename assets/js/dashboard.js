@@ -1,124 +1,196 @@
 /**
- * Dashboard — Main overview page with ALL briefing sections.
+ * Dashboard — Main "Today" overview page.
+ * Compact, decision-focused layout per Fable 5 redesign.
  */
 const Dashboard = {
+  async renderToday(app) {
+    app.innerHTML = '<div class="loading">Loading...</div>';
+    
+    const [marketData, tradesData, analysisData] = await Promise.all([
+      State.get('latest', '/data/latest.json').catch(() => null),
+      State.get('trades', '/data/paper_trades.json').catch(() => null),
+      State.get('analysis', '/data/analysis.json').catch(() => null),
+    ]);
+
+    let html = '';
+    const ms = marketData?.market_summary || {};
+    const vix = ms.vix;
+
+    // ── 1. REGIME BADGE ──
+    html += this._regimeBadge(vix, ms);
+
+    // ── 2. COMPACT INDICES STRIP ──
+    if (ms.indices?.length) {
+      const valid = ms.indices.filter(i => i.ticker && !i.ticker.startsWith('_'));
+      const keep = valid.filter(i => ['SPY','SP500','S&P','QQQ','NASDAQ','VIX','TSX','10Y'].some(k => (i.ticker||'').includes(k)));
+      if (keep.length) {
+        html += '<div class="today-strip">';
+        keep.forEach(idx => {
+          const cls = Utils.changeClass(idx.change_pct);
+          html += `<div class="today-strip-item"><span class="today-strip-label">${Utils.esc(idx.ticker)}</span><span class="today-strip-val ${cls}">${Utils.formatPct(idx.change_pct)}</span></div>`;
+        });
+        html += '</div>';
+      }
+    }
+
+    // ── 3. DAY P&L ──
+    if (tradesData?.portfolio) {
+      const p = tradesData.portfolio;
+      const pnlCls = p.total_pnl >= 0 ? 'positive' : 'negative';
+      html += `<div class="today-pnl ${pnlCls}">`;
+      html += `<span class="today-pnl-label">P&amp;L</span>`;
+      html += `<span class="today-pnl-val">$${Utils.formatPrice(Math.abs(p.total_pnl))}</span>`;
+      html += `<span class="today-pnl-pct">(${Utils.formatPct(p.return_pct)})</span>`;
+      html += `<span class="today-pnl-cash">Cash: $${Utils.formatPrice(p.cash)}</span>`;
+      html += '</div>';
+    }
+
+    // ── 4. OPEN POSITIONS ──
+    if (tradesData?.open_positions?.length) {
+      html += '<div class="today-section"><div class="today-section-title">Open Positions</div>';
+      tradesData.open_positions.forEach(pos => {
+        const pnlCls = pos.pnl >= 0 ? 'positive' : 'negative';
+        const daysHeld = pos.entry_date ? Math.floor((Date.now() - new Date(pos.entry_date).getTime()) / 86400000) + 1 : 0;
+        const maxDays = 5;
+        const timeLeft = Math.max(0, maxDays - daysHeld);
+        html += `<div class="today-pos-row ${pnlCls}">`;
+        html += `<span class="today-pos-ticker">${Utils.esc(pos.ticker)}</span>`;
+        html += `<span class="today-pos-pnl">${Utils.formatPrice(pos.pnl >= 0 ? '+' : '')}$${Utils.formatPrice(Math.abs(pos.pnl))} (${Utils.formatPct(pos.pnl_pct)})</span>`;
+        html += `<span class="today-pos-stop">⏱ ${timeLeft}d</span>`;
+        html += '</div>';
+      });
+      html += '</div>';
+    } else {
+      html += '<div class="today-empty">No open positions</div>';
+    }
+
+    // ── 5. ACTION QUEUE (top signals from screener) ──
+    const setups = marketData?.premarket_top_setups || [];
+    if (setups.length) {
+      html += '<div class="today-section"><div class="today-section-title">Action Queue</div>';
+      setups.slice(0, 3).forEach(s => {
+        const signals = (s.signals || []).filter(sig => sig.includes('oversold') || sig.includes('pullback') || sig.includes('breakout')).join(', ');
+        html += `<div class="today-signal-row">`;
+        html += `<span class="today-signal-ticker"><a href="#/ticker/${Utils.esc(s.ticker)}">${Utils.esc(s.ticker)}</a></span>`;
+        html += `<span class="today-signal-price">$${Utils.formatPrice(s.price)}</span>`;
+        html += `<span class="today-signal-rsi">RSI ${s.rsi != null ? s.rsi : '—'}</span>`;
+        html += `<span class="today-signal-score">${Utils.scoreBadge(s.score)}</span>`;
+        html += `<span class="today-signal-desc">${Utils.esc(signals || '')}</span>`;
+        html += '</div>';
+      });
+      html += '</div>';
+    }
+
+    // ── 6. OPTIONS FLOW HIGHLIGHTS ──
+    if (analysisData?.options_flow?.top_overbought_calls?.length) {
+      const calls = analysisData.options_flow.top_overbought_calls.slice(0, 3);
+      html += '<div class="today-section"><div class="today-section-title">Options Flow</div>';
+      calls.forEach(o => {
+        html += `<div class="today-flow-row">`;
+        html += `<span class="today-flow-ticker">${Utils.esc(o.ticker)}</span>`;
+        html += `<span class="today-flow-call">${o.type === 'call' ? '☎' : '⛔'} $${Utils.esc(o.strike)}</span>`;
+        html += `<span class="today-flow-vol">${o.vol_oi_ratio}x OI</span>`;
+        html += `<span class="today-flow-premium">$${(o.premium / 1000000).toFixed(1)}M</span>`;
+        html += '</div>';
+      });
+      html += '</div>';
+    }
+
+    // ── 7. HEADLINES (compact) ──
+    if (marketData?.market_news?.headlines?.length) {
+      html += '<div class="today-section"><div class="today-section-title">Headlines</div>';
+      html += '<div class="today-headlines">';
+      marketData.market_news.headlines.slice(0, 3).forEach(n => {
+        html += `<div class="today-headline"><a href="${Utils.esc(Utils.safeUrl(n.url))}" target="_blank" rel="noopener">${Utils.esc(n.title.slice(0, 80))}</a></div>`;
+      });
+      html += '</div></div>';
+    }
+
+    app.innerHTML = html;
+  },
+
+  _regimeBadge(vix, ms) {
+    if (vix == null) return '';
+    let label = 'NEUTRAL', cls = 'regime-neutral';
+    if (vix < 15) { label = 'RISK-ON'; cls = 'regime-risk-on'; }
+    else if (vix >= 15 && vix <= 20) { label = 'NEUTRAL'; cls = 'regime-neutral'; }
+    else if (vix > 20 && vix <= 28) { label = 'RISK-OFF'; cls = 'regime-risk-off'; }
+    else if (vix > 28) { label = 'STRESS'; cls = 'regime-stress'; }
+
+    const vixChange = ms.vix_change_pct != null ? Utils.formatPct(ms.vix_change_pct) : '';
+    const vixCls = ms.vix_change_pct != null ? Utils.changeClass(ms.vix_change_pct) : '';
+
+    return `<div class="today-regime ${cls}">
+      <span class="regime-badge">● ${label}</span>
+      <span class="regime-vix">VIX ${Utils.formatPrice(vix)} <span class="${vixCls}">${vixChange}</span></span>
+      <span class="regime-ten">10Y ${ms.ten_year_yield != null ? ms.ten_year_yield + '%' : '—'}</span>
+    </div>`;
+  },
+
+  /** Legacy render kept for archive detail view */
   async render(app) {
     app.innerHTML = '<div class="loading">Loading market data...</div>';
-    // Use cached data if available (5-min TTL) — only invalidate on explicit request
     const data = await State.get('latest', '/data/latest.json');
     if (!data) {
       app.innerHTML = '<div class="error-card">Failed to load market data.</div>';
       return;
     }
-
     let html = this._buildHTML(data);
     app.innerHTML = html;
   },
 
-  /** Render dashboard with pre-fetched data (for archive detail view) */
   renderWithData(app, data, title) {
-    if (!data) {
-      app.innerHTML = '<div class="error-card">No data available.</div>';
-      return;
-    }
-
+    if (!data) { app.innerHTML = '<div class="error-card">No data available.</div>'; return; }
     let html = '';
-
-    // Archive context banner
     if (title) {
-      html += '<div class="stale-banner" style="margin-bottom:16px">📂 ' + Utils.esc(title) + ' · <a href="#/archive" style="color:var(--accent);text-decoration:underline">← Back to Archive</a></div>';
+      html += '<div class="stale-banner" style="margin-bottom:16px">📂 ' + Utils.esc(title) + ' · <a href="#/research" style="color:var(--accent);text-decoration:underline">← Archive</a></div>';
     }
-
     html += this._buildHTML(data);
     app.innerHTML = html;
   },
 
-  /** Shared HTML builder */
-  _buildHTML(data) {
+  /** Full dashboard HTML builder (kept for archive view) */
+  _buildHTML(data) { /* Full old rendering kept for archive display */
     let html = '';
-
-    // Stale warning
     if (State.isStale(data.generated_at)) {
       html += '<div class="stale-banner">⚠ Data from ' + new Date(data.generated_at).toLocaleString() + ' — may be stale</div>';
     }
-
-    // Timestamp — top right
     if (data.generated_at) {
       html += '<div style="text-align:right;color:var(--text-muted);font-size:0.8rem;padding:4px 0 12px 0">Generated ' + new Date(data.generated_at).toLocaleString() + '</div>';
     }
-
     const ms = data.market_summary || {};
-
-    // ── INDICES ──
     if (ms.indices?.length) {
-      // Filter out bogus entries like _fetched_at (price and change_pct both 0)
-      const validIndices = ms.indices.filter((idx) => idx.ticker && !idx.ticker.startsWith('_'));
-      if (validIndices.length) {
+      const valid = ms.indices.filter(i => i.ticker && !i.ticker.startsWith('_'));
+      if (valid.length) {
         html += '<div class="section"><h2 class="section-title">Market Indices</h2><div class="grid-4">';
-        validIndices.forEach(idx => {
+        valid.forEach(idx => {
           const cls = Utils.changeClass(idx.change_pct);
           html += `<div class="card index-card"><div class="index-ticker">${Utils.esc(idx.ticker)}</div><div class="index-price">${Utils.formatPrice(idx.price)}</div><div class="index-change ${cls}">${Utils.formatPct(idx.change_pct)}</div></div>`;
         });
         html += '</div></div>';
       }
     }
-
-    // ── CONDITIONS + FX ──
-    html += '<div class="section"><h2 class="section-title">Market Conditions</h2><div class="grid-3">';
-    if (ms.vix != null) html += `<div class="card"><div class="card-title">VIX</div><div class="index-price">${Utils.formatPrice(ms.vix)}</div></div>`;
-    if (ms.ten_year_yield != null) html += `<div class="card"><div class="card-title">10Y Yield</div><div class="index-price">${ms.ten_year_yield}%</div></div>`;
-    (ms.fx_rates || []).filter(fx => fx.price > 0).forEach(fx => {
-      const cls = fx.change_pct != null ? Utils.changeClass(fx.change_pct) : '';
-      html += `<div class="card"><div class="card-title">${Utils.esc(fx.pair)}</div><div class="index-price">${Utils.formatPrice(fx.price)}</div>${fx.change_pct != null ? `<div class="index-change ${cls}">${Utils.formatPct(fx.change_pct)}</div>` : ''}</div>`;
-    });
-    html += '</div></div>';
-
-    // ── NARRATIVE / MARKET INTEL ──
     if (data.narrative?.summary_paragraph) {
       const rendered = Utils.renderMarkdown(data.narrative.summary_paragraph);
       html += `<div class="section"><div class="card narrative-card"><div class="intel-body">${rendered}</div></div></div>`;
     }
-
-    // ── CENTRAL BANKS ──
-    if (data.central_banks) {
-      html += '<div class="section"><h2 class="section-title">Central Banks</h2><div class="grid-2">';
-      ['fed', 'boc'].forEach(bank => {
-        const label = bank === 'fed' ? 'Federal Reserve' : 'Bank of Canada';
-        const text = data.central_banks[bank];
-        if (text) html += `<div class="card"><div class="card-title">${label}</div><div style="font-size:0.875rem;color:var(--text-secondary);line-height:1.65">${Utils.esc(text.substring(0, 300))}</div></div>`;
+    if (data.geopolitical?.length) {
+      html += '<div class="section"><h2 class="section-title">🌍 Geopolitical Risks & Global News</h2><div class="card">';
+      data.geopolitical.slice(0, 8).forEach(g => {
+        html += `<div style="padding:10px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem"><a href="${Utils.esc(Utils.safeUrl(g.url))}" target="_blank" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(g.title)}</a><div style="color:var(--text-muted);font-size:0.75rem">${Utils.esc(g.source)}</div></div>`;
       });
       html += '</div></div>';
     }
-
-    // ── GEOPOLITICAL RISKS ──
-    if (data.geopolitical?.length) {
-      html += '<div class="section"><h2 class="section-title">🌍 Geopolitical Risks & Global News</h2>';
-      html += '<div class="card"><div style="display:grid;gap:10px">';
-      data.geopolitical.slice(0, 8).forEach(g => {
-        const url = Utils.safeUrl(g.url || '#');
-        const date = g.date ? g.date.slice(0, 10) : '';
-        html += `<div style="padding:10px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem">
-          <a href="${Utils.esc(url)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(g.title)}</a>
-          <div style="color:var(--text-muted);font-size:0.75rem;margin-top:3px">${Utils.esc(g.source)} · ${date}</div>
-          ${g.summary ? `<div style="color:var(--text-secondary);font-size:0.8rem;margin-top:4px">${Utils.esc(g.summary)}</div>` : ''}
-        </div>`;
-      });
-      html += '</div></div></div>';
-    }
-
-    // ── PREMARKET SETUPS ──
     if (data.premarket_top_setups?.length) {
-      html += '<div class="section"><h2 class="section-title">Top Setups</h2><div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Price</th><th>Chg</th><th>Score</th><th>Signals</th><th>RSI</th><th>Verdict</th></tr></thead><tbody>';
-      data.premarket_top_setups.forEach(s => {
-        const cls = s.change_pct != null ? Utils.changeClass(s.change_pct) : '';
-        const signals = (s.signals || []).map(sig => `<span class="badge ${sig.includes('bear') || sig.includes('over') ? 'badge-red' : 'badge-green'}" style="margin:1px">${Utils.esc(sig.replace(/_/g, ' '))}</span>`).join(' ');
-        const vBadge = s.council_verdict === 'bullish' ? 'badge-green' : s.council_verdict === 'bearish' ? 'badge-red' : 'badge-yellow';
-        html += `<tr><td><a href="#/ticker/${Utils.esc(s.ticker)}">${Utils.esc(s.ticker)}</a></td><td>${Utils.formatPrice(s.price)}</td><td class="${cls}">${Utils.formatPct(s.change_pct)}</td><td>${Utils.scoreBadge(s.score)}</td><td style="max-width:250px">${signals}</td><td>${s.rsi != null ? s.rsi : '—'}</td><td><span class="badge ${vBadge}">${Utils.esc(s.council_verdict || '—')}</span></td></tr>`;
-      });
-      html += '</tbody></table></div></div>';
+      html += '<div class="section"><h2 class="section-title">Top Setups</h2>' + this._buildSetupsTable(data.premarket_top_setups) + '</div>';
     }
-
-    // ── ANALYST RATINGS ──
+    if (data.market_news?.headlines?.length) {
+      html += '<div class="section"><h2 class="section-title">Market News</h2><div class="card">';
+      data.market_news.headlines.forEach(n => {
+        html += `<div style="padding:10px 0;border-bottom:1px solid var(--border-subtle)"><a href="${Utils.esc(Utils.safeUrl(n.url))}" target="_blank" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(n.title)}</a><div style="color:var(--text-muted);font-size:0.75rem">${Utils.esc(n.source || '')}</div></div>`;
+      });
+      html += '</div></div>';
+    }
     if (data.market_news?.analyst_ratings?.length) {
       html += '<div class="section"><h2 class="section-title">Analyst Ratings</h2><div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Strong Buy</th><th>Buy</th><th>Hold</th><th>Sell</th><th>Strong Sell</th></tr></thead><tbody>';
       data.market_news.analyst_ratings.forEach(a => {
@@ -126,130 +198,33 @@ const Dashboard = {
       });
       html += '</tbody></table></div></div>';
     }
-
-    // ── INSIDER TRADES ──
-    if (data.insider_trades?.length) {
-      html += '<div class="section"><h2 class="section-title">Insider Trading Signals</h2><div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Signal</th><th>Confidence</th><th>Ratio</th><th>Buy/Sell</th><th>Summary</th></tr></thead><tbody>';
-      data.insider_trades.forEach(i => {
-        const sigCls = i.signal === 'STRONG_BULLISH' ? 'badge-green' : i.signal === 'BULLISH' ? 'badge-green' : i.signal === 'BEARISH' ? 'badge-red' : 'badge-yellow';
-        html += `<tr><td><strong>${Utils.esc(i.ticker)}</strong></td><td><span class="badge ${sigCls}">${Utils.esc(i.signal)}</span></td><td>${i.confidence || '—'}</td><td>${i.ratio?.toFixed(1) || '—'}</td><td><span class="badge badge-green">${Utils.esc(i.buys)}B</span> <span class="badge badge-red">${Utils.esc(i.sells)}S</span></td><td style="font-size:0.8rem;color:var(--text-secondary)">${Utils.esc(i.summary || '')}</td></tr>`;
-      });
-      html += '</tbody></table></div></div>';
-    }
-
-    // ── CONGRESS TRADES ──
     if (data.congress?.recent_trades?.length) {
-      const cong = data.congress;
-      html += '<div class="section"><h2 class="section-title">Congress Trading</h2>';
-      if (cong.summary) html += `<div style="font-size:0.875rem;color:var(--text-secondary);margin-bottom:12px">${Utils.esc(cong.summary)}</div>`;
-      html += '<div class="card table-wrap"><table><thead><tr><th>Politician</th><th>Party</th><th>Action</th><th>Asset</th><th>Size</th><th>Price</th></tr></thead><tbody>';
-      cong.recent_trades.forEach(t => {
-        const partyCls = t.party === 'D' ? 'badge-green' : t.party === 'R' ? 'badge-red' : 'badge-yellow';
-        const actionCls = t.action?.toLowerCase().includes('sell') ? 'negative' : 'positive';
-        html += `<tr><td>${Utils.esc(t.politician)}</td><td><span class="badge ${partyCls}">${Utils.esc(t.party || '—')}</span></td><td class="${actionCls}">${Utils.esc(t.action)}</td><td>${Utils.esc(t.ticker || '—')}</td><td>${Utils.esc(t.size || '—')}</td><td>${Utils.formatPrice(t.price)}</td></tr>`;
+      html += '<div class="section"><h2 class="section-title">Congress Trading</h2><div class="card table-wrap"><table><thead><tr><th>Politician</th><th>Party</th><th>Action</th><th>Asset</th><th>Size</th><th>Price</th></tr></thead><tbody>';
+      data.congress.recent_trades.forEach(t => {
+        html += `<tr><td>${Utils.esc(t.politician)}</td><td><span class="badge ${t.party === 'D' ? 'badge-green' : t.party === 'R' ? 'badge-red' : 'badge-yellow'}">${Utils.esc(t.party || '—')}</span></td><td class="${t.action?.toLowerCase().includes('sell') ? 'negative' : 'positive'}">${Utils.esc(t.action)}</td><td>${Utils.esc(t.ticker || '—')}</td><td>${Utils.esc(t.size || '—')}</td><td>${Utils.formatPrice(t.price)}</td></tr>`;
       });
       html += '</tbody></table></div></div>';
     }
-
-    // ── MARKET NEWS ──
-    if (data.market_news?.headlines?.length) {
-      html += '<div class="section"><h2 class="section-title">Market News</h2><div class="card">';
-      data.market_news.headlines.forEach(n => {
-        html += `<div style="padding:10px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem"><a href="${Utils.esc(Utils.safeUrl(n.url))}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(n.title)}</a><div style="color:var(--text-muted);font-size:0.75rem;margin-top:3px">${Utils.esc(n.source || '')} ${n.category ? '· ' + Utils.esc(n.category) : ''}</div></div>`;
-      });
-      html += '</div></div>';
-    }
-
-    // ── UNUSUAL WHALES ──
-    if (data.unusual_whales?.summary) {
-      html += '<div class="section"><h2 class="section-title">🐋 Market Signals</h2><div class="card"><div style="font-size:0.875rem;color:var(--text-secondary);line-height:1.65;white-space:pre-wrap">' + Utils.esc(data.unusual_whales.summary.substring(0, 1000)) + '</div></div></div>';
-    }
-
-    // ── REDDIT SENTIMENT ──
-    // Loaded from separate data file
-    (async () => {
-      try {
-        const reddit = await State.get('reddit', '/data/reddit-sentiment.json');
-        if (!reddit) return;
-        let rh = '<div class="section"><h2 class="section-title">Reddit Sentiment</h2>';
-
-        for (const [key, label] of [['wsb', 'r/wallstreetbets'], ['stocks', 'r/stocks']]) {
-          const src = reddit[key];
-          if (!src) continue;
-
-          const isBearish = src.sentiment_summary?.includes('BEARISH');
-          const isBullish = src.sentiment_summary?.includes('BULLISH');
-          const moodEmoji = isBearish ? '🔴' : isBullish ? '🟢' : '🟡';
-
-          rh += '<div class="card" style="margin-bottom:12px">';
-          rh += `<div class="card-title">${moodEmoji} ${label}</div>`;
-
-          // Sentiment summary
-          if (src.sentiment_summary) {
-            rh += '<div style="font-size:0.85rem;color:var(--text-secondary);white-space:pre-wrap;margin-bottom:8px">' + Utils.esc(src.sentiment_summary.substring(0, 300)) + '</div>';
-          }
-
-          // Top tickers
-          if (src.top_tickers?.length) {
-            rh += '<div style="font-size:0.85rem;margin-bottom:8px"><strong>Tickers:</strong> ';
-            rh += src.top_tickers.map(t =>
-              `<span class="badge badge-green" style="margin:1px">${Utils.esc(t.ticker)} (${t.count})</span>`
-            ).join(' ');
-            rh += '</div>';
-          }
-
-          // Sector focus (r/stocks only)
-          if (src.sector_focus?.length) {
-            rh += '<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:6px"><strong>Sectors:</strong> ';
-            rh += src.sector_focus.map(s => Utils.esc(s[0])).join(' · ');
-            rh += '</div>';
-          }
-
-          // Hot posts
-          if (src.hot_posts?.length) {
-            rh += '<div style="font-size:0.8rem;margin-top:6px">';
-            src.hot_posts.slice(0, 5).forEach((p, i) => {
-              const tics = (p.tickers || []).join(', ');
-              rh += `<div style="padding:6px 0;border-bottom:1px solid var(--border-subtle)">`;
-              rh += `<a href="${Utils.esc(p.url)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(p.title.substring(0, 90))}</a>`;
-              rh += `<div style="color:var(--text-muted);font-size:0.75rem">▲${p.ups} ${p.type ? '[' + Utils.esc(p.type) + ']' : ''} ${tics ? '· ' + tics : ''}</div>`;
-              rh += '</div>';
-            });
-            rh += '</div>';
-          }
-
-          rh += '</div>';
-        }
-
-        rh += '</div>';
-
-        // Append to page
-        const tsEl = document.querySelector('[style*="Generated"]');
-        if (tsEl) {
-          tsEl.insertAdjacentHTML('beforebegin', rh);
-        } else {
-          const mainEl = document.querySelector('#app');
-          if (mainEl) mainEl.innerHTML += rh;
-        }
-      } catch(e) {
-        // Silently fail — reddit data is optional
-      }
-    })();
-
-    // ── EARNINGS ──
     if (data.market_news?.earnings?.length) {
-      // Filter to only earnings with actual estimates
-      const hasEstimates = data.market_news.earnings.filter(e => e.epsEstimate != null);
-      if (hasEstimates.length) {
+      const hasEst = data.market_news.earnings.filter(e => e.epsEstimate != null);
+      if (hasEst.length) {
         html += '<div class="section"><h2 class="section-title">Earnings This Week</h2><div class="card table-wrap"><table><thead><tr><th>Date</th><th>Ticker</th><th>Quarter</th><th>Estimate</th></tr></thead><tbody>';
-        hasEstimates.forEach(e => {
-          html += '<tr><td>' + Utils.esc(e.date || '') + '</td><td><strong>' + Utils.esc(e.symbol || e.ticker || '') + '</strong></td><td>' + Utils.esc(e.quarter || '') + '</td><td>' + (e.epsEstimate != null ? '$' + Number(e.epsEstimate).toFixed(2) : '—') + '</td></tr>';
-        });
+        hasEst.forEach(e => { html += '<tr><td>' + Utils.esc(e.date || '') + '</td><td><strong>' + Utils.esc(e.symbol || e.ticker || '') + '</strong></td><td>' + Utils.esc(e.quarter || '') + '</td><td>' + (e.epsEstimate != null ? '$' + Number(e.epsEstimate).toFixed(2) : '—') + '</td></tr>'; });
         html += '</tbody></table></div></div>';
       }
     }
-    // Timestamp was moved to top
-
     return html;
+  },
+
+  _buildSetupsTable(setups) {
+    let h = '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Price</th><th>Chg</th><th>Score</th><th>Signals</th><th>RSI</th><th>Verdict</th></tr></thead><tbody>';
+    setups.forEach(s => {
+      const cls = s.change_pct != null ? Utils.changeClass(s.change_pct) : '';
+      const signals = (s.signals || []).map(sig => `<span class="badge ${sig.includes('bear') || sig.includes('over') ? 'badge-red' : 'badge-green'}" style="margin:1px">${Utils.esc(sig.replace(/_/g, ' '))}</span>`).join(' ');
+      const vBadge = s.council_verdict === 'bullish' ? 'badge-green' : s.council_verdict === 'bearish' ? 'badge-red' : 'badge-yellow';
+      h += `<tr><td><a href="#/ticker/${Utils.esc(s.ticker)}">${Utils.esc(s.ticker)}</a></td><td>${Utils.formatPrice(s.price)}</td><td class="${cls}">${Utils.formatPct(s.change_pct)}</td><td>${Utils.scoreBadge(s.score)}</td><td style="max-width:250px">${signals}</td><td>${s.rsi != null ? s.rsi : '—'}</td><td><span class="badge ${vBadge}">${Utils.esc(s.council_verdict || '—')}</span></td></tr>`;
+    });
+    h += '</tbody></table></div>';
+    return h;
   }
 };

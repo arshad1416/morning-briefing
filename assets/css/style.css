@@ -1399,6 +1399,178 @@ button, [role="button"], input, select, textarea {
 .strategy-link:hover { color: var(--accent-bright); }
 
 /* ─────────────────────────────────────────────────────────────
+   TODAY VIEW — Compact trader dashboard
+   ───────────────────────────────────────────────────────────── */
+
+/* Regime badge */
+.today-regime {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.regime-risk-on  { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.25); }
+.regime-neutral  { background: rgba(250,204,21,0.10); border: 1px solid rgba(250,204,21,0.20); }
+.regime-risk-off { background: rgba(248,113,113,0.10); border: 1px solid rgba(248,113,113,0.20); }
+.regime-stress   { background: rgba(248,113,113,0.18); border: 1px solid rgba(248,113,113,0.35); }
+.regime-badge { font-size: 1rem; letter-spacing: 0.02em; }
+.regime-risk-on .regime-badge { color: #4ade80; }
+.regime-neutral .regime-badge { color: #facc15; }
+.regime-risk-off .regime-badge,
+.regime-stress .regime-badge  { color: #f87171; }
+.regime-vix { margin-left: auto; font-weight: 500; color: var(--text-primary); }
+.regime-ten { font-weight: 400; color: var(--text-secondary); }
+
+/* Indices strip */
+.today-strip {
+  display: flex;
+  gap: 16px;
+  padding: 10px 0;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  overflow-x: auto;
+}
+.today-strip-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 60px;
+}
+.today-strip-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.today-strip-val { font-size: 0.95rem; font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
+
+/* P&L hero */
+.today-pnl {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+}
+.today-pnl.positive { border-left: 3px solid #4ade80; }
+.today-pnl.negative { border-left: 3px solid #f87171; }
+.today-pnl-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.today-pnl-val { font-size: 1.6rem; font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
+.today-pnl.positive .today-pnl-val { color: #4ade80; }
+.today-pnl.negative .today-pnl-val { color: #f87171; }
+.today-pnl-pct { font-size: 0.9rem; font-weight: 500; }
+.today-pnl-cash { margin-left: auto; font-size: 0.8rem; color: var(--text-secondary); }
+
+/* Section containers */
+.today-section { margin-bottom: 14px; }
+.today-section-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  padding: 6px 0 8px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 6px;
+}
+
+/* Open positions rows */
+.today-pos-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin-bottom: 3px;
+  font-size: 0.9rem;
+  transition: background 0.1s;
+}
+.today-pos-row:hover { background: var(--bg-inset); }
+.today-pos-row.positive { border-left: 2px solid rgba(74,222,128,0.4); }
+.today-pos-row.negative { border-left: 2px solid rgba(248,113,113,0.4); }
+.today-pos-ticker { font-weight: 600; min-width: 60px; }
+.today-pos-pnl { font-family: 'IBM Plex Mono', monospace; font-weight: 500; }
+.today-pos-row.positive .today-pos-pnl { color: #4ade80; }
+.today-pos-row.negative .today-pos-pnl { color: #f87171; }
+.today-pos-stop { margin-left: auto; font-size: 0.75rem; color: var(--text-muted); }
+
+/* Action queue / signal rows */
+.today-signal-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin-bottom: 3px;
+  font-size: 0.85rem;
+  transition: background 0.1s;
+}
+.today-signal-row:hover { background: var(--bg-inset); }
+.today-signal-row a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.today-signal-row a:hover { text-decoration: underline; }
+.today-signal-ticker { min-width: 50px; }
+.today-signal-price { font-family: 'IBM Plex Mono', monospace; min-width: 55px; }
+.today-signal-rsi { color: var(--text-secondary); min-width: 35px; font-size: 0.8rem; }
+.today-signal-score { min-width: 30px; }
+.today-signal-desc { font-size: 0.75rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
+
+/* Options flow rows */
+.today-flow-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin-bottom: 3px;
+  font-size: 0.85rem;
+}
+.today-flow-row:hover { background: var(--bg-inset); }
+.today-flow-ticker { font-weight: 600; min-width: 50px; }
+.today-flow-call { font-family: 'IBM Plex Mono', monospace; min-width: 70px; }
+.today-flow-vol { color: var(--accent); font-weight: 500; min-width: 55px; }
+.today-flow-premium { margin-left: auto; color: var(--text-secondary); font-size: 0.8rem; }
+
+/* Headlines on today */
+.today-headlines {
+  font-size: 0.85rem;
+}
+.today-headline {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.today-headline a { color: var(--text-primary); text-decoration: none; }
+.today-headline a:hover { color: var(--accent); }
+
+/* Empty state */
+.today-empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Research tab navigation */
+.research-tabs { margin-bottom: 12px; }
+.research-tab {
+  padding: 6px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.research-tab:hover { background: var(--bg-inset); color: var(--text-primary); }
+.research-tab.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ─────────────────────────────────────────────────────────────
    SAFE AREA INSETS
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
   main {
