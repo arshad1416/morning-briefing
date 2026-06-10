@@ -13,7 +13,7 @@
     "win_rate": 55.2,
     "total_trades": 29
   },
-  "active_strategy": "V23 VIX>=12 MR",
+  "active_strategy": "PAPER_AGENT_SELECTIVE",
   "open_positions": [
     {
       "ticker": "TD.TO",
@@ -421,5 +421,7 @@
       "rationale": "RSI 26.0 oversold, near support 9.20 USD, near BB lower band. VIX 18 > 12 per V23 MR rule. Broad commodity bounce play.",
       "exit_rationale": "DBC commodities wrong for risk-off with VIX at 20.70. VIX spike invalidates commodity thesis. Also fixing CAD currency label in dashboard."
     }
-  ]
+  ],
+  "strategy_summary": "VIX 20.5: CAUTIOUS \u2014 VIX > 20, elevated uncertainty. Focus: SELECTIVE. ",
+  "current_strategy": "PAPER_AGENT_SELECTIVE"
 }
