@@ -3,6 +3,22 @@
  * Compact, decision-focused layout per Fable 5 redesign.
  */
 const Dashboard = {
+  /** Return market session label based on current ET time */
+  _sessionLabel() {
+    const now = new Date();
+    const et = new Date(now.toLocaleString('en-US', {timeZone:'America/New_York'}));
+    const m = et.getHours() * 60 + et.getMinutes();
+    const d = et.getDay();
+    if (d === 0 || d === 6) return 'CLOSED';
+    if (m >= 240 && m < 570) return 'PRE-MKT';
+    if (m >= 570 && m < 960) return 'OPEN';
+    if (m >= 960 && m < 1200) return 'AFTER-HRS';
+    return 'CLOSED';
+  },
+  _sessionTime() {
+    return new Date().toLocaleString('en-US', {timeZone:'America/New_York', hour:'2-digit', minute:'2-digit', hour12:false});
+  },
+
   async renderToday(app) {
     app.innerHTML = '<div class="loading">Loading...</div>';
     
@@ -19,10 +35,10 @@ const Dashboard = {
     // ── 1. REGIME BADGE ──
     html += this._regimeBadge(vix, ms);
 
-    // ── 2. COMPACT INDICES STRIP ──
+    // ── 2. COMPACT INDICES STRIP (equities only — VIX/10Y merged into regime) ──
     if (ms.indices?.length) {
       const valid = ms.indices.filter(i => i.ticker && !i.ticker.startsWith('_'));
-      const keep = valid.filter(i => ['SPY','SP500','S&P','QQQ','NASDAQ','VIX','TSX','10Y'].some(k => (i.ticker||'').includes(k)));
+      const keep = valid.filter(i => ['SPY','SP500','S&P','QQQ','NASDAQ','TSX'].some(k => (i.ticker||'').includes(k)));
       if (keep.length) {
         html += '<div class="today-strip">';
         keep.forEach(idx => {
@@ -36,12 +52,15 @@ const Dashboard = {
     // ── 3. DAY P&L ──
     if (tradesData?.portfolio) {
       const p = tradesData.portfolio;
+      const sign = p.total_pnl >= 0 ? '+' : '-';
       const pnlCls = p.total_pnl >= 0 ? 'positive' : 'negative';
+      const equity = p.starting_balance + p.total_pnl + (p.unrealized_pnl || 0);
+      const deployed = p.invested || 0;
       html += `<div class="today-pnl ${pnlCls}" style="border-left:none;padding:10px 15px">`;
-      html += `<span class="today-pnl-label">P&amp;L</span>`;
-      html += `<span class="today-pnl-val">$${Utils.formatPrice(Math.abs(p.total_pnl))}</span>`;
+      html += `<span class="today-pnl-label">DAY P&amp;L</span>`;
+      html += `<span class="today-pnl-val">${sign}$${Utils.formatPrice(Math.abs(p.total_pnl))}</span>`;
       html += `<span class="today-pnl-pct">(${Utils.formatPct(p.return_pct)})</span>`;
-      html += `<span class="today-pnl-cash" style="margin-left:auto;font-size:0.9rem">Cash: $${Utils.formatPrice(p.cash)}</span>`;
+      html += `<span class="today-pnl-cash" style="margin-left:auto;font-size:0.85rem">Equity $${Utils.formatPrice(equity)} · ${deployed > 0 ? Math.round(deployed/equity*100) + '% deployed' : 'all cash'}</span>`;
       html += '</div>';
     }
 
@@ -142,11 +161,13 @@ const Dashboard = {
 
     const vixChange = ms.vix_change_pct != null ? Utils.formatPct(ms.vix_change_pct) : '';
     const vixCls = ms.vix_change_pct != null ? Utils.changeClass(ms.vix_change_pct) : '';
+    const vixArrow = ms.vix_change_pct != null ? (ms.vix_change_pct >= 0 ? '▲' : '▼') : '';
 
     return `<div class="today-regime ${cls}">
       <span class="regime-badge">● ${label}</span>
-      <span class="regime-vix">VIX ${Utils.formatPrice(vix)} <span class="${vixCls}">${vixChange}</span></span>
+      <span class="regime-vix">VIX ${Utils.formatPrice(vix)} ${vixArrow}<span class="${vixCls}">${vixChange}</span></span>
       <span class="regime-ten">10Y ${ms.ten_year_yield != null ? ms.ten_year_yield + '%' : '—'}</span>
+      <span class="regime-session">${this._sessionLabel()} · ${this._sessionTime()} ET</span>
     </div>`;
   },
 

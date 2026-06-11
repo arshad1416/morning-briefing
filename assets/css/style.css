@@ -1424,6 +1424,17 @@ button, [role="button"], input, select, textarea {
 .regime-stress .regime-badge  { color: #f87171; }
 .regime-vix { margin-left: auto; font-weight: 500; color: var(--text-primary); }
 .regime-ten { font-weight: 400; color: var(--text-secondary); }
+.regime-session {
+  margin-left: auto;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--bg-inset);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
 
 /* Indices strip */
 .today-strip {
@@ -1458,9 +1469,9 @@ button, [role="button"], input, select, textarea {
 .today-pnl.positive { border-left: 3px solid #4ade80; }
 .today-pnl.negative { border-left: 3px solid #f87171; }
 .today-pnl-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.today-pnl-val { font-size: 1.6rem; font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
-.today-pnl.positive .today-pnl-val { color: #4ade80; }
-.today-pnl.negative .today-pnl-val { color: #f87171; }
+.today-pnl-val { font-size: 2.2rem; font-weight: 700; font-family: 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.today-pnl.positive .today-pnl-val { color: #0ecb81; }
+.today-pnl.negative .today-pnl-val { color: #f6465d; }
 .today-pnl-pct { font-size: 0.9rem; font-weight: 500; }
 .today-pnl-cash { margin-left: auto; font-size: 0.8rem; color: var(--text-secondary); }
 
