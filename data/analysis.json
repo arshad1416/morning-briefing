@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-11 19:54:40",
+  "generated_at": "2026-06-11 19:55:33",
   "date": "2026-06-11",
   "market_overview": {
     "source": "Seeking Alpha + BNN Bloomberg",
@@ -19,7 +19,7 @@
       [
         "C",
         {
-          "news_count": 18,
+          "news_count": 17,
           "articles": [
             "U.S. becomes world's top oil exporter, breaking Saudi-Russian decades-long grip",
             "CME to expand 24/7 trading for WTI crude oil and gold",
@@ -35,7 +35,6 @@
             "Prepare For AI Volatility: 3 Dividend Stocks Powering The Grid",
             "The Stock Market Crash - Still In Early Phase",
             "A Golden Buying Opportunity On The Drop",
-            "The Chip Stocks That Will Crack First",
             "Micron: Buckle Up For What Is About To Happen",
             "Marvell: You Snooze, You Lose",
             "Retire On Dividends: My Near-Perfect REIT, BDC, And MLP Trio"
@@ -54,7 +53,6 @@
             "bullish",
             "neutral",
             "bearish",
-            "neutral",
             "neutral",
             "neutral",
             "neutral",
@@ -103,44 +101,20 @@
         }
       ],
       [
-        "MU",
-        {
-          "news_count": 8,
-          "articles": [
-            "Market Rotation Alert: The AI Bubble Is Showing Cracks",
-            "3 Elite Dividend Machines That Could Pay Your Bills For Decades",
-            "Nasdaq Quant Leaders: 5 Top Stocks Averaging 272% Forward EPS Growth",
-            "Micron: Just One Announcement Away",
-            "A Golden Buying Opportunity On The Drop",
-            "The Chip Stocks That Will Crack First",
-            "Micron: Buckle Up For What Is About To Happen",
-            "Retire On Dividends: My Near-Perfect REIT, BDC, And MLP Trio"
-          ],
-          "sentiments": [
-            "neutral",
-            "neutral",
-            "bullish",
-            "neutral",
-            "neutral",
-            "neutral",
-            "neutral",
-            "neutral"
-          ]
-        }
-      ],
-      [
         "F",
         {
-          "news_count": 6,
+          "news_count": 7,
           "articles": [
             "U.S. becomes world's top oil exporter, breaking Saudi-Russian decades-long grip",
             "US Foods secures $167M Navy contract for full-line food & beverage supply",
+            "Market Rotation Alert: The AI Bubble Is Showing Cracks",
             "SpaceX's Trillion\u2011Dollar Moonshot: 3 Aerospace And Defense Stocks Delivering 50%+ EPS Growth",
             "South Korea And Iran Crash The Stock Market",
             "Nasdaq Quant Leaders: 5 Top Stocks Averaging 272% Forward EPS Growth",
             "Buy The Dip: Big Dividends Getting Cheap"
           ],
           "sentiments": [
+            "neutral",
             "neutral",
             "neutral",
             "bullish",
@@ -151,13 +125,14 @@
         }
       ],
       [
-        "IWM",
+        "SPY",
         {
-          "news_count": 6,
+          "news_count": 7,
           "articles": [
             "Heading For The Exits",
             "Market Rotation Alert: The AI Bubble Is Showing Cracks",
             "South Korea And Iran Crash The Stock Market",
+            "The S&P 500 Is Lying To You, The Market Crashed A While Ago, And I Have The Receipts",
             "The Stock Market Crash - Still In Early Phase",
             "The Chip Stocks That Will Crack First",
             "Inflation Signal With 87% Hit Rate Is Flashing Again"
@@ -165,6 +140,31 @@
           "sentiments": [
             "neutral",
             "neutral",
+            "bearish",
+            "bearish",
+            "bearish",
+            "neutral",
+            "bullish"
+          ]
+        }
+      ],
+      [
+        "QQQ",
+        {
+          "news_count": 7,
+          "articles": [
+            "Heading For The Exits",
+            "Market Rotation Alert: The AI Bubble Is Showing Cracks",
+            "South Korea And Iran Crash The Stock Market",
+            "The S&P 500 Is Lying To You, The Market Crashed A While Ago, And I Have The Receipts",
+            "The Stock Market Crash - Still In Early Phase",
+            "The Chip Stocks That Will Crack First",
+            "Inflation Signal With 87% Hit Rate Is Flashing Again"
+          ],
+          "sentiments": [
+            "neutral",
+            "neutral",
+            "bearish",
             "bearish",
             "bearish",
             "neutral",
@@ -175,7 +175,7 @@
     ],
     "sentiment_by_ticker": {
       "C": {
-        "mentions": 18,
+        "mentions": 17,
         "bullish": 4,
         "bearish": 1,
         "net_sentiment": 3
@@ -186,35 +186,35 @@
         "bearish": 3,
         "net_sentiment": 1
       },
-      "MU": {
-        "mentions": 8,
-        "bullish": 1,
-        "bearish": 0,
-        "net_sentiment": 1
-      },
       "F": {
-        "mentions": 6,
+        "mentions": 7,
         "bullish": 3,
         "bearish": 1,
         "net_sentiment": 2
       },
+      "SPY": {
+        "mentions": 7,
+        "bullish": 1,
+        "bearish": 3,
+        "net_sentiment": -2
+      },
+      "QQQ": {
+        "mentions": 7,
+        "bullish": 1,
+        "bearish": 3,
+        "net_sentiment": -2
+      },
       "IWM": {
-        "mentions": 6,
+        "mentions": 5,
         "bullish": 1,
         "bearish": 2,
         "net_sentiment": -1
       },
-      "QQQ": {
-        "mentions": 6,
-        "bullish": 1,
-        "bearish": 3,
-        "net_sentiment": -2
-      },
-      "DIA": {
+      "MU": {
         "mentions": 5,
         "bullish": 1,
-        "bearish": 3,
-        "net_sentiment": -2
+        "bearish": 0,
+        "net_sentiment": 1
       },
       "US": {
         "mentions": 2,
@@ -228,7 +228,7 @@
         "bearish": 0,
         "net_sentiment": 0
       },
-      "GLD": {
+      "XLK": {
         "mentions": 2,
         "bullish": 0,
         "bearish": 0,
@@ -329,6 +329,7 @@
       "type": "BEARISH_CONVERGENCE",
       "tickers": [
         "QQQ",
+        "SPY",
         "IWM"
       ],
       "signal": "Negative news sentiment + heavy put buying",
