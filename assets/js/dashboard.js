@@ -156,7 +156,7 @@ const Dashboard = {
     // ── 6. OPTIONS FLOW HIGHLIGHTS ──
     if (analysisData?.options_flow?.top_overbought_calls?.length) {
       const calls = analysisData.options_flow.top_overbought_calls.slice(0, 3);
-      html += '<div class="today-section"><div class="today-section-title">Options Flow</div>';
+      html += '<div class="today-section"><div class="today-section-title">Options Flow <a href="#/options" style="font-size:0.7rem;font-weight:400;color:var(--accent);text-decoration:none;margin-left:6px">View all →</a></div>';
       calls.forEach(o => {
         const isCall = o.type === 'call';
         const rowBg = isCall ? 'rgba(76,175,80,0.08)' : 'rgba(244,67,54,0.08)';

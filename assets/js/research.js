@@ -129,24 +129,6 @@ const Research = {
       });
       html += '</div>';
     }
-    if (analysisData?.options_flow) {
-      const flow = analysisData.options_flow;
-      html += `<div class="card" style="margin-bottom:12px"><div class="card-title">Options Flow Summary</div>`;
-      html += `<div style="font-size:0.85rem;color:var(--text-secondary)">Total unusual contracts: ${flow.total_unusual_contracts || 0} · Call/Put ratio: ${flow.call_put_ratio || '—'}</div>`;
-      if (flow.top_overbought_calls?.length) {
-        html += '<div style="margin-top:8px"><strong>Calls</strong></div>';
-        flow.top_overbought_calls.slice(0, 5).forEach(o => {
-          html += `<div style="font-size:0.85rem;padding:4px 0">${Utils.esc(o.ticker)} $${Utils.esc(o.strike)} · ${o.vol_oi_ratio}x OI · $${(o.premium / 1000000).toFixed(1)}M</div>`;
-        });
-      }
-      if (flow.top_overbought_puts?.length) {
-        html += '<div style="margin-top:8px"><strong>Puts</strong></div>';
-        flow.top_overbought_puts.slice(0, 5).forEach(o => {
-          html += `<div style="font-size:0.85rem;padding:4px 0">${Utils.esc(o.ticker)} $${Utils.esc(o.strike)} · ${o.vol_oi_ratio}x OI · $${(o.premium / 1000000).toFixed(1)}M</div>`;
-        });
-      }
-      html += '</div>';
-    }
     if (analysisData?.market_overview?.top_headlines?.length) {
       html += '<div class="card"><div class="card-title">Seeking Alpha Top Stories</div>';
       analysisData.market_overview.top_headlines.slice(0, 10).forEach(h => {

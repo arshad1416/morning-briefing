@@ -50,14 +50,14 @@
   Router.register('/',              function (app)         { Dashboard.renderToday(app); });
   Router.register('/today',         function (app)         { Dashboard.renderToday(app); });
   Router.register('/positions',     function (app)         { PaperTrades.render(app); });
-  Router.register('/options',       function (app)         { MapleGamma.renderLanding(app); });
+  Router.register('/options',       function (app)         { OptionsFlow.render(app); });
+  Router.register('/maplegamma',    function (app)         { MapleGamma.renderLanding(app); });
   Router.register('/research',      function (app)         { Research.render(app); });
   Router.register('/models',        function (app)         { Models.render(app); });
   Router.register('/screener',      function (app)         { Screener.render(app); });
 
   // Legacy redirects
-  Router.register('/mg',            function (app)         { window.location.hash = '#/options'; });
-  Router.register('/maplegamma',    function (app)         { window.location.hash = '#/options'; });
+  Router.register('/mg',            function (app)         { window.location.hash = '#/maplegamma'; });
   Router.register('/archive',       function (app)         { window.location.hash = '#/research'; });
   Router.register('/backtest-research', function (app)    { window.location.hash = '#/research'; });
   Router.register('/trades',        function (app)         { window.location.hash = '#/positions'; });
