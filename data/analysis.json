@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-11 19:59:20",
+  "generated_at": "2026-06-11 19:59:54",
   "date": "2026-06-11",
   "market_overview": {
     "source": "Seeking Alpha + BNN Bloomberg",
@@ -19,14 +19,13 @@
       [
         "C",
         {
-          "news_count": 19,
+          "news_count": 17,
           "articles": [
             "U.S. becomes world's top oil exporter, breaking Saudi-Russian decades-long grip",
             "CME to expand 24/7 trading for WTI crude oil and gold",
             "Lockheed Martin wins $514.4M contract modification for space vehicle production",
             "Heading For The Exits",
             "3 Safe Haven Stocks For Market Chaos",
-            "Market Rotation Alert: The AI Bubble Is Showing Cracks",
             "Adobe: The $23 Billion Buyback That Bought The Top",
             "Oracle: Out-Of-Touch Valuation",
             "SpaceX's Trillion\u2011Dollar Moonshot: 3 Aerospace And Defense Stocks Delivering 50%+ EPS Growth",
@@ -36,13 +35,11 @@
             "Prepare For AI Volatility: 3 Dividend Stocks Powering The Grid",
             "The Stock Market Crash - Still In Early Phase",
             "A Golden Buying Opportunity On The Drop",
-            "The Chip Stocks That Will Crack First",
             "Micron: Buckle Up For What Is About To Happen",
             "Marvell: You Snooze, You Lose",
             "Retire On Dividends: My Near-Perfect REIT, BDC, And MLP Trio"
           ],
           "sentiments": [
-            "neutral",
             "neutral",
             "neutral",
             "neutral",
@@ -56,7 +53,6 @@
             "bullish",
             "neutral",
             "bearish",
-            "neutral",
             "neutral",
             "neutral",
             "neutral",
@@ -93,31 +89,31 @@
         }
       ],
       [
-        "SPY",
+        "F",
         {
           "news_count": 7,
           "articles": [
-            "Heading For The Exits",
+            "U.S. becomes world's top oil exporter, breaking Saudi-Russian decades-long grip",
+            "US Foods secures $167M Navy contract for full-line food & beverage supply",
             "Market Rotation Alert: The AI Bubble Is Showing Cracks",
+            "SpaceX's Trillion\u2011Dollar Moonshot: 3 Aerospace And Defense Stocks Delivering 50%+ EPS Growth",
             "South Korea And Iran Crash The Stock Market",
-            "The S&P 500 Is Lying To You, The Market Crashed A While Ago, And I Have The Receipts",
-            "The Stock Market Crash - Still In Early Phase",
-            "The Chip Stocks That Will Crack First",
-            "Inflation Signal With 87% Hit Rate Is Flashing Again"
+            "Nasdaq Quant Leaders: 5 Top Stocks Averaging 272% Forward EPS Growth",
+            "Buy The Dip: Big Dividends Getting Cheap"
           ],
           "sentiments": [
             "neutral",
             "neutral",
-            "bearish",
-            "bearish",
-            "bearish",
             "neutral",
+            "bullish",
+            "bearish",
+            "bullish",
             "bullish"
           ]
         }
       ],
       [
-        "QQQ",
+        "DIA",
         {
           "news_count": 7,
           "articles": [
@@ -167,7 +163,7 @@
     ],
     "sentiment_by_ticker": {
       "C": {
-        "mentions": 19,
+        "mentions": 17,
         "bullish": 4,
         "bearish": 1,
         "net_sentiment": 3
@@ -178,13 +174,13 @@
         "bearish": 1,
         "net_sentiment": 2
       },
-      "SPY": {
+      "F": {
         "mentions": 7,
-        "bullish": 1,
-        "bearish": 3,
-        "net_sentiment": -2
+        "bullish": 3,
+        "bearish": 1,
+        "net_sentiment": 2
       },
-      "QQQ": {
+      "DIA": {
         "mentions": 7,
         "bullish": 1,
         "bearish": 3,
@@ -196,29 +192,29 @@
         "bearish": 0,
         "net_sentiment": 1
       },
-      "F": {
+      "IWM": {
         "mentions": 6,
-        "bullish": 3,
-        "bearish": 1,
-        "net_sentiment": 2
+        "bullish": 1,
+        "bearish": 2,
+        "net_sentiment": -1
       },
-      "DIA": {
+      "QQQ": {
         "mentions": 5,
         "bullish": 1,
         "bearish": 3,
         "net_sentiment": -2
       },
-      "IWM": {
-        "mentions": 4,
+      "SPY": {
+        "mentions": 5,
         "bullish": 1,
-        "bearish": 2,
-        "net_sentiment": -1
+        "bearish": 3,
+        "net_sentiment": -2
       },
-      "XLE": {
-        "mentions": 2,
-        "bullish": 0,
+      "AI": {
+        "mentions": 3,
+        "bullish": 1,
         "bearish": 0,
-        "net_sentiment": 0
+        "net_sentiment": 1
       },
       "US": {
         "mentions": 2,
@@ -320,8 +316,8 @@
     {
       "type": "BEARISH_CONVERGENCE",
       "tickers": [
-        "SPY",
         "QQQ",
+        "SPY",
         "IWM"
       ],
       "signal": "Negative news sentiment + heavy put buying",
