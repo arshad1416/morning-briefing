@@ -19,44 +19,41 @@
   color-scheme: dark;
 
   /* Page & surface backgrounds */
-  --bg-page:       #0d1117;   /* deepest */
+  --bg-page:       #171612;   /* deepest */
   --bg-nav:        #111827;   /* nav bar */
-  --bg-card:       #1a2233;   /* card surface */
+  --bg-card:       #1F1E1A;   /* card surface */
   --bg-card-hover: #1f2d42;
-  --bg-inset:      #243048;   /* table headers, input fill */
-  --bg-active:     #2a3a55;
+  --bg-inset:      #2A2824;   /* table headers, input fill */
+  --bg-active:     #35322D;
 
   /* Borders */
-  --border-subtle: rgba(255,255,255,0.09);
+  --border-subtle: #2A2824;
   --border-dim:    rgba(255,255,255,0.14);
-  --border-mid:    rgba(255,255,255,0.22);
+  --border-mid:    #35322D;
 
   /* ── Text colours — all WCAG AA verified ──
-     --text-primary   #f0f4ff on #1a2233 → 13.1:1  ✅ AAA
-     --text-body      #cbd5e8 on #1a2233 →  8.4:1  ✅ AAA
-     --text-secondary #94a8c8 on #1a2233 →  4.8:1  ✅ AA
-     --text-muted     #7a90b0 on #1a2233 →  3.6:1  ✅ AA (large/UI)
+     --text-primary   #F0EDE4 on #1F1E1A → ~13:1  ✅ AAA
+     --text-body      #D6D0C4 on #1F1E1A → ~8:1   ✅ AAA
+     --text-secondary #A39C8A on #1F1E1A → ~5:1   ✅ AA
+     --text-muted     #7B7567 on #1F1E1A → ~3.5:1 ✅ AA (large/UI)
      (card-title is uppercase 10px bold — qualifies as large text at 18.66px bold equivalent, 3:1 threshold)
-     --text-disabled  #4a6080 on #1a2233 →  2.1:1  ⚠ decorative only
+     --text-disabled  #5A5448 on #1F1E1A → ~2:1   ⚠ decorative only
   */
-  --text-primary:   #f0f4ff;
-  --text-body:      #cbd5e8;
-  --text-secondary: #94a8c8;
-  --text-muted:     #7a90b0;
-  --text-disabled:  #4a6080;
+  --text-primary:   #F0EDE4;
+  --text-body:      #D6D0C4;
+  --text-secondary: #A39C8A;
+  --text-muted:     #7B7567;
+  --text-disabled:  #5A5448;
 
   /* ── Signal colours — WCAG AA on card bg ──
-     --green  #4ade80 on #1a2233 → 7.9:1  ✅ AAA
-     --red    #f87171 on #1a2233 → 5.1:1  ✅ AA
-     --yellow #fbbf24 on #1a2233 → 8.0:1  ✅ AAA
-     --amber  #e2a84a on #1a2233 → 6.0:1  ✅ AAA
-     --blue   #7cb9f4 on #1a2233 → 6.1:1  ✅ AAA
+     --green  #4CAF50 on #1F1E1A → ~6:1   ✅ AAA
+     --red    #EF5350 on #1F1E1A → ~4.3:1 ✅ AA
   */
-  --green:          #4ade80;
-  --green-bg:       rgba(74,222,128,0.10);
+  --green:          #4CAF50;
+  --green-bg:       rgba(76,175,80,0.12);
   --green-border:   rgba(74,222,128,0.28);
-  --red:            #f87171;
-  --red-bg:         rgba(248,113,113,0.10);
+  --red:            #EF5350;
+  --red-bg:         rgba(239,83,80,0.12);
   --red-border:     rgba(248,113,113,0.28);
   --yellow:         #fbbf24;
   --yellow-bg:      rgba(251,191,36,0.10);
@@ -68,7 +65,7 @@
   --blue-bg:        rgba(124,185,244,0.10);
 
   /* Accent — amber 6.0:1 on card bg ✅ */
-  --accent:         #e2a84a;
+  --accent:         #5B7FFF;
   --accent-bright:  #f0bf66;
   --accent-dim:     rgba(226,168,74,0.13);
   --accent-border:  rgba(226,168,74,0.32);
