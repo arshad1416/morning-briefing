@@ -173,8 +173,20 @@ const PaperTrades = {
     if (data?.portfolio) {
       const p = data.portfolio;
       const genAt = data.generated_at ? new Date(data.generated_at).toLocaleString() : '';
-      const pnlCls = (p.total_pnl || 0) >= 0 ? 'var(--positive)' : 'var(--negative)';
-      const retCls = (p.return_pct || 0) >= 0 ? 'var(--positive)' : 'var(--negative)';
+      const sign = (p.total_pnl || 0) >= 0 ? '+' : '-';
+      const pnlCls = (p.total_pnl || 0) >= 0 ? 'positive' : 'negative';
+      const equity = p.starting_balance + (p.total_pnl || 0) + (p.unrealized_pnl || 0);
+      const deployed = p.invested || 0;
+      
+      // Hero P&L row like Today view
+      html += `<div class="today-pnl ${pnlCls}" style="border-left:none;padding:10px 15px;margin-bottom:16px">`;
+      html += `<span class="today-pnl-label">TOTAL P&amp;L</span>`;
+      html += `<span class="today-pnl-val">${sign}$${Utils.formatPrice(Math.abs(p.total_pnl || 0))}</span>`;
+      html += `<span class="today-pnl-pct">(${Utils.formatPct(p.return_pct || 0)})</span>`;
+      html += `<span class="today-pnl-cash" style="margin-left:auto;font-size:0.85rem">Equity $${Utils.formatPrice(equity)} · Cash $${Utils.formatPrice(p.cash)} · ${deployed > 0 ? Math.round(deployed/equity*100) + '% deployed' : 'all cash'}</span>`;
+      html += '</div>';
+      
+      // Detail grid below
       html += '<div class="card" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px;margin-bottom:16px">'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Status</div>'
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:var(--positive)">' + Utils.esc(data.status || '—') + '</div></div>'
@@ -186,14 +198,12 @@ const PaperTrades = {
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">$' + Utils.formatPrice(p.invested || 0) + '</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Total Value</div>'
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">$' + Utils.formatPrice(p.total_balance) + '</div></div>'
-        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">P&L $</div>'
-        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + pnlCls + '">' + ((p.total_pnl || 0) >= 0 ? '+' : '') + '$' + Utils.formatPrice(Math.abs(p.total_pnl || 0)) + '</div></div>'
-        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">P&L %</div>'
-        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + retCls + '">' + ((p.return_pct || 0) >= 0 ? '+' : '') + p.return_pct + '%</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Win Rate</div>'
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + (p.win_rate >= 50 ? 'var(--positive)' : 'var(--negative)') + '">' + p.win_rate + '%</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Trades</div>'
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">' + p.total_trades + '</div></div>'
+        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Unrealized</div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + ((p.unrealized_pnl || 0) >= 0 ? 'var(--positive)' : 'var(--negative)') + '">' + ((p.unrealized_pnl || 0) >= 0 ? '+' : '') + '$' + Utils.formatPrice(Math.abs(p.unrealized_pnl || 0)) + '</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Active Strategy</div>'
         + '<div style="font-size:0.9rem;font-weight:600;margin-top:4px">' + Utils.esc(data.active_strategy || '—') + '</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Last Updated</div>'
@@ -204,7 +214,7 @@ const PaperTrades = {
     // ── Live Open Positions ──
     html += '<h2 class="section-title" style="margin-top:24px">Open Positions</h2>';
     if (data?.open_positions?.length) {
-      html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Type</th><th>Entry</th><th>Entry Price</th><th>Current</th><th>P&L</th><th>Strategy</th><th>Status</th></tr></thead><tbody>';
+      html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Type</th><th>Entry</th><th>Entry Price</th><th>Current</th><th>P&L</th><th>Risk</th><th>Strategy</th><th>Status</th></tr></thead><tbody>';
       data.open_positions.forEach(t => {
         const pnlCls = t.pnl_pct > 0 ? 'positive' : t.pnl_pct < 0 ? 'negative' : '';
         const status = t.pnl_pct > 5 ? '✅ In Profit' : t.pnl_pct > 2 ? '✅ Profitable' : t.pnl_pct > 0 ? '⏳ Pending' : t.pnl_pct > -3 ? '⏳ Watching' : t.pnl_pct > -7 ? '⚠️ At Risk' : '🔴 Stop Zone';
@@ -221,6 +231,7 @@ const PaperTrades = {
           <td style="font-size:0.85rem">${entryDisplay}</td>
           <td style="font-size:0.85rem">${currDisplay}</td>
           <td class="${pnlCls}" style="font-weight:700;font-size:0.85rem">${pnlDisplay}</td>
+          <td><div class="riskbar"><i class="${t.pnl_pct >= 0 ? 'risk-up' : 'risk-dn'}" style="${t.pnl_pct >= 0 ? 'left:50%' : 'right:50%'};width:${Math.min(50, Math.abs(t.pnl_pct) * 8)}%"></i></div></td>
           <td style="font-size:0.8rem">${this._strategyLink(t.strategy)}</td>
           <td><span class="badge ${t.pnl_pct > 0 ? 'badge-green' : t.pnl_pct < -3 ? 'badge-red' : 'badge-yellow'}" style="font-size:0.65rem">${status}</span></td>
         </tr>`;
