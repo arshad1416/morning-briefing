@@ -88,6 +88,8 @@ const Dashboard = {
     // ── 4. OPEN POSITIONS ──
     if (tradesData?.open_positions?.length) {
       html += '<div class="today-section"><div class="today-section-title">Open Positions</div>';
+      const _posPnls = tradesData.open_positions.map(p => Math.abs(p.pnl || 0));
+      const _maxPnl = Math.max(..._posPnls, 1);
       tradesData.open_positions.forEach(pos => {
         const pnlCls = pos.pnl >= 0 ? 'positive' : 'negative';
         const daysHeld = pos.entry_date ? Math.floor((Date.now() - new Date(pos.entry_date).getTime()) / 86400000) + 1 : 0;
@@ -111,6 +113,11 @@ const Dashboard = {
         html += `<span class="today-pos-pnl">${Utils.formatPrice(pos.pnl >= 0 ? '+' : '')}$${Utils.formatPrice(Math.abs(pos.pnl))}</span>`;
         html += `<span class="today-pos-pct ${pnlCls}">(${Utils.formatPct(pos.pnl_pct)})</span>`;
         html += `<div style="width:50px;height:4px;background:var(--bg-inset);border-radius:2px;overflow:hidden;flex-shrink:0"><div style="width:${volWidth}px;height:100%;background:var(--text-muted);border-radius:2px"></div></div>`;
+        // Risk bar (v1 pattern — proportional to |P&L| / max |P&L|)
+        const _riskPct = Math.min(50, (Math.abs(pos.pnl || 0) / _maxPnl) * 50);
+        const _riskDir = pos.pnl >= 0 ? 'left:50%' : 'right:50%';
+        const _riskCls = pos.pnl >= 0 ? 'risk-up' : 'risk-dn';
+        html += `<div class="riskbar"><i class="${_riskCls}" style="${_riskDir};width:${_riskPct}%"></i></div>`;
         html += `<span class="today-pos-stop">⏱ ${timeLeft}d</span>`;
         html += '</div>';
       });
@@ -118,6 +125,18 @@ const Dashboard = {
     } else {
       html += '<div class="today-empty">No open positions</div>';
     }
+
+    // ── 4.5 FOMC COUNTDOWN ──
+    (function() {
+      var _fomc = new Date('2026-06-17T18:00:00Z');
+      var _cdMs = _fomc.getTime() - Date.now();
+      if (_cdMs > 0) {
+        var _d = Math.floor(_cdMs / 86400000);
+        var _h = Math.floor((_cdMs % 86400000) / 3600000);
+        var _m = Math.floor((_cdMs % 3600000) / 60000);
+        html += '<div class="countdown-banner">FOMC in ' + _d + 'd ' + _h + 'h ' + _m + 'm \u00B7 Rate Decision Jun 17, 2026</div>';
+      }
+    })();
 
     // ── 5. ACTION QUEUE (top signals from screener) ──
     const setups = marketData?.premarket_top_setups || [];
