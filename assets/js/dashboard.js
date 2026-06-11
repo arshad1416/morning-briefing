@@ -64,6 +64,27 @@ const Dashboard = {
       html += '</div>';
     }
 
+    // ── 3.5 SINCE CLOSE (pre-market only) ──
+    const session = this._sessionLabel();
+    if (session === 'PRE-MKT' && tradesData?.open_positions?.length) {
+      html += '<div class="today-section"><div class="today-section-title">Since Close</div>';
+      html += '<div class="overnight-card" style="padding:10px 12px;background:var(--bg-inset);border-radius:8px;font-size:0.85rem">';
+      // Generate delta notes from open positions
+      tradesData.open_positions.slice(0, 5).forEach(pos => {
+        const dir = pos.pnl >= 0 ? '▲' : '▼';
+        const cls = pos.pnl >= 0 ? 'positive' : 'negative';
+        html += `<div style="padding:4px 0;display:flex;gap:8px"><span class="${cls}">${dir}</span><span>${Utils.esc(pos.ticker)} <span style="color:var(--text-muted)">entry $${Utils.formatPrice(pos.entry_price)} · now $${Utils.formatPrice(pos.current_price)}</span></span></div>`;
+      });
+      // Check if regime changed
+      const prevRegime = localStorage.getItem('mb-regime');
+      const currentRegime = vix < 15 ? 'RISK-ON' : vix > 20 ? 'RISK-OFF' : 'NEUTRAL';
+      if (prevRegime && prevRegime !== currentRegime) {
+        html += `<div style="padding:4px 0;margin-top:4px;border-top:1px solid var(--border-subtle);color:var(--yellow)">⚠ Regime flipped from ${prevRegime} → ${currentRegime}</div>`;
+      }
+      localStorage.setItem('mb-regime', currentRegime);
+      html += '</div></div>';
+    }
+
     // ── 4. OPEN POSITIONS ──
     if (tradesData?.open_positions?.length) {
       html += '<div class="today-section"><div class="today-section-title">Open Positions</div>';
@@ -86,7 +107,9 @@ const Dashboard = {
         html += `<div class="today-pos-row ${pnlCls}">`;
         html += `<span class="today-pos-ticker">${Utils.esc(pos.ticker)}</span>`;
         html += sparkline;
-        html += `<span class="today-pos-pnl">${Utils.formatPrice(pos.pnl >= 0 ? '+' : '')}$${Utils.formatPrice(Math.abs(pos.pnl))} (${Utils.formatPct(pos.pnl_pct)})</span>`;
+        html += `<span class="today-pos-entry">$${Utils.formatPrice(pos.entry_price)}</span>`;
+        html += `<span class="today-pos-pnl">${Utils.formatPrice(pos.pnl >= 0 ? '+' : '')}$${Utils.formatPrice(Math.abs(pos.pnl))}</span>`;
+        html += `<span class="today-pos-pct ${pnlCls}">(${Utils.formatPct(pos.pnl_pct)})</span>`;
         html += `<div style="width:50px;height:4px;background:var(--bg-inset);border-radius:2px;overflow:hidden;flex-shrink:0"><div style="width:${volWidth}px;height:100%;background:var(--text-muted);border-radius:2px"></div></div>`;
         html += `<span class="today-pos-stop">⏱ ${timeLeft}d</span>`;
         html += '</div>';
@@ -108,7 +131,18 @@ const Dashboard = {
           else if (sig.includes('pullback')) bg = '#ffc107';
           return `<span style="background:${bg};color:#fff;padding:1px 6px;border-radius:3px;font-size:0.7rem;margin:1px;display:inline-block">${Utils.esc(sig.replace(/_/g,' '))}</span>`;
         }).join('');
+        
+        // Determine verb from signals
+        let verb = 'WATCH', verbCls = 'verb-watch';
+        const allSig = (s.signals || []).join(' ');
+        if (allSig.includes('oversold') || allSig.includes('breakout') || allSig.includes('pullback')) {
+          verb = 'SETUP'; verbCls = 'verb-setup';
+        }
+        if ((s.council_verdict || '').includes('bull')) { verb = 'LONG'; verbCls = 'verb-long'; }
+        if ((s.council_verdict || '').includes('bear')) { verb = 'AVOID'; verbCls = 'verb-avoid'; }
+        
         html += `<div class="today-signal-row">`;
+        html += `<span class="verb ${verbCls}">${verb}</span>`;
         html += `<span class="today-signal-ticker"><a href="#/ticker/${Utils.esc(s.ticker)}">${Utils.esc(s.ticker)}</a></span>`;
         html += `<span class="today-signal-price">$${Utils.formatPrice(s.price)}</span>`;
         html += `<span class="today-signal-rsi">RSI ${s.rsi != null ? s.rsi : '—'}</span>`;

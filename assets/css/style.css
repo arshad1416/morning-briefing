@@ -1501,8 +1501,9 @@ button, [role="button"], input, select, textarea {
 .today-pos-row:hover { background: var(--bg-inset); }
 .today-pos-row.positive { border-left: 2px solid rgba(74,222,128,0.4); }
 .today-pos-row.negative { border-left: 2px solid rgba(248,113,113,0.4); }
-.today-pos-ticker { font-weight: 600; min-width: 60px; }
-.today-pos-pnl { font-family: 'IBM Plex Mono', monospace; font-weight: 500; }
+.today-pos-ticker { font-weight: 600; min-width: 45px; }
+.today-pos-entry { font-size: 0.75rem; color: var(--text-secondary); min-width: 50px; font-family: 'IBM Plex Mono', monospace; }
+.today-pos-pnl { font-family: 'IBM Plex Mono', monospace; font-weight: 500; min-width: 55px; }
 .today-pos-row.positive .today-pos-pnl { color: #4ade80; }
 .today-pos-row.negative .today-pos-pnl { color: #f87171; }
 .today-pos-stop { margin-left: auto; font-size: 0.75rem; color: var(--text-muted); }
@@ -1511,7 +1512,7 @@ button, [role="button"], input, select, textarea {
 .today-signal-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   padding: 8px 10px;
   border-radius: 6px;
   margin-bottom: 3px;
@@ -1521,6 +1522,20 @@ button, [role="button"], input, select, textarea {
 .today-signal-row:hover { background: var(--bg-inset); }
 .today-signal-row a { color: var(--accent); text-decoration: none; font-weight: 600; }
 .today-signal-row a:hover { text-decoration: underline; }
+.verb {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  min-width: 42px;
+  text-align: center;
+}
+.verb-long  { background: rgba(14,203,129,0.15); color: #0ecb81; }
+.verb-setup { background: rgba(33,150,243,0.15); color: #64b5f6; }
+.verb-watch { background: rgba(240,185,11,0.12);  color: #f0b90b; }
+.verb-avoid { background: rgba(246,70,93,0.15);   color: #f6465d; }
 .today-signal-ticker { min-width: 50px; }
 .today-signal-price { font-family: 'IBM Plex Mono', monospace; min-width: 55px; }
 .today-signal-rsi { color: var(--text-secondary); min-width: 35px; font-size: 0.8rem; }
