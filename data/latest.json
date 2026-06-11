@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-11T17:30:57-04:00",
+  "generated_at": "2026-06-11T17:31:16-04:00",
   "market_summary": {
     "vix": 19.44,
     "ten_year_yield": 4.46,
@@ -51,52 +51,16 @@
     "green_count": 0,
     "red_count": 0
   },
-  "premarket_top_setups": [
-    {
-      "ticker": "MSFT",
-      "price": 426.989990234375,
-      "change_pct": 3.47,
-      "score": 11,
-      "signals": [
-        "neutral_rsi",
-        "strong_momentum",
-        "above_20ma",
-        "above_50ma",
-        "elevated_volume"
-      ],
-      "rsi": 55.5,
-      "above_sma_20": true,
-      "above_sma_50": true
-    },
-    {
-      "ticker": "ARKK",
-      "price": 81.01000213623047,
-      "change_pct": 3.93,
-      "score": 10,
-      "signals": [
-        "neutral_rsi",
-        "strong_momentum",
-        "above_20ma",
-        "above_50ma"
-      ],
-      "rsi": 59.7,
-      "above_sma_20": true,
-      "above_sma_50": true
-    },
-    {
-      "ticker": "IBIT",
-      "price": 41.560001373291016,
-      "change_pct": -2.1,
-      "score": 10,
-      "signals": [
-        "oversold",
-        "pullback"
-      ],
-      "rsi": 29.0,
-      "above_sma_20": false,
-      "above_sma_50": false
-    }
-  ],
+  "central_banks": {
+    "fed": "",
+    "boc": ""
+  },
+  "insider_trades": [],
+  "market_news": {
+    "headlines": [],
+    "earnings": [],
+    "analyst_ratings": []
+  },
   "geopolitical": [
     {
       "title": "Putin says there is 'no point' meeting Zelensky over ending Ukraine war",
@@ -155,7 +119,52 @@
       "summary": ""
     }
   ],
-  "insider_trades": [],
+  "premarket_top_setups": [
+    {
+      "ticker": "MSFT",
+      "price": 426.989990234375,
+      "change_pct": 3.47,
+      "score": 11,
+      "signals": [
+        "neutral_rsi",
+        "strong_momentum",
+        "above_20ma",
+        "above_50ma",
+        "elevated_volume"
+      ],
+      "rsi": 55.5,
+      "above_sma_20": true,
+      "above_sma_50": true
+    },
+    {
+      "ticker": "ARKK",
+      "price": 81.01000213623047,
+      "change_pct": 3.93,
+      "score": 10,
+      "signals": [
+        "neutral_rsi",
+        "strong_momentum",
+        "above_20ma",
+        "above_50ma"
+      ],
+      "rsi": 59.7,
+      "above_sma_20": true,
+      "above_sma_50": true
+    },
+    {
+      "ticker": "IBIT",
+      "price": 41.560001373291016,
+      "change_pct": -2.1,
+      "score": 10,
+      "signals": [
+        "oversold",
+        "pullback"
+      ],
+      "rsi": 29.0,
+      "above_sma_20": false,
+      "above_sma_50": false
+    }
+  ],
   "congress": {
     "recent_trades": [],
     "summary": "\ud83d\udccb No congress trades found"
