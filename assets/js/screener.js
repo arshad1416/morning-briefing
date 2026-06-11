@@ -332,7 +332,7 @@ const Screener = {
 
       // Volume vs avg
       if (volFilter) {
-        const vr = t.volume_ratio || 0;
+        const vr = t.volume_ratio != null ? t.volume_ratio : (t.vol_ratio != null ? t.vol_ratio : 0);
         if (volFilter === 'above' && vr < 1) return false;
         if (volFilter === 'below' && vr >= 1) return false;
         if (volFilter === '1.5x' && vr < 1.5) return false;
@@ -410,7 +410,7 @@ const Screener = {
       '<td style="font-size:0.8rem">' + mcap + '</td>' +
       '<td>' + (t.divYield != null && t.divYield > 0 ? t.divYield.toFixed(2) + '%' : '—') + '</td>' +
       '<td>' + (t.rsi != null ? t.rsi.toFixed(1) : '—') + '</td>' +
-      '<td>' + (t.volume_ratio != null ? t.volume_ratio.toFixed(2) + 'x' : '—') + '</td>' +
+      '<td>' + (t.volume_ratio != null ? t.volume_ratio.toFixed(2) + 'x' : t.vol_ratio != null ? t.vol_ratio.toFixed(2) + 'x' : '—') + '</td>' +
       '<td style="font-size:0.75rem;color:var(--text-muted)">' + (t.sector ? t.sector.substring(0, 12) : '—') + '</td>' +
       '<td style="max-width:200px">' + (signals || '—') + '</td>' +
     '</tr>';

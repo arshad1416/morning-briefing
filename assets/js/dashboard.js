@@ -22,10 +22,11 @@ const Dashboard = {
   async renderToday(app) {
     app.innerHTML = '<div class="loading">Loading...</div>';
     
-    const [marketData, tradesData, analysisData] = await Promise.all([
+    const [marketData, tradesData, analysisData, gexData] = await Promise.all([
       State.get('latest', '/data/latest.json').catch(() => null),
       State.get('trades', '/data/paper_trades.json').catch(() => null),
       State.get('analysis', '/data/analysis.json').catch(() => null),
+      State.get('gex', '/data/gex_data.json').catch(() => null),
     ]);
 
     let html = '';
@@ -189,6 +190,21 @@ const Dashboard = {
         html += '</div>';
       });
       html += '</div>';
+    }
+
+    // ── 6.5 GEX/DEX/VEX SNAPSHOT ──
+    if (gexData?.modes?.all) {
+      const a = gexData.modes.all;
+      const fmt = (v) => v >= 1e6 ? '$'+(v/1e6).toFixed(1)+'M' : v >= 1e3 ? '$'+(v/1e3).toFixed(0)+'K' : '$'+v.toFixed(0);
+      const rg = (a.gamma_regime||'').toUpperCase();
+      const rc = rg.includes('LONG')||rg.includes('BULL') ? 'var(--green)' : rg.includes('SHORT')||rg.includes('BEAR') ? 'var(--red)' : 'var(--text-primary)';
+      html += '<div class="today-section"><div class="today-section-title">GEX/DEX/VEX</div><div style="display:flex;flex-wrap:wrap;gap:12px">';
+      html += '<div class="card" style="flex:1;min-width:90px;padding:10px;text-align:center"><div class="card-title">GEX</div><div style="font-size:1.2rem;font-weight:700;font-family:var(--font-mono)">'+fmt(a.total_gex)+'</div></div>';
+      html += '<div class="card" style="flex:1;min-width:90px;padding:10px;text-align:center"><div class="card-title">DEX</div><div style="font-size:1.2rem;font-weight:700;font-family:var(--font-mono)">'+fmt(a.total_dex)+'</div></div>';
+      html += '<div class="card" style="flex:1;min-width:90px;padding:10px;text-align:center"><div class="card-title">VEX</div><div style="font-size:1.2rem;font-weight:700;font-family:var(--font-mono)">'+fmt(a.total_vex)+'</div></div>';
+      html += '<div class="card" style="flex:1;min-width:90px;padding:10px;text-align:center"><div class="card-title">Regime</div><div style="font-size:1.2rem;font-weight:700;color:'+rc+'">'+rg+'</div></div>';
+      html += '<div class="card" style="flex:1;min-width:90px;padding:10px;text-align:center"><div class="card-title">Max Γ</div><div style="font-size:1.2rem;font-weight:700;font-family:var(--font-mono)">$'+a.max_gex_strike+'</div></div>';
+      html += '</div></div>';
     }
 
     // ── 7. HEADLINES (compact) ──
