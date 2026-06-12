@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-12 13:27:45",
+  "generated_at": "2026-06-12 13:29:43",
   "versions": {
     "V1 Baseline": {
       "tag": "backtest",
@@ -1678,20 +1678,39 @@
     "ml_findings": "ML models (RF/GB) trained on V3 features showed test accuracy ~65% but overfit on small signal sets. Best use: as an additional confirmation layer, not primary decision maker."
   },
   "live_trading": {
-    "generated_at": "2026-06-12 13:27:45",
+    "generated_at": "2026-06-12 13:29:43",
     "summary": {
-      "total_trades": 0,
-      "closed_trades": 0,
-      "open_positions": 0,
+      "total_trades": 3,
+      "closed_trades": 1,
+      "open_positions": 2,
       "winning_trades": 0,
-      "losing_trades": 0,
-      "win_rate": 0,
-      "total_pnl_cad": 0.0,
+      "losing_trades": 1,
+      "win_rate": 0.0,
+      "total_pnl_cad": -732.67,
       "starting_balance": 100000.0,
-      "current_balance": 100000.0,
-      "return_pct": 0.0,
+      "current_balance": 79722.33,
+      "return_pct": -20.28,
       "trading_days_active": 19
     },
-    "per_strategy": []
+    "per_strategy": [
+      {
+        "strategy": "sector_rotation",
+        "closed_trades": 1,
+        "wins": 0,
+        "losses": 1,
+        "win_rate": 0.0,
+        "avg_pnl_pct": -7.58,
+        "best_trade_pnl": -7.58,
+        "worst_trade_pnl": -7.58,
+        "tickers_traded": [
+          "MSFT"
+        ],
+        "open_positions": 2,
+        "backtest_predicted_wr": "72%",
+        "backtest_predicted_avg_pnl": "+1.8%",
+        "prediction_source": "V75 Sector Rotation (71.2% WR)",
+        "accuracy_vs_prediction": "UNDERPERFORMING by -72.0pp"
+      }
+    ]
   }
 }

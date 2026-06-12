@@ -1,68 +1,62 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-06-12 13:27:45",
+  "generated_at": "2026-06-12 13:29:40",
   "price_source": "yfinance historical closes \u2014 no CAD/USD math",
   "portfolio": {
     "starting_balance": 100000.0,
-    "cash": 100000.0,
-    "invested": 0,
-    "total_balance": 100000.0,
-    "total_pnl": 0.0,
-    "unrealized_pnl": 0,
-    "return_pct": 0.0,
-    "win_rate": 0,
-    "total_trades": 0
+    "cash": 79722.33,
+    "invested": 298.5,
+    "total_balance": 99967.17,
+    "total_pnl": -31.78,
+    "unrealized_pnl": -1.05,
+    "return_pct": -0.03,
+    "win_rate": 0.0,
+    "total_trades": 1
   },
   "active_strategy": "V23 VIX>=12 MR",
-  "open_positions": [],
-  "recent_trades": [],
-  "risk_metrics": {
-    "account_type": "demo",
-    "total_balance": 100000.0,
-    "sleeves": {
-      "sleeve_a": {
-        "allocated": 0.0,
-        "pnl": 0.0,
-        "trades": 0,
-        "wins": 0,
-        "losses": 0,
-        "win_rate": 0.0
-      },
-      "sleeve_c": {
-        "allocated": 0.0,
-        "pnl": 0.0,
-        "trades": 0,
-        "wins": 0,
-        "losses": 0,
-        "win_rate": 0.0
-      },
-      "crypto": {
-        "allocated": 0.0,
-        "pnl": 0.0,
-        "trades": 0,
-        "wins": 0,
-        "losses": 0,
-        "win_rate": 0.0
-      },
-      "forex": {
-        "allocated": 0.0,
-        "pnl": 0.0,
-        "trades": 0,
-        "wins": 0,
-        "losses": 0,
-        "win_rate": 0.0
-      },
-      "cash": {
-        "allocated": 100000.0,
-        "pnl": 0.0,
-        "trades": 0,
-        "wins": 0,
-        "losses": 0,
-        "win_rate": 0.0
-      }
+  "open_positions": [
+    {
+      "ticker": "XLE",
+      "type": "ETF",
+      "entry_date": "2026-06-12",
+      "entry_price": 58.5,
+      "current_price": 57.6,
+      "currency": "USD",
+      "pnl": -0.9,
+      "pnl_pct": -1.54,
+      "strategy": "sector_rotation",
+      "direction": "long",
+      "rationale": "XLE energy sector - US becomes world's top oil exporter catalyst, CME expanding 24/7 crude trading. Energy rotation from recent underperformance."
     },
-    "total_allocated": 100000.0,
-    "cash_reserve": 0.0,
-    "allocation_pct": 100.0
-  }
+    {
+      "ticker": "JNJ",
+      "type": "ETF",
+      "entry_date": "2026-06-12",
+      "entry_price": 240.0,
+      "current_price": 239.85,
+      "currency": "USD",
+      "pnl": -0.15,
+      "pnl_pct": -0.06,
+      "strategy": "sector_rotation",
+      "direction": "long",
+      "rationale": "JNJ defensive healthcare - 1100x OI call flow at 90 strike, $4.8M premium. DS Pro top pick."
+    }
+  ],
+  "recent_trades": [
+    {
+      "ticker": "MSFT",
+      "type": "ETF",
+      "direction": "long",
+      "pnl_pct": -7.57,
+      "pnl_usd": -31.78,
+      "entry_price": 420.0,
+      "exit_price": 388.22,
+      "currency": "USD",
+      "strategy": "sector_rotation",
+      "entry_date": "2026-06-12T13:29:02.894135",
+      "exit_date": "2026-06-12T13:29:03.803892",
+      "rationale": "MSFT mega-cap tech - 224x OI call flow. DS Pro opportunity with strong options flow signal.",
+      "exit_rationale": "STOP: Hard stop hit at -7.6% (limit 3%)"
+    }
+  ]
 }
