@@ -69,10 +69,17 @@ const Dashboard = {
     // ── 3.5 SINCE CLOSE (pre-market only) ──
     const session = this._sessionLabel();
     if (session === 'PRE-MKT' && tradesData?.open_positions?.length) {
+      // Filter out options — they have their own section in the Options tab
+      const _nonOptOvernight = tradesData.open_positions.filter(pos => {
+        const ac = (pos.asset_class || '').toUpperCase();
+        const tp = (pos.type || '').toLowerCase();
+        return ac !== 'OPTION' && tp !== 'option';
+      });
+      if (_nonOptOvernight.length) {
       html += '<div class="today-section"><div class="today-section-title">Since Close</div>';
       html += '<div class="overnight-card" style="padding:10px 12px;background:var(--bg-inset);border-radius:8px;font-size:0.85rem">';
       // Generate delta notes from open positions
-      tradesData.open_positions.slice(0, 5).forEach(pos => {
+      _nonOptOvernight.slice(0, 5).forEach(pos => {
         const dir = pos.pnl >= 0 ? '▲' : '▼';
         const cls = pos.pnl >= 0 ? 'positive' : 'negative';
         html += `<div style="padding:4px 0;display:flex;gap:8px"><span class="${cls}">${dir}</span><span>${Utils.esc(pos.ticker)} <span style="color:var(--text-muted)">entry $${Utils.formatPrice(pos.entry_price)} · now $${Utils.formatPrice(pos.current_price)}</span></span></div>`;
@@ -85,14 +92,22 @@ const Dashboard = {
       }
       localStorage.setItem('mb-regime', currentRegime);
       html += '</div></div>';
+      } // close _nonOptOvernight.length
     }
 
     // ── 4. OPEN POSITIONS ──
     if (tradesData?.open_positions?.length) {
+      // Filter out options — they have their own dedicated section in the Options tab
+      const _nonOptionPositions = tradesData.open_positions.filter(pos => {
+        const ac = (pos.asset_class || '').toUpperCase();
+        const tp = (pos.type || '').toLowerCase();
+        return ac !== 'OPTION' && tp !== 'option';
+      });
+      if (_nonOptionPositions.length) {
       html += '<div class="today-section"><div class="today-section-title">Open Positions</div>';
-      const _posPnls = tradesData.open_positions.map(p => Math.abs(p.pnl || 0));
+      const _posPnls = _nonOptionPositions.map(p => Math.abs(p.pnl || 0));
       const _maxPnl = Math.max(..._posPnls, 1);
-      tradesData.open_positions.forEach(pos => {
+      _nonOptionPositions.forEach(pos => {
         const pnlCls = pos.pnl >= 0 ? 'positive' : 'negative';
         const daysHeld = pos.entry_date ? Math.floor((Date.now() - new Date(pos.entry_date).getTime()) / 86400000) + 1 : 0;
         const maxDays = 5;
@@ -131,6 +146,7 @@ const Dashboard = {
         html += '</div>';
       });
       html += '</div>';
+      } // close _nonOptionPositions.length
     } else {
       html += '<div class="today-empty">No open positions</div>';
     }
