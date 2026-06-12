@@ -153,9 +153,6 @@ const OptionsFlow = {
     
     html += '</div></div>';
 
-    // ── MY OPTION POSITIONS (from paper trades) ──
-    html += await this._renderMyPositions();
-
     // ── Footer note ──
     html += '<div style="margin-top:16px;padding:12px;background:var(--bg-inset);border-radius:8px;font-size:0.78rem;color:var(--text-muted);display:flex;justify-content:space-between;align-items:center">';
     html += '<span>Data from yfinance options chains — unusual activity defined as Vol/OI > 2×, volume > 100 contracts</span>';
@@ -166,65 +163,6 @@ const OptionsFlow = {
     app.innerHTML = html;
   },
 
-  async _renderMyPositions() {
-    let html = '';
-    let tradesData = null;
-    try {
-      tradesData = await Utils.fetchJSON('/data/paper_trades.json');
-    } catch (_e) {
-      // ignore fetch errors
-    }
-
-    const positions = (tradesData?.open_positions || []).filter(pos => {
-      const ac = (pos.asset_class || '').toUpperCase();
-      const tp = (pos.type || '').toLowerCase();
-      return ac === 'OPTION' || tp === 'option';
-    });
-
-    html += '<div class="card" style="margin-bottom:16px">';
-    html += '<div class="card-title" style="font-size:1rem">📋 My Option Positions</div>';
-
-    if (!positions.length) {
-      html += '<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:0.85rem">No open option positions</div>';
-    } else {
-      html += '<div class="table-wrap">';
-      html += '<table class="of-table"><thead><tr>';
-      html += '<th>Ticker</th><th>Strike</th><th>Expiry</th><th>DTE</th><th>Premium Paid</th><th>Current Premium</th><th>P&L</th><th>Status</th>';
-      html += '</tr></thead><tbody>';
-
-      positions.forEach(pos => {
-        const strike = pos.option_strike || '—';
-        const expiry = pos.option_expiration || '—';
-        const dte = pos.option_days_to_expiry != null ? pos.option_days_to_expiry + 'd' : '—';
-        const premiumPaid = pos.entry_price ? '$' + pos.entry_price.toFixed(2) : '—';
-        const currentPrem = pos.current_price ? '$' + pos.current_price.toFixed(2) : '—';
-        const pnl = pos.pnl || 0;
-        const pnlCls = pnl >= 0 ? 'positive' : 'negative';
-        const pnlDisplay = (pnl >= 0 ? '+' : '') + '$' + Math.abs(pnl).toFixed(2);
-        const status = pos.option_days_to_expiry != null
-          ? (pos.option_days_to_expiry <= 0 ? '🔴 Expired' : pos.option_days_to_expiry <= 3 ? '⚠️ Expiring Soon' : '⏳ Open')
-          : '⏳ Open';
-        const dteColor = pos.option_days_to_expiry != null && pos.option_days_to_expiry <= 3
-          ? 'color:var(--red, #f44336);font-weight:700' : '';
-
-        html += '<tr>';
-        html += `<td><strong>${Utils.esc(pos.ticker)}</strong></td>`;
-        html += `<td>$${Utils.esc(String(strike))}</td>`;
-        html += `<td style="font-size:0.8rem">${Utils.esc(String(expiry))}</td>`;
-        html += `<td style="${dteColor}">${dte}</td>`;
-        html += `<td style="font-weight:600">${premiumPaid}</td>`;
-        html += `<td style="font-weight:600">${currentPrem}</td>`;
-        html += `<td class="${pnlCls}" style="font-weight:700">${pnlDisplay}</td>`;
-        html += `<td>${status}</td>`;
-        html += '</tr>';
-      });
-
-      html += '</tbody></table></div>';
-    }
-
-    html += '</div>';
-    return html;
-  },
 
   _renderPremiumCard(items, type, icon, title, color) {
     if (!items.length) return '';
