@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-12T13:37:12.247002",
+  "generated_at": "2026-06-12 13:52:12",
   "summary": {
     "total_backtest_trades": 17577,
     "tickers_tested": 59,
@@ -9,16 +9,19 @@
     "best_profit_factor": "7.64"
   },
   "live_trading": {
-    "generated_at": "2026-06-12T13:37:12.246965",
+    "generated_at": "2026-06-12 13:52:12",
     "summary": {
-      "win_rate": 0.0,
+      "total_trades": 6,
       "closed_trades": 1,
+      "open_positions": 5,
       "winning_trades": 0,
       "losing_trades": 1,
-      "return_pct": -0.03,
-      "trading_days_active": 1,
-      "open_positions": 2,
-      "generated_at": "2026-06-12T13:37:12.246985"
+      "win_rate": 0.0,
+      "total_pnl_cad": -534.99,
+      "starting_balance": 100000.0,
+      "current_balance": 71370.01,
+      "return_pct": -28.63,
+      "trading_days_active": 19
     },
     "per_strategy": [
       {
@@ -27,9 +30,17 @@
         "wins": 0,
         "losses": 1,
         "win_rate": 0.0,
-        "backtest_predicted_wr": 0.0,
-        "accuracy_vs_prediction": "tracking",
-        "avg_pnl_pct": -732.67
+        "avg_pnl_pct": -12.89,
+        "best_trade_pnl": -12.89,
+        "worst_trade_pnl": -12.89,
+        "tickers_traded": [
+          "IBIT"
+        ],
+        "open_positions": 4,
+        "backtest_predicted_wr": "72%",
+        "backtest_predicted_avg_pnl": "+1.8%",
+        "prediction_source": "V75 Sector Rotation (71.2% WR)",
+        "accuracy_vs_prediction": "UNDERPERFORMING by -72.0pp"
       }
     ]
   },
