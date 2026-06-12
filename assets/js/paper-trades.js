@@ -225,7 +225,12 @@ const PaperTrades = {
       html += '<div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:8px">' + _acSummary + '</div>';
       
       html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Asset</th><th>Type</th><th>Entry</th><th>Entry Price</th><th>Current</th><th>P&L</th><th>Risk</th><th>Strategy</th><th>Status</th></tr></thead><tbody>';
-      data.open_positions.forEach(t => {
+      data.open_positions.filter(t => {
+        const ac = (t.asset_class || '').toUpperCase();
+        const tp = (t.type || '').toLowerCase();
+        const tt = (t.trade_type || '').toLowerCase();
+        return ac !== 'OPTION' && tp !== 'option' && tt !== 'option';
+      }).forEach(t => {
         const pnlCls = t.pnl_pct > 0 ? 'positive' : t.pnl_pct < 0 ? 'negative' : '';
         const status = t.pnl_pct > 5 ? '✅ In Profit' : t.pnl_pct > 2 ? '✅ Profitable' : t.pnl_pct > 0 ? '⏳ Pending' : t.pnl_pct > -3 ? '⏳ Watching' : t.pnl_pct > -7 ? '⚠️ At Risk' : '🔴 Stop Zone';
         const cur = t.currency || 'USD';
@@ -262,6 +267,51 @@ const PaperTrades = {
         </tr>`;
       });
       html += '</tbody></table></div>';
+
+      // ── My Option Positions (separate sub-section) ──
+      const optionPositions = data.open_positions.filter(t => {
+        const ac = (t.asset_class || '').toUpperCase();
+        const tp = (t.type || '').toLowerCase();
+        const tt = (t.trade_type || '').toLowerCase();
+        return ac === 'OPTION' || tp === 'option' || tt === 'option';
+      });
+      if (optionPositions.length) {
+        html += '<div class="card" style="margin-top:16px">';
+        html += '<div class="card-title" style="font-size:1rem">📋 My Option Positions</div>';
+        html += '<div class="table-wrap">';
+        html += '<table class="of-table"><thead><tr>';
+        html += '<th>Ticker</th><th>Strike</th><th>Expiry</th><th>DTE</th><th>Premium Paid</th><th>Current Premium</th><th>P&L</th><th>Status</th>';
+        html += '</tr></thead><tbody>';
+
+        optionPositions.forEach(pos => {
+          const strike = pos.option_strike || '—';
+          const expiry = pos.option_expiration || '—';
+          const dte = pos.option_days_to_expiry != null ? pos.option_days_to_expiry + 'd' : '—';
+          const premiumPaid = pos.entry_price ? '$' + pos.entry_price.toFixed(2) : '—';
+          const currentPrem = pos.current_price ? '$' + pos.current_price.toFixed(2) : '—';
+          const pnl = pos.pnl || 0;
+          const pnlCls = pnl >= 0 ? 'positive' : 'negative';
+          const pnlDisplay = (pnl >= 0 ? '+' : '') + '$' + Math.abs(pnl).toFixed(2);
+          const status = pos.option_days_to_expiry != null
+            ? (pos.option_days_to_expiry <= 0 ? '🔴 Expired' : pos.option_days_to_expiry <= 3 ? '⚠️ Expiring Soon' : '⏳ Open')
+            : '⏳ Open';
+          const dteColor = pos.option_days_to_expiry != null && pos.option_days_to_expiry <= 3
+            ? 'color:var(--red, #f44336);font-weight:700' : '';
+
+          html += '<tr>';
+          html += `<td><strong>${Utils.esc(pos.ticker)}</strong></td>`;
+          html += `<td>$${Utils.esc(String(strike))}</td>`;
+          html += `<td style="font-size:0.8rem">${Utils.esc(String(expiry))}</td>`;
+          html += `<td style="${dteColor}">${dte}</td>`;
+          html += `<td style="font-weight:600">${premiumPaid}</td>`;
+          html += `<td style="font-weight:600">${currentPrem}</td>`;
+          html += `<td class="${pnlCls}" style="font-weight:700">${pnlDisplay}</td>`;
+          html += `<td>${status}</td>`;
+          html += '</tr>';
+        });
+
+        html += '</tbody></table></div></div>';
+      }
     } else {
       html += '<div class="card" style="text-align:center;padding:32px;color:var(--text-muted)">No open positions. All trades closed.</div>';
     }
