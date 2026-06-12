@@ -19,10 +19,11 @@ const Research = {
   async render(app) {
     app.innerHTML = '<div class="loading">Loading research...</div>';
 
-    const [marketData, analysisData, redditData] = await Promise.all([
+    const [marketData, analysisData, redditData, mgAnalysis] = await Promise.all([
       State.get('latest', '/data/latest.json').catch(() => null),
       State.get('analysis', '/data/analysis.json').catch(() => null),
       State.get('reddit', '/data/reddit-sentiment.json').catch(() => null),
+      State.get('mg-analysis', '/data/morning_analysis.json').catch(() => null),
     ]);
 
     let html = '<div class="section"><h2 class="section-title">Research</h2>';
@@ -33,6 +34,7 @@ const Research = {
     html += '<button class="research-tab" data-tab="news">News</button>';
     html += '<button class="research-tab" data-tab="reddit">Sentiment</button>';
     html += '<button class="research-tab" data-tab="analysis">Ideas</button>';
+    html += '<button class="research-tab" data-tab="mg-analysis">MapleGamma Analysis</button>';
     html += '<button class="research-tab" data-tab="backtest">Backtest</button>';
     html += '</div>';
 
@@ -157,6 +159,96 @@ const Research = {
         }
       });
       html += '</div>';
+    }
+    html += '</div>';
+
+    // ── TAB 4b: MapleGamma Analysis (DS Pro) ──
+    html += '<div class="research-pane" id="tab-mg-analysis" style="display:none">';
+    if (mgAnalysis?.meta?.generated_at) {
+      html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Last updated: ${this.formatTimestamp(mgAnalysis.meta.generated_at)}</div>`;
+      
+      // Confidence + Regime badge
+      const meta = mgAnalysis.meta;
+      const regCls = meta.market_regime === 'risk-on' ? 'badge-green' : meta.market_regime === 'risk-off' ? 'badge-red' : 'badge-yellow';
+      html += `<div style="margin-bottom:12px"><span class="badge ${regCls}" style="font-size:0.8rem">${Utils.esc((meta.market_regime || '?').toUpperCase())}</span> <span style="color:var(--text-muted);font-size:0.8rem">Confidence: ${meta.confidence}/10 · ${Utils.esc(meta.model || '')}</span></div>`;
+      
+      // Market pulse
+      if (mgAnalysis.market_pulse) {
+        const mp = mgAnalysis.market_pulse;
+        html += `<div class="card" style="margin-bottom:12px"><div class="card-title">Market Pulse</div>`;
+        html += `<div style="font-size:0.9rem;color:var(--text-primary);line-height:1.6;margin-bottom:8px">${Utils.esc(mp.one_liner || '')}</div>`;
+        html += `<div style="font-size:0.8rem;color:var(--text-muted)">Sentiment: ${mp.sentiment_score}/10</div>`;
+        if (mp.sector_rotation) html += `<div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px">${Utils.esc(mp.sector_rotation)}</div>`;
+        if (mp.key_levels?.SPY) html += `<div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px">SPY support: $${mp.key_levels.SPY.support} / resistance: $${mp.key_levels.SPY.resistance}</div>`;
+        html += '</div>';
+      }
+      
+      // Held position review
+      if (mgAnalysis.held_position_review?.length) {
+        html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Position Review</div>';
+        mgAnalysis.held_position_review.forEach(p => {
+          const actCls = p.action === 'HOLD' ? 'badge-yellow' : p.action === 'ADD' ? 'badge-green' : p.action === 'TRIM' || p.action === 'EXIT' ? 'badge-red' : 'badge-yellow';
+          html += `<div style="padding:8px 0;border-bottom:1px solid var(--border-subtle)">`;
+          html += `<div><span class="badge ${actCls}" style="font-size:0.7rem">${Utils.esc(p.action)}</span> <strong>${Utils.esc(p.ticker)}</strong>`;
+          if (p.target) html += ` · Target: $${p.target}`;
+          if (p.stop) html += ` · Stop: $${p.stop}`;
+          if (p.risk_reward) html += ` · R/R: ${p.risk_reward}`;
+          html += `</div><div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px">${Utils.esc(p.rationale || '')}</div>`;
+          html += '</div>';
+        });
+        html += '</div>';
+      } else {
+        html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Position Review</div><div style="font-size:0.85rem;color:var(--text-muted)">No open positions to review.</div></div>';
+      }
+      
+      // Opportunities
+      if (mgAnalysis.opportunities?.length) {
+        html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Opportunities</div>';
+        mgAnalysis.opportunities.forEach(o => {
+          const dirCls = o.direction === 'LONG' ? 'badge-green' : 'badge-red';
+          html += `<div style="padding:8px 0;border-bottom:1px solid var(--border-subtle)">`;
+          html += `<div><span class="badge ${dirCls}" style="font-size:0.7rem">${Utils.esc(o.direction)}</span> <strong>${Utils.esc(o.ticker)}</strong> <span style="color:var(--text-muted);font-size:0.8rem">· ${Utils.esc(o.conviction || '')} conviction · ${Utils.esc(o.timeframe || '')}</span></div>`;
+          html += `<div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px">${Utils.esc(o.thesis || '')}</div>`;
+          if (o.entry_zone?.length) html += `<div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px">Entry zone: $${o.entry_zone[0]}-$${o.entry_zone[1]} · ${Utils.esc(o.catalyst || '')}</div>`;
+          html += '</div>';
+        });
+        html += '</div>';
+      }
+      
+      // Risk alerts
+      if (mgAnalysis.risk_alerts?.length) {
+        html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Risk Alerts</div>';
+        mgAnalysis.risk_alerts.forEach(r => {
+          const sevCls = r.severity === 'high' ? 'badge-red' : r.severity === 'medium' ? 'badge-yellow' : 'badge-green';
+          html += `<div style="padding:8px 0;border-bottom:1px solid var(--border-subtle);font-size:0.85rem">`;
+          html += `<span class="badge ${sevCls}" style="font-size:0.7rem">${Utils.esc(r.severity.toUpperCase())}</span> ${Utils.esc(r.alert)}`;
+          if (r.affected_positions?.length) html += `<div style="color:var(--text-muted);font-size:0.75rem">Affects: ${r.affected_positions.join(', ')}</div>`;
+          html += '</div>';
+        });
+        html += '</div>';
+      }
+      
+      // Portfolio actions
+      if (mgAnalysis.portfolio_actions?.immediate?.length) {
+        html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Actions</div>';
+        mgAnalysis.portfolio_actions.immediate.forEach(a => {
+          html += `<div style="padding:6px 0;font-size:0.85rem">⚡ ${Utils.esc(a)}</div>`;
+        });
+        if (mgAnalysis.portfolio_actions.watchlist?.length) {
+          html += `<div style="margin-top:8px;font-size:0.8rem;color:var(--text-secondary)">Watchlist: ${mgAnalysis.portfolio_actions.watchlist.join(', ')}</div>`;
+        }
+        if (mgAnalysis.portfolio_actions.avoid?.length) {
+          html += `<div style="font-size:0.8rem;color:var(--text-muted)">Avoid: ${mgAnalysis.portfolio_actions.avoid.join(', ')}</div>`;
+        }
+        html += '</div>';
+      }
+      
+      // Staleness warning
+      if (mgAnalysis.meta.stale) {
+        html += `<div class="stale-banner">⚠ Analysis is stale: ${Utils.esc(mgAnalysis.meta.stale_reason || 'No recent data')}</div>`;
+      }
+    } else {
+      html += '<div class="card"><div class="card-title">MapleGamma Analysis</div><div class="empty-state">No analysis available yet. Run the morning pipeline first.</div></div>';
     }
     html += '</div>';
 
