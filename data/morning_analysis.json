@@ -1,0 +1,187 @@
+{
+  "meta": {
+    "generated_at": "2026-06-12T16:51:12.699747+00:00",
+    "model": "ds-pro (tier1)",
+    "confidence": 7,
+    "market_regime": "risk-on",
+    "tokens_used": {
+      "prompt_tokens": 1748,
+      "completion_tokens": 1424,
+      "total_tokens": 3172,
+      "cost": 0.0056252,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0056252,
+        "upstream_inference_prompt_cost": 0.0019228,
+        "upstream_inference_completions_cost": 0.0037024
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "analysis_type": "morning"
+  },
+  "market_pulse": {
+    "one_liner": "Equities rally across the board with VIX collapsing below 19, signaling a risk-on rotation into cyclicals and energy as AI bubble concerns trigger defensive repositioning.",
+    "sentiment_score": 7,
+    "key_levels": {
+      "SPY": {
+        "support": 7350,
+        "resistance": 7500
+      },
+      "QQQ": {
+        "support": 25500,
+        "resistance": 26200
+      }
+    },
+    "sector_rotation": "Rotation out of mega-cap tech into energy, financials, and defense as oil export leadership and Navy/LNG contracts drive cyclical outperformance."
+  },
+  "position_review": [
+    {
+      "ticker": "RY.TO",
+      "action": "TRIM",
+      "rationale": "RSI 76.3 deep overbought with score 6, take profits before mean reversion",
+      "target": 142.0,
+      "stop": 148.0,
+      "risk_reward": "1.5:1"
+    },
+    {
+      "ticker": "BNS.TO",
+      "action": "TRIM",
+      "rationale": "RSI 71.2 overbought, reduce exposure as sector rotation may fade",
+      "target": 68.0,
+      "stop": 72.5,
+      "risk_reward": "1.3:1"
+    },
+    {
+      "ticker": "BMO.TO",
+      "action": "HOLD",
+      "rationale": "RSI 70.6 borderline but trending with macro tailwinds, let runners work",
+      "target": 130.0,
+      "stop": 125.0,
+      "risk_reward": "2.0:1"
+    },
+    {
+      "ticker": "CM.TO",
+      "action": "ADD",
+      "rationale": "RSI 47.4 recovering from neutral zone, score 8 signals strong momentum building",
+      "target": 72.0,
+      "stop": 66.5,
+      "risk_reward": "2.5:1"
+    }
+  ],
+  "opportunities": [
+    {
+      "ticker": "AMZN",
+      "direction": "SHORT",
+      "thesis": "Massive put flow with 2270x OI at $305 strike and $11.6M premium, plus additional $270/$275 put accumulation signals institutional hedging against AI bubble cracks",
+      "entry_zone": [
+        310,
+        315
+      ],
+      "catalyst": "Market Rotation Alert headline and AMZN put volume spike",
+      "timeframe": "1-2 weeks",
+      "conviction": "high"
+    },
+    {
+      "ticker": "JNJ",
+      "direction": "LONG",
+      "thesis": "Unusual 1100x OI call buying at $190 with $4.8M premium suggests defensive rotation into healthcare as safe haven",
+      "entry_zone": [
+        188,
+        192
+      ],
+      "catalyst": "3 Safe Haven Stocks headline and VIX compression",
+      "timeframe": "2-4 weeks",
+      "conviction": "medium"
+    },
+    {
+      "ticker": "MSFT",
+      "direction": "LONG",
+      "thesis": "224x OI call flow at $387.5 with $5.4M premium, mega-cap tech still seeing selective dip buying despite rotation narrative",
+      "entry_zone": [
+        385,
+        390
+      ],
+      "catalyst": "AI bubble cracks creating entry point in quality names",
+      "timeframe": "1-2 weeks",
+      "conviction": "medium"
+    }
+  ],
+  "risk_alerts": [
+    {
+      "severity": "high",
+      "alert": "AMZN $305 PUT with 2270x OI ratio and $11.6M premium signals massive downside protection, potential 5%+ drawdown if AI sentiment deteriorates further",
+      "affected_positions": [
+        "AMZN"
+      ]
+    },
+    {
+      "severity": "medium",
+      "alert": "Canadian banks RSI cluster (RY, BNS, BMO, SLF, MFC, GWO all >70) indicates crowded long trade vulnerable to BOC shelter cost comments",
+      "affected_positions": [
+        "RY.TO",
+        "BNS.TO",
+        "BMO.TO",
+        "SLF.TO",
+        "MFC.TO",
+        "GWO.TO"
+      ]
+    },
+    {
+      "severity": "medium",
+      "alert": "VIX at 18.72 (-3.70%) approaching complacency zone, any geopolitical shock could spike volatility and reverse risk-on positioning",
+      "affected_positions": [
+        "SPY",
+        "QQQ"
+      ]
+    }
+  ],
+  "calendar": [
+    {
+      "date": "2025-06-19",
+      "event": "CME 24/7 WTI & Gold trading expansion effective",
+      "impact": "medium"
+    },
+    {
+      "date": "2025-06-20",
+      "event": "Quadruple Witching - options/futures expiration",
+      "impact": "high"
+    },
+    {
+      "date": "2025-09-15",
+      "event": "Fed projected rate cut (markets pricing 90% probability)",
+      "impact": "high"
+    }
+  ],
+  "portfolio_actions": {
+    "immediate": [
+      "Trim RY.TO and BNS.TO on overbought signals, lock in gains before quadruple witching",
+      "Add to CM.TO position at RSI 47.4 with momentum score 8, set stop at 66.50",
+      "Initiate AMZN put spread to capitalize on 2270x OI flow and AI rotation headline"
+    ],
+    "watchlist": [
+      "JNJ",
+      "MSFT",
+      "META",
+      "GOOGL",
+      "XLC",
+      "AAPL",
+      "JPM",
+      "NA.TO",
+      "POW.TO"
+    ],
+    "avoid": [
+      "AAPL",
+      "JPM"
+    ]
+  }
+}
