@@ -147,7 +147,14 @@ const Research = {
     if (analysisData?.market_overview?.top_headlines?.length) {
       html += '<div class="card"><div class="card-title">Seeking Alpha Top Stories</div>';
       analysisData.market_overview.top_headlines.slice(0, 10).forEach(h => {
-        html += `<div style="font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border-subtle)">${Utils.esc(h)}</div>`;
+        const title = typeof h === 'string' ? h : (h.title || '');
+        const url = typeof h === 'object' ? (h.url || '') : '';
+        const source = typeof h === 'object' ? (h.source || '') : '';
+        if (url) {
+          html += `<div style="font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border-subtle)"><a href="${Utils.esc(Utils.safeUrl(url))}" target="_blank" rel="noopener" style="color:var(--text-primary);text-decoration:none">${Utils.esc(title)}</a>${source ? '<div style="color:var(--text-muted);font-size:0.75rem">' + Utils.esc(source) + '</div>' : ''}</div>`;
+        } else {
+          html += `<div style="font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border-subtle)">${Utils.esc(title)}</div>`;
+        }
       });
       html += '</div>';
     }
