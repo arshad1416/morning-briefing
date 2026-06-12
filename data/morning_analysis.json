@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "generated_at": "2026-06-12T16:39:37.514734+00:00",
+    "model": "ds-pro (tier1)",
+    "confidence": 7,
+    "market_regime": "risk-on",
+    "tokens_used": {
+      "prompt_tokens": 1725,
+      "completion_tokens": 539,
+      "total_tokens": 2264,
+      "cost": 0.00103171,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.00103171,
+        "upstream_inference_prompt_cost": 0.000552,
+        "upstream_inference_completions_cost": 0.00047971
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "analysis_type": "morning"
+  },
+  "market_pulse": {
+    "one_liner": "Markets are trending higher with indices showing gains and VIX declining, indicating reduced volatility.",
+    "sentiment_score": 7,
+    "key_levels": {
+      "SPY": {
+        "support": 7400,
+        "resistance": 7500
+      },
+      "QQQ": {
+        "support": 25800,
+        "resistance": 26000
+      }
+    },
+    "sector_rotation": "Tech and energy sectors are showing strength, with notable options flow in tech giants."
+  },
+  "position_review": [],
+  "opportunities": [
+    {
+      "ticker": "AMZN",
+      "direction": "SHORT",
+      "thesis": "Significant put options flow suggests bearish sentiment.",
+      "entry_zone": [
+        270,
+        305
+      ],
+      "catalyst": "Options expiration and market rotation.",
+      "timeframe": "short-term",
+      "conviction": "medium"
+    },
+    {
+      "ticker": "MSFT",
+      "direction": "LONG",
+      "thesis": "Large call options flow indicates bullish sentiment.",
+      "entry_zone": [
+        380,
+        390
+      ],
+      "catalyst": "Continued tech sector strength.",
+      "timeframe": "short-term",
+      "conviction": "high"
+    }
+  ],
+  "risk_alerts": [
+    {
+      "severity": "medium",
+      "alert": "Market rotation alert: AI bubble showing cracks.",
+      "affected_positions": [
+        "AAPL",
+        "GOOGL",
+        "META"
+      ]
+    }
+  ],
+  "calendar": [
+    {
+      "date": "2023-09-20",
+      "event": "Federal Reserve Meeting",
+      "impact": "high"
+    },
+    {
+      "date": "2023-07-15",
+      "event": "Bank of Canada Meeting",
+      "impact": "medium"
+    }
+  ],
+  "portfolio_actions": {
+    "immediate": [
+      "Monitor AMZN for potential short entry",
+      "Consider adding MSFT on pullbacks"
+    ],
+    "watchlist": [
+      "AMZN",
+      "MSFT",
+      "GOOGL"
+    ],
+    "avoid": [
+      "AAPL"
+    ]
+  }
+}
