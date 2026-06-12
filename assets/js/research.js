@@ -184,12 +184,15 @@ const Research = {
       }
       
       // Held position review
-      if (mgAnalysis.held_position_review?.length) {
+      const _positions = mgAnalysis.held_position_review || mgAnalysis.position_review;
+      if (_positions?.length) {
         html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Position Review</div>';
-        mgAnalysis.held_position_review.forEach(p => {
+        _positions.forEach(p => {
           const actCls = p.action === 'HOLD' ? 'badge-yellow' : p.action === 'ADD' ? 'badge-green' : p.action === 'TRIM' || p.action === 'EXIT' ? 'badge-red' : 'badge-yellow';
+          const _pAc = (p.asset_class || '').toUpperCase();
+          const _pAcBadge = _pAc === 'OPTION' ? '<span style="background:#9c27b0;color:#fff;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px">OPT</span>' : _pAc === 'CRYPTO' ? '<span style="background:#ff9800;color:#fff;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px">CRYPTO</span>' : _pAc === 'FOREX' ? '<span style="background:#2196f3;color:#fff;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px">FX</span>' : _pAc === 'COMMODITY' ? '<span style="background:#ffc107;color:#333;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px">COMM</span>' : '';
           html += `<div style="padding:8px 0;border-bottom:1px solid var(--border-subtle)">`;
-          html += `<div><span class="badge ${actCls}" style="font-size:0.7rem">${Utils.esc(p.action)}</span> <strong>${Utils.esc(p.ticker)}</strong>`;
+          html += `<div><span class="badge ${actCls}" style="font-size:0.7rem">${Utils.esc(p.action)}</span> <strong>${Utils.esc(p.ticker)}</strong>${_pAcBadge}`;
           if (p.target) html += ` · Target: $${p.target}`;
           if (p.stop) html += ` · Stop: $${p.stop}`;
           if (p.risk_reward) html += ` · R/R: ${p.risk_reward}`;
@@ -206,8 +209,10 @@ const Research = {
         html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Opportunities</div>';
         mgAnalysis.opportunities.forEach(o => {
           const dirCls = o.direction === 'LONG' ? 'badge-green' : 'badge-red';
+          const _oAc = (o.asset_class || '').toUpperCase();
+          const _oAcBadge = _oAc === 'OPTION' ? '<span style="background:#9c27b0;color:#fff;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px">OPT</span>' : _oAc === 'CRYPTO' ? '<span style="background:#ff9800;color:#fff;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px">CRYPTO</span>' : _oAc === 'FOREX' ? '<span style="background:#2196f3;color:#fff;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px">FX</span>' : _oAc === 'COMMODITY' ? '<span style="background:#ffc107;color:#333;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px">COMM</span>' : '';
           html += `<div style="padding:8px 0;border-bottom:1px solid var(--border-subtle)">`;
-          html += `<div><span class="badge ${dirCls}" style="font-size:0.7rem">${Utils.esc(o.direction)}</span> <strong>${Utils.esc(o.ticker)}</strong> <span style="color:var(--text-muted);font-size:0.8rem">· ${Utils.esc(o.conviction || '')} conviction · ${Utils.esc(o.timeframe || '')}</span></div>`;
+          html += `<div><span class="badge ${dirCls}" style="font-size:0.7rem">${Utils.esc(o.direction)}</span> <strong>${Utils.esc(o.ticker)}</strong>${_oAcBadge} <span style="color:var(--text-muted);font-size:0.8rem">· ${Utils.esc(o.conviction || '')} conviction · ${Utils.esc(o.timeframe || '')}</span></div>`;
           html += `<div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px">${Utils.esc(o.thesis || '')}</div>`;
           if (o.entry_zone?.length) html += `<div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px">Entry zone: $${o.entry_zone[0]}-$${o.entry_zone[1]} · ${Utils.esc(o.catalyst || '')}</div>`;
           html += '</div>';
@@ -281,7 +286,7 @@ const Research = {
     html += '<strong>López de Prado — The False Strategy Theorem:</strong> If you run 100 backtests on random data, 5-10 will show positive returns by pure chance. We apply a ~30% Sharpe degradation factor — our IS Sharpe of 2.22 is expected to live-trade around 1.55.';
     if (wf && wf.summary) {
       const mr = wf.summary.mean_reversion || {};
-      html += ' Walk-forward confirms: OOS Sharpe of ' + (mr.avg_oos_sharpe || '?').toFixed(2) + ' vs IS ' + (mr.avg_is_sharpe || '?').toFixed(2) + ' for mean reversion.';
+      html += ' Walk-forward confirms: OOS Sharpe of ' + (typeof mr.avg_oos_sharpe === 'number' ? mr.avg_oos_sharpe.toFixed(2) : '?') + ' vs IS ' + (typeof mr.avg_is_sharpe === 'number' ? mr.avg_is_sharpe.toFixed(2) : '?') + ' for mean reversion.';
     }
     html += '</div></div>';
     if (wf && wf.summary) {

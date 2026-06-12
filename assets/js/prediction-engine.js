@@ -187,7 +187,7 @@ const PredictionEngine = {
   },
 
   _renderLiveTrading(lt) {
-    const s = lt.summary;
+    const s = lt.summary || {};
     const wrColor = s.win_rate >= 60 ? 'var(--green)' : s.win_rate >= 40 ? 'var(--yellow)' : 'var(--red)';
     const returnColor = s.return_pct >= 0 ? 'var(--green)' : 'var(--red)';
 
@@ -231,7 +231,7 @@ const PredictionEngine = {
       html += '<th style="text-align:right;padding:6px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-muted)">Avg P&L</th></tr></thead><tbody>';
 
       lt.per_strategy.forEach(p => {
-        const liveWR = p.win_rate;
+        const liveWR = p.win_rate || 0;
         const predStr = p.backtest_predicted_wr || 'N/A';
         const predVal = parseFloat(predStr);
         const isPredNumeric = !isNaN(predVal) && predVal > 0;
@@ -244,7 +244,7 @@ const PredictionEngine = {
           return '⚪';
         })();
         const status = p.accuracy_vs_prediction || '';
-        const pnlColor = p.avg_pnl_pct >= 0 ? 'var(--green)' : 'var(--red)';
+        const pnlColor = (p.avg_pnl_pct || 0) >= 0 ? 'var(--green)' : 'var(--red)';
 
         html += '<tr>';
         html += '<td style="padding:5px 8px;border-bottom:1px solid var(--border-subtle)"><strong>' + p.strategy + '</strong></td>';
@@ -253,7 +253,7 @@ const PredictionEngine = {
         html += '<td style="text-align:center;padding:5px 8px;border-bottom:1px solid var(--border-subtle);font-weight:600;color:' + statusColor + '">' + liveWR + '%</td>';
         html += '<td style="text-align:center;padding:5px 8px;border-bottom:1px solid var(--border-subtle);color:var(--text-muted)">' + predStr + '</td>';
         html += '<td style="text-align:center;padding:5px 8px;border-bottom:1px solid var(--border-subtle)">' + vsPred + ' <span style="font-size:0.65rem;color:var(--text-muted)">' + status.substring(0, 24) + '</span></td>';
-        html += '<td style="text-align:right;padding:5px 8px;border-bottom:1px solid var(--border-subtle);color:' + pnlColor + '">' + (p.avg_pnl_pct >= 0 ? '+' : '') + p.avg_pnl_pct + '%</td>';
+        html += '<td style="text-align:right;padding:5px 8px;border-bottom:1px solid var(--border-subtle);color:' + pnlColor + '">' + ((p.avg_pnl_pct || 0) >= 0 ? '+' : '') + (p.avg_pnl_pct || 0) + '%</td>';
         html += '</tr>';
       });
       html += '</tbody></table>';
@@ -311,6 +311,9 @@ const PredictionEngine = {
     const geo = data.geopolitical_analysis;
     let html = '<h2 class="section-title">Geopolitical & Regime Analysis</h2><div class="card" style="margin-bottom:20px">';
 
+    if (!Array.isArray(geo.events) || geo.events.length === 0) {
+      html += '<div style="font-size:0.85rem;color:var(--text-muted);padding:8px 0">No geopolitical events available.</div>';
+    } else {
     geo.events.slice(0, 4).forEach(ev => {
       const avgV3 = Object.values(ev.strategy_performance).reduce((s, v) => {
         const m = v.match(/V3:\s*([+-]?\d+\.?\d*)/);
@@ -322,9 +325,10 @@ const PredictionEngine = {
           <span style="font-weight:600;font-size:0.85rem">${ev.event}</span>
           <span class="badge ${avgV3 >= 2 ? 'badge-green' : avgV3 >= 1 ? 'badge-yellow' : 'badge-red'}" style="font-size:0.65rem">V3: ${avgV3 >= 0 ? '+' : ''}${avgV3.toFixed(1)}%</span>
         </div>
-        <div style="font-size:0.75rem;color:var(--text-muted)">${ev.market_impact.substring(0, 120)}</div>
+        <div style="font-size:0.75rem;color:var(--text-muted)">${(ev.market_impact || '').substring(0, 120)}</div>
       </div>`;
     });
+    } // end events guard
 
     // Regime table
     if (geo.regime_adaptation?.regimes) {
@@ -342,13 +346,18 @@ const PredictionEngine = {
     if (!data.polymarket_sentiment) return;
     const pm = data.polymarket_sentiment;
     let html = '<h2 class="section-title">Polymarket Sentiment</h2><div class="card" style="margin-bottom:20px">';
+
+    if (!Array.isArray(pm.top_markets) || pm.top_markets.length === 0) {
+      html += '<div style="font-size:0.85rem;color:var(--text-muted);padding:8px 0">No Polymarket data available.</div>';
+    } else {
     pm.top_markets.slice(0, 8).forEach(m => {
-      const outcomes = Object.entries(m.outcomes).map(([k,v]) => `${k}: ${v}`).join(' | ');
+      const outcomes = Object.entries(m.outcomes || {}).map(([k,v]) => `${k}: ${v}`).join(' | ');
       html += `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border-subtle);font-size:0.75rem;gap:8px">
-        <span style="flex:1">${m.question.substring(0, 55)}${m.question.length > 55 ? '...' : ''}</span>
+        <span style="flex:1">${(m.question || '').substring(0, 55)}${(m.question || '').length > 55 ? '...' : ''}</span>
         <span style="color:var(--text-secondary);white-space:nowrap">${outcomes}</span>
       </div>`;
     });
+    } // end top_markets guard
     html += '</div>';
     app.insertAdjacentHTML('beforeend', html);
   },
@@ -463,7 +472,7 @@ const PredictionEngine = {
       checks.push({
         label: 'Walk-Forward', pass: goodWindows >= Math.ceil((wf.window_count || 20) * 0.7),
         value: goodWindows + '/' + (wf.window_count || 0) + ' windows pass',
-        detail: 'OOS Sharpe: ' + oosSharpe.toFixed(2) + '. Degradation: ' + degPct.toFixed(1) + '%. ' + (wfRobust ? 'Strategy confirmed robust across regimes.' : 'Higher degradation than ideal.'),
+        detail: 'OOS Sharpe: ' + (oosSharpe != null ? oosSharpe.toFixed(2) : 'N/A') + '. Degradation: ' + (degPct != null ? degPct.toFixed(1) : 'N/A') + '%. ' + (wfRobust ? 'Strategy confirmed robust across regimes.' : 'Higher degradation than ideal.'),
         tier: wfRobust ? 'HIGH' : 'MODERATE'
       });
     } else {
