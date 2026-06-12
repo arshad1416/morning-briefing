@@ -1,14 +1,14 @@
 {
   "meta": {
-    "generated_at": "2026-06-12T17:41:15.134865+00:00",
+    "generated_at": "2026-06-12T20:31:48.445802+00:00",
     "model": "ds-pro (tier1)",
-    "confidence": 7,
+    "confidence": 8,
     "market_regime": "transitional",
     "tokens_used": {
-      "prompt_tokens": 2155,
-      "completion_tokens": 3596,
-      "total_tokens": 5751,
-      "cost": 0.01626378,
+      "prompt_tokens": 1985,
+      "completion_tokens": 5689,
+      "total_tokens": 7674,
+      "cost": 0.02256362,
       "is_byok": false,
       "prompt_tokens_details": {
         "cached_tokens": 0,
@@ -17,155 +17,198 @@
         "video_tokens": 0
       },
       "cost_details": {
-        "upstream_inference_cost": 0.01626378,
-        "upstream_inference_prompt_cost": 0.0037497,
-        "upstream_inference_completions_cost": 0.01251408
+        "upstream_inference_cost": 0.02256362,
+        "upstream_inference_prompt_cost": 0.0033348,
+        "upstream_inference_completions_cost": 0.01922882
       },
       "completion_tokens_details": {
-        "reasoning_tokens": 2128,
+        "reasoning_tokens": 4144,
         "image_tokens": 0,
         "audio_tokens": 0
       }
     },
-    "analysis_type": "morning"
+    "analysis_type": "eod"
   },
   "market_pulse": {
-    "one_liner": "Equities rally on easing trade fears and strong jobs data, but Ukraine escalation and AI rotation risks keep sentiment mixed.",
-    "sentiment_score": 7,
+    "one_liner": "Markets climb but rotation fears mount as AI bubble shows cracks; energy and safe havens lead.",
+    "sentiment_score": 6,
     "key_levels": {
       "SPY": {
-        "support": 7350,
-        "resistance": 7500
+        "support": 740,
+        "resistance": 755
       },
       "QQQ": {
-        "support": 25700,
-        "resistance": 26200
+        "support": 595,
+        "resistance": 615
       }
     },
-    "sector_rotation": "Rotation out of overbought tech into energy and safe havens as AI bubble concerns mount; Canadian financials show overbought signals."
+    "sector_rotation": "Rotation from AI/tech into energy, gold, defensives as 'AI bubble showing cracks' headline circulates."
   },
   "held_position_review": [
     {
       "ticker": "XLE",
-      "action": "ADD",
-      "rationale": "U.S. becoming top oil exporter and CME 24/7 crude trading are structural bullish catalysts; current dip offers entry ahead of energy rotation.",
+      "action": "HOLD",
+      "rationale": "Bullish oil news but near-term technical weakness; hold for rotation into energy.",
       "target": 60.0,
-      "stop": 56.0,
-      "risk_reward": "1.5:1"
+      "stop": 56.5,
+      "risk_reward": "2.0:1"
     },
     {
       "ticker": "JNJ",
-      "action": "ADD",
-      "rationale": "Massive $4.8M call flow at $190 strike signals institutional conviction; safe-haven demand supports healthcare in market rotation.",
+      "action": "HOLD",
+      "rationale": "Strong defensive demand and unusual call buying supports upside.",
       "target": 245.0,
-      "stop": 235.0,
-      "risk_reward": "1.1:1"
+      "stop": 238.0,
+      "risk_reward": "1.7:1"
+    },
+    {
+      "ticker": "FXY",
+      "action": "HOLD",
+      "rationale": "Yen strengthens on risk aversion; geopolitical tensions support safe haven.",
+      "target": 58.0,
+      "stop": 56.5,
+      "risk_reward": "1.0:1"
+    },
+    {
+      "ticker": "GLD",
+      "action": "HOLD",
+      "rationale": "Gold rallying on geopolitical risk and lower real rates; momentum strong.",
+      "target": 395.0,
+      "stop": 382.0,
+      "risk_reward": "1.5:1"
+    },
+    {
+      "ticker": "AMZN",
+      "action": "EXIT",
+      "rationale": "Massive put flow with 2270x average volume signals smart money hedging; exit to protect capital.",
+      "target": 0.0,
+      "stop": 0.0,
+      "risk_reward": "0:1"
     }
   ],
   "opportunities": [
     {
-      "ticker": "MSFT",
-      "direction": "LONG",
-      "thesis": "Unusual call flow (224x vol/OI, $5.4M premium) points to smart money positioning for tech rebound; AI narrative still intact despite rotation fears.",
-      "entry_zone": [
-        385,
-        390
-      ],
-      "catalyst": "Positive earnings surprise or AI product news within 2 weeks.",
-      "timeframe": "1-2 weeks",
-      "conviction": "medium"
-    },
-    {
       "ticker": "AMZN",
       "direction": "SHORT",
-      "thesis": "Extraordinary put buying (2270x vol/OI at $305, $11.6M premium) signals major downside bet; consumer spending concerns and rotation out of mega-cap tech.",
+      "thesis": "Massive put buying with 2270x average volume indicates institutional hedging for downside; AMZN may drop sharply.",
       "entry_zone": [
-        310,
-        315
+        295,
+        305
       ],
-      "catalyst": "Disappointing Prime Day preview or broader market rotation accelerating.",
+      "catalyst": "Upcoming earnings or tech rotation sell-off.",
       "timeframe": "1-2 weeks",
       "conviction": "high"
+    },
+    {
+      "ticker": "XLC",
+      "direction": "LONG",
+      "thesis": "Unusual call buying on communication services ETF suggests sector strength.",
+      "entry_zone": [
+        112,
+        114
+      ],
+      "catalyst": "Rotation out of overvalued tech into communication services.",
+      "timeframe": "1-2 weeks",
+      "conviction": "medium"
     }
   ],
   "risk_alerts": [
     {
       "severity": "high",
-      "alert": "Ukraine strikes on cargo ships and Putin's rejection of talks escalate geopolitical risk, potentially spiking oil prices and disrupting supply chains.",
+      "alert": "Unusual AMZN put flow with 2270x vol/OI signals big money hedging; AMZN may decline sharply.",
       "affected_positions": [
-        "XLE"
+        "AMZN"
       ]
     },
     {
       "severity": "medium",
-      "alert": "Market rotation out of AI/tech could accelerate, hitting MSFT and AMZN positions; VIX at 18.6 may underprice tail risk.",
-      "affected_positions": []
+      "alert": "Geopolitical escalation in Ukraine could spike volatility, benefiting GLD/FXY but hurting risk assets; manage stops tightly.",
+      "affected_positions": [
+        "XLE",
+        "AMZN"
+      ]
+    },
+    {
+      "severity": "low",
+      "alert": "VIX at 18.21 suggests complacency; a spike could trigger sharp sell-off across portfolio.",
+      "affected_positions": [
+        "XLE",
+        "JNJ",
+        "FXY",
+        "GLD",
+        "AMZN"
+      ]
     }
   ],
   "geopolitical_impact": [
     {
       "headline": "Putin says there is 'no point' meeting Zelensky over ending Ukraine war",
       "source": "BBC World",
-      "impact_rating": "high",
-      "rationale": "Escalation risk raises energy prices and safe-haven demand, directly impacting XLE and JNJ."
+      "impact_rating": "medium",
+      "rationale": "Prolonged war sustains energy and defense sector support, benefiting XLE and safe havens."
     },
     {
       "headline": "Ukraine strikes cargo ships and admits Romania drone blast",
       "source": "BBC World",
-      "impact_rating": "high",
-      "rationale": "Attacks on shipping could disrupt grain and energy exports, boosting oil and defense stocks."
+      "impact_rating": "medium",
+      "rationale": "Escalation risk lifts oil prices (XLE) and safe haven demand (GLD, FXY)."
     },
     {
       "headline": "Astronauts return to ISS after sheltering during air leak repair attempt",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "No direct market impact; isolated space station incident."
+      "rationale": "No direct market impact on held positions or strategy."
     },
     {
       "headline": "Fury in France after child murder suspect's criminal record released",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "Domestic French political issue, minimal effect on global markets."
+      "rationale": "Localized political event; negligible market impact."
     },
     {
       "headline": "Nearly 50 people die of thirst in Sahara desert after lorry breaks down",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "Humanitarian tragedy with no financial market implications."
+      "rationale": "Humanitarian tragedy with no immediate market implications."
     },
     {
       "headline": "Iran footballers issued US visas for World Cup, says White House",
       "source": "Al Jazeera",
       "impact_rating": "low",
-      "rationale": "Sports diplomacy has limited market effect, though signals slight thaw in US-Iran relations."
+      "rationale": "Minor positive diplomatic gesture; not a catalyst for broad markets."
     },
     {
       "headline": "Zelenskyy: Putin choosing war by rejecting offer for in-person talks",
       "source": "Al Jazeera",
-      "impact_rating": "high",
-      "rationale": "Reinforces conflict stalemate, sustaining geopolitical risk premium in energy markets."
+      "impact_rating": "medium",
+      "rationale": "Reinforces prolonged conflict narrative, supporting energy and defense sectors."
     },
     {
       "headline": "Trump hails jobs surge, says Iran talks \u2018going well\u2019",
       "source": "Al Jazeera",
-      "impact_rating": "medium",
-      "rationale": "Positive on US economy, potential de-escalation with Iran could lower oil prices, mixed for XLE."
+      "impact_rating": "low",
+      "rationale": "Positive but non-committal; unlikely to shift near-term portfolio dynamics."
     }
   ],
-  "calendar": [],
+  "calendar": [
+    {
+      "date": "2025-09-17",
+      "event": "FOMC rate decision",
+      "impact": "high"
+    }
+  ],
   "portfolio_actions": {
     "immediate": [
-      "Add to JNJ position on bullish options flow and safe-haven rotation.",
-      "Hold XLE with stop at $56.00; add on confirmation above $58.00."
+      "Exit AMZN position to avoid downside risk from massive put flow.",
+      "Set trailing stop on GLD at $382 to protect gains."
     ],
     "watchlist": [
       "MSFT",
-      "AMZN",
-      "RY.TO"
+      "META",
+      "XLC"
     ],
     "avoid": [
-      "AAPL",
-      "JPM"
+      "AMZN"
     ]
   }
 }
