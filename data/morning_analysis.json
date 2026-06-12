@@ -1,14 +1,14 @@
 {
   "meta": {
-    "generated_at": "2026-06-12T17:11:35.545474+00:00",
+    "generated_at": "2026-06-12T17:20:29.672657+00:00",
     "model": "ds-pro (tier1)",
     "confidence": 7,
     "market_regime": "risk-on",
     "tokens_used": {
-      "prompt_tokens": 1778,
-      "completion_tokens": 2763,
-      "total_tokens": 4541,
-      "cost": 0.00927608,
+      "prompt_tokens": 2001,
+      "completion_tokens": 2747,
+      "total_tokens": 4748,
+      "cost": 0.00652065,
       "is_byok": false,
       "prompt_tokens_details": {
         "cached_tokens": 0,
@@ -17,12 +17,12 @@
         "video_tokens": 0
       },
       "cost_details": {
-        "upstream_inference_cost": 0.00927608,
-        "upstream_inference_prompt_cost": 0.00225806,
-        "upstream_inference_completions_cost": 0.00701802
+        "upstream_inference_cost": 0.00652065,
+        "upstream_inference_prompt_cost": 0.00174087,
+        "upstream_inference_completions_cost": 0.00477978
       },
       "completion_tokens_details": {
-        "reasoning_tokens": 1919,
+        "reasoning_tokens": 1425,
         "image_tokens": 0,
         "audio_tokens": 0
       }
@@ -30,7 +30,7 @@
     "analysis_type": "morning"
   },
   "market_pulse": {
-    "one_liner": "Equities grind higher as VIX retreats to 18, but options flow hints at a rotation from overbought tech into defensives and energy.",
+    "one_liner": "Equities rally with VIX dropping 4.6%, but sector rotation signals caution as energy lags and defensive plays attract flows.",
     "sentiment_score": 7,
     "key_levels": {
       "SPY": {
@@ -42,86 +42,138 @@
         "resistance": 26200
       }
     },
-    "sector_rotation": "Capital rotating out of AI/tech leadership into energy and defensive healthcare names."
+    "sector_rotation": "Rotation out of energy (XLE -0.88%) into communication services (XLC +1.08%) and utilities (XLU +0.86%); defensive positioning evident."
   },
-  "held_position_review": [],
-  "opportunities": [
+  "held_position_review": [
     {
-      "ticker": "AMZN",
-      "direction": "SHORT",
-      "thesis": "Massive $11.6M premium in $305 puts (2270x OI) and additional heavy put buying at $270/$275 signal strong institutional bearishness, coinciding with 'AI bubble cracks' headline.",
-      "entry_zone": [
-        300,
-        310
-      ],
-      "catalyst": "AI sentiment souring and heavy put flow creating downside pressure; break below $300 likely accelerates selling.",
-      "timeframe": "1-2 weeks",
-      "conviction": "high"
+      "ticker": "TD.TO",
+      "action": "TRIM",
+      "rationale": "RSI 68.2 near overbought, +5.26% gain in 0 days; lock in profits ahead of potential Canadian bank pullback.",
+      "target": 168.0,
+      "stop": 160.0,
+      "risk_reward": "1.5:1"
     },
+    {
+      "ticker": "XLU",
+      "action": "HOLD",
+      "rationale": "Mean reversion play working; defensive sector bid supports, but small gain warrants patience.",
+      "target": 45.5,
+      "stop": 43.5,
+      "risk_reward": "2.0:1"
+    },
+    {
+      "ticker": "XLC",
+      "action": "HOLD",
+      "rationale": "Strong options flow (CALL XLC $113) and sector momentum; let winner run with trailing stop.",
+      "target": 115.0,
+      "stop": 110.0,
+      "risk_reward": "2.5:1"
+    },
+    {
+      "ticker": "XLP",
+      "action": "HOLD",
+      "rationale": "Defensive rotation supports staples; flat P&L, maintain as portfolio hedge.",
+      "target": 87.0,
+      "stop": 84.0,
+      "risk_reward": "1.8:1"
+    },
+    {
+      "ticker": "DBA",
+      "action": "HOLD",
+      "rationale": "Mean reversion in agricultural commodities; small drawdown within tolerance, await catalyst.",
+      "target": 27.0,
+      "stop": 25.8,
+      "risk_reward": "1.5:1"
+    },
+    {
+      "ticker": "XLE",
+      "action": "TRIM",
+      "rationale": "Energy underperformance despite US oil export headline; reduce exposure to lagging sector.",
+      "target": 59.0,
+      "stop": 57.0,
+      "risk_reward": "1.2:1"
+    }
+  ],
+  "opportunities": [
     {
       "ticker": "JNJ",
       "direction": "LONG",
-      "thesis": "Unusual $4.8M call premium at the $190 strike (1100x OI) points to defensive demand; safe-haven flows increasing amid rotation headlines.",
+      "thesis": "Massive call buying (Vol/OI 1100x, $4.8M premium) signals institutional accumulation; defensive healthcare aligns with rotation.",
       "entry_zone": [
-        185,
-        195
+        188,
+        191
       ],
-      "catalyst": "Flight to safety and healthcare rotation, amplified by dividend appeal.",
-      "timeframe": "1-2 weeks",
+      "catalyst": "Break above $190 on unusual options flow and safe-haven demand.",
+      "timeframe": "1-5 days",
       "conviction": "medium"
     },
     {
-      "ticker": "RY.TO",
+      "ticker": "AMZN",
       "direction": "SHORT",
-      "thesis": "RSI(76.3) deeply overbought, near highs with screener signal 'overbought, trending_up'; mean reversion setup in a low-VIX environment.",
+      "thesis": "Extraordinary put flow (2270x Vol/OI, $11.6M premium) and 'AI bubble cracks' headline suggest downside risk in overextended tech.",
       "entry_zone": [
-        150,
-        155
+        305,
+        310
       ],
-      "catalyst": "Profit-taking in financials or a VIX spike triggers reversion.",
-      "timeframe": "1 week",
+      "catalyst": "Rejection at $310 resistance or broad tech sell-off.",
+      "timeframe": "1-3 days",
       "conviction": "medium"
+    },
+    {
+      "ticker": "CM.TO",
+      "direction": "LONG",
+      "thesis": "RSI 47.4 with trending_up signal and score 8; Canadian bank not overbought, poised for catch-up rally.",
+      "entry_zone": [
+        82,
+        84
+      ],
+      "catalyst": "Break above near-high with momentum, supported by BOC rate hold.",
+      "timeframe": "3-7 days",
+      "conviction": "high"
     }
   ],
   "risk_alerts": [
     {
-      "severity": "medium",
-      "alert": "VIX at 18.72 (-3.7%) reflects complacency; a sudden spike on hawkish data or earnings miss could hit overbought tech and banks hard.",
+      "severity": "high",
+      "alert": "AI/tech rotation accelerating: 'AI Bubble Is Showing Cracks' headline and heavy AMZN puts could spark sharp sell-off in growth names.",
       "affected_positions": [
-        "RY.TO"
+        "XLC"
       ]
     },
     {
-      "severity": "high",
-      "alert": "AI bubble narrative cracking\u2014unusual put flow in AMZN, META, GOOGL alongside rotation headlines could trigger a 5-7% tech drawdown.",
+      "severity": "medium",
+      "alert": "Oil price volatility: despite US export dominance, XLE weakness may persist; energy positions at risk.",
       "affected_positions": [
-        "AMZN"
+        "XLE"
+      ]
+    },
+    {
+      "severity": "medium",
+      "alert": "Canadian banks overbought: RY, BNS, BMO RSI >70; potential sector pullback could drag TD.TO.",
+      "affected_positions": [
+        "TD.TO"
       ]
     }
   ],
-  "calendar": [
-    {
-      "date": "2025-03-20",
-      "event": "No major economic releases; light Fedspeak calendar",
-      "impact": "low"
-    }
-  ],
+  "calendar": [],
   "portfolio_actions": {
     "immediate": [
-      "Initiate short AMZN position via outright puts or put spreads targeting $270.",
-      "Buy JNJ calls or stock on a breakout above $190.",
-      "Consider shorting RY.TO with a stop above $158."
+      "Trim TD.TO by 50% to lock in 5.26% gain",
+      "Trim XLE by 50% to reduce energy exposure",
+      "Set stop-loss on XLC at $110 to protect profits"
     ],
     "watchlist": [
-      "XLE",
+      "JNJ",
+      "AMZN",
+      "CM.TO",
       "MSFT",
-      "META",
-      "GOOGL",
-      "BMO.TO"
+      "GOOGL"
     ],
     "avoid": [
-      "AAPL",
-      "JPM"
+      "RY.TO",
+      "BNS.TO",
+      "BMO.TO",
+      "AAPL"
     ]
   }
 }
