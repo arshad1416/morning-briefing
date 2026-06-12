@@ -1,14 +1,14 @@
 {
   "meta": {
-    "generated_at": "2026-06-12T17:20:29.672657+00:00",
+    "generated_at": "2026-06-12T17:41:15.134865+00:00",
     "model": "ds-pro (tier1)",
     "confidence": 7,
-    "market_regime": "risk-on",
+    "market_regime": "transitional",
     "tokens_used": {
-      "prompt_tokens": 2001,
-      "completion_tokens": 2747,
-      "total_tokens": 4748,
-      "cost": 0.00652065,
+      "prompt_tokens": 2155,
+      "completion_tokens": 3596,
+      "total_tokens": 5751,
+      "cost": 0.01626378,
       "is_byok": false,
       "prompt_tokens_details": {
         "cached_tokens": 0,
@@ -17,12 +17,12 @@
         "video_tokens": 0
       },
       "cost_details": {
-        "upstream_inference_cost": 0.00652065,
-        "upstream_inference_prompt_cost": 0.00174087,
-        "upstream_inference_completions_cost": 0.00477978
+        "upstream_inference_cost": 0.01626378,
+        "upstream_inference_prompt_cost": 0.0037497,
+        "upstream_inference_completions_cost": 0.01251408
       },
       "completion_tokens_details": {
-        "reasoning_tokens": 1425,
+        "reasoning_tokens": 2128,
         "image_tokens": 0,
         "audio_tokens": 0
       }
@@ -30,150 +30,142 @@
     "analysis_type": "morning"
   },
   "market_pulse": {
-    "one_liner": "Equities rally with VIX dropping 4.6%, but sector rotation signals caution as energy lags and defensive plays attract flows.",
+    "one_liner": "Equities rally on easing trade fears and strong jobs data, but Ukraine escalation and AI rotation risks keep sentiment mixed.",
     "sentiment_score": 7,
     "key_levels": {
       "SPY": {
-        "support": 7400,
+        "support": 7350,
         "resistance": 7500
       },
       "QQQ": {
-        "support": 25800,
+        "support": 25700,
         "resistance": 26200
       }
     },
-    "sector_rotation": "Rotation out of energy (XLE -0.88%) into communication services (XLC +1.08%) and utilities (XLU +0.86%); defensive positioning evident."
+    "sector_rotation": "Rotation out of overbought tech into energy and safe havens as AI bubble concerns mount; Canadian financials show overbought signals."
   },
   "held_position_review": [
     {
-      "ticker": "TD.TO",
-      "action": "TRIM",
-      "rationale": "RSI 68.2 near overbought, +5.26% gain in 0 days; lock in profits ahead of potential Canadian bank pullback.",
-      "target": 168.0,
-      "stop": 160.0,
-      "risk_reward": "1.5:1"
-    },
-    {
-      "ticker": "XLU",
-      "action": "HOLD",
-      "rationale": "Mean reversion play working; defensive sector bid supports, but small gain warrants patience.",
-      "target": 45.5,
-      "stop": 43.5,
-      "risk_reward": "2.0:1"
-    },
-    {
-      "ticker": "XLC",
-      "action": "HOLD",
-      "rationale": "Strong options flow (CALL XLC $113) and sector momentum; let winner run with trailing stop.",
-      "target": 115.0,
-      "stop": 110.0,
-      "risk_reward": "2.5:1"
-    },
-    {
-      "ticker": "XLP",
-      "action": "HOLD",
-      "rationale": "Defensive rotation supports staples; flat P&L, maintain as portfolio hedge.",
-      "target": 87.0,
-      "stop": 84.0,
-      "risk_reward": "1.8:1"
-    },
-    {
-      "ticker": "DBA",
-      "action": "HOLD",
-      "rationale": "Mean reversion in agricultural commodities; small drawdown within tolerance, await catalyst.",
-      "target": 27.0,
-      "stop": 25.8,
-      "risk_reward": "1.5:1"
-    },
-    {
       "ticker": "XLE",
-      "action": "TRIM",
-      "rationale": "Energy underperformance despite US oil export headline; reduce exposure to lagging sector.",
-      "target": 59.0,
-      "stop": 57.0,
-      "risk_reward": "1.2:1"
+      "action": "ADD",
+      "rationale": "U.S. becoming top oil exporter and CME 24/7 crude trading are structural bullish catalysts; current dip offers entry ahead of energy rotation.",
+      "target": 60.0,
+      "stop": 56.0,
+      "risk_reward": "1.5:1"
+    },
+    {
+      "ticker": "JNJ",
+      "action": "ADD",
+      "rationale": "Massive $4.8M call flow at $190 strike signals institutional conviction; safe-haven demand supports healthcare in market rotation.",
+      "target": 245.0,
+      "stop": 235.0,
+      "risk_reward": "1.1:1"
     }
   ],
   "opportunities": [
     {
-      "ticker": "JNJ",
+      "ticker": "MSFT",
       "direction": "LONG",
-      "thesis": "Massive call buying (Vol/OI 1100x, $4.8M premium) signals institutional accumulation; defensive healthcare aligns with rotation.",
+      "thesis": "Unusual call flow (224x vol/OI, $5.4M premium) points to smart money positioning for tech rebound; AI narrative still intact despite rotation fears.",
       "entry_zone": [
-        188,
-        191
+        385,
+        390
       ],
-      "catalyst": "Break above $190 on unusual options flow and safe-haven demand.",
-      "timeframe": "1-5 days",
+      "catalyst": "Positive earnings surprise or AI product news within 2 weeks.",
+      "timeframe": "1-2 weeks",
       "conviction": "medium"
     },
     {
       "ticker": "AMZN",
       "direction": "SHORT",
-      "thesis": "Extraordinary put flow (2270x Vol/OI, $11.6M premium) and 'AI bubble cracks' headline suggest downside risk in overextended tech.",
+      "thesis": "Extraordinary put buying (2270x vol/OI at $305, $11.6M premium) signals major downside bet; consumer spending concerns and rotation out of mega-cap tech.",
       "entry_zone": [
-        305,
-        310
+        310,
+        315
       ],
-      "catalyst": "Rejection at $310 resistance or broad tech sell-off.",
-      "timeframe": "1-3 days",
-      "conviction": "medium"
-    },
-    {
-      "ticker": "CM.TO",
-      "direction": "LONG",
-      "thesis": "RSI 47.4 with trending_up signal and score 8; Canadian bank not overbought, poised for catch-up rally.",
-      "entry_zone": [
-        82,
-        84
-      ],
-      "catalyst": "Break above near-high with momentum, supported by BOC rate hold.",
-      "timeframe": "3-7 days",
+      "catalyst": "Disappointing Prime Day preview or broader market rotation accelerating.",
+      "timeframe": "1-2 weeks",
       "conviction": "high"
     }
   ],
   "risk_alerts": [
     {
       "severity": "high",
-      "alert": "AI/tech rotation accelerating: 'AI Bubble Is Showing Cracks' headline and heavy AMZN puts could spark sharp sell-off in growth names.",
-      "affected_positions": [
-        "XLC"
-      ]
-    },
-    {
-      "severity": "medium",
-      "alert": "Oil price volatility: despite US export dominance, XLE weakness may persist; energy positions at risk.",
+      "alert": "Ukraine strikes on cargo ships and Putin's rejection of talks escalate geopolitical risk, potentially spiking oil prices and disrupting supply chains.",
       "affected_positions": [
         "XLE"
       ]
     },
     {
       "severity": "medium",
-      "alert": "Canadian banks overbought: RY, BNS, BMO RSI >70; potential sector pullback could drag TD.TO.",
-      "affected_positions": [
-        "TD.TO"
-      ]
+      "alert": "Market rotation out of AI/tech could accelerate, hitting MSFT and AMZN positions; VIX at 18.6 may underprice tail risk.",
+      "affected_positions": []
+    }
+  ],
+  "geopolitical_impact": [
+    {
+      "headline": "Putin says there is 'no point' meeting Zelensky over ending Ukraine war",
+      "source": "BBC World",
+      "impact_rating": "high",
+      "rationale": "Escalation risk raises energy prices and safe-haven demand, directly impacting XLE and JNJ."
+    },
+    {
+      "headline": "Ukraine strikes cargo ships and admits Romania drone blast",
+      "source": "BBC World",
+      "impact_rating": "high",
+      "rationale": "Attacks on shipping could disrupt grain and energy exports, boosting oil and defense stocks."
+    },
+    {
+      "headline": "Astronauts return to ISS after sheltering during air leak repair attempt",
+      "source": "BBC World",
+      "impact_rating": "low",
+      "rationale": "No direct market impact; isolated space station incident."
+    },
+    {
+      "headline": "Fury in France after child murder suspect's criminal record released",
+      "source": "BBC World",
+      "impact_rating": "low",
+      "rationale": "Domestic French political issue, minimal effect on global markets."
+    },
+    {
+      "headline": "Nearly 50 people die of thirst in Sahara desert after lorry breaks down",
+      "source": "BBC World",
+      "impact_rating": "low",
+      "rationale": "Humanitarian tragedy with no financial market implications."
+    },
+    {
+      "headline": "Iran footballers issued US visas for World Cup, says White House",
+      "source": "Al Jazeera",
+      "impact_rating": "low",
+      "rationale": "Sports diplomacy has limited market effect, though signals slight thaw in US-Iran relations."
+    },
+    {
+      "headline": "Zelenskyy: Putin choosing war by rejecting offer for in-person talks",
+      "source": "Al Jazeera",
+      "impact_rating": "high",
+      "rationale": "Reinforces conflict stalemate, sustaining geopolitical risk premium in energy markets."
+    },
+    {
+      "headline": "Trump hails jobs surge, says Iran talks \u2018going well\u2019",
+      "source": "Al Jazeera",
+      "impact_rating": "medium",
+      "rationale": "Positive on US economy, potential de-escalation with Iran could lower oil prices, mixed for XLE."
     }
   ],
   "calendar": [],
   "portfolio_actions": {
     "immediate": [
-      "Trim TD.TO by 50% to lock in 5.26% gain",
-      "Trim XLE by 50% to reduce energy exposure",
-      "Set stop-loss on XLC at $110 to protect profits"
+      "Add to JNJ position on bullish options flow and safe-haven rotation.",
+      "Hold XLE with stop at $56.00; add on confirmation above $58.00."
     ],
     "watchlist": [
-      "JNJ",
-      "AMZN",
-      "CM.TO",
       "MSFT",
-      "GOOGL"
+      "AMZN",
+      "RY.TO"
     ],
     "avoid": [
-      "RY.TO",
-      "BNS.TO",
-      "BMO.TO",
-      "AAPL"
+      "AAPL",
+      "JPM"
     ]
   }
 }
