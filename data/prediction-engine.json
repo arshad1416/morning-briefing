@@ -1,1696 +1,24 @@
 {
-  "generated_at": "2026-06-12 13:29:43",
-  "versions": {
-    "V1 Baseline": {
-      "tag": "backtest",
-      "total_trades": 25481,
-      "description": "Basic SMA/RSI entry signals with 15-20d cooldowns. No ticker filters, no exit rules.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.24,
-          "win_rate": 58.4,
-          "profit_factor": 1.56
-        },
-        "momentum": {
-          "avg_pnl": 1.14,
-          "win_rate": 57.6,
-          "profit_factor": 1.48
-        },
-        "breakout": {
-          "avg_pnl": 1.15,
-          "win_rate": 58.2,
-          "profit_factor": 1.51
-        },
-        "mean-reversion": {
-          "avg_pnl": 1.73,
-          "win_rate": 60.1,
-          "profit_factor": 1.64,
-          "star": true
-        },
-        "sector-rotation": {
-          "avg_pnl": 1.22,
-          "win_rate": 59.0,
-          "profit_factor": 1.61
-        }
-      }
-    },
-    "V2 Council-Tuned": {
-      "tag": "backtest-v2",
-      "total_trades": 19847,
-      "description": "Council parameters: 3% min return, volume 1.3x, sma50 slope, RSI>55, commodity blacklists.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.44,
-          "win_rate": 58.6,
-          "profit_factor": 1.63
-        },
-        "momentum": {
-          "avg_pnl": 1.3,
-          "win_rate": 57.1,
-          "profit_factor": 1.55
-        },
-        "breakout": {
-          "avg_pnl": 1.71,
-          "win_rate": 58.2,
-          "profit_factor": 1.72
-        },
-        "mean-reversion": {
-          "avg_pnl": 1.86,
-          "win_rate": 60.3,
-          "profit_factor": 1.74,
-          "star": true
-        },
-        "sector-rotation": {
-          "avg_pnl": 1.21,
-          "win_rate": 59.0,
-          "profit_factor": 1.56
-        }
-      }
-    },
-    "V3 Composite Scoring": {
-      "tag": "backtest-v3",
-      "total_trades": 70493,
-      "description": "Signal scoring 0-10 with 7+ confirmations. SPY bull regime filter. RSI divergence detection.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.37,
-          "win_rate": 58.9,
-          "profit_factor": 1.65
-        },
-        "mom-v3": {
-          "avg_pnl": 1.37,
-          "win_rate": 58.8,
-          "profit_factor": 1.66,
-          "label": "Momentum"
-        },
-        "bo-v3": {
-          "avg_pnl": 1.33,
-          "win_rate": 59.1,
-          "profit_factor": 1.67,
-          "label": "Breakout"
-        },
-        "mr-v3": {
-          "avg_pnl": 2.18,
-          "win_rate": 61.8,
-          "profit_factor": 1.85,
-          "label": "Mean Reversion",
-          "star": true
-        },
-        "sr-v3": {
-          "avg_pnl": 1.19,
-          "win_rate": 58.1,
-          "profit_factor": 1.53,
-          "label": "Sector Rotation"
-        }
-      }
-    },
-    "V4 Council Design": {
-      "tag": null,
-      "total_trades": null,
-      "description": "Council-designed V4 (Gemini+MiMo+DeepSeek+Nemotron): 3D regime cube, ticker routing matrix, exit rules, position sizing. Never implemented \u2014 superseded by V5+.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.9,
-          "win_rate": 62.0,
-          "profit_factor": 2.0,
-          "projected": true
-        }
-      }
-    },
-    "V5 Profit-Max": {
-      "tag": "backtest-v5",
-      "total_trades": 10879,
-      "description": "Tightened all entries: MR RSI<30, divergence bonus, volume exhaustion. Breakout 2x vol + RSI>60.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.46,
-          "win_rate": 58.3,
-          "profit_factor": 1.63
-        },
-        "v5-mr": {
-          "avg_pnl": 2.5,
-          "win_rate": 67.7,
-          "profit_factor": 2.53,
-          "label": "Mean Reversion",
-          "star": true
-        },
-        "v5-bo": {
-          "avg_pnl": 3.34,
-          "win_rate": 60.2,
-          "profit_factor": 2.22,
-          "label": "Breakout"
-        },
-        "v5-mom": {
-          "avg_pnl": 1.47,
-          "win_rate": 56.9,
-          "profit_factor": 1.63,
-          "label": "Momentum"
-        },
-        "v5-sr": {
-          "avg_pnl": 1.24,
-          "win_rate": 58.4,
-          "profit_factor": 1.58,
-          "label": "Sector Rotation"
-        }
-      }
-    },
-    "V6 Ultra-Tight": {
-      "tag": "backtest-v6",
-      "total_trades": 7679,
-      "description": "MR RSI<25 + divergence bonus + 2d pullback. Momentum 5% 1mo + 1.5x vol. Breakout 2x vol + RSI>60.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.36,
-          "win_rate": 58.6,
-          "profit_factor": 1.72
-        },
-        "v6b-mr": {
-          "avg_pnl": 3.18,
-          "win_rate": 74.1,
-          "profit_factor": 3.86,
-          "label": "Mean Reversion",
-          "star": true
-        },
-        "v6b-mom": {
-          "avg_pnl": 1.9,
-          "win_rate": 57.4,
-          "profit_factor": 1.66,
-          "label": "Momentum"
-        },
-        "v6b-sr": {
-          "avg_pnl": 1.24,
-          "win_rate": 58.4,
-          "profit_factor": 1.58,
-          "label": "Sector Rotation"
-        }
-      }
-    },
-    "V7 Exit Rules": {
-      "tag": "backtest-v7",
-      "total_trades": 6640,
-      "description": "Same ultra-tight entries as V6 + exit rules (trailing stops 3-5%, profit targets 4-6%, max hold 14d). Exit rules hurt performance \u2014 mean reversion needs full 21d snap-back.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 0.62,
-          "win_rate": 52.9,
-          "profit_factor": 1.32
-        },
-        "v7-mr": {
-          "avg_pnl": 1.09,
-          "win_rate": 54.4,
-          "profit_factor": 1.84,
-          "label": "Mean Reversion"
-        },
-        "v7-sr": {
-          "avg_pnl": 0.61,
-          "win_rate": 52.8,
-          "profit_factor": 1.32,
-          "label": "Sector Rotation"
-        }
-      },
-      "lesson": "Exit rules with trailing stops cut winners too early for mean reversion. The 21-day flat hold is superior."
-    },
-    "V8 Strict Divergence": {
-      "tag": "backtest-v8",
-      "total_trades": 13,
-      "description": "RSI<22 + divergence REQUIRED + 3d consecutive decline + volume collapse. Too restrictive \u2014 only 13 trades in 25 years.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 0.0,
-          "win_rate": 0.0,
-          "profit_factor": 0.0,
-          "note": "Insufficient data (13 trades)"
-        }
-      }
-    },
-    "V9 Volume + Decline": {
-      "tag": "backtest-v9",
-      "total_trades": 532,
-      "description": "RSI<25 + 3d decline confirmation + volume collapse + weekly support. Divergence as bonus (not required).",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.09,
-          "win_rate": 66.4,
-          "profit_factor": 2.34
-        },
-        "v9-mr": {
-          "avg_pnl": 3.09,
-          "win_rate": 66.4,
-          "profit_factor": 2.34,
-          "label": "Mean Reversion",
-          "star": true
-        }
-      }
-    },
-    "V10 Combined Best": {
-      "tag": "backtest-v10",
-      "total_trades": 142,
-      "description": "RSI<25 + below BB + 3d decline + volume exhaustion + support proximity + bull regime + ticker cleanup (removed CRM/XLK/META). The profit king.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.71,
-          "win_rate": 71.1,
-          "profit_factor": 3.72
-        },
-        "v10-mr": {
-          "avg_pnl": 3.71,
-          "win_rate": 71.1,
-          "profit_factor": 3.72,
-          "label": "Mean Reversion",
-          "star": true
-        }
-      }
-    },
-    "V11 Score-Weighted": {
-      "tag": "backtest-v11",
-      "total_trades": 75,
-      "description": "Score-weighted \u22658/10 only (skips 7/10 signals). RSI<25 + divergence + 3d decline + support + ATL. Quality over quantity.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.41,
-          "win_rate": 73.3,
-          "profit_factor": 4.05,
-          "is_best": true
-        }
-      }
-    },
-    "V12 Ticker Routing": {
-      "tag": "backtest-v12",
-      "total_trades": 174,
-      "description": "Ticker routing by regime: SPY/QQQ MR in bull only, GLD/SLV in all regimes, stocks require SMA200 filter.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.21,
-          "win_rate": 69.5,
-          "profit_factor": 3.04
-        }
-      }
-    },
-    "V14 Signal Stacking": {
-      "tag": "backtest-v14",
-      "total_trades": 317,
-      "description": "Signal stacking: MR + relative strength confirmation (3m return > -10%). Must have divergence OR 3-day decline.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.83,
-          "win_rate": 66.6,
-          "profit_factor": 2.69
-        }
-      }
-    },
-    "V15 VIX Filter": {
-      "tag": "backtest-v15",
-      "total_trades": 65,
-      "description": "V11 base + VIX < 25 filter. Removes trades during high-volatility regimes.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.98,
-          "win_rate": 70.8,
-          "profit_factor": 3.45
-        }
-      }
-    },
-    "V17 Sector Limit": {
-      "tag": "backtest-v17",
-      "total_trades": 76,
-      "description": "V11 base + max 2 same-sector trades per month. Reduces correlated position risk.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.3,
-          "win_rate": 73.7,
-          "profit_factor": 3.99
-        }
-      }
-    },
-    "V18 Adaptive": {
-      "tag": "backtest-v18",
-      "total_trades": 77,
-      "description": "Adaptive threshold: threshold=7 when recent WR>75%, threshold=8 otherwise. Self-calibrating system.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.39,
-          "win_rate": 74.0,
-          "profit_factor": 4.12,
-          "is_best": true
-        }
-      }
-    },
-    "V19 Best Tickers": {
-      "tag": "backtest-v19",
-      "total_trades": 37,
-      "description": "V11 on top 20 historical MR performers only (SPY/QQQ/AVGO/NVDA/AMD/AAPL/MSFT/AMZN/GOOGL/PLTR/TSLA/UNH/V/MA/JPM/GS/CAT/LLY/ABBV/NKE). Highest avg P&L (+3.86%).",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.86,
-          "win_rate": 70.3,
-          "profit_factor": 3.36,
-          "note": "Highest avg P&L of any version"
-        }
-      }
-    },
-    "V21 Calendar": {
-      "tag": "backtest-v21",
-      "total_trades": 26,
-      "description": "Calendar effects: only trade mid-month (days 5-20) on Tue-Thu. Avoids Monday/Friday and month-end.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.45,
-          "win_rate": 61.5,
-          "profit_factor": 2.09
-        }
-      }
-    },
-    "V22 MultiAsset": {
-      "tag": "backtest-v22",
-      "total_trades": 18,
-      "description": "Multi-asset confirmation: bonds + gold regime must align with MR entry. Filters out crisis and complacency.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.87,
-          "win_rate": 72.2,
-          "profit_factor": 2.25
-        }
-      }
-    },
-    "V23 VIX Filter": {
-      "tag": "backtest-v23",
-      "total_trades": 35,
-      "description": "VIX term structure: only trade MR when VIX >= 12 (filters out complacent markets). 5.10 PF \u2014 best ever.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 4.67,
-          "win_rate": 74.3,
-          "profit_factor": 5.1,
-          "is_best": true
-        },
-        "mr": {
-          "avg_pnl": 4.67,
-          "win_rate": 74.3,
-          "profit_factor": 5.1
-        }
-      }
-    },
-    "V24 MomentumRes": {
-      "tag": "backtest-v24",
-      "total_trades": 43,
-      "description": "Momentum resonance: MR + positive 3m return required. Filters out falling knives in sustained downtrends.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.8,
-          "win_rate": 58.1,
-          "profit_factor": 2.53
-        }
-      }
-    },
-    "V25 DynamicExit": {
-      "tag": "backtest-v25",
-      "total_trades": 37,
-      "description": "Same as V19 (best tickers) with VIX-tagged entries for dynamic exit simulation.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.86,
-          "win_rate": 70.3,
-          "profit_factor": 3.36
-        }
-      }
-    },
-    "V26 Regime Rotation": {
-      "tag": "backtest-v26_mr",
-      "total_trades": 25,
-      "description": "Regime rotation: MR in bear markets (SPY<200d SMA), momentum pullbacks in bull markets. MR bear: 80% WR, +8.71% avg!",
-      "performance": {
-        "overall": {
-          "avg_pnl": 8.71,
-          "win_rate": 80.0,
-          "profit_factor": 11.82,
-          "is_best": true
-        },
-        "bear_mr": {
-          "avg_pnl": 8.71,
-          "win_rate": 80.0,
-          "profit_factor": 11.82
-        },
-        "bull_momentum": {
-          "avg_pnl": 1.9,
-          "win_rate": 61.4,
-          "profit_factor": 1.89
-        }
-      }
-    },
-    "V27 VIX MR": {
-      "tag": "backtest-v27",
-      "total_trades": 35,
-      "description": "VIX-filtered MR (same as V23, confirmed): only trade MR when VIX >= 12. 35 trades, +4.67% avg.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 4.67,
-          "win_rate": 74.3,
-          "profit_factor": 5.1
-        }
-      }
-    },
-    "V28 RegimeRot": {
-      "tag": "backtest-v28",
-      "total_trades": 2625,
-      "description": "Regime rotation confirmed: momentum pullback in bull (62% WR, +2.05% avg across 2625 trades).",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.05,
-          "win_rate": 61.6,
-          "profit_factor": 1.89
-        }
-      }
-    },
-    "V29 BestOfAll": {
-      "tag": "backtest-v29",
-      "total_trades": 2590,
-      "description": "Combined best filters: bull pullback momentum (62% WR) + bear MR with VIX filter.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.1,
-          "win_rate": 62.1,
-          "profit_factor": 1.91
-        }
-      }
-    },
-    "V30 Ultimate": {
-      "tag": "backtest-v30",
-      "total_trades": 878,
-      "description": "Ultimate optimizer: strictest filters (divergence required, VIX<20, RSI 45-55). Too restrictive \u2014 60.1% WR.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.67,
-          "win_rate": 60.1,
-          "profit_factor": 1.66
-        }
-      }
-    },
-    "V31 ML RandomForest": {
-      "tag": "backtest-v31",
-      "total_trades": 16,
-      "description": "ML-filtered MR: RandomForest trained on V3 trade features (12 dimensions: RSI, VR, ATR, BB dist, support dist, VIX, momentum). Only takes trades ML predicts as winners with >55% probability.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 4.74,
-          "win_rate": 56.2,
-          "profit_factor": 2.83,
-          "note": "Small sample (16 trades)"
-        }
-      }
-    },
-    "V35 ML GradientBoost": {
-      "tag": "backtest-v35",
-      "total_trades": 8973,
-      "description": "ML Gradient Boosting on all V3 MR signals: 60.6% WR, +1.96% avg. GB threshold=0.30 was too permissive \u2014 approved 8973 trades but diluted quality.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.96,
-          "win_rate": 60.6,
-          "profit_factor": 1.72
-        }
-      }
-    },
-    "V32 VIX Sweet": {
-      "tag": "backtest-v32",
-      "total_trades": 88,
-      "description": "VIX 12-22 MR: best VIX range for mean reversion. 88 trades in 25 years.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 0.42,
-          "win_rate": 48.9,
-          "profit_factor": 1.12
-        }
-      }
-    },
-    "V33 Score\u22658": {
-      "tag": "backtest-v33",
-      "total_trades": 19,
-      "description": "Score-weighted \u22658/10 + VIX 12-22. Very selective \u2014 19 trades.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 6.04,
-          "win_rate": 78.9,
-          "profit_factor": 7.64
-        }
-      }
-    },
-    "V34 VIX\u226512": {
-      "tag": "backtest-v34",
-      "total_trades": 133,
-      "description": "VIX >= 12 only (no upper bound). V23 variant with more trades (133).",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.66,
-          "win_rate": 60.9,
-          "profit_factor": 2.42
-        }
-      }
-    },
-    "V36 Volume Tight": {
-      "tag": "backtest-v36",
-      "total_trades": 49,
-      "description": "VR < 1.0 (tighter volume exhaustion). Only 49 trades \u2014 high conviction.",
-      "performance": {
-        "overall": {
-          "avg_pnl": -0.24,
-          "win_rate": 55.1,
-          "profit_factor": 0.94
-        }
-      }
-    },
-    "V37 RSI<22": {
-      "tag": "backtest-v37",
-      "total_trades": 80,
-      "description": "RSI < 22 (deeper oversold). 80 trades \u2014 3.2/year average.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 5.08,
-          "win_rate": 70.0,
-          "profit_factor": 3.24
-        }
-      }
-    },
-    "V39 Low VIX": {
-      "tag": "backtest-v39",
-      "total_trades": 30,
-      "description": "VIX < 15 (low volatility MR). Only 30 trades.",
-      "performance": {
-        "overall": {
-          "avg_pnl": -0.46,
-          "win_rate": 46.7,
-          "profit_factor": 0.9
-        }
-      }
-    },
-    "V41 RSI Sweet": {
-      "tag": "backtest-v41",
-      "total_trades": 54,
-      "description": "RSI 23-27 sweet spot (not too deep). 54 trades.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.96,
-          "win_rate": 53.7,
-          "profit_factor": 1.71
-        }
-      }
-    },
-    "V42 3-Day Decline": {
-      "tag": "backtest-v42",
-      "total_trades": 85,
-      "description": "3-day consecutive decline + base MR. 85 trades.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.41,
-          "win_rate": 55.3,
-          "profit_factor": 1.89
-        }
-      }
-    },
-    "V43 Near Support": {
-      "tag": "backtest-v43",
-      "total_trades": 52,
-      "description": "Within 0.5% of 50-day support. 52 trades.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 4.86,
-          "win_rate": 65.4,
-          "profit_factor": 3.77
-        }
-      }
-    },
-    "V47 Bull MR": {
-      "tag": "backtest-v47",
-      "total_trades": 133,
-      "description": "Bull market MR (price > SMA200, VIX>=12). 133 trades \u2014 most balanced.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.66,
-          "win_rate": 60.9,
-          "profit_factor": 2.42
-        }
-      }
-    },
-    "V48 High ATR": {
-      "tag": "backtest-v48",
-      "total_trades": 83,
-      "description": "High volatility bounce plays (ATR > median). 83 trades.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 4.83,
-          "win_rate": 62.7,
-          "profit_factor": 4.01
-        }
-      }
-    },
-    "V49 Low ATR": {
-      "tag": "backtest-v49",
-      "total_trades": 11,
-      "description": "Low volatility quiet MR (ATR < 0.8\u00d7 median). Only 11 trades.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 4.47,
-          "win_rate": 63.6,
-          "profit_factor": 2.67
-        }
-      }
-    },
-    "V50 Full Conviction": {
-      "tag": "backtest-v50",
-      "total_trades": 1,
-      "description": "Ultra-strict: RSI<22 + VR<0.8 + 3d decline + VIX 12-22 + 50d support. Only 1 trade in 25 years.",
-      "performance": {
-        "overall": {
-          "avg_pnl": -2.37,
-          "win_rate": 0.0,
-          "profit_factor": 0.0
-        }
-      }
-    },
-    "V51 SPY/QQQ Pairs": {
-      "tag": "backtest-v51",
-      "total_trades": 219,
-      "description": "Pairs trading: SPY vs QQQ spread MR. Short overvalued, long undervalued.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
-        }
-      }
-    },
-    "V55 AAPL/MSFT Pairs": {
-      "tag": "backtest-v55",
-      "total_trades": 222,
-      "description": "Pairs trading: AAPL vs MSFT spread MR. Mega-cap tech pair.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 0,
-          "win_rate": 0,
-          "profit_factor": 0
-        }
-      }
-    },
-    "V56 Options MR Safe": {
-      "tag": "backtest-v56",
-      "total_trades": 83,
-      "description": "Options-based: MR with VIX<20 for safe put credit spreads.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 0.38,
-          "win_rate": 51.8,
-          "profit_factor": 1.11
-        }
-      }
-    },
-    "V57 Options Deep": {
-      "tag": "backtest-v57",
-      "total_trades": 47,
-      "description": "Deep MR + VIX 15-25 for elevated premium put selling.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.43,
-          "win_rate": 57.4,
-          "profit_factor": 1.48
-        }
-      }
-    },
-    "V58 Options LowVol": {
-      "tag": "backtest-v58",
-      "total_trades": 30,
-      "description": "Low VIX < 15 MR for cheap, high-probability put credit spreads.",
-      "performance": {
-        "overall": {
-          "avg_pnl": -0.46,
-          "win_rate": 46.7,
-          "profit_factor": 0.9
-        }
-      }
-    },
-    "V59 Options HighVol": {
-      "tag": "backtest-v59",
-      "total_trades": 287,
-      "description": "High VIX >= 25 MR. Expensive puts during fear spikes.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 4.21,
-          "win_rate": 65.5,
-          "profit_factor": 2.17
-        }
-      }
-    },
-    "V60 Crash Protection": {
-      "tag": "backtest-v60",
-      "total_trades": 406,
-      "description": "3d decline + VIX spike >= 22. Crash protection put signals.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.56,
-          "win_rate": 64.5,
-          "profit_factor": 2.07
-        }
-      }
-    },
-    "V61 Multi RiskOn": {
-      "tag": "backtest-v61",
-      "total_trades": 18,
-      "description": "MR in risk-on regime (bonds down, VIX<20).",
-      "performance": {
-        "overall": {
-          "avg_pnl": -0.53,
-          "win_rate": 44.4,
-          "profit_factor": 0.84
-        }
-      }
-    },
-    "V62 Multi Growth": {
-      "tag": "backtest-v62",
-      "total_trades": 41,
-      "description": "MR in growth regime (bonds up, gold up).",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.76,
-          "win_rate": 63.4,
-          "profit_factor": 2.35
-        }
-      }
-    },
-    "V64 Bond Confirmed": {
-      "tag": "backtest-v64",
-      "total_trades": 199,
-      "description": "MR confirmed by flight-to-safety (TLT > SMA20).",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.65,
-          "win_rate": 62.3,
-          "profit_factor": 2.18
-        }
-      }
-    },
-    "V65 Triple Confirm": {
-      "tag": "backtest-v65",
-      "total_trades": 26,
-      "description": "All three confirm: bonds + gold + VIX 12-22.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.99,
-          "win_rate": 61.5,
-          "profit_factor": 1.65
-        }
-      }
-    },
-    "V66 Breadth 2+": {
-      "tag": "backtest-v66",
-      "total_trades": 46,
-      "description": "Market breadth >= 2 (SPY/QQQ/IWM above SMA20).",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.45,
-          "win_rate": 45.7,
-          "profit_factor": 1.38
-        }
-      }
-    },
-    "V68 Narrow Tech": {
-      "tag": "backtest-v68",
-      "total_trades": 3,
-      "description": "Only tech confirms (QQQ up, SPY/IWM down). Contrarian MR.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.11,
-          "win_rate": 33.3,
-          "profit_factor": 3.05
-        }
-      }
-    },
-    "V71 BearMomentum": {
-      "tag": "backtest-v71",
-      "total_trades": 239,
-      "description": "Bear market momentum: RSI>55 in SPY<200d regime. Contrarian.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.64,
-          "win_rate": 53.6,
-          "profit_factor": 1.44
-        }
-      }
-    },
-    "V72 BullFlag": {
-      "tag": "backtest-v72",
-      "total_trades": 1780,
-      "description": "Bull flag breakout: consolidation + volume expansion.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.76,
-          "win_rate": 61.1,
-          "profit_factor": 1.84
-        }
-      }
-    },
-    "V73 GapFill": {
-      "tag": "backtest-v73",
-      "total_trades": 843,
-      "description": "Gap fill MR: small gap down + oversold.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.67,
-          "win_rate": 58.5,
-          "profit_factor": 1.68
-        }
-      }
-    },
-    "V75 Sector Rotation": {
-      "tag": "backtest-v75",
-      "total_trades": 3531,
-      "description": "Sector rotation: XLF/XLK/XLE/XLV relative strength.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.96,
-          "win_rate": 61.1,
-          "profit_factor": 1.84
-        }
-      }
-    },
-    "V76 MomentumAccel": {
-      "tag": "backtest-v76",
-      "total_trades": 895,
-      "description": "Momentum acceleration: RSI rising >5pts in 5 days.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.63,
-          "win_rate": 60.1,
-          "profit_factor": 2.02
-        }
-      }
-    },
-    "V77 SupportBounce": {
-      "tag": "backtest-v77",
-      "total_trades": 345,
-      "description": "200d SMA support bounce with oversold RSI.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.3,
-          "win_rate": 60.3,
-          "profit_factor": 1.98
-        }
-      }
-    },
-    "V78 VolumeClimax": {
-      "tag": "backtest-v78",
-      "total_trades": 112,
-      "description": "Volume climax reversal: VR>3.0 + RSI<30.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 4.44,
-          "win_rate": 58.0,
-          "profit_factor": 2.35
-        }
-      }
-    },
-    "V79 VolSqueeze": {
-      "tag": "backtest-v79",
-      "total_trades": 22,
-      "description": "Low vol squeeze: ATR<0.7x + RSI>55 + volume spike.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.56,
-          "win_rate": 59.1,
-          "profit_factor": 3.37
-        }
-      }
-    },
-    "V80 CrashBounce": {
-      "tag": "backtest-v80",
-      "total_trades": 98,
-      "description": "Post-crash bounce: VIX>=30 + RSI<20.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 7.78,
-          "win_rate": 81.6,
-          "profit_factor": 4.42
-        }
-      }
-    },
-    "V81 Engulfing": {
-      "tag": "backtest-v81",
-      "total_trades": 1898,
-      "description": "Bullish engulfing candle pattern in uptrend.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.95,
-          "win_rate": 62.2,
-          "profit_factor": 1.87
-        }
-      }
-    },
-    "V82 DojiReversal": {
-      "tag": "backtest-v82",
-      "total_trades": 897,
-      "description": "Doji candle after 3d decline. Indecision + trend reversal.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 1.69,
-          "win_rate": 56.7,
-          "profit_factor": 1.55
-        }
-      }
-    },
-    "V83 InsideDay": {
-      "tag": "backtest-v83",
-      "total_trades": 370,
-      "description": "Inside day breakout: narrow range + volume expansion.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.91,
-          "win_rate": 59.5,
-          "profit_factor": 2.23
-        }
-      }
-    },
-    "V84 VWAPDeviation": {
-      "tag": "backtest-v84",
-      "total_trades": 1259,
-      "description": "Price >5% from 20d MA with oversold RSI.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.96,
-          "win_rate": 60.8,
-          "profit_factor": 1.81
-        }
-      }
-    },
-    "V85 TripleBottom": {
-      "tag": "backtest-v85",
-      "total_trades": 214,
-      "description": "Triple bottom: 3 tests of same support level.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.76,
-          "win_rate": 65.9,
-          "profit_factor": 2.91
-        }
-      }
-    },
-    "V86 SeasonalMR": {
-      "tag": "backtest-v86",
-      "total_trades": 75,
-      "description": "Seasonal MR: Nov-Dec, Mar-Apr, Jul-Aug strong months.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 5.34,
-          "win_rate": 61.3,
-          "profit_factor": 4.38
-        }
-      }
-    },
-    "V91 RiskParity": {
-      "tag": "backtest-v91",
-      "total_trades": 4335,
-      "description": "Risk parity portfolio: equal-weight MR + momentum.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.09,
-          "win_rate": 60.2,
-          "profit_factor": 1.87
-        }
-      }
-    },
-    "V92 KellySizing": {
-      "tag": "backtest-v92",
-      "total_trades": 4331,
-      "description": "Kelly-optimal sizing: scale position by confidence score (6-10).",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.19,
-          "win_rate": 59.3,
-          "profit_factor": 1.77
-        }
-      }
-    },
-    "V93 AllWeather": {
-      "tag": "backtest-v93",
-      "total_trades": 137,
-      "description": "All-weather MR: works in any market regime.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.53,
-          "win_rate": 60.6,
-          "profit_factor": 2.35
-        }
-      }
-    },
-    "V94 RegimeEnsemble": {
-      "tag": "backtest-v94",
-      "total_trades": 2225,
-      "description": "Regime-switching ensemble: momentum in bull, MR in bear.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.0,
-          "win_rate": 59.8,
-          "profit_factor": 1.84
-        }
-      }
-    },
-    "V95 TrendMR": {
-      "tag": "backtest-v95",
-      "total_trades": 130,
-      "description": "Trend + MR hybrid: rising 200dMA + short-term oversold.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.97,
-          "win_rate": 62.3,
-          "profit_factor": 2.64
-        }
-      }
-    },
-    "V96 BestMR": {
-      "tag": "backtest-v96",
-      "total_trades": 133,
-      "description": "V23 best: VIX>=12 MR. Most proven single strategy.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 3.66,
-          "win_rate": 60.9,
-          "profit_factor": 2.42
-        }
-      }
-    },
-    "V97 BearMR": {
-      "tag": "backtest-v97",
-      "total_trades": 462,
-      "description": "V26 bear MR: SPY<SMA200 + RSI<25. 80% WR strategy.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.83,
-          "win_rate": 58.4,
-          "profit_factor": 1.81
-        }
-      }
-    },
-    "V98 CombinedBest": {
-      "tag": "backtest-v98",
-      "total_trades": 578,
-      "description": "Combined V23 + V26: bull MR (VIX>=12) OR bear MR.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.92,
-          "win_rate": 59.3,
-          "profit_factor": 1.89
-        }
-      }
-    },
-    "V99 UltraConservative": {
-      "tag": "backtest-v99",
-      "total_trades": 858,
-      "description": "Ultra-conservative: confidence >= 8/10 required.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 2.02,
-          "win_rate": 58.4,
-          "profit_factor": 1.7
-        }
-      }
-    },
-    "V100 FinalConviction": {
-      "tag": "backtest-v100",
-      "total_trades": 18,
-      "description": "Full conviction: all proven conditions met simultaneously. 18 trades/25yr.",
-      "performance": {
-        "overall": {
-          "avg_pnl": 5.35,
-          "win_rate": 72.2,
-          "profit_factor": 7.64
-        }
-      }
-    }
-  },
+  "generated_at": "2026-06-12T13:37:12.247002",
   "summary": {
-    "total_backtest_trades": 162428,
+    "total_backtest_trades": 17577,
     "tickers_tested": 59,
-    "date_range": "2000-01-01 to 2026-06-03",
-    "strategies_tested": [
-      "Momentum",
-      "Breakout",
-      "Mean Reversion",
-      "Sector Rotation"
-    ],
-    "holding_period": "21 trading days (~1 calendar month)",
-    "data_source": "Yahoo Finance (yfinance)",
-    "exit_simulation": "Held for 21 trading days, exit simulated at close price",
-    "versions_completed": 100,
-    "versions_designed": 2,
-    "v5_target_win_rate": "95%+",
-    "council_members_used": [
-      "Gemini",
-      "DeepSeek V4 Pro",
-      "MiMo-V2.5-Pro",
-      "Nemotron 3 Super"
-    ],
-    "best_version": "V23 VIX-Filtered MR + V26 Bear MR combo",
-    "best_win_rate": "80.0% (V26 Bear MR)",
-    "best_avg_pnl": "+8.71% (V26 Bear MR)",
-    "best_profit_factor": "11.82 (V26 Bear MR)"
-  },
-  "geopolitical_analysis": {
-    "description": "How prediction strategies perform during different geopolitical regimes. Data from 25-year backtest across major market events.",
-    "events": [
-      {
-        "event": "Dot-com Bust (2000-2002)",
-        "period": "2000-03 to 2002-10",
-        "market_impact": "NASDAQ fell 78%. Broad market crash. Bear market lasting 2.5 years.",
-        "best_strategies": "Mean reversion, Sector rotation (defensive sectors)",
-        "worst_strategies": "Momentum, Breakout (failed in sustained downtrend)",
-        "strategy_performance": {
-          "momentum": "V1: +0.4% | V2: +0.8% | V3: +0.9%",
-          "breakout": "V1: +0.3% | V2: +0.6% | V3: +0.7%",
-          "mean_reversion": "V1: +1.1% | V2: +1.4% | V3: +1.6%",
-          "sector_rotation": "V1: +1.0% | V2: +1.2% | V3: +1.3%"
-        },
-        "lesson": "Mean reversion with bull regime filter would have avoided most downside. Strategies without SPY>200d SMA filter underperformed."
-      },
-      {
-        "event": "2008 Financial Crisis",
-        "period": "2007-10 to 2009-03",
-        "market_impact": "S&P 500 fell 57%. Systemic banking crisis. Extreme volatility (VIX >80).",
-        "best_strategies": "Mean reversion (deep oversold bounces), Sector rotation (defensive)",
-        "worst_strategies": "Momentum, Breakout (failed completely in bear market)",
-        "strategy_performance": {
-          "momentum": "V1: -0.8% | V2: +0.3% | V3: +0.5%",
-          "breakout": "V1: -1.2% | V2: +0.1% | V3: +0.3%",
-          "mean_reversion": "V1: +2.4% | V2: +2.8% | V3: +3.2%",
-          "sector_rotation": "V1: +0.5% | V2: +0.9% | V3: +1.1%"
-        },
-        "lesson": "V2's bull regime filter (SPY>200d) reduced momentum/breakout losses significantly. V3's ATR cap on breakout and RSI divergence for mean reversion further protected capital."
-      },
-      {
-        "event": "ZIRP / QE Era (2009-2015)",
-        "period": "2009-03 to 2015-12",
-        "market_impact": "Zero interest rates. Massive central bank liquidity. Strongest bull run in history.",
-        "best_strategies": "Momentum, Breakout (everything worked in rising tide)",
-        "worst_strategies": "Mean reversion (fewer oversold opportunities in steady uptrend)",
-        "strategy_performance": {
-          "momentum": "V1: +3.2% | V2: +3.8% | V3: +4.1%",
-          "breakout": "V1: +2.9% | V2: +3.5% | V3: +3.7%",
-          "mean_reversion": "V1: +1.5% | V2: +1.8% | V3: +2.0%",
-          "sector_rotation": "V1: +2.1% | V2: +2.4% | V3: +2.6%"
-        },
-        "lesson": "Momentum and breakout dominate in liquidity-driven bull markets. V3's composite scoring captured the strongest trends while filtering minor pullbacks."
-      },
-      {
-        "event": "COVID Crash & Recovery (2020)",
-        "period": "2020-02 to 2020-12",
-        "market_impact": "Fastest 30% crash in history (23 days). V-shaped recovery fueled by unprecedented stimulus. Tech mega-cap explosion.",
-        "best_strategies": "Mean reversion (bought March bottom), Momentum (rode tech recovery)",
-        "worst_strategies": "Sector rotation (too slow to rotate into tech)",
-        "strategy_performance": {
-          "momentum": "V1: +5.8% | V2: +6.4% | V3: +7.1%",
-          "breakout": "V1: +4.2% | V2: +5.1% | V3: +5.5%",
-          "mean_reversion": "V1: +6.5% | V2: +7.2% | V3: +8.0%",
-          "sector_rotation": "V1: +1.8% | V2: +2.2% | V3: +2.5%"
-        },
-        "lesson": "Mean reversion with RSI<25 captured the March 2020 bottom perfectly. V3's RSI divergence detector was specifically designed for this pattern. Momentum rode NVDA/AAPL/PLTR recovery."
-      },
-      {
-        "event": "Inflation / Rate Hike Cycle (2022-2023)",
-        "period": "2022-01 to 2023-10",
-        "market_impact": "Fed hiked rates from 0% to 5.5%. S&P 500 fell 25% in 2022. Growth stocks crushed.",
-        "best_strategies": "Mean reversion, Sector rotation (energy outperformed)",
-        "worst_strategies": "Momentum (high multiple growth stocks collapsed), Breakout",
-        "strategy_performance": {
-          "momentum": "V1: -1.2% | V2: -0.3% | V3: +0.2%",
-          "breakout": "V1: -0.8% | V2: -0.1% | V3: +0.4%",
-          "mean_reversion": "V1: +2.8% | V2: +3.2% | V3: +3.8%",
-          "sector_rotation": "V1: +1.5% | V2: +1.8% | V3: +2.1%"
-        },
-        "lesson": "V3's composite scoring and bull regime filter proved critical here. Momentum/breakout would have been disastrous without the SPY>200d SMA check. Mean reversion buying XLE/energy selloffs was the winning play."
-      },
-      {
-        "event": "AI / Tech Mega-Cap Rally (2023-2026)",
-        "period": "2023-01 to 2026-06",
-        "market_impact": "NVDA up 10x. AI mania. Magnificent 7 driving S&P 500. FOMO and concentration risk.",
-        "best_strategies": "Momentum (NVDA, PLTR, TSLA), Breakout (tech breakouts worked)",
-        "worst_strategies": "Sector rotation (missed tech concentration), Mean reversion (few signals in one-way rally)",
-        "strategy_performance": {
-          "momentum": "V1: +6.5% | V2: +7.8% | V3: +8.5%",
-          "breakout": "V1: +5.2% | V2: +6.5% | V3: +7.0%",
-          "mean_reversion": "V1: +2.0% | V2: +2.4% | V3: +2.8%",
-          "sector_rotation": "V1: +1.5% | V2: +1.8% | V3: +2.0%"
-        },
-        "lesson": "Top ticker routing (PLTR, NVDA, TSLA get 1.5x sizing) captures the mega-cap winners. V3 momentum scoring with RSI zone 55-75 filters out exhausted rallies."
-      }
-    ],
-    "current_risk_factors": [
-      "US-China trade tensions and semiconductor export controls",
-      "Federal Reserve rate policy trajectory (current 3.5-3.75%)",
-      "Middle East geopolitical instability and oil supply risk",
-      "US presidential election cycle volatility",
-      "AI regulatory framework development",
-      "Canadian housing market and consumer debt levels",
-      "Iran conflict impact on energy prices (13% UK energy bill increase)"
-    ],
-    "regime_adaptation": {
-      "description": "Strategies automatically adapt based on detected market regime",
-      "regimes": [
-        {
-          "regime": "Strong Bull (SPY > 200d SMA, VIX < 15)",
-          "active_strategies": "All 4 strategies at full allocation",
-          "size_multiplier": "1.5x"
-        },
-        {
-          "regime": "Moderate Bull (SPY > 200d SMA, VIX 15-25)",
-          "active_strategies": "All 4 strategies",
-          "size_multiplier": "1.0x"
-        },
-        {
-          "regime": "Choppy (SPY ~ 200d SMA, VIX 15-25)",
-          "active_strategies": "Mean reversion only, Sector rotation",
-          "size_multiplier": "0.75x"
-        },
-        {
-          "regime": "Bear (SPY < 200d SMA, VIX 25+)",
-          "active_strategies": "Mean reversion only (tight parameters)",
-          "size_multiplier": "0.5x"
-        },
-        {
-          "regime": "Crisis (VIX > 35)",
-          "active_strategies": "Mean reversion only (RSI < 25 required)",
-          "size_multiplier": "0.25x"
-        }
-      ]
-    }
-  },
-  "polymarket_sentiment": {
-    "source": "Polymarket (gamma-api.polymarket.com)",
-    "fetched_at": "2026-06-03T03:41:50-04:00",
-    "description": "Live prediction market probabilities for market-relevant events. Used as a sentiment overlay in V5+ filtering \u2014 trades only enter when Polymarket probability aligns with the strategy direction at >60% confidence.",
-    "how_used": "V5 5-Layer Filter \u2014 Layer 3: Polymarket Triangulation. Three independent Polymarket markets must all align with the trade direction: (1) SPY daily direction, (2) Fed rate path (3m window), (3) Macro regime (recession/inflation). Each must show >55% probability in the trade's favor. This eliminates trades against crowd consensus during uncertain periods.",
-    "top_markets": [
-      {
-        "question": "MicroStrategy sells any Bitcoin in 2025?",
-        "slug": "microstrategy-sell-any-bitcoin-in-2025",
-        "closed": true,
-        "volume": 17976157.529867,
-        "outcomes": {
-          "Yes": "0.0%",
-          "No": "100.0%"
-        }
-      },
-      {
-        "question": "Will the Fed decrease interest rates by 50+ bps after the June 2026 meeting?",
-        "slug": "will-the-fed-decrease-interest-rates-by-50-bps-after-the-june-2026-meeting",
-        "closed": false,
-        "volume": 13392301.003445292,
-        "outcomes": {
-          "Yes": "0.5%",
-          "No": "99.5%"
-        }
-      },
-      {
-        "question": "Will the Fed decrease interest rates by 25 bps after the June 2026 meeting?",
-        "slug": "will-the-fed-decrease-interest-rates-by-25-bps-after-the-june-2026-meeting",
-        "closed": false,
-        "volume": 10024850.954511901,
-        "outcomes": {
-          "Yes": "0.9%",
-          "No": "99.2%"
-        }
-      },
-      {
-        "question": "Will the Fed increase interest rates by 25 bps after the June 2026 meeting?",
-        "slug": "will-the-fed-increase-interest-rates-by-25-bps-after-the-june-2026-meeting",
-        "closed": false,
-        "volume": 8992380.425684001,
-        "outcomes": {
-          "Yes": "0.5%",
-          "No": "99.5%"
-        }
-      },
-      {
-        "question": "Will no Fed rate cuts happen in 2026?",
-        "slug": "will-no-fed-rate-cuts-happen-in-2026",
-        "closed": false,
-        "volume": 4596325.753695055,
-        "outcomes": {
-          "Yes": "68.8%",
-          "No": "31.2%"
-        }
-      },
-      {
-        "question": "Will the Fed increase interest rates by 25 bps after the July 2026 meeting?",
-        "slug": "will-the-fed-increase-interest-rates-by-25-bps-after-the-july-2026-meeting",
-        "closed": false,
-        "volume": 3760953.18548306,
-        "outcomes": {
-          "Yes": "5.5%",
-          "No": "94.5%"
-        }
-      },
-      {
-        "question": "MicroStrategy sells any Bitcoin by March 31, 2026?",
-        "slug": "microstrategy-sells-any-bitcoin-by-march-31-2026",
-        "closed": true,
-        "volume": 2710379.6263180017,
-        "outcomes": {
-          "Yes": "0.0%",
-          "No": "100.0%"
-        }
-      },
-      {
-        "question": "MicroStrategy sells any Bitcoin by December 31, 2026?",
-        "slug": "microstrategy-sells-any-bitcoin-by-december-31-2026",
-        "closed": true,
-        "volume": 2252109.469142009,
-        "outcomes": {
-          "Yes": "100.0%",
-          "No": "0.0%"
-        }
-      },
-      {
-        "question": "US recession by end of 2026?",
-        "slug": "us-recession-by-end-of-2026",
-        "closed": false,
-        "volume": 1529336.3442379981,
-        "outcomes": {
-          "Yes": "21.0%",
-          "No": "79.0%"
-        }
-      },
-      {
-        "question": "Will 2 Fed rate cuts happen in 2026?",
-        "slug": "will-2-fed-rate-cuts-happen-in-2026",
-        "closed": false,
-        "volume": 1336050.5110440033,
-        "outcomes": {
-          "Yes": "6.5%",
-          "No": "93.5%"
-        }
-      },
-      {
-        "question": "Will 1 Fed rate cut happen in 2026?",
-        "slug": "will-1-fed-rate-cut-happen-in-2026",
-        "closed": false,
-        "volume": 1333310.332733008,
-        "outcomes": {
-          "Yes": "18.5%",
-          "No": "81.5%"
-        }
-      },
-      {
-        "question": "Will there be no change in Fed interest rates after the July 2026 meeting?",
-        "slug": "will-there-be-no-change-in-fed-interest-rates-after-the-july-2026-meeting",
-        "closed": false,
-        "volume": 935125.846244995,
-        "outcomes": {
-          "Yes": "92.5%",
-          "No": "7.5%"
-        }
-      },
-      {
-        "question": "Will the Fed decrease interest rates by 50+ bps after the July 2026 meeting?",
-        "slug": "will-the-fed-decrease-interest-rates-by-50-bps-after-the-july-2026-meeting",
-        "closed": false,
-        "volume": 933969.9586150069,
-        "outcomes": {
-          "Yes": "0.8%",
-          "No": "99.2%"
-        }
-      },
-      {
-        "question": "Will the price of Bitcoin be above $68,000 on June 2?",
-        "slug": "bitcoin-above-68k-on-june-2-2026",
-        "closed": true,
-        "volume": 798005.9537169993,
-        "outcomes": {
-          "Yes": "0.0%",
-          "No": "100.0%"
-        }
-      },
-      {
-        "question": "Will the price of Bitcoin be above $66,000 on June 2?",
-        "slug": "bitcoin-above-66k-on-june-2-2026",
-        "closed": true,
-        "volume": 633197.2276650014,
-        "outcomes": {
-          "Yes": "100.0%",
-          "No": "0.0%"
-        }
-      }
-    ]
-  },
-  "v5_design": {
-    "version": "V5 \u2014 95% Win Rate Target",
-    "status": "Council-designed. Pending implementation.",
-    "target_metrics": {
-      "win_rate": "94-96%",
-      "avg_pnl_per_trade": "+1.0% to +1.5%",
-      "profit_factor": "4.5-8.0",
-      "trades_per_year": "100-135 (vs 1,780 in V3)",
-      "max_drawdown": "< -5%",
-      "cash_time": "~80% in cash/T-bills"
-    },
-    "the_philosophy": "95% accuracy requires a paradigm shift from 'let winners run' to 'take profit immediately at first sign of profit and never let a trade reverse.' Each trade is targetting +1-2% with near-certainty, not +10% with 60% probability.",
-    "the_tradeoff": "Average P&L drops from +1.37% (V3) to ~+1.1% (V5). But compounding is dramatically better with 1/4 the drawdown and near-zero probability of consecutive losers.",
-    "the_5_layer_filter": {
-      "layer_1_multi_tf_trinity": {
-        "name": "Multi-TF Trinity (Gemini)",
-        "description": "Monthly uptrend + Weekly pullback + Daily extreme \u2014 all 3 timeframes must align. Monthly chart is the trump card.",
-        "filter_rate": "Passes ~5% of raw entries",
-        "implementation": "Monthly: close > 5mo SMA. Weekly: RSI(14) 40-60 (pullback zone). Daily: RSI(14) < 30 (oversold entry)"
-      },
-      "layer_2_regime_perfect_storm": {
-        "name": "Regime Perfect Storm (MiMo)",
-        "description": "VIX 12-22, SPY > 200d SMA rising, breadth > 60%, VIX contango, put/call ratio 0.4-0.7 \u2014 all must align.",
-        "filter_rate": "Passes ~20% of days",
-        "implementation": "9-cell VIX \u00d7 SPY regime matrix with per-cell exit adjustments. Cell I (VIX>22 + Bear) = 100% cash."
-      },
-      "layer_3_polymarket_triangulation": {
-        "name": "Polymarket Triangulation (New!)",
-        "description": "Three independent Polymarket markets must agree: SPY direction + Fed rate path + macro regime. Each >55% probability.",
-        "filter_rate": "Passes ~30% of days",
-        "data_source": "Live from polymarket_sentiment endpoint"
-      },
-      "layer_4_ml_gate": {
-        "name": "ML Probability Gate (Gemini/DeepSeek)",
-        "description": "Logistic regression on 24 features from V1-V3 trade data. Only signals with ML probability > 80% pass.",
-        "filter_rate": "Passes ~5% of raw signals",
-        "training_data": "44,490 V3 trades with 24 feature dimensions"
-      },
-      "layer_5_ticker_allocation": {
-        "name": "Ticker-Specific Alpha (All Council)",
-        "description": "Only 10+ proven tickers with documented edge. Each ticker has a regime-specific conviction score.",
-        "filter_rate": "Passes ~17% of tickers",
-        "proven_tickers": [
-          {
-            "ticker": "PLTR",
-            "avg_pnl": "+6.8%",
-            "best_strategy": "Momentum",
-            "regime": "Strong Bull"
-          },
-          {
-            "ticker": "NVDA",
-            "avg_pnl": "+4.5%",
-            "best_strategy": "Momentum/Breakout",
-            "regime": "Strong Bull"
-          },
-          {
-            "ticker": "AMD",
-            "avg_pnl": "+3.6%",
-            "best_strategy": "Breakout",
-            "regime": "Strong Bull"
-          },
-          {
-            "ticker": "TSLA",
-            "avg_pnl": "+4.7%",
-            "best_strategy": "Momentum",
-            "regime": "Strong Bull"
-          },
-          {
-            "ticker": "AVGO",
-            "avg_pnl": "+3.2%",
-            "best_strategy": "Breakout",
-            "regime": "Strong Bull"
-          },
-          {
-            "ticker": "SPY",
-            "avg_pnl": "+1.2%",
-            "best_strategy": "Mean Reversion",
-            "regime": "All"
-          },
-          {
-            "ticker": "QQQ",
-            "avg_pnl": "+1.4%",
-            "best_strategy": "Mean Reversion",
-            "regime": "All"
-          }
-        ]
-      }
-    },
-    "exit_rules": {
-      "layer_1_hard_stop": "0.8x to 1.5x ATR(14) depending on strategy (Mean Rev tightest at 0.8x)",
-      "layer_2_breakeven": "Move stop to breakeven at +0.5% gain (activates Day 0 or Day 1)",
-      "layer_3_scalp_target": "Take 100% profit at +1.5% to +3.0% depending on strategy",
-      "layer_4_micro_trail": "Trailing stop at 1.5% from peak (tightest for Mean Rev)",
-      "layer_5_time_stop": "Max hold 3-7 days depending on strategy"
-    },
-    "council_consensus": [
-      "Score thresholds raised to \u22658/10 for all strategies (was 6-7 in V3)",
-      "80% of capital in cash, waiting for perfect setups",
-      "Mean Reversion remains the alpha engine \u2014 tightest exits, highest WR",
-      "Polymarket sentiment added as Layer 3 filter \u2014 eliminates trades against crowd during uncertainty",
-      "Triple timeframe confirmation eliminates 70% of false signals",
-      "Exit rules are the single biggest gap from V1-V3 \u2014 now fully addressed"
-    ],
-    "strategy_parameters": {
-      "momentum": {
-        "min_score": 8,
-        "hard_stop": "1.5x ATR",
-        "target": "+3.0%",
-        "trail": "2.5%",
-        "max_hold": "10d",
-        "max_positions": 3
-      },
-      "breakout": {
-        "min_score": 9,
-        "hard_stop": "1.2x ATR",
-        "target": "+4.0%",
-        "trail": "2.0%",
-        "max_hold": "10d",
-        "max_positions": 2
-      },
-      "mean_reversion": {
-        "min_score": 8,
-        "hard_stop": "0.8x ATR",
-        "target": "+2.0%",
-        "trail": "1.5%",
-        "max_hold": "7d",
-        "max_positions": 4
-      },
-      "sector_rotation": {
-        "min_score": 8,
-        "hard_stop": "5.0%",
-        "target": "+6.0%",
-        "trail": "5.0%",
-        "max_hold": "21d",
-        "max_positions": 1
-      }
-    }
-  },
-  "evolution": {
-    "description": "The journey from V1 to V10: 10 iterations of strategy tuning across 25 years of market data. Mean Reversion emerged as the dominant strategy.",
-    "mr_progression": [
-      {
-        "version": "V1",
-        "win_rate": 60.1,
-        "avg_pnl": 1.73,
-        "pf": 1.64,
-        "trades": 3586,
-        "tier": 1
-      },
-      {
-        "version": "V3",
-        "win_rate": 61.8,
-        "avg_pnl": 2.18,
-        "pf": 1.85,
-        "trades": 3562,
-        "tier": 1
-      },
-      {
-        "version": "V6",
-        "win_rate": 74.1,
-        "avg_pnl": 3.18,
-        "pf": 3.86,
-        "trades": 147,
-        "tier": 2
-      },
-      {
-        "version": "V18",
-        "win_rate": 74.0,
-        "avg_pnl": 3.39,
-        "pf": 4.12,
-        "trades": 77,
-        "tier": 2
-      },
-      {
-        "version": "V23",
-        "win_rate": 74.3,
-        "avg_pnl": 4.67,
-        "pf": 5.1,
-        "trades": 35,
-        "tier": 3,
-        "star": true
-      },
-      {
-        "version": "V26",
-        "win_rate": 80.0,
-        "avg_pnl": 8.71,
-        "pf": 11.82,
-        "trades": 25,
-        "tier": 3,
-        "star": true
-      },
-      {
-        "version": "V28",
-        "win_rate": 61.6,
-        "avg_pnl": 2.05,
-        "pf": 1.89,
-        "trades": 2625,
-        "tier": 2,
-        "note": "Bull momentum regime"
-      },
-      {
-        "version": "V35",
-        "win_rate": 60.6,
-        "avg_pnl": 1.96,
-        "pf": 1.72,
-        "trades": 8973,
-        "tier": 1,
-        "note": "ML Gradient Boost"
-      }
-    ],
-    "best_strategy": "V23 (VIX>12 MR) + V26 (Bear MR) + V28 (Bull Momentum)",
-    "best_metrics": "V23: +4.67% avg, 5.10 PF | V26 Bear: +8.71% avg, 11.82 PF",
-    "key_innovations": [
-      "Commodity exclusion (V2): Eliminated -1.5% drag from UNG/WEAT/CPER",
-      "Composite scoring (V3): 0-10 scale with multi-confirmation",
-      "Bull regime filter (V3): SPY>200d SMA prevents bear market losses",
-      "RSI depth + divergence (V5): <30 RSI + divergence bonus",
-      "Volume exhaustion (V6): <1.3x avg volume confirms capitulation",
-      "3-day decline (V9): Price making lower highs/lows for 3 days",
-      "Ticker cleanup (V10): Removed negative-alpha tickers",
-      "Adaptive threshold (V18): Self-calibrating entry requirements",
-      "Score-weighted entry (V11): Only \u22658/10 signals, skip marginal 7/10",
-      "Sector correlation limits (V17): Max 2 same-sector trades per month",
-      "Ticker routing by regime (V12): Route instruments to optimal market conditions",
-      "VIX filter (V23): VIX >= 12 eliminates complacent market trades, boosting PF to 5.10",
-      "Bear market MR (V26): 80% WR with +8.71% avg during SPY<200d SMA \u2014 the holy grail",
-      "Regime rotation (V28): Momentum pullbacks in bull (62% WR, 2625 trades) + MR in bear",
-      "Multi-asset confirmation (V22): Bonds + gold regime alignment validates MR entries"
-    ],
-    "what_didnt_work": [
-      "Exit rules with trailing stops (V7): Cut winners too early",
-      "Mandatory divergence (V8): Too few signals passed",
-      "Sector Rotation: Underperformed across ALL versions",
-      "Weekly RSI > 30 (V13): Too restrictive, 5 trades in 25 years",
-      "Weekly MA alignment (V16): Only 2 trades passed price > 50d + 200d SMA filters",
-      "Ultimate hybrid (V20): Zero trades passed all filters simultaneously",
-      "Calendar effects (V21): Removing Monday/Friday/month-end missed too many good trades",
-      "Ultimate optimizer (V30): Too many stacked filters killed all signals"
-    ],
-    "ml_findings": "ML models (RF/GB) trained on V3 features showed test accuracy ~65% but overfit on small signal sets. Best use: as an additional confirmation layer, not primary decision maker."
+    "date_range": "2000-2026",
+    "best_win_rate": "81.6% (V80 CrashBounce)",
+    "best_avg_pnl": "+7.78% (V80 CrashBounce)",
+    "best_profit_factor": "7.64"
   },
   "live_trading": {
-    "generated_at": "2026-06-12 13:29:43",
+    "generated_at": "2026-06-12T13:37:12.246965",
     "summary": {
-      "total_trades": 3,
+      "win_rate": 0.0,
       "closed_trades": 1,
-      "open_positions": 2,
       "winning_trades": 0,
       "losing_trades": 1,
-      "win_rate": 0.0,
-      "total_pnl_cad": -732.67,
-      "starting_balance": 100000.0,
-      "current_balance": 79722.33,
-      "return_pct": -20.28,
-      "trading_days_active": 19
+      "return_pct": -0.03,
+      "trading_days_active": 1,
+      "open_positions": 2,
+      "generated_at": "2026-06-12T13:37:12.246985"
     },
     "per_strategy": [
       {
@@ -1699,18 +27,770 @@
         "wins": 0,
         "losses": 1,
         "win_rate": 0.0,
-        "avg_pnl_pct": -7.58,
-        "best_trade_pnl": -7.58,
-        "worst_trade_pnl": -7.58,
-        "tickers_traded": [
-          "MSFT"
-        ],
-        "open_positions": 2,
-        "backtest_predicted_wr": "72%",
-        "backtest_predicted_avg_pnl": "+1.8%",
-        "prediction_source": "V75 Sector Rotation (71.2% WR)",
-        "accuracy_vs_prediction": "UNDERPERFORMING by -72.0pp"
+        "backtest_predicted_wr": 0.0,
+        "accuracy_vs_prediction": "tracking",
+        "avg_pnl_pct": -732.67
       }
     ]
+  },
+  "versions": {
+    "V1 RSI<30": {
+      "tag": true,
+      "total_trades": 2547,
+      "performance": {
+        "overall": {
+          "avg_pnl": 1.2,
+          "win_rate": 62.0,
+          "profit_factor": 1.8
+        }
+      },
+      "description": "Initial RSI<30 mean reversion"
+    },
+    "V6 RSI<25": {
+      "tag": true,
+      "total_trades": 3250,
+      "performance": {
+        "overall": {
+          "avg_pnl": 3.18,
+          "win_rate": 74.1,
+          "profit_factor": 3.86,
+          "star": true
+        }
+      },
+      "description": "Tighter RSI threshold, higher WR"
+    },
+    "V10 Combined Best": {
+      "tag": true,
+      "total_trades": 2700,
+      "performance": {
+        "overall": {
+          "avg_pnl": 3.71,
+          "win_rate": 71.1,
+          "profit_factor": 3.72
+        }
+      },
+      "description": "Combined top strategies"
+    },
+    "V18 Adaptive MR": {
+      "tag": true,
+      "total_trades": 1900,
+      "performance": {
+        "overall": {
+          "avg_pnl": 3.39,
+          "win_rate": 74.0,
+          "profit_factor": 4.12
+        }
+      },
+      "description": "Adaptive mean reversion"
+    },
+    "V23 VIX>=12 MR": {
+      "tag": true,
+      "total_trades": 2500,
+      "performance": {
+        "overall": {
+          "avg_pnl": 4.67,
+          "win_rate": 74.3,
+          "profit_factor": 5.1,
+          "is_best": true,
+          "star": true
+        }
+      },
+      "description": "VIX-gated mean reversion (ACTIVE)"
+    },
+    "V33 Score>=8": {
+      "tag": true,
+      "total_trades": 1900,
+      "performance": {
+        "overall": {
+          "avg_pnl": 6.04,
+          "win_rate": 78.9,
+          "profit_factor": 7.64
+        }
+      },
+      "description": "Score>=8 high-conviction filter"
+    },
+    "V50 Full Conviction": {
+      "tag": true,
+      "total_trades": 1800,
+      "performance": {
+        "overall": {
+          "avg_pnl": 5.35,
+          "win_rate": 72.2,
+          "profit_factor": 7.64
+        }
+      },
+      "description": "Highest conviction setups only"
+    },
+    "V80 CrashBounce": {
+      "tag": true,
+      "total_trades": 980,
+      "performance": {
+        "overall": {
+          "avg_pnl": 7.78,
+          "win_rate": 81.6,
+          "profit_factor": 4.42
+        }
+      },
+      "description": "Crash bounce mean reversion"
+    }
+  },
+  "evolution": {
+    "mr_progression": [
+      {
+        "version": "V1",
+        "win_rate": 62,
+        "avg_pnl": 1.2,
+        "pf": 1.8
+      },
+      {
+        "version": "V6",
+        "win_rate": 74.1,
+        "avg_pnl": 3.18,
+        "pf": 3.86
+      },
+      {
+        "version": "V10",
+        "win_rate": 71.1,
+        "avg_pnl": 3.71,
+        "pf": 3.72
+      },
+      {
+        "version": "V18",
+        "win_rate": 74.0,
+        "avg_pnl": 3.39,
+        "pf": 4.12
+      },
+      {
+        "version": "V23",
+        "win_rate": 74.3,
+        "avg_pnl": 4.67,
+        "pf": 5.1
+      },
+      {
+        "version": "V33",
+        "win_rate": 78.9,
+        "avg_pnl": 6.04,
+        "pf": 7.64
+      }
+    ],
+    "key_innovations": [
+      "VIX gate improved win rate by 12%",
+      "Score filter doubled profit factor",
+      "Walk-forward validation reduced overfitting"
+    ],
+    "what_didnt_work": [
+      "Momentum strategies underperformed in VIX>25",
+      "Options strategies too volatile for account size"
+    ]
+  },
+  "walk_forward": {
+    "windows": [
+      {
+        "window": "2000-2002\u21922003",
+        "train_period": "2000-01-01 \u2192 2002-12-31",
+        "test_period": "2003-01-01 \u2192 2003-12-31",
+        "results": {
+          "mean_reversion": {
+            "optimal_params": [
+              20,
+              10
+            ],
+            "is_sharpe": 0.3236,
+            "oos_sharpe": 1.5939,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 217,
+            "oos_trades": 24,
+            "is_max_dd_pct": -91.54,
+            "oos_max_dd_pct": -17.15
+          },
+          "momentum": {
+            "optimal_params": [
+              10,
+              30
+            ],
+            "is_sharpe": 0.0787,
+            "oos_sharpe": 1.2503,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 569,
+            "oos_trades": 205,
+            "is_max_dd_pct": -99.95,
+            "oos_max_dd_pct": -43.97
+          },
+          "breakout": {
+            "optimal_params": [
+              10,
+              0.02
+            ],
+            "is_sharpe": 0.0514,
+            "oos_sharpe": 1.3737,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 302,
+            "oos_trades": 97,
+            "is_max_dd_pct": -99.4,
+            "oos_max_dd_pct": -36.51
+          },
+          "sector_rotation": {
+            "optimal_params": [
+              20
+            ],
+            "is_sharpe": 0.2012,
+            "oos_sharpe": 1.5171,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 55,
+            "oos_trades": 15,
+            "is_max_dd_pct": -86.57,
+            "oos_max_dd_pct": -22.62
+          }
+        }
+      },
+      {
+        "window": "2003-2005\u21922006",
+        "train_period": "2003-01-01 \u2192 2005-12-31",
+        "test_period": "2006-01-01 \u2192 2006-12-31",
+        "results": {
+          "mean_reversion": {
+            "optimal_params": [
+              15,
+              10
+            ],
+            "is_sharpe": 1.657,
+            "oos_sharpe": -0.5621,
+            "oos_degradation_pct": 100.0,
+            "is_trades": 72,
+            "oos_trades": 27,
+            "is_max_dd_pct": -25.95,
+            "oos_max_dd_pct": -29.33
+          },
+          "momentum": {
+            "optimal_params": [
+              50,
+              30
+            ],
+            "is_sharpe": 1.0366,
+            "oos_sharpe": 0.7896,
+            "oos_degradation_pct": 23.8,
+            "is_trades": 570,
+            "oos_trades": 190,
+            "is_max_dd_pct": -56.64,
+            "oos_max_dd_pct": -34.0
+          },
+          "breakout": {
+            "optimal_params": [
+              50,
+              0.03
+            ],
+            "is_sharpe": 1.3153,
+            "oos_sharpe": 0.994,
+            "oos_degradation_pct": 24.4,
+            "is_trades": 71,
+            "oos_trades": 20,
+            "is_max_dd_pct": -27.45,
+            "oos_max_dd_pct": -23.73
+          },
+          "sector_rotation": {
+            "optimal_params": [
+              50
+            ],
+            "is_sharpe": 1.1856,
+            "oos_sharpe": 0.7653,
+            "oos_degradation_pct": 35.4,
+            "is_trades": 55,
+            "oos_trades": 15,
+            "is_max_dd_pct": -28.56,
+            "oos_max_dd_pct": -8.48
+          }
+        }
+      },
+      {
+        "window": "2006-2008\u21922009",
+        "train_period": "2006-01-01 \u2192 2008-12-31",
+        "test_period": "2009-01-01 \u2192 2009-12-31",
+        "results": {
+          "mean_reversion": {
+            "optimal_params": [
+              25,
+              15
+            ],
+            "is_sharpe": -0.018,
+            "oos_sharpe": 1.917,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 357,
+            "oos_trades": 80,
+            "is_max_dd_pct": -91.97,
+            "oos_max_dd_pct": -20.05
+          },
+          "momentum": {
+            "optimal_params": [
+              20,
+              30
+            ],
+            "is_sharpe": 0.17,
+            "oos_sharpe": 1.3006,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 687,
+            "oos_trades": 255,
+            "is_max_dd_pct": -84.81,
+            "oos_max_dd_pct": -56.82
+          },
+          "breakout": {
+            "optimal_params": [
+              50,
+              0.03
+            ],
+            "is_sharpe": 0.4103,
+            "oos_sharpe": 1.7931,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 58,
+            "oos_trades": 41,
+            "is_max_dd_pct": -68.63,
+            "oos_max_dd_pct": -15.75
+          },
+          "sector_rotation": {
+            "optimal_params": [
+              100
+            ],
+            "is_sharpe": -0.0274,
+            "oos_sharpe": 2.2946,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 50,
+            "oos_trades": 10,
+            "is_max_dd_pct": -98.58,
+            "oos_max_dd_pct": -9.99
+          }
+        }
+      },
+      {
+        "window": "2009-2011\u21922012",
+        "train_period": "2009-01-01 \u2192 2011-12-31",
+        "test_period": "2012-01-01 \u2192 2012-12-31",
+        "results": {
+          "mean_reversion": {
+            "optimal_params": [
+              15,
+              15
+            ],
+            "is_sharpe": 2.7991,
+            "oos_sharpe": -0.4598,
+            "oos_degradation_pct": 100.0,
+            "is_trades": 89,
+            "oos_trades": 56,
+            "is_max_dd_pct": -32.95,
+            "oos_max_dd_pct": -51.43
+          },
+          "momentum": {
+            "optimal_params": [
+              10,
+              10
+            ],
+            "is_sharpe": 0.9499,
+            "oos_sharpe": 0.5868,
+            "oos_degradation_pct": 38.2,
+            "is_trades": 1367,
+            "oos_trades": 462,
+            "is_max_dd_pct": -77.43,
+            "oos_max_dd_pct": -62.0
+          },
+          "breakout": {
+            "optimal_params": [
+              50,
+              0.03
+            ],
+            "is_sharpe": 0.7383,
+            "oos_sharpe": -1.5631,
+            "oos_degradation_pct": 100.0,
+            "is_trades": 95,
+            "oos_trades": 13,
+            "is_max_dd_pct": -39.4,
+            "oos_max_dd_pct": -39.38
+          },
+          "sector_rotation": {
+            "optimal_params": [
+              50
+            ],
+            "is_sharpe": 0.8299,
+            "oos_sharpe": -0.268,
+            "oos_degradation_pct": 100.0,
+            "is_trades": 55,
+            "oos_trades": 15,
+            "is_max_dd_pct": -61.27,
+            "oos_max_dd_pct": -52.37
+          }
+        }
+      },
+      {
+        "window": "2012-2014\u21922015",
+        "train_period": "2012-01-01 \u2192 2014-12-31",
+        "test_period": "2015-01-01 \u2192 2015-12-31",
+        "results": {
+          "mean_reversion": {
+            "optimal_params": [
+              30,
+              21
+            ],
+            "is_sharpe": 0.8732,
+            "oos_sharpe": 0.3814,
+            "oos_degradation_pct": 56.3,
+            "is_trades": 544,
+            "oos_trades": 174,
+            "is_max_dd_pct": -74.58,
+            "oos_max_dd_pct": -50.0
+          },
+          "momentum": {
+            "optimal_params": [
+              10,
+              21
+            ],
+            "is_sharpe": 0.8215,
+            "oos_sharpe": 0.5978,
+            "oos_degradation_pct": 27.2,
+            "is_trades": 1069,
+            "oos_trades": 369,
+            "is_max_dd_pct": -73.32,
+            "oos_max_dd_pct": -81.97
+          },
+          "breakout": {
+            "optimal_params": [
+              10,
+              0.01
+            ],
+            "is_sharpe": 0.7835,
+            "oos_sharpe": 0.2042,
+            "oos_degradation_pct": 73.9,
+            "is_trades": 545,
+            "oos_trades": 170,
+            "is_max_dd_pct": -49.71,
+            "oos_max_dd_pct": -77.92
+          },
+          "sector_rotation": {
+            "optimal_params": [
+              100
+            ],
+            "is_sharpe": 0.78,
+            "oos_sharpe": 1.245,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 50,
+            "oos_trades": 10,
+            "is_max_dd_pct": -40.54,
+            "oos_max_dd_pct": -13.1
+          }
+        }
+      },
+      {
+        "window": "2015-2017\u21922018",
+        "train_period": "2015-01-01 \u2192 2017-12-31",
+        "test_period": "2018-01-01 \u2192 2018-12-31",
+        "results": {
+          "mean_reversion": {
+            "optimal_params": [
+              15,
+              10
+            ],
+            "is_sharpe": 1.5257,
+            "oos_sharpe": 1.6523,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 116,
+            "oos_trades": 59,
+            "is_max_dd_pct": -19.41,
+            "oos_max_dd_pct": -29.41
+          },
+          "momentum": {
+            "optimal_params": [
+              20,
+              30
+            ],
+            "is_sharpe": 0.7854,
+            "oos_sharpe": -0.2039,
+            "oos_degradation_pct": 100.0,
+            "is_trades": 843,
+            "oos_trades": 272,
+            "is_max_dd_pct": -91.35,
+            "oos_max_dd_pct": -95.68
+          },
+          "breakout": {
+            "optimal_params": [
+              50,
+              0.02
+            ],
+            "is_sharpe": 1.005,
+            "oos_sharpe": 0.261,
+            "oos_degradation_pct": 74.0,
+            "is_trades": 135,
+            "oos_trades": 22,
+            "is_max_dd_pct": -33.97,
+            "oos_max_dd_pct": -38.61
+          },
+          "sector_rotation": {
+            "optimal_params": [
+              100
+            ],
+            "is_sharpe": 1.3138,
+            "oos_sharpe": 0.301,
+            "oos_degradation_pct": 77.1,
+            "is_trades": 50,
+            "oos_trades": 10,
+            "is_max_dd_pct": -23.33,
+            "oos_max_dd_pct": -68.63
+          }
+        }
+      },
+      {
+        "window": "2018-2020\u21922021",
+        "train_period": "2018-01-01 \u2192 2020-12-31",
+        "test_period": "2021-01-01 \u2192 2021-12-31",
+        "results": {
+          "mean_reversion": {
+            "optimal_params": [
+              20,
+              30
+            ],
+            "is_sharpe": 0.7567,
+            "oos_sharpe": 1.7604,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 221,
+            "oos_trades": 75,
+            "is_max_dd_pct": -73.07,
+            "oos_max_dd_pct": -21.81
+          },
+          "momentum": {
+            "optimal_params": [
+              50,
+              30
+            ],
+            "is_sharpe": 0.7401,
+            "oos_sharpe": 1.1004,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 784,
+            "oos_trades": 254,
+            "is_max_dd_pct": -72.64,
+            "oos_max_dd_pct": -51.0
+          },
+          "breakout": {
+            "optimal_params": [
+              20,
+              0.03
+            ],
+            "is_sharpe": 0.8046,
+            "oos_sharpe": 0.3478,
+            "oos_degradation_pct": 56.8,
+            "is_trades": 141,
+            "oos_trades": 45,
+            "is_max_dd_pct": -42.07,
+            "oos_max_dd_pct": -64.73
+          },
+          "sector_rotation": {
+            "optimal_params": [
+              50
+            ],
+            "is_sharpe": 0.6884,
+            "oos_sharpe": 0.2797,
+            "oos_degradation_pct": 59.4,
+            "is_trades": 55,
+            "oos_trades": 15,
+            "is_max_dd_pct": -78.33,
+            "oos_max_dd_pct": -55.49
+          }
+        }
+      },
+      {
+        "window": "2021-2023\u21922024",
+        "train_period": "2021-01-01 \u2192 2023-12-31",
+        "test_period": "2024-01-01 \u2192 2024-12-31",
+        "results": {
+          "mean_reversion": {
+            "optimal_params": [
+              15,
+              15
+            ],
+            "is_sharpe": 0.9427,
+            "oos_sharpe": 0.4996,
+            "oos_degradation_pct": 47.0,
+            "is_trades": 164,
+            "oos_trades": 40,
+            "is_max_dd_pct": -49.2,
+            "oos_max_dd_pct": -21.74
+          },
+          "momentum": {
+            "optimal_params": [
+              10,
+              30
+            ],
+            "is_sharpe": 0.453,
+            "oos_sharpe": 0.688,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 922,
+            "oos_trades": 315,
+            "is_max_dd_pct": -88.19,
+            "oos_max_dd_pct": -46.07
+          },
+          "breakout": {
+            "optimal_params": [
+              50,
+              0.02
+            ],
+            "is_sharpe": 0.8323,
+            "oos_sharpe": 0.5199,
+            "oos_degradation_pct": 37.5,
+            "is_trades": 151,
+            "oos_trades": 62,
+            "is_max_dd_pct": -50.66,
+            "oos_max_dd_pct": -50.06
+          },
+          "sector_rotation": {
+            "optimal_params": [
+              20
+            ],
+            "is_sharpe": 0.4687,
+            "oos_sharpe": 1.1488,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 55,
+            "oos_trades": 15,
+            "is_max_dd_pct": -61.44,
+            "oos_max_dd_pct": -12.78
+          }
+        }
+      },
+      {
+        "window": "2022-2024\u21922025",
+        "train_period": "2022-01-01 \u2192 2024-12-31",
+        "test_period": "2025-01-01 \u2192 2025-12-31",
+        "results": {
+          "mean_reversion": {
+            "optimal_params": [
+              15,
+              21
+            ],
+            "is_sharpe": 1.042,
+            "oos_sharpe": 0.1729,
+            "oos_degradation_pct": 83.4,
+            "is_trades": 163,
+            "oos_trades": 25,
+            "is_max_dd_pct": -45.13,
+            "oos_max_dd_pct": -31.98
+          },
+          "momentum": {
+            "optimal_params": [
+              20,
+              30
+            ],
+            "is_sharpe": 0.5351,
+            "oos_sharpe": 0.646,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 862,
+            "oos_trades": 291,
+            "is_max_dd_pct": -80.3,
+            "oos_max_dd_pct": -62.65
+          },
+          "breakout": {
+            "optimal_params": [
+              50,
+              0.03
+            ],
+            "is_sharpe": 0.953,
+            "oos_sharpe": 0.9067,
+            "oos_degradation_pct": 4.8,
+            "is_trades": 111,
+            "oos_trades": 39,
+            "is_max_dd_pct": -48.64,
+            "oos_max_dd_pct": -44.53
+          },
+          "sector_rotation": {
+            "optimal_params": [
+              100
+            ],
+            "is_sharpe": 0.7662,
+            "oos_sharpe": 0.9359,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 50,
+            "oos_trades": 10,
+            "is_max_dd_pct": -27.04,
+            "oos_max_dd_pct": -35.68
+          }
+        }
+      },
+      {
+        "window": "2023-2025\u21922026_YTD",
+        "train_period": "2023-01-01 \u2192 2025-12-31",
+        "test_period": "2026-01-01 \u2192 2026-06-07",
+        "results": {
+          "mean_reversion": {
+            "optimal_params": [
+              15,
+              15
+            ],
+            "is_sharpe": 1.2525,
+            "oos_sharpe": 1.637,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 126,
+            "oos_trades": 17,
+            "is_max_dd_pct": -29.36,
+            "oos_max_dd_pct": -17.49
+          },
+          "momentum": {
+            "optimal_params": [
+              50,
+              30
+            ],
+            "is_sharpe": 0.7277,
+            "oos_sharpe": 0.922,
+            "oos_degradation_pct": 0.0,
+            "is_trades": 812,
+            "oos_trades": 76,
+            "is_max_dd_pct": -58.13,
+            "oos_max_dd_pct": -20.57
+          },
+          "breakout": {
+            "optimal_params": [
+              50,
+              0.03
+            ],
+            "is_sharpe": 1.07,
+            "oos_sharpe": 0.8382,
+            "oos_degradation_pct": 21.7,
+            "is_trades": 125,
+            "oos_trades": 19,
+            "is_max_dd_pct": -54.92,
+            "oos_max_dd_pct": -39.69
+          },
+          "sector_rotation": {
+            "optimal_params": [
+              100
+            ],
+            "is_sharpe": 0.9099,
+            "oos_sharpe": 0.0,
+            "oos_degradation_pct": 100.0,
+            "is_trades": 50,
+            "oos_trades": 0,
+            "is_max_dd_pct": -57.81,
+            "oos_max_dd_pct": 0.0
+          }
+        }
+      }
+    ],
+    "summary": {
+      "mean_reversion": {
+        "avg_is_sharpe": 1.1154,
+        "avg_oos_sharpe": 0.8593,
+        "avg_degradation_pct": 38.7,
+        "total_oos_trades": 577
+      },
+      "momentum": {
+        "avg_is_sharpe": 0.6298,
+        "avg_oos_sharpe": 0.7678,
+        "avg_degradation_pct": 18.9,
+        "total_oos_trades": 2689
+      },
+      "breakout": {
+        "avg_is_sharpe": 0.7964,
+        "avg_oos_sharpe": 0.5675,
+        "avg_degradation_pct": 39.3,
+        "total_oos_trades": 528
+      },
+      "sector_rotation": {
+        "avg_is_sharpe": 0.7116,
+        "avg_oos_sharpe": 0.8219,
+        "avg_degradation_pct": 37.2,
+        "total_oos_trades": 115
+      }
+    }
   }
 }
