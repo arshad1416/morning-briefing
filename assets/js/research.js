@@ -5,6 +5,17 @@
  * Seeking Alpha ideas, archive, and the old BacktestResearch content.
  */
 const Research = {
+  formatTimestamp(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d)) return '';
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const h = d.getHours() % 12 || 12;
+    const ampm = d.getHours() >= 12 ? 'PM' : 'AM';
+    const mm = String(d.getMinutes()).padStart(2, '0');
+    return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} at ${h}:${mm} ${ampm} ET`;
+  },
+
   async render(app) {
     app.innerHTML = '<div class="loading">Loading research...</div>';
 
@@ -29,6 +40,7 @@ const Research = {
 
     // ── TAB 1: Overview / Narrative ──
     html += '<div class="research-pane" id="tab-narrative">';
+    if (marketData?.generated_at) html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Last updated: ${this.formatTimestamp(marketData.generated_at)}</div>`;
     if (marketData?.narrative?.summary_paragraph) {
       const rendered = Utils.renderMarkdown(marketData.narrative.summary_paragraph);
       html += `<div class="card" style="margin-bottom:12px"><div class="intel-body">${rendered}</div></div>`;
@@ -64,6 +76,7 @@ const Research = {
 
     // ── TAB 2: News (Geopolitical + Market News) ──
     html += '<div class="research-pane" id="tab-news" style="display:none">';
+    if (marketData?.generated_at) html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Last updated: ${this.formatTimestamp(marketData.generated_at)}</div>`;
     if (marketData?.geopolitical?.length) {
       html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Geopolitical Risks</div>';
       marketData.geopolitical.slice(0, 12).forEach(g => {
@@ -89,6 +102,7 @@ const Research = {
 
     // ── TAB 3: Reddit Sentiment ──
     html += '<div class="research-pane" id="tab-reddit" style="display:none">';
+    if (redditData?._generated_at) html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Last updated: ${this.formatTimestamp(redditData._generated_at)}</div>`;
     if (redditData) {
       for (const [key, label] of [['wsb', 'r/wallstreetbets'], ['stocks', 'r/stocks']]) {
         const src = redditData[key];
@@ -117,6 +131,7 @@ const Research = {
 
     // ── TAB 4: Analysis Ideas (Seeking Alpha + Options Flow) ──
     html += '<div class="research-pane" id="tab-analysis" style="display:none">';
+    if (analysisData?.generated_at) html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Last updated: ${this.formatTimestamp(analysisData.generated_at)}</div>`;
     if (analysisData?.analysis_ideas?.length) {
       html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Analysis Ideas</div>';
       analysisData.analysis_ideas.forEach(idea => {
@@ -132,7 +147,14 @@ const Research = {
     if (analysisData?.market_overview?.top_headlines?.length) {
       html += '<div class="card"><div class="card-title">Seeking Alpha Top Stories</div>';
       analysisData.market_overview.top_headlines.slice(0, 10).forEach(h => {
-        html += `<div style="font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border-subtle)">${Utils.esc(h)}</div>`;
+        const title = typeof h === 'string' ? h : (h.title || '');
+        const url = typeof h === 'object' ? (h.url || '') : '';
+        const source = typeof h === 'object' ? (h.source || '') : '';
+        if (url) {
+          html += `<div style="font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border-subtle)"><a href="${Utils.esc(Utils.safeUrl(url))}" target="_blank" rel="noopener" style="color:var(--text-primary);text-decoration:none">${Utils.esc(title)}</a>${source ? '<div style="color:var(--text-muted);font-size:0.75rem">' + Utils.esc(source) + '</div>' : ''}</div>`;
+        } else {
+          html += `<div style="font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border-subtle)">${Utils.esc(title)}</div>`;
+        }
       });
       html += '</div>';
     }
@@ -141,6 +163,7 @@ const Research = {
     // ── TAB 5: Backtest Research (old content) ──
     html += '<div class="research-pane" id="tab-backtest" style="display:none">';
     html += await this._renderBacktest();
+    // Backtest timestamp is rendered inside _renderBacktest()
     html += '</div>';
 
     html += '</div></div>';
@@ -161,6 +184,7 @@ const Research = {
   async _renderBacktest() {
     const wf = await Utils.fetchJSON('/data/walk_forward_v2.json').catch(() => null);
     let html = '<div class="card" style="margin-bottom:12px"><div class="card-title">Research-Backed Backtest Validation</div>';
+    if (wf?.generated_at) html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Last updated: ${this.formatTimestamp(wf.generated_at)}</div>`;
     html += '<div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6">';
     html += '<strong>López de Prado — The False Strategy Theorem:</strong> If you run 100 backtests on random data, 5-10 will show positive returns by pure chance. We apply a ~30% Sharpe degradation factor — our IS Sharpe of 2.22 is expected to live-trade around 1.55.';
     if (wf && wf.summary) {
