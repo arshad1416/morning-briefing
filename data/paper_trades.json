@@ -1,15 +1,15 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-06-12 13:29:40",
+  "generated_at": "2026-06-12 13:45:45",
   "price_source": "yfinance historical closes \u2014 no CAD/USD math",
   "portfolio": {
     "starting_balance": 100000.0,
-    "cash": 79722.33,
-    "invested": 298.5,
-    "total_balance": 99967.17,
-    "total_pnl": -31.78,
-    "unrealized_pnl": -1.05,
-    "return_pct": -0.03,
+    "cash": 64445.01,
+    "invested": 744.0,
+    "total_balance": 100229.88,
+    "total_pnl": -5.33,
+    "unrealized_pnl": 235.21,
+    "return_pct": 0.23,
     "win_rate": 0.0,
     "total_trades": 1
   },
@@ -20,43 +20,82 @@
       "type": "ETF",
       "entry_date": "2026-06-12",
       "entry_price": 58.5,
-      "current_price": 57.6,
+      "current_price": 57.72,
       "currency": "USD",
-      "pnl": -0.9,
-      "pnl_pct": -1.54,
+      "pnl": -0.78,
+      "pnl_pct": -1.33,
       "strategy": "sector_rotation",
       "direction": "long",
-      "rationale": "XLE energy sector - US becomes world's top oil exporter catalyst, CME expanding 24/7 crude trading. Energy rotation from recent underperformance."
+      "rationale": "Energy - US top oil exporter. DS Pro pick."
     },
     {
       "ticker": "JNJ",
       "type": "ETF",
       "entry_date": "2026-06-12",
       "entry_price": 240.0,
-      "current_price": 239.85,
+      "current_price": 239.98,
       "currency": "USD",
-      "pnl": -0.15,
-      "pnl_pct": -0.06,
+      "pnl": -0.02,
+      "pnl_pct": -0.01,
       "strategy": "sector_rotation",
       "direction": "long",
-      "rationale": "JNJ defensive healthcare - 1100x OI call flow at 90 strike, $4.8M premium. DS Pro top pick."
+      "rationale": "Healthcare - 1100x OI call flow. DS Pro pick."
+    },
+    {
+      "ticker": "FXY",
+      "type": "ETF",
+      "entry_date": "2026-06-12",
+      "entry_price": 57.0,
+      "current_price": 57.26,
+      "currency": "USD",
+      "pnl": 0.26,
+      "pnl_pct": 0.46,
+      "strategy": "sector_rotation",
+      "direction": "long",
+      "rationale": "Yen forex hedge. DS Pro macro."
+    },
+    {
+      "ticker": "GLD",
+      "type": "ETF",
+      "entry_date": "2026-06-12",
+      "entry_price": 380.0,
+      "current_price": 387.55,
+      "currency": "USD",
+      "pnl": 7.55,
+      "pnl_pct": 1.99,
+      "strategy": "sector_rotation",
+      "direction": "long",
+      "rationale": "Gold commodity hedge - Geopolitical HIGH risk. DS Pro risk alert driven."
+    },
+    {
+      "ticker": "AMZN",
+      "type": "ETF",
+      "entry_date": "2026-06-12",
+      "entry_price": 8.5,
+      "current_price": 236.7,
+      "currency": "USD",
+      "pnl": 228.2,
+      "pnl_pct": 2684.71,
+      "strategy": "momentum_options",
+      "direction": "long",
+      "rationale": "AMZN PUT 7/17 $305 - 2270x OI, $11.6M premium. DS Pro top signal: downside protection flowing."
     }
   ],
   "recent_trades": [
     {
-      "ticker": "MSFT",
+      "ticker": "IBIT",
       "type": "ETF",
       "direction": "long",
-      "pnl_pct": -7.57,
-      "pnl_usd": -31.78,
-      "entry_price": 420.0,
-      "exit_price": 388.22,
+      "pnl_pct": -12.84,
+      "pnl_usd": -5.33,
+      "entry_price": 41.5,
+      "exit_price": 36.17,
       "currency": "USD",
       "strategy": "sector_rotation",
-      "entry_date": "2026-06-12T13:29:02.894135",
-      "exit_date": "2026-06-12T13:29:03.803892",
-      "rationale": "MSFT mega-cap tech - 224x OI call flow. DS Pro opportunity with strong options flow signal.",
-      "exit_rationale": "STOP: Hard stop hit at -7.6% (limit 3%)"
+      "entry_date": "2026-06-12T13:45:12.594420",
+      "exit_date": "2026-06-12T13:45:14.026897",
+      "rationale": "Bitcoin ETF - RSI 29 oversold.",
+      "exit_rationale": "STOP: Hard stop hit at -12.9% (limit 3%)"
     }
   ]
 }
