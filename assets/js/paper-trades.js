@@ -214,18 +214,43 @@ const PaperTrades = {
     // ── Live Open Positions ──
     html += '<h2 class="section-title" style="margin-top:24px">Open Positions</h2>';
     if (data?.open_positions?.length) {
-      html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Type</th><th>Entry</th><th>Entry Price</th><th>Current</th><th>P&L</th><th>Risk</th><th>Strategy</th><th>Status</th></tr></thead><tbody>';
+      // Asset class breakdown summary
+      const _acCounts = {};
+      data.open_positions.forEach(t => {
+        const ac = (t.asset_class || 'STOCK').toUpperCase();
+        _acCounts[ac] = (_acCounts[ac] || 0) + 1;
+      });
+      const _acColors = { STOCK: 'var(--text-muted)', OPTION: '#9c27b0', CRYPTO: '#ff9800', FOREX: '#2196f3', COMMODITY: '#ffc107' };
+      let _acSummary = Object.entries(_acCounts).map(([k, v]) => `<span style="color:${_acColors[k] || 'var(--text-muted)'};font-weight:600">${v} ${k}</span>`).join(' · ');
+      html += '<div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:8px">' + _acSummary + '</div>';
+      
+      html += '<div class="card table-wrap"><table><thead><tr><th>Ticker</th><th>Asset</th><th>Type</th><th>Entry</th><th>Entry Price</th><th>Current</th><th>P&L</th><th>Risk</th><th>Strategy</th><th>Status</th></tr></thead><tbody>';
       data.open_positions.forEach(t => {
         const pnlCls = t.pnl_pct > 0 ? 'positive' : t.pnl_pct < 0 ? 'negative' : '';
         const status = t.pnl_pct > 5 ? '✅ In Profit' : t.pnl_pct > 2 ? '✅ Profitable' : t.pnl_pct > 0 ? '⏳ Pending' : t.pnl_pct > -3 ? '⏳ Watching' : t.pnl_pct > -7 ? '⚠️ At Risk' : '🔴 Stop Zone';
         const cur = t.currency || 'USD';
         const entryDisplay = '$' + t.entry_price.toFixed(2) + ' ' + cur;
         const currDisplay = '$' + t.current_price.toFixed(2) + ' ' + cur;
-        const pnlDisplay = '$' + t.pnl.toFixed(2) + ' (' + (t.pnl_pct >= 0 ? '+' : '') + t.pnl_pct.toFixed(1) + '%)';
+        const isOption = (t.asset_class || '').toUpperCase() === 'OPTION';
+        // For options, show strike + expiry instead of P&L
+        let pnlDisplay;
+        if (isOption) {
+          pnlDisplay = t.option_strike ? `Strike $${t.option_strike}` : '—';
+          if (t.option_expiration) pnlDisplay += ` · Exp ${t.option_expiration}`;
+          if (t.option_days_to_expiry != null) pnlDisplay += ` (${t.option_days_to_expiry}d)`;
+        } else {
+          pnlDisplay = '$' + t.pnl.toFixed(2) + ' (' + (t.pnl_pct >= 0 ? '+' : '') + t.pnl_pct.toFixed(1) + '%)';
+        }
         const hoverReason = Utils.esc(t.rationale || t.strategy || '');
         const hoverTip = t.rationale ? 'Decision: ' + Utils.esc(t.rationale) : '';
+        // Asset class badge
+        const _ac = (t.asset_class || 'STOCK').toUpperCase();
+        const _acBadgeMap = { OPTION: { bg: '#9c27b0', color: '#fff', label: 'OPT' }, CRYPTO: { bg: '#ff9800', color: '#fff', label: 'CRYPTO' }, FOREX: { bg: '#2196f3', color: '#fff', label: 'FX' }, COMMODITY: { bg: '#ffc107', color: '#333', label: 'COMM' } };
+        const _acB = _acBadgeMap[_ac];
+        const acBadge = _acB ? `<span style="background:${_acB.bg};color:${_acB.color};padding:2px 5px;border-radius:3px;font-size:0.6rem;font-weight:700">${_acB.label}</span>` : '<span style="color:var(--text-muted);font-size:0.65rem">STOCK</span>';
         html += `<tr class="trade-row open-trade" title="${hoverTip}" data-ticker="${Utils.esc(t.ticker)}" data-rationale="${Utils.esc(t.rationale || '')}" data-exit-rationale="" style="cursor:pointer">
           <td><strong>${Utils.esc(t.ticker)}</strong></td>
+          <td>${acBadge}</td>
           <td><span class="badge ${t.type === 'Stock' ? 'badge-green' : t.type === 'ETF' ? 'badge-yellow' : 'badge'}" style="font-size:0.65rem">${t.type || 'Other'}</span></td>
           <td style="font-size:0.85rem">${t.entry_date || '—'}</td>
           <td style="font-size:0.85rem">${entryDisplay}</td>

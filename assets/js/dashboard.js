@@ -108,7 +108,14 @@ const Dashboard = {
         const volWidth = Math.min(60, volRatio * 15);
         
         html += `<div class="today-pos-row ${pnlCls}">`;
-        html += `<span class="today-pos-ticker">${Utils.esc(pos.ticker)}</span>`;
+        // Asset class badge
+        const _ac = (pos.asset_class || '').toUpperCase();
+        let _acBadge = '';
+        if (_ac === 'OPTION') _acBadge = '<span style="background:#9c27b0;color:#fff;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px;vertical-align:middle">OPT</span>';
+        else if (_ac === 'CRYPTO') _acBadge = '<span style="background:#ff9800;color:#fff;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px;vertical-align:middle">CRYPTO</span>';
+        else if (_ac === 'FOREX') _acBadge = '<span style="background:#2196f3;color:#fff;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px;vertical-align:middle">FX</span>';
+        else if (_ac === 'COMMODITY') _acBadge = '<span style="background:#ffc107;color:#333;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px;vertical-align:middle">COMM</span>';
+        html += `<span class="today-pos-ticker">${Utils.esc(pos.ticker)}${_acBadge}</span>`;
         html += sparkline;
         html += `<span class="today-pos-entry">$${Utils.formatPrice(pos.entry_price)}</span>`;
         html += `<span class="today-pos-pnl">${Utils.formatPrice(pos.pnl >= 0 ? '+' : '')}$${Utils.formatPrice(Math.abs(pos.pnl))}</span>`;
