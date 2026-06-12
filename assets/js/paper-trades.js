@@ -199,7 +199,7 @@ const PaperTrades = {
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Total Value</div>'
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">$' + Utils.formatPrice(p.total_balance) + '</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Win Rate</div>'
-        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + (p.win_rate >= 50 ? 'var(--positive)' : 'var(--negative)') + '">' + p.win_rate + '%</div></div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + ((p.win_rate || 0) >= 50 ? 'var(--positive)' : 'var(--negative)') + '">' + (p.win_rate || 0) + '%</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Trades</div>'
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">' + p.total_trades + '</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Unrealized</div>'

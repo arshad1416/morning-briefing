@@ -53,13 +53,14 @@ const Dashboard = {
     // ── 3. DAY P&L ──
     if (tradesData?.portfolio) {
       const p = tradesData.portfolio;
-      const sign = p.total_pnl >= 0 ? '+' : '-';
-      const pnlCls = p.total_pnl >= 0 ? 'positive' : 'negative';
-      const equity = p.starting_balance + p.total_pnl + (p.unrealized_pnl || 0);
+      const totalPnl = p.total_pnl || 0;
+      const sign = totalPnl >= 0 ? '+' : '-';
+      const pnlCls = totalPnl >= 0 ? 'positive' : 'negative';
+      const equity = (p.starting_balance || 0) + totalPnl + (p.unrealized_pnl || 0);
       const deployed = p.invested || 0;
       html += `<div class="today-pnl ${pnlCls}" style="border-left:none;padding:10px 15px">`;
       html += `<span class="today-pnl-label">DAY P&amp;L</span>`;
-      html += `<span class="today-pnl-val">${sign}$${Utils.formatPrice(Math.abs(p.total_pnl))}</span>`;
+      html += `<span class="today-pnl-val">${sign}$${Utils.formatPrice(Math.abs(totalPnl))}</span>`;
       html += `<span class="today-pnl-pct">(${Utils.formatPct(p.return_pct)})</span>`;
       html += `<span class="today-pnl-cash" style="margin-left:auto;font-size:0.85rem">Equity $${Utils.formatPrice(equity)} · ${deployed > 0 ? Math.round(deployed/equity*100) + '% deployed' : 'all cash'}</span>`;
       html += '</div>';
@@ -99,7 +100,7 @@ const Dashboard = {
         
         // Sparkline: 5-point fake history around entry price
         const pts = Array.from({length: 5}, (_, i) => Math.floor(Math.random() * 18 + 2));
-        const sparkPts = pts.map((v, i) => `${i * 12},${20 - v}`).join(' ');
+        const sparkPts = pts.map((v, i) => `${i * 12},${Math.max(0, 20 - v)}`).join(' ');
         const sparkColor = pos.pnl >= 0 ? 'var(--green)' : 'var(--red)';
         const sparkline = `<svg width="60" height="20" style="margin:0 8px;vertical-align:middle;flex-shrink:0"><polyline fill="none" stroke="${sparkColor}" stroke-width="1.5" points="${sparkPts}"/></svg>`;
         
