@@ -22,11 +22,12 @@ const Dashboard = {
   async renderToday(app) {
     app.innerHTML = '<div class="loading">Loading...</div>';
     
-    const [marketData, tradesData, analysisData, gexData] = await Promise.all([
+    const [marketData, tradesData, analysisData, gexData, verdictData] = await Promise.all([
       State.get('latest', '/data/latest.json').catch(() => null),
       State.get('trades', '/data/paper_trades.json').catch(() => null),
       State.get('analysis', '/data/analysis.json').catch(() => null),
       State.get('gex', '/data/gex_data.json').catch(() => null),
+      State.get('verdict', '/data/verdict.json').catch(() => null),
     ]);
 
     let html = '';
@@ -35,6 +36,12 @@ const Dashboard = {
 
     // ── 1. REGIME BADGE ──
     html += this._regimeBadge(vix, ms);
+
+    // ── 1.5 'SO WHAT' VERDICT BAR ──
+    // QWEN-ADD: Conviction from model, narrative from LLM — visually separated
+    if (verdictData) {
+      html += Dashboard._renderVerdict(verdictData);
+    }
 
     // ── 2. COMPACT INDICES STRIP (equities only — VIX/10Y merged into regime) ──
     if (ms.indices?.length) {
@@ -262,6 +269,70 @@ const Dashboard = {
       <span class="regime-ten">10Y ${ms.ten_year_yield != null ? ms.ten_year_yield + '%' : '—'}</span>
       <span class="regime-session">${this._sessionLabel()} · ${this._sessionTime()} ET</span>
     </div>`;
+  },
+
+  /**
+   * 'So What' Verdict Bar — QWEN-ADD.
+   * Shows: signal direction + conviction (from MODEL) + narrative (from LLM).
+   * MUST visually distinguish the two sources. Conviction NEVER comes from LLM.
+   */
+  _renderVerdict(v) {
+    if (!v) return '';
+    const signal = v.signal || 'neutral';
+    const conviction = v.conviction || 0;
+    const convictionPct = Math.round(conviction * 100);
+    const narrative = v.narrative || '';
+
+    // Signal color
+    const signalColors = {
+      'bullish': 'var(--green)', 'bearish': 'var(--red)', 'neutral': 'var(--yellow)'
+    };
+    const signalIcons = { 'bullish': '▲', 'bearish': '▼', 'neutral': '●' };
+    const sigColor = signalColors[signal] || 'var(--text-muted)';
+    const sigIcon = signalIcons[signal] || '●';
+
+    // Conviction bar width and color
+    const barWidth = Math.max(5, convictionPct);
+    const barColor = conviction >= 0.6 ? 'var(--green)' : conviction >= 0.4 ? 'var(--yellow)' : 'var(--red)';
+
+    // Confidence interval
+    const ci = v.confidence_interval || [0, 0];
+    const ciText = ci.length === 2 ? `${Math.round(ci[0]*100)}-${Math.round(ci[1]*100)}%` : '';
+
+    let html = '<div style="background:var(--bg-inset);border:1px solid var(--border-dim);border-radius:var(--card-radius);padding:12px 16px;margin:8px 0">';
+    html += '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">';
+
+    // Signal direction
+    html += `<div style="display:flex;align-items:center;gap:6px">`;
+    html += `<span style="font-size:1.1rem;color:${sigColor}">${sigIcon}</span>`;
+    html += `<span style="font-weight:700;font-size:0.95rem;text-transform:uppercase;color:${sigColor}">${signal}</span>`;
+    html += '</div>';
+
+    // Conviction bar (FROM MODEL)
+    html += '<div style="flex:1;min-width:120px">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">';
+    html += `<span style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em">🤖 Model Conviction</span>`;
+    html += `<span style="font-size:0.75rem;font-weight:600;color:${barColor}">${convictionPct}%</span>`;
+    html += '</div>';
+    html += `<div style="height:6px;background:var(--bg);border-radius:3px;overflow:hidden">`;
+    html += `<div style="height:100%;width:${barWidth}%;background:${barColor};border-radius:3px;transition:width 0.3s"></div>`;
+    html += '</div>';
+    if (ciText) {
+      html += `<div style="font-size:0.55rem;color:var(--text-muted);margin-top:1px">CI: ${ciText}</div>`;
+    }
+    html += '</div>';
+
+    // Narrative (FROM LLM — clearly labeled)
+    if (narrative) {
+      html += '<div style="flex:2;min-width:200px;border-left:2px solid var(--border-subtle);padding-left:12px">';
+      html += '<div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px">💬 LLM Narrative</div>';
+      html += `<div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.4">${Utils.esc(narrative)}</div>`;
+      html += '</div>';
+    }
+
+    html += '</div>';
+    html += '</div>';
+    return html;
   },
 
   /** Legacy render kept for archive detail view */
