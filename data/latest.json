@@ -1,38 +1,38 @@
 {
-  "generated_at": "2026-06-13T04:54:18-04:00",
+  "generated_at": "2026-06-15T10:58:37-04:00",
   "market_summary": {
-    "vix": 17.68,
-    "ten_year_yield": 4.49,
+    "vix": 16.29,
+    "ten_year_yield": 4.45,
     "indices": [
       {
         "ticker": "S&P 500",
-        "price": 7431.46,
-        "change_pct": 0.5
+        "price": 7553.21,
+        "change_pct": 1.64
       },
       {
         "ticker": "Dow Jones",
-        "price": 51202.26,
-        "change_pct": 0.7
+        "price": 51842.0,
+        "change_pct": 1.25
       },
       {
         "ticker": "NASDAQ",
-        "price": 25888.84,
-        "change_pct": 0.31
+        "price": 26538.86,
+        "change_pct": 2.51
       },
       {
         "ticker": "TSX",
-        "price": 34937.9,
-        "change_pct": 0.77
+        "price": 35268.9,
+        "change_pct": 0.95
       },
       {
         "ticker": "VIX",
-        "price": 17.68,
-        "change_pct": -9.05
+        "price": 16.29,
+        "change_pct": -7.86
       },
       {
         "ticker": "10Y Yield",
-        "price": 4.49,
-        "change_pct": 0.67
+        "price": 4.45,
+        "change_pct": -0.89
       }
     ],
     "fx_rates": [
@@ -43,9 +43,14 @@
     ]
   },
   "narrative": {
-    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,431.46 (+0.50%)\n  \u2022 Dow Jones: 51,202.26 (+0.70%)\n  \u2022 NASDAQ: 25,888.84 (+0.31%)\n  \u2022 TSX: 34,937.90 (+0.77%)\n  \u2022 VIX: 17.68\n  \u2022 10Y Yield: 4.49%"
+    "summary_paragraph": "The portfolio is currently **defensive\u2011leaning but idiosyncratically concentrated**: cash sits at $1,120.36 of a $1,177.72 balance (\u224895% cash), leaving only $57.36 deployed across seven open positions. The bulk of that exposure is in three separate IBIT entries (\u2248$172 notional if priced near current levels), creating a single\u2011stock over\u2011weight that outweighs the modest macro hedge (TLT long) and sector bets (XLU, TD, EFA). With a YTD return of \u201341.1% and a 4W/3L record, the strategy mix is producing marginal gains while the large drawdown stems from a few losing momentum trades (ON \u201327.7%, \u201328.4%).  \n\n**Three quantitative insights** emerge from the data:  \n1. **Macro deterioration** \u2013 the smoothed recession probability jumped to 1.82% (+1.36\u202fpp) and U.Mich sentiment fell \u20136.57\u202fpp, while real disposable income slipped \u20130.48\u202fpp and housing starts dropped \u20132.79\u202f%.  \n2. **IBIT over\u2011concentration** \u2013 three entries on May\u202f27\u201129 at $58.74, $56.85, $57.36 represent roughly 50\u202f% of the invested capital with no clear edge; recent IBIT trades have breakeven P&L.  \n3. **Strategy performance divergence** \u2013 sector_rotation (JETS +0.8\u202f%, +0.7\u202f%) and mean_reversion (NKE +3.7\u202f%) delivered the only positive trades, whereas momentum contributed a mere +$0.01 on one trade and the momentum\u2011options ON trade lost \u201327.7\u202f%.  \n\n**Strategy tilt & macro signals:** given the rising recession odds, widening HY spread (+0.01\u202fpp), PPI up +2.66\u202f% and falling real income, favor defensive assets: increase the TLT hedge (target entry \u2264$115.00) and add to XLU on dips below $62.00. Reduce IBIT exposure by scaling out two of the three lots (e.g., sell 2\u202f\u00d7\u202fIBIT at market) to bring the crypto\u2011equity weight under 20\u202f% of deployed capital. Pause new momentum entries until volatility contracts; instead, lean into mean\u2011reversion on large\u2011cap value (TD, EFA) and sector_rotation on consumer discretionary (JETS) only on pull\u2011backs of 3\u20115\u202f% from recent highs.  \n\n**Watchlist & sizing:**  \n- **RIVN** \u2013 long if price"
   },
-  "watchlist_summary": {},
+  "watchlist_summary": {
+    "total_scanned": 0,
+    "avg_change": 0,
+    "green_count": 0,
+    "red_count": 0
+  },
   "central_banks": {
     "fed": "The Federal Reserve held rates steady at 4.25-4.50% at its June meeting. Chair Powell noted inflation remains elevated but the labor market is cooling. Markets are pricing in one rate cut by September.",
     "boc": "The Bank of Canada held its overnight rate at 3.25% in June. Governor Macklem highlighted that while core inflation is trending toward the 2% target, shelter costs remain sticky."
@@ -54,73 +59,73 @@
   "market_news": {
     "headlines": [
       {
-        "title": "S&P 500 posts modest weekly gains as sector rotation favors materials and consumer staples",
-        "url": "https://seekingalpha.com/news/4603077-sp-500-posts-modest-weekly-gains-as-sector-rotation-favors-materials-and-consumer-staples?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Oil executives warn Trump administration that gasoline prices will get worse",
+        "url": "https://seekingalpha.com/news/4603097-oil-executives-warn-trump-administration-that-gasoline-prices-will-get-worse?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bearish",
+        "summary": ""
+      },
+      {
+        "title": "SA Asks: Space stocks sold off on Friday; should you buy the dip?",
+        "url": "https://seekingalpha.com/news/4603117-sa-asks-space-stocks-sold-off-on-friday-should-you-buy-the-dip?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Environmental Tectonics GAAP EPS of $0.15, revenue of $62.7M",
-        "url": "https://seekingalpha.com/news/4603088-environmental-tectonics-gaap-eps-of-0_15-revenue-of-62_7m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Key deals this week: GSK, Incyte, Ingredion, OpenAI, and more",
+        "url": "https://seekingalpha.com/news/4603111-key-deals-this-week-gsk-incyte-ingredion-openai-and-more?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Freedom Holding launches up to $300M stock offering",
-        "url": "https://seekingalpha.com/news/4603082-freedom-holding-launches-up-to-300m-stock-offering?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Trump says Strait of Hormuz will be \u201copen to all\u201d after Iran deal \u201ctomorrow\u201d",
+        "url": "https://seekingalpha.com/news/4603116-trump-signals-signing-iran-peace-deal-tomorrow?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Star Navigation announces $2M non-brokered private placement",
-        "url": "https://seekingalpha.com/news/4603084-star-navigation-announces-2m-non-brokered-private-placement?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "CMS proposes making Medicare drug price negotiations permanent",
-        "url": "https://seekingalpha.com/news/4603079-cms-proposes-making-medicare-drug-price-negotiations-permanent?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Lineage declares $0.5325 dividend",
-        "url": "https://seekingalpha.com/news/4603087-lineage-declares-0_5325-dividend?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Invesco Mortgage Capital declares $0.12 dividend",
-        "url": "https://seekingalpha.com/news/4603086-invesco-mortgage-capital-declares-0_12-dividend?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Buy The Dip: 5 Top Nasdaq AI Stocks",
-        "url": "https://seekingalpha.com/article/4914594-buy-the-dip-5-top-nasdaq-ai-stocks?source=feed",
+        "title": "SA Asks: Is Oracle a buy after the sell-off? (Update)",
+        "url": "https://seekingalpha.com/news/4603113-sa-asks-is-oracle-a-buy-after-the-sell-off?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "SpaceX: Good Luck Beating The IPO Curse",
-        "url": "https://seekingalpha.com/article/4914558-spacex-good-luck-beating-ipo-curse?source=feed",
+        "title": "Cathie Wood's ARK Invest goes all in on SpaceX after blockbuster IPO debut",
+        "url": "https://seekingalpha.com/news/4603115-cathie-woods-ark-invest-goes-all-in-on-spacex-after-blockbuster-ipo-debut?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
-        "sentiment": "bullish",
+        "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "SpaceX Debut Likely Marks An Intermediate Top",
-        "url": "https://seekingalpha.com/article/4914524-spacex-debut-likely-marks-intermediate-top?source=feed",
+        "title": "Amazon CEO is reportedly behind U.S. crackdown on Anthropic AI models",
+        "url": "https://seekingalpha.com/news/4603114-amazon-behind-us-crackdown-anthropic-models?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Meta At 17x P/E: Investing Doesn't Get Any Easier",
+        "url": "https://seekingalpha.com/article/4914841-meta-at-17x-pe-investing-does-not-get-any-easier?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Nova: Riding A Trillion\u2011Dollar Fab Capex Wave",
+        "url": "https://seekingalpha.com/article/4914840-nova-riding-a-trilliondollar-fab-capex-wave?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "ON Semiconductor: Growth Recovery Underway With Margin Expansion",
+        "url": "https://seekingalpha.com/article/4914833-on-semiconductor-growth-recovery-underway-with-margin-expansion?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
         "summary": ""
       }
     ],
@@ -129,74 +134,110 @@
   },
   "geopolitical": [
     {
-      "title": "Deal to end fighting would lead to Hormuz reopening, Iran says",
+      "title": "Putin says there is 'no point' meeting Zelensky over ending Ukraine war",
       "source": "BBC World",
-      "url": "https://www.bbc.com/news/articles/c39y02x98k8o?at_medium=RSS&at_campaign=rss",
+      "url": "",
       "date": "",
-      "summary": "The deal which will pave the way for hostilities to end is close to being finalised, the US, Iran and mediators Pakistan say."
+      "summary": ""
     },
     {
-      "title": "Elon Musk becomes world's first trillionaire as SpaceX soars in stock market debut",
+      "title": "Ukraine strikes cargo ships and admits Romania drone blast",
       "source": "BBC World",
-      "url": "https://www.bbc.com/news/articles/c4gypy3wwl7o?at_medium=RSS&at_campaign=rss",
+      "url": "",
       "date": "",
-      "summary": "Musk is now worth $1.11tn according to the Bloomberg rich list, while SpaceX listed on the Nasdaq stock exchange with a value of $2.2tn."
+      "summary": ""
     },
     {
-      "title": "French town buries murdered child as questions mount over police failings",
+      "title": "Astronauts return to ISS after sheltering during air leak repair attempt",
       "source": "BBC World",
-      "url": "https://www.bbc.com/news/articles/cy9rq21dqego?at_medium=RSS&at_campaign=rss",
+      "url": "",
       "date": "",
-      "summary": "The prime suspect in the killing of Lyhanna, 11, was reported to police nine months prior but never questioned."
+      "summary": ""
     },
     {
-      "title": "Discovery of \u20ac1.2m jewellery prompts fresh probe into former Spanish PM",
+      "title": "Fury in France after child murder suspect's criminal record released",
       "source": "BBC World",
-      "url": "https://www.bbc.com/news/articles/cjeg9p1xqdwo?at_medium=RSS&at_campaign=rss",
+      "url": "",
       "date": "",
-      "summary": "Jos\u00e9 Luis Rodriguez Zapatero is suspected of being unable to show proof he paid import duties on the jewellery."
+      "summary": ""
     },
     {
-      "title": "Fans on concourses instead of in seats, claims Fifa",
+      "title": "Nearly 50 people die of thirst in Sahara desert after lorry breaks down",
       "source": "BBC World",
-      "url": "https://www.bbc.com/sport/football/articles/c14y0dp6vrdo?at_medium=RSS&at_campaign=rss",
+      "url": "",
       "date": "",
-      "summary": "Fifa says numerous empty seats were visible in the near-sell-out Group A match between South Korea and the Czech Republic because of fans remaining on concourses."
+      "summary": ""
     },
     {
-      "title": "Taylor Swift makes tearful 21-minute speech as she joins Songwriters Hall of Fame",
-      "source": "BBC World",
-      "url": "https://www.bbc.com/news/articles/c5yzxd0g833o?at_medium=RSS&at_campaign=rss",
+      "title": "Iran footballers issued US visas for World Cup, says White House",
+      "source": "Al Jazeera",
+      "url": "",
       "date": "",
-      "summary": "The singer thanks her family as she becomes the youngest woman to be inducted into the Hall of Fame."
+      "summary": ""
     },
     {
-      "title": "A Family Ravaged by Land Mines in Myanmar",
-      "source": "NY Times",
-      "url": "https://www.nytimes.com/2026/06/13/world/asia/family-ravaged-by-land-mines-myanmar.html",
+      "title": "Zelenskyy: Putin choosing war by rejecting offer for in-person talks",
+      "source": "Al Jazeera",
+      "url": "",
       "date": "",
-      "summary": "Bu Ri lost a leg to a mine in Myanmar decades ago. More recently, six other members of his family have suffered a similar fate or worse, in a sign of the devastation wreaked by civil war."
+      "summary": ""
     },
     {
-      "title": "Should Switzerland Cap Its Population at 10 Million? Voters Will Decide.",
-      "source": "NY Times",
-      "url": "https://www.nytimes.com/2026/06/13/world/europe/switzerland-population-referendum-10-million.html",
+      "title": "Trump hails jobs surge, says Iran talks \u2018going well\u2019",
+      "source": "Al Jazeera",
+      "url": "",
       "date": "",
-      "summary": "One of the world\u2019s richest countries is about to hold a referendum on a measure that would curb migration and most likely the economy. It is being sold in warm tones."
-    },
-    {
-      "title": "Cease-Fire Deal Appears Within Reach, Officials Say",
-      "source": "NY Times",
-      "url": "https://www.nytimes.com/live/2026/06/12/world/iran-war-trump-us-israel",
-      "date": "",
-      "summary": "U.S. and Iranian officials said final details were still being worked out, but President Trump and Iran\u2019s foreign minister both said they were close to an agreement. Previous potential deals have evaporated at the last minute."
-    },
-    {
-      "title": "U.S. Plan Is Said to Pull a Third of Fighter Jets It Provides NATO for Europe",
-      "source": "NY Times",
-      "url": "https://www.nytimes.com/2026/06/12/world/europe/us-nato-cuts-drawdown-jets.html",
-      "date": "",
-      "summary": "The plan, outlined by officials and in a written document, provides rare clarity about the extent to which the Trump administration intends to reduce its commitment to NATO."
+      "summary": ""
     }
-  ]
+  ],
+  "premarket_top_setups": [
+    {
+      "ticker": "MSFT",
+      "price": 426.989990234375,
+      "change_pct": 3.47,
+      "score": 11,
+      "signals": [
+        "neutral_rsi",
+        "strong_momentum",
+        "above_20ma",
+        "above_50ma",
+        "elevated_volume"
+      ],
+      "rsi": 55.5,
+      "above_sma_20": true,
+      "above_sma_50": true
+    },
+    {
+      "ticker": "ARKK",
+      "price": 81.01000213623047,
+      "change_pct": 3.93,
+      "score": 10,
+      "signals": [
+        "neutral_rsi",
+        "strong_momentum",
+        "above_20ma",
+        "above_50ma"
+      ],
+      "rsi": 59.7,
+      "above_sma_20": true,
+      "above_sma_50": true
+    },
+    {
+      "ticker": "IBIT",
+      "price": 41.560001373291016,
+      "change_pct": -2.1,
+      "score": 10,
+      "signals": [
+        "oversold",
+        "pullback"
+      ],
+      "rsi": 29.0,
+      "above_sma_20": false,
+      "above_sma_50": false
+    }
+  ],
+  "congress": {
+    "recent_trades": [],
+    "summary": "\ud83d\udccb No congress trades found"
+  }
 }
