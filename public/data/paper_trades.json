@@ -1,0 +1,110 @@
+{
+  "status": "LIVE",
+  "generated_at": "2026-06-12 16:53:12",
+  "price_source": "yfinance historical closes \u2014 no CAD/USD math",
+  "portfolio": {
+    "starting_balance": 100000.0,
+    "cash": 64445.01,
+    "invested": 744.0,
+    "total_balance": 100001.26,
+    "total_pnl": -5.46,
+    "unrealized_pnl": 6.72,
+    "return_pct": 0.0,
+    "win_rate": 0.0,
+    "total_trades": 1
+  },
+  "active_strategy": "V23 VIX>=12 MR",
+  "open_positions": [
+    {
+      "ticker": "XLE",
+      "type": "ETF",
+      "entry_date": "2026-06-12",
+      "entry_price": 58.5,
+      "current_price": 57.55,
+      "currency": "USD",
+      "pnl": -0.95,
+      "pnl_pct": -1.62,
+      "strategy": "sector_rotation",
+      "direction": "long",
+      "rationale": "Energy - US top oil exporter. DS Pro pick.",
+      "asset_class": "STOCK"
+    },
+    {
+      "ticker": "JNJ",
+      "type": "ETF",
+      "entry_date": "2026-06-12",
+      "entry_price": 240.0,
+      "current_price": 240.87,
+      "currency": "USD",
+      "pnl": 0.87,
+      "pnl_pct": 0.36,
+      "strategy": "sector_rotation",
+      "direction": "long",
+      "rationale": "Healthcare - 1100x OI call flow. DS Pro pick.",
+      "asset_class": "STOCK"
+    },
+    {
+      "ticker": "FXY",
+      "type": "ETF",
+      "entry_date": "2026-06-12",
+      "entry_price": 57.0,
+      "current_price": 57.26,
+      "currency": "USD",
+      "pnl": 0.26,
+      "pnl_pct": 0.46,
+      "strategy": "sector_rotation",
+      "direction": "long",
+      "rationale": "Yen forex hedge. DS Pro macro.",
+      "asset_class": "FOREX"
+    },
+    {
+      "ticker": "GLD",
+      "type": "ETF",
+      "entry_date": "2026-06-12",
+      "entry_price": 380.0,
+      "current_price": 386.54,
+      "currency": "USD",
+      "pnl": 6.54,
+      "pnl_pct": 1.72,
+      "strategy": "sector_rotation",
+      "direction": "long",
+      "rationale": "Gold commodity hedge - Geopolitical HIGH risk. DS Pro risk alert driven.",
+      "asset_class": "COMMODITY"
+    },
+    {
+      "ticker": "AMZN",
+      "type": "Option",
+      "entry_date": "2026-06-12",
+      "entry_price": 8.5,
+      "current_price": 8.5,
+      "currency": "USD",
+      "pnl": 0.0,
+      "pnl_pct": 0.0,
+      "strategy": "momentum_options",
+      "direction": "long",
+      "rationale": "AMZN PUT 7/17 $305 - 2270x OI, $11.6M premium. DS Pro top signal: downside protection flowing.",
+      "asset_class": "OPTION",
+      "option_strike": 305,
+      "option_expiration": "2026-07-17",
+      "option_days_to_expiry": 34
+    }
+  ],
+  "recent_trades": [
+    {
+      "ticker": "IBIT",
+      "type": "ETF",
+      "asset_class": "CRYPTO",
+      "direction": "long",
+      "pnl_pct": -13.16,
+      "pnl_usd": -5.46,
+      "entry_price": 41.5,
+      "exit_price": 36.04,
+      "currency": "USD",
+      "strategy": "sector_rotation",
+      "entry_date": "2026-06-12T13:45:12.594420",
+      "exit_date": "2026-06-12T13:45:14.026897",
+      "rationale": "Bitcoin ETF - RSI 29 oversold.",
+      "exit_rationale": "STOP: Hard stop hit at -12.9% (limit 3%)"
+    }
+  ]
+}

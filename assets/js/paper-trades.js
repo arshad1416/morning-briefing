@@ -212,7 +212,19 @@ const PaperTrades = {
     }
 
     // ── Live Open Positions ──
-    html += '<h2 class="section-title" style="margin-top:24px">Open Positions</h2>';
+    // Currency toggle
+    const fxRate = data.fx_rate_usdcad || 1.38;
+    const storedPref = localStorage.getItem('preferredCurrency') || 'native';
+    html += `<div style="display:flex;align-items:center;justify-content:space-between;margin-top:24px;margin-bottom:8px">
+      <h2 class="section-title" style="margin:0">Open Positions</h2>
+      <div style="display:flex;align-items:center;gap:6px;font-size:0.75rem">
+        <span style="color:var(--text-muted)">Display:</span>
+        <button id="cur-toggle" style="padding:3px 10px;border-radius:4px;border:1px solid var(--border);background:${storedPref === 'native' ? 'var(--green-bg)' : 'var(--bg-inset)'};color:var(--text-body);cursor:pointer;font-size:0.75rem;font-weight:600">
+          ${storedPref === 'native' ? 'Native Currency' : storedPref === 'USD' ? 'USD' : 'CAD'}
+        </button>
+        <span style="color:var(--text-muted);font-size:0.7rem">FX: 1 USD = ${fxRate.toFixed(2)} CAD</span>
+      </div>
+    </div>`;
     if (data?.open_positions?.length) {
       // Asset class breakdown summary
       const _acCounts = {};
@@ -233,9 +245,18 @@ const PaperTrades = {
       }).forEach(t => {
         const pnlCls = t.pnl_pct > 0 ? 'positive' : t.pnl_pct < 0 ? 'negative' : '';
         const status = t.pnl_pct > 5 ? '✅ In Profit' : t.pnl_pct > 2 ? '✅ Profitable' : t.pnl_pct > 0 ? '⏳ Pending' : t.pnl_pct > -3 ? '⏳ Watching' : t.pnl_pct > -7 ? '⚠️ At Risk' : '🔴 Stop Zone';
-        const cur = t.currency || 'USD';
-        const entryDisplay = '$' + t.entry_price.toFixed(2) + ' ' + cur;
-        const currDisplay = '$' + t.current_price.toFixed(2) + ' ' + cur;
+        const nativeCur = t.currency || 'USD';
+        const pref = localStorage.getItem('preferredCurrency') || 'native';
+        let displayCur, entryVal, currVal;
+        if (pref === 'USD') {
+          displayCur = 'USD'; entryVal = t.entry_price_usd ?? t.entry_price; currVal = t.current_price_usd ?? t.current_price;
+        } else if (pref === 'CAD') {
+          displayCur = 'CAD'; entryVal = t.entry_price_cad ?? t.entry_price; currVal = t.current_price_cad ?? t.current_price;
+        } else {
+          displayCur = nativeCur; entryVal = t.entry_price; currVal = t.current_price;
+        }
+        const entryDisplay = '$' + (entryVal || 0).toFixed(2) + ' ' + displayCur;
+        const currDisplay = '$' + (currVal || 0).toFixed(2) + ' ' + displayCur;
         const isOption = (t.asset_class || '').toUpperCase() === 'OPTION';
         // For options, show strike + expiry instead of P&L
         let pnlDisplay;
@@ -414,9 +435,18 @@ const PaperTrades = {
         const cls = (t.pnl_pct > 0 || t.pnl_usd > 0) ? 'positive' : (t.pnl_pct < 0 || t.pnl_usd < 0) ? 'negative' : '';
         const status = 'Closed';
         const statusCls = 'badge-green';
-        const cur = t.currency || 'USD';
-        const entryStr = t.entry_price ? `$${t.entry_price.toFixed(2)} ${cur}` : '—';
-        const exitStr = t.exit_price ? `$${t.exit_price.toFixed(2)} ${cur}` : '—';
+        const nativeCur = t.currency || 'USD';
+        const pref2 = localStorage.getItem('preferredCurrency') || 'native';
+        let dCur, eVal, xVal;
+        if (pref2 === 'USD') {
+          dCur = 'USD'; eVal = t.entry_price_usd ?? t.entry_price; xVal = t.exit_price_usd ?? t.exit_price;
+        } else if (pref2 === 'CAD') {
+          dCur = 'CAD'; eVal = t.entry_price_cad ?? t.entry_price; xVal = t.exit_price_cad ?? t.exit_price;
+        } else {
+          dCur = nativeCur; eVal = t.entry_price; xVal = t.exit_price;
+        }
+        const entryStr = eVal ? `$${(eVal || 0).toFixed(2)} ${dCur}` : '—';
+        const exitStr = xVal ? `$${(xVal || 0).toFixed(2)} ${dCur}` : '—';
         const entryDT = t.entry_date ? (() => { try { var d = new Date(t.entry_date.replace('Z','').replace('T',' ')); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '<br><span style=\"font-size:0.7rem;color:var(--text-muted)\">' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '</span>'; } catch(e) { return t.entry_date.slice(0,10); } })() : '—';
         const exitDT = t.exit_date ? (() => { try { var d = new Date(t.exit_date.replace('Z','').replace('T',' ')); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) + '<br><span style=\"font-size:0.7rem;color:var(--text-muted)\">' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + '</span>'; } catch(e) { return t.exit_date.slice(0,10); } })() : '—';
         const hoverReason = Utils.esc(t.reason || t.rationale || '');
@@ -505,5 +535,16 @@ const PaperTrades = {
         modal.onclick = function(e) { if (e.target === modal) modal.style.display = 'none'; };
       });
     });
+
+    // ── Currency toggle handler ──
+    const toggleBtn = document.getElementById('cur-toggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const cur = localStorage.getItem('preferredCurrency') || 'native';
+        const next = cur === 'native' ? 'USD' : cur === 'USD' ? 'CAD' : 'native';
+        localStorage.setItem('preferredCurrency', next);
+        this.render(app); // re-render with new currency
+      });
+    }
   }
 };
