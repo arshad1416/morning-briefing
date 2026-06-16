@@ -1,14 +1,14 @@
 {
   "meta": {
-    "generated_at": "2026-06-12T20:31:48.445802+00:00",
+    "generated_at": "2026-06-16T18:40:40.583128+00:00",
     "model": "ds-pro (tier1)",
-    "confidence": 8,
-    "market_regime": "transitional",
+    "confidence": 6,
+    "market_regime": "risk-on",
     "tokens_used": {
-      "prompt_tokens": 1985,
-      "completion_tokens": 5689,
-      "total_tokens": 7674,
-      "cost": 0.02256362,
+      "prompt_tokens": 2195,
+      "completion_tokens": 3752,
+      "total_tokens": 5947,
+      "cost": 0.00843813,
       "is_byok": false,
       "prompt_tokens_details": {
         "cached_tokens": 0,
@@ -17,127 +17,106 @@
         "video_tokens": 0
       },
       "cost_details": {
-        "upstream_inference_cost": 0.02256362,
-        "upstream_inference_prompt_cost": 0.0033348,
-        "upstream_inference_completions_cost": 0.01922882
+        "upstream_inference_cost": 0.00843813,
+        "upstream_inference_prompt_cost": 0.00190965,
+        "upstream_inference_completions_cost": 0.00652848
       },
       "completion_tokens_details": {
-        "reasoning_tokens": 4144,
+        "reasoning_tokens": 2369,
         "image_tokens": 0,
         "audio_tokens": 0
       }
     },
-    "analysis_type": "eod"
+    "analysis_type": "morning"
   },
   "market_pulse": {
-    "one_liner": "Markets climb but rotation fears mount as AI bubble shows cracks; energy and safe havens lead.",
-    "sentiment_score": 6,
+    "one_liner": "Low VIX and heavy SPY call buying suggest bullish momentum despite mixed headlines.",
+    "sentiment_score": 7,
     "key_levels": {
       "SPY": {
-        "support": 740,
-        "resistance": 755
+        "support": 753,
+        "resistance": 756
       },
       "QQQ": {
-        "support": 595,
-        "resistance": 615
+        "support": 740,
+        "resistance": 750
       }
     },
-    "sector_rotation": "Rotation from AI/tech into energy, gold, defensives as 'AI bubble showing cracks' headline circulates."
+    "sector_rotation": "Rotating into defensive sectors (healthcare, energy, gold, yen) even amid risk-on signals, indicating cautious positioning."
   },
   "held_position_review": [
     {
       "ticker": "XLE",
       "action": "HOLD",
-      "rationale": "Bullish oil news but near-term technical weakness; hold for rotation into energy.",
-      "target": 60.0,
-      "stop": 56.5,
+      "rationale": "New sector rotation entry; energy benefits from geopolitical tensions, hold for trend.",
+      "target": 59.85,
+      "stop": 56.4,
       "risk_reward": "2.0:1"
     },
     {
       "ticker": "JNJ",
       "action": "HOLD",
-      "rationale": "Strong defensive demand and unusual call buying supports upside.",
-      "target": 245.0,
-      "stop": 238.0,
-      "risk_reward": "1.7:1"
+      "rationale": "Defensive healthcare holding, initiated today; hold as market hedges.",
+      "target": 250.5,
+      "stop": 236.05,
+      "risk_reward": "2.0:1"
     },
     {
       "ticker": "FXY",
       "action": "HOLD",
-      "rationale": "Yen strengthens on risk aversion; geopolitical tensions support safe haven.",
-      "target": 58.0,
-      "stop": 56.5,
-      "risk_reward": "1.0:1"
+      "rationale": "Yen exposure for risk-off diversification; hold as geopolitical hedge.",
+      "target": 59.55,
+      "stop": 56.11,
+      "risk_reward": "2.0:1"
     },
     {
       "ticker": "GLD",
       "action": "HOLD",
-      "rationale": "Gold rallying on geopolitical risk and lower real rates; momentum strong.",
-      "target": 395.0,
-      "stop": 382.0,
-      "risk_reward": "1.5:1"
-    },
-    {
-      "ticker": "AMZN",
-      "action": "EXIT",
-      "rationale": "Massive put flow with 2270x average volume signals smart money hedging; exit to protect capital.",
-      "target": 0.0,
-      "stop": 0.0,
-      "risk_reward": "0:1"
+      "rationale": "Gold as safe haven; geopolitical uncertainty supports price, hold.",
+      "target": 402.0,
+      "stop": 378.81,
+      "risk_reward": "2.0:1"
     }
   ],
   "opportunities": [
     {
-      "ticker": "AMZN",
+      "ticker": "RY.TO",
       "direction": "SHORT",
-      "thesis": "Massive put buying with 2270x average volume indicates institutional hedging for downside; AMZN may drop sharply.",
+      "thesis": "Overbought RSI 76.3 on screener, near high, likely mean reversion.",
       "entry_zone": [
-        295,
-        305
+        138,
+        142
       ],
-      "catalyst": "Upcoming earnings or tech rotation sell-off.",
-      "timeframe": "1-2 weeks",
-      "conviction": "high"
+      "catalyst": "RSI overbought signal, profit-taking potential.",
+      "timeframe": "1-5 days",
+      "conviction": "medium"
     },
     {
-      "ticker": "XLC",
+      "ticker": "IBM",
       "direction": "LONG",
-      "thesis": "Unusual call buying on communication services ETF suggests sector strength.",
+      "thesis": "Slow, steady with room for multiple expansion per Seeking Alpha upgrade, value play.",
       "entry_zone": [
-        112,
-        114
+        170,
+        175
       ],
-      "catalyst": "Rotation out of overvalued tech into communication services.",
-      "timeframe": "1-2 weeks",
+      "catalyst": "Analyst upgrade, rotation into value stocks.",
+      "timeframe": "2-4 weeks",
       "conviction": "medium"
     }
   ],
   "risk_alerts": [
     {
-      "severity": "high",
-      "alert": "Unusual AMZN put flow with 2270x vol/OI signals big money hedging; AMZN may decline sharply.",
-      "affected_positions": [
-        "AMZN"
-      ]
-    },
-    {
       "severity": "medium",
-      "alert": "Geopolitical escalation in Ukraine could spike volatility, benefiting GLD/FXY but hurting risk assets; manage stops tightly.",
+      "alert": "Escalating Ukraine rhetoric may spike energy prices and safe-haven demand, boosting XLE/GLD but increasing overall volatility.",
       "affected_positions": [
         "XLE",
-        "AMZN"
+        "GLD"
       ]
     },
     {
       "severity": "low",
-      "alert": "VIX at 18.21 suggests complacency; a spike could trigger sharp sell-off across portfolio.",
-      "affected_positions": [
-        "XLE",
-        "JNJ",
-        "FXY",
-        "GLD",
-        "AMZN"
-      ]
+      "alert": "Overbought Canadian banks could see quick pullbacks; avoid long entries in that space.",
+      "affected_positions": []
     }
   ],
   "geopolitical_impact": [
@@ -145,70 +124,69 @@
       "headline": "Putin says there is 'no point' meeting Zelensky over ending Ukraine war",
       "source": "BBC World",
       "impact_rating": "medium",
-      "rationale": "Prolonged war sustains energy and defense sector support, benefiting XLE and safe havens."
+      "rationale": "Prolongs conflict, supporting energy prices (XLE) and safe havens (GLD, FXY)."
     },
     {
       "headline": "Ukraine strikes cargo ships and admits Romania drone blast",
       "source": "BBC World",
       "impact_rating": "medium",
-      "rationale": "Escalation risk lifts oil prices (XLE) and safe haven demand (GLD, FXY)."
+      "rationale": "Escalation risks disrupt commodity supply chains, boosting energy and gold."
     },
     {
       "headline": "Astronauts return to ISS after sheltering during air leak repair attempt",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "No direct market impact on held positions or strategy."
+      "rationale": "No direct market impact."
     },
     {
       "headline": "Fury in France after child murder suspect's criminal record released",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "Localized political event; negligible market impact."
+      "rationale": "Domestic legal issue, no market consequences."
     },
     {
       "headline": "Nearly 50 people die of thirst in Sahara desert after lorry breaks down",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "Humanitarian tragedy with no immediate market implications."
+      "rationale": "Humanitarian tragedy without market implications."
     },
     {
       "headline": "Iran footballers issued US visas for World Cup, says White House",
       "source": "Al Jazeera",
       "impact_rating": "low",
-      "rationale": "Minor positive diplomatic gesture; not a catalyst for broad markets."
+      "rationale": "Minor diplomatic gesture, negligible market effect."
     },
     {
       "headline": "Zelenskyy: Putin choosing war by rejecting offer for in-person talks",
       "source": "Al Jazeera",
       "impact_rating": "medium",
-      "rationale": "Reinforces prolonged conflict narrative, supporting energy and defense sectors."
+      "rationale": "Confirms diplomatic deadlock, reinforcing safe-haven asset demand."
     },
     {
       "headline": "Trump hails jobs surge, says Iran talks \u2018going well\u2019",
       "source": "Al Jazeera",
       "impact_rating": "low",
-      "rationale": "Positive but non-committal; unlikely to shift near-term portfolio dynamics."
+      "rationale": "Positive sentiment but non-specific; minor risk-on tailwind."
     }
   ],
-  "calendar": [
-    {
-      "date": "2025-09-17",
-      "event": "FOMC rate decision",
-      "impact": "high"
-    }
-  ],
+  "calendar": [],
   "portfolio_actions": {
     "immediate": [
-      "Exit AMZN position to avoid downside risk from massive put flow.",
-      "Set trailing stop on GLD at $382 to protect gains."
+      "Hold all positions; no changes required on day 0 of sector rotation.",
+      "Monitor XLE and GLD for geopolitical breakout moves."
     ],
     "watchlist": [
-      "MSFT",
-      "META",
-      "XLC"
+      "RY.TO",
+      "IBM",
+      "NVDA"
     ],
     "avoid": [
-      "AMZN"
+      "RY.TO",
+      "BNS.TO",
+      "BMO.TO",
+      "SLF.TO",
+      "MFC.TO",
+      "GWO.TO"
     ]
   }
 }
