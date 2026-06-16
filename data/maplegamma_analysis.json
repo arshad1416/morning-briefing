@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "generated_at": "2026-06-16T11:25:36.101278+00:00",
+    "experts_consulted": 4,
+    "experts_succeeded": 1,
+    "total_cost_usd": 0.00122,
+    "status": "insufficient_experts"
+  },
+  "expert_outputs": {
+    "deepseek_quantitative": "auth_error",
+    "mimo_risk_contrarian": "auth_error",
+    "kimi_momentum": "auth_error",
+    "qwen_trade_selector": "### Trade 1: SPY Pullback Long (Support Bounce)\n- **Ticker:** SPY\n- **Direction:** Long\n- **Entry:** $731.50 (Limit order near max GEX support)\n- **Stop Loss:** $726.50 \n- **Target:** $745.00\n- **Conviction:** 8/10\n- **Rationale:** The GEX data highlights a massive Put Open Interest (165,097 contracts) at the $730.00 strike, making it a formidable support level. With the gamma regime classified as \"bullish,\" market makers are likely to buy dips to hedge, creating a strong floor. This trade capitalizes on a pullback to this gamma flip/support zone with a tight stop just below the structural level.\n\n### Trade 2: SPY Breakout Long (Momentum to Next Strike)\n- **Ticker:** SPY\n- **Direction:** Long\n- **Entry:** $738.50 (Stop-limit order just above current $737.89 price)\n- **Stop Loss:** $733.00\n- **Target:** $749.50\n- **Conviction:** 7/10\n- **Rationale:** With SPY currently hovering at $737.89 and the broader regime in a \"transitional/bullish\" state, momentum is likely to carry the price toward the next major options strike at $750.00. This trade captures the immediate upside breakout, targeting just below the $750 psychological and structural resistance level while keeping risk contained below the current consolidation zone."
+  }
+}
