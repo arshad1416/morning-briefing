@@ -1,59 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-16T19:47:52.536542+00:00",
+    "generated_at": "2026-06-17T11:25:41.158009+00:00",
     "experts_consulted": 4,
-    "experts_succeeded": 4,
-    "total_cost_usd": 0.001342,
-    "aggregator": "gemini-3.5-flash"
+    "experts_succeeded": 1,
+    "total_cost_usd": 0.001408,
+    "status": "insufficient_experts"
   },
-  "market_pulse": {
-    "one_liner": "Bullish gamma suppresses volatility near SPY 730, but fractured breadth and defensive drags keep conviction mixed.",
-    "score": 7,
-    "regime": "bullish",
-    "confidence": 7
-  },
-  "key_levels": {
-    "SPY": {
-      "support": 730.0,
-      "resistance": 750.0
-    },
-    "QQQ": {
-      "support": 508.0,
-      "resistance": 538.0
-    }
-  },
-  "gamma_landscape": {
-    "pinning_zone": 730.0,
-    "notes": "Massive GEX concentration of 201k contracts at the 730.0 strike acts as a strong support and downside magnet, compressing volatility and encouraging mean-reversion."
-  },
-  "risks": [
-    "Fragility if SPY 730.0 support is breached, potentially triggering dealer short-gamma hedging and accelerated selling.",
-    "Fractured market breadth with capital rotating away from cyclical value (XLE) and traditional defensives (JNJ).",
-    "Portfolio mismatch where defensive holdings (GLD, FXY) clash with the prevailing risk-on regime."
-  ],
-  "trades": [
-    {
-      "ticker": "SPY",
-      "direction": "long",
-      "entry": 738.0,
-      "stop": 728.5,
-      "target": 750.0,
-      "conviction": 8,
-      "source": "Qwen 3.7 Max"
-    },
-    {
-      "ticker": "QQQ",
-      "direction": "long",
-      "entry": 518.5,
-      "stop": 508.0,
-      "target": 538.0,
-      "conviction": 7,
-      "source": "Qwen 3.7 Max"
-    }
-  ],
-  "disagreements": [
-    "MiMo views the defensive tilt (GLD, FXY) as clashing with the risk-on regime, whereas Kimi notes GLD is one of the few assets generating reliable momentum.",
-    "DeepSeek expects range-bound, pinned price action around 730, while Qwen and DS Pro's risk-on signal suggest an upward drift toward 750."
-  ],
-  "narrative": "The market exhibits a low-volatility, risk-on posture anchored by a massive gamma wall at SPY 730, which serves as a strong support level. While underlying breadth remains fractured\u2014evidenced by underperformance in the portfolio's XLE and JNJ holdings\u2014adding high-beta tech exposure via QQQ balances the defensive drag. We favor long positions targeting SPY 750, utilizing the 730 level as a tight risk-management anchor."
+  "expert_outputs": {
+    "deepseek_quantitative": "auth_error",
+    "kimi_momentum": "auth_error",
+    "mimo_risk_contrarian": "auth_error",
+    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF) - LONG\n- **Entry:** $735.50 (Buy on a minor pullback toward the GEX support zone)\n- **Stop Loss:** $728.50 (Strict invalidation below the massive 730 Put GEX wall)\n- **Target:** $749.00 (Upper boundary of the current gamma range, just below the 750 strike)\n- **Conviction:** 8/10\n- **Rationale:** The DS Pro analysis indicates a \"risk-on\" market regime, and the SPY GEX data shows a \"bullish\" gamma regime. The 730 strike holds the maximum GEX value (201,055), acting as a formidable support floor where dealer hedging will likely buy dips. We enter slightly above this floor to capture the upside move toward the next major magnetic strike at 750. \n\n### Trade 2: GLD (Gold ETF) - LONG (Add to Winner)\n- **Entry:** $394.50 (Scale in on a slight retracement from current levels)\n- **Stop Loss:** $384.00 (Placed below your original entry of $386.54 and key structural support)\n- **Target:** $412.00 (Trend continuation target based on current momentum)\n- **Conviction:** 7/10\n- **Rationale:** GLD is your strongest performing open position (+$11.09 P&L) and is showing clear relative strength. Even in a broader \"risk-on\" environment, gold is maintaining a strong bid. Adding on a pullback allows you to pyramid into a winning trend while keeping the stop safely below your initial cost basis to protect overall portfolio capital."
+  }
 }
