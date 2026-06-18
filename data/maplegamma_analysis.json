@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-17T11:25:41.158009+00:00",
+    "generated_at": "2026-06-18T11:25:33.922598+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001408,
+    "total_cost_usd": 0.001137,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
-    "deepseek_quantitative": "auth_error",
-    "kimi_momentum": "auth_error",
     "mimo_risk_contrarian": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF) - LONG\n- **Entry:** $735.50 (Buy on a minor pullback toward the GEX support zone)\n- **Stop Loss:** $728.50 (Strict invalidation below the massive 730 Put GEX wall)\n- **Target:** $749.00 (Upper boundary of the current gamma range, just below the 750 strike)\n- **Conviction:** 8/10\n- **Rationale:** The DS Pro analysis indicates a \"risk-on\" market regime, and the SPY GEX data shows a \"bullish\" gamma regime. The 730 strike holds the maximum GEX value (201,055), acting as a formidable support floor where dealer hedging will likely buy dips. We enter slightly above this floor to capture the upside move toward the next major magnetic strike at 750. \n\n### Trade 2: GLD (Gold ETF) - LONG (Add to Winner)\n- **Entry:** $394.50 (Scale in on a slight retracement from current levels)\n- **Stop Loss:** $384.00 (Placed below your original entry of $386.54 and key structural support)\n- **Target:** $412.00 (Trend continuation target based on current momentum)\n- **Conviction:** 7/10\n- **Rationale:** GLD is your strongest performing open position (+$11.09 P&L) and is showing clear relative strength. Even in a broader \"risk-on\" environment, gold is maintaining a strong bid. Adding on a pullback allows you to pyramid into a winning trend while keeping the stop safely below your initial cost basis to protect overall portfolio capital."
+    "kimi_momentum": "auth_error",
+    "deepseek_quantitative": "auth_error",
+    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF)\n- **Direction:** Long\n- **Entry:** $735.50 (Buy on a slight intraday pullback)\n- **Stop Loss:** $728.50 (Placed safely below the massive $730 Max GEX strike to avoid gamma-induced volatility)\n- **Target:** $748.00 \n- **Conviction:** 7/10\n- **Rationale:** The DS Pro analysis indicates a \"risk-on\" market regime, and the GEX data shows a \"bullish\" gamma regime for SPY. The massive Put open interest at the $730 strike (Max GEX) acts as a strong magnetic support level where market makers will likely buy dips to hedge. Entering on a minor pullback toward the mid-$730s offers a favorable risk/reward ratio, capitalizing on the broader risk-on momentum while using the $730 gamma wall as a structural floor.\n\n### Trade 2: QQQ (Nasdaq 100 ETF)\n- **Direction:** Long\n- **Entry:** $518.00 \n- **Stop Loss:** $504.50\n- **Target:** $538.00\n- **Conviction:** 6/10\n- **Rationale:** In a confirmed \"risk-on\" environment, large-cap tech and growth stocks typically lead the broader market. QQQ acts as a high-beta proxy to SPY. This trade aims to capture the upside beta of the current market regime. The stop is placed below recent structural consolidation zones to allow for normal intraday noise, while the target aims for a roughly 1:1.5 risk/reward profile as capital rotates into growth sectors."
   }
 }
