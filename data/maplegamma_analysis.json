@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-18T11:25:33.922598+00:00",
+    "generated_at": "2026-06-19T11:25:56.495871+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001137,
+    "total_cost_usd": 0.001397,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
-    "mimo_risk_contrarian": "auth_error",
-    "kimi_momentum": "auth_error",
     "deepseek_quantitative": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF)\n- **Direction:** Long\n- **Entry:** $735.50 (Buy on a slight intraday pullback)\n- **Stop Loss:** $728.50 (Placed safely below the massive $730 Max GEX strike to avoid gamma-induced volatility)\n- **Target:** $748.00 \n- **Conviction:** 7/10\n- **Rationale:** The DS Pro analysis indicates a \"risk-on\" market regime, and the GEX data shows a \"bullish\" gamma regime for SPY. The massive Put open interest at the $730 strike (Max GEX) acts as a strong magnetic support level where market makers will likely buy dips to hedge. Entering on a minor pullback toward the mid-$730s offers a favorable risk/reward ratio, capitalizing on the broader risk-on momentum while using the $730 gamma wall as a structural floor.\n\n### Trade 2: QQQ (Nasdaq 100 ETF)\n- **Direction:** Long\n- **Entry:** $518.00 \n- **Stop Loss:** $504.50\n- **Target:** $538.00\n- **Conviction:** 6/10\n- **Rationale:** In a confirmed \"risk-on\" environment, large-cap tech and growth stocks typically lead the broader market. QQQ acts as a high-beta proxy to SPY. This trade aims to capture the upside beta of the current market regime. The stop is placed below recent structural consolidation zones to allow for normal intraday noise, while the target aims for a roughly 1:1.5 risk/reward profile as capital rotates into growth sectors."
+    "kimi_momentum": "auth_error",
+    "mimo_risk_contrarian": "auth_error",
+    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF)\n- **Direction:** Long\n- **Entry:** $738.00\n- **Stop Loss:** $727.50\n- **Target:** $749.50\n- **Conviction:** 8/10\n- **Rationale:** The options market indicates a \"bullish\" gamma regime for SPY with a massive concentration of put open interest at the $730 strike (Max GEX), acting as a strong support floor. With the broader macro regime identified as \"risk-on,\" the path of least resistance is higher. The stop is placed safely below the $730 gamma wall to invalidate the thesis, while the target sits just below the next major strike/magnet at $750. \n\n### Trade 2: QQQ (Nasdaq 100 ETF)\n- **Direction:** Long\n- **Entry:** $635.00\n- **Stop Loss:** $612.00\n- **Target:** $668.00\n- **Conviction:** 7/10\n- **Rationale:** In a confirmed \"risk-on\" market environment, growth and technology sectors typically exhibit the highest beta and outperform the broader market. This trade acts as a leveraged proxy to the SPY long setup. The stop allows for standard volatility shakeouts, while the target aims for a ~5% move as capital rotates into tech amid bullish sentiment. *(Note: Entry/Stop/Target prices are scaled proportionally to SPY's current structure).*"
   }
 }
