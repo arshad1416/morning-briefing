@@ -30,12 +30,34 @@ const Dashboard = {
       State.get('verdict', '/data/verdict.json').catch(() => null),
     ]);
 
+
+    // Track which fetches failed for error indicators
+    var fetchErrors = [];
+    if (!marketData) fetchErrors.push('Market data');
+    if (!tradesData) fetchErrors.push('Portfolio');
+    if (!analysisData) fetchErrors.push('Analysis');
+    if (!gexData) fetchErrors.push('GEX/DEX');
+    if (!verdictData) fetchErrors.push('Verdict');
+
     let html = '';
     const ms = marketData?.market_summary || {};
     const vix = ms.vix;
 
     // ── 1. REGIME BADGE ──
     html += this._regimeBadge(vix, ms);
+
+    // Staleness / time indicator (mirrors _buildHTML pattern)
+    if (marketData?.generated_at) {
+      if (State.isStale(marketData.generated_at)) {
+        html += '<div class="stale-banner" style="margin:4px 0 8px 0">⚠ Data from ' + new Date(marketData.generated_at).toLocaleString() + ' — may be stale</div>';
+      }
+      html += '<div style="text-align:right;color:var(--text-muted);font-size:0.75rem;padding:2px 0 6px 0">As of ' + new Date(marketData.generated_at).toLocaleString() + '</div>';
+    }
+
+    // Error indicator banner
+    if (fetchErrors.length > 0) {
+      html += '<div style="background:rgba(244,67,54,0.1);border:1px solid rgba(244,67,54,0.3);border-radius:6px;padding:6px 10px;margin:4px 0 8px 0;font-size:0.8rem;color:var(--red)">⚠ Some data unavailable: ' + fetchErrors.join(', ') + '</div>';
+    }
 
     // ── 1.5 'SO WHAT' VERDICT BAR ──
     // QWEN-ADD: Conviction from model, narrative from LLM — visually separated
@@ -120,11 +142,7 @@ const Dashboard = {
         const maxDays = 5;
         const timeLeft = Math.max(0, maxDays - daysHeld);
         
-        // Sparkline: 5-point fake history around entry price
-        const pts = Array.from({length: 5}, (_, i) => Math.floor(Math.random() * 18 + 2));
-        const sparkPts = pts.map((v, i) => `${i * 12},${Math.max(0, 20 - v)}`).join(' ');
-        const sparkColor = pos.pnl >= 0 ? 'var(--green)' : 'var(--red)';
-        const sparkline = `<svg width="60" height="20" style="margin:0 8px;vertical-align:middle;flex-shrink:0"><polyline fill="none" stroke="${sparkColor}" stroke-width="1.5" points="${sparkPts}"/></svg>`;
+        // Sparkline removed — was generating fake Math.random() data; real sparklines TBD
         
         // Volume bar
         const volRatio = (pos.volume_ratio || (Math.random() * 2.5 + 0.5));
@@ -139,7 +157,7 @@ const Dashboard = {
         else if (_ac === 'FOREX') _acBadge = '<span style="background:#2196f3;color:#fff;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px;vertical-align:middle">FX</span>';
         else if (_ac === 'COMMODITY') _acBadge = '<span style="background:#ffc107;color:#333;padding:1px 4px;border-radius:3px;font-size:0.55rem;font-weight:700;margin-left:4px;vertical-align:middle">COMM</span>';
         html += `<span class="today-pos-ticker">${Utils.esc(pos.ticker)}${_acBadge}</span>`;
-        html += sparkline;
+        html += '<span style="margin:0 8px;color:var(--text-muted);flex-shrink:0;font-size:0.75rem">—</span>';
         html += `<span class="today-pos-entry">$${Utils.formatPrice(pos.entry_price)}</span>`;
         html += `<span class="today-pos-pnl">${Utils.formatPrice(pos.pnl >= 0 ? '+' : '')}$${Utils.formatPrice(Math.abs(pos.pnl))}</span>`;
         html += `<span class="today-pos-pct ${pnlCls}">(${Utils.formatPct(pos.pnl_pct)})</span>`;
@@ -160,13 +178,13 @@ const Dashboard = {
 
     // ── 4.5 FOMC COUNTDOWN ──
     (function() {
-      var _fomc = new Date('2026-06-17T18:00:00Z');
+      var _fomc = new Date('2026-07-29T18:00:00Z');
       var _cdMs = _fomc.getTime() - Date.now();
       if (_cdMs > 0) {
         var _d = Math.floor(_cdMs / 86400000);
         var _h = Math.floor((_cdMs % 86400000) / 3600000);
         var _m = Math.floor((_cdMs % 3600000) / 60000);
-        html += '<div class="countdown-banner">FOMC in ' + _d + 'd ' + _h + 'h ' + _m + 'm \u00B7 Rate Decision Jun 17, 2026</div>';
+        html += '<div class="countdown-banner">FOMC in ' + _d + 'd ' + _h + 'h ' + _m + 'm \u00B7 Rate Decision Jul 29, 2026</div>';
       }
     })();
 
@@ -279,7 +297,8 @@ const Dashboard = {
   _renderVerdict(v) {
     if (!v) return '';
     const signal = v.signal || 'neutral';
-    const conviction = v.conviction || 0;
+    let conviction = v.conviction || 0;
+    conviction = Math.min(1, Math.max(0, conviction));
     const convictionPct = Math.round(conviction * 100);
     const narrative = v.narrative || '';
 
@@ -324,8 +343,9 @@ const Dashboard = {
 
     // Narrative (FROM LLM — clearly labeled)
     if (narrative) {
+      var narrativeLabel = v.narrative_source === 'rule_template' ? '📋 Market Summary' : '💬 LLM Narrative';
       html += '<div style="flex:2;min-width:200px;border-left:2px solid var(--border-subtle);padding-left:12px">';
-      html += '<div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px">💬 LLM Narrative</div>';
+      html += '<div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px">' + narrativeLabel + '</div>';
       html += `<div style="font-size:0.82rem;color:var(--text-secondary);line-height:1.4">${Utils.esc(narrative)}</div>`;
       html += '</div>';
     }

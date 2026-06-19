@@ -1,6 +1,6 @@
-// app/page.tsx — Dashboard / "The Briefing"
-import { DashboardClient } from './dashboard/dashboard-client';
+// app/page.tsx — Landing page (default route)
+import MapleGammaLanding from '@/components/landing/LandingPage';
 
-export default function DashboardPage() {
-  return <DashboardClient />;
+export default function HomePage() {
+  return <MapleGammaLanding />;
 }

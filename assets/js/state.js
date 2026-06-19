@@ -16,7 +16,8 @@ const State = {
       return cached;
     }
 
-    const data = await Utils.fetchJSON(url);
+    const cacheBustUrl = url + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
+    const data = await Utils.fetchJSON(cacheBustUrl);
     if (data) {
       this._cache[key] = data;
       this._fetchTimestamps[key] = now;
