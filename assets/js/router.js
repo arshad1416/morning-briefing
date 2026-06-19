@@ -37,7 +37,9 @@ const Router = {
     // Try exact match first
     if (this.routes[hash]) {
       try {
-        this.routes[hash](app);
+        Promise.resolve(this.routes[hash](app)).catch(e => {
+          app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
+        });
       } catch(e) {
         app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
       }
@@ -61,7 +63,9 @@ const Router = {
         }
         if (match) {
           try {
-            handler(app, params);
+            Promise.resolve(handler(app, params)).catch(e => {
+              app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
+            });
           } catch(e) {
             app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
           }
