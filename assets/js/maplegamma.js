@@ -19,7 +19,38 @@ const MapleGamma = {
   /* ─────────────────────────────────────────────────────────────
      LANDING PAGE (public, for conversion)
      ───────────────────────────────────────────────────────────── */
-  renderLanding(app) {
+  async renderLanding(app) {
+    app.innerHTML = '<div class="loading">Loading market data...</div>';
+
+    var [mgData, latestData] = await Promise.all([
+      State.get('mg-landing', '/data/maplegamma-data.json').catch(function() { return null; }),
+      State.get('latest-landing', '/data/latest.json').catch(function() { return null; }),
+    ]);
+
+    var spxPrice, spxGexFormatted, tsxPrice, tsxGexFormatted, vix, spxTagClass, tsxTagClass;
+
+    if (mgData && mgData.tickers) {
+      var spx = mgData.tickers.SPX || {};
+      var tsx = mgData.tickers.TSX || {};
+      spxPrice = spx.current_price;
+      spxGexFormatted = spx.total_gex != null ? '\u0393 ' + MapleGamma._fmtGex(spx.total_gex) : '\u0393 \u2014';
+      tsxPrice = tsx.current_price;
+      tsxGexFormatted = tsx.total_gex != null ? '\u0393 ' + MapleGamma._fmtGex(tsx.total_gex) : '\u0393 \u2014';
+      var spxRegime = spx.gamma_regime || 'neutral';
+      var tsxRegime = tsx.gamma_regime || 'neutral';
+      spxTagClass = spxRegime === 'bullish' ? 'bullish' : spxRegime === 'bearish' ? 'bearish' : 'neutral';
+      tsxTagClass = tsxRegime === 'bullish' ? 'bullish' : tsxRegime === 'bearish' ? 'bearish' : 'neutral';
+    } else {
+      spxPrice = null; spxGexFormatted = '\u0393 \u2014';
+      tsxPrice = null; tsxGexFormatted = '\u0393 \u2014';
+      spxTagClass = 'neutral'; tsxTagClass = 'neutral';
+    }
+
+    if (latestData && latestData.market_summary) {
+      vix = latestData.market_summary.vix;
+    } else {
+      vix = null;
+    }
     app.innerHTML = `
       <div class="mg-landing">
         <!-- Hero -->
@@ -45,17 +76,17 @@ const MapleGamma = {
           <div class="mg-hero-stats">
             <div class="mg-hero-stat">
               <div class="ticker">SPX</div>
-              <div class="price">7,609.14</div>
-              <span class="gamma-tag bullish">Γ +1.5B</span>
+              <div class="price">${spxPrice != null ? spxPrice.toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2}) : '—'}</div>
+              <span class="gamma-tag ${spxTagClass}">${spxGexFormatted}</span>
             </div>
             <div class="mg-hero-stat">
               <div class="ticker">TSX</div>
-              <div class="price">35,083.91</div>
-              <span class="gamma-tag bullish">Γ +0.6B</span>
+              <div class="price">${tsxPrice != null ? tsxPrice.toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2}) : '—'}</div>
+              <span class="gamma-tag ${tsxTagClass}">${tsxGexFormatted}</span>
             </div>
             <div class="mg-hero-stat">
               <div class="ticker">VIX</div>
-              <div class="price">15.76</div>
+              <div class="price">${vix != null ? vix.toFixed(2) : '—'}</div>
               <span class="gamma-tag neutral">Γ neutral</span>
             </div>
           </div>
