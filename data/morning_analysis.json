@@ -1,14 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-16T18:40:40.583128+00:00",
-    "model": "ds-pro (tier1)",
-    "confidence": 6,
-    "market_regime": "risk-on",
+    "generated_at": "2026-06-21T06:56:05.380312+00:00",
+    "model": "qwen-max (tier2)",
+    "confidence": 7,
+    "market_regime": "risk-off",
+    "fallback": true,
     "tokens_used": {
-      "prompt_tokens": 2195,
-      "completion_tokens": 3752,
-      "total_tokens": 5947,
-      "cost": 0.00843813,
+      "prompt_tokens": 2338,
+      "completion_tokens": 5484,
+      "total_tokens": 7822,
+      "cost": 0.0234875,
       "is_byok": false,
       "prompt_tokens_details": {
         "cached_tokens": 0,
@@ -17,12 +18,12 @@
         "video_tokens": 0
       },
       "cost_details": {
-        "upstream_inference_cost": 0.00843813,
-        "upstream_inference_prompt_cost": 0.00190965,
-        "upstream_inference_completions_cost": 0.00652848
+        "upstream_inference_cost": 0.0234875,
+        "upstream_inference_prompt_cost": 0.0029225,
+        "upstream_inference_completions_cost": 0.020565
       },
       "completion_tokens_details": {
-        "reasoning_tokens": 2369,
+        "reasoning_tokens": 3599,
         "image_tokens": 0,
         "audio_tokens": 0
       }
@@ -30,163 +31,185 @@
     "analysis_type": "morning"
   },
   "market_pulse": {
-    "one_liner": "Low VIX and heavy SPY call buying suggest bullish momentum despite mixed headlines.",
-    "sentiment_score": 7,
+    "one_liner": "Elevated VIX and heavy tech put flow signal a risk-off rotation into defensives and commodities amid sticky inflation and geopolitical friction.",
+    "sentiment_score": 4,
     "key_levels": {
       "SPY": {
-        "support": 753,
-        "resistance": 756
+        "support": 510.0,
+        "resistance": 530.0
       },
       "QQQ": {
-        "support": 740,
-        "resistance": 750
+        "support": 440.0,
+        "resistance": 460.0
       }
     },
-    "sector_rotation": "Rotating into defensive sectors (healthcare, energy, gold, yen) even amid risk-on signals, indicating cautious positioning."
+    "sector_rotation": "Capital is fleeing mega-cap tech and rotating into Canadian financials and safe-haven commodities."
   },
   "held_position_review": [
     {
       "ticker": "XLE",
-      "action": "HOLD",
-      "rationale": "New sector rotation entry; energy benefits from geopolitical tensions, hold for trend.",
-      "target": 59.85,
-      "stop": 56.4,
-      "risk_reward": "2.0:1"
+      "action": "TRIM",
+      "rationale": "Cut exposure to weak energy sector to fund stronger safe-haven trades as geopolitical oil premium fades.",
+      "target": 52.0,
+      "stop": 55.0,
+      "risk_reward": "0.5:1"
     },
     {
       "ticker": "JNJ",
       "action": "HOLD",
-      "rationale": "Defensive healthcare holding, initiated today; hold as market hedges.",
-      "target": 250.5,
-      "stop": 236.05,
-      "risk_reward": "2.0:1"
+      "rationale": "Healthcare is a classic risk-off haven; hold for mean reversion as VIX spikes and defensive bids increase.",
+      "target": 245.0,
+      "stop": 220.0,
+      "risk_reward": "1.9:1"
     },
     {
       "ticker": "FXY",
-      "action": "HOLD",
-      "rationale": "Yen exposure for risk-off diversification; hold as geopolitical hedge.",
-      "target": 59.55,
-      "stop": 56.11,
-      "risk_reward": "2.0:1"
+      "action": "EXIT",
+      "rationale": "Yen weakness persists and current price data is missing; close position immediately to preserve cash.",
+      "target": 0.0,
+      "stop": 0.0,
+      "risk_reward": "0.0:1"
     },
     {
       "ticker": "GLD",
-      "action": "HOLD",
-      "rationale": "Gold as safe haven; geopolitical uncertainty supports price, hold.",
-      "target": 402.0,
-      "stop": 378.81,
-      "risk_reward": "2.0:1"
+      "action": "ADD",
+      "rationale": "Gold is the premier safe-haven asset benefiting from VIX expansion, sticky inflation, and geopolitical uncertainty.",
+      "target": 400.0,
+      "stop": 380.0,
+      "risk_reward": "1.9:1"
     }
   ],
   "opportunities": [
     {
-      "ticker": "RY.TO",
+      "ticker": "AMZN",
       "direction": "SHORT",
-      "thesis": "Overbought RSI 76.3 on screener, near high, likely mean reversion.",
+      "thesis": "Unusual options flow shows massive put buying at $275, $270, and $265 strikes with over $25M in premium, indicating institutional downside hedging.",
       "entry_zone": [
-        138,
-        142
+        270.0,
+        275.0
       ],
-      "catalyst": "RSI overbought signal, profit-taking potential.",
-      "timeframe": "1-5 days",
-      "conviction": "medium"
+      "catalyst": "Prime Day disappointment or broader tech multiple compression.",
+      "timeframe": "2 weeks",
+      "conviction": "high"
     },
     {
-      "ticker": "IBM",
+      "ticker": "RY.TO",
       "direction": "LONG",
-      "thesis": "Slow, steady with room for multiple expansion per Seeking Alpha upgrade, value play.",
+      "thesis": "Screener flags show RSI 76.3 and trending up; Canadian regulator lowered capital requirements, boosting bank stocks and driving sector momentum.",
       "entry_zone": [
-        170,
-        175
+        130.0,
+        135.0
       ],
-      "catalyst": "Analyst upgrade, rotation into value stocks.",
-      "timeframe": "2-4 weeks",
+      "catalyst": "Continued sector rotation into Canadian financials and favorable regulatory environment.",
+      "timeframe": "1 month",
       "conviction": "medium"
     }
   ],
   "risk_alerts": [
     {
-      "severity": "medium",
-      "alert": "Escalating Ukraine rhetoric may spike energy prices and safe-haven demand, boosting XLE/GLD but increasing overall volatility.",
+      "severity": "high",
+      "alert": "VIX spiked 12.37% to 18.44, indicating rising market fear and potential for broad equity drawdowns.",
       "affected_positions": [
         "XLE",
-        "GLD"
+        "JNJ"
       ]
     },
     {
-      "severity": "low",
-      "alert": "Overbought Canadian banks could see quick pullbacks; avoid long entries in that space.",
-      "affected_positions": []
+      "severity": "medium",
+      "alert": "Heavy put flow on mega-cap tech (AMZN, NVDA, AMD) could trigger a broader index drag if QQQ breaks support.",
+      "affected_positions": [
+        "XLE"
+      ]
+    },
+    {
+      "severity": "medium",
+      "alert": "USD/CAD at 1.42 indicates strong USD, which typically creates a headwind for dollar-denominated commodities.",
+      "affected_positions": [
+        "GLD"
+      ]
     }
   ],
   "geopolitical_impact": [
     {
       "headline": "Putin says there is 'no point' meeting Zelensky over ending Ukraine war",
       "source": "BBC World",
-      "impact_rating": "medium",
-      "rationale": "Prolongs conflict, supporting energy prices (XLE) and safe havens (GLD, FXY)."
+      "impact_rating": "high",
+      "rationale": "Prolonged conflict sustains safe-haven demand for GLD and keeps global energy markets volatile."
     },
     {
       "headline": "Ukraine strikes cargo ships and admits Romania drone blast",
       "source": "BBC World",
       "impact_rating": "medium",
-      "rationale": "Escalation risks disrupt commodity supply chains, boosting energy and gold."
+      "rationale": "Black Sea shipping disruptions could cause localized spikes in energy and grain prices, affecting XLE."
     },
     {
       "headline": "Astronauts return to ISS after sheltering during air leak repair attempt",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "No direct market impact."
+      "rationale": "Space station maintenance has no direct impact on equity or commodity markets."
     },
     {
       "headline": "Fury in France after child murder suspect's criminal record released",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "Domestic legal issue, no market consequences."
+      "rationale": "Domestic social issue in France with no material impact on global financial markets."
     },
     {
       "headline": "Nearly 50 people die of thirst in Sahara desert after lorry breaks down",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "Humanitarian tragedy without market implications."
+      "rationale": "Tragic humanitarian event but lacks macroeconomic or market-moving relevance."
     },
     {
       "headline": "Iran footballers issued US visas for World Cup, says White House",
       "source": "Al Jazeera",
       "impact_rating": "low",
-      "rationale": "Minor diplomatic gesture, negligible market effect."
+      "rationale": "Minor diplomatic gesture that does not alter the broader geopolitical risk premium or oil supply."
     },
     {
       "headline": "Zelenskyy: Putin choosing war by rejecting offer for in-person talks",
       "source": "Al Jazeera",
-      "impact_rating": "medium",
-      "rationale": "Confirms diplomatic deadlock, reinforcing safe-haven asset demand."
+      "impact_rating": "high",
+      "rationale": "Reinforces the narrative of a protracted war, supporting long-term bullishness on GLD and defense sectors."
     },
     {
       "headline": "Trump hails jobs surge, says Iran talks \u2018going well\u2019",
       "source": "Al Jazeera",
-      "impact_rating": "low",
-      "rationale": "Positive sentiment but non-specific; minor risk-on tailwind."
+      "impact_rating": "medium",
+      "rationale": "Potential easing of Iran tensions could lower the geopolitical risk premium on crude oil, creating headwinds for XLE."
     }
   ],
-  "calendar": [],
+  "calendar": [
+    {
+      "date": "2024-06-20",
+      "event": "Micron Earnings",
+      "impact": "high"
+    },
+    {
+      "date": "2024-06-25",
+      "event": "Bank Stress Test Results",
+      "impact": "high"
+    },
+    {
+      "date": "2024-07-11",
+      "event": "Amazon Prime Day",
+      "impact": "medium"
+    }
+  ],
   "portfolio_actions": {
     "immediate": [
-      "Hold all positions; no changes required on day 0 of sector rotation.",
-      "Monitor XLE and GLD for geopolitical breakout moves."
+      "EXIT FXY due to missing data and weak yen trend",
+      "ADD to GLD to capitalize on VIX spike and geopolitical hedging",
+      "TRIM XLE to reduce energy sector drag"
     ],
     "watchlist": [
+      "AMZN",
       "RY.TO",
-      "IBM",
-      "NVDA"
+      "UNH"
     ],
     "avoid": [
-      "RY.TO",
-      "BNS.TO",
-      "BMO.TO",
-      "SLF.TO",
-      "MFC.TO",
-      "GWO.TO"
+      "SNAP",
+      "MSFT"
     ]
   }
 }
