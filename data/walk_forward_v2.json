@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-11T17:29:15.737672",
+  "generated_at": "2026-06-21T06:01:52.922673",
   "description": "Walk-Forward Validation V2 \u2014 3yr train / 1yr test, non-overlapping, 10bps TC",
   "parameters": {
     "tickers": 60,
@@ -44,10 +44,10 @@
             20,
             10
           ],
-          "is_sharpe": 0.3236,
-          "oos_sharpe": 1.5939,
+          "is_sharpe": 0.3262,
+          "oos_sharpe": 1.594,
           "oos_degradation_pct": 0.0,
-          "is_trades": 217,
+          "is_trades": 218,
           "oos_trades": 24,
           "is_max_dd_pct": -91.54,
           "oos_max_dd_pct": -17.15
@@ -157,16 +157,16 @@
       "results": {
         "mean_reversion": {
           "optimal_params": [
-            25,
+            30,
             15
           ],
-          "is_sharpe": -0.018,
-          "oos_sharpe": 1.917,
+          "is_sharpe": -0.0158,
+          "oos_sharpe": 1.3679,
           "oos_degradation_pct": 0.0,
-          "is_trades": 357,
-          "oos_trades": 80,
-          "is_max_dd_pct": -91.97,
-          "oos_max_dd_pct": -20.05
+          "is_trades": 561,
+          "oos_trades": 127,
+          "is_max_dd_pct": -96.64,
+          "oos_max_dd_pct": -44.41
         },
         "momentum": {
           "optimal_params": [
@@ -276,7 +276,7 @@
             30,
             21
           ],
-          "is_sharpe": 0.8732,
+          "is_sharpe": 0.8725,
           "oos_sharpe": 0.3814,
           "oos_degradation_pct": 56.3,
           "is_trades": 544,
@@ -617,10 +617,10 @@
   ],
   "summary": {
     "mean_reversion": {
-      "avg_is_sharpe": 1.1154,
-      "avg_oos_sharpe": 0.8593,
+      "avg_is_sharpe": 1.1159,
+      "avg_oos_sharpe": 0.8044,
       "avg_degradation_pct": 38.7,
-      "total_oos_trades": 577
+      "total_oos_trades": 624
     },
     "momentum": {
       "avg_is_sharpe": 0.6298,

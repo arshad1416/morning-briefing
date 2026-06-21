@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-21T02:29:20-04:00",
+  "generated_at": "2026-06-21T07:20:32-04:00",
   "market_overview": {
     "total_net_gex": 2529364,
     "total_oi": 3620423,
-    "current_price": 0,
-    "change_pct": 0
+    "current_price": 7500.58,
+    "change_pct": 1.08
   },
   "tickers": {
     "SPX": {
-      "current_price": 0,
-      "change_pct": 0,
+      "current_price": 7500.58,
+      "change_pct": 1.08,
       "gamma_regime": "bullish",
       "total_gex": 2529364,
       "total_dex": 81302822,
@@ -226,16 +226,16 @@
           "oi": 157740
         }
       ],
-      "floor_zone": null,
-      "ceiling_zone": {
+      "floor_zone": {
         "strike": 750.0,
         "net_gex": 473489,
         "total_gex": 473489,
         "range_start": 745.0,
         "range_end": 755.0,
         "strength": "strong",
-        "narrative": "Gamma ceiling at $750"
+        "narrative": "Gamma floor at $750"
       },
+      "ceiling_zone": null,
       "narrative": "Net GEX: $+2,529,364 \u2014 dealers are long gamma (range-bound)",
       "expiry_data": {
         "all": {
