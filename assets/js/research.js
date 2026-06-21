@@ -19,11 +19,12 @@ const Research = {
   async render(app) {
     app.innerHTML = '<div class="loading">Loading research...</div>';
 
-    const [marketData, analysisData, redditData, mgAnalysis] = await Promise.all([
+    const [marketData, analysisData, redditData, mgAnalysis, webNewsData] = await Promise.all([
       State.get('latest', '/data/latest.json').catch(() => null),
       State.get('analysis', '/data/analysis.json').catch(() => null),
       State.get('reddit', '/data/reddit-sentiment.json').catch(() => null),
       State.get('mg-analysis', '/data/morning_analysis.json').catch(() => null),
+      State.get('web-news', '/data/web-news.json').catch(() => null),
     ]);
 
     let html = '<div class="section"><h2 class="section-title">Research</h2>';
@@ -76,9 +77,39 @@ const Research = {
     }
     html += '</div>';
 
-    // ── TAB 2: News (Geopolitical + Market News) ──
+    // ── TAB 2: News (Exa Web News + Geopolitical + Market News + SA RSS fallback) ──
     html += '<div class="research-pane" id="tab-news" style="display:none">';
-    if (marketData?.generated_at) html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Last updated: ${this.formatTimestamp(marketData.generated_at)}</div>`;
+
+    // Primary: Exa web news articles (fresh from /data/web-news.json)
+    if (webNewsData?.articles?.length) {
+      if (webNewsData._fetched_at) html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Last updated: ${this.formatTimestamp(webNewsData._fetched_at)}</div>`;
+      // Trending topics
+      if (webNewsData.topics?.length) {
+        html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Trending Topics</div><div style="display:flex;flex-wrap:wrap;gap:6px">';
+        webNewsData.topics.slice(0, 15).forEach(t => {
+          const label = typeof t === 'string' ? t : (t.name || t.label || t.topic || '');
+          if (label) html += `<span class="badge badge-yellow" style="font-size:0.75rem">${Utils.esc(label)}</span>`;
+        });
+        html += '</div></div>';
+      }
+      // Article list
+      html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Latest News (Exa)</div>';
+      webNewsData.articles.forEach(a => {
+        html += `<div style="padding:8px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem">`;
+        html += `<a href="${Utils.esc(Utils.safeUrl(a.url))}" target="_blank" rel="noopener" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(a.title)}</a>`;
+        const metaParts = [];
+        if (a.source) metaParts.push(Utils.esc(a.source));
+        if (a.published) metaParts.push(this.formatTimestamp(a.published));
+        if (metaParts.length) html += `<div style="color:var(--text-muted);font-size:0.75rem">${metaParts.join(' · ')}</div>`;
+        if (a.snippet) html += `<div style="color:var(--text-secondary);font-size:0.8rem;margin-top:2px;line-height:1.4">${Utils.esc(a.snippet.substring(0, 220))}${a.snippet.length > 220 ? '…' : ''}</div>`;
+        html += `</div>`;
+      });
+      html += '</div>';
+    } else if (!marketData) {
+      html += '<div class="empty-state">News data not available</div>';
+    }
+
+    // Secondary: Geopolitical Risks (from latest.json)
     if (marketData?.geopolitical?.length) {
       html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Geopolitical Risks</div>';
       marketData.geopolitical.slice(0, 12).forEach(g => {
@@ -86,6 +117,7 @@ const Research = {
       });
       html += '</div>';
     }
+    // Secondary: Market News headlines (from latest.json)
     if (marketData?.market_news?.headlines?.length) {
       html += '<div class="card"><div class="card-title">Market News</div>';
       marketData.market_news.headlines.forEach(n => {
@@ -93,12 +125,28 @@ const Research = {
       });
       html += '</div>';
     }
+    // Secondary: Analyst Ratings (from latest.json)
     if (marketData?.market_news?.analyst_ratings?.length) {
       html += '<div class="card" style="margin-top:12px"><div class="card-title">Analyst Ratings</div><div class="table-wrap"><table><thead><tr><th>Ticker</th><th>Strong Buy</th><th>Buy</th><th>Hold</th><th>Sell</th><th>Strong Sell</th></tr></thead><tbody>';
       marketData.market_news.analyst_ratings.forEach(a => {
         html += `<tr><td><strong>${Utils.esc(a.ticker)}</strong></td><td><span class="badge badge-green">${a.strongBuy || 0}</span></td><td style="color:var(--green)">${a.buy || 0}</td><td style="color:var(--yellow)">${a.hold || 0}</td><td style="color:var(--red)">${a.sell || 0}</td><td><span class="badge badge-red">${a.strongSell || 0}</span></td></tr>`;
       });
       html += '</tbody></table></div></div>';
+    }
+    // Fallback: SA RSS headlines (from analysis.json — also used by Dashboard homepage)
+    if (analysisData?.market_overview?.top_headlines?.length) {
+      html += '<div class="card" style="margin-top:12px"><div class="card-title">Seeking Alpha Top Stories</div>';
+      analysisData.market_overview.top_headlines.slice(0, 10).forEach(h => {
+        const title = typeof h === 'string' ? h : (h.title || '');
+        const url = typeof h === 'object' ? (h.url || '') : '';
+        const source = typeof h === 'object' ? (h.source || '') : '';
+        if (url) {
+          html += `<div style="font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border-subtle)"><a href="${Utils.esc(Utils.safeUrl(url))}" target="_blank" rel="noopener" style="color:var(--text-primary);text-decoration:none">${Utils.esc(title)}</a>${source ? '<div style="color:var(--text-muted);font-size:0.75rem">' + Utils.esc(source) + '</div>' : ''}</div>`;
+        } else {
+          html += `<div style="font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border-subtle)">${Utils.esc(title)}</div>`;
+        }
+      });
+      html += '</div>';
     }
     html += '</div>';
 
