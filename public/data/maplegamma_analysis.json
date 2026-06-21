@@ -1,60 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-16T18:39:05.938079+00:00",
+    "generated_at": "2026-06-20T11:25:34.665695+00:00",
     "experts_consulted": 4,
-    "experts_succeeded": 4,
-    "total_cost_usd": 0.0014,
-    "aggregator": "gemini-2.5-flash"
+    "experts_succeeded": 1,
+    "total_cost_usd": 0.001168,
+    "status": "insufficient_experts"
   },
-  "market_pulse": {
-    "one_liner": "Market is in a transitional, defensive phase with strong SPY support at 730, but upside remains sticky and fragile despite a bullish gamma regime.",
-    "score": 6,
-    "regime": "transitional",
-    "confidence": 8
-  },
-  "key_levels": {
-    "SPY": {
-      "support": 730.0,
-      "resistance": 748.0
-    },
-    "QQQ": {
-      "support": null,
-      "resistance": null
-    }
-  },
-  "gamma_landscape": {
-    "pinning_zone": 730.0,
-    "notes": "SPY is in a bullish gamma regime with dealers net long gamma, suggesting mean reversion and cushioned moves. A significant put wall and max GEX concentration at the 730 strike acts as strong magnetic support, likely pinning price into expiration. A break below 730 could trigger aggressive dealer selling."
-  },
-  "risks": [
-    "Critical system/data feed failure indicated by 'nan' prices in the paper portfolio, preventing accurate P&L and position assessment.",
-    "Portfolio's late-cycle, defensive holdings (XLE, JNJ, FXY, GLD) are vulnerable to a sustained risk-on reversal if inflation cools or the Fed pivots dovish.",
-    "A decline below the 730 SPY strike could trigger aggressive dealer selling, overwhelming current defensive hedges.",
-    "Upside potential in the broader market (SPY) is considered sticky and fragile, not driven by aggressive accumulation, despite the bullish gamma regime."
-  ],
-  "trades": [
-    {
-      "ticker": "SPY",
-      "direction": "long",
-      "entry": 738.0,
-      "stop": 728.5,
-      "target": 748.0,
-      "conviction": 8,
-      "source": "Qwen 3.7 Max"
-    },
-    {
-      "ticker": "XLE",
-      "direction": "long",
-      "entry": 57.6,
-      "stop": 55.4,
-      "target": 61.5,
-      "conviction": 7,
-      "source": "Qwen 3.7 Max"
-    }
-  ],
-  "disagreements": [
-    "While GEX data and DeepSeek indicate a 'bullish' gamma regime for SPY with strong support, Kimi K2.6 suggests that any upside remains 'sticky and fragile' and not driven by aggressive accumulation, implying a more cautious outlook on upward momentum despite the technical floor.",
-    "MiMo V2.5 Pro highlights the portfolio's vulnerability to a risk-on reversal, contrasting with the 'transitional' regime's implication of defensive sector outperformance, suggesting a potential conflict in long-term outlooks for current holdings."
-  ],
-  "narrative": "The market is navigating a transitional and defensive regime, with SPY exhibiting strong technical support at the 730 strike due to a bullish gamma profile and significant put concentration. While dealers are net long gamma, cushioning downside, the overall sentiment suggests upside will be sticky and fragile. Current portfolio holdings reflect a late-cycle, defensive stance, which could be vulnerable to a broader risk-on shift."
+  "expert_outputs": {
+    "kimi_momentum": "auth_error",
+    "deepseek_quantitative": "auth_error",
+    "mimo_risk_contrarian": "auth_error",
+    "qwen_trade_selector": "### Trade 1\n- **Ticker**: SPY\n- **Direction**: Long\n- **Entry**: $737.50\n- **Stop Loss**: $728.50\n- **Target**: $748.00\n- **Conviction**: 8/10\n- **Rationale**: The GEX data indicates a \"bullish\" gamma regime with a massive positive GEX wall at the $730 strike (Put OI of 165k). In a positive gamma environment, market makers buy dips and sell rips, which suppresses volatility and creates strong structural support. Entering near current levels with a stop just below the $730 magnet/support allows for a tight risk-reward ratio as the market grinds higher in a risk-on environment.\n\n### Trade 2\n- **Ticker**: XLK (Technology Select Sector SPDR)\n- **Direction**: Long\n- **Entry**: $232.50\n- **Stop Loss**: $224.00\n- **Target**: $246.00\n- **Conviction**: 7/10\n- **Rationale**: The DS Pro model identifies the current market regime as \"risk-on.\" Your current portfolio is heavily weighted toward defensive, value, and hard assets (JNJ, XLE, GLD, FXY). Adding large-cap tech exposure via XLK balances the portfolio and capitalizes on the risk-on momentum. The stop is placed below recent consolidation zones, targeting a breakout continuation."
+  }
 }
