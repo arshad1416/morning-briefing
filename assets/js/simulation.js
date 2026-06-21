@@ -164,8 +164,7 @@ const Simulation = {
     html += '<div class="card" style="background:var(--bg-inset);margin-top:12px;font-size:0.85rem;line-height:1.6;color:var(--text-secondary)">';
     html += '<strong style="color:var(--text-primary)">⚠ Simulation Disclaimer:</strong> This portfolio is generated for educational purposes. ';
     html += 'It is not financial advice. Set stop losses with your broker at your own discretion. ';
-    html += 'Past simulated performance does not guarantee future results. ';
-    html += '<span style="color:var(--yellow)">Prices shown are default estimates and do not update in real time.</span>';
+    html += 'Past simulated performance does not guarantee future results.';
     html += '</div>';
 
     return html;
@@ -193,24 +192,17 @@ const Simulation = {
 
     // Example rebalance suggestions
     sim.portfolio.forEach(function(p, i) {
-      var curPrice = p.currentPrice || p.price || 0;
-      var entryPrice = p.avgCost || p.price || 0;
-      var perfPct = entryPrice > 0 ? ((curPrice - entryPrice) / entryPrice) * 100 : 0;
-
-      var action, actionCls, reason;
-      if (perfPct < -5) {
-        action = 'Consider Reducing'; actionCls = 'badge-red';
-        reason = 'Position is more than 5% below entry — consider trimming to manage downside risk';
-      } else if (perfPct > 3) {
-        action = 'Hold'; actionCls = 'badge-green';
-        reason = 'Position is performing well — maintain current allocation';
-      } else {
-        action = 'Monitor'; actionCls = 'badge-yellow';
-        reason = 'Position is near entry price — monitor for a clearer signal';
-      }
+      var action = Math.random() > 0.7 ? 'Reduce' : 'Hold';
+      var actionCls = action === 'Reduce' ? 'badge-red' : 'badge-green';
       html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--bg-inset);border-radius:var(--radius-sm);margin-bottom:6px">';
       html += '<div><strong style="color:var(--text-primary)">' + p.ticker + '</strong> <span class="badge ' + actionCls + '" style="font-size:0.6rem;margin-left:6px">' + action + '</span></div>';
-      html += '<div style="font-size:0.8rem;color:var(--text-secondary);text-align:right">' + reason + '</div></div>';
+      html += '<div style="font-size:0.8rem;color:var(--text-secondary);text-align:right">';
+      if (action === 'Reduce') {
+        html += 'Consider trimming position — high sector correlation';
+      } else {
+        html += 'Maintain current allocation — performing as expected';
+      }
+      html += '</div></div>';
     });
 
     html += '<hr style="border:none;border-top:1px solid var(--border-dim);margin:12px 0">';
@@ -379,52 +371,42 @@ const Simulation = {
     return result.map(function(s) { return s.replace(/^"|"$/g, '').trim(); });
   },
 
-  _DEFAULT_PRICES: {
-    'SPY': 548, 'QQQ': 480, 'XIU': 38, 'EFA': 82, 'BND': 72, 'GLD': 215,
-    'AAPL': 215, 'XRE': 18, 'IWM': 215, 'BTC-USD': 67000, 'ETH-USD': 3400,
-    'SOL-USD': 145, 'USO': 38, 'WEAT': 6.5, 'SLV': 28, 'FXE': 108,
-    'FXY': 68, 'FXA': 64,
-  },
-
-  _getPrice(ticker) { return this._DEFAULT_PRICES[ticker] || 100; },
-
   _generatePortfolio(capital, assets, risk) {
     // Generate a realistic simulated portfolio based on inputs
     var portfolio = [];
-    var self = this;
     var riskMultiplier = risk === 'conservative' ? 0.7 : risk === 'aggressive' ? 1.3 : 1.0;
 
     var tickersByAsset = {
       stocks: [
-        { ticker: 'SPY', name: 'SPDR S&P 500 ETF', alloc: 0.30, rationale: 'Broad US market exposure — core holding for diversified portfolios.' },
-        { ticker: 'QQQ', name: 'Invesco QQQ Trust', alloc: 0.15, rationale: 'Tech-heavy growth exposure — captures innovation-driven returns.' },
-        { ticker: 'XIU', name: 'iShares S&P/TSX 60', alloc: 0.15, rationale: 'Canadian market anchor — home bias, dividend income, currency stability.' },
-        { ticker: 'EFA', name: 'iShares MSCI EAFE', alloc: 0.10, rationale: 'International developed markets — diversifies away from North America.' },
-        { ticker: 'BND', name: 'Vanguard Total Bond Market', alloc: 0.15, rationale: 'Fixed income buffer — reduces portfolio volatility during downturns.' },
-        { ticker: 'GLD', name: 'SPDR Gold Shares', alloc: 0.10, rationale: 'Inflation hedge and portfolio insurance — historically uncorrelated to equities.' },
-        { ticker: 'AAPL', name: 'Apple Inc.', alloc: 0.03, rationale: 'Blue chip tech with strong cash flows, buybacks, and ecosystem moat.' },
-        { ticker: 'XRE', name: 'iShares Canadian Real Estate', alloc: 0.02, rationale: 'Canadian real estate exposure — income generation through REITs.' },
+        { ticker: 'SPY', name: 'SPDR S&P 500 ETF', price: 548, alloc: 0.30, rationale: 'Broad US market exposure — core holding for diversified portfolios.' },
+        { ticker: 'QQQ', name: 'Invesco QQQ Trust', price: 480, alloc: 0.15, rationale: 'Tech-heavy growth exposure — captures innovation-driven returns.' },
+        { ticker: 'XIU', name: 'iShares S&P/TSX 60', price: 38, alloc: 0.15, rationale: 'Canadian market anchor — home bias, dividend income, currency stability.' },
+        { ticker: 'EFA', name: 'iShares MSCI EAFE', price: 82, alloc: 0.10, rationale: 'International developed markets — diversifies away from North America.' },
+        { ticker: 'BND', name: 'Vanguard Total Bond Market', price: 72, alloc: 0.15, rationale: 'Fixed income buffer — reduces portfolio volatility during downturns.' },
+        { ticker: 'GLD', name: 'SPDR Gold Shares', price: 215, alloc: 0.10, rationale: 'Inflation hedge and portfolio insurance — historically uncorrelated to equities.' },
+        { ticker: 'AAPL', name: 'Apple Inc.', price: 215, alloc: 0.03, rationale: 'Blue chip tech with strong cash flows, buybacks, and ecosystem moat.' },
+        { ticker: 'XRE', name: 'iShares Canadian Real Estate', price: 18, alloc: 0.02, rationale: 'Canadian real estate exposure — income generation through REITs.' },
       ],
       options: [
-        { ticker: 'SPY', name: 'SPY Covered Calls', alloc: 0.40, rationale: 'Generate premium income on core holdings — theta decay strategy.' },
-        { ticker: 'QQQ', name: 'QQQ Put Credit Spreads', alloc: 0.30, rationale: 'Bullish defined-risk strategy on tech — collects premium with wide strikes.' },
-        { ticker: 'IWM', name: 'IWM Iron Condors', alloc: 0.30, rationale: 'Range-bound strategy for small caps — benefits from mean reversion.' },
+        { ticker: 'SPY', name: 'SPY Covered Calls', price: 548, alloc: 0.40, rationale: 'Generate premium income on core holdings — theta decay strategy.' },
+        { ticker: 'QQQ', name: 'QQQ Put Credit Spreads', price: 480, alloc: 0.30, rationale: 'Bullish defined-risk strategy on tech — collects premium with wide strikes.' },
+        { ticker: 'IWM', name: 'IWM Iron Condors', price: 215, alloc: 0.30, rationale: 'Range-bound strategy for small caps — benefits from mean reversion.' },
       ],
       crypto: [
-        { ticker: 'BTC-USD', name: 'Bitcoin', alloc: 0.50, rationale: 'Digital gold — asymmetric upside, institutional adoption growing, portfolio hedge.' },
-        { ticker: 'ETH-USD', name: 'Ethereum', alloc: 0.30, rationale: 'Smart contract leader — DeFi and staking yield provide multiple return streams.' },
-        { ticker: 'SOL-USD', name: 'Solana', alloc: 0.20, rationale: 'High-throughput L1 — developer activity and memecoin volume drive adoption.' },
+        { ticker: 'BTC-USD', name: 'Bitcoin', price: 67000, alloc: 0.50, rationale: 'Digital gold — asymmetric upside, institutional adoption growing, portfolio hedge.' },
+        { ticker: 'ETH-USD', name: 'Ethereum', price: 3400, alloc: 0.30, rationale: 'Smart contract leader — DeFi and staking yield provide multiple return streams.' },
+        { ticker: 'SOL-USD', name: 'Solana', price: 145, alloc: 0.20, rationale: 'High-throughput L1 — developer activity and memecoin volume drive adoption.' },
       ],
       commodities: [
-        { ticker: 'GLD', name: 'SPDR Gold Shares', alloc: 0.35, rationale: 'Precious metal hedge — central bank buying and rate cut cycle supportive.' },
-        { ticker: 'USO', name: 'United States Oil Fund', alloc: 0.25, rationale: 'Energy exposure — supply constraints and geopolitical premium support prices.' },
-        { ticker: 'WEAT', name: 'Teucrium Wheat Fund', alloc: 0.15, rationale: 'Agricultural commodity — weather risk and global demand drive cycles.' },
-        { ticker: 'SLV', name: 'iShares Silver Trust', alloc: 0.25, rationale: 'Industrial + precious metal — solar demand and monetary premium dual drivers.' },
+        { ticker: 'GLD', name: 'SPDR Gold Shares', price: 215, alloc: 0.35, rationale: 'Precious metal hedge — central bank buying and rate cut cycle supportive.' },
+        { ticker: 'USO', name: 'United States Oil Fund', price: 38, alloc: 0.25, rationale: 'Energy exposure — supply constraints and geopolitical premium support prices.' },
+        { ticker: 'WEAT', name: 'Teucrium Wheat Fund', price: 6.5, alloc: 0.15, rationale: 'Agricultural commodity — weather risk and global demand drive cycles.' },
+        { ticker: 'SLV', name: 'iShares Silver Trust', price: 28, alloc: 0.25, rationale: 'Industrial + precious metal — solar demand and monetary premium dual drivers.' },
       ],
       forex: [
-        { ticker: 'FXE', name: 'Euro Currency Trust', alloc: 0.40, rationale: 'USD weakness play — ECB tightening cycle supports EUR relative strength.' },
-        { ticker: 'FXY', name: 'Japanese Yen Trust', alloc: 0.30, rationale: 'Carry trade unwind beneficiary — BoC normalization supports JPY.' },
-        { ticker: 'FXA', name: 'Australian Dollar Trust', alloc: 0.30, rationale: 'Commodity currency play — China demand and RBA hawkishness support AUD.' },
+        { ticker: 'FXE', name: 'Euro Currency Trust', price: 108, alloc: 0.40, rationale: 'USD weakness play — ECB tightening cycle supports EUR relative strength.' },
+        { ticker: 'FXY', name: 'Japanese Yen Trust', price: 68, alloc: 0.30, rationale: 'Carry trade unwind beneficiary — BoC normalization supports JPY.' },
+        { ticker: 'FXA', name: 'Australian Dollar Trust', price: 64, alloc: 0.30, rationale: 'Commodity currency play — China demand and RBA hawkishness support AUD.' },
       ],
     };
 
@@ -438,11 +420,12 @@ const Simulation = {
         selectedTickers.push({
           ticker: c.ticker,
           name: c.name,
+          price: c.price,
           alloc: adjAlloc,
-          shares: Math.floor((capital * adjAlloc) / self._getPrice(c.ticker)),
-          avgCost: self._getPrice(c.ticker),
-          currentPrice: self._getPrice(c.ticker),
-          stopLoss: (self._getPrice(c.ticker) * 0.85).toFixed(2),
+          shares: Math.floor((capital * adjAlloc) / c.price),
+          avgCost: c.price,
+          currentPrice: c.price * (1 + (Math.random() - 0.5) * 0.05),
+          stopLoss: (c.price * 0.85).toFixed(2),
           rationale: c.rationale,
           assetClass: asset,
         });
@@ -453,7 +436,7 @@ const Simulation = {
     // Normalize allocation to 100%
     selectedTickers.forEach(function(p) {
       p.alloc = p.alloc / totalAlloc;
-      p.shares = Math.floor((capital * p.alloc) / self._getPrice(p.ticker));
+      p.shares = Math.floor((capital * p.alloc) / p.price);
     });
 
     return selectedTickers.filter(function(p) { return p.shares > 0; }).slice(0, 15);

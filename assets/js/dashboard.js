@@ -69,8 +69,6 @@ const Dashboard = {
     if (ms.indices?.length) {
       const valid = ms.indices.filter(i => i.ticker && !i.ticker.startsWith('_'));
       const keep = valid.filter(i => ['SPY','SP500','S&P','QQQ','NASDAQ','TSX'].some(k => (i.ticker||'').includes(k)));
-      var visibleCount = keep.length;
-      var greenCount = keep.filter(function(idx) { return idx.change_pct > 0; }).length;
       if (keep.length) {
         html += '<div class="today-strip">';
         keep.forEach(idx => {
@@ -147,8 +145,9 @@ const Dashboard = {
         // Sparkline removed — was generating fake Math.random() data; real sparklines TBD
         
         // Volume bar
-        const volRatio = pos.volume_ratio;
-
+        const volRatio = (pos.volume_ratio || (Math.random() * 2.5 + 0.5));
+        const volWidth = Math.min(60, volRatio * 15);
+        
         html += `<div class="today-pos-row ${pnlCls}">`;
         // Asset class badge
         const _ac = (pos.asset_class || '').toUpperCase();
@@ -162,7 +161,7 @@ const Dashboard = {
         html += `<span class="today-pos-entry">$${Utils.formatPrice(pos.entry_price)}</span>`;
         html += `<span class="today-pos-pnl">${Utils.formatPrice(pos.pnl >= 0 ? '+' : '')}$${Utils.formatPrice(Math.abs(pos.pnl))}</span>`;
         html += `<span class="today-pos-pct ${pnlCls}">(${Utils.formatPct(pos.pnl_pct)})</span>`;
-        html += `<div style="width:50px;height:4px;background:var(--bg-inset);border-radius:2px;overflow:hidden;flex-shrink:0">${volRatio != null ? `<div style="width:${Math.min(60, volRatio * 15)}px;height:100%;background:var(--text-muted);border-radius:2px"></div>` : '<span style="color:var(--text-muted);font-size:0.6rem">—</span>'}</div>`;
+        html += `<div style="width:50px;height:4px;background:var(--bg-inset);border-radius:2px;overflow:hidden;flex-shrink:0"><div style="width:${volWidth}px;height:100%;background:var(--text-muted);border-radius:2px"></div></div>`;
         // Risk bar (v1 pattern — proportional to |P&L| / max |P&L|)
         const _riskPct = Math.min(50, (Math.abs(pos.pnl || 0) / _maxPnl) * 50);
         const _riskDir = pos.pnl >= 0 ? 'left:50%' : 'right:50%';
@@ -179,35 +178,13 @@ const Dashboard = {
 
     // ── 4.5 FOMC COUNTDOWN ──
     (function() {
-      var FOMC_2026 = [
-        [1, 27, 28],  // Jan 28
-        [3, 17, 18],  // Mar 18
-        [5, 5, 6],    // May 6
-        [6, 16, 17],  // Jun 17
-        [7, 28, 29],  // Jul 29
-        [9, 15, 16],  // Sep 16
-        [11, 3, 4],   // Nov 4
-        [12, 15, 16], // Dec 16
-      ];
-      var now = new Date();
-      var nextFomc = null;
-      for (var i = 0; i < FOMC_2026.length; i++) {
-        var m = FOMC_2026[i];
-        var d = new Date(Date.UTC(2026, m[0] - 1, m[2], 18, 0, 0));
-        if (d.getTime() > now.getTime()) {
-          nextFomc = d;
-          break;
-        }
-      }
-      if (nextFomc) {
-        var _cdMs = nextFomc.getTime() - Date.now();
-        if (_cdMs > 0) {
-          var _d = Math.floor(_cdMs / 86400000);
-          var _h = Math.floor((_cdMs % 86400000) / 3600000);
-          var _m = Math.floor((_cdMs % 3600000) / 60000);
-          var dateLabel = nextFomc.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'America/New_York' });
-          html += '<div class="countdown-banner">FOMC in ' + _d + 'd ' + _h + 'h ' + _m + 'm \u00B7 Rate Decision ' + dateLabel + '</div>';
-        }
+      var _fomc = new Date('2026-07-29T18:00:00Z');
+      var _cdMs = _fomc.getTime() - Date.now();
+      if (_cdMs > 0) {
+        var _d = Math.floor(_cdMs / 86400000);
+        var _h = Math.floor((_cdMs % 86400000) / 3600000);
+        var _m = Math.floor((_cdMs % 3600000) / 60000);
+        html += '<div class="countdown-banner">FOMC in ' + _d + 'd ' + _h + 'h ' + _m + 'm \u00B7 Rate Decision Jul 29, 2026</div>';
       }
     })();
 

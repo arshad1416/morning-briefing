@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-19T11:25:56.495871+00:00",
+    "generated_at": "2026-06-20T11:25:34.665695+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001397,
+    "total_cost_usd": 0.001168,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
-    "deepseek_quantitative": "auth_error",
     "kimi_momentum": "auth_error",
+    "deepseek_quantitative": "auth_error",
     "mimo_risk_contrarian": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF)\n- **Direction:** Long\n- **Entry:** $738.00\n- **Stop Loss:** $727.50\n- **Target:** $749.50\n- **Conviction:** 8/10\n- **Rationale:** The options market indicates a \"bullish\" gamma regime for SPY with a massive concentration of put open interest at the $730 strike (Max GEX), acting as a strong support floor. With the broader macro regime identified as \"risk-on,\" the path of least resistance is higher. The stop is placed safely below the $730 gamma wall to invalidate the thesis, while the target sits just below the next major strike/magnet at $750. \n\n### Trade 2: QQQ (Nasdaq 100 ETF)\n- **Direction:** Long\n- **Entry:** $635.00\n- **Stop Loss:** $612.00\n- **Target:** $668.00\n- **Conviction:** 7/10\n- **Rationale:** In a confirmed \"risk-on\" market environment, growth and technology sectors typically exhibit the highest beta and outperform the broader market. This trade acts as a leveraged proxy to the SPY long setup. The stop allows for standard volatility shakeouts, while the target aims for a ~5% move as capital rotates into tech amid bullish sentiment. *(Note: Entry/Stop/Target prices are scaled proportionally to SPY's current structure).*"
+    "qwen_trade_selector": "### Trade 1\n- **Ticker**: SPY\n- **Direction**: Long\n- **Entry**: $737.50\n- **Stop Loss**: $728.50\n- **Target**: $748.00\n- **Conviction**: 8/10\n- **Rationale**: The GEX data indicates a \"bullish\" gamma regime with a massive positive GEX wall at the $730 strike (Put OI of 165k). In a positive gamma environment, market makers buy dips and sell rips, which suppresses volatility and creates strong structural support. Entering near current levels with a stop just below the $730 magnet/support allows for a tight risk-reward ratio as the market grinds higher in a risk-on environment.\n\n### Trade 2\n- **Ticker**: XLK (Technology Select Sector SPDR)\n- **Direction**: Long\n- **Entry**: $232.50\n- **Stop Loss**: $224.00\n- **Target**: $246.00\n- **Conviction**: 7/10\n- **Rationale**: The DS Pro model identifies the current market regime as \"risk-on.\" Your current portfolio is heavily weighted toward defensive, value, and hard assets (JNJ, XLE, GLD, FXY). Adding large-cap tech exposure via XLK balances the portfolio and capitalizes on the risk-on momentum. The stop is placed below recent consolidation zones, targeting a breakout continuation."
   }
 }
