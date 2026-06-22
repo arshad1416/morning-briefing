@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-06-19T14:25:19.442315-04:00",
+  "generated_at": "2026-06-22T11:20:01.916745+00:00",
   "signal": "neutral",
-  "conviction": 0.31,
+  "conviction": 0.54,
   "conviction_source": "model",
-  "narrative": "Markets mixed \u2014 VIX at 16.78 \u2014 0/6 indices green \u2014 SP500 +0.0%. Conviction 31%.",
-  "narrative_source": "rule_template",
+  "narrative": "Equities rally on tech strength and falling VIX, but heavy put buying in mega-cap tech and overbought financials signal underlying distribution.",
+  "narrative_source": "llm",
   "model_features": {
-    "vix": 16.78,
-    "vix_score": 0.6,
-    "breadth": 0.0,
-    "vix_contango": 0.0,
-    "recent_hit_rate": 0.0,
+    "vix": 16.4,
+    "vix_score": 0.5,
+    "sleeve_a_signals": 0,
+    "avg_signal_score": 0,
+    "max_signal_score": 0,
+    "recent_hit_rate": 0.5,
     "recent_trades": 2,
-    "avg_signal_score": 10.3,
-    "max_signal_score": 11.0,
-    "sleeve_a_signals": 3,
+    "breadth": 1.0,
+    "vix_contango": 3.25,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.14,
-      0.48
+      0.29,
+      0.79
     ]
   },
   "confidence_interval": [
-    0.14,
-    0.48
+    0.29,
+    0.79
   ]
 }

@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-21T06:56:05.380312+00:00",
+    "generated_at": "2026-06-21T11:25:28.428921+00:00",
     "model": "qwen-max (tier2)",
     "confidence": 7,
-    "market_regime": "risk-off",
+    "market_regime": "transitional",
     "fallback": true,
     "tokens_used": {
-      "prompt_tokens": 2338,
-      "completion_tokens": 5484,
-      "total_tokens": 7822,
-      "cost": 0.0234875,
+      "prompt_tokens": 2436,
+      "completion_tokens": 5099,
+      "total_tokens": 7535,
+      "cost": 0.02216625,
       "is_byok": false,
       "prompt_tokens_details": {
         "cached_tokens": 0,
@@ -18,12 +18,12 @@
         "video_tokens": 0
       },
       "cost_details": {
-        "upstream_inference_cost": 0.0234875,
-        "upstream_inference_prompt_cost": 0.0029225,
-        "upstream_inference_completions_cost": 0.020565
+        "upstream_inference_cost": 0.02216625,
+        "upstream_inference_prompt_cost": 0.003045,
+        "upstream_inference_completions_cost": 0.01912125
       },
       "completion_tokens_details": {
-        "reasoning_tokens": 3599,
+        "reasoning_tokens": 3299,
         "image_tokens": 0,
         "audio_tokens": 0
       }
@@ -31,76 +31,76 @@
     "analysis_type": "morning"
   },
   "market_pulse": {
-    "one_liner": "Elevated VIX and heavy tech put flow signal a risk-off rotation into defensives and commodities amid sticky inflation and geopolitical friction.",
-    "sentiment_score": 4,
+    "one_liner": "Equities rally on tech strength and falling VIX, but heavy put buying in mega-cap tech and overbought financials signal underlying distribution.",
+    "sentiment_score": 6,
     "key_levels": {
       "SPY": {
-        "support": 510.0,
-        "resistance": 530.0
+        "support": 735.0,
+        "resistance": 755.0
       },
       "QQQ": {
-        "support": 440.0,
-        "resistance": 460.0
+        "support": 515.0,
+        "resistance": 535.0
       }
     },
-    "sector_rotation": "Capital is fleeing mega-cap tech and rotating into Canadian financials and safe-haven commodities."
+    "sector_rotation": "Capital rotating into defensive yields and Canadian financials, while tech faces institutional hedging via options."
   },
   "held_position_review": [
     {
       "ticker": "XLE",
       "action": "TRIM",
-      "rationale": "Cut exposure to weak energy sector to fund stronger safe-haven trades as geopolitical oil premium fades.",
-      "target": 52.0,
-      "stop": 55.0,
-      "risk_reward": "0.5:1"
+      "rationale": "Down 6.57% on entry day with energy headlines focusing on grid overhauls rather than supply shocks; cut risk.",
+      "target": 55.0,
+      "stop": 52.5,
+      "risk_reward": "1.2:1"
     },
     {
       "ticker": "JNJ",
       "action": "HOLD",
-      "rationale": "Healthcare is a classic risk-off haven; hold for mean reversion as VIX spikes and defensive bids increase.",
+      "rationale": "Defensive healthcare holding down 5.18% but offers portfolio stability amid tech put-hedging and sticky inflation.",
       "target": 245.0,
       "stop": 220.0,
-      "risk_reward": "1.9:1"
+      "risk_reward": "1.5:1"
     },
     {
       "ticker": "FXY",
-      "action": "EXIT",
-      "rationale": "Yen weakness persists and current price data is missing; close position immediately to preserve cash.",
-      "target": 0.0,
-      "stop": 0.0,
-      "risk_reward": "0.0:1"
+      "action": "HOLD",
+      "rationale": "Down 0.72% but currency pairs remain volatile; hold for mean reversion as safe-haven flows fluctuate.",
+      "target": 58.5,
+      "stop": 55.5,
+      "risk_reward": "1.2:1"
     },
     {
       "ticker": "GLD",
       "action": "ADD",
-      "rationale": "Gold is the premier safe-haven asset benefiting from VIX expansion, sticky inflation, and geopolitical uncertainty.",
-      "target": 400.0,
-      "stop": 380.0,
-      "risk_reward": "1.9:1"
+      "rationale": "Gold holding positive P&L amid geopolitical noise and sticky inflation noted by the Fed; strong safe-haven bid.",
+      "target": 395.0,
+      "stop": 382.0,
+      "risk_reward": "1.8:1"
     }
   ],
   "opportunities": [
     {
       "ticker": "AMZN",
       "direction": "SHORT",
-      "thesis": "Unusual options flow shows massive put buying at $275, $270, and $265 strikes with over $25M in premium, indicating institutional downside hedging.",
+      "thesis": "Unusual options flow shows massive put buying at $275/$270/$265 strikes with >$25M premium, indicating institutional downside hedging.",
       "entry_zone": [
-        270.0,
-        275.0
+        275.0,
+        280.0
       ],
-      "catalyst": "Prime Day disappointment or broader tech multiple compression.",
+      "catalyst": "Break below $275 support level on high volume.",
       "timeframe": "2 weeks",
       "conviction": "high"
     },
     {
       "ticker": "RY.TO",
-      "direction": "LONG",
-      "thesis": "Screener flags show RSI 76.3 and trending up; Canadian regulator lowered capital requirements, boosting bank stocks and driving sector momentum.",
+      "direction": "SHORT",
+      "thesis": "Screener flags RSI at 76.3 (overbought) with near-high signals; prime mean-reversion candidate in Canadian financials.",
       "entry_zone": [
-        130.0,
-        135.0
+        145.0,
+        148.0
       ],
-      "catalyst": "Continued sector rotation into Canadian financials and favorable regulatory environment.",
+      "catalyst": "RSI divergence or macro rate hold disappointment from BOC.",
       "timeframe": "1 month",
       "conviction": "medium"
     }
@@ -108,24 +108,18 @@
   "risk_alerts": [
     {
       "severity": "high",
-      "alert": "VIX spiked 12.37% to 18.44, indicating rising market fear and potential for broad equity drawdowns.",
+      "alert": "Heavy put volume in AMZN, NVDA, and AMD (C/P ratio 9:16) contradicts the NASDAQ's +1.91% rally, signaling a potential tech pullback.",
       "affected_positions": [
-        "XLE",
-        "JNJ"
+        "AMZN",
+        "NVDA"
       ]
     },
     {
       "severity": "medium",
-      "alert": "Heavy put flow on mega-cap tech (AMZN, NVDA, AMD) could trigger a broader index drag if QQQ breaks support.",
+      "alert": "Fed holding rates at 4.25-4.50% with elevated inflation limits multiple expansion for rate-sensitive sectors.",
       "affected_positions": [
+        "JNJ",
         "XLE"
-      ]
-    },
-    {
-      "severity": "medium",
-      "alert": "USD/CAD at 1.42 indicates strong USD, which typically creates a headwind for dollar-denominated commodities.",
-      "affected_positions": [
-        "GLD"
       ]
     }
   ],
@@ -134,13 +128,13 @@
       "headline": "Putin says there is 'no point' meeting Zelensky over ending Ukraine war",
       "source": "BBC World",
       "impact_rating": "high",
-      "rationale": "Prolonged conflict sustains safe-haven demand for GLD and keeps global energy markets volatile."
+      "rationale": "Prolonged conflict sustains energy risk premiums, supporting GLD and complicating XLE recovery."
     },
     {
       "headline": "Ukraine strikes cargo ships and admits Romania drone blast",
       "source": "BBC World",
       "impact_rating": "medium",
-      "rationale": "Black Sea shipping disruptions could cause localized spikes in energy and grain prices, affecting XLE."
+      "rationale": "Black Sea shipping disruptions could cause localized supply chain hiccups, mildly bullish for commodities."
     },
     {
       "headline": "Astronauts return to ISS after sheltering during air leak repair attempt",
@@ -152,7 +146,7 @@
       "headline": "Fury in France after child murder suspect's criminal record released",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "Domestic social issue in France with no material impact on global financial markets."
+      "rationale": "Domestic social issue in France with no material impact on global portfolio strategy."
     },
     {
       "headline": "Nearly 50 people die of thirst in Sahara desert after lorry breaks down",
@@ -164,43 +158,37 @@
       "headline": "Iran footballers issued US visas for World Cup, says White House",
       "source": "Al Jazeera",
       "impact_rating": "low",
-      "rationale": "Minor diplomatic gesture that does not alter the broader geopolitical risk premium or oil supply."
+      "rationale": "Minor diplomatic gesture with no immediate effect on crude oil or geopolitical risk premiums."
     },
     {
       "headline": "Zelenskyy: Putin choosing war by rejecting offer for in-person talks",
       "source": "Al Jazeera",
       "impact_rating": "high",
-      "rationale": "Reinforces the narrative of a protracted war, supporting long-term bullishness on GLD and defense sectors."
+      "rationale": "Reinforces the prolonged war narrative, keeping defense stocks bid and supporting safe-haven GLD."
     },
     {
       "headline": "Trump hails jobs surge, says Iran talks \u2018going well\u2019",
       "source": "Al Jazeera",
       "impact_rating": "medium",
-      "rationale": "Potential easing of Iran tensions could lower the geopolitical risk premium on crude oil, creating headwinds for XLE."
+      "rationale": "Positive Iran talk rhetoric could cap crude oil spikes, acting as a headwind for XLE upside."
     }
   ],
   "calendar": [
     {
-      "date": "2024-06-20",
-      "event": "Micron Earnings",
+      "date": "2024-06-15",
+      "event": "US-Iran talks in Switzerland",
       "impact": "high"
     },
     {
-      "date": "2024-06-25",
-      "event": "Bank Stress Test Results",
+      "date": "2024-07-10",
+      "event": "US CPI Inflation Data",
       "impact": "high"
-    },
-    {
-      "date": "2024-07-11",
-      "event": "Amazon Prime Day",
-      "impact": "medium"
     }
   ],
   "portfolio_actions": {
     "immediate": [
-      "EXIT FXY due to missing data and weak yen trend",
-      "ADD to GLD to capitalize on VIX spike and geopolitical hedging",
-      "TRIM XLE to reduce energy sector drag"
+      "TRIM XLE to reduce sector rotation drag",
+      "ADD to GLD on safe-haven momentum"
     ],
     "watchlist": [
       "AMZN",
@@ -208,8 +196,8 @@
       "UNH"
     ],
     "avoid": [
-      "SNAP",
-      "MSFT"
+      "NVDA",
+      "AMD"
     ]
   }
 }
