@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-21T11:25:39.565845+00:00",
+    "generated_at": "2026-06-22T11:25:28.589617+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001313,
+    "total_cost_usd": 0.000959,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
     "mimo_risk_contrarian": "auth_error",
-    "kimi_momentum": "auth_error",
     "deepseek_quantitative": "auth_error",
-    "qwen_trade_selector": "**Trade 1: Short SPY (S&P 500 ETF)**\n* **Entry:** $738.00\n* **Stop:** $743.50\n* **Target:** $730.50\n* **Conviction:** 6/10\n* **Rationale:** The DS Pro analysis indicates a \"risk-off\" market regime, suggesting downside pressure despite the technically \"bullish\" gamma regime. The massive Put open interest at the $730 strike (Max GEX) acts as a strong downside magnet. This trade capitalizes on the risk-off sentiment with a defined risk above current pricing, targeting the $730 GEX wall.\n\n**Trade 2: Long GLD (Gold ETF)**\n* **Entry:** $387.20\n* **Stop:** $383.00\n* **Target:** $395.00\n* **Conviction:** 8/10\n* **Rationale:** GLD is currently the only profitable position in the portfolio and aligns perfectly with the \"risk-off\" macro environment. Pyramiding into this winning safe-haven asset provides a natural hedge against the underwater long exposure in cyclical/defensive equities (XLE, JNJ) while riding the established momentum."
+    "kimi_momentum": "auth_error",
+    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF Trust)\n- **Direction**: Long (Buy the Dip)\n- **Entry**: $732.50 \n- **Stop Loss**: $727.50\n- **Target**: $748.00\n- **Conviction**: 8/10\n- **Rationale**: The GEX data indicates a \"bullish\" gamma regime with a massive Put wall at the $730 strike (Max GEX). In a positive gamma environment, market makers buy dips and sell rips, which suppresses volatility and creates strong support near major gamma strikes. Entering on a pullback toward the $730-$732 zone offers an excellent risk/reward ratio, targeting the next major resistance/liquidity zone near $748-$750. \n\n### Trade 2: GLD (SPDR Gold Shares)\n- **Direction**: Long (Trend Continuation / Hedge)\n- **Entry**: $384.50\n- **Stop Loss**: $378.00\n- **Target**: $396.00\n- **Conviction**: 6/10\n- **Rationale**: GLD is currently your only profitable open position, showing relative strength. With the broader market in a \"transitional\" regime, capital often rotates into safe-haven assets like gold. Buying a minor pullback to the $384.50 level allows you to scale into the trend while keeping a tight stop below recent consolidation, targeting a push toward $396 as macro uncertainty persists."
   }
 }
