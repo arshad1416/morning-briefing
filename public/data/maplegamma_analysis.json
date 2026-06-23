@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-22T11:25:28.589617+00:00",
+    "generated_at": "2026-06-23T11:25:39.999909+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.000959,
+    "total_cost_usd": 0.001364,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
-    "mimo_risk_contrarian": "auth_error",
-    "deepseek_quantitative": "auth_error",
     "kimi_momentum": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF Trust)\n- **Direction**: Long (Buy the Dip)\n- **Entry**: $732.50 \n- **Stop Loss**: $727.50\n- **Target**: $748.00\n- **Conviction**: 8/10\n- **Rationale**: The GEX data indicates a \"bullish\" gamma regime with a massive Put wall at the $730 strike (Max GEX). In a positive gamma environment, market makers buy dips and sell rips, which suppresses volatility and creates strong support near major gamma strikes. Entering on a pullback toward the $730-$732 zone offers an excellent risk/reward ratio, targeting the next major resistance/liquidity zone near $748-$750. \n\n### Trade 2: GLD (SPDR Gold Shares)\n- **Direction**: Long (Trend Continuation / Hedge)\n- **Entry**: $384.50\n- **Stop Loss**: $378.00\n- **Target**: $396.00\n- **Conviction**: 6/10\n- **Rationale**: GLD is currently your only profitable open position, showing relative strength. With the broader market in a \"transitional\" regime, capital often rotates into safe-haven assets like gold. Buying a minor pullback to the $384.50 level allows you to scale into the trend while keeping a tight stop below recent consolidation, targeting a push toward $396 as macro uncertainty persists."
+    "deepseek_quantitative": "auth_error",
+    "mimo_risk_contrarian": "auth_error",
+    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF) - Long on Dip\n- **Entry:** $733.00 (Limit order near support)\n- **Stop:** $727.50 (Below major GEX support)\n- **Target:** $748.00 (Previous resistance / upside target)\n- **Conviction:** 8/10\n- **Rationale:** The GEX/DEX data indicates a \"bullish\" gamma regime for SPY with the Max GEX strike (heavy put support) sitting right at $730. Entering on a pullback to $733 allows you to buy near this structural support floor with a tight stop just below the $730 strike. This offers a highly favorable risk/reward ratio in a transitional market.\n\n### Trade 2: QQQ (Nasdaq 100 ETF) - Long Momentum\n- **Entry:** $508.50 \n- **Stop:** $498.00 \n- **Target:** $528.00 \n- **Conviction:** 7/10\n- **Rationale:** In transitional market regimes with bullish underlying gamma, large-cap tech typically leads the rebound and exhibits higher beta. This trade capitalizes on tech outperformance. *Note: Since your current paper portfolio is 100% long and bleeding across XLE, JNJ, FXY, and GLD, consider using a smaller position size for this trade to manage overall portfolio drawdown, or use it as a pair-trade to offset weaker legacy positions.*\n\n***\n\n**Portfolio Management Note:** Your current open positions (XLE, JNJ, FXY, GLD) are all in the red, indicating your portfolio is heavily exposed to long value/defensive/commodity assets that are currently lagging. Consider taking partial profits on any bounces in these legacy positions to free up cash and reduce overall portfolio delta until the market regime clarifies."
   }
 }
