@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-23T11:25:39.999909+00:00",
+    "generated_at": "2026-06-24T11:25:29.718407+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001364,
+    "total_cost_usd": 0.001002,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
-    "kimi_momentum": "auth_error",
-    "deepseek_quantitative": "auth_error",
     "mimo_risk_contrarian": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF) - Long on Dip\n- **Entry:** $733.00 (Limit order near support)\n- **Stop:** $727.50 (Below major GEX support)\n- **Target:** $748.00 (Previous resistance / upside target)\n- **Conviction:** 8/10\n- **Rationale:** The GEX/DEX data indicates a \"bullish\" gamma regime for SPY with the Max GEX strike (heavy put support) sitting right at $730. Entering on a pullback to $733 allows you to buy near this structural support floor with a tight stop just below the $730 strike. This offers a highly favorable risk/reward ratio in a transitional market.\n\n### Trade 2: QQQ (Nasdaq 100 ETF) - Long Momentum\n- **Entry:** $508.50 \n- **Stop:** $498.00 \n- **Target:** $528.00 \n- **Conviction:** 7/10\n- **Rationale:** In transitional market regimes with bullish underlying gamma, large-cap tech typically leads the rebound and exhibits higher beta. This trade capitalizes on tech outperformance. *Note: Since your current paper portfolio is 100% long and bleeding across XLE, JNJ, FXY, and GLD, consider using a smaller position size for this trade to manage overall portfolio drawdown, or use it as a pair-trade to offset weaker legacy positions.*\n\n***\n\n**Portfolio Management Note:** Your current open positions (XLE, JNJ, FXY, GLD) are all in the red, indicating your portfolio is heavily exposed to long value/defensive/commodity assets that are currently lagging. Consider taking partial profits on any bounces in these legacy positions to free up cash and reduce overall portfolio delta until the market regime clarifies."
+    "deepseek_quantitative": "auth_error",
+    "kimi_momentum": "auth_error",
+    "qwen_trade_selector": "### Trade 1: SPY (Long)\n* **Thesis:** SPY is trading in a \"bullish\" gamma regime with a massive Put wall at the $730 strike (165k OI) acting as strong support. The transitional market regime favors buying dips toward this gamma flip/support level and targeting the next major strike at $750.\n* **Entry:** $737.50 - $738.50 (Current market price)\n* **Stop Loss:** $728.00 (Placed safely below the $730 max GEX strike to invalidate the support thesis)\n* **Target:** $749.00 (Just below the $750 strike resistance/dealer gamma zone)\n* **Conviction:** 8/10\n\n### Trade 2: GLD (Add to Position / Average Down)\n* **Thesis:** Gold is currently experiencing a pullback in your portfolio (-2.4%). In a transitional market regime with mixed signals across energy (XLE) and currencies (FXY), adding to the physical gold proxy at a discount improves the average cost basis while maintaining a macro hedge. \n* **Entry:** $376.50 - $378.00 (Current market price)\n* **Stop Loss:** $368.00 (Below recent structural consolidation lows)\n* **Target:** $395.00 (Return to previous highs and breakout territory)\n* **Conviction:** 6/10"
   }
 }
