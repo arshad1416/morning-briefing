@@ -1,39 +1,21 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-06-25 09:00:01",
+  "generated_at": "2026-06-25 09:30:01",
   "price_source": "yfinance historical closes \u2014 no CAD/USD math",
-  "fx_rate_usdcad": 1.4235,
+  "fx_rate_usdcad": 1.4219,
   "portfolio": {
     "starting_balance": 100000.0,
-    "cash": 53062.51,
-    "invested": 742.22,
-    "total_balance": 99982.42,
-    "total_pnl": 7.45,
-    "unrealized_pnl": -25.03,
+    "cash": 62111.61,
+    "invested": 684.67,
+    "total_balance": 99982.07,
+    "total_pnl": 3.12,
+    "unrealized_pnl": -21.05,
     "return_pct": -0.02,
     "win_rate": 0.0,
-    "total_trades": 2
+    "total_trades": 3
   },
   "active_strategy": "V23 VIX>=12 MR",
   "open_positions": [
-    {
-      "ticker": "XLE",
-      "type": "ETF",
-      "entry_date": "2026-06-12",
-      "entry_price": 57.55,
-      "current_price": 53.57,
-      "currency": "USD",
-      "entry_price_usd": 57.55,
-      "entry_price_cad": 79.42,
-      "current_price_usd": 53.57,
-      "current_price_cad": 73.93,
-      "pnl": -3.98,
-      "pnl_pct": -6.92,
-      "strategy": "sector_rotation",
-      "direction": "long",
-      "rationale": "Energy - US top oil exporter. DS Pro pick.",
-      "asset_class": "STOCK"
-    },
     {
       "ticker": "JNJ",
       "type": "ETF",
@@ -129,6 +111,26 @@
       "exit_date": "2026-06-15T10:19:30.340669",
       "rationale": "AMZN PUT 7/17 $305 - 2270x OI, $11.6M premium. DS Pro top signal: downside protection flowing.",
       "exit_rationale": "Stop-loss triggered at -15%"
+    },
+    {
+      "ticker": "XLE",
+      "type": "ETF",
+      "asset_class": "STOCK",
+      "direction": "long",
+      "pnl_pct": -7.52,
+      "pnl_usd": -4.33,
+      "entry_price": 57.55,
+      "exit_price": 53.22,
+      "currency": "USD",
+      "entry_price_usd": 57.55,
+      "entry_price_cad": 79.42,
+      "exit_price_usd": 53.22,
+      "exit_price_cad": 73.44,
+      "strategy": "sector_rotation",
+      "entry_date": "2026-06-12T13:45:09.600130",
+      "exit_date": "2026-06-25T09:30:01.604798",
+      "rationale": "Energy - US top oil exporter. DS Pro pick.",
+      "exit_rationale": "STOP: Hard stop hit at -9.0% (limit 3%)"
     }
   ]
 }
