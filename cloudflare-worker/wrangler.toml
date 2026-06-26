@@ -8,12 +8,12 @@ compatibility_date = "2026-06-01"
 
 [vars]
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-OPENROUTER_MODEL = "openai/gpt-4o-mini"  # cheap + fast for ticker analysis
+OPENROUTER_MODEL = "deepseek/deepseek-v4-pro"
 RATE_LIMIT_PER_MIN = 10
-ALLOWED_ORIGIN = "https://briefing.yourdomain.com"
 
-[env.production]
-route = "chat-api.yourdomain.com/chat"
+# KV namespace for rate limiting
+# Rate limiting is configured via Cloudflare dashboard (WAF).
+# No KV required.
 
 # Deployment: npx wrangler deploy
 # Secrets: npx wrangler secret put OPENROUTER_API_KEY

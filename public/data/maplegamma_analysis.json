@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "generated_at": "2026-06-25T11:25:55.504401+00:00",
+    "experts_consulted": 4,
+    "experts_succeeded": 1,
+    "total_cost_usd": 0.001865,
+    "status": "insufficient_experts"
+  },
+  "expert_outputs": {
+    "kimi_momentum": "auth_error",
+    "deepseek_quantitative": "auth_error",
+    "mimo_risk_contrarian": "auth_error",
+    "qwen_trade_selector": "### **TRADE PROPOSALS**\n\nBased on the current portfolio composition (heavy in lagging defensives/commodities) and the SPY GEX/DEX data indicating a \"bullish\" gamma regime with a massive dealer-supported floor, here are two tactical trades for today.\n\n#### **Trade 1: SPY (Long) - Pullback to Gamma Support**\n*   **Ticker:** SPY\n*   **Direction:** Long\n*   **Entry:** $733.50 (Limit order on pullback)\n*   **Stop Loss:** $727.50 \n*   **Target:** $746.00\n*   **Conviction:** 8/10\n*   **Rationale:** SPY is currently in a \"bullish\" gamma regime. The Max GEX strike is at $730.0 with massive Put Open Interest (165,097 contracts), creating a strong dealer-supported floor (dealers will buy dips to hedge). Entering on a pullback toward this $730 gamma wall provides a high-probability long setup. The stop is placed safely below the $730 strike to invalidate the thesis if the support breaks. This adds broad market beta to your portfolio, which currently lacks it.\n\n#### **Trade 2: XLE (Short) - Trend Continuation & Portfolio Hedge**\n*   **Ticker:** XLE\n*   **Direction:** Short\n*   **Entry:** $53.80 (Limit order on minor bounce)\n*   **Stop Loss:** $55.50\n*   **Target:** $50.00\n*   **Conviction:** 7/10\n*   **Rationale:** Your current long XLE position is dragging (entry $57.55, now $53.57) and showing severe relative weakness. Instead of averaging down, initiating a short position on a minor bounce hedges your existing long exposure and neutralizes your energy sector risk. The target is the next major psychological support at $50.00. *(Note: If XLE breaks below $52.50, consider closing the original long position entirely to realize the tax loss and remove the dead weight from the portfolio).*\n\n***\n\n### **RISK & PORTFOLIO NOTES**\n*   **Position Sizing:** With ~$53k in cash, risk no more than 1% to 1.5% of total account equity ($1,000 - $1,500) on the initial stop-loss distance for these new entries. \n*   **Portfolio Balance:** Your current open positions (XLE, JNJ, FXY, GLD) are highly defensive and commodity-heavy, which is why they are bleeding in a \"bullish\" gamma equity regime. Adding SPY exposure (Trade 1) will help align your portfolio with the broader market's current dealer positioning."
+  }
+}

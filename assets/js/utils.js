@@ -30,6 +30,26 @@ const Utils = {
     return `<span class="badge badge-red">${score}</span>`;
   },
 
+  /** Sanitize string for safe innerHTML injection (text + attribute contexts) */
+  esc(str) {
+    if (str == null) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  },
+
+  /** Validate URL — only http/https allowed, blocks javascript: */
+  safeUrl(url) {
+    if (!url) return '#';
+    try {
+      var u = new URL(url, location.origin);
+      return ['http:', 'https:'].includes(u.protocol) ? url : '#';
+    } catch { return '#'; }
+  },
+
   /** Safe JSON fetch with error handling */
   async fetchJSON(url) {
     try {
@@ -42,10 +62,101 @@ const Utils = {
     }
   },
 
+  /**
+   * renderMarkdown(text)
+   * Converts the AI-generated markdown narrative into clean HTML.
+   * Handles the specific patterns produced by the Pi briefing agent:
+   *   **🔷 SECTION HEADER**  → styled <h3> with emoji
+   *   **bold text**           → <strong>
+   *   • bullet line           → <li> inside <ul>
+   *   blank line              → paragraph break
+   *
+   * Does NOT use any external libraries — pure regex transforms.
+   */
+  renderMarkdown(text) {
+    if (!text) return '';
+
+    // Normalise line endings
+    let t = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+    // Split into lines for processing
+    const lines = t.split('\n');
+    const out = [];
+    let inList = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i];
+
+      // ── Section headers: **HEADING** (Pi format) or ## HEADING (standard markdown)
+      const h2Match = line.match(/^##\s+(.+)/);
+      const h3Match = line.match(/^###\s+(.+)/);
+      const headerMatch = line.match(/^\*{1,2}\s*([\p{Emoji}\u{1F300}-\u{1FFFF}\u{2600}-\u{27BF}]?\s*[A-Z][A-Z\s\/\-&()0-9]*)\*{1,2}\s*$/u);
+      if (h2Match || h3Match || headerMatch) {
+        if (inList) { out.push('</ul>'); inList = false; }
+        const label = h2Match ? h2Match[1].trim() : h3Match ? h3Match[1].trim() : headerMatch[1].trim();
+        const isH2 = !!h2Match;
+        out.push(`<h3 class="intel-header" style="${isH2 ? 'font-size:0.85rem;margin-top:24px' : ''}">${label}</h3>`);
+        continue;
+      }
+
+      // ── Bullet lines: start with •, -, *, or – 
+      const bulletMatch = line.match(/^[•\-\*–]\s+(.+)/);
+      if (bulletMatch) {
+        if (!inList) { out.push('<ul class="intel-list">'); inList = true; }
+        const content = Utils._inlineBold(bulletMatch[1]);
+        out.push(`<li>${content}</li>`);
+        continue;
+      }
+
+      // ── Close list on non-bullet line
+      if (inList && line.trim() !== '') {
+        out.push('</ul>');
+        inList = false;
+      }
+
+      // ── Empty line → paragraph spacer
+      if (line.trim() === '') {
+        if (inList) { out.push('</ul>'); inList = false; }
+        out.push('<div class="intel-spacer"></div>');
+        continue;
+      }
+
+      // ── Tables: | header | header |
+      if (line.trim().startsWith('|') && i + 1 < lines.length && lines[i + 1].trim().startsWith('|') && lines[i + 1].match(/^\|[-| :]+\|/)) {
+        // Collect all lines of the table
+        let tableLines = [line];
+        i++;
+        while (i < lines.length && lines[i].trim().startsWith('|')) {
+          tableLines.push(lines[i]);
+          i++;
+        }
+        i--; // loop will increment
+        out.push(Utils.renderTable(tableLines.join('\n')));
+        continue;
+      }
+
+      // ── Regular paragraph line
+      const content = Utils._inlineBold(line);
+      out.push(`<p class="intel-para">${content}</p>`);
+    }
+
+    if (inList) out.push('</ul>');
+
+    return out.join('\n');
+  },
+
+  /** Convert **bold** and *italic* inline markers to HTML */
+  _inlineBold(text) {
+    // **bold** → <strong>
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // *italic* (single asterisk, not already consumed)
+    text = text.replace(/\*([^*\s][^*]*[^*\s]|\S)\*/g, '<em>$1</em>');
+    return text;
+  },
+
   /** Render markdown tables to HTML (simple regex-based) */
   renderTable(markdown) {
     if (!markdown) return '';
-    // Match markdown tables: header | separator | rows
     let html = markdown;
     const tableRegex = /\|(.+)\|\n\|[-| :]+\|\n((?:\|.+\|\n?)*)/g;
     html = html.replace(tableRegex, (match, headerLine, bodyLines) => {

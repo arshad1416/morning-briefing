@@ -1,0 +1,138 @@
+{
+  "generated_at": "2026-06-03T12:46:12-04:00",
+  "overall": {
+    "total_backtest_trades": 135016,
+    "top_10_avg_win_rate": 72.4,
+    "top_10_avg_pnl": 4.89,
+    "best_version": "V80 CrashBounce",
+    "best_win_rate": 81.6,
+    "best_avg_pnl": 7.78,
+    "best_profit_factor": 11.82,
+    "versions_completed": 100
+  },
+  "strategies_tested": 100,
+  "total_versions": 100,
+  "top_performers": [
+    {
+      "name": "V80 CrashBounce",
+      "trades": 98,
+      "win_rate": 81.6,
+      "avg_pnl": 7.78,
+      "profit_factor": 4.42
+    },
+    {
+      "name": "V26 Bear Market MR",
+      "trades": 25,
+      "win_rate": 80.0,
+      "avg_pnl": 8.71,
+      "profit_factor": 11.82
+    },
+    {
+      "name": "V33 Score \u22658",
+      "trades": 19,
+      "win_rate": 78.9,
+      "avg_pnl": 6.04,
+      "profit_factor": 7.64
+    },
+    {
+      "name": "V23 VIX\u226512 MR",
+      "trades": 35,
+      "win_rate": 74.3,
+      "avg_pnl": 4.67,
+      "profit_factor": 5.1
+    },
+    {
+      "name": "V6 RSI<25 MR",
+      "trades": 147,
+      "win_rate": 74.1,
+      "avg_pnl": 3.18,
+      "profit_factor": 3.86
+    },
+    {
+      "name": "V18 Adaptive MR",
+      "trades": 77,
+      "win_rate": 74.0,
+      "avg_pnl": 3.39,
+      "profit_factor": 4.12
+    },
+    {
+      "name": "V11 Score-Weighted",
+      "trades": 75,
+      "win_rate": 73.3,
+      "avg_pnl": 3.41,
+      "profit_factor": 4.05
+    },
+    {
+      "name": "V100 Full Conviction",
+      "trades": 18,
+      "win_rate": 72.2,
+      "avg_pnl": 5.35,
+      "profit_factor": 7.64
+    },
+    {
+      "name": "V37 RSI<22",
+      "trades": 80,
+      "win_rate": 70.0,
+      "avg_pnl": 5.08,
+      "profit_factor": 3.24
+    },
+    {
+      "name": "V10 Combined Best",
+      "trades": 142,
+      "win_rate": 71.1,
+      "avg_pnl": 3.71,
+      "profit_factor": 3.72
+    }
+  ],
+  "mr_progression": [
+    {
+      "version": "V1",
+      "win_rate": 60.1,
+      "avg_pnl": 1.73,
+      "pf": 1.64,
+      "trades": 3586
+    },
+    {
+      "version": "V6",
+      "win_rate": 74.1,
+      "avg_pnl": 3.18,
+      "pf": 3.86,
+      "trades": 147
+    },
+    {
+      "version": "V23",
+      "win_rate": 74.3,
+      "avg_pnl": 4.67,
+      "pf": 5.1,
+      "trades": 35
+    },
+    {
+      "version": "V26",
+      "win_rate": 80.0,
+      "avg_pnl": 8.71,
+      "pf": 11.82,
+      "trades": 25
+    },
+    {
+      "version": "V80",
+      "win_rate": 81.6,
+      "avg_pnl": 7.78,
+      "pf": 4.42,
+      "trades": 98
+    }
+  ],
+  "date_range": "2000-01-01 to 2026-06-03",
+  "data_source": "yfinance, 59+ tickers, 21-day hold, Turso, 100 versions",
+  "live_portfolio": {
+    "status": "LIVE",
+    "balance": 1987.25,
+    "cash": 903.07,
+    "return_pct": -0.64,
+    "win_rate": 45.5,
+    "open_positions": 8,
+    "total_trades": 11,
+    "active_strategy": "V23 VIX>=12 MR",
+    "market_regime": "BULL (SPY $755 > 200d SMA)",
+    "vix": 16.37
+  }
+}

@@ -1,0 +1,109 @@
+/* ─────────────────────────────────────────────────────────────
+   SCREENER FILTER BAR
+   ───────────────────────────────────────────────────────────── */
+.screener-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--card-radius);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  align-items: flex-end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 130px;
+  flex: 1 0 auto;
+}
+
+.filter-group label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.filter-group select,
+.filter-group input[type="text"] {
+  background: var(--bg-inset);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-family: var(--font-ui);
+  min-height: 36px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.filter-group select:focus,
+.filter-group input[type="text"]:focus {
+  border-color: var(--accent);
+}
+
+.filter-group select option {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.screener-btn {
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  min-height: 36px;
+  transition: background 0.12s;
+  align-self: flex-end;
+}
+
+.screener-btn:hover {
+  background: var(--accent);
+  color: var(--accent-on);
+}
+
+.screener-count {
+  text-align: right;
+  padding: 8px 4px 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Mobile: stack filters 2-col */
+@media (max-width: 768px) {
+  .screener-filters {
+    gap: 8px;
+    padding: 12px;
+  }
+  .filter-group {
+    min-width: calc(50% - 8px);
+    flex: 1 1 45%;
+  }
+  .filter-search {
+    min-width: 100%;
+  }
+  .screener-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-group {
+    min-width: 100%;
+  }
+}

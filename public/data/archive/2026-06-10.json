@@ -1,0 +1,163 @@
+{
+  "generated_at": "2026-06-10T09:00:37-04:00",
+  "market_summary": {
+    "vix": 20.94,
+    "ten_year_yield": 4.52,
+    "indices": [
+      {
+        "ticker": "S&P 500",
+        "price": NaN,
+        "change_pct": NaN
+      },
+      {
+        "ticker": "Dow Jones",
+        "price": NaN,
+        "change_pct": NaN
+      },
+      {
+        "ticker": "NASDAQ",
+        "price": NaN,
+        "change_pct": NaN
+      },
+      {
+        "ticker": "TSX",
+        "price": NaN,
+        "change_pct": NaN
+      },
+      {
+        "ticker": "VIX",
+        "price": 20.94,
+        "change_pct": 10.68
+      },
+      {
+        "ticker": "10Y Yield",
+        "price": 4.52,
+        "change_pct": -0.66
+      }
+    ],
+    "fx_rates": [
+      {
+        "pair": "USD/CAD",
+        "price": 1.39
+      }
+    ]
+  },
+  "narrative": {
+    "summary_paragraph": "The portfolio is currently **defensive\u2011leaning but idiosyncratically concentrated**: cash sits at $1,120.36 of a $1,177.72 balance (\u224895% cash), leaving only $57.36 deployed across seven open positions. The bulk of that exposure is in three separate IBIT entries (\u2248$172 notional if priced near current levels), creating a single\u2011stock over\u2011weight that outweighs the modest macro hedge (TLT long) and sector bets (XLU, TD, EFA). With a YTD return of \u201341.1% and a 4W/3L record, the strategy mix is producing marginal gains while the large drawdown stems from a few losing momentum trades (ON \u201327.7%, \u201328.4%).  \n\n**Three quantitative insights** emerge from the data:  \n1. **Macro deterioration** \u2013 the smoothed recession probability jumped to 1.82% (+1.36\u202fpp) and U.Mich sentiment fell \u20136.57\u202fpp, while real disposable income slipped \u20130.48\u202fpp and housing starts dropped \u20132.79\u202f%.  \n2. **IBIT over\u2011concentration** \u2013 three entries on May\u202f27\u201129 at $58.74, $56.85, $57.36 represent roughly 50\u202f% of the invested capital with no clear edge; recent IBIT trades have breakeven P&L.  \n3. **Strategy performance divergence** \u2013 sector_rotation (JETS +0.8\u202f%, +0.7\u202f%) and mean_reversion (NKE +3.7\u202f%) delivered the only positive trades, whereas momentum contributed a mere +$0.01 on one trade and the momentum\u2011options ON trade lost \u201327.7\u202f%.  \n\n**Strategy tilt & macro signals:** given the rising recession odds, widening HY spread (+0.01\u202fpp), PPI up +2.66\u202f% and falling real income, favor defensive assets: increase the TLT hedge (target entry \u2264$115.00) and add to XLU on dips below $62.00. Reduce IBIT exposure by scaling out two of the three lots (e.g., sell 2\u202f\u00d7\u202fIBIT at market) to bring the crypto\u2011equity weight under 20\u202f% of deployed capital. Pause new momentum entries until volatility contracts; instead, lean into mean\u2011reversion on large\u2011cap value (TD, EFA) and sector_rotation on consumer discretionary (JETS) only on pull\u2011backs of 3\u20115\u202f% from recent highs.  \n\n**Watchlist & sizing:**  \n- **RIVN** \u2013 long if price"
+  },
+  "watchlist_summary": {
+    "total_scanned": 0,
+    "avg_change": 0,
+    "green_count": 0,
+    "red_count": 0
+  },
+  "premarket_top_setups": [
+    {
+      "ticker": "MSFT",
+      "price": 426.989990234375,
+      "change_pct": 3.47,
+      "score": 11,
+      "signals": [
+        "neutral_rsi",
+        "strong_momentum",
+        "above_20ma",
+        "above_50ma",
+        "elevated_volume"
+      ],
+      "rsi": 55.5,
+      "above_sma_20": true,
+      "above_sma_50": true
+    },
+    {
+      "ticker": "ARKK",
+      "price": 81.01000213623047,
+      "change_pct": 3.93,
+      "score": 10,
+      "signals": [
+        "neutral_rsi",
+        "strong_momentum",
+        "above_20ma",
+        "above_50ma"
+      ],
+      "rsi": 59.7,
+      "above_sma_20": true,
+      "above_sma_50": true
+    },
+    {
+      "ticker": "IBIT",
+      "price": 41.560001373291016,
+      "change_pct": -2.1,
+      "score": 10,
+      "signals": [
+        "oversold",
+        "pullback"
+      ],
+      "rsi": 29.0,
+      "above_sma_20": false,
+      "above_sma_50": false
+    }
+  ],
+  "geopolitical": [
+    {
+      "title": "Putin says there is 'no point' meeting Zelensky over ending Ukraine war",
+      "source": "BBC World",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Ukraine strikes cargo ships and admits Romania drone blast",
+      "source": "BBC World",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Astronauts return to ISS after sheltering during air leak repair attempt",
+      "source": "BBC World",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Fury in France after child murder suspect's criminal record released",
+      "source": "BBC World",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Nearly 50 people die of thirst in Sahara desert after lorry breaks down",
+      "source": "BBC World",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Iran footballers issued US visas for World Cup, says White House",
+      "source": "Al Jazeera",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Zelenskyy: Putin choosing war by rejecting offer for in-person talks",
+      "source": "Al Jazeera",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Trump hails jobs surge, says Iran talks \u2018going well\u2019",
+      "source": "Al Jazeera",
+      "url": "",
+      "date": "",
+      "summary": ""
+    }
+  ],
+  "insider_trades": [],
+  "congress": {
+    "recent_trades": [],
+    "summary": "\ud83d\udccb No congress trades found"
+  }
+}

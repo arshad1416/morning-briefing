@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Briefing — arshadkazi.ca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F5EF; --card:#FFFFFF; --ink:#1A1813; --mut:#7B7567; --soft:#A39C8A;
+  --line:#E7E2D5; --line2:#D6CFBE;
+  --up:#0B7A45; --upbg:#E7F3EB; --dn:#C03B22; --dnbg:#FAEBE5;
+  --acc:#2547D0; --accbg:#EAEEFB;
+  --amber:#96690A; --amberbg:#F8EFD9;
+  --mono:'Spline Sans Mono',monospace; --disp:'Fraunces',serif; --body:'Schibsted Grotesk',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14px;line-height:1.5;
+  background-image:radial-gradient(rgba(26,24,19,.035) 1px,transparent 1px);background-size:22px 22px}
+::selection{background:var(--acc);color:#fff}
+a{color:var(--acc);text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.up{color:var(--up)}.dn{color:var(--dn)}
+.micro{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--mut)}
+
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:50;background:rgba(247,245,239,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.masthead{display:flex;align-items:baseline;justify-content:space-between;padding:18px 0 10px}
+.brand{font-family:var(--disp);font-style:italic;font-weight:600;font-size:24px;letter-spacing:-.02em}
+.brand span{font-family:var(--body);font-style:normal;font-weight:600;font-size:10px;letter-spacing:.18em;color:var(--mut);margin-left:10px;vertical-align:2px}
+.meta{display:flex;gap:16px;align-items:center;font-size:12px;color:var(--mut)}
+.live{display:inline-flex;align-items:center;gap:6px}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--up);display:inline-block;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(11,122,69,.35)}50%{box-shadow:0 0 0 5px rgba(11,122,69,0)}}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+.tab{appearance:none;background:none;border:none;cursor:pointer;font-family:var(--body);font-size:13px;font-weight:600;
+  color:var(--mut);padding:10px 14px;position:relative;white-space:nowrap;transition:color .15s}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--ink)}
+.tab.on::after{content:'';position:absolute;left:12px;right:12px;bottom:-1px;height:2px;background:var(--acc);border-radius:2px}
+
+/* ---------- layout ---------- */
+main{padding:28px 0 96px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;transition:border-color .15s}
+.card:hover{border-color:var(--line2)}
+.card h3{font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--mut);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.card h3 a{font-size:11px;letter-spacing:.04em;text-transform:none;font-weight:600}
+.reveal{opacity:0;animation:rise .55s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.grid>*:nth-child(1){animation-delay:.02s}.grid>*:nth-child(2){animation-delay:.08s}
+.grid>*:nth-child(3){animation-delay:.14s}.grid>*:nth-child(4){animation-delay:.2s}
+.grid>*:nth-child(5){animation-delay:.26s}.grid>*:nth-child(6){animation-delay:.32s}
+.grid>*:nth-child(7){animation-delay:.38s}
+
+/* indices strip */
+.strip{grid-column:1/-1;display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.idx{flex:1;min-width:128px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;gap:1px}
+.idx b{font-size:11px;letter-spacing:.1em;color:var(--mut);font-weight:700}
+.idx .num{font-size:15px;font-weight:600}
+.idx small{font-size:11.5px;font-weight:600}
+
+/* hero */
+.hero{grid-column:span 8;display:flex;flex-direction:column;justify-content:space-between;min-height:240px;
+  background:linear-gradient(135deg,#fff 60%,#FBF9F2)}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.equity{font-family:var(--disp);font-weight:560;font-size:clamp(44px,6.4vw,72px);letter-spacing:-.03em;line-height:1.02;font-variant-numeric:tabular-nums;margin:6px 0 12px}
+.equity sup{font-size:.42em;font-weight:500;color:var(--mut);margin-right:4px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-family:var(--mono);font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:99px}
+.pill.g{background:var(--upbg);color:var(--up)}.pill.r{background:var(--dnbg);color:var(--dn)}
+.pill.n{background:#F1EEE4;color:var(--mut)}
+.regime{text-align:right}
+.badge{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;letter-spacing:.08em;
+  padding:7px 13px;border-radius:99px;border:1px solid}
+.badge.neutral{background:var(--amberbg);color:var(--amber);border-color:#EAD9A8}
+.badge.riskon{background:var(--upbg);color:var(--up);border-color:#BFE0CC}
+.badge.riskoff{background:var(--dnbg);color:var(--dn);border-color:#F0C6B8}
+.badge i{width:8px;height:8px;border-radius:50%;background:currentColor}
+.regime small{display:block;margin-top:8px;font-size:11.5px;color:var(--mut)}
+.spark{margin-top:14px}
+
+/* side cards */
+.side{grid-column:span 4;display:flex;flex-direction:column;gap:16px}
+.event-name{font-family:var(--disp);font-size:21px;font-weight:600;letter-spacing:-.01em;margin-bottom:2px}
+.countdown{font-family:var(--mono);font-size:13px;color:var(--acc);font-weight:600}
+.event-meta{font-size:12.5px;color:var(--mut);margin-top:8px;line-height:1.6}
+.flowline{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid var(--line);font-size:13px}
+.flowline:first-of-type{border-top:none;padding-top:0}
+.flowline b{font-family:var(--mono)}
+.chip{font-size:10px;font-weight:700;letter-spacing:.08em;padding:3px 8px;border-radius:5px}
+.chip.c{background:var(--upbg);color:var(--up)}.chip.p{background:var(--dnbg);color:var(--dn)}
+.chip.l{background:var(--upbg);color:var(--up)}.chip.s{background:var(--dnbg);color:var(--dn)}
+.chip.a{background:var(--accbg);color:var(--acc)}.chip.m{background:#F1EEE4;color:var(--mut)}
+.chip.w{background:var(--amberbg);color:var(--amber)}
+
+/* tables */
+.pos-card{grid-column:span 7}.setups-card{grid-column:span 5}.full{grid-column:1/-1}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);font-weight:700;padding:0 10px 8px;border-bottom:1px solid var(--line)}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr{transition:background .12s}
+tbody tr:hover{background:#FBFAF5}
+td.r,th.r{text-align:right}
+.sym{font-family:var(--mono);font-weight:600;font-size:13.5px}
+.sub{font-size:11.5px;color:var(--mut)}
+.hover-detail{display:block;font-family:var(--mono);font-size:11px;color:var(--soft);max-height:0;overflow:hidden;transition:max-height .2s,margin .2s}
+tbody tr:hover .hover-detail{max-height:20px;margin-top:3px}
+.riskbar{height:3px;border-radius:2px;background:var(--line);position:relative;width:70px;margin-left:auto}
+.riskbar i{position:absolute;top:0;height:100%;border-radius:2px}
+
+/* setups */
+.setup{display:flex;gap:14px;padding:13px 0;border-top:1px solid var(--line)}
+.setup:first-of-type{border-top:none;padding-top:0}
+.rank{font-family:var(--disp);font-style:italic;font-size:26px;font-weight:600;color:var(--soft);line-height:1;min-width:24px}
+.setup-body{flex:1}
+.setup-head{display:flex;align-items:center;gap:8px;margin-bottom:2px}
+.score{margin-left:auto;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--acc)}
+.levels{display:flex;gap:14px;margin-top:6px;font-family:var(--mono);font-size:11.5px;color:var(--mut)}
+.levels b{color:var(--ink);font-weight:600}
+.meter{height:3px;background:var(--line);border-radius:2px;margin-top:8px}
+.meter i{display:block;height:100%;background:var(--acc);border-radius:2px}
+
+/* headlines */
+.hl{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line);align-items:baseline}
+.hl:first-of-type{border-top:none;padding-top:0}
+.hl .src{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--acc);min-width:74px;text-transform:uppercase}
+.hl .t{flex:1}
+.hl .ago{font-family:var(--mono);font-size:11px;color:var(--soft);white-space:nowrap}
+
+/* stats */
+.stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px}
+.stat .v{font-family:var(--disp);font-size:30px;font-weight:600;letter-spacing:-.02em;margin-top:2px}
+.ratio{height:5px;border-radius:3px;background:var(--line);margin-top:10px;overflow:hidden}
+.ratio i{display:block;height:100%;background:var(--up)}
+
+/* flow tab */
+.flow-col{grid-column:span 6}
+.fbar{height:4px;background:var(--line);border-radius:2px;margin-top:5px}
+.fbar i{display:block;height:100%;border-radius:2px}
+.empty{grid-column:1/-1;text-align:center;padding:60px 0;color:var(--mut)}
+.empty .big{font-family:var(--disp);font-style:italic;font-size:24px;color:var(--ink);margin-bottom:6px}
+
+/* bottom nav */
+.bnav{display:none}
+footer{border-top:1px solid var(--line);padding:20px 0;color:var(--soft);font-size:11.5px;display:flex;justify-content:space-between}
+
+@media(max-width:880px){
+  .hero,.side,.pos-card,.setups-card,.flow-col{grid-column:1/-1}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .wrap{padding:0 16px}
+  nav.tabs{display:none}
+  main{padding-top:18px}
+  .masthead{padding-bottom:14px}
+  .equity{font-size:46px}
+  .hero-top{flex-direction:column}.regime{text-align:left}
+  .stats{grid-template-columns:1fr 1fr;gap:10px}
+  .grid{gap:12px}
+  .bnav{display:grid;position:fixed;bottom:0;left:0;right:0;z-index:60;grid-template-columns:repeat(6,1fr);
+    background:rgba(247,245,239,.92);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 4px calc(8px + env(safe-area-inset-bottom))}
+  .bnav button{appearance:none;background:none;border:none;font-family:var(--body);font-size:10px;font-weight:600;color:var(--mut);
+    display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;cursor:pointer}
+  .bnav button.on{color:var(--acc)}
+  .bnav button span{font-size:16px;line-height:1}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="masthead">
+      <div class="brand">The Briefing<span>ARSHADKAZI.CA</span></div>
+      <div class="meta">
+        <span id="dateline"></span>
+        <span class="live"><i></i>Market open</span>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs"></nav>
+  </div>
+</header>
+
+<main><div class="wrap"><div class="grid" id="view"></div></div></main>
+
+<nav class="bnav" id="bnav"></nav>
+
+<footer><div class="wrap" style="display:flex;justify-content:space-between;width:100%">
+  <span>Paper trading — not financial advice.</span><span class="num" id="asof"></span>
+</div></footer>
+
+<script>
+/* ================= DATA (sample shapes from /data/*.json) ================= */
+const D = {
+  asOf: "2026-06-11T13:45:00Z",
+  regime: { label: "NEUTRAL", cls: "neutral", vix: 16.42, note: "VIX 14–20 · normal premium · size as usual" },
+  indices: [
+    { sym:"SPX",  px:"6,481.22", chg:+0.42 }, { sym:"NDX", px:"23,617.80", chg:+0.71 },
+    { sym:"RUT",  px:"2,289.14", chg:-0.38 }, { sym:"VIX", px:"16.42",     chg:-4.81 },
+    { sym:"US10Y",px:"4.21%",    chg:+0.48 }, { sym:"DXY", px:"103.84",    chg:-0.21 }
+  ],
+  account: { equity:112483.07, dayPnl:+1240.55, dayPct:+1.12, totPct:+12.48,
+    curve:[100,100.8,100.2,101.5,102.9,102.1,103.6,105.2,104.4,106.1,107.8,107.2,109.0,110.5,109.8,111.2,112.5] },
+  positions: [
+    { sym:"SMCI", strat:"Gap Fade",        side:"SHORT", qty:120, entry:41.80,  last:44.12,  pnl:-278.40, pnlPct:-5.55, stop:45.50, target:36.00, opened:"Jun 08" },
+    { sym:"PYPL", strat:"RSI-2 Reversion", side:"LONG",  qty:140, entry:71.25,  last:70.05,  pnl:-168.00, pnlPct:-1.68, stop:67.80, target:78.40, opened:"Jun 10" },
+    { sym:"AMD",  strat:"RSI-2 Reversion", side:"LONG",  qty:60,  entry:158.30, last:161.75, pnl:+207.00, pnlPct:+2.18, stop:151.00, target:172.00, opened:"Jun 09" },
+    { sym:"XLE",  strat:"Trend Pullback",  side:"LONG",  qty:110, entry:92.40,  last:95.18,  pnl:+305.80, pnlPct:+3.01, stop:89.10,  target:101.50, opened:"Jun 04" },
+    { sym:"NVDA", strat:"Breakout Hold",   side:"LONG",  qty:25,  entry:1182.0, last:1241.6, pnl:+1490.00,pnlPct:+5.04, stop:1130.0, target:1340.0, opened:"May 28" }
+  ],
+  setups: [
+    { sym:"CRM",  dir:"LONG",  strat:"RSI-2 Mean Reversion", score:91, entry:228.50, target:246.00, stop:219.80, note:"RSI(2) 4.1 at 200-DMA, 3 down days" },
+    { sym:"DG",   dir:"LONG",  strat:"Earnings Drift",       score:84, entry:141.20, target:153.50, stop:135.40, note:"Beat + raise, day-2 continuation" },
+    { sym:"COIN", dir:"SHORT", strat:"Gap Fade",             score:78, entry:312.00, target:288.00, stop:324.50, note:"+9% gap into resistance, fading flow" }
+  ],
+  flow: {
+    calls: [
+      { sym:"PLTR", ratio:4.8, vol:"412K", oi:"1.2x OI", note:"Jun 27 $32C sweeps, ask-side" },
+      { sym:"MU",   ratio:3.6, vol:"298K", oi:"0.9x OI", note:"Pre-earnings call buying, Jul $135C" },
+      { sym:"XBI",  ratio:2.9, vol:"187K", oi:"1.4x OI", note:"Sector calls, M&A chatter" }
+    ],
+    puts: [
+      { sym:"TSLA", ratio:3.9, vol:"521K", oi:"1.1x OI", note:"Jun 20 $310P blocks, bid-side" },
+      { sym:"IWM",  ratio:3.1, vol:"344K", oi:"0.8x OI", note:"Hedging into FOMC" },
+      { sym:"DAL",  ratio:2.4, vol:"96K",  oi:"1.6x OI", note:"Put spreads, fuel cost worries" }
+    ],
+    ideas: [
+      "VIX term structure in contango — premium selling still favored, but FOMC Wed argues for half-size.",
+      "Call/put ratio on PLTR most stretched in 60 sessions; momentum chase, not hedged stock-replacement.",
+      "IWM put volume looks like protection, not direction — small caps still above 50-DMA."
+    ]
+  },
+  nextEvent: { name:"FOMC Rate Decision", at:"2026-06-17T18:00:00Z", detail:"Consensus: hold at 3.75–4.00% · Powell presser 2:30 ET · dot plot update" },
+  headlines: [
+    { src:"Reuters",   t:"CPI cools to 2.6% y/y, core services still sticky at 3.4%", ago:"2h" },
+    { src:"Bloomberg", t:"Nvidia supplier checks point to Blackwell Ultra demand into Q3", ago:"4h" },
+    { src:"SA",        t:"Energy outperforming for third week as crude holds $84", ago:"5h" },
+    { src:"Reuters",   t:"Treasury 10-year auction tails 1.2bp; yields drift higher", ago:"7h" }
+  ],
+  trades: {
+    closedPnl:+9847.12, winRate:66.7, wins:38, losses:19, pf:2.14, avgWin:412.30, avgLoss:-238.55,
+    best: [
+      { strat:"RSI-2 Mean Reversion", n:21, wr:76.2, pnl:+4382.20 },
+      { strat:"Trend Pullback",       n:14, wr:64.3, pnl:+2911.45 },
+      { strat:"Earnings Drift",       n:12, wr:58.3, pnl:+1804.90 }
+    ],
+    closed: [
+      { sym:"META", strat:"Trend Pullback",  side:"LONG",  pnl:+684.20, pct:+4.4, closed:"Jun 10" },
+      { sym:"SBUX", strat:"RSI-2 Reversion", side:"LONG",  pnl:+391.00, pct:+2.9, closed:"Jun 09" },
+      { sym:"RIVN", strat:"Gap Fade",        side:"SHORT", pnl:-242.80, pct:-3.8, closed:"Jun 09" },
+      { sym:"JPM",  strat:"Earnings Drift",  side:"LONG",  pnl:+518.65, pct:+2.2, closed:"Jun 06" },
+      { sym:"ARKK", strat:"Gap Fade",        side:"SHORT", pnl:-187.30, pct:-2.6, closed:"Jun 05" },
+      { sym:"AVGO", strat:"Breakout Hold",   side:"LONG",  pnl:+1106.40,pct:+6.1, closed:"Jun 04" }
+    ]
+  },
+  screener: { total:115, rows: [
+    { sym:"CRM",  px:228.50, rsi2:4.1,  rsi14:31.2, score:91, sig:"OVERSOLD BUY" },
+    { sym:"DG",   px:141.20, rsi2:12.8, rsi14:38.5, score:84, sig:"BUY" },
+    { sym:"ADBE", px:512.40, rsi2:6.9,  rsi14:33.8, score:82, sig:"OVERSOLD BUY" },
+    { sym:"COIN", px:312.00, rsi2:94.2, rsi14:78.1, score:78, sig:"FADE" },
+    { sym:"NKE",  px:88.75,  rsi2:8.4,  rsi14:35.0, score:74, sig:"BUY" },
+    { sym:"XLE",  px:95.18,  rsi2:71.5, rsi14:62.4, score:71, sig:"TREND HOLD" },
+    { sym:"PYPL", px:70.05,  rsi2:11.2, rsi14:34.6, score:69, sig:"BUY" },
+    { sym:"SMCI", px:44.12,  rsi2:96.8, rsi14:74.9, score:67, sig:"FADE" },
+    { sym:"AMD",  px:161.75, rsi2:58.3, rsi14:55.7, score:60, sig:"NEUTRAL" },
+    { sym:"TSLA", px:308.40, rsi2:62.1, rsi14:58.2, score:54, sig:"NEUTRAL" },
+    { sym:"AAPL", px:224.90, rsi2:44.7, rsi14:51.3, score:51, sig:"NEUTRAL" },
+    { sym:"INTC", px:21.34,  rsi2:38.2, rsi14:41.0, score:33, sig:"AVOID" }
+  ]},
+  research: {
+    sa: [
+      "Salesforce: the market is mispricing Agentforce attach rates — initiating at Buy",
+      "Dollar General's trade-down tailwind has another two quarters to run",
+      "Why small-cap breadth divergence resolves upward this cycle",
+      "Energy capex discipline makes XLE the quiet compounder of 2026"
+    ],
+    ideas: D_IDEAS()
+  },
+  models: [
+    { strat:"RSI-2 Mean Reversion", win:"12/12", wr:71.4, pf:2.31, sharpe:1.84, dd:-6.2,  verdict:"DEPLOYED" },
+    { strat:"Trend Pullback",       win:"11/12", wr:63.8, pf:1.92, sharpe:1.41, dd:-8.9,  verdict:"DEPLOYED" },
+    { strat:"Earnings Drift",       win:"9/12",  wr:57.1, pf:1.55, sharpe:1.02, dd:-11.4, verdict:"WATCH" },
+    { strat:"Gap Fade",             win:"8/12",  wr:54.0, pf:1.38, sharpe:0.86, dd:-13.8, verdict:"WATCH" },
+    { strat:"Overnight Hold",       win:"5/12",  wr:48.2, pf:0.91, sharpe:-0.12,dd:-19.6, verdict:"REJECTED" }
+  ]
+};
+function D_IDEAS(){ return [
+  { t:"FOMC week playbook", b:"Half-size new entries through Wednesday. Historically, neutral-regime FOMC weeks mean-revert harder — RSI-2 setups get an extra tailwind Thursday/Friday." },
+  { t:"Energy rotation", b:"XLE relative strength vs SPX at 6-month highs while crude consolidates. Trend Pullback entries on dips to the 10-DMA remain the highest-PF pattern in the book." }
+];}
+
+/* ================= helpers ================= */
+const $ = id => document.getElementById(id);
+const money = v => (v<0?"−$":"$") + Math.abs(v).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const sign  = v => (v>0?"+":v<0?"−":"") + Math.abs(v).toFixed(2);
+const cls   = v => v>=0?"up":"dn";
+const chipSide = s => `<span class="chip ${s==="LONG"?"l":"s"}">${s}</span>`;
+
+function spark(arr,w=560,h=64){
+  const min=Math.min(...arr),max=Math.max(...arr);
+  const pts=arr.map((v,i)=>[(i/(arr.length-1))*w, h-4-((v-min)/(max-min))*(h-10)]);
+  const line=pts.map(p=>p.map(n=>n.toFixed(1)).join(",")).join(" ");
+  return `<svg class="spark" width="100%" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="display:block">
+    <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2547D0" stop-opacity=".14"/><stop offset="1" stop-color="#2547D0" stop-opacity="0"/></linearGradient></defs>
+    <polygon points="0,${h} ${line} ${w},${h}" fill="url(#g)"/>
+    <polyline points="${line}" fill="none" stroke="#2547D0" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="${pts.at(-1)[0]}" cy="${pts.at(-1)[1]}" r="3.5" fill="#2547D0"/></svg>`;
+}
+
+/* ================= renderers ================= */
+function rDashboard(){
+  const a=D.account, losersFirst=[...D.positions].sort((x,y)=>x.pnl-y.pnl);
+  return `
+  <div class="strip reveal">${D.indices.map(i=>`
+    <div class="idx"><b>${i.sym}</b><span class="num">${i.px}</span>
+    <small class="num ${i.sym==="VIX"?(i.chg<0?"up":"dn"):cls(i.chg)}">${sign(i.chg)}%</small></div>`).join("")}
+  </div>
+
+  <section class="card hero reveal">
+    <div>
+      <div class="hero-top">
+        <div>
+          <div class="micro">Paper account · equity</div>
+          <div class="equity"><sup>$</sup>${a.equity.toLocaleString("en-US",{minimumFractionDigits:2})}</div>
+          <div class="pills">
+            <span class="pill ${cls(a.dayPnl)==="up"?"g":"r"}">${sign(a.dayPnl)} today (${sign(a.dayPct)}%)</span>
+            <span class="pill n">${sign(a.totPct)}% all-time</span>
+          </div>
+        </div>
+        <div class="regime">
+          <div class="micro" style="margin-bottom:8px">Vol regime</div>
+          <span class="badge ${D.regime.cls}"><i></i>${D.regime.label} · VIX ${D.regime.vix}</span>
+          <small>${D.regime.note}</small>
+        </div>
+      </div>
+    </div>
+    ${spark(a.curve)}
+  </section>
+
+  <aside class="side">
+    <div class="card reveal">
+      <h3>Next event</h3>
+      <div class="event-name">${D.nextEvent.name}</div>
+      <div class="countdown" id="cd"></div>
+      <div class="event-meta">${D.nextEvent.detail}</div>
+    </div>
+    <div class="card reveal">
+      <h3>Options flow <a href="#" onclick="go('flow');return false">View all →</a></h3>
+      <div class="flowline"><span><b>${D.flow.calls[0].sym}</b> <span class="chip c">CALLS</span></span><span class="num">${D.flow.calls[0].ratio}× avg</span></div>
+      <div class="flowline"><span><b>${D.flow.puts[0].sym}</b> <span class="chip p">PUTS</span></span><span class="num">${D.flow.puts[0].ratio}× avg</span></div>
+      <div class="flowline"><span><b>${D.flow.calls[1].sym}</b> <span class="chip c">CALLS</span></span><span class="num">${D.flow.calls[1].ratio}× avg</span></div>
+    </div>
+  </aside>
+
+  <section class="card pos-card reveal">
+    <h3>Open positions · risk first <a href="#" onclick="go('positions');return false">Manage →</a></h3>
+    <table><thead><tr><th>Ticker</th><th>Side</th><th class="r">P&amp;L</th><th class="r">Risk</th></tr></thead><tbody>
+    ${losersFirst.map(p=>`<tr>
+      <td><span class="sym">${p.sym}</span><span class="sub"> · ${p.strat}</span>
+        <span class="hover-detail">${p.qty} @ ${p.entry} → ${p.last} · stop ${p.stop} · tgt ${p.target} · ${p.opened}</span></td>
+      <td>${chipSide(p.side)}</td>
+      <td class="r"><span class="num ${cls(p.pnl)}" style="font-weight:600">${money(p.pnl)}</span><br><span class="sub num">${sign(p.pnlPct)}%</span></td>
+      <td class="r"><div class="riskbar"><i style="${p.pnl<0
+        ?`right:50%;width:${Math.min(Math.abs(p.pnlPct)*8,50)}%;background:var(--dn)`
+        :`left:50%;width:${Math.min(p.pnlPct*8,50)}%;background:var(--up)`}"></i></div></td>
+    </tr>`).join("")}</tbody></table>
+  </section>
+
+  <section class="card setups-card reveal">
+    <h3>Top setups today</h3>
+    ${D.setups.map((s,i)=>`<div class="setup">
+      <div class="rank">${i+1}</div>
+      <div class="setup-body">
+        <div class="setup-head"><span class="sym">${s.sym}</span>${chipSide(s.dir)}<span class="score">${s.score}/100</span></div>
+        <div class="sub">${s.strat} — ${s.note}</div>
+        <div class="levels"><span>in <b>${s.entry}</b></span><span>tgt <b class="up">${s.target}</b></span><span>stop <b class="dn">${s.stop}</b></span></div>
+        <div class="meter"><i style="width:${s.score}%"></i></div>
+      </div></div>`).join("")}
+  </section>
+
+  <section class="card full reveal">
+    <h3>Headlines</h3>
+    ${D.headlines.map(h=>`<div class="hl"><span class="src">${h.src}</span><span class="t">${h.t}</span><span class="ago">${h.ago} ago</span></div>`).join("")}
+  </section>`;
+}
+
+function rPositions(){
+  const t=D.trades, losersFirst=[...D.positions].sort((x,y)=>x.pnl-y.pnl);
+  return `
+  <div class="stats">
+    <div class="stat reveal"><div class="micro">Closed P&amp;L</div><div class="v num up">${money(t.closedPnl)}</div><div class="sub">${t.wins+t.losses} trades closed</div></div>
+    <div class="stat reveal"><div class="micro">Win rate</div><div class="v num">${t.winRate}%</div><div class="ratio"><i style="width:${t.winRate}%"></i></div></div>
+    <div class="stat reveal"><div class="micro">Profit factor</div><div class="v num">${t.pf}</div><div class="sub">gross win ÷ gross loss</div></div>
+    <div class="stat reveal"><div class="micro">Avg win / loss</div><div class="v num" style="font-size:22px;padding-top:6px"><span class="up">${money(t.avgWin)}</span> <span class="sub">/</span> <span class="dn">${money(t.avgLoss)}</span></div></div>
+  </div>
+
+  <section class="card full reveal">
+    <h3>Open positions — sorted by risk</h3>
+    <table><thead><tr><th>Ticker</th><th>Strategy</th><th>Side</th><th class="r">Qty</th><th class="r">Entry</th><th class="r">Last</th><th class="r">Stop</th><th class="r">Target</th><th class="r">P&amp;L</th></tr></thead><tbody>
+    ${losersFirst.map(p=>`<tr>
+      <td><span class="sym">${p.sym}</span><span class="hover-detail">opened ${p.opened}</span></td>
+      <td class="sub">${p.strat}</td><td>${chipSide(p.side)}</td>
+      <td class="r num">${p.qty}</td><td class="r num">${p.entry}</td><td class="r num">${p.last}</td>
+      <td class="r num dn">${p.stop}</td><td class="r num up">${p.target}</td>
+      <td class="r"><span class="num ${cls(p.pnl)}" style="font-weight:600">${money(p.pnl)}</span> <span class="sub num">${sign(p.pnlPct)}%</span></td>
+    </tr>`).join("")}</tbody></table>
+  </section>
+
+  <section class="card pos-card reveal">
+    <h3>Recent closed trades</h3>
+    <table><thead><tr><th>Ticker</th><th>Strategy</th><th class="r">P&amp;L</th><th class="r">Closed</th></tr></thead><tbody>
+    ${t.closed.map(c=>`<tr><td><span class="sym">${c.sym}</span> ${chipSide(c.side)}</td><td class="sub">${c.strat}</td>
+      <td class="r num ${cls(c.pnl)}" style="font-weight:600">${money(c.pnl)} <span class="sub">${sign(c.pct)}%</span></td>
+      <td class="r sub num">${c.closed}</td></tr>`).join("")}</tbody></table>
+  </section>
+
+  <section class="card setups-card reveal">
+    <h3>Best strategies</h3>
+    <table><thead><tr><th>Strategy</th><th class="r">Trades</th><th class="r">Win %</th><th class="r">P&amp;L</th></tr></thead><tbody>
+    ${t.best.map(b=>`<tr><td>${b.strat}</td><td class="r num">${b.n}</td><td class="r num">${b.wr}%</td><td class="r num up" style="font-weight:600">${money(b.pnl)}</td></tr>`).join("")}
+    </tbody></table>
+  </section>`;
+}
+
+function rFlow(){
+  const max=5, col=(title,arr,c)=>`
+  <section class="card flow-col reveal">
+    <h3>${title}</h3>
+    ${arr.map(f=>`<div style="padding:11px 0;border-top:1px solid var(--line)">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span><span class="sym">${f.sym}</span> <span class="sub">${f.vol} vol · ${f.oi}</span></span>
+        <span class="num" style="font-weight:600;color:${c}">${f.ratio}× avg</span></div>
+      <div class="fbar"><i style="width:${(f.ratio/max)*100}%;background:${c}"></i></div>
+      <div class="sub" style="margin-top:5px">${f.note}</div></div>`).join("")}
+  </section>`;
+  return col("Calls bid up — overbought","calls"in D.flow?D.flow.calls:[], "var(--up)")
+       + col("Puts bid up — overbought", D.flow.puts, "var(--dn)")
+       + `<section class="card full reveal"><h3>Desk read</h3>
+          ${D.flow.ideas.map((i,n)=>`<div class="hl"><span class="src">№ ${n+1}</span><span class="t">${i}</span></div>`).join("")}</section>`;
+}
+
+function rScreener(){
+  const heat=v=>v<15?"c":v>85?"p":"m";
+  const sigc=s=>/BUY/.test(s)?"c":/FADE|AVOID/.test(s)?"p":/HOLD/.test(s)?"a":"m";
+  return `<section class="card full reveal">
+    <h3>Screener — top 12 of ${D.screener.total} by score</h3>
+    <table><thead><tr><th>Ticker</th><th class="r">Last</th><th class="r">RSI(2)</th><th class="r">RSI(14)</th><th class="r">Score</th><th class="r">Signal</th></tr></thead><tbody>
+    ${D.screener.rows.map(r=>`<tr>
+      <td><span class="sym">${r.sym}</span></td><td class="r num">${r.px.toFixed(2)}</td>
+      <td class="r"><span class="chip ${heat(r.rsi2)} num">${r.rsi2.toFixed(1)}</span></td>
+      <td class="r num">${r.rsi14.toFixed(1)}</td>
+      <td class="r num" style="font-weight:600;color:${r.score>=70?"var(--acc)":"var(--mut)"}">${r.score}</td>
+      <td class="r"><span class="chip ${sigc(r.sig)}">${r.sig}</span></td></tr>`).join("")}
+    </tbody></table></section>`;
+}
+
+function rResearch(){
+  return `<section class="card pos-card reveal"><h3>Seeking Alpha — latest</h3>
+    ${D.research.sa.map(h=>`<div class="hl"><span class="src">SA</span><span class="t">${h}</span></div>`).join("")}</section>
+  <section class="card setups-card reveal"><h3>Analysis ideas</h3>
+    ${D.research.ideas.map(i=>`<div style="padding:11px 0;border-top:1px solid var(--line)">
+      <div style="font-family:var(--disp);font-size:16px;font-weight:600;margin-bottom:3px">${i.t}</div>
+      <div class="sub" style="line-height:1.6">${i.b}</div></div>`).join("")}</section>`;
+}
+
+function rModels(){
+  const vc=v=>v==="DEPLOYED"?"c":v==="WATCH"?"w":"p";
+  return `<section class="card full reveal">
+    <h3>Walk-forward v2 — out-of-sample results per strategy</h3>
+    <table><thead><tr><th>Strategy</th><th class="r">Windows passed</th><th class="r">OOS win %</th><th class="r">OOS PF</th><th class="r">Sharpe</th><th class="r">Max DD</th><th class="r">Verdict</th></tr></thead><tbody>
+    ${D.models.map(m=>`<tr><td style="font-weight:600">${m.strat}</td>
+      <td class="r num">${m.win}</td><td class="r num">${m.wr}%</td><td class="r num">${m.pf}</td>
+      <td class="r num ${m.sharpe>0?"":"dn"}">${m.sharpe}</td><td class="r num dn">${m.dd}%</td>
+      <td class="r"><span class="chip ${vc(m.verdict)}">${m.verdict}</span></td></tr>`).join("")}
+    </tbody></table>
+    <p class="sub" style="margin-top:12px">12 rolling windows · 18-month train / 6-month test · only DEPLOYED strategies receive live paper allocations.</p>
+  </section>`;
+}
+
+/* ================= shell ================= */
+const TABS=[["dashboard","Dashboard","◧",rDashboard],["positions","Positions","☰",rPositions],["flow","Options Flow","⇄",rFlow],
+            ["screener","Screener","◎",rScreener],["research","Research","✦",rResearch],["models","Models","∿",rModels]];
+let cur="dashboard";
+
+function go(id){
+  cur=id;
+  document.querySelectorAll(".tab,.bnav button").forEach(b=>b.classList.toggle("on",b.dataset.t===id));
+  $("view").innerHTML=TABS.find(t=>t[0]===id)[3]();
+  window.scrollTo({top:0,behavior:"smooth"});
+  tickCountdown();
+}
+
+function tickCountdown(){
+  const el=$("cd"); if(!el)return;
+  const ms=new Date(D.nextEvent.at)-Date.now();
+  if(ms<=0){el.textContent="Live now";return}
+  const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);
+  el.textContent=`in ${d}d ${h}h ${m}m`;
+}
+
+$("tabs").innerHTML=TABS.map(t=>`<button class="tab" data-t="${t[0]}" onclick="go('${t[0]}')">${t[1]}</button>`).join("");
+$("bnav").innerHTML=TABS.map(t=>`<button data-t="${t[0]}" onclick="go('${t[0]}')"><span>${t[2]}</span>${t[1].split(" ")[0]}</button>`).join("");
+$("dateline").textContent=new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+$("asof").textContent="Data as of "+new Date(D.asOf).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit",timeZone:"America/Toronto"})+" ET";
+setInterval(tickCountdown,3e4);
+go("dashboard");
+</script>
+</body>
+</html>

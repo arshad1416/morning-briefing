@@ -1,169 +1,174 @@
 /**
- * Cloudflare Worker — Chat API proxy to OpenRouter.
- * 
- * POST /chat { ticker: "AAPL" }
- * → Calls OpenRouter with a financial analyst system prompt
- * → Returns { ticker, content (markdown), model }
- * 
- * Keeps OPENROUTER_API_KEY server-side.
- * Enforces rate limiting and CORS.
+ * Cloudflare Worker — Chat API proxy to OpenRouter with live data.
+ * POST /chat  { ticker, eli5? } → OpenRouter analysis + live yfinance data
+ *
+ * SECURITY: No SQL proxy. All DB queries use typed, predefined endpoints.
  */
 
-// Simple in-memory rate limiter (per IP)
-const rateLimitStore = {};
+const ALLOWED_ORIGINS = [
+  'https://briefing.arshadkazi.ca',
+  /^https:\/\/[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.morningbriefing\.pages\.dev$/,
+];
 
-function checkRateLimit(ip) {
-  const now = Date.now();
-  const windowMs = 60_000; // 1 minute
-  const maxRequests = parseInt(envConfig.RATE_LIMIT_PER_MIN || '10', 10);
-
-  if (!rateLimitStore[ip]) {
-    rateLimitStore[ip] = [];
-  }
-
-  // Filter out expired entries
-  rateLimitStore[ip] = rateLimitStore[ip].filter(ts => now - ts < windowMs);
-
-  if (rateLimitStore[ip].length >= maxRequests) {
-    return false;
-  }
-
-  rateLimitStore[ip].push(now);
-  return true;
+function getOrigin(request) {
+  const origin = request.headers.get('Origin');
+  if (!origin) return 'https://briefing.arshadkazi.ca';
+  // exact match or regex match
+  if (
+    ALLOWED_ORIGINS.some((o) =>
+      typeof o === 'string' ? o === origin : o.test(origin),
+    )
+  )
+    return origin;
+  return 'https://briefing.arshadkazi.ca'; // fallback
 }
 
-// Environment config from wrangler.toml or secrets
-const envConfig = {
-  OPENROUTER_API_KEY: undefined,  // Set via wrangler secret
-  OPENROUTER_BASE_URL: undefined, // Set via vars
-  OPENROUTER_MODEL: undefined,    // Set via vars
-  RATE_LIMIT_PER_MIN: '10',
-  ALLOWED_ORIGIN: '*',
+const json = (d, s = 200, request = null) => {
+  const origin = request ? getOrigin(request) : 'https://briefing.arshadkazi.ca';
+  return new Response(JSON.stringify(d), {
+    status: s,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': origin,
+    },
+  });
 };
 
-const SYSTEM_PROMPT = `You are a professional financial analyst. Generate a comprehensive analysis for the given ticker symbol.
-
-Return your analysis in markdown format. Include:
-
-1. **Company Overview** — brief sector, market cap, what they do
-2. **Price & Technicals** — Current price, RSI, support/resistance levels, trend direction
-3. **Fundamentals** — P/E ratio, EPS, revenue growth, margin quality (if known)
-4. **Key Catalysts** — recent events, earnings dates, sector trends
-5. **Risk Factors** — what could go wrong
-6. **Verdict** — Bullish / Bearish / Neutral with reasoning
-
-Use real data tables for metrics. Be specific with numbers. Use ## for section headers.
-Keep the analysis to 3-5 paragraphs with 1-2 tables max.
-If you don't know a specific number, provide a reasonable estimate based on the sector average and note it.
-
-IMPORTANT: Return ONLY the analysis markdown. No preamble, no "Here's your analysis" — just the markdown content.`;
-
-function corsHeaders(origin) {
-  const allowedOrigin = envConfig.ALLOWED_ORIGIN === '*' ? '*' : envConfig.ALLOWED_ORIGIN || '*';
-  return {
-    'Access-Control-Allow-Origin': allowedOrigin,
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Content-Type': 'application/json',
-  };
+async function fetchLiveData(ticker) {
+  try {
+    const res = await fetch(
+      `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d&range=1mo`,
+      { headers: { 'User-Agent': 'Mozilla/5.0' } },
+    );
+    if (!res.ok) return null;
+    const c = (await res.json())?.chart?.result?.[0];
+    if (!c) return null;
+    const m = c.meta || {};
+    const closes = (c.indicators?.quote?.[0]?.close || []).filter((v) => v != null);
+    const prev = closes.length >= 2 ? closes[closes.length - 2] : null;
+    const chg =
+      m.regularMarketPrice != null && prev != null
+        ? ((m.regularMarketPrice - prev) / prev) * 100
+        : null;
+    return {
+      price: m.regularMarketPrice,
+      prevClose: prev,
+      change: chg,
+      volume: m.regularMarketVolume,
+      currency: m.currency,
+      exchange: m.exchangeName,
+    };
+  } catch {
+    return null;
+  }
 }
 
-function errorResponse(status, message, headers) {
-  return new Response(JSON.stringify({ error: message }), {
-    status,
-    headers: { ...headers, 'Content-Type': 'application/json' },
-  });
-}
+const PROMPT_NORMAL = `You are a professional financial analyst. Generate a comprehensive analysis for the given ticker.
+Use REAL data from the context provided — never hallucinate numbers.
+Return markdown: ## Price & Technicals (table), ## Technical Analysis, ## Key Catalysts, ## Risk Factors, ## Verdict.
+IMPORTANT: Return ONLY the markdown. No preamble. Use tables.`;
+
+const PROMPT_ELI5 = `You are explaining stock analysis to a beginner trader. Use simple language, no jargon.
+Return markdown: ## What's Happening (plain English), ## The Numbers (table with "what it means" column), ## The Simple Verdict.
+Keep it friendly and educational.`;
 
 async function handleRequest(request, env) {
-  const headers = corsHeaders(env?.ALLOWED_ORIGIN);
-  const origin = request.headers.get('Origin') || '';
+  const url = new URL(request.url);
+  const path = url.pathname;
 
   // CORS preflight
   if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers });
-  }
-
-  // Only POST
-  if (request.method !== 'POST') {
-    return errorResponse(405, 'Method not allowed', headers);
-  }
-
-  // Rate limit by IP
-  const ip = request.headers.get('CF-Connecting-IP') || request.headers.get('X-Forwarded-For') || 'unknown';
-  if (!checkRateLimit(ip)) {
-    return errorResponse(429, 'Rate limit exceeded (10 requests/min). Please wait.', headers);
-  }
-
-  // Parse body
-  let body;
-  try {
-    body = await request.json();
-  } catch {
-    return errorResponse(400, 'Invalid JSON body', headers);
-  }
-
-  const ticker = (body?.ticker || '').trim().toUpperCase();
-  if (!ticker || !/^[A-Z]{1,5}$/.test(ticker)) {
-    return errorResponse(400, 'Invalid ticker. Must be 1-5 uppercase letters (e.g., AAPL).', headers);
-  }
-
-  // Read secrets/config
-  const apiKey = env?.OPENROUTER_API_KEY || envConfig.OPENROUTER_API_KEY;
-  if (!apiKey) {
-    return errorResponse(500, 'OpenRouter API key not configured', headers);
-  }
-
-  const baseUrl = env?.OPENROUTER_BASE_URL || envConfig.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1';
-  const model = env?.OPENROUTER_MODEL || envConfig.OPENROUTER_MODEL || 'openai/gpt-4o-mini';
-
-  // Call OpenRouter
-  const userPrompt = `Provide a detailed financial analysis of ${ticker} (${body.ticker || ticker}). Include price (real if you know it, estimated if not), technical indicators, key levels, and a verdict with reasoning.`;
-
-  try {
-    const response = await fetch(`${baseUrl}/chat/completions`, {
-      method: 'POST',
+    return new Response(null, {
+      status: 204,
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://briefing.yourdomain.com',
-        'X-Title': 'Morning Briefing Chat',
+        'Access-Control-Allow-Origin': getOrigin(request),
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400',
       },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: userPrompt },
-        ],
-        temperature: 0.3,
-        max_tokens: 1500,
-      }),
     });
-
-    if (!response.ok) {
-      const errText = await response.text();
-      console.error('OpenRouter error:', response.status, errText);
-      return errorResponse(502, `OpenRouter API error: ${response.status}`, headers);
-    }
-
-    const result = await response.json();
-    const content = result?.choices?.[0]?.message?.content || 'No analysis generated.';
-
-    return new Response(JSON.stringify({
-      ticker,
-      content,
-      model: result?.model || model,
-      usage: result?.usage || null,
-    }), { status: 200, headers });
-  } catch (err) {
-    console.error('Worker error:', err);
-    return errorResponse(500, 'Internal server error', headers);
   }
+
+  // Rate limiting uses Cloudflare dashboard rules (WAF).
+  // See Cloudflare dashboard → Security → Rate Limiting for configuration.
+  // Recommended: 10 requests per 60 seconds per IP on /chat endpoint.
+
+  // ── Chat only ──
+  if ((path === '/' || path === '/chat') && request.method === 'POST') {
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return json({ error: 'Invalid JSON' }, 400, request);
+    }
+    const ticker = (body?.ticker || '').trim().toUpperCase();
+    if (!ticker || !/^[A-Z]{1,5}(\.[A-Z]{1,4})?$/.test(ticker))
+      return json({ error: 'Invalid ticker' }, 400, request);
+
+    const apiKey = env?.OPENROUTER_API_KEY;
+    if (!apiKey) return json({ error: 'API key not configured' }, 500, request);
+
+    const model = env?.OPENROUTER_MODEL || 'deepseek/deepseek-v4-pro';
+    const baseUrl = env?.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1';
+    const isELI5 = body?.eli5 === true;
+    const liveData = await fetchLiveData(ticker);
+
+    let ctx = [`Analyze ticker: ${ticker}`];
+    if (liveData) {
+      ctx.push(
+        `Live price: $${liveData.price}`,
+        liveData.change != null
+          ? `Change: ${liveData.change >= 0 ? '+' : ''}${liveData.change.toFixed(2)}%`
+          : '',
+      );
+      ctx.push(`Volume: ${(liveData.volume / 1e6).toFixed(1)}M`);
+    }
+    ctx.push(isELI5 ? 'Explain simply.' : 'Provide detailed analysis with tables.');
+
+    try {
+      const resp = await fetch(`${baseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': 'https://briefing.arshadkazi.ca',
+          'X-Title': 'Morning Briefing Chat',
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            {
+              role: 'system',
+              content: isELI5 ? PROMPT_ELI5 : PROMPT_NORMAL,
+            },
+            { role: 'user', content: ctx.join('\n') },
+          ],
+          temperature: 0.3,
+          max_tokens: 2000,
+        }),
+      });
+      if (!resp.ok) return json({ error: `OpenRouter error: ${resp.status}` }, 502, request);
+
+      const result = await resp.json();
+      const content = result?.choices?.[0]?.message?.content || 'No analysis.';
+      let ctxBlock = '';
+      if (liveData) {
+        const sign = liveData.change >= 0 ? '+' : '';
+        ctxBlock = `<div class=\"live-data-card\">${ticker} $${liveData.price} ${sign}${liveData.change?.toFixed(2)}% Vol: ${(liveData.volume / 1e6).toFixed(1)}M</div>`;
+      }
+      return json({
+        ticker,
+        content,
+        contextBlock: ctxBlock,
+        model: result?.model || model,
+        liveData,
+      }, 200, request);
+    } catch {
+      return json({ error: 'Internal error' }, 500, request);
+    }
+  }
+
+  return json({ error: 'Not found' }, 404, request);
 }
 
-// Cloudflare Worker entry point
-export default {
-  fetch(request, env, ctx) {
-    return handleRequest(request, env);
-  },
-};
+export default { fetch: handleRequest };

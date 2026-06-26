@@ -1,0 +1,203 @@
+{
+  "meta": {
+    "generated_at": "2026-06-21T11:25:28.428921+00:00",
+    "model": "qwen-max (tier2)",
+    "confidence": 7,
+    "market_regime": "transitional",
+    "fallback": true,
+    "tokens_used": {
+      "prompt_tokens": 2436,
+      "completion_tokens": 5099,
+      "total_tokens": 7535,
+      "cost": 0.02216625,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.02216625,
+        "upstream_inference_prompt_cost": 0.003045,
+        "upstream_inference_completions_cost": 0.01912125
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 3299,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "analysis_type": "morning"
+  },
+  "market_pulse": {
+    "one_liner": "Equities rally on tech strength and falling VIX, but heavy put buying in mega-cap tech and overbought financials signal underlying distribution.",
+    "sentiment_score": 6,
+    "key_levels": {
+      "SPY": {
+        "support": 735.0,
+        "resistance": 755.0
+      },
+      "QQQ": {
+        "support": 515.0,
+        "resistance": 535.0
+      }
+    },
+    "sector_rotation": "Capital rotating into defensive yields and Canadian financials, while tech faces institutional hedging via options."
+  },
+  "held_position_review": [
+    {
+      "ticker": "XLE",
+      "action": "TRIM",
+      "rationale": "Down 6.57% on entry day with energy headlines focusing on grid overhauls rather than supply shocks; cut risk.",
+      "target": 55.0,
+      "stop": 52.5,
+      "risk_reward": "1.2:1"
+    },
+    {
+      "ticker": "JNJ",
+      "action": "HOLD",
+      "rationale": "Defensive healthcare holding down 5.18% but offers portfolio stability amid tech put-hedging and sticky inflation.",
+      "target": 245.0,
+      "stop": 220.0,
+      "risk_reward": "1.5:1"
+    },
+    {
+      "ticker": "FXY",
+      "action": "HOLD",
+      "rationale": "Down 0.72% but currency pairs remain volatile; hold for mean reversion as safe-haven flows fluctuate.",
+      "target": 58.5,
+      "stop": 55.5,
+      "risk_reward": "1.2:1"
+    },
+    {
+      "ticker": "GLD",
+      "action": "ADD",
+      "rationale": "Gold holding positive P&L amid geopolitical noise and sticky inflation noted by the Fed; strong safe-haven bid.",
+      "target": 395.0,
+      "stop": 382.0,
+      "risk_reward": "1.8:1"
+    }
+  ],
+  "opportunities": [
+    {
+      "ticker": "AMZN",
+      "direction": "SHORT",
+      "thesis": "Unusual options flow shows massive put buying at $275/$270/$265 strikes with >$25M premium, indicating institutional downside hedging.",
+      "entry_zone": [
+        275.0,
+        280.0
+      ],
+      "catalyst": "Break below $275 support level on high volume.",
+      "timeframe": "2 weeks",
+      "conviction": "high"
+    },
+    {
+      "ticker": "RY.TO",
+      "direction": "SHORT",
+      "thesis": "Screener flags RSI at 76.3 (overbought) with near-high signals; prime mean-reversion candidate in Canadian financials.",
+      "entry_zone": [
+        145.0,
+        148.0
+      ],
+      "catalyst": "RSI divergence or macro rate hold disappointment from BOC.",
+      "timeframe": "1 month",
+      "conviction": "medium"
+    }
+  ],
+  "risk_alerts": [
+    {
+      "severity": "high",
+      "alert": "Heavy put volume in AMZN, NVDA, and AMD (C/P ratio 9:16) contradicts the NASDAQ's +1.91% rally, signaling a potential tech pullback.",
+      "affected_positions": [
+        "AMZN",
+        "NVDA"
+      ]
+    },
+    {
+      "severity": "medium",
+      "alert": "Fed holding rates at 4.25-4.50% with elevated inflation limits multiple expansion for rate-sensitive sectors.",
+      "affected_positions": [
+        "JNJ",
+        "XLE"
+      ]
+    }
+  ],
+  "geopolitical_impact": [
+    {
+      "headline": "Putin says there is 'no point' meeting Zelensky over ending Ukraine war",
+      "source": "BBC World",
+      "impact_rating": "high",
+      "rationale": "Prolonged conflict sustains energy risk premiums, supporting GLD and complicating XLE recovery."
+    },
+    {
+      "headline": "Ukraine strikes cargo ships and admits Romania drone blast",
+      "source": "BBC World",
+      "impact_rating": "medium",
+      "rationale": "Black Sea shipping disruptions could cause localized supply chain hiccups, mildly bullish for commodities."
+    },
+    {
+      "headline": "Astronauts return to ISS after sheltering during air leak repair attempt",
+      "source": "BBC World",
+      "impact_rating": "low",
+      "rationale": "Space station maintenance has no direct impact on equity or commodity markets."
+    },
+    {
+      "headline": "Fury in France after child murder suspect's criminal record released",
+      "source": "BBC World",
+      "impact_rating": "low",
+      "rationale": "Domestic social issue in France with no material impact on global portfolio strategy."
+    },
+    {
+      "headline": "Nearly 50 people die of thirst in Sahara desert after lorry breaks down",
+      "source": "BBC World",
+      "impact_rating": "low",
+      "rationale": "Tragic humanitarian event but lacks macroeconomic or market-moving relevance."
+    },
+    {
+      "headline": "Iran footballers issued US visas for World Cup, says White House",
+      "source": "Al Jazeera",
+      "impact_rating": "low",
+      "rationale": "Minor diplomatic gesture with no immediate effect on crude oil or geopolitical risk premiums."
+    },
+    {
+      "headline": "Zelenskyy: Putin choosing war by rejecting offer for in-person talks",
+      "source": "Al Jazeera",
+      "impact_rating": "high",
+      "rationale": "Reinforces the prolonged war narrative, keeping defense stocks bid and supporting safe-haven GLD."
+    },
+    {
+      "headline": "Trump hails jobs surge, says Iran talks \u2018going well\u2019",
+      "source": "Al Jazeera",
+      "impact_rating": "medium",
+      "rationale": "Positive Iran talk rhetoric could cap crude oil spikes, acting as a headwind for XLE upside."
+    }
+  ],
+  "calendar": [
+    {
+      "date": "2024-06-15",
+      "event": "US-Iran talks in Switzerland",
+      "impact": "high"
+    },
+    {
+      "date": "2024-07-10",
+      "event": "US CPI Inflation Data",
+      "impact": "high"
+    }
+  ],
+  "portfolio_actions": {
+    "immediate": [
+      "TRIM XLE to reduce sector rotation drag",
+      "ADD to GLD on safe-haven momentum"
+    ],
+    "watchlist": [
+      "AMZN",
+      "RY.TO",
+      "UNH"
+    ],
+    "avoid": [
+      "NVDA",
+      "AMD"
+    ]
+  }
+}

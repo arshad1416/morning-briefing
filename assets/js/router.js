@@ -18,20 +18,31 @@ const Router = {
   },
 
   handleRoute() {
-    const hash = window.location.hash.slice(1) || '/';
+    const fullHash = window.location.hash.slice(1) || '/';
+    const hash = fullHash.split('?')[0]; // Strip query string from hash
     this.currentHash = hash;
 
     // Update active nav link
     this.navLinks.forEach(link => {
-      link.classList.toggle('active', link.getAttribute('href') === `#${hash}`);
+      const linkHash = link.getAttribute('href')?.slice(1).split('?')[0] || '';
+      link.classList.toggle('active', linkHash === hash);
     });
 
-    // Find matching route
     const app = document.getElementById('app');
+    if (!app) return;
+
+    // Clear stale content before routing
+    app.innerHTML = '<div class="loading">Loading...</div>';
 
     // Try exact match first
     if (this.routes[hash]) {
-      this.routes[hash](app);
+      try {
+        Promise.resolve(this.routes[hash](app)).catch(e => {
+          app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
+        });
+      } catch(e) {
+        app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
+      }
       return;
     }
 
@@ -51,7 +62,13 @@ const Router = {
           }
         }
         if (match) {
-          handler(app, params);
+          try {
+            Promise.resolve(handler(app, params)).catch(e => {
+              app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
+            });
+          } catch(e) {
+            app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
+          }
           return;
         }
       }
