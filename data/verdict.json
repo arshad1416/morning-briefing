@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-06-25T11:20:01.826722+00:00",
+  "generated_at": "2026-06-26T11:20:01.788232+00:00",
   "signal": "neutral",
-  "conviction": 0.54,
+  "conviction": 0.46,
   "conviction_source": "model",
   "narrative": "Equities rally on tech strength and falling VIX, but heavy put buying in mega-cap tech and overbought financials signal underlying distribution.",
   "narrative_source": "llm",
   "model_features": {
-    "vix": 20.02,
+    "vix": 19.08,
     "vix_score": 0.5,
     "sleeve_a_signals": 0,
     "avg_signal_score": 0,
     "max_signal_score": 0,
-    "recent_hit_rate": 0.5,
-    "recent_trades": 2,
+    "recent_hit_rate": 0.17,
+    "recent_trades": 6,
     "breadth": 1.0,
     "vix_contango": 5.64,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.29,
-      0.79
+      0.21,
+      0.71
     ]
   },
   "confidence_interval": [
-    0.29,
-    0.79
+    0.21,
+    0.71
   ]
 }
