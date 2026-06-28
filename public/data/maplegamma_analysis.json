@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-26T11:25:28.038341+00:00",
+    "generated_at": "2026-06-27T11:25:30.713638+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.000919,
+    "total_cost_usd": 0.001017,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
     "deepseek_quantitative": "auth_error",
-    "kimi_momentum": "auth_error",
     "mimo_risk_contrarian": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY Long (Trend Continuation / Support Bounce)\n- **Direction:** Long\n- **Entry:** $737.50 - $738.00 (Near current market price)\n- **Stop Loss:** $734.00 (Below immediate structural support, safely above the $730 GEX magnet)\n- **Target:** $742.50 (Next upside liquidity/resistance zone)\n- **Conviction:** 7/10\n- **Rationale:** The options market indicates a \"bullish\" gamma regime with a massive Put GEX node at $730 (OI: 165,097). This acts as a strong dealer-supported floor. With the market in a transitional regime, dealers being long gamma will likely suppress downside volatility, allowing the path of least resistance to remain upward in the short term. \n\n### Trade 2: SPY Short (Mean Reversion to Gamma Magnet)\n- **Direction:** Short\n- **Entry:** $739.50 - $740.00 (At immediate upside resistance)\n- **Stop Loss:** $742.50 (Invalidates the short thesis if it breaks and holds above this level)\n- **Target:** $731.00 (Reversion to the massive $730 Max GEX strike)\n- **Conviction:** 6/10\n- **Rationale:** SPY is currently trading nearly $8 above the highest GEX strike ($730). In transitional market regimes, prices that extend too far from the primary gamma node often experience mean reversion as dealer hedging flows pull the price back toward the \"gamma magnet\" at $730 to maximize option decay and pin the price."
+    "kimi_momentum": "auth_error",
+    "qwen_trade_selector": "### Trade 1: SPY Long (Pullback to GEX Support)\n- **Ticker:** SPY\n- **Direction:** Long\n- **Entry:** $732.50 \n- **Stop Loss:** $727.80 \n- **Target:** $742.00 \n- **Conviction:** 8/10\n- **Rationale:** The options market shows a \"bullish\" gamma regime with the maximum GEX (Gamma Exposure) node at the $730 Put strike. This acts as a massive structural support level. In a bullish gamma environment, market makers buy dips to hedge, suppressing downside volatility. This trade looks to buy the pullback toward this high-gamma floor with a tight stop just below the strike to invalidate the thesis.\n\n### Trade 2: SPY Long (Momentum / Trend Continuation)\n- **Ticker:** SPY\n- **Direction:** Long\n- **Entry:** $738.50 (Near current market price)\n- **Stop Loss:** $734.00 \n- **Target:** $745.00 \n- **Conviction:** 6/10\n- **Rationale:** Capitalizing on the current bullish gamma regime which typically grinds prices higher with suppressed volatility. Entering near current levels to catch the continuation, with a stop placed below the immediate short-term consolidation zone. The target is the next major psychological and options strike resistance at $745."
   }
 }
