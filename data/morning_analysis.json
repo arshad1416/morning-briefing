@@ -1,15 +1,14 @@
 {
   "meta": {
-    "generated_at": "2026-06-21T11:25:28.428921+00:00",
-    "model": "qwen-max (tier2)",
-    "confidence": 7,
-    "market_regime": "transitional",
-    "fallback": true,
+    "generated_at": "2026-06-29T20:24:43.194879+00:00",
+    "model": "ds-pro (tier1)",
+    "confidence": 8,
+    "market_regime": "risk-on",
     "tokens_used": {
-      "prompt_tokens": 2436,
-      "completion_tokens": 5099,
-      "total_tokens": 7535,
-      "cost": 0.02216625,
+      "prompt_tokens": 1927,
+      "completion_tokens": 3196,
+      "total_tokens": 5123,
+      "cost": 0.006263333505,
       "is_byok": false,
       "prompt_tokens_details": {
         "cached_tokens": 0,
@@ -18,12 +17,12 @@
         "video_tokens": 0
       },
       "cost_details": {
-        "upstream_inference_cost": 0.02216625,
-        "upstream_inference_prompt_cost": 0.003045,
-        "upstream_inference_completions_cost": 0.01912125
+        "upstream_inference_cost": 0.0063265995,
+        "upstream_inference_prompt_cost": 0.0014654835,
+        "upstream_inference_completions_cost": 0.004861116
       },
       "completion_tokens_details": {
-        "reasoning_tokens": 3299,
+        "reasoning_tokens": 1949,
         "image_tokens": 0,
         "audio_tokens": 0
       }
@@ -31,173 +30,136 @@
     "analysis_type": "morning"
   },
   "market_pulse": {
-    "one_liner": "Equities rally on tech strength and falling VIX, but heavy put buying in mega-cap tech and overbought financials signal underlying distribution.",
-    "sentiment_score": 6,
+    "one_liner": "Tech-led rally broadens as VIX dips; oversold mega-cap signals and heavy call flow in NVDA/SPY point to sustained risk appetite.",
+    "sentiment_score": 8,
     "key_levels": {
       "SPY": {
-        "support": 735.0,
-        "resistance": 755.0
+        "support": 730,
+        "resistance": 740
       },
       "QQQ": {
-        "support": 515.0,
-        "resistance": 535.0
+        "support": 700,
+        "resistance": 720
       }
     },
-    "sector_rotation": "Capital rotating into defensive yields and Canadian financials, while tech faces institutional hedging via options."
+    "sector_rotation": "Rotation into tech/growth as Nasdaq leaps 2%; defensives lag with Dow up only 0.6%. AI and crypto bets boosted by Wood."
   },
-  "held_position_review": [
-    {
-      "ticker": "XLE",
-      "action": "TRIM",
-      "rationale": "Down 6.57% on entry day with energy headlines focusing on grid overhauls rather than supply shocks; cut risk.",
-      "target": 55.0,
-      "stop": 52.5,
-      "risk_reward": "1.2:1"
-    },
-    {
-      "ticker": "JNJ",
-      "action": "HOLD",
-      "rationale": "Defensive healthcare holding down 5.18% but offers portfolio stability amid tech put-hedging and sticky inflation.",
-      "target": 245.0,
-      "stop": 220.0,
-      "risk_reward": "1.5:1"
-    },
-    {
-      "ticker": "FXY",
-      "action": "HOLD",
-      "rationale": "Down 0.72% but currency pairs remain volatile; hold for mean reversion as safe-haven flows fluctuate.",
-      "target": 58.5,
-      "stop": 55.5,
-      "risk_reward": "1.2:1"
-    },
-    {
-      "ticker": "GLD",
-      "action": "ADD",
-      "rationale": "Gold holding positive P&L amid geopolitical noise and sticky inflation noted by the Fed; strong safe-haven bid.",
-      "target": 395.0,
-      "stop": 382.0,
-      "risk_reward": "1.8:1"
-    }
-  ],
+  "held_position_review": [],
   "opportunities": [
     {
-      "ticker": "AMZN",
-      "direction": "SHORT",
-      "thesis": "Unusual options flow shows massive put buying at $275/$270/$265 strikes with >$25M premium, indicating institutional downside hedging.",
+      "ticker": "NVDA",
+      "direction": "LONG",
+      "thesis": "RSI 34.7 oversold below moving average, massive call buying at 200/207.5 strikes (Vol/OI 39k & 162k) suggests institutional accumulation dip.",
       "entry_zone": [
-        275.0,
-        280.0
+        195,
+        200
       ],
-      "catalyst": "Break below $275 support level on high volume.",
-      "timeframe": "2 weeks",
+      "catalyst": "AI momentum from Wood's increased bet; technical bounce off oversold levels.",
+      "timeframe": "3-5 days",
       "conviction": "high"
     },
     {
-      "ticker": "RY.TO",
-      "direction": "SHORT",
-      "thesis": "Screener flags RSI at 76.3 (overbought) with near-high signals; prime mean-reversion candidate in Canadian financials.",
+      "ticker": "ADBE",
+      "direction": "LONG",
+      "thesis": "RSI 27.2 deep oversold with value PE signal; below MA and screener score 7 indicating strong mean-reversion potential.",
       "entry_zone": [
-        145.0,
-        148.0
+        380,
+        390
       ],
-      "catalyst": "RSI divergence or macro rate hold disappointment from BOC.",
-      "timeframe": "1 month",
+      "catalyst": "Short-covering rally in beaten-down SaaS; market rotation toward value tech.",
+      "timeframe": "1-2 weeks",
+      "conviction": "high"
+    },
+    {
+      "ticker": "ORCL",
+      "direction": "LONG",
+      "thesis": "RSI 11.3 extreme oversold, historically such readings lead to snapback rallies; below MA adds confluence.",
+      "entry_zone": [
+        80,
+        85
+      ],
+      "catalyst": "Any positive AI/cloud news; extreme fear exhaustion.",
+      "timeframe": "5-10 days",
       "conviction": "medium"
     }
   ],
   "risk_alerts": [
     {
-      "severity": "high",
-      "alert": "Heavy put volume in AMZN, NVDA, and AMD (C/P ratio 9:16) contradicts the NASDAQ's +1.91% rally, signaling a potential tech pullback.",
-      "affected_positions": [
-        "AMZN",
-        "NVDA"
-      ]
+      "severity": "medium",
+      "alert": "Ukraine-Russia escalation (strikes on cargo ships, Putin rejects talks) could spike energy prices and reverse risk-on sentiment.",
+      "affected_positions": []
     },
     {
       "severity": "medium",
-      "alert": "Fed holding rates at 4.25-4.50% with elevated inflation limits multiple expansion for rate-sensitive sectors.",
-      "affected_positions": [
-        "JNJ",
-        "XLE"
-      ]
+      "alert": "TSLA heavy put flow (Vol/OI 31k at $380) signals bearish bets despite market rally; avoid long exposure.",
+      "affected_positions": []
     }
   ],
   "geopolitical_impact": [
     {
       "headline": "Putin says there is 'no point' meeting Zelensky over ending Ukraine war",
       "source": "BBC World",
-      "impact_rating": "high",
-      "rationale": "Prolonged conflict sustains energy risk premiums, supporting GLD and complicating XLE recovery."
+      "impact_rating": "medium",
+      "rationale": "Heightens geopolitical uncertainty; could pressure risk assets if conflict escalates, though no direct portfolio impact."
     },
     {
       "headline": "Ukraine strikes cargo ships and admits Romania drone blast",
       "source": "BBC World",
       "impact_rating": "medium",
-      "rationale": "Black Sea shipping disruptions could cause localized supply chain hiccups, mildly bullish for commodities."
+      "rationale": "Raises supply chain and energy disruption fears, potentially affecting broad market sentiment."
     },
     {
       "headline": "Astronauts return to ISS after sheltering during air leak repair attempt",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "Space station maintenance has no direct impact on equity or commodity markets."
+      "rationale": "No market impact."
     },
     {
       "headline": "Fury in France after child murder suspect's criminal record released",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "Domestic social issue in France with no material impact on global portfolio strategy."
+      "rationale": "Domestic political issue, minimal global market influence."
     },
     {
       "headline": "Nearly 50 people die of thirst in Sahara desert after lorry breaks down",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "Tragic humanitarian event but lacks macroeconomic or market-moving relevance."
+      "rationale": "Humanitarian tragedy, negligible market impact."
     },
     {
       "headline": "Iran footballers issued US visas for World Cup, says White House",
       "source": "Al Jazeera",
       "impact_rating": "low",
-      "rationale": "Minor diplomatic gesture with no immediate effect on crude oil or geopolitical risk premiums."
+      "rationale": "Positive diplomatic gesture but no direct portfolio implications."
     },
     {
       "headline": "Zelenskyy: Putin choosing war by rejecting offer for in-person talks",
       "source": "Al Jazeera",
-      "impact_rating": "high",
-      "rationale": "Reinforces the prolonged war narrative, keeping defense stocks bid and supporting safe-haven GLD."
+      "impact_rating": "medium",
+      "rationale": "Reinforces the stalemate; may dampen risk sentiment if narrative hardens."
     },
     {
       "headline": "Trump hails jobs surge, says Iran talks \u2018going well\u2019",
       "source": "Al Jazeera",
-      "impact_rating": "medium",
-      "rationale": "Positive Iran talk rhetoric could cap crude oil spikes, acting as a headwind for XLE upside."
+      "impact_rating": "low",
+      "rationale": "Positive rhetoric supports risk-on, but mostly noise; limited effect on portfolio."
     }
   ],
-  "calendar": [
-    {
-      "date": "2024-06-15",
-      "event": "US-Iran talks in Switzerland",
-      "impact": "high"
-    },
-    {
-      "date": "2024-07-10",
-      "event": "US CPI Inflation Data",
-      "impact": "high"
-    }
-  ],
+  "calendar": [],
   "portfolio_actions": {
     "immediate": [
-      "TRIM XLE to reduce sector rotation drag",
-      "ADD to GLD on safe-haven momentum"
+      "Initiate long NVDA on any pullback to $195-200 with tight stop at $190",
+      "Add ADBE to buy list; watch for reversal candle at $380-390 zone"
     ],
     "watchlist": [
-      "AMZN",
-      "RY.TO",
-      "UNH"
+      "NVDA",
+      "ADBE",
+      "ORCL",
+      "CRM",
+      "PFE"
     ],
     "avoid": [
-      "NVDA",
-      "AMD"
+      "TSLA"
     ]
   }
 }
