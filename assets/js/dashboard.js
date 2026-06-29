@@ -22,12 +22,13 @@ const Dashboard = {
   async renderToday(app) {
     app.innerHTML = '<div class="loading">Loading...</div>';
     
-    const [marketData, tradesData, analysisData, gexData, verdictData] = await Promise.all([
+    const [marketData, tradesData, analysisData, gexData, verdictData, redditData] = await Promise.all([
       State.get('latest', '/data/latest.json').catch(() => null),
       State.get('trades', '/data/paper_trades.json').catch(() => null),
       State.get('analysis', '/data/analysis.json').catch(() => null),
       State.get('gex', '/data/gex_data.json').catch(() => null),
       State.get('verdict', '/data/verdict.json').catch(() => null),
+      State.get('reddit', '/data/reddit-sentiment.json').catch(() => null),
     ]);
 
 
@@ -38,6 +39,7 @@ const Dashboard = {
     if (!analysisData) fetchErrors.push('Analysis');
     if (!gexData) fetchErrors.push('GEX/DEX');
     if (!verdictData) fetchErrors.push('Verdict');
+    if (!redditData) fetchErrors.push('Reddit sentiment');
 
     let html = '';
     const ms = marketData?.market_summary || {};
@@ -263,6 +265,33 @@ const Dashboard = {
       marketData.market_news.headlines.slice(0, 3).forEach(n => {
         html += `<div class="today-headline"><a href="${Utils.esc(Utils.safeUrl(n.url))}" target="_blank" rel="noopener">${Utils.esc(n.title.slice(0, 80))}</a></div>`;
       });
+      html += '</div></div>';
+    }
+
+    // ── 8. REDDIT SENTIMENT STRIP (compact) ──
+    if (redditData) {
+      html += '<div class="today-section"><div class="today-section-title">🔴 Reddit Pulse</div>';
+      html += '<div style="display:flex;flex-wrap:wrap;gap:10px">';
+      for (const [key, label] of [['wsb', 'r/wallstreetbets'], ['stocks', 'r/stocks']]) {
+        const src = redditData[key];
+        if (!src) continue;
+        const summary = (src.sentiment_summary || '').toUpperCase();
+        const isBullish = summary.includes('BULLISH') || summary.includes('CONSTRUCTIVE') || summary.includes('POSITIVE');
+        const isBearish = summary.includes('BEARISH') || summary.includes('NEGATIVE');
+        const moodEmoji = isBearish ? '🔴' : '🟢';
+        const moodLabel = isBearish ? 'Bearish' : isBullish ? 'Bullish' : 'Neutral';
+        html += `<div class="card" style="flex:1;min-width:180px;padding:10px;display:flex;flex-direction:column;gap:6px">`;
+        html += `<div style="display:flex;align-items:center;gap:6px"><span style="font-size:1rem">${moodEmoji}</span><span class="card-title" style="margin:0;font-size:0.8rem">${label}</span><span style="font-size:0.7rem;color:${isBearish ? 'var(--red)' : isBullish ? 'var(--green)' : 'var(--yellow)'};font-weight:600">${moodLabel}</span></div>`;
+        // Top tickers as badge-style links
+        if (src.top_tickers?.length) {
+          html += '<div style="display:flex;flex-wrap:wrap;gap:4px">';
+          src.top_tickers.slice(0, 8).forEach(t => {
+            html += `<a href="#/ticker/${Utils.esc(t.ticker)}" class="badge ${isBearish ? 'badge-red' : 'badge-green'}" style="text-decoration:none;font-size:0.7rem">${Utils.esc(t.ticker)} <span style="opacity:0.7">${t.count}</span></a>`;
+          });
+          html += '</div>';
+        }
+        html += '</div>';
+      }
       html += '</div></div>';
     }
 

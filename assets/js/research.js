@@ -19,12 +19,13 @@ const Research = {
   async render(app) {
     app.innerHTML = '<div class="loading">Loading research...</div>';
 
-    const [marketData, analysisData, redditData, mgAnalysis, webNewsData] = await Promise.all([
+    const [marketData, analysisData, redditData, mgAnalysis, webNewsData, polymarketData] = await Promise.all([
       State.get('latest', '/data/latest.json').catch(() => null),
       State.get('analysis', '/data/analysis.json').catch(() => null),
       State.get('reddit', '/data/reddit-sentiment.json').catch(() => null),
       State.get('mg-analysis', '/data/morning_analysis.json').catch(() => null),
       State.get('web-news', '/data/web-news.json').catch(() => null),
+      State.get('polymarket', '/data/polymarket_sentiment.json').catch(() => null),
     ]);
 
     let html = '<div class="section"><h2 class="section-title">Research</h2>';
@@ -37,6 +38,7 @@ const Research = {
     html += '<button class="research-tab" data-tab="analysis">Ideas</button>';
     html += '<button class="research-tab" data-tab="mg-analysis">MapleGamma Analysis</button>';
     html += '<button class="research-tab" data-tab="backtest">Backtest</button>';
+    html += '<button class="research-tab" data-tab="markets">Markets</button>';
     html += '</div>';
 
     html += '<div class="research-content">';
@@ -309,6 +311,49 @@ const Research = {
     html += '<div class="research-pane" id="tab-backtest" style="display:none">';
     html += await this._renderBacktest();
     // Backtest timestamp is rendered inside _renderBacktest()
+    html += '</div>';
+
+    // ── TAB 6: Prediction Markets (Polymarket) ──
+    html += '<div class="research-pane" id="tab-markets" style="display:none">';
+    if (polymarketData?.markets?.length) {
+      html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Source: ${Utils.esc(polymarketData.source || 'Polymarket')} · ${polymarketData.fetched_at ? 'Updated ' + this.formatTimestamp(polymarketData.fetched_at) : ''}</div>`;
+      // Sort by volume descending, show top 30
+      const sorted = [...polymarketData.markets].sort((a, b) => (b.volume || 0) - (a.volume || 0)).slice(0, 30);
+      sorted.forEach(m => {
+        const isClosed = m.closed === true;
+        const volumeStr = m.volume >= 1e6 ? '$' + (m.volume / 1e6).toFixed(1) + 'M' : m.volume >= 1e3 ? '$' + (m.volume / 1e3).toFixed(0) + 'K' : '$' + (m.volume || 0).toFixed(0);
+        // Format outcomes with probability bars
+        let outcomesHtml = '';
+        if (m.outcomes?.length) {
+          outcomesHtml = '<div style="display:flex;flex-direction:column;gap:4px;margin-top:6px">';
+          m.outcomes.forEach(o => {
+            const pct = (parseFloat(o.price) * 100);
+            const barColor = pct >= 50 ? 'var(--green)' : 'var(--red)';
+            outcomesHtml += `<div style="display:flex;align-items:center;gap:8px;font-size:0.8rem">`;
+            outcomesHtml += `<span style="min-width:60px;font-weight:500">${Utils.esc(o.name)}</span>`;
+            outcomesHtml += `<div style="flex:1;height:6px;background:var(--bg-inset);border-radius:3px;overflow:hidden"><div style="width:${Math.max(pct, 2)}%;height:100%;background:${barColor};border-radius:3px"></div></div>`;
+            outcomesHtml += `<span style="min-width:40px;text-align:right;font-family:var(--font-mono);font-size:0.75rem;color:${barColor}">${pct.toFixed(1)}%</span>`;
+            outcomesHtml += `</div>`;
+          });
+          outcomesHtml += '</div>';
+        }
+        // Card
+        html += `<div class="card" style="margin-bottom:8px;padding:12px;${isClosed ? 'opacity:0.6' : ''}">`;
+        html += '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">';
+        html += `<div style="flex:1"><div class="card-title" style="margin:0;font-size:0.85rem">${Utils.esc(m.question)}</div></div>`;
+        html += `<div style="display:flex;gap:6px;flex-shrink:0;align-items:center">`;
+        html += `<span style="font-size:0.7rem;color:var(--text-muted);font-family:var(--font-mono)">${volumeStr}</span>`;
+        if (isClosed) html += `<span class="badge badge-red" style="font-size:0.6rem">CLOSED</span>`;
+        html += '</div></div>';
+        html += outcomesHtml;
+        html += '</div>';
+      });
+      if (polymarketData.markets.length > 30) {
+        html += `<div style="text-align:center;color:var(--text-muted);font-size:0.75rem;padding:8px 0">Showing top 30 of ${polymarketData.markets.length} markets by volume</div>`;
+      }
+    } else {
+      html += '<div class="empty-state">Prediction market data not available</div>';
+    }
     html += '</div>';
 
     html += '</div></div>';
