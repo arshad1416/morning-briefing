@@ -1,15 +1,57 @@
 {
   "meta": {
-    "generated_at": "2026-06-29T11:25:31.878502+00:00",
+    "generated_at": "2026-06-29T20:47:44.608923+00:00",
     "experts_consulted": 4,
-    "experts_succeeded": 1,
-    "total_cost_usd": 0.00107,
-    "status": "insufficient_experts"
+    "experts_succeeded": 4,
+    "total_cost_usd": 0.001918,
+    "aggregator": "gemini-2.0-flash"
   },
-  "expert_outputs": {
-    "kimi_momentum": "auth_error",
-    "mimo_risk_contrarian": "auth_error",
-    "deepseek_quantitative": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY Long (Bullish Gamma Regime Play)\n- **Ticker:** SPY\n- **Direction:** Long\n- **Entry Zone:** $737.50 - $738.00 (Current price: $737.89)\n- **Stop Loss:** $732.50 (Placed safely below the $730 Max GEX strike to avoid stop-hunts)\n- **Target:** $745.00 (Next major psychological/resistance level)\n- **Conviction:** 7/10\n- **Rationale:** The GEX data indicates a \"bullish\" gamma regime with a massive Put wall at the $730 strike (Max GEX: 201,055). Dealer hedging dynamics in a bullish gamma environment typically suppress volatility and support upward price drift. As long as SPY holds above $735, the path of least resistance is up toward $745. \n\n### Trade 2: SPY Short (GEX Support Breakdown)\n- **Ticker:** SPY\n- **Direction:** Short\n- **Entry Zone:** $729.00 - $729.50 (Confirmed daily close or high-volume break below $730)\n- **Stop Loss:** $734.50 (Reclaim of the breakdown level and GEX support)\n- **Target:** $720.00 (Next major structural support and liquidity pool)\n- **Conviction:** 5/10\n- **Rationale:** This is a contingency trade. The DS Pro Analysis notes a \"transitional\" market regime. If the $730 Max GEX strike fails, dealers will be forced to unwind long gamma hedges, accelerating selling pressure. This trade capitalizes on the transition from a low-volatility bullish regime to a high-volatility bearish regime. \n\n***\n\n**Risk Management Note:** Your current win rate is 17%. It is highly recommended to risk no more than 0.5% to 1% of your total account balance ($100,004) on these setups. Strict adherence to the stop loss is critical until the win rate normalizes."
-  }
+  "market_pulse": {
+    "one_liner": "Risk-on sentiment and bullish gamma structure support orderly upside, but concentration at key levels poses volatility risk.",
+    "score": 7,
+    "regime": "bullish",
+    "confidence": 8
+  },
+  "key_levels": {
+    "SPY": {
+      "support": 730.0,
+      "resistance": 750.0
+    },
+    "QQQ": null
+  },
+  "gamma_landscape": {
+    "pinning_zone": 730.0,
+    "notes": "The $730 strike exhibits the highest GEX and Put OI, acting as a strong dealer-supported floor. However, zero gamma at this strike for calls indicates a potential liquidity vacuum and amplified downside if breached."
+  },
+  "risks": [
+    "Breach below the $730 support level could trigger accelerated selling due to dealer delta unwinding.",
+    "Concentration of vega at the $730 strike means a sudden vol spike could force dealer hedging and exacerbate downside.",
+    "Over-reliance on a single 'risk-on' signal may overlook hidden macro fragilities.",
+    "Short gamma at the $730 strike for calls creates a volatility amplification risk if SPY dips below this level."
+  ],
+  "trades": [
+    {
+      "ticker": "SPY",
+      "direction": "long",
+      "entry": 737.5,
+      "stop": 728.5,
+      "target": 750.0,
+      "conviction": 8,
+      "source": "Qwen 3.7 Max (Trade Idea 1)"
+    },
+    {
+      "ticker": "SPY",
+      "direction": "long",
+      "entry": 730.5,
+      "stop": 726.0,
+      "target": 738.0,
+      "conviction": 7,
+      "source": "Qwen 3.7 Max (Trade Idea 2)"
+    }
+  ],
+  "disagreements": [
+    "MiMo V2.5 Pro highlights short gamma at the $730 strike for calls, indicating a potential liquidity vacuum and amplification risk if SPY dips below, contradicting the purely bullish interpretation of the gamma structure by DeepSeek V4 Pro and Qwen 3.7 Max.",
+    "MiMo V2.5 Pro criticizes the over-reliance on DS Pro's 'risk-on' signal and the cost of analysis, while DS Pro itself expresses high confidence in the 'risk-on' regime."
+  ],
+  "narrative": "The market is exhibiting a strong 'risk-on' sentiment supported by a bullish gamma regime, with SPY finding significant support around the $730 strike due to high Put OI and GEX. While this suggests potential for orderly upside, a critical risk lies in the short gamma at the $730 call strike, which could amplify volatility if the price breaches this key level. Trades are recommended to capitalize on the current bullish momentum, with a focus on the $730 support and $750 resistance levels."
 }
