@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-28T11:25:48.628768+00:00",
+    "generated_at": "2026-06-29T11:25:31.878502+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001615,
+    "total_cost_usd": 0.00107,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
+    "kimi_momentum": "auth_error",
     "mimo_risk_contrarian": "auth_error",
     "deepseek_quantitative": "auth_error",
-    "kimi_momentum": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY Long (Bullish Gamma Regime Support Play)\n\n- **Ticker:** SPY\n- **Direction:** Long\n- **Entry Price:** $737.50 - $738.00 (Current Price: $737.89)\n- **Stop Loss:** $728.50\n- **Target Price:** $749.50\n- **Risk/Reward Ratio:** ~1 : 1.25\n- **Conviction:** 7/10\n\n**Position Sizing:**\n- **Max Risk:** 1% of Account ($1,000)\n- **Risk per Share:** ~$9.39 \n- **Suggested Size:** 106 shares (~$78,226 notional, well within your $86,843 available cash)\n\n**Rationale:** \n- **Gamma Regime & Support:** The GEX data indicates a \"bullish\" gamma regime. The Max GEX strike sits at **$730.0** with a massive positive GEX value (201,055). This heavy concentration of gamma acts as strong structural support and a \"gamma flip\" level. Market makers will likely buy dips to hedge as price approaches this level, creating a floor.\n- **Targeting:** The next major aggregated options strike is at **$750.0**. We set the target just below this psychological and structural resistance at $749.50 to ensure fills before potential dealer selling/pinning at the exact strike.\n- **Risk Management:** The stop loss is placed at $728.50, safely below the $730 GEX wall. If SPY closes below 730, the bullish gamma regime is invalidated, and dealer delta-hedging could accelerate a move lower. \n- **Market Context:** The DS Pro analysis notes a \"transitional\" market regime with a confidence of 7, which aligns perfectly with a moderate-conviction, structurally backed swing trade rather than an aggressive breakout play."
+    "qwen_trade_selector": "### Trade 1: SPY Long (Bullish Gamma Regime Play)\n- **Ticker:** SPY\n- **Direction:** Long\n- **Entry Zone:** $737.50 - $738.00 (Current price: $737.89)\n- **Stop Loss:** $732.50 (Placed safely below the $730 Max GEX strike to avoid stop-hunts)\n- **Target:** $745.00 (Next major psychological/resistance level)\n- **Conviction:** 7/10\n- **Rationale:** The GEX data indicates a \"bullish\" gamma regime with a massive Put wall at the $730 strike (Max GEX: 201,055). Dealer hedging dynamics in a bullish gamma environment typically suppress volatility and support upward price drift. As long as SPY holds above $735, the path of least resistance is up toward $745. \n\n### Trade 2: SPY Short (GEX Support Breakdown)\n- **Ticker:** SPY\n- **Direction:** Short\n- **Entry Zone:** $729.00 - $729.50 (Confirmed daily close or high-volume break below $730)\n- **Stop Loss:** $734.50 (Reclaim of the breakdown level and GEX support)\n- **Target:** $720.00 (Next major structural support and liquidity pool)\n- **Conviction:** 5/10\n- **Rationale:** This is a contingency trade. The DS Pro Analysis notes a \"transitional\" market regime. If the $730 Max GEX strike fails, dealers will be forced to unwind long gamma hedges, accelerating selling pressure. This trade capitalizes on the transition from a low-volatility bullish regime to a high-volatility bearish regime. \n\n***\n\n**Risk Management Note:** Your current win rate is 17%. It is highly recommended to risk no more than 0.5% to 1% of your total account balance ($100,004) on these setups. Strict adherence to the stop loss is critical until the win rate normalizes."
   }
 }
