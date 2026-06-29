@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29 15:30:09",
+  "generated_at": "2026-06-29 17:15:32",
   "summary": {
     "total_backtest_trades": 17577,
     "tickers_tested": 59,
@@ -9,62 +9,21 @@
     "best_profit_factor": "7.64"
   },
   "live_trading": {
-    "generated_at": "2026-06-29 15:30:09",
+    "generated_at": "2026-06-29 17:15:32",
     "summary": {
-      "total_trades": 6,
-      "closed_trades": 6,
-      "open_positions": 0,
-      "winning_trades": 1,
-      "losing_trades": 5,
-      "win_rate": 16.7,
-      "total_pnl_cad": -13156.83,
+      "total_trades": 12,
+      "closed_trades": 0,
+      "open_positions": 5,
+      "winning_trades": 0,
+      "losing_trades": 0,
+      "win_rate": 0,
+      "total_pnl_cad": -13234.85,
       "starting_balance": 100000.0,
-      "current_balance": 86843.17,
-      "return_pct": -13.16,
+      "current_balance": 86765.15,
+      "return_pct": -13.23,
       "trading_days_active": 36
     },
-    "per_strategy": [
-      {
-        "strategy": "momentum_options",
-        "closed_trades": 1,
-        "wins": 0,
-        "losses": 1,
-        "win_rate": 0.0,
-        "avg_pnl_pct": -97.06,
-        "best_trade_pnl": -97.06,
-        "worst_trade_pnl": -97.06,
-        "tickers_traded": [
-          "AMZN"
-        ],
-        "open_positions": 0,
-        "backtest_predicted_wr": "55%",
-        "backtest_predicted_avg_pnl": "+3.5%",
-        "prediction_source": "V56 Options MR Safe (62.7% WR)",
-        "accuracy_vs_prediction": "UNDERPERFORMING by -55.0pp"
-      },
-      {
-        "strategy": "sector_rotation",
-        "closed_trades": 5,
-        "wins": 1,
-        "losses": 4,
-        "win_rate": 20.0,
-        "avg_pnl_pct": -5.14,
-        "best_trade_pnl": 0.42,
-        "worst_trade_pnl": -12.89,
-        "tickers_traded": [
-          "FXY",
-          "GLD",
-          "IBIT",
-          "JNJ",
-          "XLE"
-        ],
-        "open_positions": 0,
-        "backtest_predicted_wr": "72%",
-        "backtest_predicted_avg_pnl": "+1.8%",
-        "prediction_source": "V75 Sector Rotation (71.2% WR)",
-        "accuracy_vs_prediction": "UNDERPERFORMING by -52.0pp"
-      }
-    ]
+    "per_strategy": []
   },
   "versions": {
     "V1 RSI<30": {
