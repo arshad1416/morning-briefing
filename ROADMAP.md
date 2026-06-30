@@ -1,6 +1,6 @@
 # MapleGamma Feature Roadmap
 
-> Kanban board tracking all gap items from the retail ecosystem competitive analysis.
+> Kanban tracking all gap items from the retail ecosystem competitive analysis.
 > **[View issues →](https://github.com/arshad1416/morning-briefing/issues)**
 
 ---
@@ -18,11 +18,13 @@
 ## 🎯 Priority — Next Up
 
 - [ ] **TradingView-style charts** ([#1](https://github.com/arshad1416/morning-briefing/issues/1))
-  - [ ] Select charting library (lightweight-charts, chart.js, etc.)
-  - [ ] Pi pipeline: daily OHLCV JSON for tracked tickers
-  - [ ] Frontend: chart component on Dashboard or dedicated page
-  - [ ] Timeframes: 1D, 1W, 1M, 1Y
-  - [ ] Indicators: SMA, RSI, volume overlay
+  - **Phase 1 — Pi pipeline:** daily OHLCV JSON for all 60 V3 tickers
+  - **Phase 2 — Frontend:** dedicated Charts page with:
+    - [ ] Charting library integration (lightweight-charts recommended — DS Pro researching)
+    - [ ] Ticker selector + timeframe toggle (1D, 1W, 1M, 1Y)
+    - [ ] Candlestick series + volume bars
+    - [ ] Indicator overlays (SMA, RSI — top picks per DS Pro)
+  - **Phase 3 — Polish:** loading states, responsive, theme support
 
 ## 📋 Backlog
 
