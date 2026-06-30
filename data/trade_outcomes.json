@@ -1,0 +1,84 @@
+{
+  "entries": [
+    {
+      "date": "2026-06-29",
+      "council_query": "Market outlook analysis for 2026-06-29",
+      "recommendations": [
+        {
+          "model": "gemini-2.0-flash-aggregator",
+          "prediction": "bullish",
+          "confidence": 0.8,
+          "source": "market_pulse",
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max (Trade Idea 1)",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "SPY",
+          "entry": 737.5,
+          "target": 750.0,
+          "stop": 728.5,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max (Trade Idea 2)",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "SPY",
+          "entry": 730.5,
+          "target": 738.0,
+          "stop": 726.0,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 0.0,
+        "total_pnl": 0.0,
+        "unrealized_pnl": 0.99,
+        "open_positions_count": 5,
+        "generated_at": "2026-06-29 17:15:27",
+        "positions": [
+          {
+            "ticker": "CAT",
+            "direction": "long",
+            "pnl_pct": -2.25,
+            "asset_class": "STOCK"
+          },
+          {
+            "ticker": "UNH",
+            "direction": "long",
+            "pnl_pct": 4.7,
+            "asset_class": "STOCK"
+          },
+          {
+            "ticker": "IWM",
+            "direction": "long",
+            "pnl_pct": 0.02,
+            "asset_class": "STOCK"
+          },
+          {
+            "ticker": "XLF",
+            "direction": "long",
+            "pnl_pct": 1.07,
+            "asset_class": "STOCK"
+          },
+          {
+            "ticker": "XLK",
+            "direction": "long",
+            "pnl_pct": 2.95,
+            "asset_class": "STOCK"
+          }
+        ]
+      },
+      "correct_models": [
+        "gemini-2.0-flash-aggregator"
+      ],
+      "correlation_score": 1.0
+    }
+  ]
+}

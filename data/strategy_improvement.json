@@ -1,0 +1,85 @@
+{
+  "generated_at": "2026-06-30T06:04:01.151366+00:00",
+  "date": "2026-06-30",
+  "model_accuracy": {
+    "Qwen 3.7 Max (Trade Idea 1)": {
+      "total_predictions": 1,
+      "correct_predictions": 0,
+      "win_rate": 0.0,
+      "avg_return_all": 0.0,
+      "avg_return_when_correct": 0.0,
+      "avg_return_when_incorrect": 0.0,
+      "best_asset_classes": [
+        {
+          "class": "STOCK",
+          "win_rate": 0.8,
+          "samples": 5
+        }
+      ],
+      "confusion_matrix": {
+        "long->bullish": 1
+      }
+    },
+    "Qwen 3.7 Max (Trade Idea 2)": {
+      "total_predictions": 1,
+      "correct_predictions": 0,
+      "win_rate": 0.0,
+      "avg_return_all": 0.0,
+      "avg_return_when_correct": 0.0,
+      "avg_return_when_incorrect": 0.0,
+      "best_asset_classes": [
+        {
+          "class": "STOCK",
+          "win_rate": 0.8,
+          "samples": 5
+        }
+      ],
+      "confusion_matrix": {
+        "long->bullish": 1
+      }
+    },
+    "gemini-2.0-flash-aggregator": {
+      "total_predictions": 1,
+      "correct_predictions": 1,
+      "win_rate": 1.0,
+      "avg_return_all": 0.0,
+      "avg_return_when_correct": 0.0,
+      "avg_return_when_incorrect": 0.0,
+      "best_asset_classes": [
+        {
+          "class": "STOCK",
+          "win_rate": 0.8,
+          "samples": 5
+        }
+      ],
+      "confusion_matrix": {
+        "bullish->bullish": 1
+      }
+    }
+  },
+  "prompt_weights": "All models are equal \u2014 insufficient data for weighting.",
+  "position_sizing": {
+    "base_multiplier": 0.83,
+    "max_position_pct": 4.1,
+    "min_conviction_threshold": 5,
+    "updated_at": "2026-06-30T06:04:01.150591+00:00"
+  },
+  "strategy_weights": {
+    "gemini-2.0-flash-aggregator": {
+      "weight": 1.0,
+      "samples": 1,
+      "enabled": false
+    },
+    "Qwen 3.7 Max (Trade Idea 1)": {
+      "weight": 0.0,
+      "samples": 1,
+      "enabled": false
+    },
+    "Qwen 3.7 Max (Trade Idea 2)": {
+      "weight": 0.0,
+      "samples": 1,
+      "enabled": false
+    }
+  },
+  "total_outcomes_analyzed": 1
+}

@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-06-29T11:20:01.239019+00:00",
+  "generated_at": "2026-06-30T11:20:01.239041+00:00",
   "signal": "neutral",
-  "conviction": 0.46,
+  "conviction": 0.54,
   "conviction_source": "model",
-  "narrative": "Equities rally on tech strength and falling VIX, but heavy put buying in mega-cap tech and overbought financials signal underlying distribution.",
+  "narrative": "Tech-led rally broadens as VIX dips; oversold mega-cap signals and heavy call flow in NVDA/SPY point to sustained risk appetite.",
   "narrative_source": "llm",
   "model_features": {
-    "vix": 18.41,
+    "vix": 17.65,
     "vix_score": 0.5,
     "sleeve_a_signals": 0,
     "avg_signal_score": 0,
     "max_signal_score": 0,
-    "recent_hit_rate": 0.17,
-    "recent_trades": 6,
+    "recent_hit_rate": 0.5,
+    "recent_trades": 0,
     "breadth": 1.0,
-    "vix_contango": 5.64,
+    "vix_contango": 3.33,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.21,
-      0.71
+      0.29,
+      0.79
     ]
   },
   "confidence_interval": [
-    0.21,
-    0.71
+    0.29,
+    0.79
   ]
 }

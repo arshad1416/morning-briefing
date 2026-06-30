@@ -1,57 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-29T20:47:44.608923+00:00",
+    "generated_at": "2026-06-30T11:20:39.281427+00:00",
     "experts_consulted": 4,
-    "experts_succeeded": 4,
-    "total_cost_usd": 0.001918,
-    "aggregator": "gemini-2.0-flash"
+    "experts_succeeded": 1,
+    "total_cost_usd": 0.001186,
+    "status": "insufficient_experts"
   },
-  "market_pulse": {
-    "one_liner": "Risk-on sentiment and bullish gamma structure support orderly upside, but concentration at key levels poses volatility risk.",
-    "score": 7,
-    "regime": "bullish",
-    "confidence": 8
-  },
-  "key_levels": {
-    "SPY": {
-      "support": 730.0,
-      "resistance": 750.0
-    },
-    "QQQ": null
-  },
-  "gamma_landscape": {
-    "pinning_zone": 730.0,
-    "notes": "The $730 strike exhibits the highest GEX and Put OI, acting as a strong dealer-supported floor. However, zero gamma at this strike for calls indicates a potential liquidity vacuum and amplified downside if breached."
-  },
-  "risks": [
-    "Breach below the $730 support level could trigger accelerated selling due to dealer delta unwinding.",
-    "Concentration of vega at the $730 strike means a sudden vol spike could force dealer hedging and exacerbate downside.",
-    "Over-reliance on a single 'risk-on' signal may overlook hidden macro fragilities.",
-    "Short gamma at the $730 strike for calls creates a volatility amplification risk if SPY dips below this level."
-  ],
-  "trades": [
-    {
-      "ticker": "SPY",
-      "direction": "long",
-      "entry": 737.5,
-      "stop": 728.5,
-      "target": 750.0,
-      "conviction": 8,
-      "source": "Qwen 3.7 Max (Trade Idea 1)"
-    },
-    {
-      "ticker": "SPY",
-      "direction": "long",
-      "entry": 730.5,
-      "stop": 726.0,
-      "target": 738.0,
-      "conviction": 7,
-      "source": "Qwen 3.7 Max (Trade Idea 2)"
-    }
-  ],
-  "disagreements": [
-    "MiMo V2.5 Pro highlights short gamma at the $730 strike for calls, indicating a potential liquidity vacuum and amplification risk if SPY dips below, contradicting the purely bullish interpretation of the gamma structure by DeepSeek V4 Pro and Qwen 3.7 Max.",
-    "MiMo V2.5 Pro criticizes the over-reliance on DS Pro's 'risk-on' signal and the cost of analysis, while DS Pro itself expresses high confidence in the 'risk-on' regime."
-  ],
-  "narrative": "The market is exhibiting a strong 'risk-on' sentiment supported by a bullish gamma regime, with SPY finding significant support around the $730 strike due to high Put OI and GEX. While this suggests potential for orderly upside, a critical risk lies in the short gamma at the $730 call strike, which could amplify volatility if the price breaches this key level. Trades are recommended to capitalize on the current bullish momentum, with a focus on the $730 support and $750 resistance levels."
+  "expert_outputs": {
+    "mimo_risk_contrarian": "auth_error",
+    "deepseek_quantitative": "auth_error",
+    "kimi_momentum": "auth_error",
+    "qwen_trade_selector": "### Trade 1: Broad Market Bullish Continuation\n- **Ticker:** SPY\n- **Direction:** Long\n- **Entry:** $738.00\n- **Stop Loss:** $728.50\n- **Target:** $750.00\n- **Conviction:** 8/10\n- **Rationale:** The DS Pro model identifies a \"risk-on\" market regime with high confidence. SPY's GEX data confirms a \"bullish\" gamma regime with a massive put wall at the $730 strike (Max GEX), which should act as strong support. A break above current levels targets the next major options strike at $750. The stop is placed just below the $730 gamma support to invalidate the thesis if the put wall breaks.\n\n### Trade 2: Risk-On Financial Sector Rotation\n- **Ticker:** XLF\n- **Direction:** Long\n- **Entry:** $53.75\n- **Stop Loss:** $52.20\n- **Target:** $56.00\n- **Conviction:** 7/10\n- **Rationale:** Financials (XLF) typically outperform in \"risk-on\" environments due to increased lending activity and favorable yield curve dynamics. You already have a slightly profitable paper position in XLF; adding on a pullback or breakout confirms the sector's strength. The stop is placed below recent consolidation, targeting a roughly 1:2.5 risk/reward ratio as capital rotates into cyclical/value sectors."
+  }
 }
