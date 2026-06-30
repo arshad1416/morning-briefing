@@ -39,6 +39,8 @@ const Research = {
     html += '<button class="research-tab" data-tab="mg-analysis">MapleGamma Analysis</button>';
     html += '<button class="research-tab" data-tab="backtest">Backtest</button>';
     html += '<button class="research-tab" data-tab="markets">Markets</button>';
+    html += '<button class="research-tab" data-tab="earnings">Earnings</button>';
+    html += '<button class="research-tab" data-tab="sec">SEC Filings</button>';
     html += '</div>';
 
     html += '<div class="research-content">';
@@ -369,6 +371,22 @@ const Research = {
       html += '<div class="empty-state">Prediction market data not available</div>';
     }
     html += '</div>';
+
+    // ── TAB 7: Earnings Transcripts ──
+    html += '<div class="research-pane" id="tab-earnings" style="display:none">';
+    html += '<div class="card"><div class="card-title">Earnings Transcripts</div>';
+    html += '<div style="font-size:0.85rem;color:var(--text-secondary)">';
+    html += 'Earnings transcript data powered by Financial Modeling Prep. Use the CLI on the Pi to fetch: ';
+    html += '<code style="background:var(--card-bg);padding:2px 6px;border-radius:3px">python3 fetch_earnings.py --ticker AAPL</code>';
+    html += '</div></div></div>';
+
+    // ── TAB 8: SEC Filings ──
+    html += '<div class="research-pane" id="tab-sec" style="display:none">';
+    html += '<div class="card"><div class="card-title">SEC EDGAR Filings</div>';
+    html += '<div style="font-size:0.85rem;color:var(--text-secondary)">';
+    html += 'SEC filing data sourced directly from EDGAR. Use the CLI on the Pi to fetch: ';
+    html += '<code style="background:var(--card-bg);padding:2px 6px;border-radius:3px">python3 fetch_sec_filings.py --ticker AAPL</code>';
+    html += '</div></div></div>';
 
     html += '</div></div>';
     app.innerHTML = html;

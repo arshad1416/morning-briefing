@@ -287,6 +287,7 @@ const PaperTrades = {
     html += '<div class="research-tabs" style="display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap">';
     html += '<button class="research-tab active" data-tab="paper">📝 Paper Trading</button>';
     html += '<button class="research-tab" data-tab="ibkr">🏦 IBKR Real Portfolio</button>';
+    html += '<button class="research-tab" data-tab="journal">📓 Journal</button>';
     html += '</div>';
 
     // ── PAPER TRADING TAB ──
@@ -599,6 +600,87 @@ const PaperTrades = {
     html += '<div id="ibkr-content"><div class="loading">Loading IBKR portfolio...</div></div>';
     html += '</div>'; // #tab-ibkr
 
+    // ── JOURNAL TAB ──
+    (async () => {
+      const journalData = await Utils.fetchJSON('/data/journal.json').catch(() => null);
+      const fileEntries = journalData?.entries || [];
+      // Merge with localStorage entries (for entries submitted via the form)
+      const localKey = 'mg-journal-entries';
+      const localEntries = JSON.parse(localStorage.getItem(localKey) || '[]');
+      const allEntries = [...fileEntries, ...localEntries];
+
+      html += '<div class="research-pane" id="tab-journal" style="display:none">';
+
+      // Stats summary
+      if (allEntries.length) {
+        const grades = allEntries.map(e => e.grade || 'B');
+        const gradeMap = { 'A': 4, 'A-': 3.7, 'B+': 3.3, 'B': 3, 'B-': 2.7, 'C+': 2.3, 'C': 2, 'C-': 1.7, 'D': 1, 'F': 0 };
+        const avgGrade = grades.reduce((s, g) => s + (gradeMap[g] || 0), 0) / grades.length;
+        const emotionCounts = {};
+        allEntries.forEach(e => { const em = e.emotion || 'Neutral'; emotionCounts[em] = (emotionCounts[em] || 0) + 1; });
+        const topEmotion = Object.entries(emotionCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || '—';
+
+        html += '<div class="card" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px;margin-bottom:16px">';
+        html += '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Entries</div><div style="font-size:1.3rem;font-weight:700;margin-top:4px">' + allEntries.length + '</div></div>';
+        html += '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Avg Grade</div><div style="font-size:1.3rem;font-weight:700;margin-top:4px;color:' + (avgGrade >= 3 ? 'var(--green)' : avgGrade >= 2 ? 'var(--yellow)' : 'var(--red)') + '">' + avgGrade.toFixed(1) + ' (' + allEntries.filter(e => (e.grade || 'B')[0] === 'A').length + ' As)</div></div>';
+        html += '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Top Emotion</div><div style="font-size:1.3rem;font-weight:700;margin-top:4px">' + Utils.esc(topEmotion) + '</div></div>';
+        html += '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Lessons</div><div style="font-size:1.3rem;font-weight:700;margin-top:4px">' + allEntries.filter(e => e.lesson).length + '</div></div>';
+        html += '</div>';
+      }
+
+      // Add entry form
+      html += '<div class="card" style="margin-bottom:16px">';
+      html += '<div class="card-title">✏️ New Journal Entry</div>';
+      html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">';
+      html += '<input id="journal-ticker" placeholder="Ticker" style="padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem;font-family:var(--font-mono)">';
+      html += '<select id="journal-grade" style="padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem">';
+      ['A','A-','B+','B','B-','C+','C','C-','D','F'].forEach(g => {
+        html += '<option value="' + g + '">Grade: ' + g + '</option>';
+      });
+      html += '</select>';
+      html += '<select id="journal-emotion" style="padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem">';
+      ['Confident','Calm','Neutral','Hopeful','Anxiety','FOMO','Greed','Fear','Regret'].forEach(e => {
+        html += '<option value="' + e + '">' + e + '</option>';
+      });
+      html += '</select>';
+      html += '<input id="journal-strategy" placeholder="Strategy (e.g. mean_reversion)" style="padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem">';
+      html += '</div>';
+      html += '<textarea id="journal-lesson" placeholder="Key lesson learned..." rows="2" style="width:100%;margin-top:8px;padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem;font-family:var(--font-ui);resize:vertical"></textarea>';
+      html += '<textarea id="journal-mistake" placeholder="Mistake made (if any)..." rows="2" style="width:100%;margin-top:8px;padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem;font-family:var(--font-ui);resize:vertical"></textarea>';
+      html += '<button id="journal-submit" style="margin-top:10px;padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:var(--font-mono)">Submit Entry</button>';
+      html += '</div>';
+
+      // Journal entries table
+      if (allEntries.length) {
+        const sorted = [...allEntries].reverse();
+        html += '<div class="card table-wrap"><table><thead><tr>';
+        html += '<th>Trade ID</th><th>Ticker</th><th>Entry</th><th>Exit</th><th>Grade</th><th>Emotion</th><th>Strategy</th><th>Lesson</th><th>Mistake</th>';
+        html += '</tr></thead><tbody>';
+        sorted.forEach(e => {
+          const gradeCls = (e.grade || 'B')[0] === 'A' ? 'badge-green' : (e.grade || 'B')[0] === 'B' ? 'badge-yellow' : 'badge-red';
+          html += '<tr>';
+          html += '<td style="font-size:0.75rem;font-family:var(--font-mono);color:var(--text-muted)">' + Utils.esc(e.trade_id || '—') + '</td>';
+          html += '<td><strong>' + Utils.esc(e.ticker || '—') + '</strong></td>';
+          html += '<td style="font-size:0.8rem">' + Utils.esc(e.entry_date || '—') + '</td>';
+          html += '<td style="font-size:0.8rem">' + Utils.esc(e.exit_date || '—') + '</td>';
+          html += '<td><span class="badge ' + gradeCls + '" style="font-size:0.7rem">' + Utils.esc(e.grade || '—') + '</span></td>';
+          html += '<td style="font-size:0.85rem">' + Utils.esc(e.emotion || '—') + '</td>';
+          html += '<td style="font-size:0.8rem;color:var(--text-secondary)">' + Utils.esc(e.strategy || '—') + '</td>';
+          html += '<td style="font-size:0.85rem;max-width:180px;color:var(--text-secondary)">' + Utils.esc(e.lesson || '') + '</td>';
+          html += '<td style="font-size:0.85rem;max-width:180px;color:var(--red)">' + Utils.esc(e.mistake || '') + '</td>';
+          html += '</tr>';
+        });
+        html += '</tbody></table></div>';
+      } else {
+        html += '<div class="card" style="text-align:center;padding:32px;color:var(--text-muted)">No journal entries yet. Use the form above or the CLI script to add your first entry.</div>';
+      }
+
+      html += '</div>'; // #tab-journal
+
+      // Store journal HTML for tab switching
+      window._journalHtml = html;
+    })();
+
     html += '</div>'; // .section
 
     // Modal for trade reason
@@ -690,6 +772,52 @@ const PaperTrades = {
         const next = cur === 'native' ? 'USD' : cur === 'USD' ? 'CAD' : 'native';
         localStorage.setItem('preferredCurrency', next);
         PaperTrades.render(app); // re-render with new currency
+      });
+    }
+
+    // ── Journal submit handler ──
+    const journalSubmit = document.getElementById('journal-submit');
+    if (journalSubmit) {
+      journalSubmit.addEventListener('click', async () => {
+        const ticker = document.getElementById('journal-ticker')?.value?.trim();
+        if (!ticker) { alert('Please enter a ticker'); return; }
+        const grade = document.getElementById('journal-grade')?.value || 'B';
+        const emotion = document.getElementById('journal-emotion')?.value || 'Neutral';
+        const strategy = document.getElementById('journal-strategy')?.value?.trim() || '';
+        const lesson = document.getElementById('journal-lesson')?.value?.trim() || '';
+        const mistake = document.getElementById('journal-mistake')?.value?.trim() || '';
+
+        // Build API-like payload — we POST to the CLI via a data endpoint
+        // For now, save locally in localStorage and append to the journal display
+        const existingJournal = await Utils.fetchJSON('/data/journal.json').catch(() => ({ entries: [] }));
+        const entries = existingJournal?.entries || [];
+        const newEntry = {
+          trade_id: 't' + Date.now().toString(36) + '_' + ticker,
+          ticker: ticker.toUpperCase(),
+          entry_date: new Date().toISOString().split('T')[0],
+          exit_date: '',
+          emotion: emotion,
+          grade: grade,
+          lesson: lesson,
+          mistake: mistake,
+          strategy: strategy,
+          notes: '',
+          created_at: new Date().toISOString(),
+        };
+        entries.push(newEntry);
+
+        // Store in localStorage for immediate display
+        const localKey = 'mg-journal-entries';
+        const localData = JSON.parse(localStorage.getItem(localKey) || '[]');
+        localData.push(newEntry);
+        localStorage.setItem(localKey, JSON.stringify(localData));
+
+        // Show success and re-render
+        journalSubmit.textContent = '✅ Saved!';
+        journalSubmit.style.background = 'var(--green)';
+        setTimeout(() => {
+          PaperTrades.render(app);
+        }, 800);
       });
     }
   }

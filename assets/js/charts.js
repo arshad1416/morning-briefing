@@ -30,6 +30,8 @@ const Charts = {
   _currentTicker: null,
   _currentTimeframe: '1D',
   _data: null,
+  _vpData: null,
+  _vpPriceLines: [],
   _resizeObserver: null,
   _themeListener: null,
 
@@ -325,6 +327,14 @@ const Charts = {
     vwapSeries.setData(vwap);
     this._vwapSeries = vwapSeries;
 
+    // ── Volume Profile ──
+    const vpPeriod = this._currentTimeframe === '1D' ? 50 :
+                     this._currentTimeframe === '1W' ? 20 :
+                     this._currentTimeframe === '1M' ? 12 :
+                     this._currentTimeframe === '1Y' ? 5 : 20;
+    this._vpData = this._calcVolumeProfile(ohlcv, vpPeriod);
+    this._renderVolumeProfile();
+
     // Fit content
     chart.timeScale().fitContent();
 
@@ -512,6 +522,35 @@ const Charts = {
 
     const dateStr = last.time || '';
 
+    // Volume Profile snippet
+    let vpHtml = '';
+    if (this._vpData && ohlcv.length >= 10) {
+      const vp = this._vpData;
+      const pocVolStr = vp.poc.volume >= 1e6 ? (vp.poc.volume / 1e6).toFixed(1) + 'M' :
+                        vp.poc.volume >= 1e3 ? (vp.poc.volume / 1e3).toFixed(1) + 'K' :
+                        vp.poc.volume.toFixed(0);
+      vpHtml = `
+        <div class="chart-info-separator"></div>
+        <div class="chart-info-item">
+          <span class="chart-info-label vp-poc">POC</span>
+          <span class="chart-info-value vp-poc">$${vp.poc.price.toFixed(2)}</span>
+          <span class="chart-info-label" style="font-size:0.6rem;opacity:0.6">(${pocVolStr})</span>
+        </div>
+        <div class="chart-info-item">
+          <span class="chart-info-label vp-vah">VAH</span>
+          <span class="chart-info-value vp-vah">$${vp.vah.price.toFixed(2)}</span>
+        </div>
+        <div class="chart-info-item">
+          <span class="chart-info-label vp-val">VAL</span>
+          <span class="chart-info-value vp-val">$${vp.val.price.toFixed(2)}</span>
+        </div>
+        <div class="chart-info-item">
+          <span class="chart-info-label">VA%</span>
+          <span class="chart-info-value">${vp.valueAreaPct.toFixed(1)}%</span>
+        </div>
+      `;
+    }
+
     bar.innerHTML = `
       <div class="chart-info-item">
         <span class="chart-info-label">${this._currentTicker}</span>
@@ -538,6 +577,7 @@ const Charts = {
         <span class="chart-info-label">Avg Vol</span>
         <span class="chart-info-value">${volumeStr}</span>
       </div>
+      ${vpHtml}
       <div class="chart-info-item" style="margin-left:auto">
         <span class="chart-info-label">${dateStr}</span>
       </div>
@@ -561,6 +601,18 @@ const Charts = {
       <div class="chart-legend-item">
         <span class="chart-legend-swatch" style="background:#2196F3"></span>
         VWAP
+      </div>
+      <div class="chart-legend-item">
+        <span class="chart-legend-swatch" style="background:#FF9800;height:2px;border-top:2px solid #FF9800"></span>
+        POC
+      </div>
+      <div class="chart-legend-item">
+        <span class="chart-legend-swatch" style="background:transparent;border-top:2px dashed #4CAF50"></span>
+        VAH
+      </div>
+      <div class="chart-legend-item">
+        <span class="chart-legend-swatch" style="background:transparent;border-top:2px dashed #F44336"></span>
+        VAL
       </div>
       <div class="chart-legend-item">
         <span class="chart-legend-swatch" style="background:#9C27B0"></span>
@@ -800,6 +852,8 @@ const Charts = {
     this._rsiOverbought = null;
     this._rsiOversold = null;
     this._atrSeries = null;
+    this._clearVpPriceLines();
+    this._vpData = null;
   },
 
   // ── Theme ──
@@ -901,5 +955,143 @@ const Charts = {
     }
 
     return atr;
+  },
+
+  /**
+   * Volume Profile — buckets volume by price level over the last N periods.
+   * Returns { poc: {price, volume}, vah: {price}, val: {price}, valueAreaVolume, totalVolume }
+   * or null if insufficient data.
+   */
+  _calcVolumeProfile(data, period) {
+    const window = data.slice(-period);
+    if (window.length < 10) return null;
+
+    // Determine bucket size (~30 buckets across the price range)
+    let allLow = Infinity, allHigh = -Infinity;
+    for (const d of window) {
+      if (d.low < allLow) allLow = d.low;
+      if (d.high > allHigh) allHigh = d.high;
+    }
+    const range = allHigh - allLow;
+    if (range === 0) return null; // single price level — no distribution
+    const bucketSize = Math.max(0.2, range / 30);
+
+    // Bucket volume by price level (distribute each candle's volume to its midpoint bucket)
+    const buckets = {};
+    let totalVolume = 0;
+
+    for (const d of window) {
+      const vol = d.volume || 0;
+      if (vol === 0) continue;
+      const price = (d.high + d.low) / 2;
+      const bucketIdx = Math.floor((price - allLow) / bucketSize);
+      const key = (bucketIdx * bucketSize + allLow).toFixed(2);
+      buckets[key] = (buckets[key] || 0) + vol;
+      totalVolume += vol;
+    }
+
+    if (totalVolume === 0) return null;
+
+    // Sort buckets by price
+    const sorted = Object.entries(buckets)
+      .map(([price, vol]) => ({ price: parseFloat(price), volume: vol }))
+      .sort((a, b) => a.price - b.price);
+
+    // Find POC — the bucket with highest volume
+    const poc = sorted.reduce((max, b) => b.volume > max.volume ? b : max, sorted[0]);
+
+    // Calculate Value Area (70% of total volume), expanding outward from POC
+    const valueAreaTarget = totalVolume * 0.7;
+    const pocIdx = sorted.indexOf(poc);
+    let cumVol = poc.volume;
+    let upper = pocIdx + 1;
+    let lower = pocIdx - 1;
+
+    while (cumVol < valueAreaTarget && (upper < sorted.length || lower >= 0)) {
+      const upVol = upper < sorted.length ? sorted[upper].volume : 0;
+      const lowVol = lower >= 0 ? sorted[lower].volume : 0;
+      if (upVol >= lowVol && upper < sorted.length) {
+        cumVol += upVol;
+        upper++;
+      } else if (lower >= 0) {
+        cumVol += lowVol;
+        lower--;
+      } else {
+        break;
+      }
+    }
+
+    const vahIdx = Math.min(upper - 1, sorted.length - 1);
+    const valIdx = Math.max(lower + 1, 0);
+
+    return {
+      poc: { price: poc.price, volume: poc.volume },
+      vah: { price: sorted[vahIdx].price },
+      val: { price: sorted[valIdx].price },
+      valueAreaVolume: cumVol,
+      totalVolume: totalVolume,
+      valueAreaPct: totalVolume > 0 ? (cumVol / totalVolume) * 100 : 0,
+    };
+  },
+
+  /**
+   * Render Volume Profile price lines on the candlestick series.
+   */
+  _renderVolumeProfile() {
+    // Clean up old price lines first
+    this._clearVpPriceLines();
+
+    const vp = this._vpData;
+    if (!vp) return;
+
+    const series = this._mainSeries;
+    if (!series) return;
+
+    const isDark = this._getTheme() === 'dark';
+
+    // Theme-aware colors: orange POC (solid), green VAH (dashed), red VAL (dashed)
+    const pocColor = '#FF9800';
+    const vahColor = '#4CAF50';
+    const valColor = '#F44336';
+
+    this._vpPriceLines.push(series.createPriceLine({
+      price: vp.poc.price,
+      color: pocColor,
+      lineWidth: 2,
+      lineStyle: LightweightCharts.LineStyle.Solid,
+      axisLabelVisible: true,
+      title: `POC ${vp.poc.price.toFixed(2)}`,
+    }));
+
+    this._vpPriceLines.push(series.createPriceLine({
+      price: vp.vah.price,
+      color: vahColor,
+      lineWidth: 1,
+      lineStyle: LightweightCharts.LineStyle.Dashed,
+      axisLabelVisible: true,
+      title: `VAH ${vp.vah.price.toFixed(2)}`,
+    }));
+
+    this._vpPriceLines.push(series.createPriceLine({
+      price: vp.val.price,
+      color: valColor,
+      lineWidth: 1,
+      lineStyle: LightweightCharts.LineStyle.Dashed,
+      axisLabelVisible: true,
+      title: `VAL ${vp.val.price.toFixed(2)}`,
+    }));
+  },
+
+  /**
+   * Remove all Volume Profile price lines from the chart.
+   */
+  _clearVpPriceLines() {
+    const series = this._mainSeries;
+    if (series && this._vpPriceLines.length) {
+      for (const line of this._vpPriceLines) {
+        series.removePriceLine(line);
+      }
+    }
+    this._vpPriceLines = [];
   },
 };

@@ -250,6 +250,20 @@
 .chart-info-value.positive { color: var(--green); }
 .chart-info-value.negative { color: var(--red); }
 
+/* ── Volume Profile info bar ── */
+.chart-info-separator {
+  width: 1px;
+  height: 20px;
+  background: var(--border-mid);
+  margin: 0 4px;
+}
+.chart-info-label.vp-poc { color: #FF9800; }
+.chart-info-value.vp-poc { color: #FF9800; }
+.chart-info-label.vp-vah { color: #4CAF50; }
+.chart-info-value.vp-vah { color: #4CAF50; }
+.chart-info-label.vp-val { color: #F44336; }
+.chart-info-value.vp-val { color: #F44336; }
+
 /* ── Legend / Indicator labels ── */
 .chart-legend {
   display: flex;

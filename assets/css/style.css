@@ -1626,6 +1626,69 @@ button, [role="button"], input, select, textarea {
   border-color: var(--accent-border);
 }
 
+/* ── Sector Heatmap (Finviz-style) ── */
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+.heatmap-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  text-decoration: none;
+  transition: transform 0.12s, box-shadow 0.12s;
+  cursor: pointer;
+}
+.heatmap-tile:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-decoration: none;
+}
+.heatmap-tile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+.heatmap-name {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.heatmap-etf {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--bg-inset);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.03em;
+}
+.heatmap-pct {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+.heatmap-count {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+@media (max-width: 640px) {
+  .heatmap-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 6px;
+  }
+  .heatmap-name { font-size: 0.65rem; }
+  .heatmap-pct { font-size: 0.9rem; }
+  .heatmap-tile { padding: 8px 6px; }
+}
+
 /* ─────────────────────────────────────────────────────────────
    SAFE AREA INSETS
 @supports (padding-bottom: env(safe-area-inset-bottom)) {

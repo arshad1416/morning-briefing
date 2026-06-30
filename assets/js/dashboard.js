@@ -22,13 +22,14 @@ const Dashboard = {
   async renderToday(app) {
     app.innerHTML = '<div class="loading">Loading...</div>';
     
-    const [marketData, tradesData, analysisData, gexData, verdictData, redditData] = await Promise.all([
+    const [marketData, tradesData, analysisData, gexData, verdictData, redditData, screenerData] = await Promise.all([
       State.get('latest', '/data/latest.json').catch(() => null),
       State.get('trades', '/data/paper_trades.json').catch(() => null),
       State.get('analysis', '/data/analysis.json').catch(() => null),
       State.get('gex', '/data/gex_data.json').catch(() => null),
       State.get('verdict', '/data/verdict.json').catch(() => null),
       State.get('reddit', '/data/reddit-sentiment.json').catch(() => null),
+      State.get('screener', '/data/screener-data.json').catch(() => null),
     ]);
 
 
@@ -40,6 +41,7 @@ const Dashboard = {
     if (!gexData) fetchErrors.push('GEX/DEX');
     if (!verdictData) fetchErrors.push('Verdict');
     if (!redditData) fetchErrors.push('Reddit sentiment');
+    if (!screenerData) fetchErrors.push('Screener');
 
     let html = '';
     const ms = marketData?.market_summary || {};
@@ -292,6 +294,70 @@ const Dashboard = {
         }
         html += '</div>';
       }
+      html += '</div></div>';
+    }
+
+    // ── 9. SECTOR HEATMAP (Finviz-style) ──
+    if (screenerData?.market_summary?.sector_breakdown) {
+      const sectors = screenerData.market_summary.sector_breakdown;
+      const sectorEtfMap = {
+        'Technology': { ticker: 'XLK', color: '#3b82f6' },
+        'Financial Services': { ticker: 'XLF', color: '#10b981' },
+        'Healthcare': { ticker: 'XLV', color: '#ef4444' },
+        'Consumer Cyclical': { ticker: 'XLY', color: '#f59e0b' },
+        'Consumer Defensive': { ticker: 'XLP', color: '#8b5cf6' },
+        'Energy': { ticker: 'XLE', color: '#f97316' },
+        'Industrials': { ticker: 'XLI', color: '#06b6d4' },
+        'Communication Services': { ticker: 'XLC', color: '#ec4899' },
+        'Utilities': { ticker: 'XLU', color: '#84cc16' },
+        'Real Estate': { ticker: 'XLRE', color: '#a855f7' },
+        'Basic Materials': { ticker: 'XLB', color: '#eab308' },
+      };
+
+      // Build sorted array by avg_change descending
+      const sectorArr = Object.entries(sectors)
+        .map(([name, data]) => ({
+          name,
+          count: data.count,
+          change: data.avg_change || 0,
+          etf: sectorEtfMap[name]?.ticker || '',
+        }))
+        .sort((a, b) => b.change - a.change);
+
+      // Determine intensity bounds
+      const maxPos = Math.max(0.01, ...sectorArr.filter(s => s.change > 0).map(s => s.change));
+      const maxNeg = Math.min(-0.01, ...sectorArr.filter(s => s.change < 0).map(s => s.change));
+
+      html += '<div class="today-section" style="margin-top:16px">';
+      html += '<div class="today-section-title">Sector Heatmap</div>';
+      html += '<div class="heatmap-grid">';
+
+      sectorArr.forEach(s => {
+        const isPositive = s.change >= 0;
+        // Intensity: 0..1 scale
+        const intensity = isPositive
+          ? Math.min(1, s.change / maxPos)
+          : Math.min(1, Math.abs(s.change) / Math.abs(maxNeg));
+        const tileBg = isPositive
+          ? `rgba(76,175,80,${0.12 + intensity * 0.7})`
+          : `rgba(239,83,80,${0.12 + intensity * 0.7})`;
+        const borderColor = isPositive
+          ? `rgba(76,175,80,${0.25 + intensity * 0.5})`
+          : `rgba(239,83,80,${0.25 + intensity * 0.5})`;
+        const textColor = isPositive ? 'var(--green)' : 'var(--red)';
+        const etfLabel = s.etf ? `<span class="heatmap-etf">${Utils.esc(s.etf)}</span>` : '';
+
+        const href = s.etf ? `#/screener?filter=${Utils.esc(s.etf)}` : '#';
+        html += `<a href="${href}" class="heatmap-tile" style="background:${tileBg};border-color:${borderColor}">
+          <div class="heatmap-tile-header">
+            <span class="heatmap-name">${Utils.esc(s.name)}</span>
+            ${etfLabel}
+          </div>
+          <div class="heatmap-pct ${isPositive ? 'positive' : 'negative'}" style="color:${textColor}">${Utils.formatPct(s.change)}</div>
+          <div class="heatmap-count">${s.count} stocks</div>
+        </a>`;
+      });
+
       html += '</div></div>';
     }
 
