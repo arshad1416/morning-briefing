@@ -31,7 +31,8 @@
 }
 
 .filter-group select,
-.filter-group input[type="text"] {
+.filter-group input[type="text"],
+.filter-group input[type="number"] {
   background: var(--bg-inset);
   border: 1px solid var(--border-dim);
   border-radius: var(--radius-sm);
@@ -106,4 +107,24 @@
   .filter-group {
     min-width: 100%;
   }
+}
+
+/* Sortable column headers */
+th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.12s;
+}
+th.sortable:hover {
+  background: var(--bg-active);
+}
+.sort-indicator {
+  display: inline-block;
+  margin-left: 3px;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+}
+th.sortable .sort-indicator::after {
+  content: "⇅";
+  opacity: 0.4;
 }

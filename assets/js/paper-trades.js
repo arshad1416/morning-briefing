@@ -2,6 +2,7 @@
  * Paper Trades — Live open positions, strategy performance, backtest accuracy.
  * Shows V1-V100 backtest results with live trade tracking.
  * Includes clickable strategy names with explanation modals.
+ * + IBKR Real Portfolio tab alongside the paper trading tab.
  */
 const PaperTrades = {
   // Strategy explanations in plain English
@@ -160,6 +161,118 @@ const PaperTrades = {
     document.addEventListener('keydown', escHandler);
   },
 
+  /** Render IBKR portfolio data into the ibkr-content container */
+  async _renderIBKR() {
+    const container = document.getElementById('ibkr-content');
+    if (!container) return;
+
+    container.innerHTML = '<div class="loading">Loading IBKR portfolio...</div>';
+
+    const [account, positions, trades] = await Promise.all([
+      Utils.fetchJSON('/data/ibkr_account.json').catch(() => null),
+      Utils.fetchJSON('/data/ibkr_positions.json').catch(() => null),
+      Utils.fetchJSON('/data/ibkr_trades.json').catch(() => null),
+    ]);
+
+    if (!account && !positions && !trades) {
+      container.innerHTML = '<div class="card" style="text-align:center;padding:32px;color:var(--text-muted)">No IBKR data available yet. The portfolio agent runs daily at 07:12 ET.</div>';
+      return;
+    }
+
+    let html = '';
+
+    // ── Account Summary Card ──
+    if (account?.accounts?.length) {
+      const s = account.accounts[0].summary || {};
+      const currency = s.currency || 'USD';
+      html += '<div class="card" style="margin-bottom:16px">';
+      html += '<div class="card-title">Account Summary (' + Utils.esc(currency) + ')</div>';
+      html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px">';
+      const items = [
+        { label: 'Net Liquidation', value: s.net_liquidation, fmt: 'currency' },
+        { label: 'Buying Power', value: s.buying_power, fmt: 'currency' },
+        { label: 'Cash Balance', value: s.cash_balance, fmt: 'currency' },
+        { label: 'Unrealized P&L', value: s.unrealized_pnl, fmt: 'pnl' },
+        { label: 'Realized P&L', value: s.realized_pnl, fmt: 'pnl' },
+      ];
+      items.forEach(item => {
+        const val = item.value;
+        const isPnl = item.fmt === 'pnl';
+        const cls = isPnl ? (val >= 0 ? 'positive' : 'negative') : '';
+        const sign = isPnl && val >= 0 ? '+' : '';
+        const formatted = val != null ? '$' + sign + Utils.formatPrice(Math.abs(val)) : '—';
+        html += '<div style="text-align:center">';
+        html += '<div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">' + item.label + '</div>';
+        html += '<div style="font-size:1.1rem;font-weight:700;margin-top:4px" class="' + cls + '">' + formatted + '</div>';
+        html += '</div>';
+      });
+      html += '</div></div>';
+    } else if (account) {
+      // Fallback: account exists but no accounts array — show raw keys
+      html += '<div class="card" style="margin-bottom:16px">';
+      html += '<div class="card-title">Account Summary</div>';
+      html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px">';
+      Object.entries(account).forEach(([key, val]) => {
+        if (typeof val === 'object') return;
+        const display = typeof val === 'number' ? '$' + Utils.formatPrice(Math.abs(val)) + (val < 0 ? ' (neg)' : '') : String(val);
+        html += '<div style="text-align:center">';
+        html += '<div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">' + key.replace(/_/g, ' ') + '</div>';
+        html += '<div style="font-size:1rem;font-weight:600;margin-top:4px">' + display + '</div>';
+        html += '</div>';
+      });
+      html += '</div></div>';
+    }
+
+    // ── Positions Table ──
+    if (positions?.positions?.length) {
+      html += '<h3 style="font-size:0.9rem;font-weight:700;margin:16px 0 8px;color:var(--text-primary)">Open Positions (' + positions.positions.length + ')</h3>';
+      html += '<div class="card table-wrap"><table><thead><tr>';
+      html += '<th>Ticker</th><th>Qty</th><th>Market Price</th><th>Market Value</th><th>Unrealized P&L</th><th>Cost Basis</th><th>Currency</th>';
+      html += '</tr></thead><tbody>';
+      positions.positions.forEach(p => {
+        const pnl = p.unrealized_pnl || 0;
+        const pnlCls = pnl >= 0 ? 'positive' : 'negative';
+        html += '<tr>';
+        html += '<td><strong>' + Utils.esc(p.ticker) + '</strong></td>';
+        html += '<td>' + (p.quantity != null ? p.quantity : '—') + '</td>';
+        html += '<td>' + (p.market_price != null ? '$' + Utils.formatPrice(p.market_price) : '—') + '</td>';
+        html += '<td>' + (p.market_value != null ? '$' + Utils.formatPrice(p.market_value) : '—') + '</td>';
+        html += '<td class="' + pnlCls + '">' + (p.unrealized_pnl != null ? (pnl >= 0 ? '+' : '') + '$' + Utils.formatPrice(Math.abs(pnl)) : '—') + '</td>';
+        html += '<td>' + (p.cost_basis != null ? '$' + Utils.formatPrice(p.cost_basis) : '—') + '</td>';
+        html += '<td>' + Utils.esc(p.currency || '—') + '</td>';
+        html += '</tr>';
+      });
+      html += '</tbody></table></div>';
+    } else {
+      html += '<div class="card" style="text-align:center;padding:16px;color:var(--text-muted);margin-top:12px">No open positions.</div>';
+    }
+
+    // ── Recent Trades ──
+    if (trades?.trades?.length) {
+      html += '<h3 style="font-size:0.9rem;font-weight:700;margin:16px 0 8px;color:var(--text-primary)">Recent Trades (Last ' + Math.min(trades.trades.length, 10) + ')</h3>';
+      html += '<div class="card table-wrap"><table><thead><tr>';
+      html += '<th>Ticker</th><th>Direction</th><th>Qty</th><th>Price</th><th>Date</th><th>P&L</th>';
+      html += '</tr></thead><tbody>';
+      const recent = trades.trades.slice(-10).reverse();
+      recent.forEach(t => {
+        const dirCls = t.direction === 'BUY' ? 'badge-green' : 'badge-red';
+        const pnl = t.pnl || 0;
+        const pnlCls = pnl >= 0 ? 'positive' : 'negative';
+        html += '<tr>';
+        html += '<td><strong>' + Utils.esc(t.ticker) + '</strong></td>';
+        html += '<td><span class="badge ' + dirCls + '" style="font-size:0.65rem">' + Utils.esc(t.direction) + '</span></td>';
+        html += '<td>' + (t.quantity != null ? t.quantity : '—') + '</td>';
+        html += '<td>' + (t.price != null ? '$' + Utils.formatPrice(t.price) : '—') + '</td>';
+        html += '<td style="font-size:0.8rem">' + Utils.esc(t.trade_date || '—') + '</td>';
+        html += '<td class="' + pnlCls + '">' + (t.pnl != null ? (pnl >= 0 ? '+' : '') + '$' + Utils.formatPrice(Math.abs(pnl)) : '—') + '</td>';
+        html += '</tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+
+    container.innerHTML = html;
+  },
+
   async render(app) {
     app.innerHTML = '<div class="loading">Loading trade data...</div>';
     const [data, accuracy] = await Promise.all([
@@ -167,7 +280,17 @@ const PaperTrades = {
       Utils.fetchJSON('/data/accuracy.json')
     ]);
 
-    let html = '<div class="section"><h2 class="section-title">📊 Trading Performance</h2>';
+    let html = '<div class="section">';
+    html += '<h2 class="section-title">📊 Trading Performance</h2>';
+
+    // ── TAB NAVIGATION ──
+    html += '<div class="research-tabs" style="display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap">';
+    html += '<button class="research-tab active" data-tab="paper">📝 Paper Trading</button>';
+    html += '<button class="research-tab" data-tab="ibkr">🏦 IBKR Real Portfolio</button>';
+    html += '</div>';
+
+    // ── PAPER TRADING TAB ──
+    html += '<div class="research-pane" id="tab-paper">';
 
     // ── Portfolio Summary ──
     if (data?.portfolio) {
@@ -468,7 +591,15 @@ const PaperTrades = {
       html += '</tbody></table></div>';
     }
 
-    html += '</div>';
+    // Close paper tab pane
+    html += '</div>'; // #tab-paper
+
+    // ── IBKR REAL PORTFOLIO TAB ──
+    html += '<div class="research-pane" id="tab-ibkr" style="display:none">';
+    html += '<div id="ibkr-content"><div class="loading">Loading IBKR portfolio...</div></div>';
+    html += '</div>'; // #tab-ibkr
+
+    html += '</div>'; // .section
 
     // Modal for trade reason
     html += '<div id="trade-modal" class="modal-overlay" style="display:none">';
@@ -479,12 +610,27 @@ const PaperTrades = {
 
     app.innerHTML = html;
 
+    // ── Wire up tab switching ──
+    app.querySelectorAll('.research-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        app.querySelectorAll('.research-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        app.querySelectorAll('.research-pane').forEach(p => p.style.display = 'none');
+        const pane = document.getElementById('tab-' + this.dataset.tab);
+        if (pane) pane.style.display = 'block';
+        // Lazy-load IBKR data when the tab is first clicked
+        if (this.dataset.tab === 'ibkr') {
+          PaperTrades._renderIBKR();
+        }
+      });
+    });
+
     // ── Wire up strategy link clicks ──
     app.querySelectorAll('.strategy-link').forEach(el => {
       el.addEventListener('click', (e) => {
         e.preventDefault();
         const strategy = el.dataset.strategy || el.textContent.trim();
-        this._showModal(strategy);
+        PaperTrades._showModal(strategy);
       });
     });
 
@@ -543,7 +689,7 @@ const PaperTrades = {
         const cur = localStorage.getItem('preferredCurrency') || 'native';
         const next = cur === 'native' ? 'USD' : cur === 'USD' ? 'CAD' : 'native';
         localStorage.setItem('preferredCurrency', next);
-        this.render(app); // re-render with new currency
+        PaperTrades.render(app); // re-render with new currency
       });
     }
   }

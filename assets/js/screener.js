@@ -151,12 +151,29 @@ const Screener = {
       '</div>' +
 
       '<div class="filter-group">' +
-        '<label>Min Score</label>' +
-        '<select id="filter-score">' +
-          '<option value="0">Any Score</option>' +
-          '<option value="7">7+ (Strong)</option>' +
-          '<option value="5">5+ (Positive)</option>' +
-          '<option value="3">3+ (Weak)</option>' +
+        '<label>Score Min</label>' +
+        '<input type="number" id="filter-score-min" min="0" max="10" step="0.1" value="1" style="width:70px" />' +
+      '</div>' +
+      '<div class="filter-group">' +
+        '<label>Score Max</label>' +
+        '<input type="number" id="filter-score-max" min="0" max="10" step="0.1" value="10" style="width:70px" />' +
+      '</div>' +
+      '<div class="filter-group">' +
+        '<label>Strategy</label>' +
+        '<select id="filter-strategy">' +
+          '<option value="">All</option>' +
+          '<option value="momentum">Momentum</option>' +
+          '<option value="breakout">Breakout</option>' +
+          '<option value="mean_reversion">Mean Reversion</option>' +
+          '<option value="support_resistance">Support/Resistance</option>' +
+        '</select>' +
+      '</div>' +
+      '<div class="filter-group">' +
+        '<label>Direction</label>' +
+        '<select id="filter-direction">' +
+          '<option value="">All</option>' +
+          '<option value="long">Long</option>' +
+          '<option value="short">Short</option>' +
         '</select>' +
       '</div>' +
 
@@ -173,6 +190,10 @@ const Screener = {
           '<option value="mcap-asc">Market Cap (Small→Large)</option>' +
           '<option value="pe-asc">PE (Low→High)</option>' +
           '<option value="pe-desc">PE (High→Low)</option>' +
+          '<option value="ticker-asc">Ticker (A→Z)</option>' +
+          '<option value="ticker-desc">Ticker (Z→A)</option>' +
+          '<option value="volume_ratio-asc">Vol Ratio (Low→High)</option>' +
+          '<option value="volume_ratio-desc">Vol Ratio (High→Low)</option>' +
         '</select>' +
       '</div>' +
 
@@ -188,17 +209,17 @@ const Screener = {
   /** Table with sortable columns */
   _buildTable(tickers) {
     return '<div class="section"><div class="card table-wrap">' +
-      '<table>' +
+      '<table id="screener-table">' +
         '<thead><tr>' +
-          '<th>Ticker</th>' +
+          '<th class="sortable" data-sort="ticker" style="cursor:pointer">Ticker <span class="sort-indicator"></span></th>' +
           '<th>Price</th>' +
-          '<th>Chg%</th>' +
-          '<th>Score</th>' +
+          '<th class="sortable" data-sort="change" style="cursor:pointer">Chg% <span class="sort-indicator"></span></th>' +
+          '<th class="sortable" data-sort="score" style="cursor:pointer">Score <span class="sort-indicator"></span></th>' +
           '<th>PE</th>' +
           '<th>Mkt Cap</th>' +
           '<th>Div%</th>' +
-          '<th>RSI</th>' +
-          '<th>Vol Ratio</th>' +
+          '<th class="sortable" data-sort="rsi" style="cursor:pointer">RSI <span class="sort-indicator"></span></th>' +
+          '<th class="sortable" data-sort="volume_ratio" style="cursor:pointer">Vol Ratio <span class="sort-indicator"></span></th>' +
           '<th>Sector</th>' +
           '<th>Signals</th>' +
         '</tr></thead>' +
@@ -221,7 +242,8 @@ const Screener = {
   _wireFilters(allTickers) {
     const filterIds = ['filter-pe', 'filter-mcap', 'filter-div', 'filter-rsi',
                        'filter-universe', 'filter-sector', 'filter-volume', 'filter-52w', 'filter-sma',
-                       'filter-score', 'filter-sort', 'filter-search'];
+                       'filter-strategy', 'filter-direction', 'filter-score-min', 'filter-score-max',
+                       'filter-sort', 'filter-search'];
 
     // Attach change/input handlers
     filterIds.forEach(id => {
@@ -230,7 +252,31 @@ const Screener = {
       el.addEventListener(id === 'filter-search' ? 'input' : 'change', () => {
         this._applyFilters(allTickers);
       });
+      // Also listen for 'input' on number fields for real-time filtering
+      if (el.type === 'number') {
+        el.addEventListener('input', () => {
+          this._applyFilters(allTickers);
+        });
+      }
     });
+
+    // Clickable sort headers
+    const table = document.getElementById('screener-table');
+    if (table) {
+      table.querySelectorAll('.sortable').forEach(th => {
+        th.addEventListener('click', () => {
+          const sortKey = th.dataset.sort;
+          const currentSort = document.getElementById('filter-sort')?.value || '';
+          const isAsc = currentSort === sortKey + '-asc';
+          const newSort = isAsc ? sortKey + '-desc' : sortKey + '-asc';
+          const sortEl = document.getElementById('filter-sort');
+          if (sortEl) {
+            sortEl.value = newSort;
+            this._applyFilters(allTickers);
+          }
+        });
+      });
+    }
 
     // Reset button
     const resetBtn = document.getElementById('filter-reset');
@@ -238,7 +284,10 @@ const Screener = {
       resetBtn.addEventListener('click', () => {
         filterIds.forEach(id => {
           const el = document.getElementById(id);
-          if (el) el.value = '';
+          if (el) {
+            if (el.type === 'number') el.value = el.id === 'filter-score-min' ? '1' : el.id === 'filter-score-max' ? '10' : '';
+            else el.value = '';
+          }
         });
         document.getElementById('filter-search') && (document.getElementById('filter-search').value = '');
         this._applyFilters(allTickers);
@@ -261,9 +310,14 @@ const Screener = {
     const volFilter    = val('filter-volume');
     const w52Filter    = val('filter-52w');
     const smaFilter    = val('filter-sma');
-    const scoreFilter  = parseInt(val('filter-score')) || 0;
+    const strategyFilter = val('filter-strategy').toLowerCase().trim();
+    const directionFilter = val('filter-direction').toLowerCase().trim();
     const sortBy       = val('filter-sort') || 'score-desc';
     const search       = val('filter-search').toLowerCase().trim();
+
+    // Score range
+    const scoreMin = parseFloat(document.getElementById('filter-score-min')?.value) || 0;
+    const scoreMax = parseFloat(document.getElementById('filter-score-max')?.value) || 10;
 
     // Helper: test a range filter like "0-15" or "50-"
     const inRange = (value, filter) => {
@@ -310,8 +364,12 @@ const Screener = {
         }
       }
 
-      // Min Score
-      if (scoreFilter && (t.score || 0) < scoreFilter) return false;
+      // Min/Max Score range
+      const tScore = t.score || 0;
+      if (tScore < scoreMin || tScore > scoreMax) return false;
+
+      // Strategy filter
+      if (strategyFilter && (t.signal || '').toLowerCase().replace(/[^a-z_]/g, '') !== strategyFilter) return false;
 
       // Market cap filter
       if (mcapFilter) {
@@ -338,6 +396,9 @@ const Screener = {
         if (volFilter === '1.5x' && vr < 1.5) return false;
         if (volFilter === '2x' && vr < 2) return false;
       }
+
+      // Direction filter
+      if (directionFilter && (t.direction || '').toLowerCase() !== directionFilter) return false;
 
       // 52-week position
       if (w52Filter) {
@@ -373,6 +434,10 @@ const Screener = {
         case 'mcap-asc':    return (a.marketCap || 0) - (b.marketCap || 0);
         case 'pe-asc':      return (a.pe || Infinity) - (b.pe || Infinity);
         case 'pe-desc':     return (b.pe || 0) - (a.pe || 0);
+        case 'ticker-asc':  return (a.ticker || '').localeCompare(b.ticker || '');
+        case 'ticker-desc': return (b.ticker || '').localeCompare(a.ticker || '');
+        case 'volume_ratio-asc':  return (a.volume_ratio != null ? a.volume_ratio : (a.vol_ratio != null ? a.vol_ratio : 0)) - (b.volume_ratio != null ? b.volume_ratio : (b.vol_ratio != null ? b.vol_ratio : 0));
+        case 'volume_ratio-desc': return (b.volume_ratio != null ? b.volume_ratio : (b.vol_ratio != null ? b.vol_ratio : 0)) - (a.volume_ratio != null ? a.volume_ratio : (a.vol_ratio != null ? a.vol_ratio : 0));
         default: return 0;
       }
     });
@@ -390,7 +455,7 @@ const Screener = {
     }
   },
 
-  /** Format a single ticker row */
+  /** Format a single ticker row with color-coded cells */
   _tickerRow(t) {
     const cls = Utils.changeClass(t.change_pct);
     const mcap = t.marketCap ? Utils.formatPrice(t.marketCap / 1e9, 1) + 'B' : '—';
@@ -401,16 +466,38 @@ const Screener = {
       return '<span class="badge ' + bg + '" style="margin:1px">' + s.replace(/_/g, ' ') + '</span>';
     }).join(' ');
 
+    // Score: green gradient (higher = darker green)
+    const score = t.score || 0;
+    const scoreOpacity = score / 10;
+    const scoreStyle = 'background:rgba(76,175,80,' + (0.12 + scoreOpacity * 0.35) + ');font-weight:700;border-radius:4px;padding:2px 6px';
+
+    // RSI: red when oversold (<30), green when overbought (>70)
+    let rsiCell = '<td>' + (t.rsi != null ? t.rsi.toFixed(1) : '—') + '</td>';
+    if (t.rsi != null) {
+      if (t.rsi < 30) {
+        rsiCell = '<td style="color:var(--red);font-weight:700;background:rgba(239,83,80,0.12);border-radius:4px">' + t.rsi.toFixed(1) + '</td>';
+      } else if (t.rsi > 70) {
+        rsiCell = '<td style="color:var(--green);font-weight:700;background:rgba(76,175,80,0.12);border-radius:4px">' + t.rsi.toFixed(1) + '</td>';
+      }
+    }
+
+    // Volume ratio: blue highlight when > 2x average
+    const volRatio = t.volume_ratio != null ? t.volume_ratio : (t.vol_ratio != null ? t.vol_ratio : null);
+    let volCell = '<td>' + (volRatio != null ? volRatio.toFixed(2) + 'x' : '—') + '</td>';
+    if (volRatio != null && volRatio > 2) {
+      volCell = '<td style="color:var(--blue);font-weight:700;background:rgba(124,185,244,0.12);border-radius:4px">' + volRatio.toFixed(2) + 'x</td>';
+    }
+
     return '<tr>' +
       '<td><a href="#/ticker/' + t.ticker + '" class="archive-date">' + t.ticker + '</a></td>' +
       '<td>' + Utils.formatPrice(t.price) + '</td>' +
       '<td class="' + cls + '">' + Utils.formatPct(t.change_pct) + '</td>' +
-      '<td>' + Utils.scoreBadge(t.score) + '</td>' +
+      '<td style="text-align:center"><span style="' + scoreStyle + '">' + Utils.scoreBadge(t.score) + '</span></td>' +
       '<td>' + (t.pe != null ? t.pe.toFixed(1) : '—') + '</td>' +
       '<td style="font-size:0.8rem">' + mcap + '</td>' +
       '<td>' + (t.divYield != null && t.divYield > 0 ? t.divYield.toFixed(2) + '%' : '—') + '</td>' +
-      '<td>' + (t.rsi != null ? t.rsi.toFixed(1) : '—') + '</td>' +
-      '<td>' + (t.volume_ratio != null ? t.volume_ratio.toFixed(2) + 'x' : t.vol_ratio != null ? t.vol_ratio.toFixed(2) + 'x' : '—') + '</td>' +
+      rsiCell +
+      volCell +
       '<td style="font-size:0.75rem;color:var(--text-muted)">' + (t.sector ? t.sector.substring(0, 12) : '—') + '</td>' +
       '<td style="max-width:200px">' + (signals || '—') + '</td>' +
     '</tr>';
