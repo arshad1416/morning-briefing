@@ -363,6 +363,12 @@ const Dashboard = {
 
     app.innerHTML = html;
 
+    // ── Staggered section entrance ──
+    this._animateSections();
+
+    // ── Number counting animation for key stats ──
+    this._animateCountUp();
+
     // Start listening for real-time price updates
     this._listenForRealtime();
   },
@@ -389,6 +395,12 @@ const Dashboard = {
             const arrowIdx = oldText.indexOf('▲') >= 0 ? oldText.indexOf('▲') : oldText.indexOf('▼');
             const suffix = arrowIdx >= 0 ? oldText.substring(arrowIdx) : '';
             vixEl.innerHTML = vixStr + ' ' + suffix;
+            // Price pulse on VIX change
+            vixEl.classList.remove('price-pulse-green', 'price-pulse-red');
+            void vixEl.offsetWidth; // Force reflow
+            if (marketSummary.vix_change_pct != null) {
+              vixEl.classList.add(marketSummary.vix_change_pct >= 0 ? 'price-pulse-red' : 'price-pulse-green');
+            }
           }
         }
       }
@@ -405,6 +417,10 @@ const Dashboard = {
               if (val) {
                 val.textContent = (idx.change_pct >= 0 ? '+' : '') + idx.change_pct.toFixed(2) + '%';
                 val.className = 'today-strip-val ' + (idx.change_pct >= 0 ? 'positive' : 'negative');
+                // Price pulse
+                val.classList.remove('price-pulse-green', 'price-pulse-red');
+                void val.offsetWidth;
+                val.classList.add(idx.change_pct >= 0 ? 'price-pulse-green' : 'price-pulse-red');
               }
             }
           });
@@ -424,6 +440,98 @@ const Dashboard = {
     };
 
     document.addEventListener('price-update', this._realtimeHandler);
+  },
+
+  /** Animate sections in with staggered entrance */
+  _animateSections() {
+    var sections = document.querySelectorAll('.today-section, .today-regime, .today-pnl, .stale-banner, .today-strip, .today-signal-row, .today-flow-row, .today-headlines, .heatmap-grid, .overnight-card');
+    sections.forEach(function (el, i) {
+      el.classList.add('section-enter');
+    });
+
+    // Convert grid-4/grid-3/grid-2 with .card children to staggered cards
+    var grids = document.querySelectorAll('.grid-4, .grid-3, .grid-2');
+    grids.forEach(function (g) {
+      if (g.querySelectorAll(':scope > .card').length > 1) {
+        g.classList.add('stagger-cards');
+      }
+    });
+  },
+
+  /** Animate number counting for key Dashboard stats */
+  _animateCountUp() {
+    // Find numeric values in P&L, equity, index prices, etc.
+    var targets = [];
+
+    // Day P&L value
+    var pnlVal = document.querySelector('.today-pnl-val');
+    if (pnlVal) targets.push(pnlVal);
+
+    // Equity/cash text
+    var pnlCash = document.querySelector('.today-pnl-cash');
+    if (pnlCash) targets.push(pnlCash);
+
+    // Index prices
+    document.querySelectorAll('.index-price').forEach(function (el) {
+      targets.push(el);
+    });
+
+    // GEX/DEX/VEX values
+    document.querySelectorAll('.card .card-title + div').forEach(function (el) {
+      // Only target font-mono number values
+      if (el.closest('.today-section')) {
+        targets.push(el);
+      }
+    });
+
+    targets.forEach(function (el) {
+      var text = el.textContent || '';
+      // Find the first number in the text
+      var match = text.match(/([\+\-]?\$?[\d,]+\.?\d*)/);
+      if (!match) return;
+      var numStr = match[1];
+      var prefix = text.substring(0, match.index);
+      var suffix = text.substring(match.index + numStr.length);
+      var rawNum = parseFloat(numStr.replace(/[\$,]/g, ''));
+      if (isNaN(rawNum) || rawNum === 0) return;
+      if (Math.abs(rawNum) < 10 || Math.abs(rawNum) > 999999999) return;
+
+      // Save original text to restore after animation
+      var originalText = text;
+      var duration = 400;
+      var startTime = Date.now();
+      var startVal = 0;
+
+      function formatNum(val) {
+        var absVal = Math.abs(val);
+        var sign = val < 0 ? '-' : '';
+        var formatted = absVal.toFixed(2);
+        // Match decimal places from original
+        var origParts = numStr.match(/\.(\d+)/);
+        if (origParts) {
+          formatted = absVal.toFixed(origParts[1].length);
+        } else if (numStr.indexOf('.') === -1) {
+          formatted = absVal.toFixed(0);
+        }
+        return (numStr.indexOf('$') !== -1 ? sign + '$' : sign) + formatted;
+      }
+
+      function tick() {
+        var elapsed = Date.now() - startTime;
+        var progress = Math.min(1, elapsed / duration);
+        // Exponential ease-out (quartic)
+        var eased = 1 - Math.pow(1 - progress, 4);
+        var current = startVal + (rawNum - startVal) * eased;
+        el.textContent = prefix + formatNum(current) + suffix;
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          // Restore original text to preserve formatting
+          el.textContent = originalText;
+        }
+      }
+      requestAnimationFrame(tick);
+    });
   },
 
   _regimeBadge(vix, ms) {

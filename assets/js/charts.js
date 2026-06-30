@@ -190,6 +190,12 @@ const Charts = {
       // Render charts
       this._renderCharts(ohlcv);
 
+      // Mark indicator panes as loaded for fade-in animation
+      var rsiPane = document.getElementById('rsi-chart-container');
+      var atrPane = document.getElementById('atr-chart-container');
+      if (rsiPane) rsiPane.classList.add('loaded');
+      if (atrPane) atrPane.classList.add('loaded');
+
       // Wire drawing tools and render saved annotations
       this._wireDrawingTools();
       this._renderAnnotations();

@@ -1,0 +1,179 @@
+/* ==============================================================
+   ANIMATIONS — MapleGamma Dashboard
+   Exponential easing, no bounce/elastic, reduced-motion fallbacks.
+   Only transforms + opacity — never layout properties.
+   ============================================================== */
+
+/* ── Custom Easing Shortcut ─────────────────────────────── */
+/* Exponential ease-out (quint) — smooth deceleration */
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 300ms;
+  --duration-slow: 400ms;
+}
+
+/* ── Keyframes ──────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+@keyframes countUp {
+  /* count-up is driven by JS, this is a placeholder */
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+
+/* ── Utility Classes ────────────────────────────────────── */
+
+/* Page-level fade-in on route navigation */
+.page-enter {
+  animation: fadeIn var(--duration-fast) var(--ease-out-expo) both;
+}
+
+/* Staggered card entrance — add .stagger-enter to parent,
+   then each .stagger-item animates in sequence */
+.stagger-enter > .stagger-item {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: slideUp var(--duration-normal) var(--ease-out-expo) forwards;
+}
+.stagger-enter > .stagger-item:nth-child(1)  { animation-delay: 0.00s; }
+.stagger-enter > .stagger-item:nth-child(2)  { animation-delay: 0.08s; }
+.stagger-enter > .stagger-item:nth-child(3)  { animation-delay: 0.16s; }
+.stagger-enter > .stagger-item:nth-child(4)  { animation-delay: 0.24s; }
+.stagger-enter > .stagger-item:nth-child(5)  { animation-delay: 0.32s; }
+.stagger-enter > .stagger-item:nth-child(6)  { animation-delay: 0.40s; }
+.stagger-enter > .stagger-item:nth-child(7)  { animation-delay: 0.48s; }
+.stagger-enter > .stagger-item:nth-child(8)  { animation-delay: 0.56s; }
+.stagger-enter > .stagger-item:nth-child(9)  { animation-delay: 0.64s; }
+.stagger-enter > .stagger-item:nth-child(10) { animation-delay: 0.72s; }
+.stagger-enter > .stagger-item:nth-child(11) { animation-delay: 0.80s; }
+.stagger-enter > .stagger-item:nth-child(12) { animation-delay: 0.88s; }
+
+/* Simple fade-in for individual elements */
+.fade-in {
+  animation: fadeIn var(--duration-normal) var(--ease-out-expo) both;
+}
+
+/* Slide-up entrance for individual elements */
+.slide-up {
+  animation: slideUp var(--duration-normal) var(--ease-out-expo) both;
+}
+
+/* Shimmer loading placeholder */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 0%,
+    var(--bg-active) 40%,
+    var(--bg-card) 80%
+  );
+  background-size: 400px 100%;
+  animation: shimmer 1.8s var(--ease-out-expo) infinite;
+  border-radius: var(--radius-sm, 4px);
+}
+
+/* Price pulse — attach to elements whose value just changed */
+.price-pulse-green {
+  animation: pulse var(--duration-fast) var(--ease-out-expo);
+  color: var(--green) !important;
+}
+.price-pulse-red {
+  animation: pulse var(--duration-fast) var(--ease-out-expo);
+  color: var(--red) !important;
+}
+
+/* Staggered grid cards — auto-detect child cards */
+.stagger-cards > .card {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: slideUp var(--duration-normal) var(--ease-out-expo) forwards;
+}
+.stagger-cards > .card:nth-child(1)  { animation-delay: 0.00s; }
+.stagger-cards > .card:nth-child(2)  { animation-delay: 0.08s; }
+.stagger-cards > .card:nth-child(3)  { animation-delay: 0.16s; }
+.stagger-cards > .card:nth-child(4)  { animation-delay: 0.24s; }
+.stagger-cards > .card:nth-child(5)  { animation-delay: 0.32s; }
+.stagger-cards > .card:nth-child(6)  { animation-delay: 0.40s; }
+.stagger-cards > .card:nth-child(7)  { animation-delay: 0.48s; }
+.stagger-cards > .card:nth-child(8)  { animation-delay: 0.56s; }
+.stagger-cards > .card:nth-child(9)  { animation-delay: 0.64s; }
+.stagger-cards > .card:nth-child(10) { animation-delay: 0.72s; }
+.stagger-cards > .card:nth-child(11) { animation-delay: 0.80s; }
+.stagger-cards > .card:nth-child(12) { animation-delay: 0.88s; }
+
+/* Section entrance (section fades + slides up) */
+.section-enter {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: slideUp var(--duration-slow) var(--ease-out-expo) forwards;
+}
+.section-enter:nth-child(1)  { animation-delay: 0.00s; }
+.section-enter:nth-child(2)  { animation-delay: 0.10s; }
+.section-enter:nth-child(3)  { animation-delay: 0.20s; }
+.section-enter:nth-child(4)  { animation-delay: 0.30s; }
+.section-enter:nth-child(5)  { animation-delay: 0.40s; }
+.section-enter:nth-child(6)  { animation-delay: 0.50s; }
+.section-enter:nth-child(7)  { animation-delay: 0.60s; }
+.section-enter:nth-child(8)  { animation-delay: 0.70s; }
+.section-enter:nth-child(9)  { animation-delay: 0.80s; }
+.section-enter:nth-child(10) { animation-delay: 0.90s; }
+
+/* ── Reduced Motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .stagger-enter > .stagger-item,
+  .stagger-cards > .card,
+  .section-enter,
+  .page-enter,
+  .slide-up,
+  .fade-in {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .shimmer {
+    background: var(--bg-card);
+    animation: none;
+  }
+
+  .price-pulse-green,
+  .price-pulse-red {
+    animation: none;
+  }
+
+  .chart-card {
+    animation: none;
+  }
+
+  .indicator-pane-container {
+    opacity: 1;
+    transition: none;
+  }
+}

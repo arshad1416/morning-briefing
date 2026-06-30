@@ -404,6 +404,50 @@ main {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* Shimmer loading placeholder for content areas */
+.shimmer-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+}
+
+.shimmer-placeholder .shimmer-line {
+  height: 14px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 0%,
+    var(--bg-active) 40%,
+    var(--bg-card) 80%
+  );
+  background-size: 400px 100%;
+  animation: shimmer 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  border-radius: var(--radius-sm, 4px);
+}
+
+.shimmer-placeholder .shimmer-line:nth-child(1) { width: 75%; }
+.shimmer-placeholder .shimmer-line:nth-child(2) { width: 60%; }
+.shimmer-placeholder .shimmer-line:nth-child(3) { width: 85%; }
+.shimmer-placeholder .shimmer-line:nth-child(4) { width: 45%; }
+.shimmer-placeholder .shimmer-line:nth-child(5) { width: 70%; }
+.shimmer-placeholder .shimmer-card {
+  height: 120px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 0%,
+    var(--bg-active) 40%,
+    var(--bg-card) 80%
+  );
+  background-size: 400px 100%;
+  animation: shimmer 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  border-radius: var(--card-radius, 10px);
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
 /* ─────────────────────────────────────────────────────────────
    SECTION HEADERS
    ───────────────────────────────────────────────────────────── */
@@ -537,6 +581,7 @@ td {
   border-bottom: 1px solid var(--border-subtle);
   font-size: var(--text-base);   /* 15px */
   color: var(--text-body);       /* dark: 8.4:1 ✅; light: 14.1:1 ✅ */
+  transition: background var(--duration-fast, 200ms) var(--ease-out-expo, ease-out), color var(--duration-fast, 200ms) var(--ease-out-expo, ease-out);
 }
 
 td:first-child {

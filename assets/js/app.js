@@ -73,4 +73,16 @@
   // ── Start ────────────────────────────────────────────────────
   Router.init();
 
+  // ── Shimmer loading helper ──
+  window.showShimmer = function (container, lines) {
+    lines = lines || 4;
+    var html = '<div class="shimmer-placeholder">';
+    for (var i = 0; i < lines; i++) {
+      html += '<div class="shimmer-line"></div>';
+    }
+    html += '<div class="shimmer-card"></div>';
+    html += '</div>';
+    container.innerHTML = html;
+  };
+
 })();

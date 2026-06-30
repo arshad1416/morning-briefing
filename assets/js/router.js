@@ -33,15 +33,27 @@ const Router = {
 
     // Clear stale content before routing
     app.innerHTML = '<div class="loading">Loading...</div>';
+    app.classList.remove('page-enter');
 
     // Try exact match first
     if (this.routes[hash]) {
       try {
-        Promise.resolve(this.routes[hash](app)).catch(e => {
-          app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
+        Promise.resolve(this.routes[hash](app)).then(function () {
+          // Fade-in the page content after route renders
+          requestAnimationFrame(function () {
+            app.classList.add('page-enter');
+          });
+        }).catch(function (e) {
+          app.innerHTML = '<div class="error-card">Error loading page: ' + Utils.esc(e.message) + '</div>';
+          requestAnimationFrame(function () {
+            app.classList.add('page-enter');
+          });
         });
       } catch(e) {
-        app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
+        app.innerHTML = '<div class="error-card">Error loading page: ' + Utils.esc(e.message) + '</div>';
+        requestAnimationFrame(function () {
+          app.classList.add('page-enter');
+        });
       }
       return;
     }
@@ -63,11 +75,21 @@ const Router = {
         }
         if (match) {
           try {
-            Promise.resolve(handler(app, params)).catch(e => {
-              app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
+            Promise.resolve(handler(app, params)).then(function () {
+              requestAnimationFrame(function () {
+                app.classList.add('page-enter');
+              });
+            }).catch(function (e) {
+              app.innerHTML = '<div class="error-card">Error loading page: ' + Utils.esc(e.message) + '</div>';
+              requestAnimationFrame(function () {
+                app.classList.add('page-enter');
+              });
             });
           } catch(e) {
-            app.innerHTML = `<div class="error-card">Error loading page: ${Utils.esc(e.message)}</div>`;
+            app.innerHTML = '<div class="error-card">Error loading page: ' + Utils.esc(e.message) + '</div>';
+            requestAnimationFrame(function () {
+              app.classList.add('page-enter');
+            });
           }
           return;
         }
@@ -76,6 +98,9 @@ const Router = {
 
     // 404 fallback
     app.innerHTML = '<div class="empty-state">Page not found</div>';
+    requestAnimationFrame(function () {
+      app.classList.add('page-enter');
+    });
   },
 
   navigate(path) {
