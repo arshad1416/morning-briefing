@@ -88,12 +88,13 @@
 
 - [ ] **Volume Profile on Charts** (POC, VAH, VAL horizontal lines) — delegated
 - [ ] **Trader Dev MCP on Pi** (Playwright session bridge — needs one-time sign-in)
+- [ ] **Stock screener treemap** — heatmap component for Screener page — delegated
+- [ ] **TradingView-style drawing tools** — annotations, trendlines on charts — delegated
+- [ ] **Real-time price updates** — polling /data/latest.json every 60s — delegated
 
 ## 📋 Backlog
 
-- [ ] **Stock screener treemap** — heatmap component for Screener page (deferred from #7)
-- [ ] **TradingView-style drawing tools** — annotations, trendlines on charts
-- [ ] **Real-time price updates** — WebSocket or polling for live prices
+*(All items from competitive analysis are now addressed. New ideas will go here.)*
 
 ---
 
