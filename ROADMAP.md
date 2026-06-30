@@ -24,8 +24,7 @@
 - [x] **Charts Page — Phase 2: Frontend** ([#1](https://github.com/arshad1416/morning-briefing/issues/1))
   - `#/charts` route with ticker selector, timeframe toggle
   - Candlestick + volume via lightweight-charts
-  - Indicators: 20/50 EMA, VWAP, RSI (14), ATR (14)
-  - Volume Profile (POC, VAH, VAL) — in progress
+  - Indicators: 20/50 EMA, VWAP, RSI (14), ATR (14), Volume Profile (POC, VAH, VAL)
   - Dark/light theme, localStorage persistence
   - Deployed: June 29
 
@@ -47,24 +46,48 @@
   - Audio player on Research → Overview tab
   - Deployed: June 29
 
-- [x] **Backtrader Backtesting Engine** 
+- [x] **Sector Heatmap / Treemap** ([#2](https://github.com/arshad1416/morning-briefing/issues/2))
+  - Finviz-style grid on Dashboard, color-coded by performance
+  - Clickable tiles linking to screener
+  - Deployed: June 29
+
+- [x] **Trading Journal** ([#6](https://github.com/arshad1416/morning-briefing/issues/6))
+  - Pi CLI: `add_journal_entry.py` with emotion/grade/lesson fields
+  - Frontend tab on Positions page with inline form + stats
+  - Deployed: June 29
+
+- [x] **Earnings Transcripts** ([#4](https://github.com/arshad1416/morning-briefing/issues/4))
+  - Pi script: `fetch_earnings.py` via FMP API
+  - Research tab for transcript display
+  - Deployed: June 29
+
+- [x] **Tiingo/IEX Cloud API** ([#8](https://github.com/arshad1416/morning-briefing/issues/8))
+  - Pi script: `fetch_alternative_data.py` for fallback price data
+  - Deployed: June 29
+
+- [x] **SEC EDGAR Filings** ([#9](https://github.com/arshad1416/morning-briefing/issues/9))
+  - Pi script: `fetch_sec_filings.py` with CIK mapping for 60+ tickers
+  - Research tab for 10-K/10-Q filings
+  - Deployed: June 29
+
+- [x] **Backtrader Backtesting Engine**
   - 4 strategies: SMA cross, mean reversion, breakout, VWAP reversion
   - CLI with `--sizer-pct` allocation, JSON output
   - Deployed on Pi: June 29
 
 - [x] **Trader Dev MCP** (crypto + forex backtests)
   - MCP server works from Claude Desktop
-  - Pi bridge in progress (Playwright session persistence)
+  - Pi bridge scripts built (Playwright session persistence)
+
+- [x] **V3 Engine Retraining**
+  - Fixed 4 root causes: MR entry, pullback detection, cooldown periods, strategy deadlock
+  - All asset classes now generate valid signals
+  - Deployed: June 29
 
 ## 🚧 In Progress
 
 - [ ] **Volume Profile on Charts** (POC, VAH, VAL horizontal lines) — delegated
-- [ ] **Heatmap/Treemap** ([#2](https://github.com/arshad1416/morning-briefing/issues/2)) — delegated
-- [ ] **Trading Journal** ([#6](https://github.com/arshad1416/morning-briefing/issues/6)) — delegated
-- [ ] **Earnings Transcripts** ([#4](https://github.com/arshad1416/morning-briefing/issues/4)) — delegated
-- [ ] **Tiingo/IEX Cloud API** ([#8](https://github.com/arshad1416/morning-briefing/issues/8)) — delegated
-- [ ] **SEC EDGAR Filings** ([#9](https://github.com/arshad1416/morning-briefing/issues/9)) — delegated
-- [ ] **Trader Dev MCP on Pi** (Playwright session bridge) — delegated
+- [ ] **Trader Dev MCP on Pi** (Playwright session bridge — needs one-time sign-in)
 
 ## 📋 Backlog
 
