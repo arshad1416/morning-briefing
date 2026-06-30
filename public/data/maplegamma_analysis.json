@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-30T16:20:32.728900+00:00",
+    "generated_at": "2026-06-30T18:20:36.366246+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001095,
+    "total_cost_usd": 0.001225,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
-    "mimo_risk_contrarian": "auth_error",
     "deepseek_quantitative": "auth_error",
+    "mimo_risk_contrarian": "auth_error",
     "kimi_momentum": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF)\n- **Direction:** Long\n- **Entry:** $738.00\n- **Stop Loss:** $728.50 (Placed safely below the massive $730 Max GEX strike support)\n- **Target:** $748.00\n- **Conviction:** 8/10\n- **Rationale:** The DS Pro analysis indicates a \"risk-on\" market regime with high confidence. SPY's GEX data shows a \"bullish\" gamma regime with a massive Put wall at the $730 strike (Max GEX), which will act as strong magnetic support. Market makers will likely buy dips to hedge their short gamma exposure below this level, creating a favorable risk/reward setup for an upside move.\n\n### Trade 2: IWM (Russell 2000 ETF)\n- **Direction:** Long (Add to existing position / Swing)\n- **Entry:** $299.50\n- **Stop Loss:** $293.50\n- **Target:** $308.00\n- **Conviction:** 7/10\n- **Rationale:** IWM is already in the portfolio and holding up well. In a broader \"risk-on\" environment, small caps typically exhibit high beta and catch up to large-cap momentum. A decisive break and hold above the $300 psychological resistance level will likely trigger algorithmic momentum buying and short covering, driving it toward the $308 target."
+    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF) - Long\n- **Rationale:** The DS Pro model indicates a \"risk-on\" market regime, and the GEX data shows a \"bullish\" gamma regime for SPY. The massive Put GEX wall at the $730 strike acts as strong structural support, making it an ideal floor for a long position. The next major strike concentration is at $750, providing a clear upside target.\n- **Entry:** $738.00\n- **Stop Loss:** $728.00 (Placed just below the $730 max GEX support wall to invalidate the thesis if support breaks)\n- **Target:** $750.00 (Next major options strike and psychological resistance)\n- **Conviction:** 8/10\n\n### Trade 2: QQQ (Nasdaq 100 ETF) - Long\n- **Rationale:** In a confirmed \"risk-on\" environment with bullish gamma in the broader market, growth and tech-heavy indices typically exhibit higher beta and outperform. QQQ will benefit from the broader market tailwinds while offering slightly more aggressive upside momentum. \n- **Entry:** $645.00\n- **Stop Loss:** $632.00 (Roughly 2% risk, allowing for normal intraday volatility)\n- **Target:** $665.00 (Capturing the high-beta upside move in a risk-on rally)\n- **Conviction:** 7/10"
   }
 }
