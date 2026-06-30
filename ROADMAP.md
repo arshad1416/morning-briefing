@@ -23,7 +23,8 @@
     - [ ] Charting library integration (lightweight-charts recommended — DS Pro researching)
     - [ ] Ticker selector + timeframe toggle (1D, 1W, 1M, 1Y)
     - [ ] Candlestick series + volume bars
-    - [ ] Indicator overlays (SMA, RSI — top picks per DS Pro)
+    - **Indicator overlays:** Volume Profile, VWAP, 20/50 EMA, RSI (14), ATR
+    - Charting library: **lightweight-charts** (TradingView) — CDN script tag, no build step
   - **Phase 3 — Polish:** loading states, responsive, theme support
 
 ## 📋 Backlog
