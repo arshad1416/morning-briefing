@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-30 09:30:38",
+  "generated_at": "2026-06-30 10:00:14",
   "summary": {
     "total_backtest_trades": 17577,
     "tickers_tested": 59,
@@ -9,18 +9,18 @@
     "best_profit_factor": "7.64"
   },
   "live_trading": {
-    "generated_at": "2026-06-30 09:30:38",
+    "generated_at": "2026-06-30 10:00:14",
     "summary": {
       "total_trades": 12,
-      "closed_trades": 1,
-      "open_positions": 4,
-      "winning_trades": 1,
+      "closed_trades": 2,
+      "open_positions": 3,
+      "winning_trades": 2,
       "losing_trades": 0,
       "win_rate": 100.0,
-      "total_pnl_cad": -13213.09,
+      "total_pnl_cad": -13205.6,
       "starting_balance": 100000.0,
-      "current_balance": 85197.75,
-      "return_pct": -14.8,
+      "current_balance": 85385.33,
+      "return_pct": -14.61,
       "trading_days_active": 37
     },
     "per_strategy": [
@@ -37,6 +37,22 @@
           "UNH"
         ],
         "open_positions": 3,
+        "backtest_predicted_wr": "N/A",
+        "prediction_source": "No backtest data"
+      },
+      {
+        "strategy": "backtest-sr-v3",
+        "closed_trades": 1,
+        "wins": 1,
+        "losses": 0,
+        "win_rate": 100.0,
+        "avg_pnl_pct": 4.16,
+        "best_trade_pnl": 4.16,
+        "worst_trade_pnl": 4.16,
+        "tickers_traded": [
+          "XLK"
+        ],
+        "open_positions": 0,
         "backtest_predicted_wr": "N/A",
         "prediction_source": "No backtest data"
       }
