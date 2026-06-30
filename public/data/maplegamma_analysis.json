@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-06-30T11:20:39.281427+00:00",
+    "generated_at": "2026-06-30T11:25:36.262564+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001186,
+    "total_cost_usd": 0.001185,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
     "mimo_risk_contrarian": "auth_error",
-    "deepseek_quantitative": "auth_error",
     "kimi_momentum": "auth_error",
-    "qwen_trade_selector": "### Trade 1: Broad Market Bullish Continuation\n- **Ticker:** SPY\n- **Direction:** Long\n- **Entry:** $738.00\n- **Stop Loss:** $728.50\n- **Target:** $750.00\n- **Conviction:** 8/10\n- **Rationale:** The DS Pro model identifies a \"risk-on\" market regime with high confidence. SPY's GEX data confirms a \"bullish\" gamma regime with a massive put wall at the $730 strike (Max GEX), which should act as strong support. A break above current levels targets the next major options strike at $750. The stop is placed just below the $730 gamma support to invalidate the thesis if the put wall breaks.\n\n### Trade 2: Risk-On Financial Sector Rotation\n- **Ticker:** XLF\n- **Direction:** Long\n- **Entry:** $53.75\n- **Stop Loss:** $52.20\n- **Target:** $56.00\n- **Conviction:** 7/10\n- **Rationale:** Financials (XLF) typically outperform in \"risk-on\" environments due to increased lending activity and favorable yield curve dynamics. You already have a slightly profitable paper position in XLF; adding on a pullback or breakout confirms the sector's strength. The stop is placed below recent consolidation, targeting a roughly 1:2.5 risk/reward ratio as capital rotates into cyclical/value sectors."
+    "deepseek_quantitative": "auth_error",
+    "qwen_trade_selector": "### Trade 1: SPY (Long)\n- **Entry:** $738.00\n- **Stop Loss:** $732.50 \n- **Target:** $749.00\n- **Conviction:** 8/10\n- **Rationale:** The DS Pro model indicates a \"risk-on\" market regime with high confidence (8/10), and the SPY GEX data confirms a \"bullish\" gamma regime. SPY is currently trading at $737.89, well above the massive $730 max GEX strike (Put wall), which will act as strong structural support. We are entering near the current price with a stop safely above the $730 GEX magnet, targeting the next upside resistance level around $749 for a clean 2:1 risk/reward ratio.\n\n### Trade 2: XLF (Long)\n- **Entry:** $53.75\n- **Stop Loss:** $52.90\n- **Target:** $55.45\n- **Conviction:** 7/10\n- **Rationale:** Financials (XLF) typically outperform in a confirmed \"risk-on\" environment due to steepening yield curves and increased economic activity. You already have a baseline position at $53.72; this trade aims to capitalize on the broader risk-on momentum. The stop is placed just below the recent consolidation zone, while the target aligns with upper technical resistance, offering a 2:1 risk/reward profile to complement the broader bullish SPY setup."
   }
 }
