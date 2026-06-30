@@ -53,6 +53,7 @@
   Router.register('/options',       function (app)         { OptionsFlow.render(app); });
   Router.register('/maplegamma',    function (app)         { MapleGamma.renderLanding(app); });
   Router.register('/research',      function (app)         { Research.render(app); });
+  Router.register('/charts',        function (app)         { Charts.render(app); });
   Router.register('/models',        function (app)         { Models.render(app); });
   Router.register('/screener',      function (app)         { Screener.render(app); });
 

@@ -1,15 +1,13 @@
 node_modules/
-<<<<<<< HEAD
 .wrangler/
 .cloudflare/
 *.log
 .DS_Store
-node_modules/
 .next/
 out/
-=======
-.next/
 .env
 .env.local
 graphify-out/
->>>>>>> ab2f762b (maplegamma: design polish via impeccable — surface hover, theme transition, spacing refinement, entrance animations)
+
+# Chart data files (generated at runtime)
+data/charts/*.json

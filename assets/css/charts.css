@@ -1,0 +1,319 @@
+/* ─────────────────────────────────────────────────────────────
+   CHARTS PAGE — TradingView lightweight-charts integration
+   Cream/ink design language matching existing site
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Page Layout ── */
+.charts-page {
+  padding: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.charts-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-lg, 8px);
+}
+
+.charts-header .section-title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.charts-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+/* ── Ticker Search / Selector ── */
+.ticker-selector-wrapper {
+  position: relative;
+  min-width: 180px;
+}
+
+.ticker-selector-wrapper input {
+  width: 100%;
+  background: var(--bg-inset);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-sm, 4px);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  font-family: var(--font-ui, 'Schibsted Grotesk', sans-serif);
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.ticker-selector-wrapper input:focus {
+  border-color: var(--accent);
+}
+
+.ticker-selector-wrapper input::placeholder {
+  color: var(--text-muted);
+}
+
+.ticker-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 320px;
+  overflow-y: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius-sm, 4px);
+  z-index: 100;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.ticker-dropdown.open {
+  display: block;
+}
+
+.ticker-dropdown-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  font-family: var(--font-mono, 'Spline Sans Mono', monospace);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.1s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticker-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.ticker-dropdown-item:hover,
+.ticker-dropdown-item.highlighted {
+  background: var(--bg-active);
+}
+
+.ticker-dropdown-item .ticker-name {
+  font-family: var(--font-ui, 'Schibsted Grotesk', sans-serif);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* ── Timeframe Toggle ── */
+.timeframe-group {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-inset);
+  border-radius: var(--radius-sm, 4px);
+  padding: 2px;
+}
+
+.timeframe-btn {
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: var(--font-mono, 'Spline Sans Mono', monospace);
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.timeframe-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-active);
+}
+
+.timeframe-btn.active {
+  color: var(--accent-on, #fff);
+  background: var(--accent);
+}
+
+/* ── Chart Containers ── */
+.charts-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-lg, 8px);
+  overflow: hidden;
+}
+
+.chart-container-wrap {
+  position: relative;
+  width: 100%;
+}
+
+#main-chart-container {
+  width: 100%;
+  height: 480px;
+}
+
+.indicator-pane-container {
+  width: 100%;
+  height: 160px;
+}
+
+.indicator-pane-container.rsi-pane {
+  height: 160px;
+}
+
+.indicator-pane-container.atr-pane {
+  height: 140px;
+}
+
+/* ── Loading / Error States ── */
+.charts-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.charts-error {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+}
+
+.charts-error .error-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  opacity: 0.6;
+}
+
+.charts-error .error-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.charts-error .error-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ── Chart info bar ── */
+.chart-info-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  background: var(--bg-inset);
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.78rem;
+  flex-wrap: wrap;
+}
+
+.chart-info-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chart-info-label {
+  color: var(--text-muted);
+  font-family: var(--font-mono, 'Spline Sans Mono', monospace);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.chart-info-value {
+  color: var(--text-primary);
+  font-family: var(--font-mono, 'Spline Sans Mono', monospace);
+  font-weight: 600;
+}
+
+.chart-info-value.positive { color: var(--green); }
+.chart-info-value.negative { color: var(--red); }
+
+/* ── Legend / Indicator labels ── */
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 8px 16px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.72rem;
+}
+
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono, 'Spline Sans Mono', monospace);
+  color: var(--text-secondary);
+}
+
+.chart-legend-swatch {
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .charts-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .charts-controls {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .ticker-selector-wrapper {
+    flex: 1;
+    min-width: 140px;
+  }
+
+  #main-chart-container {
+    height: 340px;
+  }
+
+  .indicator-pane-container {
+    height: 130px;
+  }
+
+  .indicator-pane-container.rsi-pane {
+    height: 130px;
+  }
+
+  .indicator-pane-container.atr-pane {
+    height: 120px;
+  }
+
+  .chart-info-bar {
+    gap: 10px;
+  }
+
+  .timeframe-btn {
+    padding: 5px 10px;
+    font-size: 0.68rem;
+  }
+}

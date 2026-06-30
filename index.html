@@ -28,7 +28,7 @@
   <script>
     (function() {
       var v = Date.now().toString(36);
-      var sheets = ['/assets/css/style.css', '/assets/css/maplegamma.css', '/assets/css/screener.css'];
+      var sheets = ['/assets/css/style.css', '/assets/css/maplegamma.css', '/assets/css/screener.css', '/assets/css/charts.css'];
       sheets.forEach(function(href) {
         var l = document.createElement('link');
         l.rel = 'stylesheet';
@@ -50,6 +50,7 @@
       <a href="#/options" class="nav-link">Options</a>
       <a href="#/screener" class="nav-link">Screener</a>
       <a href="#/research" class="nav-link">Research</a>
+      <a href="#/charts" class="nav-link">Charts</a>
       <a href="#/models"  class="nav-link">Models</a>
     </div>
     <button
@@ -67,6 +68,9 @@
   <main id="app">
     <div class="loading">Loading...</div>
   </main>
+
+  <!-- TradingView lightweight-charts -->
+  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 
   <script>
     (function() {
@@ -87,6 +91,7 @@
         '/assets/js/portfolio.js',
         '/assets/js/simulation.js',
         '/assets/js/screener.js',
+        '/assets/js/charts.js',
         '/assets/js/router.js',
         '/assets/js/app.js'
       ];
