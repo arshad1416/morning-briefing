@@ -46,6 +46,20 @@ const Research = {
     // ── TAB 1: Overview / Narrative ──
     html += '<div class="research-pane" id="tab-narrative">';
     if (marketData?.generated_at) html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Last updated: ${this.formatTimestamp(marketData.generated_at)}</div>`;
+
+    // ── Audio Briefing Player ──
+    var todayStr = new Date().toISOString().slice(0, 10);
+    var audioUrl = '/data/audio/briefing-' + todayStr + '.mp3';
+    html += '<div class="card" style="margin-bottom:12px;padding:12px 16px">';
+    html += '<div style="display:flex;align-items:center;gap:12px">';
+    html += '<span style="font-size:1.4rem">🎧</span>';
+    html += '<div style="flex:1"><div style="font-weight:600;font-size:0.95rem">Audio Briefing</div>';
+    html += '<div style="font-size:0.8rem;color:var(--text-muted)">' + todayStr + '</div></div>';
+    html += '<audio controls preload="none" style="height:36px;max-width:260px" onerror="this.parentElement.innerHTML=\'<span style=color:var(--text-muted);font-size:0.85rem>No briefing yet for today</span>\'">';
+    html += '<source src="' + audioUrl + '" type="audio/mpeg">';
+    html += '</audio>';
+    html += '</div></div>';
+
     if (marketData?.narrative?.summary_paragraph) {
       const rendered = Utils.renderMarkdown(marketData.narrative.summary_paragraph);
       html += `<div class="card" style="margin-bottom:12px"><div class="intel-body">${rendered}</div></div>`;
@@ -62,7 +76,7 @@ const Research = {
     if (marketData?.insider_trades?.length) {
       html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Insider Trading Signals</div><div class="table-wrap"><table><thead><tr><th>Ticker</th><th>Signal</th><th>Ratio</th></tr></thead><tbody>';
       marketData.insider_trades.slice(0, 10).forEach(i => {
-        html += `<tr><td><strong>${Utils.esc(i.ticker)}</strong></td><td><span class="badge ${i.signal?.includes('BULLISH') ? 'badge-green' : 'badge-red'}">${Utils.esc(i.signal)}</span></td><td>${i.ratio?.toFixed(1) || '—'}</td></tr>`;
+        html += `<tr><td><strong>${Utils.esc(i.ticker)}</strong></td><td><span class="badge ${i.signal?.includes('BULLISH') ? 'badge-green' : 'badge-red'}\">${Utils.esc(i.signal)}</span></td><td>${i.ratio?.toFixed(1) || '—'}</td></tr>`;
       });
       html += '</tbody></table></div></div>';
     }

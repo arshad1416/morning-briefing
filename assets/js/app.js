@@ -51,7 +51,7 @@
   Router.register('/today',         function (app)         { Dashboard.renderToday(app); });
   Router.register('/positions',     function (app)         { PaperTrades.render(app); });
   Router.register('/options',       function (app)         { OptionsFlow.render(app); });
-  Router.register('/maplegamma',    function (app)         { MapleGamma.renderLanding(app); });
+  Router.register('/maplegamma',    function (app)         { MapleGamma.renderDashboard(app); });
   Router.register('/research',      function (app)         { Research.render(app); });
   Router.register('/charts',        function (app)         { Charts.render(app); });
   Router.register('/models',        function (app)         { Models.render(app); });
