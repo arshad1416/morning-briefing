@@ -128,3 +128,140 @@ th.sortable .sort-indicator::after {
   content: "⇅";
   opacity: 0.4;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   TREEMAP VIEW — Finviz-style CSS grid heatmap
+   ───────────────────────────────────────────────────────────── */
+
+/* Toggle button for switching between table and treemap views */
+.screener-view-toggle {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-inset);
+  border-radius: var(--radius-sm, 4px);
+  padding: 2px;
+  margin-bottom: 16px;
+}
+.screener-view-toggle .view-btn {
+  padding: 6px 14px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-family: var(--font-mono, 'Spline Sans Mono', monospace);
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.screener-view-toggle .view-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-active);
+}
+.screener-view-toggle .view-btn.active {
+  color: var(--accent-on, #fff);
+  background: var(--accent);
+}
+
+/* Treemap grid container */
+.screener-treemap {
+  display: grid;
+  gap: 2px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+/* Individual treemap tile */
+.screener-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 4px;
+  overflow: hidden;
+  transition: opacity 0.15s, transform 0.1s;
+  text-decoration: none;
+  color: #fff;
+  font-family: var(--font-mono, 'Spline Sans Mono', monospace);
+  min-height: 40px;
+  min-width: 40px;
+}
+.screener-tile:hover {
+  opacity: 0.85;
+  transform: scale(1.03);
+  z-index: 2;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+
+/* Treemap tile ticker label */
+.screener-tile .tile-ticker {
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+.screener-tile .tile-change {
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  pointer-events: none;
+  margin-top: 1px;
+}
+
+/* Treemap tile tooltip (shown on hover) */
+.screener-tile .tile-tooltip {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-card, #1F1E1A);
+  border: 1px solid var(--border-mid, #35322D);
+  border-radius: var(--radius-sm, 4px);
+  padding: 6px 10px;
+  font-size: 0.68rem;
+  font-family: var(--font-ui, 'Schibsted Grotesk', sans-serif);
+  color: var(--text-primary, #F0EDE4);
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.screener-tile:hover .tile-tooltip {
+  opacity: 1;
+}
+
+.tile-tooltip .tt-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  line-height: 1.4;
+}
+.tile-tooltip .tt-label {
+  color: var(--text-muted, #7B7567);
+}
+.tile-tooltip .tt-value {
+  font-weight: 600;
+}
+
+/* Mobile: fewer columns, smaller tiles */
+@media (max-width: 768px) {
+  .screener-tile {
+    min-height: 32px;
+    min-width: 32px;
+    padding: 2px;
+  }
+  .screener-tile .tile-ticker {
+    font-size: 0.6rem;
+  }
+  .screener-tile .tile-change {
+    font-size: 0.5rem;
+  }
+}

@@ -3,6 +3,9 @@
  * Scans 100 tickers with multi-factor scoring. Follows Watchlist.js patterns.
  */
 const Screener = {
+  _viewMode: 'table', // 'table' or 'treemap'
+  _data: null,
+
   async render(app) {
     app.innerHTML = '<div class="loading">Loading screener data...</div>';
 
@@ -12,9 +15,15 @@ const Screener = {
       return;
     }
 
+    this._data = data;
+    this._viewMode = localStorage.getItem('screener-view') || 'table';
+
     let html = this._buildHeader(data);
+    html += this._buildViewToggle();
     html += this._buildFilterBar(data.tickers);
-    html += this._buildTable(data.tickers);
+    html += '<div id="screener-view-container">';
+    html += this._viewMode === 'treemap' ? this._buildTreemap(data.tickers) : this._buildTable(data.tickers);
+    html += '</div>';
     html += this._buildFooter(data);
 
     app.innerHTML = html;
@@ -238,6 +247,84 @@ const Screener = {
       new Date(data.generated_at).toLocaleString() + '</div>';
   },
 
+  /** View toggle (table / treemap) */
+  _buildViewToggle() {
+    const activeTable = this._viewMode === 'table' ? 'active' : '';
+    const activeTreemap = this._viewMode === 'treemap' ? 'active' : '';
+    return '<div class="screener-view-toggle" id="screener-view-toggle">' +
+      '<button class="view-btn ' + activeTable + '" data-view="table">📋 Table</button>' +
+      '<button class="view-btn ' + activeTreemap + '" data-view="treemap">🗺 Treemap</button>' +
+    '</div>';
+  },
+
+  /** Build Finviz-style CSS grid treemap */
+  _buildTreemap(tickers) {
+    if (!tickers || !tickers.length) {
+      return '<div class="empty-state" style="padding:32px;text-align:center;color:var(--text-muted)">No tickers to display.</div>';
+    }
+
+    // Determine total volume for sizing (fall back to constant if none)
+    const hasVolume = tickers.some(t => (t.volume || 0) > 0);
+    const totalVolume = hasVolume ? tickers.reduce((s, t) => s + Math.max(1, t.volume || 1), 0) : tickers.length * 100;
+
+    // Compute grid columns: aim for ~40-60 tiles per row, proportional to total count
+    const tileCount = tickers.length;
+    const gridCols = Math.max(8, Math.min(40, Math.ceil(Math.sqrt(tileCount * 2))));
+
+    // Determine min/max change for color intensity scaling
+    const changes = tickers.map(t => t.change_pct || 0);
+    const maxPos = Math.max(0.01, ...changes.filter(c => c > 0));
+    const maxNeg = Math.min(-0.01, ...changes.filter(c => c < 0));
+
+    let html = '<div class="screener-treemap" id="screener-treemap" style="grid-template-columns:repeat(' + gridCols + ', 1fr)">';
+
+    tickers.forEach(t => {
+      const chg = t.change_pct || 0;
+      const isPositive = chg >= 0;
+
+      // Size based on volume (or market cap, or constant)
+      const vol = hasVolume ? Math.max(1, t.volume || 1) : 100;
+      const sizeRatio = vol / totalVolume;
+      // Span: 1-4 columns and 1-3 rows based on volume percentile
+      const colSpan = Math.max(1, Math.min(4, Math.ceil(sizeRatio * tileCount * 0.8)));
+      const rowSpan = Math.max(1, Math.min(3, Math.ceil(sizeRatio * tileCount * 0.4)));
+
+      // Color intensity
+      const intensity = isPositive
+        ? Math.min(1, chg / maxPos)
+        : Math.min(1, Math.abs(chg) / Math.abs(maxNeg));
+
+      const bgColor = isPositive
+        ? 'rgba(76,175,80,' + (0.15 + intensity * 0.7) + ')'
+        : 'rgba(239,83,80,' + (0.15 + intensity * 0.7) + ')';
+
+      const borderColor = isPositive
+        ? 'rgba(76,175,80,' + (0.2 + intensity * 0.5) + ')'
+        : 'rgba(239,83,80,' + (0.2 + intensity * 0.5) + ')';
+
+      html += '<a href="#/screener?filter=' + t.ticker + '" class="screener-tile" ' +
+        'data-ticker="' + t.ticker + '" ' +
+        'style="background:' + bgColor + ';border:1px solid ' + borderColor + ';' +
+        'grid-column:span ' + colSpan + ';grid-row:span ' + rowSpan + '">';
+
+      html += '<span class="tile-ticker">' + t.ticker + '</span>';
+      html += '<span class="tile-change">' + (chg >= 0 ? '+' : '') + chg.toFixed(2) + '%</span>';
+
+      // Tooltip
+      html += '<div class="tile-tooltip">';
+      html += '<div class="tt-line"><span class="tt-label">Ticker</span><span class="tt-value">' + t.ticker + '</span></div>';
+      html += '<div class="tt-line"><span class="tt-label">Score</span><span class="tt-value">' + Utils.scoreBadge(t.score) + '</span></div>';
+      html += '<div class="tt-line"><span class="tt-label">Change</span><span class="tt-value">' + (chg >= 0 ? '+' : '') + chg.toFixed(2) + '%</span></div>';
+      html += '<div class="tt-line"><span class="tt-label">RSI</span><span class="tt-value">' + (t.rsi != null ? t.rsi.toFixed(1) : '—') + '</span></div>';
+      html += '</div>';
+
+      html += '</a>';
+    });
+
+    html += '</div>';
+    return html;
+  },
+
   /** Wire up all filter event handlers */
   _wireFilters(allTickers) {
     const filterIds = ['filter-pe', 'filter-mcap', 'filter-div', 'filter-rsi',
@@ -274,6 +361,24 @@ const Screener = {
             sortEl.value = newSort;
             this._applyFilters(allTickers);
           }
+        });
+      });
+    }
+
+    // View toggle buttons
+    const toggleContainer = document.getElementById('screener-view-toggle');
+    if (toggleContainer) {
+      toggleContainer.querySelectorAll('.view-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const view = btn.dataset.view;
+          if (view === this._viewMode) return;
+          this._viewMode = view;
+          localStorage.setItem('screener-view', view);
+          // Update button active states
+          toggleContainer.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          // Re-render the view container
+          this._applyFilters(allTickers);
         });
       });
     }
@@ -445,13 +550,55 @@ const Screener = {
     // Render
     const tbody = document.getElementById('screener-tbody');
     const countEl = document.getElementById('screener-count');
-    if (tbody) {
-      tbody.innerHTML = filtered.length
-        ? filtered.map(t => this._tickerRow(t)).join('')
-        : '<tr><td colspan="11" class="empty-state" style="padding:32px;text-align:center">No tickers match your filters.</td></tr>';
+    const viewContainer = document.getElementById('screener-view-container');
+    if (viewContainer) {
+      if (this._viewMode === 'treemap') {
+        viewContainer.innerHTML = this._buildTreemap(filtered);
+      } else {
+        viewContainer.innerHTML = this._buildTable(allTickers);
+        // Re-wire sortable headers on the newly rendered table
+        const newTable = document.getElementById('screener-table');
+        if (newTable) {
+          newTable.querySelectorAll('.sortable').forEach(th => {
+            th.addEventListener('click', () => {
+              const sortKey = th.dataset.sort;
+              const currentSort = document.getElementById('filter-sort')?.value || '';
+              const isAsc = currentSort === sortKey + '-asc';
+              const newSort = isAsc ? sortKey + '-desc' : sortKey + '-asc';
+              const sortEl = document.getElementById('filter-sort');
+              if (sortEl) {
+                sortEl.value = newSort;
+                this._applyFilters(allTickers);
+              }
+            });
+          });
+        }
+        // Populate the newly rendered table body with filtered data
+        const newTbody = document.getElementById('screener-tbody');
+        if (newTbody) {
+          newTbody.innerHTML = filtered.length
+            ? filtered.map(t => this._tickerRow(t)).join('')
+            : '<tr><td colspan="11" class="empty-state" style="padding:32px;text-align:center">No tickers match your filters.</td></tr>';
+        }
+      }
+      // Update count for both views
+      const newCountEl = document.getElementById('screener-count');
+      if (newCountEl) {
+        newCountEl.textContent = filtered.length + ' of ' + allTickers.length + ' tickers';
+      }
     }
-    if (countEl) {
-      countEl.textContent = filtered.length + ' of ' + allTickers.length + ' tickers';
+    // Legacy fallback (for when viewContainer doesn't exist)
+    if (!viewContainer) {
+      const tbody = document.getElementById('screener-tbody');
+      const countEl = document.getElementById('screener-count');
+      if (tbody) {
+        tbody.innerHTML = filtered.length
+          ? filtered.map(t => this._tickerRow(t)).join('')
+          : '<tr><td colspan="11" class="empty-state" style="padding:32px;text-align:center">No tickers match your filters.</td></tr>';
+      }
+      if (countEl) {
+        countEl.textContent = filtered.length + ' of ' + allTickers.length + ' tickers';
+      }
     }
   },
 

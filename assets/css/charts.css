@@ -331,3 +331,66 @@
     font-size: 0.68rem;
   }
 }
+
+/* ── Drawing Tools Toolbar ── */
+.drawing-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-lg, 8px);
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.drawing-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm, 4px);
+  color: var(--text-secondary);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.12s;
+  padding: 0;
+  line-height: 1;
+}
+.drawing-btn:hover {
+  background: var(--bg-active);
+  color: var(--text-primary);
+  border-color: var(--border-mid);
+}
+.drawing-btn.active {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+.drawing-btn-clear {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+.drawing-btn-clear:hover {
+  color: var(--red);
+  border-color: var(--red-border);
+}
+.drawing-separator {
+  width: 1px;
+  height: 24px;
+  background: var(--border-subtle);
+  margin: 0 4px;
+}
+.drawing-status {
+  margin-left: auto;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono, 'Spline Sans Mono', monospace);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -362,6 +362,68 @@ const Dashboard = {
     }
 
     app.innerHTML = html;
+
+    // Start listening for real-time price updates
+    this._listenForRealtime();
+  },
+
+  /** Listen for real-time price updates and refresh displayed data */
+  _listenForRealtime() {
+    // Remove old listener to avoid duplicates
+    if (this._realtimeHandler) {
+      document.removeEventListener('price-update', this._realtimeHandler);
+    }
+
+    this._realtimeHandler = (e) => {
+      const marketSummary = e.detail.market_summary;
+      if (!marketSummary) return;
+
+      // Update VIX in regime badge
+      if (marketSummary.vix != null) {
+        const regimeEl = document.querySelector('.today-regime');
+        if (regimeEl) {
+          const vixEl = regimeEl.querySelector('.regime-vix');
+          if (vixEl) {
+            const vixStr = 'VIX ' + (marketSummary.vix != null ? marketSummary.vix.toFixed(2) : '—');
+            const oldText = vixEl.textContent || '';
+            const arrowIdx = oldText.indexOf('▲') >= 0 ? oldText.indexOf('▲') : oldText.indexOf('▼');
+            const suffix = arrowIdx >= 0 ? oldText.substring(arrowIdx) : '';
+            vixEl.innerHTML = vixStr + ' ' + suffix;
+          }
+        }
+      }
+
+      // Update index strip prices
+      if (marketSummary.indices) {
+        marketSummary.indices.forEach(idx => {
+          if (!idx.ticker) return;
+          const items = document.querySelectorAll('.today-strip-item');
+          items.forEach(item => {
+            const label = item.querySelector('.today-strip-label');
+            if (label && (label.textContent || '').trim() === idx.ticker) {
+              const val = item.querySelector('.today-strip-val');
+              if (val) {
+                val.textContent = (idx.change_pct >= 0 ? '+' : '') + idx.change_pct.toFixed(2) + '%';
+                val.className = 'today-strip-val ' + (idx.change_pct >= 0 ? 'positive' : 'negative');
+              }
+            }
+          });
+        });
+      }
+
+      // Update session time
+      const sessionEl = document.querySelector('.regime-session');
+      if (sessionEl) {
+        const now = new Date();
+        const et = new Date(now.toLocaleString('en-US', {timeZone:'America/New_York'}));
+        const hh = String(et.getHours()).padStart(2, '0');
+        const mm = String(et.getMinutes()).padStart(2, '0');
+        const session = this._sessionLabel();
+        sessionEl.textContent = session + ' · ' + hh + ':' + mm + ' ET';
+      }
+    };
+
+    document.addEventListener('price-update', this._realtimeHandler);
   },
 
   _regimeBadge(vix, ms) {

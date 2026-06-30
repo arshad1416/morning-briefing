@@ -35,6 +35,13 @@ const Charts = {
   _resizeObserver: null,
   _themeListener: null,
 
+  // ── Drawing Tools ──
+  _activeTool: null,
+  _annotations: [],
+  _tempLineSeries: null,
+  _tempClickPoints: [],
+  _clickHandler: null,
+
   // ── Render ──
   async render(app) {
     app.innerHTML = '<div class="loading">Loading charts...</div>';
@@ -56,6 +63,9 @@ const Charts = {
 
     // Resize handler
     this._setupResizeObserver(app);
+
+    // Listen for real-time price updates
+    this._setupRealtimeListener();
   },
 
   // ── Page HTML ──
@@ -83,6 +93,15 @@ const Charts = {
               <button class="timeframe-btn ${this._currentTimeframe === '1Y' ? 'active' : ''}" data-tf="1Y">1Y</button>
             </div>
           </div>
+        </div>
+        <!-- Drawing Tools Toolbar -->
+        <div class="drawing-toolbar" id="drawing-toolbar">
+          <button class="drawing-btn" data-tool="trendline" title="Trendline">📈</button>
+          <button class="drawing-btn" data-tool="horizontal" title="Horizontal Line">➖</button>
+          <button class="drawing-btn" data-tool="rectangle" title="Rectangle">⬜</button>
+          <span class="drawing-separator"></span>
+          <button class="drawing-btn drawing-btn-clear" id="drawing-clear" title="Clear All">🗑</button>
+          <span class="drawing-status" id="drawing-status"></span>
         </div>
         <div id="charts-main" class="charts-main">
           <div class="chart-card">
@@ -170,6 +189,10 @@ const Charts = {
 
       // Render charts
       this._renderCharts(ohlcv);
+
+      // Wire drawing tools and render saved annotations
+      this._wireDrawingTools();
+      this._renderAnnotations();
 
     } catch (err) {
       console.error('Charts load error:', err);
@@ -739,6 +762,284 @@ const Charts = {
     });
   },
 
+  // ── Drawing Tools ──
+  _wireDrawingTools() {
+    const toolbar = document.getElementById('drawing-toolbar');
+    if (!toolbar) return;
+
+    // Tool buttons
+    toolbar.querySelectorAll('.drawing-btn[data-tool]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tool = btn.dataset.tool;
+        if (this._activeTool === tool) {
+          // Deactivate
+          this._activeTool = null;
+          toolbar.querySelectorAll('.drawing-btn[data-tool]').forEach(b => b.classList.remove('active'));
+          this._setDrawingStatus('');
+          this._removeChartClickHandler();
+        } else {
+          this._activeTool = tool;
+          toolbar.querySelectorAll('.drawing-btn[data-tool]').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const labels = { trendline: 'Click two points to draw a trendline', horizontal: 'Click on the chart to place a horizontal line', rectangle: 'Click two points to draw a rectangle' };
+          this._setDrawingStatus(labels[tool] || '');
+          this._setupChartClickHandler();
+        }
+      });
+    });
+
+    // Clear button
+    const clearBtn = document.getElementById('drawing-clear');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        this._clearAllAnnotations();
+        this._setDrawingStatus('All annotations cleared');
+        setTimeout(() => this._setDrawingStatus(''), 2000);
+      });
+    }
+  },
+
+  _setDrawingStatus(msg) {
+    const el = document.getElementById('drawing-status');
+    if (el) el.textContent = msg;
+  },
+
+  _setupChartClickHandler() {
+    this._removeChartClickHandler();
+    if (!this._chart) return;
+
+    this._clickHandler = this._chart.subscribeClick((param) => {
+      if (!param || !param.time || !param.point) return;
+      this._handleChartClick(param);
+    });
+  },
+
+  _removeChartClickHandler() {
+    if (this._clickHandler && this._chart) {
+      try { this._chart.unsubscribeClick(this._clickHandler); } catch(e) {}
+    }
+    this._clickHandler = null;
+  },
+
+  _handleChartClick(param) {
+    if (!this._activeTool || !this._chart || !this._mainSeries) return;
+
+    const time = param.time;
+    const price = param.point.y;
+    // Get actual price from the series
+    const data = this._mainSeries.dataByIndex(this._mainSeries.data().length - 1);
+    // Use coordinateToValue for accurate price
+    let actualPrice = price;
+    try {
+      const priceScale = this._chart.priceScale('right');
+      if (priceScale && priceScale.coordinateToPrice) {
+        actualPrice = priceScale.coordinateToPrice(price);
+      }
+    } catch(e) {}
+
+    if (this._activeTool === 'horizontal') {
+      // Single-click: place a horizontal line
+      const line = this._mainSeries.createPriceLine({
+        price: actualPrice,
+        color: '#FF9800',
+        lineWidth: 2,
+        lineStyle: LightweightCharts.LineStyle.Solid,
+        axisLabelVisible: true,
+        title: 'H: ' + actualPrice.toFixed(2),
+      });
+      this._annotations.push({
+        type: 'horizontal',
+        price: actualPrice,
+        time: time,
+        color: '#FF9800',
+      });
+      this._saveAnnotations();
+      this._activeTool = null;
+      document.querySelectorAll('.drawing-btn[data-tool]').forEach(b => b.classList.remove('active'));
+      this._setDrawingStatus('Horizontal line placed');
+      setTimeout(() => this._setDrawingStatus(''), 1500);
+      this._removeChartClickHandler();
+    } else if (this._activeTool === 'trendline' || this._activeTool === 'rectangle') {
+      // Two-click tools
+      this._tempClickPoints.push({ time, price: actualPrice });
+
+      if (this._tempClickPoints.length === 1) {
+        // First click: show temp visual feedback
+        this._setDrawingStatus(this._activeTool === 'trendline' ? 'Click second point for trendline' : 'Click second point for rectangle');
+        // Draw a temporary marker
+        this._tempLineSeries = this._chart.addLineSeries({
+          color: this._activeTool === 'trendline' ? '#FF9800' : '#9C27B0',
+          lineWidth: 1,
+          lineStyle: LightweightCharts.LineStyle.Dashed,
+          priceLineVisible: false,
+          lastValueVisible: false,
+        });
+      } else if (this._tempClickPoints.length === 2) {
+        // Second click: create the annotation
+        const p1 = this._tempClickPoints[0];
+        const p2 = this._tempClickPoints[1];
+
+        if (this._activeTool === 'trendline') {
+          // Create trendline as a line series with just 2 data points
+          const trendSeries = this._chart.addLineSeries({
+            color: '#FF9800',
+            lineWidth: 2,
+            priceLineVisible: false,
+            lastValueVisible: false,
+          });
+          const trendData = [
+            { time: Math.min(p1.time, p2.time), value: p1.time <= p2.time ? p1.price : p2.price },
+            { time: Math.max(p1.time, p2.time), value: p1.time <= p2.time ? p2.price : p1.price },
+          ];
+          trendSeries.setData(trendData);
+          this._annotations.push({
+            type: 'trendline',
+            p1: p1,
+            p2: p2,
+            color: '#FF9800',
+          });
+        } else if (this._activeTool === 'rectangle') {
+          // Rectangle: create two horizontal lines (top and bottom)
+          const topPrice = Math.max(p1.price, p2.price);
+          const bottomPrice = Math.min(p1.price, p2.price);
+          const lineTop = this._mainSeries.createPriceLine({
+            price: topPrice,
+            color: '#9C27B0',
+            lineWidth: 1,
+            lineStyle: LightweightCharts.LineStyle.Dashed,
+            axisLabelVisible: true,
+            title: 'R: ' + topPrice.toFixed(2),
+          });
+          const lineBottom = this._mainSeries.createPriceLine({
+            price: bottomPrice,
+            color: '#9C27B0',
+            lineWidth: 1,
+            lineStyle: LightweightCharts.LineStyle.Dashed,
+            axisLabelVisible: true,
+            title: 'R: ' + bottomPrice.toFixed(2),
+          });
+          this._annotations.push({
+            type: 'rectangle',
+            topPrice: topPrice,
+            bottomPrice: bottomPrice,
+            p1: p1,
+            p2: p2,
+            color: '#9C27B0',
+          });
+        }
+
+        // Clean up temp
+        this._tempClickPoints = [];
+        if (this._tempLineSeries) {
+          try { this._chart.removeSeries(this._tempLineSeries); } catch(e) {}
+          this._tempLineSeries = null;
+        }
+        this._saveAnnotations();
+        this._activeTool = null;
+        document.querySelectorAll('.drawing-btn[data-tool]').forEach(b => b.classList.remove('active'));
+        this._setDrawingStatus(this._activeTool === 'trendline' ? 'Trendline placed' : 'Rectangle placed');
+        setTimeout(() => this._setDrawingStatus(''), 1500);
+        this._removeChartClickHandler();
+      }
+    }
+  },
+
+  /** Load annotations from localStorage for the current ticker */
+  _loadAnnotations() {
+    const key = 'charts-annotations-' + this._currentTicker;
+    try {
+      const stored = localStorage.getItem(key);
+      this._annotations = stored ? JSON.parse(stored) : [];
+    } catch(e) {
+      this._annotations = [];
+    }
+  },
+
+  /** Save annotations to localStorage for the current ticker */
+  _saveAnnotations() {
+    const key = 'charts-annotations-' + this._currentTicker;
+    try {
+      localStorage.setItem(key, JSON.stringify(this._annotations));
+    } catch(e) {
+      console.warn('Failed to save annotations:', e);
+    }
+  },
+
+  /** Render all loaded annotations on the current chart */
+  _renderAnnotations() {
+    if (!this._chart || !this._mainSeries) return;
+    this._loadAnnotations();
+    this._annotations.forEach(ann => {
+      try {
+        if (ann.type === 'horizontal') {
+          this._mainSeries.createPriceLine({
+            price: ann.price,
+            color: ann.color || '#FF9800',
+            lineWidth: 2,
+            lineStyle: LightweightCharts.LineStyle.Solid,
+            axisLabelVisible: true,
+            title: 'H: ' + (ann.price != null ? ann.price.toFixed(2) : ''),
+          });
+        } else if (ann.type === 'trendline' && ann.p1 && ann.p2) {
+          const trendSeries = this._chart.addLineSeries({
+            color: ann.color || '#FF9800',
+            lineWidth: 2,
+            priceLineVisible: false,
+            lastValueVisible: false,
+          });
+          const p1 = ann.p1, p2 = ann.p2;
+          const trendData = [
+            { time: Math.min(p1.time, p2.time), value: p1.time <= p2.time ? p1.price : p2.price },
+            { time: Math.max(p1.time, p2.time), value: p1.time <= p2.time ? p2.price : p1.price },
+          ];
+          trendSeries.setData(trendData);
+        } else if (ann.type === 'rectangle') {
+          if (ann.topPrice != null) {
+            this._mainSeries.createPriceLine({
+              price: ann.topPrice,
+              color: ann.color || '#9C27B0',
+              lineWidth: 1,
+              lineStyle: LightweightCharts.LineStyle.Dashed,
+              axisLabelVisible: true,
+              title: 'R: ' + ann.topPrice.toFixed(2),
+            });
+          }
+          if (ann.bottomPrice != null) {
+            this._mainSeries.createPriceLine({
+              price: ann.bottomPrice,
+              color: ann.color || '#9C27B0',
+              lineWidth: 1,
+              lineStyle: LightweightCharts.LineStyle.Dashed,
+              axisLabelVisible: true,
+              title: 'R: ' + ann.bottomPrice.toFixed(2),
+            });
+          }
+        }
+      } catch(e) {
+        console.warn('Error rendering annotation:', e);
+      }
+    });
+  },
+
+  /** Clear all annotations and remove from localStorage */
+  _clearAllAnnotations() {
+    this._annotations = [];
+    this._tempClickPoints = [];
+    if (this._tempLineSeries) {
+      try { this._chart.removeSeries(this._tempLineSeries); } catch(e) {}
+      this._tempLineSeries = null;
+    }
+    this._saveAnnotations();
+    // Re-render the chart (which clears the old annotations since they're owned by the chart)
+    if (this._data) {
+      const tf = this._currentTimeframe;
+      const ohlcv = this._data.timeframes && this._data.timeframes[tf];
+      if (ohlcv) {
+        this._renderCharts(ohlcv);
+      }
+    }
+  },
+
   // ── Theme Listener ──
   _wireThemeListener(app) {
     // Remove old listener
@@ -826,6 +1127,98 @@ const Charts = {
     });
 
     this._resizeObserver.observe(mainContainer);
+  },
+
+  // ── Real-Time Price Updates ──
+  _setupRealtimeListener() {
+    // Remove old listener
+    if (this._realtimeHandler) {
+      document.removeEventListener('price-update', this._realtimeHandler);
+    }
+
+    this._realtimeHandler = (e) => {
+      const marketSummary = e.detail.market_summary;
+      if (!marketSummary) return;
+
+      // If we have chart data, try to update the latest candle's close price
+      if (this._mainSeries && this._data) {
+        const tf = this._currentTimeframe;
+        const ohlcv = this._data.timeframes && this._data.timeframes[tf];
+        if (ohlcv && ohlcv.length > 0) {
+          // Try to find a matching ticker from indices or premarket setups
+          const ticker = this._currentTicker;
+          let newPrice = null;
+
+          // Check indices first
+          if (marketSummary.indices) {
+            const match = marketSummary.indices.find(i => i.ticker === ticker);
+            if (match && match.price) newPrice = match.price;
+          }
+
+          // If not found, check premarket setups
+          if (newPrice == null && e.detail.data && e.detail.data.premarket_top_setups) {
+            const match = e.detail.data.premarket_top_setups.find(s => s.ticker === ticker);
+            if (match && match.price) newPrice = match.price;
+          }
+
+          // Update the last candle if we have a new price
+          if (newPrice != null) {
+            const lastCandle = ohlcv[ohlcv.length - 1];
+            if (lastCandle) {
+              // Only update if the new price is within expected range (no more than 20% move)
+              const changePct = Math.abs(newPrice - lastCandle.close) / lastCandle.close;
+              if (changePct < 0.2) {
+                // Update the closing price
+                try {
+                  this._mainSeries.update({
+                    time: lastCandle.time,
+                    open: lastCandle.open,
+                    high: Math.max(lastCandle.high, newPrice),
+                    low: Math.min(lastCandle.low, newPrice),
+                    close: newPrice,
+                  });
+                  // Also update volume if available
+                  if (this._volumeSeries) {
+                    this._volumeSeries.update({
+                      time: lastCandle.time,
+                      value: lastCandle.volume,
+                      color: newPrice >= lastCandle.open ? 'rgba(76,175,80,0.4)' : 'rgba(239,83,80,0.4)',
+                    });
+                  }
+                  // Update the info bar
+                  this._updateInfoBar(ohlcv);
+                } catch (err) {
+                  // Silently fail for realtime updates
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // Update the chart info bar time display
+      const infoBar = document.getElementById('chart-info-bar');
+      if (infoBar) {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString();
+        // Find or add a live indicator
+        let liveEl = infoBar.querySelector('.chart-info-live');
+        if (!liveEl) {
+          liveEl = document.createElement('div');
+          liveEl.className = 'chart-info-item chart-info-live';
+          liveEl.style.cssText = 'margin-left:auto;color:var(--green);font-size:0.65rem';
+          const sep = infoBar.querySelector('[style*=\"margin-left:auto\"]');
+          if (sep) {
+            sep.parentNode.insertBefore(liveEl, sep.nextSibling);
+          } else {
+            infoBar.appendChild(liveEl);
+          }
+        }
+        liveEl.textContent = '● LIVE ' + timeStr;
+      }
+    };
+
+    document.addEventListener('price-update', this._realtimeHandler);
   },
 
   // ── Destroy Charts ──
