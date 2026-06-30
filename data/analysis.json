@@ -1,9 +1,23 @@
 {
-  "generated_at": "2026-06-30 07:17:13",
+  "generated_at": "2026-06-30 07:22:13",
   "date": "2026-06-30",
   "market_overview": {
     "source": "Seeking Alpha + BNN Bloomberg",
     "top_headlines": [
+      {
+        "title": "Ingredion completes $165M sale of majority stake in Pakistan business",
+        "url": "https://seekingalpha.com/news/4608349-ingredion-completes-165m-sale-of-majority-stake-in-pakistan-business?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "PowerBank prices $4.2M registered direct offering",
+        "url": "https://seekingalpha.com/news/4608363-powerbank-prices-4_2m-registered-direct-offering?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
       {
         "title": "At a glance: stocks gapping up premarket",
         "url": "https://seekingalpha.com/news/4608351-at-a-glance-stocks-gapping-up-premarket?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
@@ -37,20 +51,6 @@
         "url": "https://seekingalpha.com/news/4608359-vanguard-intermediate-term-bond-etf-declares-monthly-distribution-of-02750?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Vanguard Short-Term Bond ETF declares monthly distribution of $0.2613",
-        "url": "https://seekingalpha.com/news/4608355-vanguard-short-term-bond-etf-declares-monthly-distribution-of-02613?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Eos Energy drops 5% on stock offering",
-        "url": "https://seekingalpha.com/news/4608346-eos-energy-drops-5-on-stock-offering?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "bearish",
         "summary": ""
       },
       {
@@ -89,9 +89,9 @@
             "Best 4 July Stocks For America's 250th",
             "3 Top Growth And Income Stocks To Win The 'Tortoise Vs. Hare Race'",
             "Hard To Imagine A Retirement Portfolio Without These 2 Cash Machines",
-            "Market Correction Warning For H2 2026",
             "Bought Bloom Energy, Credo At A +20% Discount, But Also Hedged",
             "I Am Buying The Dip In Dividends As Others Sell",
+            "It's Time To Go All-In On SCHD",
             "Beyond The SpaceX IPO: 3 Top Aerospace And Infrastructure Stocks",
             "The Market Is Dead Wrong: I'm Buying Dirt-Cheap Energy Stocks",
             "A Near-Perfect And Simple Retirement Dividend Growth Portfolio",
@@ -107,9 +107,9 @@
             "neutral",
             "bullish",
             "neutral",
-            "bearish",
             "neutral",
             "bullish",
+            "neutral",
             "neutral",
             "bullish",
             "bullish",
@@ -121,21 +121,17 @@
       [
         "V",
         {
-          "news_count": 15,
+          "news_count": 11,
           "articles": [
             "At a glance: stocks gapping up premarket",
             "Vanguard Intermediate-Term Bond ETF declares monthly distribution of $0.2750",
-            "Vanguard Short-Term Bond ETF declares monthly distribution of $0.2613",
             "Best 4 July Stocks For America's 250th",
             "3 Top Growth And Income Stocks To Win The 'Tortoise Vs. Hare Race'",
             "Market Correction Warning For H2 2026",
-            "Bought Bloom Energy, Credo At A +20% Discount, But Also Hedged",
             "I Am Buying The Dip In Dividends As Others Sell",
-            "It's Time To Go All-In On SCHD",
             "Beyond The SpaceX IPO: 3 Top Aerospace And Infrastructure Stocks",
             "Markets Got Its Final Warnings",
             "A Near-Perfect And Simple Retirement Dividend Growth Portfolio",
-            "How The Mag 7 Became The Drag 7, And Might Drop The S&P 500 By 30% (Technical Analysis)",
             "Micron Technology: The Replaceable Role Of Memory In The AI \u200b\u200bValue Chain",
             "Micron's Blockbuster Earnings Don't Inspire Us"
           ],
@@ -143,16 +139,12 @@
             "neutral",
             "neutral",
             "neutral",
-            "neutral",
             "bullish",
             "bearish",
-            "neutral",
             "bullish",
-            "neutral",
             "neutral",
             "bearish",
             "bullish",
-            "bearish",
             "neutral",
             "neutral"
           ]
@@ -181,26 +173,6 @@
         }
       ],
       [
-        "QQQ",
-        {
-          "news_count": 5,
-          "articles": [
-            "Hard To Imagine A Retirement Portfolio Without These 2 Cash Machines",
-            "Bought Bloom Energy, Credo At A +20% Discount, But Also Hedged",
-            "Markets Got Its Final Warnings",
-            "A Near-Perfect And Simple Retirement Dividend Growth Portfolio",
-            "How The Mag 7 Became The Drag 7, And Might Drop The S&P 500 By 30% (Technical Analysis)"
-          ],
-          "sentiments": [
-            "neutral",
-            "neutral",
-            "bearish",
-            "bullish",
-            "bearish"
-          ]
-        }
-      ],
-      [
         "AI",
         {
           "news_count": 4,
@@ -217,20 +189,38 @@
             "bearish"
           ]
         }
+      ],
+      [
+        "MU",
+        {
+          "news_count": 4,
+          "articles": [
+            "Micron: AI Momentum Keeps The Bull Case Intact",
+            "Market Correction Warning For H2 2026",
+            "Micron Technology: The Replaceable Role Of Memory In The AI \u200b\u200bValue Chain",
+            "Micron's Blockbuster Earnings Don't Inspire Us"
+          ],
+          "sentiments": [
+            "neutral",
+            "bearish",
+            "neutral",
+            "neutral"
+          ]
+        }
       ]
     ],
     "sentiment_by_ticker": {
       "C": {
         "mentions": 16,
         "bullish": 5,
-        "bearish": 2,
-        "net_sentiment": 3
+        "bearish": 1,
+        "net_sentiment": 4
       },
       "V": {
-        "mentions": 15,
+        "mentions": 11,
         "bullish": 3,
-        "bearish": 3,
-        "net_sentiment": 0
+        "bearish": 2,
+        "net_sentiment": 1
       },
       "SPY": {
         "mentions": 6,
@@ -238,13 +228,13 @@
         "bearish": 3,
         "net_sentiment": -2
       },
-      "QQQ": {
-        "mentions": 5,
-        "bullish": 1,
-        "bearish": 2,
+      "AI": {
+        "mentions": 4,
+        "bullish": 0,
+        "bearish": 1,
         "net_sentiment": -1
       },
-      "AI": {
+      "MU": {
         "mentions": 4,
         "bullish": 0,
         "bearish": 1,
@@ -256,29 +246,29 @@
         "bearish": 0,
         "net_sentiment": 1
       },
+      "QQQ": {
+        "mentions": 4,
+        "bullish": 1,
+        "bearish": 1,
+        "net_sentiment": 0
+      },
       "MA": {
         "mentions": 3,
         "bullish": 0,
         "bearish": 0,
         "net_sentiment": 0
       },
-      "MU": {
+      "NVDA": {
         "mentions": 3,
         "bullish": 0,
-        "bearish": 0,
-        "net_sentiment": 0
+        "bearish": 2,
+        "net_sentiment": -2
       },
-      "AMZN": {
-        "mentions": 2,
+      "DIA": {
+        "mentions": 3,
         "bullish": 0,
-        "bearish": 0,
-        "net_sentiment": 0
-      },
-      "ETF": {
-        "mentions": 2,
-        "bullish": 0,
-        "bearish": 0,
-        "net_sentiment": 0
+        "bearish": 2,
+        "net_sentiment": -2
       }
     }
   },
@@ -374,7 +364,7 @@
     {
       "type": "BEARISH_CONVERGENCE",
       "tickers": [
-        "QQQ"
+        "NVDA"
       ],
       "signal": "Negative news sentiment + heavy put buying",
       "action": "Consider bearish bias / hedge"
@@ -398,10 +388,10 @@
     {
       "type": "SECTOR_AVOID",
       "tickers": [
-        "Tech"
+        "Tech/Semi"
       ],
       "signal": "Most negative sentiment sector",
-      "action": "Avoid or hedge exposure in Tech"
+      "action": "Avoid or hedge exposure in Tech/Semi"
     }
   ]
 }
