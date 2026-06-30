@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-30 09:00:14",
+  "generated_at": "2026-06-30 09:30:38",
   "summary": {
     "total_backtest_trades": 17577,
     "tickers_tested": 59,
@@ -9,21 +9,38 @@
     "best_profit_factor": "7.64"
   },
   "live_trading": {
-    "generated_at": "2026-06-30 09:00:14",
+    "generated_at": "2026-06-30 09:30:38",
     "summary": {
       "total_trades": 12,
-      "closed_trades": 0,
-      "open_positions": 5,
-      "winning_trades": 0,
+      "closed_trades": 1,
+      "open_positions": 4,
+      "winning_trades": 1,
       "losing_trades": 0,
-      "win_rate": 0,
-      "total_pnl_cad": -13234.85,
+      "win_rate": 100.0,
+      "total_pnl_cad": -13213.09,
       "starting_balance": 100000.0,
-      "current_balance": 86765.15,
-      "return_pct": -13.23,
+      "current_balance": 85197.75,
+      "return_pct": -14.8,
       "trading_days_active": 37
     },
-    "per_strategy": []
+    "per_strategy": [
+      {
+        "strategy": "backtest-mom-v3",
+        "closed_trades": 1,
+        "wins": 1,
+        "losses": 0,
+        "win_rate": 100.0,
+        "avg_pnl_pct": 5.43,
+        "best_trade_pnl": 5.43,
+        "worst_trade_pnl": 5.43,
+        "tickers_traded": [
+          "UNH"
+        ],
+        "open_positions": 3,
+        "backtest_predicted_wr": "N/A",
+        "prediction_source": "No backtest data"
+      }
+    ]
   },
   "versions": {
     "V1 RSI<30": {
