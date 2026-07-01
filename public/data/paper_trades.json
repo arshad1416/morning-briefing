@@ -1,14 +1,14 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-07-01 07:22:14",
+  "generated_at": "2026-07-01 09:00:03",
   "price_source": "yfinance historical closes \u2014 no CAD/USD math",
-  "fx_rate_usdcad": 1.4215,
+  "fx_rate_usdcad": 1.4228,
   "portfolio": {
     "starting_balance": 100000.0,
     "cash": 85385.33,
     "invested": 1385.88,
-    "total_balance": 100034.0,
-    "total_pnl": 0.92,
+    "total_balance": 100033.08,
+    "total_pnl": 0.0,
     "unrealized_pnl": 33.08,
     "return_pct": 0.03,
     "win_rate": 33.3,
@@ -71,46 +71,5 @@
       "asset_class": "STOCK"
     }
   ],
-  "recent_trades": [
-    {
-      "ticker": "UNH",
-      "type": "ETF",
-      "asset_class": "STOCK",
-      "direction": "long",
-      "pnl_pct": -1.0,
-      "pnl_usd": -4.19,
-      "entry_price": 419.82,
-      "exit_price": 415.63,
-      "currency": "USD",
-      "entry_price_usd": 419.82,
-      "entry_price_cad": 579.35,
-      "exit_price_usd": 415.63,
-      "exit_price_cad": 573.57,
-      "strategy": "backtest-mom-v3",
-      "entry_date": "2026-06-29T17:02:20.431273",
-      "exit_date": "2026-06-30T09:30:01.993831",
-      "rationale": "S10/10",
-      "exit_rationale": "TARGET: Take profit at 5.4% (target 5%)"
-    },
-    {
-      "ticker": "XLK",
-      "type": "ETF",
-      "asset_class": "STOCK",
-      "direction": "long",
-      "pnl_pct": 2.76,
-      "pnl_usd": 5.11,
-      "entry_price": 185.41,
-      "exit_price": 190.52,
-      "currency": "USD",
-      "entry_price_usd": 185.41,
-      "entry_price_cad": 255.87,
-      "exit_price_usd": 190.52,
-      "exit_price_cad": 262.92,
-      "strategy": "backtest-sr-v3",
-      "entry_date": "2026-06-29T17:03:57.077498",
-      "exit_date": "2026-06-30T09:45:03.082133",
-      "rationale": "S9/10",
-      "exit_rationale": "TARGET: Take profit at 4.2% (target 4%)"
-    }
-  ]
+  "recent_trades": []
 }
