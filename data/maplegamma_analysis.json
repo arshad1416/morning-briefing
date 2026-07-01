@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-07-01T16:20:32.952709+00:00",
+    "generated_at": "2026-07-01T18:20:31.147897+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001109,
+    "total_cost_usd": 0.001025,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
     "kimi_momentum": "auth_error",
     "mimo_risk_contrarian": "auth_error",
     "deepseek_quantitative": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (Long)\n- **Entry:** $738.00\n- **Stop Loss:** $732.50\n- **Target:** $746.50\n- **Conviction:** 8/10\n- **Rationale:** The DS Pro analysis indicates a strong \"risk-on\" market regime. GEX data confirms a \"bullish\" gamma regime with SPY trading at $737.89. There is a massive Put Open Interest at the $730 strike (165,097 contracts), which acts as a strong support floor and dealer hedging magnet. Entering near the current price with a stop safely below the $730 GEX wall provides an excellent risk/reward profile for a continuation move higher.\n\n### Trade 2: IWM (Long - Pullback Entry)\n- **Entry:** $300.50\n- **Stop Loss:** $295.00\n- **Target:** $308.00\n- **Conviction:** 7/10\n- **Rationale:** Small caps (IWM) typically outperform in a confirmed risk-on environment. You already have an open position in profit, but adding on a slight pullback to $300.50 (retesting the psychological $300 level) offers a much better risk/reward than chasing the current $302.07 price. The stop is placed below your original entry ($298.97) and recent structural support to invalidate the thesis if the trend reverses."
+    "qwen_trade_selector": "### Trade 1: SPY (Long)\n- **Entry:** $737.50\n- **Stop:** $728.50\n- **Target:** $746.00\n- **Conviction:** 8/10\n- **Rationale:** The market is in a \"risk-on\" regime with a \"bullish\" gamma setup. SPY is currently trading at $737.89, well above the massive Put GEX wall at the $730.00 strike (which holds 201,055 GEX and acts as strong dealer support). Entering near current prices with a stop placed safely below the $730 gamma flip/support level to capture upside momentum.\n\n### Trade 2: QQQ (Long)\n- **Entry:** $512.30\n- **Stop:** $504.50\n- **Target:** $525.00\n- **Conviction:** 7/10\n- **Rationale:** With the broader market in a risk-on environment and your current small-cap (IWM) and financial (XLF) positions already running profitably, adding large-cap tech exposure via QQQ provides high-beta leverage to the current trend. Entering on a minor intraday pullback with a tight stop to maintain a strong risk/reward ratio."
   }
 }
