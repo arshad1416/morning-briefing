@@ -1,6 +1,50 @@
 {
   "entries": [
     {
+      "date": "2026-06-30",
+      "council_query": "Market outlook analysis for 2026-06-30",
+      "recommendations": [
+        {
+          "model": "gemini-2.0-flash-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.5,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 0.04,
+        "total_pnl": -0.07,
+        "unrealized_pnl": 37.82,
+        "open_positions_count": 3,
+        "generated_at": "2026-06-30 15:30:02",
+        "positions": [
+          {
+            "ticker": "CAT",
+            "direction": "long",
+            "pnl_pct": 3.48,
+            "asset_class": "STOCK"
+          },
+          {
+            "ticker": "IWM",
+            "direction": "long",
+            "pnl_pct": 0.63,
+            "asset_class": "STOCK"
+          },
+          {
+            "ticker": "XLF",
+            "direction": "long",
+            "pnl_pct": -0.09,
+            "asset_class": "STOCK"
+          }
+        ]
+      },
+      "correct_models": [],
+      "correlation_score": 0.0
+    },
+    {
       "date": "2026-06-29",
       "council_query": "Market outlook analysis for 2026-06-29",
       "recommendations": [
