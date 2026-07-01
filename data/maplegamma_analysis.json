@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-07-01T11:25:40.461684+00:00",
+    "generated_at": "2026-07-01T14:20:35.773944+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001258,
+    "total_cost_usd": 0.001191,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
-    "deepseek_quantitative": "auth_error",
     "mimo_risk_contrarian": "auth_error",
+    "deepseek_quantitative": "auth_error",
     "kimi_momentum": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF)\n- **Direction:** Long\n- **Entry:** $738.50\n- **Stop Loss:** $727.50 \n- **Target:** $750.00\n- **Conviction:** 8/10\n- **Rationale:** The GEX data indicates a bullish gamma regime with major dealer support (Max GEX) at the $730 strike. Placing the stop just below $730 invalidates the thesis if support breaks. In a \"risk-on\" environment, upside momentum should accelerate toward the next major open interest strike at $750.\n\n### Trade 2: NVDA (Nvidia)\n- **Direction:** Long\n- **Entry:** $145.20\n- **Stop Loss:** $138.50\n- **Target:** $158.00\n- **Conviction:** 7/10\n- **Rationale:** High-beta semiconductor leader that typically outperforms during \"risk-on\" market regimes. Acts as a high-conviction, leveraged play on the broader bullish SPY gamma setup and strong tech sector momentum."
+    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF) - Pullback Long\n* **Ticker:** SPY\n* **Direction:** Long\n* **Entry:** $732.50\n* **Stop Loss:** $726.50\n* **Target:** $749.00\n* **Conviction:** 8/10\n* **Rationale:** The options market shows a \"bullish\" gamma regime with a massive put wall at the $730 strike (Max GEX), which will act as strong dealer-supported floor. With the broader market regime identified as \"risk-on\", buying the dip toward this $730 support level offers an excellent risk/reward profile, targeting the next major open interest cluster near $750.\n\n### Trade 2: QQQ (Nasdaq 100 ETF) - Trend Continuation Long\n* **Ticker:** QQQ\n* **Direction:** Long\n* **Entry:** $625.50\n* **Stop Loss:** $614.00\n* **Target:** $648.00\n* **Conviction:** 7/10\n* **Rationale:** In a confirmed \"risk-on\" environment, large-cap technology typically provides the highest beta and leads the rally. This trade capitalizes on tech outperformance relative to the broader market. The entry is positioned near immediate structural support, with a stop placed below the recent consolidation zone to protect against sudden regime shifts."
   }
 }
