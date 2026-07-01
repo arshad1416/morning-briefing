@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-07-01T14:20:35.773944+00:00",
+    "generated_at": "2026-07-01T16:20:32.952709+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001191,
+    "total_cost_usd": 0.001109,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
+    "kimi_momentum": "auth_error",
     "mimo_risk_contrarian": "auth_error",
     "deepseek_quantitative": "auth_error",
-    "kimi_momentum": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF) - Pullback Long\n* **Ticker:** SPY\n* **Direction:** Long\n* **Entry:** $732.50\n* **Stop Loss:** $726.50\n* **Target:** $749.00\n* **Conviction:** 8/10\n* **Rationale:** The options market shows a \"bullish\" gamma regime with a massive put wall at the $730 strike (Max GEX), which will act as strong dealer-supported floor. With the broader market regime identified as \"risk-on\", buying the dip toward this $730 support level offers an excellent risk/reward profile, targeting the next major open interest cluster near $750.\n\n### Trade 2: QQQ (Nasdaq 100 ETF) - Trend Continuation Long\n* **Ticker:** QQQ\n* **Direction:** Long\n* **Entry:** $625.50\n* **Stop Loss:** $614.00\n* **Target:** $648.00\n* **Conviction:** 7/10\n* **Rationale:** In a confirmed \"risk-on\" environment, large-cap technology typically provides the highest beta and leads the rally. This trade capitalizes on tech outperformance relative to the broader market. The entry is positioned near immediate structural support, with a stop placed below the recent consolidation zone to protect against sudden regime shifts."
+    "qwen_trade_selector": "### Trade 1: SPY (Long)\n- **Entry:** $738.00\n- **Stop Loss:** $732.50\n- **Target:** $746.50\n- **Conviction:** 8/10\n- **Rationale:** The DS Pro analysis indicates a strong \"risk-on\" market regime. GEX data confirms a \"bullish\" gamma regime with SPY trading at $737.89. There is a massive Put Open Interest at the $730 strike (165,097 contracts), which acts as a strong support floor and dealer hedging magnet. Entering near the current price with a stop safely below the $730 GEX wall provides an excellent risk/reward profile for a continuation move higher.\n\n### Trade 2: IWM (Long - Pullback Entry)\n- **Entry:** $300.50\n- **Stop Loss:** $295.00\n- **Target:** $308.00\n- **Conviction:** 7/10\n- **Rationale:** Small caps (IWM) typically outperform in a confirmed risk-on environment. You already have an open position in profit, but adding on a slight pullback to $300.50 (retesting the psychological $300 level) offers a much better risk/reward than chasing the current $302.07 price. The stop is placed below your original entry ($298.97) and recent structural support to invalidate the thesis if the trend reverses."
   }
 }
