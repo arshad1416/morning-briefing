@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-30T21:00:01.769308+00:00",
-  "date": "2026-06-30",
+  "generated_at": "2026-07-01T21:00:01.777427+00:00",
+  "date": "2026-07-01",
   "model_accuracy": {
     "Qwen 3.7 Max (Trade Idea 1)": {
       "total_predictions": 1,
@@ -39,37 +39,37 @@
       }
     },
     "gemini-2.0-flash-aggregator": {
-      "total_predictions": 2,
+      "total_predictions": 3,
       "correct_predictions": 1,
-      "win_rate": 0.5,
-      "avg_return_all": 0.02,
+      "win_rate": 0.3333,
+      "avg_return_all": 0.0,
       "avg_return_when_correct": 0.0,
-      "avg_return_when_incorrect": 0.04,
+      "avg_return_when_incorrect": 0.0,
       "best_asset_classes": [
         {
           "class": "STOCK",
-          "win_rate": 0.75,
-          "samples": 8
+          "win_rate": 0.8,
+          "samples": 10
         }
       ],
       "confusion_matrix": {
-        "neutral->bullish": 1,
+        "neutral->bullish": 2,
         "bullish->bullish": 1
       }
     }
   },
-  "prompt_weights": "Model accuracy weighting based on recent outcomes:\nModel gemini-2.0-flash-aggregator has 50% accuracy (1/2 predictions), best on STOCK (75% win rate).",
+  "prompt_weights": "Model accuracy weighting based on recent outcomes:\nModel gemini-2.0-flash-aggregator has 33% accuracy (1/3 predictions), best on STOCK (80% win rate).",
   "position_sizing": {
-    "base_multiplier": 0.75,
-    "max_position_pct": 3.8,
+    "base_multiplier": 0.7,
+    "max_position_pct": 3.5,
     "min_conviction_threshold": 6,
-    "updated_at": "2026-06-30T21:00:01.767303+00:00"
+    "updated_at": "2026-07-01T21:00:01.775355+00:00"
   },
   "strategy_weights": {
     "gemini-2.0-flash-aggregator": {
-      "weight": 0.5,
-      "samples": 2,
-      "enabled": false
+      "weight": 0.3333,
+      "samples": 3,
+      "enabled": true
     },
     "Qwen 3.7 Max (Trade Idea 1)": {
       "weight": 0.0,
@@ -82,5 +82,5 @@
       "enabled": false
     }
   },
-  "total_outcomes_analyzed": 2
+  "total_outcomes_analyzed": 3
 }

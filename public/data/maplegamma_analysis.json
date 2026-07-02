@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-07-01T18:20:31.147897+00:00",
+    "generated_at": "2026-07-02T11:20:59.333517+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001025,
+    "total_cost_usd": 0.001045,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
     "kimi_momentum": "auth_error",
     "mimo_risk_contrarian": "auth_error",
     "deepseek_quantitative": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (Long)\n- **Entry:** $737.50\n- **Stop:** $728.50\n- **Target:** $746.00\n- **Conviction:** 8/10\n- **Rationale:** The market is in a \"risk-on\" regime with a \"bullish\" gamma setup. SPY is currently trading at $737.89, well above the massive Put GEX wall at the $730.00 strike (which holds 201,055 GEX and acts as strong dealer support). Entering near current prices with a stop placed safely below the $730 gamma flip/support level to capture upside momentum.\n\n### Trade 2: QQQ (Long)\n- **Entry:** $512.30\n- **Stop:** $504.50\n- **Target:** $525.00\n- **Conviction:** 7/10\n- **Rationale:** With the broader market in a risk-on environment and your current small-cap (IWM) and financial (XLF) positions already running profitably, adding large-cap tech exposure via QQQ provides high-beta leverage to the current trend. Entering on a minor intraday pullback with a tight stop to maintain a strong risk/reward ratio."
+    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF)\n- **Direction**: Long\n- **Entry**: $736.50 (Buy on minor pullback / consolidation near current levels)\n- **Stop Loss**: $728.50 (Placed safely below the massive $730 Put wall / Max GEX strike which acts as a hard floor)\n- **Target**: $748.00 (Just below the next major GEX strike and psychological resistance at $750)\n- **Conviction**: 8/10\n- **Rationale**: The DS Pro model indicates a \"risk-on\" market regime with high confidence. The GEX data shows a \"bullish\" gamma regime with a massive put wall at $730 (Max GEX strike), providing exceptionally strong downside support. With the current price at $737.89, the path of least resistance is upward toward the $750 strike. \n\n### Trade 2: QQQ (Nasdaq 100 ETF)\n- **Direction**: Long\n- **Entry**: $512.50 (Assuming proportional pricing to SPY, enter on intraday dip)\n- **Stop Loss**: $504.00 (Risking ~1.6% to invalidate the immediate bullish tech structure)\n- **Target**: $526.00 (Capturing the broader risk-on beta move)\n- **Conviction**: 7/10\n- **Rationale**: In a confirmed \"risk-on\" environment, large-cap tech typically outperforms the broader market. Since you already have cyclicals/financials (XLF) and small-caps (IWM) open and profitable, adding large-cap tech growth provides balanced portfolio exposure to the current bullish regime without overlapping your existing positions."
   }
 }
