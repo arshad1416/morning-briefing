@@ -1,16 +1,16 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-07-02 07:22:13",
+  "generated_at": "2026-07-02 09:00:02",
   "price_source": "yfinance historical closes \u2014 no CAD/USD math",
-  "fx_rate_usdcad": 1.4206,
+  "fx_rate_usdcad": 1.4171,
   "portfolio": {
     "starting_balance": 100000.0,
     "cash": 86407.57,
     "invested": 352.69,
-    "total_balance": 99959.63,
-    "total_pnl": -41.78,
+    "total_balance": 100001.41,
+    "total_pnl": 0.0,
     "unrealized_pnl": 1.41,
-    "return_pct": -0.04,
+    "return_pct": 0.0,
     "win_rate": 30.0,
     "total_trades": 10
   },
@@ -53,26 +53,5 @@
       "asset_class": "STOCK"
     }
   ],
-  "recent_trades": [
-    {
-      "ticker": "CAT",
-      "type": "ETF",
-      "asset_class": "STOCK",
-      "direction": "long",
-      "pnl_pct": -4.04,
-      "pnl_usd": -41.78,
-      "entry_price": 1033.19,
-      "exit_price": 991.41,
-      "currency": "USD",
-      "entry_price_usd": 1033.19,
-      "entry_price_cad": 1425.8,
-      "exit_price_usd": 991.41,
-      "exit_price_cad": 1368.15,
-      "strategy": "backtest-mom-v3",
-      "entry_date": "2026-06-29T17:02:19.809299",
-      "exit_date": "2026-07-01T09:45:01.865446",
-      "rationale": "S10/10",
-      "exit_rationale": "STOP: Hard stop hit at -3.3% (limit 3%)"
-    }
-  ]
+  "recent_trades": []
 }

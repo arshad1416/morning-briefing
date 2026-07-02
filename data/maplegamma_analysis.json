@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-07-02T11:20:59.333517+00:00",
+    "generated_at": "2026-07-02T11:25:31.231168+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001045,
+    "total_cost_usd": 0.001049,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
+    "deepseek_quantitative": "auth_error",
     "kimi_momentum": "auth_error",
     "mimo_risk_contrarian": "auth_error",
-    "deepseek_quantitative": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF)\n- **Direction**: Long\n- **Entry**: $736.50 (Buy on minor pullback / consolidation near current levels)\n- **Stop Loss**: $728.50 (Placed safely below the massive $730 Put wall / Max GEX strike which acts as a hard floor)\n- **Target**: $748.00 (Just below the next major GEX strike and psychological resistance at $750)\n- **Conviction**: 8/10\n- **Rationale**: The DS Pro model indicates a \"risk-on\" market regime with high confidence. The GEX data shows a \"bullish\" gamma regime with a massive put wall at $730 (Max GEX strike), providing exceptionally strong downside support. With the current price at $737.89, the path of least resistance is upward toward the $750 strike. \n\n### Trade 2: QQQ (Nasdaq 100 ETF)\n- **Direction**: Long\n- **Entry**: $512.50 (Assuming proportional pricing to SPY, enter on intraday dip)\n- **Stop Loss**: $504.00 (Risking ~1.6% to invalidate the immediate bullish tech structure)\n- **Target**: $526.00 (Capturing the broader risk-on beta move)\n- **Conviction**: 7/10\n- **Rationale**: In a confirmed \"risk-on\" environment, large-cap tech typically outperforms the broader market. Since you already have cyclicals/financials (XLF) and small-caps (IWM) open and profitable, adding large-cap tech growth provides balanced portfolio exposure to the current bullish regime without overlapping your existing positions."
+    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF) - Long\n* **Entry:** $737.50\n* **Stop Loss:** $728.50 \n* **Target:** $748.00\n* **Conviction:** 8/10\n* **Rationale:** The DS Pro model indicates a \"risk-on\" market regime, and the GEX data shows a \"bullish\" gamma regime. The $730 strike holds massive Put GEX (201,055), which will act as a strong support floor and dealer hedging magnet. Entering near current levels with a stop safely below the $730 GEX wall allows for favorable risk/reward to the upside.\n\n### Trade 2: IWM (Russell 2000 ETF) - Long\n* **Entry:** $299.00\n* **Stop Loss:** $293.50\n* **Target:** $308.00\n* **Conviction:** 7/10\n* **Rationale:** Small-cap equities historically outperform during \"risk-on\" environments. IWM is already showing a slight profit in the current paper portfolio. This trade looks to add exposure on a minor pullback to the $299.00 level, with a stop placed below the $295.00 structural support zone, targeting a push above the psychological $300.00 resistance."
   }
 }
