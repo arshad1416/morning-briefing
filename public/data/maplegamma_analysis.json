@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-07-02T14:20:35.824258+00:00",
+    "generated_at": "2026-07-02T16:20:26.580482+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.00101,
+    "total_cost_usd": 0.000876,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
-    "kimi_momentum": "auth_error",
     "mimo_risk_contrarian": "auth_error",
     "deepseek_quantitative": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF)\n- **Direction:** Long\n- **Entry:** $736.50\n- **Stop Loss:** $728.50\n- **Target:** $748.00\n- **Conviction:** 8/10\n- **Rationale:** The DS Pro model indicates a \"risk-on\" market regime, and the GEX data shows a \"bullish\" gamma regime for SPY. There is a massive positive GEX wall at the $730 strike (driven by 165k Put OI), which will act as strong support as dealers hedge by buying dips. Entering on a slight pullback toward this support zone provides an excellent risk-to-reward ratio. \n\n### Trade 2: IWM (Russell 2000 ETF)\n- **Direction:** Long (Add to existing position)\n- **Entry:** $300.00\n- **Stop Loss:** $294.50\n- **Target:** $310.00\n- **Conviction:** 7/10\n- **Rationale:** You already have a profitable open position in IWM. In a broad \"risk-on\" environment, small caps tend to outperform. Adding to the position on a minor pullback to the $300 psychological support level allows you to scale into the trend while keeping your stop safely below the recent consolidation zone."
+    "kimi_momentum": "auth_error",
+    "qwen_trade_selector": "### Trade 1: SPY (Long)\n* **Direction:** Long\n* **Entry:** $737.50\n* **Stop Loss:** $729.50 \n* **Target:** $748.00\n* **Conviction:** 8/10\n* **Rationale:** The GEX data shows a massive Put wall at the $730 strike, creating a strong floor/support level. Combined with a \"bullish\" gamma regime and a \"risk-on\" macro environment, the path of least resistance is higher. The stop is placed just below the $730 GEX magnet to invalidate the thesis if the wall breaks.\n\n### Trade 2: IWM (Long / Add to Position)\n* **Direction:** Long (Average down on existing position)\n* **Entry:** $297.50\n* **Stop Loss:** $292.00\n* **Target:** $305.00\n* **Conviction:** 7/10\n* **Rationale:** You already have an open IWM position slightly in the red. In a confirmed \"risk-on\" market regime, small-caps (IWM) typically exhibit high beta and outperform. Adding near current levels ($297.50) lowers your average cost basis, with a stop placed below structural support to manage downside risk."
   }
 }
