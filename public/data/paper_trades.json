@@ -1,18 +1,18 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-07-02 09:30:02",
+  "generated_at": "2026-07-02 10:00:02",
   "price_source": "yfinance historical closes \u2014 no CAD/USD math",
-  "fx_rate_usdcad": 1.4174,
+  "fx_rate_usdcad": 1.4171,
   "portfolio": {
     "starting_balance": 100000.0,
-    "cash": 86407.57,
-    "invested": 352.69,
-    "total_balance": 100001.41,
-    "total_pnl": 0.0,
-    "unrealized_pnl": 1.41,
+    "cash": 86462.87,
+    "invested": 298.97,
+    "total_balance": 100003.9,
+    "total_pnl": 1.37,
+    "unrealized_pnl": 2.53,
     "return_pct": 0.0,
-    "win_rate": 30.0,
-    "total_trades": 10
+    "win_rate": 36.4,
+    "total_trades": 11
   },
   "active_strategy": "V23 VIX>=12 MR",
   "open_positions": [
@@ -21,37 +21,40 @@
       "type": "ETF",
       "entry_date": "2026-06-29",
       "entry_price": 298.97,
-      "current_price": 299.32,
+      "current_price": 301.5,
       "currency": "USD",
       "entry_price_usd": 298.97,
       "entry_price_cad": 412.58,
-      "current_price_usd": 299.32,
-      "current_price_cad": 413.06,
-      "pnl": 0.35,
-      "pnl_pct": 0.12,
-      "strategy": "backtest-mom-v3",
-      "direction": "long",
-      "rationale": "S9/10",
-      "asset_class": "STOCK"
-    },
-    {
-      "ticker": "XLF",
-      "type": "ETF",
-      "entry_date": "2026-06-29",
-      "entry_price": 53.72,
-      "current_price": 54.78,
-      "currency": "USD",
-      "entry_price_usd": 53.72,
-      "entry_price_cad": 74.13,
-      "current_price_usd": 54.78,
-      "current_price_cad": 75.6,
-      "pnl": 1.06,
-      "pnl_pct": 1.97,
+      "current_price_usd": 301.5,
+      "current_price_cad": 416.07,
+      "pnl": 2.53,
+      "pnl_pct": 0.85,
       "strategy": "backtest-mom-v3",
       "direction": "long",
       "rationale": "S9/10",
       "asset_class": "STOCK"
     }
   ],
-  "recent_trades": []
+  "recent_trades": [
+    {
+      "ticker": "XLF",
+      "type": "ETF",
+      "asset_class": "STOCK",
+      "direction": "long",
+      "pnl_pct": 2.55,
+      "pnl_usd": 1.37,
+      "entry_price": 53.72,
+      "exit_price": 55.09,
+      "currency": "USD",
+      "entry_price_usd": 53.72,
+      "entry_price_cad": 74.13,
+      "exit_price_usd": 55.09,
+      "exit_price_cad": 76.02,
+      "strategy": "backtest-mom-v3",
+      "entry_date": "2026-06-29T17:03:55.632844",
+      "exit_date": "2026-07-02T09:30:02.810204",
+      "rationale": "S9/10",
+      "exit_rationale": "TARGET: Take profit at 4.0% (target 4%)"
+    }
+  ]
 }
