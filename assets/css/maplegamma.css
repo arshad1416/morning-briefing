@@ -383,6 +383,17 @@
   padding: 20px 24px 64px;
 }
 
+/* Embedded inside the GEX & Flow section (sub-tab pane), the section already
+   supplies the page's horizontal padding. Drop mg-dashboard's own so its
+   content lines up with the Gamma Profile / Options Flow buttons above it
+   instead of sitting 24px to their right. */
+.research-pane .mg-dashboard {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+}
+
 /* Section spacer */
 .mg-section {
   margin-bottom: 24px;

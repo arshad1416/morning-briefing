@@ -57,9 +57,15 @@ const OptionsFlow = {
     const putPct = (putCnt / total * 100).toFixed(0);
     html += '<div style="flex:2;min-width:200px">';
     html += '<div style="font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Distribution</div>';
-    html += '<div style="display:flex;height:24px;border-radius:12px;overflow:hidden">';
-    html += `<div style="flex:${callCnt};background:var(--green, #4caf50);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:600;color:#fff">☎ Calls ${callPct}%</div>`;
-    html += `<div style="flex:${putCnt};background:var(--red, #f44336);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:600;color:#fff">⛔ Puts ${putPct}%</div>`;
+    // Bar is a pure proportional visual — labels go in the legend below so a
+    // lopsided split (e.g. 12% calls) never clips the text inside a thin slice.
+    html += '<div style="display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--bg-inset)">';
+    html += `<div style="flex:${callCnt};background:var(--green, #4caf50);min-width:${callCnt ? '3px' : '0'}"></div>`;
+    html += `<div style="flex:${putCnt};background:var(--red, #f44336);min-width:${putCnt ? '3px' : '0'}"></div>`;
+    html += '</div>';
+    html += '<div style="display:flex;justify-content:space-between;margin-top:6px;font-size:0.72rem;font-weight:600">';
+    html += `<span style="color:var(--green, #4caf50)">☎ ${callPct}% Calls</span>`;
+    html += `<span style="color:var(--red, #f44336)">⛔ ${putPct}% Puts</span>`;
     html += '</div>';
     html += '</div>';
 
