@@ -1,6 +1,38 @@
 {
   "entries": [
     {
+      "date": "2026-07-02",
+      "council_query": "Market outlook analysis for 2026-07-02",
+      "recommendations": [
+        {
+          "model": "gemini-2.0-flash-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.5,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bearish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bearish",
+        "return_pct": 0.0,
+        "total_pnl": 1.68,
+        "unrealized_pnl": -3.39,
+        "open_positions_count": 1,
+        "generated_at": "2026-07-02 15:30:02",
+        "positions": [
+          {
+            "ticker": "IWM",
+            "direction": "long",
+            "pnl_pct": -1.13,
+            "asset_class": "STOCK"
+          }
+        ]
+      },
+      "correct_models": [],
+      "correlation_score": 0.0
+    },
+    {
       "date": "2026-07-01",
       "council_query": "Market outlook analysis for 2026-07-01",
       "recommendations": [

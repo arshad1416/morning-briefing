@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-07-02T18:20:33.406653+00:00",
+    "generated_at": "2026-07-03T11:20:56.622596+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001138,
+    "total_cost_usd": 0.00173,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
-    "mimo_risk_contrarian": "auth_error",
     "kimi_momentum": "auth_error",
     "deepseek_quantitative": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY Long\n- **Entry:** $737.85\n- **Stop:** $729.25 \n- **Target:** $748.50\n- **Conviction:** 8/10\n- **Rationale:** The DS Pro model indicates a \"risk-on\" market regime with high confidence. GEX data confirms a \"bullish\" gamma regime with SPY currently at $737.89. The massive Put open interest at the $730 strike (165,097 contracts) acts as a strong support floor (put wall). The stop is placed just below this $730 level, while the target is set just below the next major options strike at $750.\n\n### Trade 2: IWM Long (Add to Position)\n- **Entry:** $295.10\n- **Stop:** $288.50\n- **Target:** $304.00\n- **Conviction:** 7/10\n- **Rationale:** You are currently holding IWM at $298.97 with a slight unrealized loss. In a broader \"risk-on\" environment, small-cap indices typically exhibit high beta and catch up to large caps. Adding to the position near the current price ($295.09) lowers your average cost basis. The stop is placed below structural support, with a target to push back above your original entry and test the $304 level."
+    "mimo_risk_contrarian": "auth_error",
+    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF)\n- **Direction:** Long\n- **Entry:** $738.00 \n- **Stop Loss:** $728.50 \n- **Target:** $749.50 \n- **Conviction:** 8/10\n- **Risk/Reward:** ~1 : 1.2\n- **Rationale:** The DS Pro model indicates a \"risk-on\" market regime with high confidence (8/10). GEX data confirms a \"bullish\" gamma regime with SPY currently trading at $737.89. The massive Put OI at the $730 strike (Max GEX) acts as a strong support floor/magnet. With price holding comfortably above this wall, the path of least resistance is upward toward the next major strike and resistance level at $750. We place the stop just below the $730 GEX wall to invalidate the thesis if dealer hedging flips.\n\n### Trade 2: IWM (Russell 2000 ETF) - *New Swing Lot*\n- **Direction:** Long\n- **Entry:** $295.50\n- **Stop Loss:** $291.00\n- **Target:** $302.50\n- **Conviction:** 6/10\n- **Risk/Reward:** ~1 : 1.5\n- **Rationale:** You currently hold an open IWM position that is slightly underwater (entry $298.97, current $295.58). In a broad \"risk-on\" environment, small-cap equities typically exhibit high beta and catch up to large-cap momentum. This trade proposes a *new, separate lot* to average into the current pullback and capture the swing back to the $300+ psychological resistance. The stop is placed below the $295 psychological level and recent structural support to prevent compounding losses if the broader risk-on theme fails to lift small caps."
   }
 }
