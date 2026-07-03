@@ -302,8 +302,11 @@ const MapleGamma = {
         <label class="active"><input type="radio" name="mg-mode" value="simple" checked> 🌿 Beginner: Zones</label>
         <label><input type="radio" name="mg-mode" value="advanced"> ⚡ Advanced: Full Table</label>
       </div>
-      <div id="mg-table-content">`; // simple mode = nothing extra shown
-    html += this._buildGammaTableHTML(data, defaultTicker, 'all');
+      <div id="mg-table-content">`;
+    // Render the content that matches the checked mode (simple) on first
+    // paint. Building the full table here and swapping it out post-render
+    // meant Advanced flashed/stuck if the swap was delayed or threw.
+    html += this._beginnerTableNote();
     html += `</div></div>`;
 
     // ── WIDGET 5: Net GEX by Expiration ──
@@ -996,12 +999,19 @@ const MapleGamma = {
       });
     } else {
       // Simple mode: hide the table, show the zone cards reference
-      content.innerHTML = `
-        <div style="padding:20px 0;color:var(--text-muted);font-size:var(--text-sm);text-align:center">
-          🌿 In Beginner Mode, focus on the <strong>Floor &amp; Ceiling Zone cards</strong> above.
-          Switch to <strong>Advanced</strong> for the full gamma exposure table.
-        </div>`;
+      content.innerHTML = this._beginnerTableNote();
     }
+  },
+
+  /** Beginner-mode placeholder shown in place of the full gamma table.
+   *  Shared by the initial render and the mode toggle so the two never
+   *  disagree. */
+  _beginnerTableNote() {
+    return `
+      <div style="padding:20px 0;color:var(--text-muted);font-size:var(--text-sm);text-align:center">
+        🌿 In Beginner Mode, focus on the <strong>Floor &amp; Ceiling Zone cards</strong> above.
+        Switch to <strong>Advanced</strong> for the full gamma exposure table.
+      </div>`;
   },
 
   /* ─────────────────────────────────────────────────────────────
