@@ -50,11 +50,14 @@ const Screener = {
   /** Page header with summary stats */
   _buildHeader(data) {
     const ms = data.market_summary || {};
-    const stale = State.isStale(data.generated_at);
+    // The screener is a once-a-day scan (~10:30 AM ET, weekdays), so it's
+    // only "stale" once it's from a prior trading day — not merely >6h old.
+    const stale = State.isStaleDaily(data.generated_at);
 
     let html = '';
     if (stale) {
-      html += '<div class="stale-banner">⚠ Data from ' + new Date(data.generated_at).toLocaleTimeString() + ' — may be stale</div>';
+      const when = new Date(data.generated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      html += '<div class="stale-banner">⚠ Showing the ' + when + ' scan — the screener refreshes ~10:30 AM ET on trading days</div>';
     }
 
     html += '<div class="section"><h2 class="section-title">Stock Screener</h2>';

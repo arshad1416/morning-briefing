@@ -55,6 +55,33 @@
   color: var(--text-primary);
 }
 
+/* Always-visible toolbar controls (search + sort) share the drawer's
+   control styling so the sort dropdown doesn't fall back to raw browser
+   chrome that clashes with the rest of the UI. */
+.screener-filter-toolbar select,
+.screener-filter-toolbar input[type="text"] {
+  background: var(--bg-inset);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-family: var(--font-ui);
+  min-height: 36px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.screener-filter-toolbar select:focus,
+.screener-filter-toolbar input[type="text"]:focus {
+  border-color: var(--accent);
+}
+
+.screener-filter-toolbar select option {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
 .screener-btn {
   background: var(--accent-dim);
   border: 1px solid var(--accent-border);
