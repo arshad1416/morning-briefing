@@ -668,10 +668,12 @@ const Screener = {
       return '<span class="badge ' + bg + '" style="margin:1px">' + s.replace(/_/g, ' ') + '</span>';
     }).join(' ');
 
-    // Score: green gradient (higher = darker green)
-    const score = t.score || 0;
-    const scoreOpacity = score / 10;
-    const scoreStyle = 'background:rgba(76,175,80,' + (0.12 + scoreOpacity * 0.35) + ');font-weight:700;border-radius:4px;padding:2px 6px';
+    // Score: ONE highlighted box (not a badge nested inside a tinted box).
+    // Colour by tier to match the RSI/vol highlight pattern.
+    const score = t.score != null ? t.score : null;
+    const scoreRgb = score == null ? '128,128,128' : score >= 7 ? '76,175,80' : score >= 5 ? '245,197,66' : '239,83,80';
+    const scoreTxt = score == null ? 'var(--text-muted)' : score >= 7 ? 'var(--green)' : score >= 5 ? 'var(--yellow)' : 'var(--red)';
+    const scoreStyle = 'display:inline-block;min-width:22px;text-align:center;background:rgba(' + scoreRgb + ',0.15);color:' + scoreTxt + ';font-weight:700;border-radius:4px;padding:2px 8px';
 
     // RSI: red when oversold (<30), green when overbought (>70)
     let rsiCell = '<td>' + (t.rsi != null ? t.rsi.toFixed(1) : '—') + '</td>';
@@ -694,13 +696,13 @@ const Screener = {
       '<td><a href="#/ticker/' + t.ticker + '" class="archive-date">' + t.ticker + '</a></td>' +
       '<td>' + Utils.formatPrice(t.price) + '</td>' +
       '<td class="' + cls + '">' + Utils.formatPct(t.change_pct) + '</td>' +
-      '<td style="text-align:center"><span style="' + scoreStyle + '">' + Utils.scoreBadge(t.score) + '</span></td>' +
+      '<td style="text-align:center"><span style="' + scoreStyle + '">' + (score != null ? score : '—') + '</span></td>' +
       '<td>' + (t.pe != null ? t.pe.toFixed(1) : '—') + '</td>' +
       '<td style="font-size:0.8rem">' + mcap + '</td>' +
       '<td>' + (t.divYield != null && t.divYield > 0 ? t.divYield.toFixed(2) + '%' : '—') + '</td>' +
       rsiCell +
       volCell +
-      '<td style="font-size:0.75rem;color:var(--text-muted)">' + (t.sector ? t.sector.substring(0, 12) : '—') + '</td>' +
+      '<td style="font-size:0.75rem;color:var(--text-muted);white-space:normal;min-width:96px;line-height:1.25">' + (t.sector ? Utils.esc(t.sector) : '—') + '</td>' +
       '<td style="max-width:200px">' + (signals || '—') + '</td>' +
     '</tr>';
   },
