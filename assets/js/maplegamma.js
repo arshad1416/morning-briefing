@@ -564,8 +564,8 @@ const MapleGamma = {
     // ── Y-axis label ──
     ctx.textAlign = 'right';
     ctx.textBaseline = 'middle';
-    ctx.fillText('+' + this._fmtGexShort(maxAbs), pad.left - 6, pad.top + 4);
-    ctx.fillText('-' + this._fmtGexShort(maxAbs), pad.left - 6, pad.top + chartH - 4);
+    ctx.fillText(this._fmtGexShort(maxAbs), pad.left - 6, pad.top + 4);
+    ctx.fillText(this._fmtGexShort(-maxAbs), pad.left - 6, pad.top + chartH - 4);
     ctx.textBaseline = 'middle';
     ctx.fillText('0', pad.left - 6, zeroY);
 

@@ -340,7 +340,7 @@ const PaperTrades = {
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Trades</div>'
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">' + p.total_trades + '</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Unrealized</div>'
-        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + ((p.unrealized_pnl || 0) >= 0 ? 'var(--positive)' : 'var(--negative)') + '">' + ((p.unrealized_pnl || 0) >= 0 ? '+' : '') + '$' + Utils.formatPrice(Math.abs(p.unrealized_pnl || 0)) + '</div></div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + ((p.unrealized_pnl || 0) >= 0 ? 'var(--positive)' : 'var(--negative)') + '">' + ((p.unrealized_pnl || 0) >= 0 ? '+' : '-') + '$' + Utils.formatPrice(Math.abs(p.unrealized_pnl || 0)) + '</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Active Strategy</div>'
         + '<div style="font-size:0.9rem;font-weight:600;margin-top:4px">' + Utils.esc(data.active_strategy || '—') + '</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Last Updated</div>'
