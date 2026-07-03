@@ -47,8 +47,11 @@ const Dashboard = {
     const ms = marketData?.market_summary || {};
     const vix = ms.vix;
 
-    // ── 1. REGIME BADGE ──
-    html += this._regimeBadge(vix, ms);
+    // ── 1. STATUS STRIP ──
+    // Telemetry only (VIX / 10Y / session). The regime word lives in one
+    // place — The Call card below — unless verdict data is missing, in
+    // which case the strip keeps its badge as a fallback.
+    html += this._regimeBadge(vix, ms, !verdictData);
 
     // Staleness / time indicator (mirrors _buildHTML pattern)
     if (marketData?.generated_at) {
@@ -608,7 +611,7 @@ const Dashboard = {
     return html;
   },
 
-  _regimeBadge(vix, ms) {
+  _regimeBadge(vix, ms, showLabel) {
     if (vix == null) return '';
     let label = 'NEUTRAL', cls = 'regime-neutral';
     if (vix < 15) { label = 'RISK-ON'; cls = 'regime-risk-on'; }
@@ -621,7 +624,7 @@ const Dashboard = {
     const vixArrow = ms.vix_change_pct != null ? (ms.vix_change_pct >= 0 ? '▲' : '▼') : '';
 
     return `<div class="today-regime ${cls}">
-      <span class="regime-badge">● ${label}</span>
+      ${showLabel ? `<span class="regime-badge">● ${label}</span>` : ''}
       <span class="regime-vix">VIX ${Utils.formatPrice(vix)} ${vixArrow}<span class="${vixCls}">${vixChange}</span></span>
       <span class="regime-ten">10Y ${ms.ten_year_yield != null ? ms.ten_year_yield + '%' : '—'}</span>
       <span class="regime-session">${this._sessionLabel()} · ${this._sessionTime()} ET</span>
