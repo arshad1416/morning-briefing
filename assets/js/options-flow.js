@@ -28,16 +28,27 @@ const OptionsFlow = {
     html += `<div style="font-size:1.8rem;font-weight:700">${flow.total_unusual_contracts || 0}</div>`;
     html += '</div>';
 
-    // Call/Put ratio
+    // Call/Put ratio — "3:22" is a raw count pair, not a trader-readable
+    // ratio. Show the P/C (or C/P) multiple with the counts underneath.
     const cpRatio = flow.call_put_ratio || '—';
     const cpParts = typeof cpRatio === 'string' ? cpRatio.split(':') : [];
     const callCnt = parseInt(cpParts[0]) || 0;
     const putCnt = parseInt(cpParts[1]) || 0;
     const isCallHeavy = callCnt >= putCnt;
     const ratioColor = isCallHeavy ? 'var(--green, #4caf50)' : 'var(--red, #f44336)';
+    let ratioLabel = '—', ratioSub = '';
+    if (callCnt || putCnt) {
+      if (isCallHeavy) {
+        ratioLabel = 'Calls ' + (putCnt > 0 ? (callCnt / putCnt).toFixed(1) + '×' : 'only');
+      } else {
+        ratioLabel = 'Puts ' + (callCnt > 0 ? (putCnt / callCnt).toFixed(1) + '×' : 'only');
+      }
+      ratioSub = callCnt + ' call' + (callCnt === 1 ? '' : 's') + ' · ' + putCnt + ' put' + (putCnt === 1 ? '' : 's');
+    }
     html += '<div style="flex:1;min-width:120px">';
-    html += '<div style="font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">Call/Put Ratio</div>';
-    html += `<div style="font-size:1.8rem;font-weight:700;color:${ratioColor}">${cpRatio}</div>`;
+    html += '<div style="font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">Flow Skew</div>';
+    html += `<div style="font-size:1.8rem;font-weight:700;color:${ratioColor}">${ratioLabel}</div>`;
+    if (ratioSub) html += `<div style="font-size:0.72rem;color:var(--text-muted)">${ratioSub}</div>`;
     html += '</div>';
 
     // Call vs Put bar
@@ -75,8 +86,9 @@ const OptionsFlow = {
       html += '<table class="of-table"><thead><tr>';
       html += '<th>Ticker</th><th>Strike</th><th>Expiry</th><th>Volume</th><th>Vol/OI</th><th>Premium</th><th>Signal</th>';
       html += '</tr></thead><tbody>';
+      const _cMax = Math.max(...flow.top_overbought_calls.map(o => o.vol_oi_ratio || 0), 1);
       flow.top_overbought_calls.forEach(o => {
-        const ratioWidth = Math.min(100, (o.vol_oi_ratio || 0) * 5);
+        const ratioWidth = Math.max(4, Math.round((o.vol_oi_ratio || 0) / _cMax * 100));
         const premiumStr = o.premium >= 1000000
           ? '$' + (o.premium / 1000000).toFixed(1) + 'M'
           : o.premium >= 1000
@@ -103,8 +115,9 @@ const OptionsFlow = {
       html += '<table class="of-table"><thead><tr>';
       html += '<th>Ticker</th><th>Strike</th><th>Expiry</th><th>Volume</th><th>Vol/OI</th><th>Premium</th><th>Signal</th>';
       html += '</tr></thead><tbody>';
+      const _pMax = Math.max(...flow.top_overbought_puts.map(o => o.vol_oi_ratio || 0), 1);
       flow.top_overbought_puts.forEach(o => {
-        const ratioWidth = Math.min(100, (o.vol_oi_ratio || 0) * 5);
+        const ratioWidth = Math.max(4, Math.round((o.vol_oi_ratio || 0) / _pMax * 100));
         const premiumStr = o.premium >= 1000000
           ? '$' + (o.premium / 1000000).toFixed(1) + 'M'
           : o.premium >= 1000
@@ -148,7 +161,7 @@ const OptionsFlow = {
       const bias = isCallHeavy
         ? 'Call bias — market leaning bullish on net'
         : 'Put bias — bearish hedging or speculation detected';
-      html += `<div>⚖️ <strong>Balance:</strong> ${cpRatio} ratio. ${bias}</div>`;
+      html += `<div>⚖️ <strong>Balance:</strong> ${ratioSub || cpRatio}. ${bias}</div>`;
     }
     
     html += '</div></div>';
@@ -156,7 +169,7 @@ const OptionsFlow = {
     // ── Footer note ──
     html += '<div style="margin-top:16px;padding:12px;background:var(--bg-inset);border-radius:8px;font-size:0.78rem;color:var(--text-muted);display:flex;justify-content:space-between;align-items:center">';
     html += '<span>Data from yfinance options chains — unusual activity defined as Vol/OI > 2×, volume > 100 contracts</span>';
-    html += '<a href="#/maplegamma" style="color:var(--accent);text-decoration:none;font-size:0.78rem">MapleGamma GEX/DEX →</a>';
+    html += '<a href="#/gex" style="color:var(--accent);text-decoration:none;font-size:0.78rem">Gamma profile →</a>';
     html += '</div>';
 
     html += '</div>'; // close section

@@ -330,9 +330,12 @@ def compute_market_summary(tickers):
     changes = [t['change_pct'] for t in tickers if t.get('change_pct') is not None]
     scores = [t['score'] for t in tickers if t.get('score')]
 
+    # yfinance returns sector=None for ETFs/bonds/commodities; `.get()` with a
+    # default doesn't catch an explicit None, which serialized to a literal
+    # "null" key in the JSON (and a "null" tile on the dashboard heatmap).
     sectors = {}
     for t in tickers:
-        s = t.get('sector', 'Unknown')
+        s = t.get('sector') or 'ETF / Other'
         if s not in sectors:
             sectors[s] = {'count': 0, 'avg_change': 0}
         sectors[s]['count'] += 1
@@ -340,7 +343,7 @@ def compute_market_summary(tickers):
     # Compute average change per sector
     sector_changes = {}
     for t in tickers:
-        s = t.get('sector', 'Unknown')
+        s = t.get('sector') or 'ETF / Other'
         if s not in sector_changes:
             sector_changes[s] = []
         if t.get('change_pct') is not None:

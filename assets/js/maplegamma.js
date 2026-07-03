@@ -244,7 +244,8 @@ const MapleGamma = {
     this._data = data;
 
     const tickers = Object.keys(data.tickers);
-    const defaultTicker = 'SPX';
+    // Trust the data for which underlying we're showing — never hardcode.
+    const defaultTicker = tickers.includes('SPY') ? 'SPY' : (tickers[0] || 'SPX');
     this._selectedTicker = defaultTicker;
     this._defaultTicker = defaultTicker;
     this._selectedOverlay = 'gex';
@@ -254,6 +255,21 @@ const MapleGamma = {
     // ── Data refresh timestamp ──
     if (data.generated_at) {
       html += `<div class="mg-stale-banner">📡 Data refreshed: ${new Date(data.generated_at).toLocaleString('en-CA', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' })}</div>`;
+    }
+
+    // ── Sanity guard: price and strikes must live on the same scale.
+    // If the pipeline ever mixes underlyings again (e.g. SPX index price
+    // over SPY strikes), say so instead of rendering wrong levels.
+    const _t0 = data.tickers[defaultTicker];
+    const _prof0 = _t0 && _t0.gamma_profile;
+    if (_t0 && _prof0 && _prof0.length && _t0.current_price > 0) {
+      const _maxStrike = _prof0[_prof0.length - 1].strike;
+      const _minStrike = _prof0[0].strike;
+      if (_t0.current_price > _maxStrike * 2 || _t0.current_price < _minStrike / 2) {
+        html += '<div class="mg-error-card" style="margin-bottom:12px"><strong>⚠ Data quality issue</strong><p>The quoted price for ' + defaultTicker + ' (' + Utils.formatPrice(_t0.current_price) + ') does not match the option strike range (' + Utils.formatPrice(_minStrike, 0) + '–' + Utils.formatPrice(_maxStrike, 0) + '). Floor/ceiling levels are hidden until the pipeline republishes consistent data.</p></div>';
+        _t0.floor_zone = null;
+        _t0.ceiling_zone = null;
+      }
     }
 
     // ── WIDGET 1: Metics Bar ──
@@ -514,21 +530,24 @@ const MapleGamma = {
       ctx.stroke();
     }
 
-    // ── Current price line ──
-    ctx.strokeStyle = cssAccent;
-    ctx.lineWidth = 2;
-    ctx.setLineDash([6, 4]);
-    ctx.beginPath();
-    ctx.moveTo(priceX, pad.top);
-    ctx.lineTo(priceX, pad.top + chartH);
-    ctx.stroke();
-    ctx.setLineDash([]);
+    // ── Current price line (only when the price actually falls inside the
+    //    strike domain — a price off-scale means bad data, not an edge bar) ──
+    if (priceFrac >= -0.05 && priceFrac <= 1.05) {
+      ctx.strokeStyle = cssAccent;
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 4]);
+      ctx.beginPath();
+      ctx.moveTo(priceX, pad.top);
+      ctx.lineTo(priceX, pad.top + chartH);
+      ctx.stroke();
+      ctx.setLineDash([]);
 
-    // Price label
-    ctx.fillStyle = cssAccent;
-    ctx.font = '11px "IBM Plex Mono", monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText(Utils.formatPrice(currentPrice), priceX, pad.top - 5);
+      // Price label
+      ctx.fillStyle = cssAccent;
+      ctx.font = '11px "IBM Plex Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(Utils.formatPrice(currentPrice), priceX, pad.top - 5);
+    }
 
     // ── Axis labels ──
     ctx.fillStyle = cssTextMuted;
@@ -595,7 +614,7 @@ const MapleGamma = {
           <div class="mg-zone-name">Gamma Floor</div>
           <div class="mg-zone-range">${Utils.formatPrice(floor.range_start)} — ${Utils.formatPrice(floor.range_end)}</div>
           <div><span class="mg-zone-strength ${floor.strength}">${floor.strength}</span></div>
-          <div class="mg-zone-gex">Total GEX: <strong class="positive">+${this._fmtGex(floor.total_gex)}</strong></div>
+          <div class="mg-zone-gex">Total GEX: <strong class="positive">${this._fmtGex(floor.total_gex)}</strong></div>
           <div class="mg-zone-narrative">"${floor.narrative}"</div>
           <div class="mg-zone-detail" id="mg-zone-detail-floor"></div>
         </div>`;
@@ -1079,19 +1098,20 @@ const MapleGamma = {
   _fmtGex(val) {
     if (val == null) return '—';
     const abs = Math.abs(val);
-    if (abs >= 1e9) return (val >= 0 ? '+' : '') + (abs / 1e9).toFixed(1) + 'B';
-    if (abs >= 1e6) return (val >= 0 ? '+' : '') + (abs / 1e6).toFixed(0) + 'M';
-    if (abs >= 1e3) return (val >= 0 ? '+' : '') + (abs / 1e3).toFixed(0) + 'K';
-    return (val >= 0 ? '+' : '') + String(val);
+    const sign = val >= 0 ? '+' : '-'; // negatives MUST show their sign
+    if (abs >= 1e9) return sign + (abs / 1e9).toFixed(1) + 'B';
+    if (abs >= 1e6) return sign + (abs / 1e6).toFixed(0) + 'M';
+    if (abs >= 1e3) return sign + (abs / 1e3).toFixed(0) + 'K';
+    return sign + String(abs);
   },
 
   _fmtGexShort(val) {
     if (val == null) return '—';
     const abs = Math.abs(val);
-    const sign = val >= 0 ? '+' : '';
+    const sign = val >= 0 ? '+' : '-';
     if (abs >= 1e9) return sign + (abs / 1e9).toFixed(1) + 'B';
     if (abs >= 1e6) return sign + (abs / 1e6).toFixed(0) + 'M';
     if (abs >= 1e3) return sign + (abs / 1e3).toFixed(0) + 'K';
-    return sign + String(val);
+    return sign + String(abs);
   }
 };

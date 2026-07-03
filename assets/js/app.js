@@ -46,26 +46,35 @@
   }
 
   // ── Routes ──
-  // New consolidated routes
+  // Five-section IA: Briefing / Markets / GEX & Flow / Track Record / Research
   Router.register('/',              function (app)         { Dashboard.renderToday(app); });
-  Router.register('/today',         function (app)         { Dashboard.renderToday(app); });
-  Router.register('/positions',     function (app)         { PaperTrades.render(app); });
-  Router.register('/options',       function (app)         { OptionsFlow.render(app); });
-  Router.register('/maplegamma',    function (app)         { MapleGamma.renderDashboard(app); });
+  Router.register('/markets',       function (app)         { Markets.render(app); });
+  Router.register('/gex',           function (app)         { GexFlow.render(app); });
+  Router.register('/track-record',  function (app)         { PaperTrades.render(app); });
   Router.register('/research',      function (app)         { Research.render(app); });
-  Router.register('/charts',        function (app)         { Charts.render(app); });
-  Router.register('/models',        function (app)         { Models.render(app); });
-  Router.register('/screener',      function (app)         { Screener.render(app); });
 
-  // Legacy redirects
-  Router.register('/mg',            function (app)         { window.location.hash = '#/maplegamma'; });
-  Router.register('/archive',       function (app)         { window.location.hash = '#/research'; });
-  Router.register('/backtest-research', function (app)    { window.location.hash = '#/research'; });
-  Router.register('/trades',        function (app)         { window.location.hash = '#/positions'; });
-  Router.register('/portfolio',     function (app)         { window.location.hash = '#/positions'; });
-  Router.register('/simulation',    function (app)         { window.location.hash = '#/models'; });
-  Router.register('/prediction-engine', function (app)    { window.location.hash = '#/models'; });
-  Router.register('/chat',          function (app)         { window.location.hash = '#/research'; });
+  // Legacy redirects (preserve query string, e.g. ?filter=XLV)
+  function redirect(target) {
+    return function () {
+      var q = window.location.hash.split('?')[1] || '';
+      window.location.hash = '#' + target + (q ? (target.indexOf('?') >= 0 ? '&' : '?') + q : '');
+    };
+  }
+  Router.register('/today',         redirect('/'));
+  Router.register('/positions',     redirect('/track-record'));
+  Router.register('/trades',        redirect('/track-record'));
+  Router.register('/portfolio',     redirect('/track-record'));
+  Router.register('/models',        redirect('/track-record?tab=predictions'));
+  Router.register('/simulation',    redirect('/track-record?tab=predictions'));
+  Router.register('/prediction-engine', redirect('/track-record?tab=predictions'));
+  Router.register('/options',       redirect('/gex?tab=flow'));
+  Router.register('/maplegamma',    redirect('/gex'));
+  Router.register('/mg',            redirect('/gex'));
+  Router.register('/screener',      redirect('/markets'));
+  Router.register('/charts',        redirect('/markets?tab=charts'));
+  Router.register('/archive',       redirect('/research'));
+  Router.register('/backtest-research', redirect('/research'));
+  Router.register('/chat',          redirect('/research'));
 
   Router.register('/ticker/:ticker',function (app, params) { TickerDetail.render(app, params); });
   Router.register('/archive/:date', function (app, params) { window.location.hash = '#/research'; });

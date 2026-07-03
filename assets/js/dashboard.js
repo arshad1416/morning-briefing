@@ -63,10 +63,9 @@ const Dashboard = {
       html += '<div style="background:rgba(244,67,54,0.1);border:1px solid rgba(244,67,54,0.3);border-radius:6px;padding:6px 10px;margin:4px 0 8px 0;font-size:0.8rem;color:var(--red)">⚠ Some data unavailable: ' + fetchErrors.join(', ') + '</div>';
     }
 
-    // ── 1.5 'SO WHAT' VERDICT BAR ──
-    // QWEN-ADD: Conviction from model, narrative from LLM — visually separated
+    // ── 1.5 THE CALL — AI conviction + gamma regime, side by side, labeled ──
     if (verdictData) {
-      html += Dashboard._renderVerdict(verdictData);
+      html += Dashboard._renderVerdict(verdictData, gexData);
     }
 
     // ── 2. COMPACT INDICES STRIP (equities only — VIX/10Y merged into regime) ──
@@ -83,19 +82,40 @@ const Dashboard = {
       }
     }
 
-    // ── 3. DAY P&L ──
-    if (tradesData?.portfolio) {
-      const p = tradesData.portfolio;
-      const totalPnl = p.total_pnl || 0;
-      const sign = totalPnl >= 0 ? '+' : '-';
-      const pnlCls = totalPnl >= 0 ? 'positive' : 'negative';
-      const equity = (p.starting_balance || 0) + totalPnl + (p.unrealized_pnl || 0);
-      const deployed = p.invested || 0;
-      html += `<div class="today-pnl ${pnlCls}" style="border-left:none;padding:10px 15px">`;
-      html += `<span class="today-pnl-label">DAY P&amp;L</span>`;
-      html += `<span class="today-pnl-val">${sign}$${Utils.formatPrice(Math.abs(totalPnl))}</span>`;
-      html += `<span class="today-pnl-pct">(${Utils.formatPct(p.return_pct)})</span>`;
-      html += `<span class="today-pnl-cash" style="margin-left:auto;font-size:0.85rem">Equity $${Utils.formatPrice(equity)} · ${deployed > 0 ? Math.round(deployed/equity*100) + '% deployed' : 'all cash'}</span>`;
+    // ── 2.5 WHAT CHANGED — the deltas a returning trader needs first ──
+    html += this._whatChanged(ms, vix);
+
+    // ── 3. ACTION QUEUE (hero — the "what do I do" layer) ──
+    const setups = marketData?.premarket_top_setups || [];
+    if (setups.length) {
+      html += '<div class="today-section aq-hero"><div class="today-section-title">Action Queue</div>';
+      setups.slice(0, 5).forEach(s => {
+        const signalsHtml = (s.signals || []).map(sig => {
+          let bg = 'var(--text-muted)';
+          if (sig.includes('oversold')) bg = 'var(--green)';
+          else if (sig.includes('breakout')) bg = '#2196f3';
+          else if (sig.includes('pullback')) bg = '#ffc107';
+          return `<span style="background:${bg};color:#fff;padding:1px 6px;border-radius:3px;font-size:0.7rem;margin:1px;display:inline-block">${Utils.esc(sig.replace(/_/g,' '))}</span>`;
+        }).join('');
+
+        // Determine verb from signals
+        let verb = 'WATCH', verbCls = 'verb-watch';
+        const allSig = (s.signals || []).join(' ');
+        if (allSig.includes('oversold') || allSig.includes('breakout') || allSig.includes('pullback')) {
+          verb = 'SETUP'; verbCls = 'verb-setup';
+        }
+        if ((s.council_verdict || '').includes('bull')) { verb = 'LONG'; verbCls = 'verb-long'; }
+        if ((s.council_verdict || '').includes('bear')) { verb = 'AVOID'; verbCls = 'verb-avoid'; }
+
+        html += `<div class="today-signal-row">`;
+        html += `<span class="verb ${verbCls}">${verb}</span>`;
+        html += `<span class="today-signal-ticker"><a href="#/ticker/${Utils.esc(s.ticker)}">${Utils.esc(s.ticker)}</a></span>`;
+        html += `<span class="today-signal-price">$${Utils.formatPrice(s.price)}</span>`;
+        html += `<span class="today-signal-rsi">RSI ${s.rsi != null ? s.rsi : '—'}</span>`;
+        html += `<span class="today-signal-score">${Utils.scoreBadge(s.score)}</span>`;
+        html += `<span class="today-signal-desc">${signalsHtml}</span>`;
+        html += '</div>';
+      });
       html += '</div>';
     }
 
@@ -117,13 +137,6 @@ const Dashboard = {
         const cls = pos.pnl >= 0 ? 'positive' : 'negative';
         html += `<div style="padding:4px 0;display:flex;gap:8px"><span class="${cls}">${dir}</span><span>${Utils.esc(pos.ticker)} <span style="color:var(--text-muted)">entry $${Utils.formatPrice(pos.entry_price)} · now $${Utils.formatPrice(pos.current_price)}</span></span></div>`;
       });
-      // Check if regime changed
-      const prevRegime = localStorage.getItem('mb-regime');
-      const currentRegime = vix < 15 ? 'RISK-ON' : vix > 20 ? 'RISK-OFF' : 'NEUTRAL';
-      if (prevRegime && prevRegime !== currentRegime) {
-        html += `<div style="padding:4px 0;margin-top:4px;border-top:1px solid var(--border-subtle);color:var(--yellow)">⚠ Regime flipped from ${prevRegime} → ${currentRegime}</div>`;
-      }
-      localStorage.setItem('mb-regime', currentRegime);
       html += '</div></div>';
       } // close _nonOptOvernight.length
     }
@@ -137,7 +150,15 @@ const Dashboard = {
         return ac !== 'OPTION' && tp !== 'option';
       });
       if (_nonOptionPositions.length) {
-      html += '<div class="today-section"><div class="today-section-title">Open Positions</div>';
+      // Paper-account context chip — the P&L hero moved to Track Record;
+      // here we only need enough to know what's on and where to click.
+      let _acctChip = '';
+      if (tradesData?.portfolio) {
+        const _p = tradesData.portfolio;
+        const _equity = (_p.starting_balance || 0) + (_p.total_pnl || 0) + (_p.unrealized_pnl || 0);
+        _acctChip = `<a href="#/track-record" style="margin-left:auto;font-size:0.72rem;font-weight:400;color:var(--text-muted);text-decoration:none">Paper equity $${Utils.formatPrice(_equity)} · Track Record →</a>`;
+      }
+      html += `<div class="today-section"><div class="today-section-title" style="display:flex;align-items:center">Paper Account — Open Positions${_acctChip}</div>`;
       const _posPnls = _nonOptionPositions.map(p => Math.abs(p.pnl || 0));
       const _maxPnl = Math.max(..._posPnls, 1);
       _nonOptionPositions.forEach(pos => {
@@ -145,13 +166,7 @@ const Dashboard = {
         const daysHeld = pos.entry_date ? Math.floor((Date.now() - new Date(pos.entry_date).getTime()) / 86400000) + 1 : 0;
         const maxDays = 5;
         const timeLeft = Math.max(0, maxDays - daysHeld);
-        
-        // Sparkline removed — was generating fake Math.random() data; real sparklines TBD
-        
-        // Volume bar
-        const volRatio = (pos.volume_ratio || (Math.random() * 2.5 + 0.5));
-        const volWidth = Math.min(60, volRatio * 15);
-        
+
         html += `<div class="today-pos-row ${pnlCls}">`;
         // Asset class badge
         const _ac = (pos.asset_class || '').toUpperCase();
@@ -163,9 +178,13 @@ const Dashboard = {
         html += `<span class="today-pos-ticker">${Utils.esc(pos.ticker)}${_acBadge}</span>`;
         html += '<span style="margin:0 8px;color:var(--text-muted);flex-shrink:0;font-size:0.75rem">—</span>';
         html += `<span class="today-pos-entry">$${Utils.formatPrice(pos.entry_price)}</span>`;
-        html += `<span class="today-pos-pnl">${Utils.formatPrice(pos.pnl >= 0 ? '+' : '')}$${Utils.formatPrice(Math.abs(pos.pnl))}</span>`;
+        html += `<span class="today-pos-pnl ${pnlCls}">${pos.pnl >= 0 ? '+' : '-'}$${Utils.formatPrice(Math.abs(pos.pnl))}</span>`;
         html += `<span class="today-pos-pct ${pnlCls}">(${Utils.formatPct(pos.pnl_pct)})</span>`;
-        html += `<div style="width:50px;height:4px;background:var(--bg-inset);border-radius:2px;overflow:hidden;flex-shrink:0"><div style="width:${volWidth}px;height:100%;background:var(--text-muted);border-radius:2px"></div></div>`;
+        // Volume bar only when we actually have volume data — never fake it
+        if (pos.volume_ratio != null) {
+          const volWidth = Math.min(60, pos.volume_ratio * 15);
+          html += `<div style="width:50px;height:4px;background:var(--bg-inset);border-radius:2px;overflow:hidden;flex-shrink:0" title="${pos.volume_ratio.toFixed(1)}x avg volume"><div style="width:${volWidth}px;height:100%;background:var(--text-muted);border-radius:2px"></div></div>`;
+        }
         // Risk bar (v1 pattern — proportional to |P&L| / max |P&L|)
         const _riskPct = Math.min(50, (Math.abs(pos.pnl || 0) / _maxPnl) * 50);
         const _riskDir = pos.pnl >= 0 ? 'left:50%' : 'right:50%';
@@ -180,7 +199,8 @@ const Dashboard = {
       html += '<div class="today-empty">No open positions</div>';
     }
 
-    // ── 4.5 FOMC COUNTDOWN ──
+    // ── FOMC countdown moved into What Changed; legacy block disabled ──
+    if (false) {
     (function() {
       var _fomc = new Date('2026-07-29T18:00:00Z');
       var _cdMs = _fomc.getTime() - Date.now();
@@ -226,14 +246,19 @@ const Dashboard = {
       html += '</div>';
     }
 
+    } // end disabled legacy block
+
     // ── 6. OPTIONS FLOW HIGHLIGHTS ──
     if (analysisData?.options_flow?.top_overbought_calls?.length) {
       const calls = analysisData.options_flow.top_overbought_calls.slice(0, 3);
-      html += '<div class="today-section"><div class="today-section-title">Options Flow <a href="#/options" style="font-size:0.7rem;font-weight:400;color:var(--accent);text-decoration:none;margin-left:6px">View all →</a></div>';
+      // Scale bars relative to the largest ratio shown — absolute scaling
+      // saturated every bar at 100% and carried no information.
+      const _maxRatio = Math.max(...calls.map(o => o.vol_oi_ratio || 0), 1);
+      html += '<div class="today-section"><div class="today-section-title">Options Flow <a href="#/gex?tab=flow" style="font-size:0.7rem;font-weight:400;color:var(--accent);text-decoration:none;margin-left:6px">View all →</a></div>';
       calls.forEach(o => {
         const isCall = o.type === 'call';
         const rowBg = isCall ? 'rgba(76,175,80,0.08)' : 'rgba(244,67,54,0.08)';
-        const ratioWidth = Math.min(100, (o.vol_oi_ratio || 0) * 10);
+        const ratioWidth = Math.max(4, Math.round((o.vol_oi_ratio || 0) / _maxRatio * 100));
         html += `<div class="today-flow-row" style="background:${rowBg};padding:6px 8px;border-radius:6px;margin-bottom:3px">`;
         html += `<span class="today-flow-ticker">${Utils.esc(o.ticker)}</span>`;
         html += `<span class="today-flow-call">${isCall ? '☎' : '⛔'} $${Utils.esc(o.strike)}</span>`;
@@ -248,15 +273,21 @@ const Dashboard = {
     // ── 6.5 GEX/DEX/VEX SNAPSHOT ──
     if (gexData?.modes?.all) {
       const a = gexData.modes.all;
-      const fmt = (v) => v >= 1e6 ? '$'+(v/1e6).toFixed(1)+'M' : v >= 1e3 ? '$'+(v/1e3).toFixed(0)+'K' : '$'+v.toFixed(0);
+      const gxTicker = (gexData.ticker || '').toUpperCase();
+      const fmt = (v) => {
+        if (v == null) return '—';
+        const sign = v < 0 ? '-' : '';
+        const abs = Math.abs(v);
+        return abs >= 1e6 ? sign+'$'+(abs/1e6).toFixed(1)+'M' : abs >= 1e3 ? sign+'$'+(abs/1e3).toFixed(0)+'K' : sign+'$'+abs.toFixed(0);
+      };
       const rg = (a.gamma_regime||'').toUpperCase();
       const rc = rg.includes('LONG')||rg.includes('BULL') ? 'var(--green)' : rg.includes('SHORT')||rg.includes('BEAR') ? 'var(--red)' : 'var(--text-primary)';
-      html += '<div class="today-section"><div class="today-section-title">GEX/DEX/VEX</div><div style="display:flex;flex-wrap:wrap;gap:12px">';
+      html += '<div class="today-section"><div class="today-section-title">GEX/DEX/VEX' + (gxTicker ? ' — ' + Utils.esc(gxTicker) : '') + ' <a href="#/gex" style="font-size:0.7rem;font-weight:400;color:var(--accent);text-decoration:none;margin-left:6px">Full profile →</a></div><div style="display:flex;flex-wrap:wrap;gap:12px">';
       html += '<div class="card" style="flex:1;min-width:90px;padding:10px;text-align:center"><div class="card-title">GEX</div><div style="font-size:1.2rem;font-weight:700;font-family:var(--font-mono)">'+fmt(a.total_gex)+'</div></div>';
       html += '<div class="card" style="flex:1;min-width:90px;padding:10px;text-align:center"><div class="card-title">DEX</div><div style="font-size:1.2rem;font-weight:700;font-family:var(--font-mono)">'+fmt(a.total_dex)+'</div></div>';
       html += '<div class="card" style="flex:1;min-width:90px;padding:10px;text-align:center"><div class="card-title">VEX</div><div style="font-size:1.2rem;font-weight:700;font-family:var(--font-mono)">'+fmt(a.total_vex)+'</div></div>';
       html += '<div class="card" style="flex:1;min-width:90px;padding:10px;text-align:center"><div class="card-title">Regime</div><div style="font-size:1.2rem;font-weight:700;color:'+rc+'">'+rg+'</div></div>';
-      html += '<div class="card" style="flex:1;min-width:90px;padding:10px;text-align:center"><div class="card-title">Max Γ</div><div style="font-size:1.2rem;font-weight:700;font-family:var(--font-mono)">$'+a.max_gex_strike+'</div></div>';
+      html += '<div class="card" style="flex:1;min-width:90px;padding:10px;text-align:center"><div class="card-title">Max Γ' + (gxTicker ? ' · ' + Utils.esc(gxTicker) + ' strike' : '') + '</div><div style="font-size:1.2rem;font-weight:700;font-family:var(--font-mono)">$'+a.max_gex_strike+'</div></div>';
       html += '</div></div>';
     }
 
@@ -264,8 +295,9 @@ const Dashboard = {
     if (marketData?.market_news?.headlines?.length) {
       html += '<div class="today-section"><div class="today-section-title">Headlines</div>';
       html += '<div class="today-headlines">';
-      marketData.market_news.headlines.slice(0, 3).forEach(n => {
-        html += `<div class="today-headline"><a href="${Utils.esc(Utils.safeUrl(n.url))}" target="_blank" rel="noopener">${Utils.esc(n.title.slice(0, 80))}</a></div>`;
+      marketData.market_news.headlines.slice(0, 4).forEach(n => {
+        // Full title with source — mid-word truncation reads as broken data
+        html += `<div class="today-headline"><a href="${Utils.esc(Utils.safeUrl(n.url))}" target="_blank" rel="noopener">${Utils.esc(n.title)}</a>${n.source ? '<span style="color:var(--text-muted);font-size:0.72rem;margin-left:8px">' + Utils.esc(n.source) + '</span>' : ''}</div>`;
       });
       html += '</div></div>';
     }
@@ -314,10 +346,12 @@ const Dashboard = {
         'Basic Materials': { ticker: 'XLB', color: '#eab308' },
       };
 
-      // Build sorted array by avg_change descending
+      // Build sorted array by avg_change descending.
+      // The pipeline emits a literal "null" key for tickers with no sector
+      // (ETFs, bonds, commodities) — label it honestly instead of leaking it.
       const sectorArr = Object.entries(sectors)
         .map(([name, data]) => ({
-          name,
+          name: (!name || name === 'null' || name === 'Unknown') ? 'ETF / Other' : name,
           count: data.count,
           change: data.avg_change || 0,
           etf: sectorEtfMap[name]?.ticker || '',
@@ -347,7 +381,7 @@ const Dashboard = {
         const textColor = isPositive ? 'var(--green)' : 'var(--red)';
         const etfLabel = s.etf ? `<span class="heatmap-etf">${Utils.esc(s.etf)}</span>` : '';
 
-        const href = s.etf ? `#/screener?filter=${Utils.esc(s.etf)}` : '#';
+        const href = s.etf ? `#/markets?filter=${Utils.esc(s.etf)}` : '#/markets';
         html += `<a href="${href}" class="heatmap-tile" style="background:${tileBg};border-color:${borderColor}">
           <div class="heatmap-tile-header">
             <span class="heatmap-name">${Utils.esc(s.name)}</span>
@@ -460,6 +494,8 @@ const Dashboard = {
 
   /** Animate number counting for key Dashboard stats */
   _animateCountUp() {
+    // Motion must never gate legibility — honor the OS setting
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     // Find numeric values in P&L, equity, index prices, etc.
     var targets = [];
 
@@ -534,6 +570,44 @@ const Dashboard = {
     });
   },
 
+  /**
+   * What Changed — the deltas a returning trader scans first:
+   * VIX move, biggest index move, regime flips, next macro event.
+   */
+  _whatChanged(ms, vix) {
+    const items = [];
+    if (ms.vix_change_pct != null) {
+      const dir = ms.vix_change_pct >= 0 ? '▲' : '▼';
+      const cls = ms.vix_change_pct >= 0 ? 'negative' : 'positive'; // rising VIX = risk
+      items.push(`<span class="${cls}">${dir}</span> VIX ${ms.vix_change_pct >= 0 ? 'up' : 'down'} ${Math.abs(ms.vix_change_pct).toFixed(1)}% since close`);
+    }
+    const valid = (ms.indices || []).filter(i => i.ticker && !i.ticker.startsWith('_') && i.change_pct != null);
+    if (valid.length) {
+      const big = valid.reduce((a, b) => Math.abs(b.change_pct) > Math.abs(a.change_pct) ? b : a);
+      items.push(`${Utils.esc(big.ticker)} <span class="${Utils.changeClass(big.change_pct)}">${Utils.formatPct(big.change_pct)}</span> is the biggest index move`);
+    }
+    if (vix != null) {
+      const current = vix < 15 ? 'RISK-ON' : vix > 20 ? 'RISK-OFF' : 'NEUTRAL';
+      const prev = localStorage.getItem('mb-regime');
+      if (prev && prev !== current) {
+        items.push(`<span style="color:var(--yellow)">⚠ Regime flipped ${Utils.esc(prev)} → ${current}</span>`);
+      }
+      localStorage.setItem('mb-regime', current);
+    }
+    const fomcMs = new Date('2026-07-29T18:00:00Z').getTime() - Date.now();
+    if (fomcMs > 0) {
+      const d = Math.floor(fomcMs / 86400000);
+      const h = Math.floor((fomcMs % 86400000) / 3600000);
+      items.push(`FOMC rate decision in ${d}d ${h}h (Jul 29)`);
+    }
+    if (!items.length) return '';
+    let html = '<div class="today-section"><div class="today-section-title">What Changed</div>';
+    html += '<div class="card" style="padding:10px 14px;font-size:0.85rem;line-height:1.9">';
+    items.forEach(it => { html += `<div>${it}</div>`; });
+    html += '</div></div>';
+    return html;
+  },
+
   _regimeBadge(vix, ms) {
     if (vix == null) return '';
     let label = 'NEUTRAL', cls = 'regime-neutral';
@@ -559,7 +633,7 @@ const Dashboard = {
    * Shows: signal direction + conviction (from MODEL) + narrative (from LLM).
    * MUST visually distinguish the two sources. Conviction NEVER comes from LLM.
    */
-  _renderVerdict(v) {
+  _renderVerdict(v, gexData) {
     if (!v) return '';
     const signal = v.signal || 'neutral';
     let conviction = v.conviction || 0;
@@ -605,6 +679,20 @@ const Dashboard = {
       html += `<div style="font-size:0.55rem;color:var(--text-muted);margin-top:1px">CI: ${ciText}</div>`;
     }
     html += '</div>';
+
+    // Gamma regime (SEPARATE model — dealer positioning, not the LLM).
+    // Shown side-by-side with AI conviction so disagreement between the
+    // two reads as information instead of inconsistency.
+    if (gexData?.modes?.all?.gamma_regime) {
+      const grg = String(gexData.modes.all.gamma_regime).toUpperCase();
+      const grgColor = grg.includes('BULL') || grg.includes('LONG') ? 'var(--green)'
+                     : grg.includes('BEAR') || grg.includes('SHORT') ? 'var(--red)' : 'var(--yellow)';
+      const grgTicker = (gexData.ticker || '').toUpperCase();
+      html += '<div style="display:flex;flex-direction:column;gap:2px;min-width:100px">';
+      html += `<span style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em">Γ Gamma Regime${grgTicker ? ' · ' + Utils.esc(grgTicker) : ''}</span>`;
+      html += `<span style="font-weight:700;font-size:0.95rem;color:${grgColor}">${Utils.esc(grg)}</span>`;
+      html += '</div>';
+    }
 
     // Narrative (FROM LLM — clearly labeled)
     if (narrative) {

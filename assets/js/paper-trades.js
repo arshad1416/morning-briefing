@@ -280,18 +280,30 @@ const PaperTrades = {
       Utils.fetchJSON('/data/accuracy.json')
     ]);
 
+    const wantTab = new URLSearchParams(window.location.hash.split('?')[1] || '').get('tab') === 'predictions' ? 'predictions' : 'paper';
+
     let html = '<div class="section">';
-    html += '<h2 class="section-title">📊 Trading Performance</h2>';
+    html += '<h2 class="section-title">📊 Track Record</h2>';
 
     // ── TAB NAVIGATION ──
     html += '<div class="research-tabs" style="display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap">';
-    html += '<button class="research-tab active" data-tab="paper">📝 Paper Trading</button>';
+    html += '<button class="research-tab' + (wantTab === 'paper' ? ' active' : '') + '" data-tab="paper">📝 Paper Account (Live)</button>';
     html += '<button class="research-tab" data-tab="ibkr">🏦 IBKR Real Portfolio</button>';
+    html += '<button class="research-tab' + (wantTab === 'predictions' ? ' active' : '') + '" data-tab="predictions">🎯 Predictions</button>';
     html += '<button class="research-tab" data-tab="journal">📓 Journal</button>';
     html += '</div>';
 
     // ── PAPER TRADING TAB ──
-    html += '<div class="research-pane" id="tab-paper">';
+    html += '<div class="research-pane" id="tab-paper"' + (wantTab === 'predictions' ? ' style="display:none"' : '') + '>';
+
+    // ── Honest framing: live results vs backtest are different animals ──
+    const _liveTrades = data?.portfolio?.total_trades || 0;
+    html += '<div class="card" style="margin-bottom:12px;padding:10px 14px;font-size:0.8rem;color:var(--text-secondary);line-height:1.6;border-left:3px solid var(--yellow)">';
+    html += '<strong style="color:var(--text-primary)">How to read this page.</strong> ';
+    html += 'The <strong>Live</strong> numbers below come from a real-time simulated account';
+    html += _liveTrades ? ' with only <strong>' + _liveTrades + ' closed trade' + (_liveTrades === 1 ? '' : 's') + '</strong> so far — far too few to be statistically meaningful. ' : '. ';
+    html += 'The <strong>Backtest</strong> tables further down cover <strong>135,000+ simulated trades over 25 years</strong> — statistically robust, but historical. Expect live results to underperform backtests (we assume ~30% Sharpe degradation).';
+    html += '</div>';
 
     // ── Portfolio Summary ──
     if (data?.portfolio) {
@@ -322,8 +334,9 @@ const PaperTrades = {
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">$' + Utils.formatPrice(p.invested || 0) + '</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Total Value</div>'
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">$' + Utils.formatPrice(p.total_balance) + '</div></div>'
-        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Win Rate</div>'
-        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + ((p.win_rate || 0) >= 50 ? 'var(--positive)' : 'var(--negative)') + '">' + (p.win_rate || 0) + '%</div></div>'
+        + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Win Rate (live)</div>'
+        + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:' + ((p.win_rate || 0) >= 50 ? 'var(--positive)' : 'var(--negative)') + '">' + (p.win_rate || 0) + '%</div>'
+        + '<div style="font-size:0.62rem;color:var(--text-muted)">n=' + (p.total_trades || 0) + ' — small sample</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Trades</div>'
         + '<div style="font-size:1.2rem;font-weight:700;margin-top:4px">' + p.total_trades + '</div></div>'
         + '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Unrealized</div>'
@@ -464,7 +477,7 @@ const PaperTrades = {
     // ── Backtest Accuracy Summary ──
     if (accuracy?.overall) {
       const ov = accuracy.overall;
-      html += '<h2 class="section-title" style="margin-top:24px">Prediction Engine Accuracy (V1-V100)</h2>';
+      html += '<h2 class="section-title" style="margin-top:24px">Backtest Library (V1–V100) <span class="badge badge-yellow" style="font-size:0.6rem;vertical-align:middle">HISTORICAL SIMULATION — NOT LIVE RESULTS</span></h2>';
       html += '<div class="grid-4" style="margin-bottom:20px">';
       const cards = [
         { label: 'Top 10 Avg WR', value: ov.top_10_avg_win_rate + '%', cls: 'positive', sub: 'Across top strategies' },
@@ -576,7 +589,8 @@ const PaperTrades = {
         const hoverReason = Utils.esc(t.reason || t.rationale || '');
         const hoverExit = Utils.esc(t.exit_rationale || '');
         const tipText = (hoverReason ? 'Entry: ' + hoverReason : '') + (hoverReason && hoverExit ? ' | ' : '') + (hoverExit ? 'Exit: ' + hoverExit : '');
-        const pnlDisplay = t.pnl_pct != null ? `${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct}%` : (t.pnl_usd != null ? `$${t.pnl_usd.toFixed(2)}` : '---');
+        // Dollar P&L in the $ column; percent stays in its own column
+        const pnlDisplay = t.pnl_usd != null ? `${t.pnl_usd >= 0 ? '+' : '-'}$${Math.abs(t.pnl_usd).toFixed(2)}` : (t.pnl_pct != null ? `${t.pnl_pct >= 0 ? '+' : ''}${t.pnl_pct}%` : '—');
         html += `<tr class="trade-row" title="${tipText}" data-ticker="${Utils.esc(t.ticker)}" data-rationale="${hoverReason}" data-exit-rationale="${hoverExit}" style="cursor:pointer">
           <td><strong>${Utils.esc(t.ticker)}</strong></td>
           <td><span class="badge ${t.type === 'Stock' ? 'badge-green' : 'badge-yellow'}" style="font-size:0.65rem">${t.type || '—'}</span></td>
@@ -597,11 +611,20 @@ const PaperTrades = {
 
     // ── IBKR REAL PORTFOLIO TAB ──
     html += '<div class="research-pane" id="tab-ibkr" style="display:none">';
+    html += '<div class="card" style="margin-bottom:12px;padding:8px 14px;font-size:0.78rem;color:var(--text-secondary);border-left:3px solid var(--accent)">This is the operator\'s personal brokerage account, shown for transparency. It is separate from the paper account and the backtest library.</div>';
     html += '<div id="ibkr-content"><div class="loading">Loading IBKR portfolio...</div></div>';
     html += '</div>'; // #tab-ibkr
 
+    // ── PREDICTIONS TAB ──
+    html += '<div class="research-pane" id="tab-predictions"' + (wantTab === 'predictions' ? '' : ' style="display:none"') + '>';
+    html += '<div id="predictions-content"><div class="loading">Loading predictions...</div></div>';
+    html += '</div>'; // #tab-predictions
+
     // ── JOURNAL TAB ──
-    (async () => {
+    // Awaited: this used to run as a detached async IIFE, so the journal
+    // pane was appended after app.innerHTML had already been set and the
+    // Journal tab rendered empty.
+    await (async () => {
       const journalData = await Utils.fetchJSON('/data/journal.json').catch(() => null);
       const fileEntries = journalData?.entries || [];
       // Merge with localStorage entries (for entries submitted via the form)
@@ -700,12 +723,28 @@ const PaperTrades = {
         app.querySelectorAll('.research-pane').forEach(p => p.style.display = 'none');
         const pane = document.getElementById('tab-' + this.dataset.tab);
         if (pane) pane.style.display = 'block';
-        // Lazy-load IBKR data when the tab is first clicked
+        // Lazy-load IBKR / predictions data when the tab is first clicked
         if (this.dataset.tab === 'ibkr') {
           PaperTrades._renderIBKR();
         }
+        if (this.dataset.tab === 'predictions') {
+          const pc = document.getElementById('predictions-content');
+          if (pc && !pc.dataset.loaded && typeof PredictionEngine !== 'undefined') {
+            pc.dataset.loaded = '1';
+            PredictionEngine.render(pc);
+          }
+        }
       });
     });
+
+    // Deep-linked ?tab=predictions renders immediately
+    if (wantTab === 'predictions') {
+      const pc = document.getElementById('predictions-content');
+      if (pc && typeof PredictionEngine !== 'undefined') {
+        pc.dataset.loaded = '1';
+        PredictionEngine.render(pc);
+      }
+    }
 
     // ── Wire up strategy link clicks ──
     app.querySelectorAll('.strategy-link').forEach(el => {

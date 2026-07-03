@@ -36,11 +36,9 @@ const Research = {
     html += '<button class="research-tab" data-tab="news">News</button>';
     html += '<button class="research-tab" data-tab="reddit">Sentiment</button>';
     html += '<button class="research-tab" data-tab="analysis">Ideas</button>';
-    html += '<button class="research-tab" data-tab="mg-analysis">MapleGamma Analysis</button>';
+    html += '<button class="research-tab" data-tab="mg-analysis">AI Analysis</button>';
     html += '<button class="research-tab" data-tab="backtest">Backtest</button>';
-    html += '<button class="research-tab" data-tab="markets">Markets</button>';
-    html += '<button class="research-tab" data-tab="earnings">Earnings</button>';
-    html += '<button class="research-tab" data-tab="sec">SEC Filings</button>';
+    html += '<button class="research-tab" data-tab="markets">Prediction Markets</button>';
     html += '</div>';
 
     html += '<div class="research-content">';
@@ -64,7 +62,11 @@ const Research = {
 
     if (marketData?.narrative?.summary_paragraph) {
       const rendered = Utils.renderMarkdown(marketData.narrative.summary_paragraph);
-      html += `<div class="card" style="margin-bottom:12px"><div class="intel-body">${rendered}</div></div>`;
+      // Labeled clearly: this AI narrative references the operator's own
+      // live account — without the label it reads as unexplained numbers.
+      html += '<div class="card" style="margin-bottom:12px">';
+      html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="card-title" style="margin:0">AI Morning Analysis</span><span class="badge badge-yellow" style="font-size:0.6rem">REFERENCES OPERATOR\'S LIVE ACCOUNT</span></div>';
+      html += `<div class="intel-body">${rendered}</div></div>`;
     }
     // Central banks
     if (marketData?.central_banks) {
@@ -372,21 +374,9 @@ const Research = {
     }
     html += '</div>';
 
-    // ── TAB 7: Earnings Transcripts ──
-    html += '<div class="research-pane" id="tab-earnings" style="display:none">';
-    html += '<div class="card"><div class="card-title">Earnings Transcripts</div>';
-    html += '<div style="font-size:0.85rem;color:var(--text-secondary)">';
-    html += 'Earnings transcript data powered by Financial Modeling Prep. Use the CLI on the Pi to fetch: ';
-    html += '<code style="background:var(--card-bg);padding:2px 6px;border-radius:3px">python3 fetch_earnings.py --ticker AAPL</code>';
-    html += '</div></div></div>';
-
-    // ── TAB 8: SEC Filings ──
-    html += '<div class="research-pane" id="tab-sec" style="display:none">';
-    html += '<div class="card"><div class="card-title">SEC EDGAR Filings</div>';
-    html += '<div style="font-size:0.85rem;color:var(--text-secondary)">';
-    html += 'SEC filing data sourced directly from EDGAR. Use the CLI on the Pi to fetch: ';
-    html += '<code style="background:var(--card-bg);padding:2px 6px;border-radius:3px">python3 fetch_sec_filings.py --ticker AAPL</code>';
-    html += '</div></div></div>';
+    // Earnings + SEC tabs removed: they only held CLI instructions for the
+    // operator — internal tooling, not subscriber content. Re-add when the
+    // pipeline publishes actual transcript/filing data.
 
     html += '</div></div>';
     app.innerHTML = html;

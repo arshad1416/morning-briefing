@@ -17,6 +17,7 @@ const Screener = {
 
     this._data = data;
     this._viewMode = localStorage.getItem('screener-view') || 'table';
+    this._showAll = false;
 
     let html = this._buildHeader(data);
     html += this._buildViewToggle();
@@ -27,6 +28,20 @@ const Screener = {
     html += this._buildFooter(data);
 
     app.innerHTML = html;
+
+    // Deep link from the sector heatmap: #/markets?filter=XLV → preselect sector
+    const _q = new URLSearchParams(window.location.hash.split('?')[1] || '');
+    const _deepEtf = _q.get('filter');
+    if (_deepEtf) {
+      const _etfSector = {
+        XLK: 'Technology', XLF: 'Financial Services', XLV: 'Healthcare',
+        XLY: 'Consumer Cyclical', XLP: 'Consumer Defensive', XLE: 'Energy',
+        XLI: 'Industrials', XLC: 'Communication Services', XLU: 'Utilities',
+        XLRE: 'Real Estate', XLB: 'Basic Materials',
+      };
+      const _sectorSel = document.getElementById('filter-sector');
+      if (_sectorSel && _etfSector[_deepEtf]) _sectorSel.value = _etfSector[_deepEtf];
+    }
 
     // Wire up filter events (after DOM is rendered)
     this._wireFilters(data.tickers);
@@ -55,13 +70,34 @@ const Screener = {
     return html;
   },
 
-  /** Filter bar with all filter controls */
+  /** Filter bar — search + sort always visible, everything else in a drawer */
   _buildFilterBar(tickers) {
     // Collect unique sectors for dynamic population
     const sectors = [...new Set(tickers.filter(t => t.sector).map(t => t.sector))].sort();
     const sectorOpts = sectors.map(s => '<option value="' + s + '">' + s + '</option>').join('');
+    const drawerOpen = localStorage.getItem('screener-drawer') === 'open';
 
-    return '<div class="screener-filters" id="screener-filters">' +
+    return '<div class="screener-filter-toolbar" style="display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap">' +
+      '<button id="filter-drawer-toggle" class="screener-btn">Filters<span id="filter-active-count"></span> ' + (drawerOpen ? '▴' : '▾') + '</button>' +
+      '<input type="text" id="filter-search" placeholder="Ticker or name..." style="min-width:170px" />' +
+      '<select id="filter-sort">' +
+        '<option value="score-desc">Score (High→Low)</option>' +
+        '<option value="score-asc">Score (Low→High)</option>' +
+        '<option value="change-desc">Change (High→Low)</option>' +
+        '<option value="change-asc">Change (Low→High)</option>' +
+        '<option value="rsi-asc">RSI (Low→High)</option>' +
+        '<option value="rsi-desc">RSI (High→Low)</option>' +
+        '<option value="mcap-desc">Market Cap (Large→Small)</option>' +
+        '<option value="mcap-asc">Market Cap (Small→Large)</option>' +
+        '<option value="pe-asc">PE (Low→High)</option>' +
+        '<option value="pe-desc">PE (High→Low)</option>' +
+        '<option value="ticker-asc">Ticker (A→Z)</option>' +
+        '<option value="ticker-desc">Ticker (Z→A)</option>' +
+        '<option value="volume_ratio-asc">Vol Ratio (Low→High)</option>' +
+        '<option value="volume_ratio-desc">Vol Ratio (High→Low)</option>' +
+      '</select>' +
+    '</div>' +
+    '<div class="screener-filters" id="screener-filters"' + (drawerOpen ? '' : ' style="display:none"') + '>' +
       '<div class="filter-group">' +
         '<label>PE Ratio</label>' +
         '<select id="filter-pe">' +
@@ -184,31 +220,6 @@ const Screener = {
           '<option value="long">Long</option>' +
           '<option value="short">Short</option>' +
         '</select>' +
-      '</div>' +
-
-      '<div class="filter-group">' +
-        '<label>Sort By</label>' +
-        '<select id="filter-sort">' +
-          '<option value="score-desc">Score (High→Low)</option>' +
-          '<option value="score-asc">Score (Low→High)</option>' +
-          '<option value="change-desc">Change (High→Low)</option>' +
-          '<option value="change-asc">Change (Low→High)</option>' +
-          '<option value="rsi-asc">RSI (Low→High)</option>' +
-          '<option value="rsi-desc">RSI (High→Low)</option>' +
-          '<option value="mcap-desc">Market Cap (Large→Small)</option>' +
-          '<option value="mcap-asc">Market Cap (Small→Large)</option>' +
-          '<option value="pe-asc">PE (Low→High)</option>' +
-          '<option value="pe-desc">PE (High→Low)</option>' +
-          '<option value="ticker-asc">Ticker (A→Z)</option>' +
-          '<option value="ticker-desc">Ticker (Z→A)</option>' +
-          '<option value="volume_ratio-asc">Vol Ratio (Low→High)</option>' +
-          '<option value="volume_ratio-desc">Vol Ratio (High→Low)</option>' +
-        '</select>' +
-      '</div>' +
-
-      '<div class="filter-group filter-search">' +
-        '<label>Search</label>' +
-        '<input type="text" id="filter-search" placeholder="Ticker or name..." />' +
       '</div>' +
 
       '<button id="filter-reset" class="screener-btn">Reset Filters</button>' +
@@ -383,6 +394,19 @@ const Screener = {
       });
     }
 
+    // Filter drawer toggle
+    const drawerToggle = document.getElementById('filter-drawer-toggle');
+    if (drawerToggle) {
+      drawerToggle.addEventListener('click', () => {
+        const drawer = document.getElementById('screener-filters');
+        if (!drawer) return;
+        const isOpen = drawer.style.display !== 'none';
+        drawer.style.display = isOpen ? 'none' : '';
+        localStorage.setItem('screener-drawer', isOpen ? 'closed' : 'open');
+        drawerToggle.innerHTML = drawerToggle.innerHTML.replace(isOpen ? '▴' : '▾', isOpen ? '▾' : '▴');
+      });
+    }
+
     // Reset button
     const resetBtn = document.getElementById('filter-reset');
     if (resetBtn) {
@@ -547,6 +571,14 @@ const Screener = {
       }
     });
 
+    // Active-filter count on the drawer button — "Filters (3)" beats
+    // fifteen always-open dropdowns for telling you what's applied.
+    const _activeCount = [peFilter, mcapFilter, divFilter, rsiFilter, sectorFilter, volFilter,
+      w52Filter, smaFilter, strategyFilter, directionFilter, val('filter-universe')].filter(Boolean).length
+      + ((scoreMin !== 0 && scoreMin !== 1) || (scoreMax !== 10) ? 1 : 0);
+    const _countBadge = document.getElementById('filter-active-count');
+    if (_countBadge) _countBadge.textContent = _activeCount ? ' (' + _activeCount + ')' : '';
+
     // Render
     const tbody = document.getElementById('screener-tbody');
     const countEl = document.getElementById('screener-count');
@@ -576,9 +608,8 @@ const Screener = {
         // Populate the newly rendered table body with filtered data
         const newTbody = document.getElementById('screener-tbody');
         if (newTbody) {
-          newTbody.innerHTML = filtered.length
-            ? filtered.map(t => this._tickerRow(t)).join('')
-            : '<tr><td colspan="11" class="empty-state" style="padding:32px;text-align:center">No tickers match your filters.</td></tr>';
+          newTbody.innerHTML = this._renderRows(filtered);
+          this._wireShowAll(allTickers);
         }
       }
       // Update count for both views
@@ -592,13 +623,34 @@ const Screener = {
       const tbody = document.getElementById('screener-tbody');
       const countEl = document.getElementById('screener-count');
       if (tbody) {
-        tbody.innerHTML = filtered.length
-          ? filtered.map(t => this._tickerRow(t)).join('')
-          : '<tr><td colspan="11" class="empty-state" style="padding:32px;text-align:center">No tickers match your filters.</td></tr>';
+        tbody.innerHTML = this._renderRows(filtered);
+        this._wireShowAll(allTickers);
       }
       if (countEl) {
         countEl.textContent = filtered.length + ' of ' + allTickers.length + ' tickers';
       }
+    }
+  },
+
+  /** Render table rows, capped at 150 until "Show all" is clicked —
+      600 rows of DOM on initial paint helps nobody, least of all phones. */
+  _renderRows(filtered) {
+    const CAP = 150;
+    const rows = (this._showAll ? filtered : filtered.slice(0, CAP)).map(t => this._tickerRow(t)).join('');
+    let html = rows || '<tr><td colspan="11" class="empty-state" style="padding:32px;text-align:center">No tickers match your filters.</td></tr>';
+    if (!this._showAll && filtered.length > CAP) {
+      html += '<tr><td colspan="11" style="text-align:center;padding:10px"><button id="screener-show-all" class="screener-btn">Show all ' + filtered.length + ' tickers</button></td></tr>';
+    }
+    return html;
+  },
+
+  _wireShowAll(allTickers) {
+    const btn = document.getElementById('screener-show-all');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        this._showAll = true;
+        this._applyFilters(allTickers);
+      });
     }
   },
 
