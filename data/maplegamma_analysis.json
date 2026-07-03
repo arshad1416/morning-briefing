@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-07-03T11:25:35.250561+00:00",
+    "generated_at": "2026-07-03T14:20:46.375786+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001156,
+    "total_cost_usd": 0.001493,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
-    "deepseek_quantitative": "auth_error",
     "kimi_momentum": "auth_error",
     "mimo_risk_contrarian": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (S&P 500 ETF) - Long\n* **Entry:** $737.50 - $738.50 (Current Price: $737.89)\n* **Stop Loss:** $728.00 \n* **Target:** $746.00\n* **Conviction:** 8/10\n* **Rationale:** The DS Pro model identifies a strong \"risk-on\" market regime. GEX data confirms a \"bullish\" gamma regime with a massive Put GEX wall at the $730 strike (max GEX value). This $730 level will act as formidable support, with market makers likely long gamma above it, which suppresses volatility and encourages a steady upward grind. The stop is placed safely below the $730 GEX wall to avoid being shaken out by standard noise.\n\n### Trade 2: IWM (Russell 2000 ETF) - Long (Add-on / Average Down)\n* **Entry:** $296.00 - $297.50 (Current Price: $297.58 | Existing Position Entry: $298.97)\n* **Stop Loss:** $291.50\n* **Target:** $305.00\n* **Conviction:** 7/10\n* **Rationale:** Small-cap stocks historically outperform during \"risk-on\" market regimes. Your existing IWM position is currently in a minor drawdown (-$1.39). Adding to the position on a slight pullback into the $296-$297 zone will improve your average cost basis. The stop is placed below the psychological and structural $292 level to protect capital if the broader risk-on thesis breaks down."
+    "deepseek_quantitative": "auth_error",
+    "qwen_trade_selector": "### **TRADE IDEA 1: SPY (S&P 500 ETF) - Bullish Continuation**\n\n*   **Direction:** Long\n*   **Entry Price:** $738.00 (Near current market price of $737.89)\n*   **Stop Loss:** $728.50 (Placed just below the massive 730 Max GEX Put wall)\n*   **Target Price:** $749.50 (Just below the next major GEX strike at 750)\n*   **Conviction:** 8/10\n*   **Risk/Reward Ratio:** ~1.2 : 1\n\n**Rationale:** \nThe DS Pro model identifies a strong \"risk-on\" market regime with high confidence (8/10). Furthermore, the GEX/DEX data confirms a \"bullish\" gamma regime. The massive Put Open Interest and GEX at the $730 strike act as a formidable support floor (dealer hedging will likely buy dips near this level). We are entering near the current price to capture the upward drift, targeting the next major options strike at $750, while keeping a tight stop just below the $730 gamma support to invalidate the thesis if the floor breaks.\n\n---\n\n### **TRADE IDEA 2: IWM (Russell 2000 ETF) - Add to Position / Average Down**\n\n*   **Direction:** Long (Add to existing open position)\n*   **Entry Price:** $296.50 (Limit order on a slight intraday pullback)\n*   **Stop Loss:** $291.50 (Below recent structural consolidation)\n*   **Target Price:** $305.00 (Psychological resistance and risk-on rotation target)\n*   **Conviction:** 7/10\n*   **Risk/Reward Ratio:** 1.7 : 1\n\n**Rationale:** \nYou currently hold an open IWM position at $298.97 which is slightly underwater ($297.58). In a confirmed \"risk-on\" macro regime, small-cap equities typically exhibit high beta and outperform large caps. By setting a limit buy slightly below the current price at $296.50, you can average down your cost basis on a minor dip. The stop is placed safely below the $292 structural support level to prevent a larger drawdown if the risk-on regime suddenly reverses, while the target captures the upside momentum typical of small-cap breakouts."
   }
 }
