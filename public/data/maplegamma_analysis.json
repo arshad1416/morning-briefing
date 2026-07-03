@@ -1,15 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-07-03T14:20:46.375786+00:00",
+    "generated_at": "2026-07-03T16:20:31.479406+00:00",
     "experts_consulted": 4,
     "experts_succeeded": 1,
-    "total_cost_usd": 0.001493,
+    "total_cost_usd": 0.00102,
     "status": "insufficient_experts"
   },
   "expert_outputs": {
     "kimi_momentum": "auth_error",
-    "mimo_risk_contrarian": "auth_error",
     "deepseek_quantitative": "auth_error",
-    "qwen_trade_selector": "### **TRADE IDEA 1: SPY (S&P 500 ETF) - Bullish Continuation**\n\n*   **Direction:** Long\n*   **Entry Price:** $738.00 (Near current market price of $737.89)\n*   **Stop Loss:** $728.50 (Placed just below the massive 730 Max GEX Put wall)\n*   **Target Price:** $749.50 (Just below the next major GEX strike at 750)\n*   **Conviction:** 8/10\n*   **Risk/Reward Ratio:** ~1.2 : 1\n\n**Rationale:** \nThe DS Pro model identifies a strong \"risk-on\" market regime with high confidence (8/10). Furthermore, the GEX/DEX data confirms a \"bullish\" gamma regime. The massive Put Open Interest and GEX at the $730 strike act as a formidable support floor (dealer hedging will likely buy dips near this level). We are entering near the current price to capture the upward drift, targeting the next major options strike at $750, while keeping a tight stop just below the $730 gamma support to invalidate the thesis if the floor breaks.\n\n---\n\n### **TRADE IDEA 2: IWM (Russell 2000 ETF) - Add to Position / Average Down**\n\n*   **Direction:** Long (Add to existing open position)\n*   **Entry Price:** $296.50 (Limit order on a slight intraday pullback)\n*   **Stop Loss:** $291.50 (Below recent structural consolidation)\n*   **Target Price:** $305.00 (Psychological resistance and risk-on rotation target)\n*   **Conviction:** 7/10\n*   **Risk/Reward Ratio:** 1.7 : 1\n\n**Rationale:** \nYou currently hold an open IWM position at $298.97 which is slightly underwater ($297.58). In a confirmed \"risk-on\" macro regime, small-cap equities typically exhibit high beta and outperform large caps. By setting a limit buy slightly below the current price at $296.50, you can average down your cost basis on a minor dip. The stop is placed safely below the $292 structural support level to prevent a larger drawdown if the risk-on regime suddenly reverses, while the target captures the upside momentum typical of small-cap breakouts."
+    "mimo_risk_contrarian": "auth_error",
+    "qwen_trade_selector": "### Trade 1: SPY Long (Buy the Dip)\n- **Entry:** $736.00 \n- **Stop Loss:** $728.50 \n- **Target:** $746.00\n- **Conviction:** 8/10\n- **Rationale:** The DS Pro model indicates a \"risk-on\" market regime with high confidence (8/10). SPY's GEX data shows a \"bullish\" gamma regime with a massive Put GEX wall at the $730 strike (Max GEX: 201,055). This $730 level will act as strong support, with market makers likely buying dips to hedge. Entering on a slight pullback to $736 offers an excellent risk/reward ratio, keeping the stop safely below the $730 dealer gamma support level.\n\n### Trade 2: IWM Long (Add to Position / Average Down)\n- **Entry:** $295.00\n- **Stop Loss:** $288.00\n- **Target:** $304.00\n- **Conviction:** 6/10\n- **Rationale:** You currently hold IWM at $298.97, and it is slightly in the red at $297.58. In a broader \"risk-on\" environment, small caps typically exhibit high beta and catch up to large caps. Adding to the position on a pullback to $295.00 lowers your average cost basis. The stop is placed below the psychological $290 support, and the target aims for a breakout back above your initial entry and into the $300+ range. Keep position sizing small since this is an averaging-down play."
   }
 }
