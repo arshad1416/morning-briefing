@@ -63,6 +63,15 @@ const Dashboard = {
       html += '<div style="background:rgba(244,67,54,0.1);border:1px solid rgba(244,67,54,0.3);border-radius:6px;padding:6px 10px;margin:4px 0 8px 0;font-size:0.8rem;color:var(--red)">⚠ Some data unavailable: ' + fetchErrors.join(', ') + '</div>';
     }
 
+    // ── 1.4 IBKR POSITION DISCLOSURE ──
+    // Standing disclosure: if the briefing discusses a security the operator
+    // holds in IBKR (per /data/ibkr_positions.json), surface it up front.
+    const discussedTickers = []
+      .concat((marketData?.premarket_top_setups || []).map(s => s.ticker))
+      .concat((analysisData?.options_flow?.top_overbought_calls || []).map(c => c.ticker || c.symbol))
+      .concat((tradesData?.open_positions || []).map(p => p.ticker));
+    html += await Compliance.positionDisclosureHTML(discussedTickers);
+
     // ── 1.5 'SO WHAT' VERDICT BAR ──
     // QWEN-ADD: Conviction from model, narrative from LLM — visually separated
     if (verdictData) {
@@ -92,7 +101,7 @@ const Dashboard = {
       const equity = (p.starting_balance || 0) + totalPnl + (p.unrealized_pnl || 0);
       const deployed = p.invested || 0;
       html += `<div class="today-pnl ${pnlCls}" style="border-left:none;padding:10px 15px">`;
-      html += `<span class="today-pnl-label">DAY P&amp;L</span>`;
+      html += `<span class="today-pnl-label">DAY P&amp;L${Compliance.simBadge()}</span>`;
       html += `<span class="today-pnl-val">${sign}$${Utils.formatPrice(Math.abs(totalPnl))}</span>`;
       html += `<span class="today-pnl-pct">(${Utils.formatPct(p.return_pct)})</span>`;
       html += `<span class="today-pnl-cash" style="margin-left:auto;font-size:0.85rem">Equity $${Utils.formatPrice(equity)} · ${deployed > 0 ? Math.round(deployed/equity*100) + '% deployed' : 'all cash'}</span>`;
@@ -109,7 +118,7 @@ const Dashboard = {
         return ac !== 'OPTION' && tp !== 'option';
       });
       if (_nonOptOvernight.length) {
-      html += '<div class="today-section"><div class="today-section-title">Since Close</div>';
+      html += '<div class="today-section"><div class="today-section-title">Since Close' + Compliance.simBadge() + '</div>';
       html += '<div class="overnight-card" style="padding:10px 12px;background:var(--bg-inset);border-radius:8px;font-size:0.85rem">';
       // Generate delta notes from open positions
       _nonOptOvernight.slice(0, 5).forEach(pos => {
@@ -137,7 +146,7 @@ const Dashboard = {
         return ac !== 'OPTION' && tp !== 'option';
       });
       if (_nonOptionPositions.length) {
-      html += '<div class="today-section"><div class="today-section-title">Open Positions</div>';
+      html += '<div class="today-section"><div class="today-section-title">Open Positions' + Compliance.simBadge() + '</div>';
       const _posPnls = _nonOptionPositions.map(p => Math.abs(p.pnl || 0));
       const _maxPnl = Math.max(..._posPnls, 1);
       _nonOptionPositions.forEach(pos => {

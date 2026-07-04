@@ -12,6 +12,9 @@ function PositionsTablePlaceholder() {
     <Surface span="hero">
       <SurfaceHeader title="Positions" />
       <div className="p-4">
+        <p className="mb-3 px-3 py-2 rounded-lg border border-dashed text-xs leading-relaxed" style={{ borderColor: 'var(--color-border-subtle)', color: 'var(--color-text-tertiary)', backgroundColor: 'var(--color-bg-elevated)' }}>
+          🧪 <strong style={{ color: 'var(--color-text-secondary)' }}>Simulated portfolio — not a recommendation.</strong> Paper-trading results with no real money.
+        </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm" style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}>
             <thead>

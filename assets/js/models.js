@@ -22,6 +22,7 @@ const Models = {
     
     // ── Simulation tab ──
     html += '<div class="models-pane" id="subtab-simulation">';
+    html += Compliance.simLabel();
     if (simData) {
       html += this._renderSimulation(simData);
     } else {

@@ -292,6 +292,7 @@ const PaperTrades = {
 
     // ── PAPER TRADING TAB ──
     html += '<div class="research-pane" id="tab-paper">';
+    html += Compliance.simLabel();
 
     // ── Portfolio Summary ──
     if (data?.portfolio) {

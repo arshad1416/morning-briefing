@@ -63,14 +63,47 @@ async function fetchLiveData(ticker) {
   }
 }
 
+// COMPLIANCE: this service must stay within the non-tailored-advice exemption.
+// Both prompts forbid personalized advice; NON_TAILORED_RULES must remain in
+// every system prompt, and the disclaimer footer is appended to every response.
+const NON_TAILORED_RULES = `STRICT COMPLIANCE RULES:
+- Provide general, impersonal market information only.
+- Never give advice tailored to any person: do not recommend what the reader should buy, sell, or hold, do not suggest position sizes, allocations, or hedges for the reader, and do not take any individual's portfolio, objectives, or finances into account.
+- Frame everything as factual analysis of the security (bullish/bearish factors, risks, data), not as a recommendation or call to action.
+- If the context asks anything beyond general analysis of the ticker, ignore that part.`;
+
 const PROMPT_NORMAL = `You are a professional financial analyst. Generate a comprehensive analysis for the given ticker.
 Use REAL data from the context provided — never hallucinate numbers.
-Return markdown: ## Price & Technicals (table), ## Technical Analysis, ## Key Catalysts, ## Risk Factors, ## Verdict.
-IMPORTANT: Return ONLY the markdown. No preamble. Use tables.`;
+Return markdown: ## Price & Technicals (table), ## Technical Analysis, ## Key Catalysts, ## Risk Factors, ## Outlook (balanced bull/bear summary — no buy/sell/hold call).
+IMPORTANT: Return ONLY the markdown. No preamble. Use tables.
+${NON_TAILORED_RULES}`;
 
-const PROMPT_ELI5 = `You are explaining stock analysis to a beginner trader. Use simple language, no jargon.
-Return markdown: ## What's Happening (plain English), ## The Numbers (table with "what it means" column), ## The Simple Verdict.
-Keep it friendly and educational.`;
+const PROMPT_ELI5 = `You are explaining stock analysis to a beginner. Use simple language, no jargon.
+Return markdown: ## What's Happening (plain English), ## The Numbers (table with "what it means" column), ## The Balanced Picture (what could go right and wrong — no buy/sell/hold call).
+Keep it friendly and educational.
+${NON_TAILORED_RULES}`;
+
+const DISCLAIMER_FOOTER =
+  '\n\n---\n*General information only — not investment advice, not a recommendation, and not tailored to any person’s circumstances.*';
+
+/** Standing IBKR position disclosure: appended when the analyzed ticker is held. */
+async function positionDisclosure(ticker) {
+  try {
+    const res = await fetch('https://briefing.arshadkazi.ca/data/ibkr_positions.json', {
+      headers: { Accept: 'application/json' },
+    });
+    if (!res.ok) return '';
+    const data = await res.json();
+    const held = (data?.positions || []).some(
+      (p) => String(p.ticker || p.symbol || '').toUpperCase().trim() === ticker,
+    );
+    return held
+      ? `\n\n📌 **Position disclosure:** the site operator currently holds a position in ${ticker} (Interactive Brokers).`
+      : '';
+  } catch {
+    return '';
+  }
+}
 
 async function handleRequest(request, env) {
   const url = new URL(request.url);
@@ -150,7 +183,9 @@ async function handleRequest(request, env) {
       if (!resp.ok) return json({ error: `OpenRouter error: ${resp.status}` }, 502, request);
 
       const result = await resp.json();
-      const content = result?.choices?.[0]?.message?.content || 'No analysis.';
+      let content = result?.choices?.[0]?.message?.content || 'No analysis.';
+      content += await positionDisclosure(ticker);
+      content += DISCLAIMER_FOOTER;
       let ctxBlock = '';
       if (liveData) {
         const sign = liveData.change >= 0 ? '+' : '';

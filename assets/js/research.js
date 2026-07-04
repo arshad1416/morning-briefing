@@ -230,6 +230,11 @@ const Research = {
 
     // ── TAB 4b: MapleGamma Analysis (DS Pro) ──
     html += '<div class="research-pane" id="tab-mg-analysis" style="display:none">';
+    html += Compliance.simLabel();
+    html += await Compliance.positionDisclosureHTML(
+      (mgAnalysis?.opportunities || []).map(o => o.ticker)
+        .concat(mgAnalysis?.portfolio_actions?.watchlist || [])
+    );
     if (mgAnalysis?.meta?.generated_at) {
       html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Last updated: ${this.formatTimestamp(mgAnalysis.meta.generated_at)}</div>`;
       

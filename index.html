@@ -69,6 +69,25 @@
     <div class="loading">Loading...</div>
   </main>
 
+  <!-- Compliance footer — general disclaimer, position-disclosure policy, Quebec notice -->
+  <footer id="compliance-footer" style="max-width:1200px;margin:32px auto 24px;padding:16px 20px;border-top:1px solid var(--border-dim,#333);font-size:0.72rem;line-height:1.6;color:var(--text-muted,#888)">
+    <p style="margin:0 0 8px 0">
+      Morning Briefing / MapleGamma provides general market information and simulated
+      (paper-trading) results for educational purposes only. Nothing on this site is
+      investment advice or a recommendation to buy or sell any security, and nothing is
+      tailored to the needs or circumstances of any person. The site operator may hold
+      positions in securities discussed; current Interactive Brokers holdings are disclosed
+      on pages where those securities appear. Data may be delayed or inaccurate. Past
+      performance — real or simulated — does not guarantee future results.
+    </p>
+    <p style="margin:0">
+      <strong>Quebec notice:</strong> this service is not directed at, or intended for use by,
+      residents of Quebec. <span lang="fr">Avis&nbsp;: ce service ne s'adresse pas aux résidents
+      du Québec. L'information fournie est de nature générale et ne constitue pas un conseil
+      en placement ni une recommandation.</span>
+    </p>
+  </footer>
+
   <!-- TradingView lightweight-charts -->
   <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 
@@ -77,6 +96,7 @@
       var v = Date.now().toString(36);
       var scripts = [
         '/assets/js/utils.js',
+        '/assets/js/compliance.js',
         '/assets/js/state.js',
         '/assets/js/dashboard.js',
         '/assets/js/ticker-detail.js',
@@ -89,7 +109,10 @@
         '/assets/js/maplegamma.js',
         '/assets/js/options-flow.js',
         '/assets/js/portfolio.js',
-        '/assets/js/simulation.js',
+        // simulation.js disabled 2026-07-03: the "AI portfolio builder" took a
+        // user's capital/risk profile and produced tailored allocations and
+        // rebalance suggestions on imported real positions — outside the
+        // non-tailored-advice exemption. Do not re-enable without legal review.
         '/assets/js/screener.js',
         '/assets/js/charts.js',
         '/assets/js/realtime.js',

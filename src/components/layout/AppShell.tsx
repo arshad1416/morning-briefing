@@ -146,6 +146,23 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         {/* Main content */}
         <main className="flex-1 min-w-0 p-4 md:p-6">
           {children}
+
+          {/* Compliance footer — general disclaimer, position-disclosure policy, Quebec notice */}
+          <footer className="mt-8 pt-4 pb-16 md:pb-4 border-t text-xs leading-relaxed text-[var(--color-text-tertiary)]" style={{ borderColor: 'var(--color-border-subtle)' }}>
+            <p className="mb-2">
+              MapleGamma provides general market information and simulated (paper-trading) results for
+              educational purposes only. Nothing on this site is investment advice or a recommendation,
+              and nothing is tailored to any person&apos;s circumstances. The site operator may hold positions
+              in securities discussed; current Interactive Brokers holdings are disclosed on pages where
+              those securities appear. Past performance — real or simulated — does not guarantee future results.
+            </p>
+            <p>
+              <strong>Quebec notice:</strong> this service is not directed at, or intended for use by, residents
+              of Quebec. <span lang="fr">Avis&nbsp;: ce service ne s&apos;adresse pas aux résidents du Québec.
+              L&apos;information fournie est de nature générale et ne constitue pas un conseil en placement ni
+              une recommandation.</span>
+            </p>
+          </footer>
         </main>
       </div>
 

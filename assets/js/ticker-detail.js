@@ -33,6 +33,9 @@ const TickerDetail = {
         ${t.name ? `<span style="color:var(--text-secondary)">${t.name}</span>` : ''}
       </div>`;
 
+    // Standing IBKR position disclosure for the security this page discusses
+    html += await Compliance.positionDisclosureHTML([ticker]);
+
     // Price card
     const price = t.price || scan.price;
     const changePct = t.change_pct || scan.change_pct;

@@ -12,6 +12,9 @@ export function DayPnLCard() {
     <Surface span="third">
       <SurfaceHeader title="Portfolio" />
       <div className="p-4 space-y-4">
+        <p className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--color-text-tertiary)' }}>
+          Simulated portfolio — not a recommendation
+        </p>
         <Stat label="Equity" value={`$${equity.toLocaleString()}`} delta={dayPnL} suffix="" prefix="" />
         <div className="flex items-center justify-between">
           <span className="text-xs text-[var(--color-text-tertiary)]">Deployed</span>
