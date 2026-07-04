@@ -338,7 +338,7 @@ const PaperTrades = {
 
     // ── Live Open Positions ──
     // Currency toggle
-    const fxRate = data.fx_rate_usdcad || 1.38;
+    const fxRate = data?.fx_rate_usdcad || 1.38;
     const storedPref = localStorage.getItem('preferredCurrency') || 'native';
     html += `<div style="display:flex;align-items:center;justify-content:space-between;margin-top:24px;margin-bottom:8px">
       <h2 class="section-title" style="margin:0">Open Positions</h2>
