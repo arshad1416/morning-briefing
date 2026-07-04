@@ -93,6 +93,7 @@ def main():
     # Get multi-expiry data via direct import (primary source for all bucket data)
     expiry_data = {}
     ibkr_px = None
+    all_bucket_strikes = []
     try:
         from ibkr_gex import calc_gex_multi
         try:
@@ -119,9 +120,14 @@ def main():
                 summary.setdefault("total_vex", multi["all"].get("total_vex", 0))
                 summary.setdefault("max_gex_strike", multi["all"].get("max_gex_strike"))
                 summary.setdefault("max_gex_value", multi["all"].get("max_gex_value"))
-    except Exception:
-        pass
-    
+    except Exception as e:
+        print(f"⚠️ calc_gex_multi failed: {type(e).__name__}: {e}", file=sys.stderr)
+
+    if not strikes and not all_bucket_strikes:
+        # Both sources empty — keep the existing maplegamma-data.json intact
+        print("❌ No strikes from subprocess output or calc_gex_multi; not overwriting existing data", file=sys.stderr)
+        sys.exit(1)
+
     # Compute call/put/net GEX — merge calls and puts at the same strike
     gamma_profile = _build_gamma_profile(strikes if strikes else all_bucket_strikes)
 
@@ -209,7 +215,7 @@ def main():
     with open(OUTPUT, "w") as f:
         json.dump(data, f, indent=2)
     
-    n = len(strikes)
+    n = len(strikes) if strikes else len(all_bucket_strikes)
     print(f"✅ GEX/DEX/VEX pushed: {n} strikes, ${summary.get('total_gex',0):+,.0f} GEX")
 
 if __name__ == "__main__":
