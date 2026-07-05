@@ -225,6 +225,1874 @@
         "gemini-2.0-flash-aggregator"
       ],
       "correlation_score": 1.0
+    },
+    {
+      "date": "2026-06-26",
+      "council_query": "Market outlook analysis for 2026-06-26 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.7,
+          "source": "market_pulse",
+          "correct": true,
+          "actual_direction": "neutral"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.5,
+          "target": 45.5,
+          "stop": 39.8,
+          "correct": false,
+          "actual_direction": "neutral"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "MSFT",
+          "entry": 427.5,
+          "target": 445.0,
+          "stop": 418.0,
+          "correct": false,
+          "actual_direction": "neutral"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "neutral",
+        "return_pct": -0.047,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "gemini-3.1-flash-lite-preview-aggregator"
+      ],
+      "correlation_score": 0.3333,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Fragile market complacency faces rising volatility and geopolitical tail risks despite high-beta momentum.",
+          "score": 4,
+          "regime": "neutral",
+          "confidence": 7
+        },
+        "trades": [
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.5,
+            "stop": 39.8,
+            "target": 45.5,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "MSFT",
+            "direction": "long",
+            "entry": 427.5,
+            "stop": 418.0,
+            "target": 445.0,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "VIX spike to 20.09 indicates a transition to a high-volatility regime.",
+          "Geopolitical escalation in Ukraine and ISS safety concerns increasing systemic tail risk.",
+          "Potential liquidity trap in high-beta assets if 10Y yields sustain 4.45%.",
+          "Grantham's AI bubble warnings creating psychological pressure on tech-heavy indices."
+        ],
+        "narrative": "The market is currently bifurcated between institutional momentum in quality tech and growing macro anxiety reflected in the VIX spike. While the portfolio's 95% cash position provides a strong defensive buffer, the proposed trades aim to capitalize on mean reversion in oversold crypto-proxies and momentum breakouts in flight-to-quality assets, provided strict stop-loss discipline is maintained against potential broad-market volatility."
+      }
+    },
+    {
+      "date": "2026-06-25",
+      "council_query": "Market outlook analysis for 2026-06-25 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.7,
+          "source": "market_pulse",
+          "correct": true,
+          "actual_direction": "neutral"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "MSFT",
+          "entry": 427.0,
+          "target": 448.0,
+          "stop": 414.5,
+          "correct": false,
+          "actual_direction": "neutral"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.5,
+          "target": 45.5,
+          "stop": 39.25,
+          "correct": false,
+          "actual_direction": "neutral"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "neutral",
+        "return_pct": -0.01,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "gemini-3.1-flash-lite-preview-aggregator"
+      ],
+      "correlation_score": 0.3333,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Market exhibits bifurcated momentum with tech rotation and industrial strength offsetting geopolitical volatility.",
+          "score": 6,
+          "regime": "neutral",
+          "confidence": 7
+        },
+        "trades": [
+          {
+            "ticker": "MSFT",
+            "direction": "long",
+            "entry": 427.0,
+            "stop": 414.5,
+            "target": 448.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.5,
+            "stop": 39.25,
+            "target": 45.5,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Persistent geopolitical escalation in Ukraine impacting yields and inflation.",
+          "High cash concentration creating opportunity cost in a near-all-time-high market.",
+          "Idiosyncratic exposure to IBIT volatility during an oversold technical setup.",
+          "10Y yield at 4.45% continuing to pressure equity valuation premiums."
+        ],
+        "narrative": "The portfolio is currently under-deployed, holding 95% cash while the S&P 500 consolidates near record highs. By initiating long positions in MSFT to capture momentum and averaging down on the oversold IBIT, the strategy shifts from a passive defensive stance to a tactical deployment focused on mean reversion and tech-sector leadership."
+      }
+    },
+    {
+      "date": "2026-06-24",
+      "council_query": "Market outlook analysis for 2026-06-24 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bearish",
+          "confidence": 0.8,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "neutral"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "MSFT",
+          "entry": 427.0,
+          "target": 455.0,
+          "stop": 412.5,
+          "correct": false,
+          "actual_direction": "neutral"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.5,
+          "target": 46.0,
+          "stop": 38.75,
+          "correct": false,
+          "actual_direction": "neutral"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "neutral",
+        "return_pct": -0.098,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [],
+      "correlation_score": 0.0,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Fragile market consolidation characterized by tech-sector rotation and heightened geopolitical risk.",
+          "score": 4,
+          "regime": "bearish",
+          "confidence": 8
+        },
+        "trades": [
+          {
+            "ticker": "MSFT",
+            "direction": "long",
+            "entry": 427.0,
+            "stop": 412.5,
+            "target": 455.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.5,
+            "stop": 38.75,
+            "target": 46.0,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Systemic tech-led liquidation following NASDAQ's 2.21% decline.",
+          "Geopolitical escalation in Ukraine impacting global risk appetite.",
+          "10Y yield at 4.45% creating resistance for high-growth equity valuations.",
+          "Portfolio over-concentration in IBIT during a period of crypto-asset weakness."
+        ],
+        "narrative": "The market is currently in a defensive state, with high-beta tech facing significant rotation pressure despite premarket momentum in select large-caps. While the 95% cash position provides a safety buffer, the portfolio must balance tactical mean-reversion plays in oversold assets like IBIT against the systemic risks posed by geopolitical instability and elevated bond yields. Deploying a small portion of capital into MSFT and IBIT leverages technical strength and oversold conditions while maintaining strict stop-loss discipline to protect the core cash balance."
+      }
+    },
+    {
+      "date": "2026-06-23",
+      "council_query": "Market outlook analysis for 2026-06-23 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.8,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.5,
+          "target": 45.5,
+          "stop": 39.8,
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.6,
+          "source": "trade_recommendation",
+          "ticker": "MSFT",
+          "entry": 427.0,
+          "target": 450.0,
+          "stop": 412.0,
+          "correct": false,
+          "actual_direction": "bearish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bearish",
+        "return_pct": -1.436,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [],
+      "correlation_score": 0.0,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Market enters a 'yellow light' volatility regime as AI-sector fragility triggers a rotation out of high-beta tech.",
+          "score": 4,
+          "regime": "neutral",
+          "confidence": 8
+        },
+        "trades": [
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.5,
+            "stop": 39.8,
+            "target": 45.5,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "MSFT",
+            "direction": "long",
+            "entry": 427.0,
+            "stop": 412.0,
+            "target": 450.0,
+            "conviction": 6,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Systemic volatility contagion from AI-chip sector repricing",
+          "Geopolitical escalation in Ukraine impacting global supply chains",
+          "High 10Y yield (4.45%) pressuring growth equity valuations",
+          "Portfolio over-concentration in IBIT during liquidity-driven deleveraging"
+        ],
+        "narrative": "The market is currently navigating a period of heightened volatility, with the VIX spike signaling a breakdown in complacency and a rotation away from AI-related hardware. While the portfolio remains heavily cash-rich, the current setup favors tactical, small-scale deployments into oversold assets like IBIT or resilient tech leaders like MSFT to capitalize on the ongoing sector repricing. Investors should maintain a defensive posture, as the 'yellow light' regime suggests that systemic risks from geopolitical instability and elevated yields remain significant."
+      }
+    },
+    {
+      "date": "2026-06-22",
+      "council_query": "Market outlook analysis for 2026-06-22 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bullish",
+          "confidence": 0.7,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "ARKK",
+          "entry": 81.01,
+          "target": 88.0,
+          "stop": 77.5,
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.56,
+          "target": 46.0,
+          "stop": 39.2,
+          "correct": false,
+          "actual_direction": "bearish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bearish",
+        "return_pct": -0.371,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [],
+      "correlation_score": 0.0,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Market exhibits M&A-driven optimism and tech momentum, tempered by rising volatility and geopolitical caution.",
+          "score": 6,
+          "regime": "bullish",
+          "confidence": 7
+        },
+        "trades": [
+          {
+            "ticker": "ARKK",
+            "direction": "long",
+            "entry": 81.01,
+            "stop": 77.5,
+            "target": 88.0,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.56,
+            "stop": 39.2,
+            "target": 46.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "VIX rising 5.43% despite index gains indicates underlying hedging demand and fragility.",
+          "Geopolitical instability in Ukraine impacting global sentiment.",
+          "Portfolio over-concentration in IBIT amidst a technical breakdown (RSI 29.0).",
+          "High-beta asset sensitivity to the 4.45% 10Y yield environment."
+        ],
+        "narrative": "The market is currently characterized by a divergence between strong tech-led momentum and rising volatility, fueled by significant M&A activity. While the portfolio is heavily under-deployed, the proposed trades aim to capitalize on ARKK's technical strength and a mean-reversion opportunity in the oversold IBIT position. Investors should remain cautious of the fragile S&P 500 rally and the potential for geopolitical shocks to disrupt current risk-on sentiment."
+      }
+    },
+    {
+      "date": "2026-06-18",
+      "council_query": "Market outlook analysis for 2026-06-18 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bearish",
+          "confidence": 0.8,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.56,
+          "target": 44.5,
+          "stop": 39.8,
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "MSFT",
+          "entry": 427.0,
+          "target": 450.0,
+          "stop": 412.0,
+          "correct": true,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 1.085,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "Qwen 3.7 Max",
+        "Qwen 3.7 Max"
+      ],
+      "correlation_score": 0.6667,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Macro headwinds from a surging USD and rising 10Y yields are pressuring indices, creating a fragile environment despite tactical momentum in select tech.",
+          "score": 3,
+          "regime": "bearish",
+          "confidence": 8
+        },
+        "trades": [
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.56,
+            "stop": 39.8,
+            "target": 44.5,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "MSFT",
+            "direction": "long",
+            "entry": 427.0,
+            "stop": 412.0,
+            "target": 450.0,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Liquidity squeeze driven by USD strength and 10Y yield at 4.49%",
+          "Geopolitical escalation in Ukraine impacting energy and global stability",
+          "Portfolio over-concentration in IBIT during a period of crypto-asset volatility",
+          "Decoupling of realized volatility from sentiment, potentially masking underlying fragility"
+        ],
+        "narrative": "The market is currently navigating a high-yield, strong-dollar environment that threatens to undermine equity valuations, necessitating a cautious deployment of the portfolio's 95% cash reserves. While the macro backdrop remains bearish, tactical opportunities exist in mean-reversion plays for oversold assets like IBIT and momentum-driven entries in high-quality tech names like MSFT that show relative strength against index pullbacks."
+      }
+    },
+    {
+      "date": "2026-06-17",
+      "council_query": "Market outlook analysis for 2026-06-17 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.7,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.5,
+          "target": 45.5,
+          "stop": 39.8,
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "MSFT",
+          "entry": 427.5,
+          "target": 445.0,
+          "stop": 415.0,
+          "correct": false,
+          "actual_direction": "bearish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bearish",
+        "return_pct": -1.215,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [],
+      "correlation_score": 0.0,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Market exhibits fragile momentum as rising yields and sector divergence create a high-risk environment for tech-heavy portfolios.",
+          "score": 4,
+          "regime": "neutral",
+          "confidence": 7
+        },
+        "trades": [
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.5,
+            "stop": 39.8,
+            "target": 45.5,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "MSFT",
+            "direction": "long",
+            "entry": 427.5,
+            "stop": 415.0,
+            "target": 445.0,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "10Y yield at 4.49% pressuring equity valuations and eroding real returns.",
+          "Geopolitical instability in Ukraine impacting global risk appetite.",
+          "Narrowing market breadth with NASDAQ weakness signaling potential for violent mean reversion.",
+          "High concentration in IBIT leaving the portfolio vulnerable to crypto-liquidity shocks."
+        ],
+        "narrative": "The market is currently caught between defensive rotation and speculative momentum, evidenced by the divergence between Dow resilience and NASDAQ weakness. While the portfolio's 95% cash position provides safety, it risks missing the relative strength in tech leaders like MSFT; however, any deployment must be tempered by the macro headwinds of rising yields and persistent inflation."
+      }
+    },
+    {
+      "date": "2026-06-16",
+      "council_query": "Market outlook analysis for 2026-06-16 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bullish",
+          "confidence": 0.7,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.5,
+          "target": 44.5,
+          "stop": 39.8,
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "MSFT",
+          "entry": 427.0,
+          "target": 445.0,
+          "stop": 415.0,
+          "correct": false,
+          "actual_direction": "bearish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bearish",
+        "return_pct": -0.568,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [],
+      "correlation_score": 0.0,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Market exhibits a risk-on momentum bias in tech despite persistent geopolitical friction and yield-driven macro headwinds.",
+          "score": 6,
+          "regime": "bullish",
+          "confidence": 7
+        },
+        "trades": [
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.5,
+            "stop": 39.8,
+            "target": 44.5,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "MSFT",
+            "direction": "long",
+            "entry": 427.0,
+            "stop": 415.0,
+            "target": 445.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Escalating geopolitical instability in Eastern Europe affecting global risk sentiment.",
+          "Rising 10Y yields at 4.49% creating liquidity pressure on speculative assets.",
+          "Concentration risk in IBIT within the current portfolio structure.",
+          "Corporate belt-tightening signals, evidenced by Robinhood's 10% headcount reduction."
+        ],
+        "narrative": "The market is currently in a stabilization phase characterized by a declining VIX and strong momentum in large-cap tech, providing a tactical window to deploy excess cash. While geopolitical tensions and rising yields remain significant macro overhangs, the oversold condition of IBIT and the breakout momentum of MSFT offer high-conviction opportunities for mean reversion and trend-following, respectively."
+      }
+    },
+    {
+      "date": "2026-06-15",
+      "council_query": "Market outlook analysis for 2026-06-15 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bullish",
+          "confidence": 0.7,
+          "source": "market_pulse",
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.56,
+          "target": 45.5,
+          "stop": 39.4,
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "MSFT",
+          "entry": 427.0,
+          "target": 455.0,
+          "stop": 412.0,
+          "correct": true,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 1.653,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "gemini-3.1-flash-lite-preview-aggregator",
+        "Qwen 3.7 Max",
+        "Qwen 3.7 Max"
+      ],
+      "correlation_score": 1.0,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Market exhibits strong risk-on momentum with cooling volatility, though underlying stagflationary risks persist.",
+          "score": 8,
+          "regime": "bullish",
+          "confidence": 7
+        },
+        "trades": [
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.56,
+            "stop": 39.4,
+            "target": 45.5,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "MSFT",
+            "direction": "long",
+            "entry": 427.0,
+            "stop": 412.0,
+            "target": 455.0,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Elevated 10Y yield at 4.46% threatening tech valuation multiples",
+          "Geopolitical instability in the Strait of Hormuz impacting energy costs",
+          "Potential stagflationary pressure from rising gasoline prices",
+          "Over-concentration in speculative assets like IBIT"
+        ],
+        "narrative": "The market is currently in a strong risk-on regime, characterized by a sharp decline in the VIX and broad-based momentum in tech equities. While the portfolio's 95% cash position creates significant opportunity cost, the proposed trades aim to capture mean reversion in oversold assets and momentum continuation in AI-linked large caps. We balance this aggressive deployment with disciplined stop-loss levels to mitigate risks stemming from geopolitical volatility and elevated interest rates."
+      }
+    },
+    {
+      "date": "2026-06-12",
+      "council_query": "Market outlook analysis for 2026-06-12 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bullish",
+          "confidence": 0.8,
+          "source": "market_pulse",
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "MSFT",
+          "entry": 427.0,
+          "target": 455.0,
+          "stop": 412.5,
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.5,
+          "target": 45.0,
+          "stop": 39.8,
+          "correct": true,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 0.503,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "gemini-3.1-flash-lite-preview-aggregator",
+        "Qwen 3.7 Max",
+        "Qwen 3.7 Max"
+      ],
+      "correlation_score": 1.0,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Broad equity momentum persists despite rising yields and geopolitical friction.",
+          "score": 7,
+          "regime": "bullish",
+          "confidence": 8
+        },
+        "trades": [
+          {
+            "ticker": "MSFT",
+            "direction": "long",
+            "entry": 427.0,
+            "stop": 412.5,
+            "target": 455.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.5,
+            "stop": 39.8,
+            "target": 45.0,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Higher-for-longer 10Y yield at 4.48% threatening tech valuations.",
+          "Geopolitical escalation in Ukraine and ISS instability potentially spiking VIX.",
+          "Concentration risk in IBIT amid crypto-market volatility.",
+          "Liquidity risks stemming from CME 24/7 commodity trading shifts."
+        ],
+        "narrative": "The market is currently in a risk-on regime driven by industrial and tech momentum, though the portfolio's extreme cash position reflects a disconnect from this bullish trend. By deploying capital into MSFT for trend continuation and IBIT for mean reversion, the portfolio can bridge the gap between its defensive posture and the prevailing market strength. Success depends on balancing these tactical entries against the macro risks of rising yields and geopolitical instability."
+      }
+    },
+    {
+      "date": "2026-06-11",
+      "council_query": "Market outlook analysis for 2026-06-11 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bullish",
+          "confidence": 0.7,
+          "source": "market_pulse",
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "MSFT",
+          "entry": 427.0,
+          "target": 455.0,
+          "stop": 412.5,
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.6,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.5,
+          "target": 46.0,
+          "stop": 38.75,
+          "correct": true,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 1.752,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "gemini-3.1-flash-lite-preview-aggregator",
+        "Qwen 3.7 Max",
+        "Qwen 3.7 Max"
+      ],
+      "correlation_score": 1.0,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Risk-on momentum surge driven by volatility compression, though tempered by persistent 10Y yield pressures and geopolitical instability.",
+          "score": 7,
+          "regime": "bullish",
+          "confidence": 7
+        },
+        "trades": [
+          {
+            "ticker": "MSFT",
+            "direction": "long",
+            "entry": 427.0,
+            "stop": 412.5,
+            "target": 455.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.5,
+            "stop": 38.75,
+            "target": 46.0,
+            "conviction": 6,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Elevated 10Y yield (4.46%) creates a liquidity trap if VIX mean-reverts.",
+          "Geopolitical escalation in Ukraine threatens global market stability.",
+          "Portfolio concentration in IBIT creates idiosyncratic risk during crypto-specific drawdowns.",
+          "Failure to deploy 95% cash during a momentum breakout risks significant opportunity cost."
+        ],
+        "narrative": "The market is currently in a strong risk-on regime, characterized by a sharp VIX decline and broad equity participation. While the portfolio remains heavily under-deployed, the strategy shifts toward capturing momentum in large-cap tech while cautiously averaging into oversold crypto positions, provided strict risk management is maintained to hedge against geopolitical volatility."
+      }
+    },
+    {
+      "date": "2026-06-10",
+      "council_query": "Market outlook analysis for 2026-06-10 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bearish",
+          "confidence": 0.8,
+          "source": "market_pulse",
+          "correct": true,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "MSFT",
+          "entry": 427.0,
+          "target": 450.0,
+          "stop": 412.5,
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.6,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.5,
+          "target": 46.0,
+          "stop": 38.75,
+          "correct": false,
+          "actual_direction": "bearish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bearish",
+        "return_pct": -1.62,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "gemini-3.1-flash-lite-preview-aggregator"
+      ],
+      "correlation_score": 0.3333,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Heightened volatility and geopolitical anxiety drive a flight to liquidity, despite isolated momentum in tech-growth sectors.",
+          "score": 3,
+          "regime": "bearish",
+          "confidence": 8
+        },
+        "trades": [
+          {
+            "ticker": "MSFT",
+            "direction": "long",
+            "entry": 427.0,
+            "stop": 412.5,
+            "target": 450.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.5,
+            "stop": 38.75,
+            "target": 46.0,
+            "conviction": 6,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "VIX spike of 10.68% indicates systemic instability and potential for rapid liquidation.",
+          "Geopolitical escalation in Ukraine creates unpredictable macro shocks.",
+          "Portfolio concentration in IBIT creates excessive exposure to crypto-volatility during a risk-off regime.",
+          "Correlation breakdown between duration hedges and equity assets."
+        ],
+        "narrative": "The market is currently in a high-volatility regime characterized by a flight to safety, evidenced by the VIX surge and geopolitical tensions. While 95% cash provides a defensive buffer, the portfolio must prioritize capital preservation by limiting IBIT exposure and leveraging MSFT as a quality growth anchor to navigate the prevailing uncertainty."
+      }
+    },
+    {
+      "date": "2026-06-09",
+      "council_query": "Market outlook analysis for 2026-06-09 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bullish",
+          "confidence": 0.7,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "MSFT",
+          "entry": 427.0,
+          "target": 455.0,
+          "stop": 412.5,
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.5,
+          "target": 46.0,
+          "stop": 39.2,
+          "correct": false,
+          "actual_direction": "bearish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bearish",
+        "return_pct": -0.258,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [],
+      "correlation_score": 0.0,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Tech-led momentum persists despite geopolitical friction and crypto-specific volatility.",
+          "score": 6,
+          "regime": "bullish",
+          "confidence": 7
+        },
+        "trades": [
+          {
+            "ticker": "MSFT",
+            "direction": "long",
+            "entry": 427.0,
+            "stop": 412.5,
+            "target": 455.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.5,
+            "stop": 39.2,
+            "target": 46.0,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Escalating geopolitical instability in Ukraine mispriced by current VIX levels.",
+          "10Y yield at 4.55% acting as a persistent headwind for speculative assets.",
+          "Portfolio over-concentration in IBIT creating liquidity trap risk.",
+          "Potential exhaustion of S&P 500 at 7405 triggering a broad market rotation."
+        ],
+        "narrative": "The market is currently favoring high-beta technology momentum, supported by a stable VIX and strong NASDAQ performance. While geopolitical risks remain elevated, the portfolio's significant cash position allows for tactical deployment into MSFT to capture trend strength and IBIT to capitalize on oversold mean reversion."
+      }
+    },
+    {
+      "date": "2026-06-08",
+      "council_query": "Market outlook analysis for 2026-06-08 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bullish",
+          "confidence": 0.7,
+          "source": "market_pulse",
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "MSFT",
+          "entry": 427.0,
+          "target": 455.0,
+          "stop": 412.5,
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.5,
+          "target": 46.0,
+          "stop": 38.75,
+          "correct": true,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 0.298,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "gemini-3.1-flash-lite-preview-aggregator",
+        "Qwen 3.7 Max",
+        "Qwen 3.7 Max"
+      ],
+      "correlation_score": 1.0,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "NASDAQ-led momentum rally persists despite rising 10Y yields and geopolitical friction.",
+          "score": 7,
+          "regime": "bullish",
+          "confidence": 7
+        },
+        "trades": [
+          {
+            "ticker": "MSFT",
+            "direction": "long",
+            "entry": 427.0,
+            "stop": 412.5,
+            "target": 455.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.5,
+            "stop": 38.75,
+            "target": 46.0,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Rising 10Y yield (4.55%) compressing valuation multiples for growth assets.",
+          "Geopolitical escalation in Eastern Europe acting as a latent volatility catalyst.",
+          "Portfolio over-concentration in IBIT amidst crypto-sector weakness.",
+          "Correlation risk between TLT and crypto assets during risk-off events."
+        ],
+        "narrative": "The market is currently in a risk-on regime driven by tech momentum, though the 10Y yield at 4.55% and geopolitical instability in Ukraine necessitate a cautious approach to capital deployment. By deploying a portion of the 95% cash position into high-momentum MSFT and mean-reverting IBIT, the portfolio can capture current market strength while maintaining a defensive buffer. This strategy balances aggressive growth participation with tactical risk management to address the portfolio's existing concentration issues."
+      }
+    },
+    {
+      "date": "2026-06-05",
+      "council_query": "Market outlook analysis for 2026-06-05 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bearish",
+          "confidence": 0.9,
+          "source": "market_pulse",
+          "correct": true,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "XLE",
+          "entry": 102.5,
+          "target": 112.0,
+          "stop": 98.75,
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.6,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.5,
+          "target": 45.5,
+          "stop": 39.8,
+          "correct": false,
+          "actual_direction": "bearish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bearish",
+        "return_pct": -2.645,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "gemini-3.1-flash-lite-preview-aggregator"
+      ],
+      "correlation_score": 0.3333,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Escalating Middle East conflict and EU tariff threats trigger a violent risk-off regime and bear steepening of the yield curve.",
+          "score": 2,
+          "regime": "bearish",
+          "confidence": 9
+        },
+        "trades": [
+          {
+            "ticker": "XLE",
+            "direction": "long",
+            "entry": 102.5,
+            "stop": 98.75,
+            "target": 112.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.5,
+            "stop": 39.8,
+            "target": 45.5,
+            "conviction": 6,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Escalation of Iran-Kuwait hostilities threatening global oil supply chains.",
+          "Bear steepening of the yield curve with 30Y yields hitting 5.0% increasing cost of capital.",
+          "Potential stagflationary pressure from new White House tariffs on the EU.",
+          "High volatility environment as VIX approaches 20, signaling potential for further margin calls."
+        ],
+        "narrative": "The market is currently undergoing a sharp risk-off recalibration as geopolitical instability in the Gulf and trade tensions with the EU collide with a deteriorating macro environment. While technical oversold conditions offer potential for mean reversion, the broader trend is dominated by a flight to safety and a dangerous bear steepening of the yield curve that threatens to undermine equity valuations."
+      }
+    },
+    {
+      "date": "2026-06-04",
+      "council_query": "Market outlook analysis for 2026-06-04 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bearish",
+          "confidence": 0.8,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "XLE",
+          "entry": 118.5,
+          "target": 128.0,
+          "stop": 114.2,
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.6,
+          "source": "trade_recommendation",
+          "ticker": "IBIT",
+          "entry": 41.5,
+          "target": 44.5,
+          "stop": 39.8,
+          "correct": true,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 0.405,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "Qwen 3.7 Max",
+        "Qwen 3.7 Max"
+      ],
+      "correlation_score": 0.6667,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Geopolitical shocks and yield curve steepening trigger a risk-off shift despite tech momentum.",
+          "score": 3,
+          "regime": "bearish",
+          "confidence": 8
+        },
+        "trades": [
+          {
+            "ticker": "XLE",
+            "direction": "long",
+            "entry": 118.5,
+            "stop": 114.2,
+            "target": 128.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "IBIT",
+            "direction": "long",
+            "entry": 41.5,
+            "stop": 39.8,
+            "target": 44.5,
+            "conviction": 6,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Escalation of Middle East conflict impacting global energy supply chains.",
+          "Forced liquidation of carry-trade assets due to Yen depreciation to 160.",
+          "Term-premium shock from 30Y yield spike de-rating high-multiple tech stocks.",
+          "Potential trade friction following White House tariff proposals on the EU."
+        ],
+        "narrative": "The market is currently navigating a fragile environment where geopolitical instability in the Persian Gulf and rising 30-year yields are forcing a shift toward risk-off positioning. While speculative momentum persists in high-beta tech, the combination of a weakening Yen and inflationary pressure from oil suggests that broad indices remain vulnerable to further liquidity withdrawals. Investors are advised to prioritize energy-sector hedges while maintaining strict risk management on oversold tactical plays."
+      }
+    },
+    {
+      "date": "2026-06-03",
+      "council_query": "Market outlook analysis for 2026-06-03 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.6,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "XLE",
+          "entry": 94.5,
+          "target": 101.0,
+          "stop": 91.8,
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "short",
+          "confidence": 0.6,
+          "source": "trade_recommendation",
+          "ticker": "XLY",
+          "entry": 184.2,
+          "target": 172.0,
+          "stop": 188.5,
+          "correct": true,
+          "actual_direction": "bearish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bearish",
+        "return_pct": -0.737,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "Qwen 3.7 Max"
+      ],
+      "correlation_score": 0.3333,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Market participants are trapped in a narrow, range-bound consolidation zone characterized by valuation anxiety and defensive rotation.",
+          "score": 4,
+          "regime": "neutral",
+          "confidence": 6
+        },
+        "trades": [
+          {
+            "ticker": "XLE",
+            "direction": "long",
+            "entry": 94.5,
+            "stop": 91.8,
+            "target": 101.0,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "XLY",
+            "direction": "short",
+            "entry": 184.2,
+            "stop": 188.5,
+            "target": 172.0,
+            "conviction": 6,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Overvaluation of mega-cap tech with a forward P/E of 23.4x",
+          "Stagflationary pressure from persistent 3.8% core CPI",
+          "Deleveraging risk if 10-year Treasury yields breach 4.65%",
+          "Narrow market breadth indicating lack of conviction in broader rally"
+        ],
+        "narrative": "The market is currently defined by a cautious defensive rotation as investors grapple with high valuations and persistent inflation. While quantitative models suggest a range-bound regime, the underlying risk of a violent deleveraging event remains elevated due to crowded tech positioning and sensitivity to rising Treasury yields."
+      }
+    },
+    {
+      "date": "2026-06-02",
+      "council_query": "Market outlook analysis for 2026-06-02 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bearish",
+          "confidence": 0.8,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "short",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "SPY",
+          "entry": 562.5,
+          "target": 552.0,
+          "stop": 567.2,
+          "correct": false,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.6,
+          "source": "trade_recommendation",
+          "ticker": "USO",
+          "entry": 73.4,
+          "target": 77.8,
+          "stop": 71.5,
+          "correct": true,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 0.129,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "Qwen 3.7 Max"
+      ],
+      "correlation_score": 0.3333,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Market exhaustion meets structural resistance as investors pivot toward defensive positioning amid high valuations and persistent inflation.",
+          "score": 3,
+          "regime": "bearish",
+          "confidence": 8
+        },
+        "trades": [
+          {
+            "ticker": "SPY",
+            "direction": "short",
+            "entry": 562.5,
+            "stop": 567.2,
+            "target": 552.0,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "USO",
+            "direction": "long",
+            "entry": 73.4,
+            "stop": 71.5,
+            "target": 77.8,
+            "conviction": 6,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Compressed equity risk premium of 1.2% leaving no margin for earnings misses.",
+          "Forced liquidation risk in crowded AI-infrastructure trades.",
+          "Solvency threats for small-caps facing $1.2 trillion in maturing high-yield debt.",
+          "Narrowing market breadth signaling loss of rally momentum."
+        ],
+        "narrative": "The market is currently characterized by a loss of momentum and a rotation into defensive sectors as participants react to high valuations and persistent inflationary pressures. Technical indicators suggest a potential pullback for the broader indices, while energy remains a localized area of resilience despite the prevailing cautious sentiment."
+      }
+    },
+    {
+      "date": "2026-06-01",
+      "council_query": "Market outlook analysis for 2026-06-01 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.7,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "NVDA",
+          "entry": 138.5,
+          "target": 152.0,
+          "stop": 132.0,
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "short",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "USO",
+          "entry": 80.5,
+          "target": 75.5,
+          "stop": 83.25,
+          "correct": false,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 0.263,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "Qwen 3.7 Max"
+      ],
+      "correlation_score": 0.3333,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Market at a technical crossroads with compressed risk premiums and weakening institutional conviction.",
+          "score": 4,
+          "regime": "neutral",
+          "confidence": 7
+        },
+        "trades": [
+          {
+            "ticker": "NVDA",
+            "direction": "long",
+            "entry": 138.5,
+            "stop": 132.0,
+            "target": 152.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "USO",
+            "direction": "short",
+            "entry": 80.5,
+            "stop": 83.25,
+            "target": 75.5,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Unsustainably low equity risk premium with 10-year Treasury yields at 4.8%.",
+          "Decelerating AI capital expenditure growth signaling a potential efficiency wall.",
+          "Rising corporate debt refinancing costs pressuring earnings growth.",
+          "Narrowing market breadth and low-volume rallies indicating lack of institutional conviction."
+        ],
+        "narrative": "The market is currently trapped in a compressed volatility regime, balancing strong momentum in select AI-infrastructure sectors against significant macro headwinds from high interest rates and corporate debt costs. While technical setups suggest potential for a breakout, the lack of volume-backed conviction and an unsustainable equity risk premium warrant a cautious, defensive stance. Investors are rotating into high-quality yield, reflecting growing anxiety over consumer exhaustion and margin compression."
+      }
+    },
+    {
+      "date": "2026-05-29",
+      "council_query": "Market outlook analysis for 2026-05-29 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.7,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "NVDA",
+          "entry": 138.5,
+          "target": 152.0,
+          "stop": 132.2,
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "short",
+          "confidence": 0.6,
+          "source": "trade_recommendation",
+          "ticker": "TSLA",
+          "entry": 208.0,
+          "target": 192.0,
+          "stop": 216.5,
+          "correct": false,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 0.217,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "Qwen 3.7 Max"
+      ],
+      "correlation_score": 0.3333,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Market exhibits extreme concentration risk and narrowing breadth, signaling a fragile consolidation phase prone to volatility expansion.",
+          "score": 4,
+          "regime": "neutral",
+          "confidence": 7
+        },
+        "trades": [
+          {
+            "ticker": "NVDA",
+            "direction": "long",
+            "entry": 138.5,
+            "stop": 132.2,
+            "target": 152.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "TSLA",
+            "direction": "short",
+            "entry": 208.0,
+            "stop": 216.5,
+            "target": 192.0,
+            "conviction": 6,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Extreme concentration in AI infrastructure (top 5 holdings at 34% of S&P 500).",
+          "Compressed equity risk premium of 1.2% against a 4.8% 10-year Treasury yield.",
+          "Refinancing wall for $1.1 trillion in corporate debt maturing within six months.",
+          "Narrowing market breadth and weakening momentum indicating potential mean reversion."
+        ],
+        "narrative": "The market is currently defined by a precarious tug-of-war between momentum in AI-infrastructure and a defensive rotation driven by macro-economic headwinds. While quantitative indicators suggest an imminent breakout from a low-volatility regime, the combination of record debt maturities and an unsustainable equity risk premium necessitates a cautious, hedged approach."
+      }
+    },
+    {
+      "date": "2026-05-27",
+      "council_query": "Market outlook analysis for 2026-05-27 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.7,
+          "source": "market_pulse",
+          "correct": true,
+          "actual_direction": "neutral"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "NVDA",
+          "entry": 138.5,
+          "target": 152.0,
+          "stop": 131.2,
+          "correct": false,
+          "actual_direction": "neutral"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "short",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "XLY",
+          "entry": 214.2,
+          "target": 206.0,
+          "stop": 218.5,
+          "correct": false,
+          "actual_direction": "neutral"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "neutral",
+        "return_pct": 0.016,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "gemini-3.1-flash-lite-preview-aggregator"
+      ],
+      "correlation_score": 0.3333,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Market at a technical crossroads with high valuation risks and defensive sector rotation.",
+          "score": 4,
+          "regime": "neutral",
+          "confidence": 7
+        },
+        "trades": [
+          {
+            "ticker": "NVDA",
+            "direction": "long",
+            "entry": 138.5,
+            "stop": 131.2,
+            "target": 152.0,
+            "conviction": 8,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "XLY",
+            "direction": "short",
+            "entry": 214.2,
+            "stop": 218.5,
+            "target": 206.0,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Overvaluation at 24x forward P/E amid declining earnings growth.",
+          "Prohibitive cost of capital with 10-year Treasury yields sustained above 4.8%.",
+          "Narrowing market breadth and institutional overcrowding in AI-linked cyclicals.",
+          "Potential for violent deleveraging if unemployment trends soften further."
+        ],
+        "narrative": "As of May 27, 2026, the market is caught between a technical consolidation phase and fundamental headwinds driven by high interest rates and earnings contraction. While quantitative indicators suggest an imminent breakout, the broader sentiment is shifting toward defensive positioning, favoring energy and staples over high-beta growth. Investors are advised to balance momentum-based technology plays with defensive shorts to hedge against potential valuation compression."
+      }
+    },
+    {
+      "date": "2026-05-26",
+      "council_query": "Market outlook analysis for 2026-05-26 (backfilled retrodiction)",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.7,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "NVDA",
+          "entry": 138.5,
+          "target": 148.0,
+          "stop": 133.2,
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max",
+          "prediction": "short",
+          "confidence": 0.6,
+          "source": "trade_recommendation",
+          "ticker": "XLE",
+          "entry": 92.0,
+          "target": 87.5,
+          "stop": 94.5,
+          "correct": false,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 0.611,
+        "outcome_source": "market_^GSPC",
+        "positions": []
+      },
+      "correct_models": [
+        "Qwen 3.7 Max"
+      ],
+      "correlation_score": 0.3333,
+      "backfilled": true,
+      "backfill_note": "retrodiction generated 2026-07-05 from the archived morning snapshot of this date; expert models may possess post-date training knowledge (hindsight risk) \u2014 filter on backfilled=true to exclude",
+      "raw_council_output": {
+        "market_pulse": {
+          "one_liner": "Market exhibits signs of exhaustion with compressed volatility and a growing disconnect between equity valuations and persistent inflationary pressures.",
+          "score": 4,
+          "regime": "neutral",
+          "confidence": 7
+        },
+        "trades": [
+          {
+            "ticker": "NVDA",
+            "direction": "long",
+            "entry": 138.5,
+            "stop": 133.2,
+            "target": 148.0,
+            "conviction": 7,
+            "source": "Qwen 3.7 Max"
+          },
+          {
+            "ticker": "XLE",
+            "direction": "short",
+            "entry": 92.0,
+            "stop": 94.5,
+            "target": 87.5,
+            "conviction": 6,
+            "source": "Qwen 3.7 Max"
+          }
+        ],
+        "risks": [
+          "Unsustainable equity risk premium given 4.8% 10-year Treasury yield",
+          "Crowded institutional positioning in AI-infrastructure proxies",
+          "Persistent 3.4% core CPI undermining premature Fed rate cut expectations",
+          "Thinning liquidity and potential for volatility spikes above 18"
+        ],
+        "narrative": "The market is currently in a state of range-bound consolidation as investors shift toward defensive positioning and cash-flow stability amidst a 'higher-for-longer' interest rate reality. While technical setups suggest potential for short-term gains in specific tech names, the broader environment remains vulnerable due to compressed risk premiums and institutional crowding in AI-related assets."
+      }
     }
   ]
 }

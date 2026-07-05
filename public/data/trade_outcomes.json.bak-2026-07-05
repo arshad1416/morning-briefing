@@ -1,0 +1,230 @@
+{
+  "entries": [
+    {
+      "date": "2026-07-03",
+      "council_query": "Market outlook analysis for 2026-07-03",
+      "recommendations": [
+        {
+          "model": "gemini-2.0-flash-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.5,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bearish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bearish",
+        "return_pct": 0.0,
+        "total_pnl": 0.0,
+        "unrealized_pnl": -1.39,
+        "open_positions_count": 1,
+        "generated_at": "2026-07-03 15:30:02",
+        "positions": [
+          {
+            "ticker": "IWM",
+            "direction": "long",
+            "pnl_pct": -0.46,
+            "asset_class": "STOCK"
+          }
+        ]
+      },
+      "correct_models": [],
+      "correlation_score": 0.0
+    },
+    {
+      "date": "2026-07-02",
+      "council_query": "Market outlook analysis for 2026-07-02",
+      "recommendations": [
+        {
+          "model": "gemini-2.0-flash-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.5,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bearish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bearish",
+        "return_pct": 0.0,
+        "total_pnl": 1.68,
+        "unrealized_pnl": -3.39,
+        "open_positions_count": 1,
+        "generated_at": "2026-07-02 15:30:02",
+        "positions": [
+          {
+            "ticker": "IWM",
+            "direction": "long",
+            "pnl_pct": -1.13,
+            "asset_class": "STOCK"
+          }
+        ]
+      },
+      "correct_models": [],
+      "correlation_score": 0.0
+    },
+    {
+      "date": "2026-07-01",
+      "council_query": "Market outlook analysis for 2026-07-01",
+      "recommendations": [
+        {
+          "model": "gemini-2.0-flash-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.5,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": -0.04,
+        "total_pnl": -38.87,
+        "unrealized_pnl": 2.46,
+        "open_positions_count": 2,
+        "generated_at": "2026-07-01 15:30:02",
+        "positions": [
+          {
+            "ticker": "IWM",
+            "direction": "long",
+            "pnl_pct": 0.46,
+            "asset_class": "STOCK"
+          },
+          {
+            "ticker": "XLF",
+            "direction": "long",
+            "pnl_pct": 1.99,
+            "asset_class": "STOCK"
+          }
+        ]
+      },
+      "correct_models": [],
+      "correlation_score": 0.0
+    },
+    {
+      "date": "2026-06-30",
+      "council_query": "Market outlook analysis for 2026-06-30",
+      "recommendations": [
+        {
+          "model": "gemini-2.0-flash-aggregator",
+          "prediction": "neutral",
+          "confidence": 0.5,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 0.04,
+        "total_pnl": -0.07,
+        "unrealized_pnl": 37.82,
+        "open_positions_count": 3,
+        "generated_at": "2026-06-30 15:30:02",
+        "positions": [
+          {
+            "ticker": "CAT",
+            "direction": "long",
+            "pnl_pct": 3.48,
+            "asset_class": "STOCK"
+          },
+          {
+            "ticker": "IWM",
+            "direction": "long",
+            "pnl_pct": 0.63,
+            "asset_class": "STOCK"
+          },
+          {
+            "ticker": "XLF",
+            "direction": "long",
+            "pnl_pct": -0.09,
+            "asset_class": "STOCK"
+          }
+        ]
+      },
+      "correct_models": [],
+      "correlation_score": 0.0
+    },
+    {
+      "date": "2026-06-29",
+      "council_query": "Market outlook analysis for 2026-06-29",
+      "recommendations": [
+        {
+          "model": "gemini-2.0-flash-aggregator",
+          "prediction": "bullish",
+          "confidence": 0.8,
+          "source": "market_pulse",
+          "correct": true,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max (Trade Idea 1)",
+          "prediction": "long",
+          "confidence": 0.8,
+          "source": "trade_recommendation",
+          "ticker": "SPY",
+          "entry": 737.5,
+          "target": 750.0,
+          "stop": 728.5,
+          "actual_direction": "bullish"
+        },
+        {
+          "model": "Qwen 3.7 Max (Trade Idea 2)",
+          "prediction": "long",
+          "confidence": 0.7,
+          "source": "trade_recommendation",
+          "ticker": "SPY",
+          "entry": 730.5,
+          "target": 738.0,
+          "stop": 726.0,
+          "actual_direction": "bullish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bullish",
+        "return_pct": 0.0,
+        "total_pnl": 0.0,
+        "unrealized_pnl": 0.99,
+        "open_positions_count": 5,
+        "generated_at": "2026-06-29 17:15:27",
+        "positions": [
+          {
+            "ticker": "CAT",
+            "direction": "long",
+            "pnl_pct": -2.25,
+            "asset_class": "STOCK"
+          },
+          {
+            "ticker": "UNH",
+            "direction": "long",
+            "pnl_pct": 4.7,
+            "asset_class": "STOCK"
+          },
+          {
+            "ticker": "IWM",
+            "direction": "long",
+            "pnl_pct": 0.02,
+            "asset_class": "STOCK"
+          },
+          {
+            "ticker": "XLF",
+            "direction": "long",
+            "pnl_pct": 1.07,
+            "asset_class": "STOCK"
+          },
+          {
+            "ticker": "XLK",
+            "direction": "long",
+            "pnl_pct": 2.95,
+            "asset_class": "STOCK"
+          }
+        ]
+      },
+      "correct_models": [
+        "gemini-2.0-flash-aggregator"
+      ],
+      "correlation_score": 1.0
+    }
+  ]
+}

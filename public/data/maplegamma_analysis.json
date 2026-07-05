@@ -1,15 +1,65 @@
 {
   "meta": {
-    "generated_at": "2026-07-03T18:20:30.235608+00:00",
+    "generated_at": "2026-07-05T05:17:45.465449+00:00",
     "experts_consulted": 4,
-    "experts_succeeded": 1,
-    "total_cost_usd": 0.00101,
-    "status": "insufficient_experts"
+    "experts_succeeded": 4,
+    "total_cost_usd": 0.002117,
+    "aggregator": "gemini-3.1-flash-lite-preview",
+    "expert_models": {
+      "mimo_risk_contrarian": "mimo-v2.5-pro",
+      "kimi_momentum": "kimi-k2.6",
+      "deepseek_quantitative": "deepseek-v4-pro",
+      "qwen_trade_selector": "qwen/qwen3.7-max"
+    }
   },
-  "expert_outputs": {
-    "deepseek_quantitative": "auth_error",
-    "kimi_momentum": "auth_error",
-    "mimo_risk_contrarian": "auth_error",
-    "qwen_trade_selector": "### Trade 1: SPY (Long)\n- **Entry:** $736.50 (Buy on minor pullback from current $737.89)\n- **Stop:** $728.00 (Placed safely below the massive 730 Put GEX support wall)\n- **Target:** $749.50 (Targeting the next major strike concentration at 750)\n- **Conviction:** 8/10\n- **Rationale:** The DS Pro model indicates a \"risk-on\" market regime with high confidence. SPY's gamma regime is bullish, and the GEX data shows a colossal support wall at the 730 strike (165k OI, 201k GEX). As long as price holds above 730, the path of least resistance is upward toward the 750 strike. \n\n### Trade 2: IWM (Long / Add to Position)\n- **Entry:** $296.00 (Scale in slightly below current $297.58 to improve average cost)\n- **Stop:** $291.50 (Invalidates the immediate short-term bullish structure)\n- **Target:** $304.50 (Prior resistance and psychological round number extension)\n- **Conviction:** 7/10\n- **Rationale:** Small caps typically outperform in a confirmed \"risk-on\" environment. The current open position is only slightly in the drawdown (-$1.39). Adding on a minor dip to the $296 zone improves the cost basis while maintaining a tight stop below the $292 structural support level."
-  }
+  "market_pulse": {
+    "one_liner": "Bifurcated market rotating from tech-heavy risk-on into defensive utility plays amid institutional hedging.",
+    "score": 5,
+    "regime": "neutral",
+    "confidence": 7
+  },
+  "key_levels": {
+    "SPY": {
+      "support": 7450.0,
+      "resistance": 7520.0
+    },
+    "QQQ": {
+      "support": 485.0,
+      "resistance": 505.0
+    }
+  },
+  "gamma_landscape": {
+    "pinning_zone": 7450.0,
+    "notes": "SPX is currently trading above the max GEX strike of 7450, creating a gravitational pull toward this level as dealers hedge, dampening volatility."
+  },
+  "risks": [
+    "Extreme AAPL put volume (4349x Vol/OI) suggests significant institutional downside hedging or directional bets.",
+    "Deteriorating breadth in technology and crypto-miners (TER, KLAC, IREN) threatens broader index stability.",
+    "Dealer hedging activity may trigger rapid pullbacks if price drifts significantly from the 7450 pin."
+  ],
+  "trades": [
+    {
+      "ticker": "XLU",
+      "direction": "long",
+      "entry": 81.5,
+      "stop": 79.8,
+      "target": 85.2,
+      "conviction": 7,
+      "source": "Qwen 3.7 Max"
+    },
+    {
+      "ticker": "AAPL",
+      "direction": "short",
+      "entry": 314.2,
+      "stop": 318.5,
+      "target": 305.5,
+      "conviction": 6,
+      "source": "Qwen 3.7 Max"
+    }
+  ],
+  "disagreements": [
+    "DS Pro identifies a 'risk-on' regime, while MiMo V2.5 Pro and options flow data indicate significant institutional defensive positioning and hedging.",
+    "Retail sentiment (WSB) remains bullish on speculative tech, contradicting the institutional 'smart money' rotation into defensive utilities."
+  ],
+  "narrative": "The market is undergoing a structural rotation as capital flees high-beta technology and crypto-miners in favor of defensive utility plays, driven by grid-reliability concerns. While the broader gamma regime remains bullish, the extreme put-skew in mega-cap tech and deteriorating breadth suggest that the current 'risk-on' label is masking underlying institutional caution."
 }
