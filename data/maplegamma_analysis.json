@@ -1,17 +1,17 @@
 {
   "meta": {
-    "generated_at": "2026-07-06T11:20:49.796040+00:00",
+    "generated_at": "2026-07-06T14:20:49.194361+00:00",
     "experts_consulted": 5,
     "experts_succeeded": 4,
-    "total_cost_usd": 0.001429,
+    "total_cost_usd": 0.001504,
     "aggregator": "gemini-3.1-flash-lite-preview",
     "context_variant": "a"
   },
   "market_pulse": {
-    "one_liner": "Dealer-supported bullish regime masking underlying small-cap fragility and high volatility exposure.",
+    "one_liner": "Bullish gamma regime masking significant institutional tail-risk hedging via high VEX.",
     "score": 6,
     "regime": "bullish",
-    "confidence": 6
+    "confidence": 5
   },
   "key_levels": {
     "SPY": {
@@ -25,35 +25,27 @@
   },
   "gamma_landscape": {
     "pinning_zone": 730.0,
-    "notes": "Positive GEX regime provides a floor at 730, but the extreme VEX-to-GEX ratio indicates high vulnerability to volatility shocks that could overwhelm dealer hedging."
+    "notes": "Max GEX at 730.0 creates a structural floor; however, the massive 1.05B VEX suggests extreme sensitivity to IV expansion which could override gamma stabilization."
   },
   "risks": [
-    "Dealer hedging failure if SPY breaks below the 730 gamma pin.",
-    "IWM weakness signaling a divergence from the broader risk-on narrative.",
-    "Low model accuracy (39-41%) increasing the probability of false signals."
+    "High VEX-to-GEX ratio indicates potential for rapid dealer unwinds if volatility spikes.",
+    "Negative DEX exposure suggests institutional hedging is outpacing directional bullish sentiment.",
+    "Low historical model accuracy (33-41%) necessitates tight risk management."
   ],
   "trades": [
     {
       "ticker": "SPY",
       "direction": "long",
-      "entry": 738.0,
+      "entry": 735.0,
       "stop": 728.0,
-      "target": 749.5,
-      "conviction": 7,
-      "source": "Qwen 3.7 Max / DeepSeek V4 Pro"
-    },
-    {
-      "ticker": "IWM",
-      "direction": "long",
-      "entry": 295.5,
-      "stop": 291.0,
-      "target": 305.0,
-      "conviction": 5,
+      "target": 749.0,
+      "conviction": 6,
       "source": "Qwen 3.7 Max"
     }
   ],
   "disagreements": [
-    "MiMo V2.5 Pro warns of imminent risk-off rotation due to IWM weakness, while Qwen 3.7 Max and DeepSeek V4 Pro favor continued bullish momentum based on SPY gamma positioning."
+    "DS Pro identifies a 'risk-on' regime while GLM 5.2 argues the high VEX and negative DEX indicate institutional fear and mispriced tail risk.",
+    "The utility of the bullish gamma regime is debated: Quantitative models see it as a stabilizer, while Risk Contrarians view it as a fragile compression masking underlying weakness."
   ],
-  "narrative": "The market is currently supported by a bullish gamma regime with a strong anchor at the 730 SPY strike, justifying a cautious long bias. However, the divergence in IWM performance and the massive volatility exposure (VEX) relative to gamma hedging suggest that the current risk-on environment is fragile and prone to sudden reversals if the 730 level is breached."
+  "narrative": "While current gamma positioning provides a structural floor at 730, the market is exhibiting a divergence between price action and institutional hedging behavior. We favor a cautious long approach that respects the 730 support, while acknowledging that the massive VEX exposure makes the current bullish regime highly susceptible to sudden volatility-driven dealer unwinds."
 }
