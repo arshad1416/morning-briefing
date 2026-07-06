@@ -1,65 +1,59 @@
 {
   "meta": {
-    "generated_at": "2026-07-05T05:17:45.465449+00:00",
-    "experts_consulted": 4,
+    "generated_at": "2026-07-06T11:20:49.796040+00:00",
+    "experts_consulted": 5,
     "experts_succeeded": 4,
-    "total_cost_usd": 0.002117,
+    "total_cost_usd": 0.001429,
     "aggregator": "gemini-3.1-flash-lite-preview",
-    "expert_models": {
-      "mimo_risk_contrarian": "mimo-v2.5-pro",
-      "kimi_momentum": "kimi-k2.6",
-      "deepseek_quantitative": "deepseek-v4-pro",
-      "qwen_trade_selector": "qwen/qwen3.7-max"
-    }
+    "context_variant": "a"
   },
   "market_pulse": {
-    "one_liner": "Bifurcated market rotating from tech-heavy risk-on into defensive utility plays amid institutional hedging.",
-    "score": 5,
-    "regime": "neutral",
-    "confidence": 7
+    "one_liner": "Dealer-supported bullish regime masking underlying small-cap fragility and high volatility exposure.",
+    "score": 6,
+    "regime": "bullish",
+    "confidence": 6
   },
   "key_levels": {
     "SPY": {
-      "support": 7450.0,
-      "resistance": 7520.0
+      "support": 730.0,
+      "resistance": 750.0
     },
     "QQQ": {
-      "support": 485.0,
-      "resistance": 505.0
+      "support": 0.0,
+      "resistance": 0.0
     }
   },
   "gamma_landscape": {
-    "pinning_zone": 7450.0,
-    "notes": "SPX is currently trading above the max GEX strike of 7450, creating a gravitational pull toward this level as dealers hedge, dampening volatility."
+    "pinning_zone": 730.0,
+    "notes": "Positive GEX regime provides a floor at 730, but the extreme VEX-to-GEX ratio indicates high vulnerability to volatility shocks that could overwhelm dealer hedging."
   },
   "risks": [
-    "Extreme AAPL put volume (4349x Vol/OI) suggests significant institutional downside hedging or directional bets.",
-    "Deteriorating breadth in technology and crypto-miners (TER, KLAC, IREN) threatens broader index stability.",
-    "Dealer hedging activity may trigger rapid pullbacks if price drifts significantly from the 7450 pin."
+    "Dealer hedging failure if SPY breaks below the 730 gamma pin.",
+    "IWM weakness signaling a divergence from the broader risk-on narrative.",
+    "Low model accuracy (39-41%) increasing the probability of false signals."
   ],
   "trades": [
     {
-      "ticker": "XLU",
+      "ticker": "SPY",
       "direction": "long",
-      "entry": 81.5,
-      "stop": 79.8,
-      "target": 85.2,
+      "entry": 738.0,
+      "stop": 728.0,
+      "target": 749.5,
       "conviction": 7,
-      "source": "Qwen 3.7 Max"
+      "source": "Qwen 3.7 Max / DeepSeek V4 Pro"
     },
     {
-      "ticker": "AAPL",
-      "direction": "short",
-      "entry": 314.2,
-      "stop": 318.5,
-      "target": 305.5,
-      "conviction": 6,
+      "ticker": "IWM",
+      "direction": "long",
+      "entry": 295.5,
+      "stop": 291.0,
+      "target": 305.0,
+      "conviction": 5,
       "source": "Qwen 3.7 Max"
     }
   ],
   "disagreements": [
-    "DS Pro identifies a 'risk-on' regime, while MiMo V2.5 Pro and options flow data indicate significant institutional defensive positioning and hedging.",
-    "Retail sentiment (WSB) remains bullish on speculative tech, contradicting the institutional 'smart money' rotation into defensive utilities."
+    "MiMo V2.5 Pro warns of imminent risk-off rotation due to IWM weakness, while Qwen 3.7 Max and DeepSeek V4 Pro favor continued bullish momentum based on SPY gamma positioning."
   ],
-  "narrative": "The market is undergoing a structural rotation as capital flees high-beta technology and crypto-miners in favor of defensive utility plays, driven by grid-reliability concerns. While the broader gamma regime remains bullish, the extreme put-skew in mega-cap tech and deteriorating breadth suggest that the current 'risk-on' label is masking underlying institutional caution."
+  "narrative": "The market is currently supported by a bullish gamma regime with a strong anchor at the 730 SPY strike, justifying a cautious long bias. However, the divergence in IWM performance and the massive volatility exposure (VEX) relative to gamma hedging suggest that the current risk-on environment is fragile and prone to sudden reversals if the 730 level is breached."
 }
