@@ -1,17 +1,17 @@
 {
   "meta": {
-    "generated_at": "2026-07-06T03:46:01.132467+00:00",
+    "generated_at": "2026-07-06T11:22:43.244870+00:00",
     "experts_consulted": 5,
     "experts_succeeded": 5,
-    "total_cost_usd": 0.001437,
+    "total_cost_usd": 0.001749,
     "aggregator": "gemini-3.1-flash-lite-preview",
     "context_variant": "b"
   },
   "market_pulse": {
-    "one_liner": "Dealer-stabilized bullish regime masking extreme volatility fragility and sentiment divergence.",
-    "score": 4,
+    "one_liner": "Dealer-supported gamma pinning masks underlying geopolitical fragility and narrowing breadth.",
+    "score": 6,
     "regime": "bullish",
-    "confidence": 3
+    "confidence": 5
   },
   "key_levels": {
     "SPY": {
@@ -25,37 +25,37 @@
   },
   "gamma_landscape": {
     "pinning_zone": 730.0,
-    "notes": "Dealer gamma is net positive, providing a floor at 730, but the 170:1 VEX-to-GEX ratio indicates that any volatility spike will trigger rapid dealer hedging and liquidity evaporation."
+    "notes": "Positive GEX of 6.18M creates a magnetic floor at 730; dealers are net long gamma, suppressing volatility and forcing range-bound behavior."
   },
   "risks": [
-    "Extreme VEX concentration (1.05B) suggests high sensitivity to sudden volatility shocks.",
-    "Geopolitical escalation in Ukraine/Romania is currently ignored by the market.",
-    "Severe divergence between retail euphoria (WSB) and institutional caution (Burry/r/stocks).",
-    "Low model accuracy (20-41%) indicates high probability of signal failure."
+    "Dealer-forced unwind if SPY breaks below 730 support.",
+    "Escalation of Ukraine conflict creating tail-risk events.",
+    "Narrowing market breadth as small-cap (IWM) underperforms large-cap.",
+    "Systemic model inaccuracy (historical win rate <42%)."
   ],
   "trades": [
     {
-      "ticker": "RKLB",
+      "ticker": "SPY",
       "direction": "long",
-      "entry": 24.5,
-      "stop": 22.1,
-      "target": 29.0,
+      "entry": 738.0,
+      "stop": 728.5,
+      "target": 750.0,
       "conviction": 6,
-      "source": "Qwen 3.7 Max"
+      "source": "Qwen 3.7 Max / DeepSeek V4 Pro"
     },
     {
-      "ticker": "CVNA",
+      "ticker": "XME",
       "direction": "long",
-      "entry": 185.0,
-      "stop": 168.5,
-      "target": 215.0,
+      "entry": 65.5,
+      "stop": 62.8,
+      "target": 71.0,
       "conviction": 5,
       "source": "Qwen 3.7 Max"
     }
   ],
   "disagreements": [
-    "Experts diverged on the sustainability of the 'risk-on' regime; quantitative models emphasize dealer support, while contrarian/fundamental analysts highlight the extreme risk of a sentiment-driven mean reversion.",
-    "Disagreement on the validity of current long signals given the poor historical accuracy of the model stack."
+    "MiMo V2.5 Pro warns of complacency and fragility, while DeepSeek V4 Pro views the gamma regime as a stable, supportive floor.",
+    "GLM 5.2 argues that the current 'risk-on' signal is unreliable due to poor historical model accuracy, contradicting the DS Pro confidence score."
   ],
-  "narrative": "The market is currently pinned by dealer gamma at the 730 level, creating a false sense of stability that ignores significant geopolitical and fundamental risks. While retail sentiment remains aggressively bullish, the extreme volatility exposure and institutional skepticism suggest that the current 'risk-on' environment is highly fragile and prone to a sharp, sentiment-driven unwind."
+  "narrative": "The market is currently trapped in a dealer-driven gamma pin at 730, providing a temporary floor that masks significant geopolitical and breadth-based risks. While quantitative signals favor a range-bound upward drift, the divergence between large-cap stability and small-cap weakness, coupled with historically low model accuracy, necessitates a cautious, risk-managed approach to any long exposure."
 }

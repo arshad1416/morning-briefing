@@ -1,39 +1,20 @@
 {
   "status": "LIVE",
-  "generated_at": "2026-07-06 07:22:15",
+  "generated_at": "2026-07-06 09:00:02",
   "price_source": "yfinance historical closes \u2014 no CAD/USD math",
-  "fx_rate_usdcad": 1.4219,
+  "fx_rate_usdcad": 1.4235,
   "portfolio": {
     "starting_balance": 100000.0,
-    "cash": 86462.87,
-    "invested": 298.97,
-    "total_balance": 99998.61,
+    "cash": 86760.45,
+    "invested": 0,
+    "total_balance": 100000.0,
     "total_pnl": 0.0,
-    "unrealized_pnl": -1.39,
-    "return_pct": -0.0,
-    "win_rate": 36.4,
-    "total_trades": 11
+    "unrealized_pnl": 0,
+    "return_pct": 0.0,
+    "win_rate": 33.3,
+    "total_trades": 12
   },
   "active_strategy": "V23 VIX>=12 MR",
-  "open_positions": [
-    {
-      "ticker": "IWM",
-      "type": "ETF",
-      "entry_date": "2026-06-29",
-      "entry_price": 298.97,
-      "current_price": 297.58,
-      "currency": "USD",
-      "entry_price_usd": 298.97,
-      "entry_price_cad": 412.58,
-      "current_price_usd": 297.58,
-      "current_price_cad": 410.66,
-      "pnl": -1.39,
-      "pnl_pct": -0.46,
-      "strategy": "backtest-mom-v3",
-      "direction": "long",
-      "rationale": "S9/10",
-      "asset_class": "STOCK"
-    }
-  ],
+  "open_positions": [],
   "recent_trades": []
 }
