@@ -8,6 +8,12 @@ Static market briefing site on Cloudflare Pages, data piped from Raspberry Pi.
 - **Data:** Pi cron generates JSON → commits to GitHub → auto-deploys
 - **Chat:** Cloudflare Worker proxies to OpenRouter (API key stays server-side)
 - **Design:** Dark theme, professional financial dashboard, mobile-responsive
+- **Engine code:** The MapleGamma council learn loop (5-expert council, trade
+  executor, outcome scoring, strategy improvement, context A/B harness) lives in
+  [arshad1416/hermes-scripts](https://github.com/arshad1416/hermes-scripts) — it
+  runs from `~/.hermes/scripts/` on the Pi and only its *outputs* are committed
+  here (`data/maplegamma_analysis*.json`, `data/trade_outcomes*.json`,
+  `data/strategy_improvement*.json`, `data/council_history.json`)
 
 See [ARCHITECTURE.md](./ARCHITECTURE.md) for full design.
 
