@@ -131,7 +131,11 @@ const Research = {
     if (marketData?.geopolitical?.length) {
       html += '<div class="card" style="margin-bottom:12px"><div class="card-title">Geopolitical Risks</div>';
       marketData.geopolitical.slice(0, 12).forEach(g => {
-        html += `<div style="padding:8px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem"><a href="${Utils.esc(Utils.safeUrl(g.url))}" target="_blank" rel="noopener" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(g.title)}</a><div style="color:var(--text-muted);font-size:0.75rem">${Utils.esc(g.source)}</div></div>`;
+        // The pipeline often has headline+source but no URL — an empty href
+        // reloads the SPA. Fall back to a news search for the headline.
+        const gUrl = g.url ? Utils.safeUrl(g.url)
+          : 'https://news.google.com/search?q=' + encodeURIComponent(g.title || '');
+        html += `<div style="padding:8px 0;border-bottom:1px solid var(--border-subtle);font-size:0.9rem"><a href="${Utils.esc(gUrl)}" target="_blank" rel="noopener" style="color:var(--text-primary);text-decoration:none;font-weight:500">${Utils.esc(g.title)}</a><div style="color:var(--text-muted);font-size:0.75rem">${Utils.esc(g.source)}${g.url ? '' : ' · via news search'}</div></div>`;
       });
       html += '</div>';
     }
@@ -378,20 +382,34 @@ const Research = {
     html += '</div>';
 
     // ── TAB 7: Earnings Transcripts ──
+    // Honest state: no automated pipeline generates earnings data yet.
+    // If /data/earnings.json ever appears, render it; otherwise say so plainly.
     html += '<div class="research-pane" id="tab-earnings" style="display:none">';
-    html += '<div class="card"><div class="card-title">Earnings Transcripts</div>';
-    html += '<div style="font-size:0.85rem;color:var(--text-secondary)">';
-    html += 'Earnings transcript data powered by Financial Modeling Prep. Use the CLI on the Pi to fetch: ';
-    html += '<code style="background:var(--card-bg);padding:2px 6px;border-radius:3px">python3 fetch_earnings.py --ticker AAPL</code>';
-    html += '</div></div></div>';
+    const earningsData = await Utils.fetchJSON('/data/earnings.json').catch(() => null);
+    if (earningsData?.transcripts?.length) {
+      earningsData.transcripts.slice(0, 10).forEach(tr => {
+        html += `<div class="card" style="margin-bottom:8px"><div class="card-title">${Utils.esc(tr.ticker || '')} — ${Utils.esc(tr.quarter || '')}</div><div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6">${Utils.esc((tr.summary || tr.content || '').substring(0, 600))}…</div></div>`;
+      });
+    } else {
+      html += '<div class="card"><div class="card-title">Earnings Transcripts</div>';
+      html += '<div class="empty-state" style="padding:24px;text-align:center;color:var(--text-muted)">Not yet wired to an automated pipeline — no earnings data has been generated. The fetcher exists on the Pi (<code>fetch_earnings.py</code>, Financial Modeling Prep) but has no cron. Ask to enable it.</div></div>';
+    }
+    html += '</div>';
 
     // ── TAB 8: SEC Filings ──
     html += '<div class="research-pane" id="tab-sec" style="display:none">';
-    html += '<div class="card"><div class="card-title">SEC EDGAR Filings</div>';
-    html += '<div style="font-size:0.85rem;color:var(--text-secondary)">';
-    html += 'SEC filing data sourced directly from EDGAR. Use the CLI on the Pi to fetch: ';
-    html += '<code style="background:var(--card-bg);padding:2px 6px;border-radius:3px">python3 fetch_sec_filings.py --ticker AAPL</code>';
-    html += '</div></div></div>';
+    const secData = await Utils.fetchJSON('/data/sec_filings.json').catch(() => null);
+    if (secData?.filings?.length) {
+      html += '<div class="card"><div class="card-title">Recent SEC Filings</div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Ticker</th><th>Form</th><th>Link</th></tr></thead><tbody>';
+      secData.filings.slice(0, 20).forEach(f => {
+        html += `<tr><td>${Utils.esc(f.date || '')}</td><td><strong>${Utils.esc(f.ticker || '')}</strong></td><td>${Utils.esc(f.form || '')}</td><td><a href="${Utils.esc(Utils.safeUrl(f.url || ''))}" target="_blank" rel="noopener">EDGAR ↗</a></td></tr>`;
+      });
+      html += '</tbody></table></div></div>';
+    } else {
+      html += '<div class="card"><div class="card-title">SEC EDGAR Filings</div>';
+      html += '<div class="empty-state" style="padding:24px;text-align:center;color:var(--text-muted)">Not yet wired to an automated pipeline — no filings data has been generated. The fetcher exists on the Pi (<code>fetch_sec_filings.py</code>, EDGAR) but has no cron. Ask to enable it.</div></div>';
+    }
+    html += '</div>';
 
     html += '</div></div>';
     app.innerHTML = html;

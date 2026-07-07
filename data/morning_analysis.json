@@ -1,14 +1,14 @@
 {
   "meta": {
-    "generated_at": "2026-06-29T20:24:43.194879+00:00",
+    "generated_at": "2026-07-07T19:54:51.381763+00:00",
     "model": "ds-pro (tier1)",
-    "confidence": 8,
-    "market_regime": "risk-on",
+    "confidence": 7,
+    "market_regime": "transitional",
     "tokens_used": {
-      "prompt_tokens": 1927,
-      "completion_tokens": 3196,
-      "total_tokens": 5123,
-      "cost": 0.006263333505,
+      "prompt_tokens": 2122,
+      "completion_tokens": 2638,
+      "total_tokens": 4760,
+      "cost": 0.0127437948,
       "is_byok": false,
       "prompt_tokens_details": {
         "cached_tokens": 0,
@@ -17,12 +17,12 @@
         "video_tokens": 0
       },
       "cost_details": {
-        "upstream_inference_cost": 0.0063265995,
-        "upstream_inference_prompt_cost": 0.0014654835,
-        "upstream_inference_completions_cost": 0.004861116
+        "upstream_inference_cost": 0.01287252,
+        "upstream_inference_prompt_cost": 0.00369228,
+        "upstream_inference_completions_cost": 0.00918024
       },
       "completion_tokens_details": {
-        "reasoning_tokens": 1949,
+        "reasoning_tokens": 1212,
         "image_tokens": 0,
         "audio_tokens": 0
       }
@@ -30,68 +30,73 @@
     "analysis_type": "morning"
   },
   "market_pulse": {
-    "one_liner": "Tech-led rally broadens as VIX dips; oversold mega-cap signals and heavy call flow in NVDA/SPY point to sustained risk appetite.",
-    "sentiment_score": 8,
+    "one_liner": "Tech sell-off deepens as AI memory fears overshadow Samsung's profit surge, with VIX spiking 4.7% and defensive rotation evident.",
+    "sentiment_score": 4,
     "key_levels": {
       "SPY": {
-        "support": 730,
-        "resistance": 740
+        "support": 740,
+        "resistance": 760
       },
       "QQQ": {
-        "support": 700,
-        "resistance": 720
+        "support": 630,
+        "resistance": 660
       }
     },
-    "sector_rotation": "Rotation into tech/growth as Nasdaq leaps 2%; defensives lag with Dow up only 0.6%. AI and crypto bets boosted by Wood."
+    "sector_rotation": "Rotation out of semiconductors and AI-related names into value and energy, with oversold signals flashing in both tech (NVDA, ORCL) and energy (COP, SLB)."
   },
   "held_position_review": [],
   "opportunities": [
     {
       "ticker": "NVDA",
       "direction": "LONG",
-      "thesis": "RSI 34.7 oversold below moving average, massive call buying at 200/207.5 strikes (Vol/OI 39k & 162k) suggests institutional accumulation dip.",
+      "thesis": "RSI 29.1 deeply oversold, below MA; potential mean-reversion bounce despite AI memory headwinds.",
       "entry_zone": [
-        195,
-        200
+        740,
+        750
       ],
-      "catalyst": "AI momentum from Wood's increased bet; technical bounce off oversold levels.",
+      "catalyst": "Bounce from oversold RSI with any positive AI capex news or short-covering.",
       "timeframe": "3-5 days",
-      "conviction": "high"
+      "conviction": "medium"
     },
     {
-      "ticker": "ADBE",
+      "ticker": "QQQ",
       "direction": "LONG",
-      "thesis": "RSI 27.2 deep oversold with value PE signal; below MA and screener score 7 indicating strong mean-reversion potential.",
+      "thesis": "Massive call buying detected: $57.4M premium on $708 strike (630.6x avg vol) and $30.1M on $713 strike, signaling institutional bullish positioning.",
       "entry_zone": [
-        380,
-        390
+        640,
+        650
       ],
-      "catalyst": "Short-covering rally in beaten-down SaaS; market rotation toward value tech.",
+      "catalyst": "Follow-through from options flow; potential tech stabilization.",
       "timeframe": "1-2 weeks",
       "conviction": "high"
     },
     {
-      "ticker": "ORCL",
-      "direction": "LONG",
-      "thesis": "RSI 11.3 extreme oversold, historically such readings lead to snapback rallies; below MA adds confluence.",
+      "ticker": "AMZN",
+      "direction": "SHORT",
+      "thesis": "Unusual put flow with $1.1M premium on $270 strike (464x avg vol) and $1M on $275 strike, indicating downside protection demand.",
       "entry_zone": [
-        80,
-        85
+        272,
+        275
       ],
-      "catalyst": "Any positive AI/cloud news; extreme fear exhaustion.",
-      "timeframe": "5-10 days",
+      "catalyst": "Break below $270 put strike on consumer spending fears or broad market weakness.",
+      "timeframe": "1-2 weeks",
       "conviction": "medium"
     }
   ],
   "risk_alerts": [
     {
-      "severity": "medium",
-      "alert": "Ukraine-Russia escalation (strikes on cargo ships, Putin rejects talks) could spike energy prices and reverse risk-on sentiment.",
+      "severity": "high",
+      "alert": "Escalating Ukraine-Russia tensions after Putin rejects Zelensky meeting; potential energy supply disruptions.",
       "affected_positions": []
     },
     {
       "severity": "medium",
-      "alert": "TSLA heavy put flow (Vol/OI 31k at $380) signals bearish bets despite market rally; avoid long exposure.",
+      "alert": "AI memory and chip stocks falling despite Samsung profit beat; sector rotation could accelerate if NVDA breaks below $740.",
+      "affected_positions": []
+    },
+    {
+      "severity": "medium",
+      "alert": "VIX up 4.69% to 16.3, signaling rising anxiety; a move above 18 would confirm risk-off shift.",
       "affected_positions": []
     }
   ],
@@ -99,67 +104,69 @@
     {
       "headline": "Putin says there is 'no point' meeting Zelensky over ending Ukraine war",
       "source": "BBC World",
-      "impact_rating": "medium",
-      "rationale": "Heightens geopolitical uncertainty; could pressure risk assets if conflict escalates, though no direct portfolio impact."
+      "impact_rating": "high",
+      "rationale": "Prolongs conflict, sustaining energy and commodity price pressures, impacting inflation-sensitive assets."
     },
     {
       "headline": "Ukraine strikes cargo ships and admits Romania drone blast",
       "source": "BBC World",
       "impact_rating": "medium",
-      "rationale": "Raises supply chain and energy disruption fears, potentially affecting broad market sentiment."
+      "rationale": "Raises Black Sea shipping risks, potentially disrupting grain/oil flows and lifting commodity volatility."
     },
     {
       "headline": "Astronauts return to ISS after sheltering during air leak repair attempt",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "No market impact."
+      "rationale": "No direct market impact; limited to aerospace sentiment."
     },
     {
       "headline": "Fury in France after child murder suspect's criminal record released",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "Domestic political issue, minimal global market influence."
+      "rationale": "Domestic political noise with negligible cross-market effects."
     },
     {
       "headline": "Nearly 50 people die of thirst in Sahara desert after lorry breaks down",
       "source": "BBC World",
       "impact_rating": "low",
-      "rationale": "Humanitarian tragedy, negligible market impact."
+      "rationale": "Humanitarian tragedy but no financial market implications."
     },
     {
       "headline": "Iran footballers issued US visas for World Cup, says White House",
       "source": "Al Jazeera",
       "impact_rating": "low",
-      "rationale": "Positive diplomatic gesture but no direct portfolio implications."
+      "rationale": "Sports diplomacy with minimal immediate market impact."
     },
     {
       "headline": "Zelenskyy: Putin choosing war by rejecting offer for in-person talks",
       "source": "Al Jazeera",
-      "impact_rating": "medium",
-      "rationale": "Reinforces the stalemate; may dampen risk sentiment if narrative hardens."
+      "impact_rating": "high",
+      "rationale": "Reinforces prolonged conflict narrative, supporting defense and energy sectors, weighing on risk appetite."
     },
     {
       "headline": "Trump hails jobs surge, says Iran talks \u2018going well\u2019",
       "source": "Al Jazeera",
-      "impact_rating": "low",
-      "rationale": "Positive rhetoric supports risk-on, but mostly noise; limited effect on portfolio."
+      "impact_rating": "medium",
+      "rationale": "Positive labor market signal but Iran diplomacy could ease oil supply fears if talks progress."
     }
   ],
   "calendar": [],
   "portfolio_actions": {
     "immediate": [
-      "Initiate long NVDA on any pullback to $195-200 with tight stop at $190",
-      "Add ADBE to buy list; watch for reversal candle at $380-390 zone"
+      "Monitor VIX for break above 18 as risk-off trigger; consider buying put spreads on QQQ if VIX spikes.",
+      "Set alerts on NVDA $740 and AMZN $270 for potential entry on breakdown/breakout."
     ],
     "watchlist": [
       "NVDA",
-      "ADBE",
-      "ORCL",
-      "CRM",
-      "PFE"
+      "QQQ",
+      "AMZN",
+      "JPM",
+      "COP",
+      "SLB"
     ],
     "avoid": [
-      "TSLA"
+      "MU",
+      "AI memory names"
     ]
   }
 }

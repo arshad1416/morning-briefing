@@ -573,11 +573,12 @@ const Screener = {
             });
           });
         }
-        // Populate the newly rendered table body with filtered data
+        // Populate the newly rendered table body with filtered data.
+        // Per-row try/catch: one malformed ticker must not blank the table.
         const newTbody = document.getElementById('screener-tbody');
         if (newTbody) {
           newTbody.innerHTML = filtered.length
-            ? filtered.map(t => this._tickerRow(t)).join('')
+            ? filtered.map(t => { try { return this._tickerRow(t); } catch (e) { return ''; } }).join('')
             : '<tr><td colspan="11" class="empty-state" style="padding:32px;text-align:center">No tickers match your filters.</td></tr>';
         }
       }
@@ -593,7 +594,7 @@ const Screener = {
       const countEl = document.getElementById('screener-count');
       if (tbody) {
         tbody.innerHTML = filtered.length
-          ? filtered.map(t => this._tickerRow(t)).join('')
+          ? filtered.map(t => { try { return this._tickerRow(t); } catch (e) { return ''; } }).join('')
           : '<tr><td colspan="11" class="empty-state" style="padding:32px;text-align:center">No tickers match your filters.</td></tr>';
       }
       if (countEl) {
@@ -603,7 +604,15 @@ const Screener = {
   },
 
   /** Format a single ticker row with color-coded cells */
-  _tickerRow(t) {
+  _tickerRow(raw) {
+    // Sanitize: the generator can emit non-numeric values (e.g. pe:"Infinity"
+    // from yfinance) — one bad field must not kill the whole table render.
+    const _n = v => { const n = Number(v); return isFinite(n) ? n : null; };
+    const t = Object.assign({}, raw, {
+      price: _n(raw.price), change_pct: _n(raw.change_pct) || 0, score: _n(raw.score) || 0,
+      pe: _n(raw.pe), rsi: _n(raw.rsi), marketCap: _n(raw.marketCap),
+      divYield: _n(raw.divYield), volume_ratio: _n(raw.volume_ratio), vol_ratio: _n(raw.vol_ratio),
+    });
     const cls = Utils.changeClass(t.change_pct);
     const mcap = t.marketCap ? Utils.formatPrice(t.marketCap / 1e9, 1) + 'B' : '—';
     const signals = (t.signals || []).map(s => {

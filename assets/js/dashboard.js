@@ -556,7 +556,7 @@ const Dashboard = {
     const vixArrow = ms.vix_change_pct != null ? (ms.vix_change_pct >= 0 ? '▲' : '▼') : '';
 
     return `<div class="today-regime ${cls}">
-      <span class="regime-badge">● ${label}</span>
+      <span class="regime-badge" title="Volatility regime derived from VIX level">● VOL REGIME: ${label}</span>
       <span class="regime-vix">VIX ${Utils.formatPrice(vix)} ${vixArrow}<span class="${vixCls}">${vixChange}</span></span>
       <span class="regime-ten">10Y ${ms.ten_year_yield != null ? ms.ten_year_yield + '%' : '—'}</span>
       <span class="regime-session">${this._sessionLabel()} · ${this._sessionTime()} ET</span>
@@ -593,6 +593,7 @@ const Dashboard = {
     const ciText = ci.length === 2 ? `${Math.round(ci[0]*100)}-${Math.round(ci[1]*100)}%` : '';
 
     let html = '<div style="background:var(--bg-inset);border:1px solid var(--border-dim);border-radius:var(--card-radius);padding:12px 16px;margin:8px 0">';
+    html += '<div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">🎯 Model Verdict — daily signal (distinct from the VIX volatility regime above)</div>';
     html += '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">';
 
     // Signal direction

@@ -602,6 +602,11 @@ const PaperTrades = {
     html += '</div>'; // #tab-ibkr
 
     // ── JOURNAL TAB ──
+    // The pane div must exist synchronously (it used to be appended inside the
+    // async IIFE below AFTER app.innerHTML was already set, so the Journal tab
+    // rendered empty). Placeholder now; content injected when the fetch lands.
+    html += '<div class="research-pane" id="tab-journal" style="display:none"><div class="loading">Loading journal…</div></div>';
+
     (async () => {
       const journalData = await Utils.fetchJSON('/data/journal.json').catch(() => null);
       const fileEntries = journalData?.entries || [];
@@ -610,7 +615,7 @@ const PaperTrades = {
       const localEntries = JSON.parse(localStorage.getItem(localKey) || '[]');
       const allEntries = [...fileEntries, ...localEntries];
 
-      html += '<div class="research-pane" id="tab-journal" style="display:none">';
+      let jhtml = '';
 
       // Stats summary
       if (allEntries.length) {
@@ -621,65 +626,63 @@ const PaperTrades = {
         allEntries.forEach(e => { const em = e.emotion || 'Neutral'; emotionCounts[em] = (emotionCounts[em] || 0) + 1; });
         const topEmotion = Object.entries(emotionCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || '—';
 
-        html += '<div class="card" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px;margin-bottom:16px">';
-        html += '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Entries</div><div style="font-size:1.3rem;font-weight:700;margin-top:4px">' + allEntries.length + '</div></div>';
-        html += '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Avg Grade</div><div style="font-size:1.3rem;font-weight:700;margin-top:4px;color:' + (avgGrade >= 3 ? 'var(--green)' : avgGrade >= 2 ? 'var(--yellow)' : 'var(--red)') + '">' + avgGrade.toFixed(1) + ' (' + allEntries.filter(e => (e.grade || 'B')[0] === 'A').length + ' As)</div></div>';
-        html += '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Top Emotion</div><div style="font-size:1.3rem;font-weight:700;margin-top:4px">' + Utils.esc(topEmotion) + '</div></div>';
-        html += '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Lessons</div><div style="font-size:1.3rem;font-weight:700;margin-top:4px">' + allEntries.filter(e => e.lesson).length + '</div></div>';
-        html += '</div>';
+        jhtml += '<div class="card" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px;margin-bottom:16px">';
+        jhtml += '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Entries</div><div style="font-size:1.3rem;font-weight:700;margin-top:4px">' + allEntries.length + '</div></div>';
+        jhtml += '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Avg Grade</div><div style="font-size:1.3rem;font-weight:700;margin-top:4px;color:' + (avgGrade >= 3 ? 'var(--green)' : avgGrade >= 2 ? 'var(--yellow)' : 'var(--red)') + '">' + avgGrade.toFixed(1) + ' (' + allEntries.filter(e => (e.grade || 'B')[0] === 'A').length + ' As)</div></div>';
+        jhtml += '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Top Emotion</div><div style="font-size:1.3rem;font-weight:700;margin-top:4px">' + Utils.esc(topEmotion) + '</div></div>';
+        jhtml += '<div style="text-align:center"><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase">Lessons</div><div style="font-size:1.3rem;font-weight:700;margin-top:4px">' + allEntries.filter(e => e.lesson).length + '</div></div>';
+        jhtml += '</div>';
       }
 
       // Add entry form
-      html += '<div class="card" style="margin-bottom:16px">';
-      html += '<div class="card-title">✏️ New Journal Entry</div>';
-      html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">';
-      html += '<input id="journal-ticker" placeholder="Ticker" style="padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem;font-family:var(--font-mono)">';
-      html += '<select id="journal-grade" style="padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem">';
+      jhtml += '<div class="card" style="margin-bottom:16px">';
+      jhtml += '<div class="card-title">✏️ New Journal Entry</div>';
+      jhtml += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">';
+      jhtml += '<input id="journal-ticker" placeholder="Ticker" style="padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem;font-family:var(--font-mono)">';
+      jhtml += '<select id="journal-grade" style="padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem">';
       ['A','A-','B+','B','B-','C+','C','C-','D','F'].forEach(g => {
-        html += '<option value="' + g + '">Grade: ' + g + '</option>';
+        jhtml += '<option value="' + g + '">Grade: ' + g + '</option>';
       });
-      html += '</select>';
-      html += '<select id="journal-emotion" style="padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem">';
+      jhtml += '</select>';
+      jhtml += '<select id="journal-emotion" style="padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem">';
       ['Confident','Calm','Neutral','Hopeful','Anxiety','FOMO','Greed','Fear','Regret'].forEach(e => {
-        html += '<option value="' + e + '">' + e + '</option>';
+        jhtml += '<option value="' + e + '">' + e + '</option>';
       });
-      html += '</select>';
-      html += '<input id="journal-strategy" placeholder="Strategy (e.g. mean_reversion)" style="padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem">';
-      html += '</div>';
-      html += '<textarea id="journal-lesson" placeholder="Key lesson learned..." rows="2" style="width:100%;margin-top:8px;padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem;font-family:var(--font-ui);resize:vertical"></textarea>';
-      html += '<textarea id="journal-mistake" placeholder="Mistake made (if any)..." rows="2" style="width:100%;margin-top:8px;padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem;font-family:var(--font-ui);resize:vertical"></textarea>';
-      html += '<button id="journal-submit" style="margin-top:10px;padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:var(--font-mono)">Submit Entry</button>';
-      html += '</div>';
+      jhtml += '</select>';
+      jhtml += '<input id="journal-strategy" placeholder="Strategy (e.g. mean_reversion)" style="padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem">';
+      jhtml += '</div>';
+      jhtml += '<textarea id="journal-lesson" placeholder="Key lesson learned..." rows="2" style="width:100%;margin-top:8px;padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem;font-family:var(--font-ui);resize:vertical"></textarea>';
+      jhtml += '<textarea id="journal-mistake" placeholder="Mistake made (if any)..." rows="2" style="width:100%;margin-top:8px;padding:8px 12px;background:var(--bg-inset);border:1px solid var(--border-subtle);border-radius:6px;color:var(--text-primary);font-size:0.85rem;font-family:var(--font-ui);resize:vertical"></textarea>';
+      jhtml += '<button id="journal-submit" style="margin-top:10px;padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:var(--font-mono)">Submit Entry</button>';
+      jhtml += '</div>';
 
       // Journal entries table
       if (allEntries.length) {
         const sorted = [...allEntries].reverse();
-        html += '<div class="card table-wrap"><table><thead><tr>';
-        html += '<th>Trade ID</th><th>Ticker</th><th>Entry</th><th>Exit</th><th>Grade</th><th>Emotion</th><th>Strategy</th><th>Lesson</th><th>Mistake</th>';
-        html += '</tr></thead><tbody>';
+        jhtml += '<div class="card table-wrap"><table><thead><tr>';
+        jhtml += '<th>Trade ID</th><th>Ticker</th><th>Entry</th><th>Exit</th><th>Grade</th><th>Emotion</th><th>Strategy</th><th>Lesson</th><th>Mistake</th>';
+        jhtml += '</tr></thead><tbody>';
         sorted.forEach(e => {
           const gradeCls = (e.grade || 'B')[0] === 'A' ? 'badge-green' : (e.grade || 'B')[0] === 'B' ? 'badge-yellow' : 'badge-red';
-          html += '<tr>';
-          html += '<td style="font-size:0.75rem;font-family:var(--font-mono);color:var(--text-muted)">' + Utils.esc(e.trade_id || '—') + '</td>';
-          html += '<td><strong>' + Utils.esc(e.ticker || '—') + '</strong></td>';
-          html += '<td style="font-size:0.8rem">' + Utils.esc(e.entry_date || '—') + '</td>';
-          html += '<td style="font-size:0.8rem">' + Utils.esc(e.exit_date || '—') + '</td>';
-          html += '<td><span class="badge ' + gradeCls + '" style="font-size:0.7rem">' + Utils.esc(e.grade || '—') + '</span></td>';
-          html += '<td style="font-size:0.85rem">' + Utils.esc(e.emotion || '—') + '</td>';
-          html += '<td style="font-size:0.8rem;color:var(--text-secondary)">' + Utils.esc(e.strategy || '—') + '</td>';
-          html += '<td style="font-size:0.85rem;max-width:180px;color:var(--text-secondary)">' + Utils.esc(e.lesson || '') + '</td>';
-          html += '<td style="font-size:0.85rem;max-width:180px;color:var(--red)">' + Utils.esc(e.mistake || '') + '</td>';
-          html += '</tr>';
+          jhtml += '<tr>';
+          jhtml += '<td style="font-size:0.75rem;font-family:var(--font-mono);color:var(--text-muted)">' + Utils.esc(e.trade_id || '—') + '</td>';
+          jhtml += '<td><strong>' + Utils.esc(e.ticker || '—') + '</strong></td>';
+          jhtml += '<td style="font-size:0.8rem">' + Utils.esc(e.entry_date || '—') + '</td>';
+          jhtml += '<td style="font-size:0.8rem">' + Utils.esc(e.exit_date || '—') + '</td>';
+          jhtml += '<td><span class="badge ' + gradeCls + '" style="font-size:0.7rem">' + Utils.esc(e.grade || '—') + '</span></td>';
+          jhtml += '<td style="font-size:0.85rem">' + Utils.esc(e.emotion || '—') + '</td>';
+          jhtml += '<td style="font-size:0.8rem;color:var(--text-secondary)">' + Utils.esc(e.strategy || '—') + '</td>';
+          jhtml += '<td style="font-size:0.85rem;max-width:180px;color:var(--text-secondary)">' + Utils.esc(e.lesson || '') + '</td>';
+          jhtml += '<td style="font-size:0.85rem;max-width:180px;color:var(--red)">' + Utils.esc(e.mistake || '') + '</td>';
+          jhtml += '</tr>';
         });
-        html += '</tbody></table></div>';
+        jhtml += '</tbody></table></div>';
       } else {
-        html += '<div class="card" style="text-align:center;padding:32px;color:var(--text-muted)">No journal entries yet. Use the form above or the CLI script to add your first entry.</div>';
+        jhtml += '<div class="card" style="text-align:center;padding:32px;color:var(--text-muted)">No journal entries yet. Use the form above or the CLI script to add your first entry.</div>';
       }
 
-      html += '</div>'; // #tab-journal
-
-      // Store journal HTML for tab switching
-      window._journalHtml = html;
+      const pane = document.getElementById('tab-journal');
+      if (pane) { pane.innerHTML = jhtml; PaperTrades._wireJournalSubmit(app); }
     })();
 
     html += '</div>'; // .section
@@ -776,7 +779,10 @@ const PaperTrades = {
       });
     }
 
-    // ── Journal submit handler ──
+    // Journal submit is wired by _wireJournalSubmit() after async injection
+  },
+
+  _wireJournalSubmit(app) {
     const journalSubmit = document.getElementById('journal-submit');
     if (journalSubmit) {
       journalSubmit.addEventListener('click', async () => {

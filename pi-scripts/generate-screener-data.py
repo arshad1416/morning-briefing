@@ -138,6 +138,16 @@ for universe, tickers in UNIVERSES.items():
 
 # ── Metrics Computation ────────────────────────────────────────
 
+
+def _finite(v):
+    """yfinance sometimes returns Infinity/NaN — JSON-encode those as null."""
+    try:
+        f = float(v)
+        import math
+        return f if math.isfinite(f) else None
+    except (TypeError, ValueError):
+        return None
+
 def fetch_ticker_data(ticker):
     """Fetch data for one ticker, compute metrics."""
     try:
@@ -208,8 +218,8 @@ def fetch_ticker_data(ticker):
             "universe": TICKER_UNIVERSE.get(ticker, "Other"),
             "price": round(price, 2),
             "change_pct": change_pct,
-            "pe": info.get("trailingPE"),
-            "forwardPe": info.get("forwardPE"),
+            "pe": _finite(info.get("trailingPE")),
+            "forwardPe": _finite(info.get("forwardPE")),
             "marketCap": info.get("marketCap"),
             "divYield": div_yield,
             "sector": info.get("sector"),
