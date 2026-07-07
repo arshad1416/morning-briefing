@@ -1,0 +1,33 @@
+# Morning Briefing (MapleGamma)
+
+> Automated daily market dashboard. A 5-model AI council (risk-contrarian,
+> quantitative/GEX, momentum, trade-selector, fundamental analyst + an
+> aggregator) produces an S&P 500 regime call, key levels, risks and paper
+> trades every weekday morning (~7:20 ET). Outcomes are scored nightly against
+> realized ^GSPC direction and the lessons feed back into the next morning
+> prompt. Paper trading only — nothing here is financial advice.
+
+The dashboard is JavaScript-rendered; agents should read the JSON directly.
+
+## Data endpoints (JSON, refreshed weekday mornings ET)
+
+- /data/maplegamma_analysis.json : today’s council briefing — market_pulse
+  (regime/score/confidence), key_levels (SPY/QQQ), gamma_landscape, risks,
+  trades, narrative, meta (models, cost, context_variant)
+- /data/maplegamma_analysis_b.json : experimental council arm (adds news,
+  Reddit sentiment and geopolitics to the model context) — context A/B test
+- /data/trade_outcomes.json : per-day scored predictions vs realized ^GSPC
+  direction (entries with backfilled=true are retrodictions — exclude for
+  clean analysis); _b variant for the experimental arm
+- /data/strategy_improvement.json : rolling model-accuracy table and the
+  prompt weighting derived from it; _b variant for the experimental arm
+- /data/council_history.json : historical council runs
+- /data/gex_data.json : gamma exposure snapshot
+- /data/reddit-sentiment.json : WSB/r-stocks sentiment summaries
+- /data/paper_trades.json : paper-trading portfolio state
+
+## Engine
+
+- Code: https://github.com/arshad1416/hermes-scripts (runs on a Raspberry Pi;
+  this site only hosts the outputs)
+- Site repo: https://github.com/arshad1416/morning-briefing
