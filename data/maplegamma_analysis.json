@@ -1,17 +1,17 @@
 {
   "meta": {
-    "generated_at": "2026-07-06T18:20:35.163969+00:00",
+    "generated_at": "2026-07-07T11:20:49.944277+00:00",
     "experts_consulted": 5,
-    "experts_succeeded": 5,
-    "total_cost_usd": 0.001437,
+    "experts_succeeded": 4,
+    "total_cost_usd": 0.001377,
     "aggregator": "gemini-3.1-flash-lite-preview",
     "context_variant": "a"
   },
   "market_pulse": {
-    "one_liner": "Bullish gamma structure masking underlying fragility and high volatility hedging costs.",
+    "one_liner": "Dealer-supported bullish drift constrained by extreme vega-to-gamma imbalance.",
     "score": 6,
     "regime": "bullish",
-    "confidence": 4
+    "confidence": 6
   },
   "key_levels": {
     "SPY": {
@@ -25,27 +25,26 @@
   },
   "gamma_landscape": {
     "pinning_zone": 730.0,
-    "notes": "Max GEX at 730 creates a structural floor, but the massive VEX and DEX overhang suggest a fragile market prone to forced liquidation if the 730 support is breached."
+    "notes": "Max GEX at 730 provides a structural floor; positive aggregate delta suggests dealer-driven pinning, but high VEX indicates vulnerability to volatility shocks."
   },
   "risks": [
-    "Dealer hedging fragility due to massive VEX/DEX exposure.",
-    "Poor historical model accuracy (20-41%) creating high execution risk.",
-    "Thin cushion (1%) between spot and major put-wall support."
+    "High VEX-to-GEX ratio suggests potential for violent dealer unwind if volatility spikes.",
+    "Portfolio cash drag (86.8%) limits upside capture.",
+    "Historical model accuracy (39-41%) necessitates tighter risk management than suggested by high-conviction signals."
   ],
   "trades": [
     {
       "ticker": "SPY",
       "direction": "long",
-      "entry": 732.5,
-      "stop": 727.0,
-      "target": 745.0,
+      "entry": 737.5,
+      "stop": 728.0,
+      "target": 748.5,
       "conviction": 6,
-      "source": "Qwen 3.7 Max / Quantitative Synthesis"
+      "source": "Qwen 3.7 Max / DS Pro"
     }
   ],
   "disagreements": [
-    "Fundamental analysts view current valuations as overextended, while quantitative models prioritize the bullish gamma regime.",
-    "Confidence in the 'risk-on' signal is high (8/10) but is heavily discounted by the system's poor historical win rate."
+    "Fundamental analyst warns of mispriced tail risk and complacency, contrasting with the quantitative view of a stable bullish gamma regime."
   ],
-  "narrative": "The market is currently supported by a strong gamma floor at 730, providing a tactical opportunity for long exposure. However, the extreme VEX and DEX levels indicate a fragile environment where high hedging costs suggest participants are vulnerable to sudden volatility spikes. We prioritize the 732.50 entry to optimize risk-reward against the 730 support level while maintaining tight stops to account for low model reliability."
+  "narrative": "The market is currently supported by a robust 730 GEX floor, creating a bullish pinning effect that favors long positioning. However, the extreme vega-to-gamma ratio and low historical model accuracy suggest that this stability is fragile; traders should prioritize the 730 support level and remain wary of macro-driven volatility spikes that could trigger a cascading dealer unwind."
 }
