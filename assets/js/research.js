@@ -386,13 +386,36 @@ const Research = {
     // If /data/earnings.json ever appears, render it; otherwise say so plainly.
     html += '<div class="research-pane" id="tab-earnings" style="display:none">';
     const earningsData = await Utils.fetchJSON('/data/earnings.json').catch(() => null);
-    if (earningsData?.transcripts?.length) {
-      earningsData.transcripts.slice(0, 10).forEach(tr => {
-        html += `<div class="card" style="margin-bottom:8px"><div class="card-title">${Utils.esc(tr.ticker || '')} — ${Utils.esc(tr.quarter || '')}</div><div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6">${Utils.esc((tr.summary || tr.content || '').substring(0, 600))}…</div></div>`;
-      });
+    if (earningsData?.calendar?.length) {
+      if (earningsData.generated_at) html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Last updated: ${this.formatTimestamp(earningsData.generated_at)}</div>`;
+      const today = new Date().toISOString().slice(0, 10);
+      const upcoming = earningsData.calendar.filter(r => r.date >= today).sort((a, b) => a.date.localeCompare(b.date));
+      const recent = earningsData.calendar.filter(r => r.date < today).slice(0, 20);
+      const table = (rows, title, showActual) => {
+        if (!rows.length) return '';
+        let t = `<div class="card" style="margin-bottom:12px"><div class="card-title">${title}</div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Ticker</th><th>EPS Est.</th>${showActual ? '<th>EPS Actual</th><th>Beat?</th>' : ''}</tr></thead><tbody>`;
+        rows.slice(0, 25).forEach(r => {
+          t += `<tr><td>${Utils.esc(r.date)}</td><td><strong>${Utils.esc(r.ticker)}</strong></td><td>${r.epsEstimate != null ? '$' + r.epsEstimate.toFixed(2) : '—'}</td>`;
+          if (showActual) {
+            const beat = r.epsActual != null && r.epsEstimate != null ? (r.epsActual >= r.epsEstimate) : null;
+            t += `<td>${r.epsActual != null ? '$' + r.epsActual.toFixed(2) : '—'}</td><td>${beat == null ? '—' : beat ? '<span class="badge badge-green">BEAT</span>' : '<span class="badge badge-red">MISS</span>'}</td>`;
+          }
+          t += '</tr>';
+        });
+        return t + '</tbody></table></div></div>';
+      };
+      html += table(upcoming, '📅 Upcoming Earnings (watchlist)', false);
+      html += table(recent, 'Recent Results', true);
+      if (earningsData.transcripts?.length) {
+        earningsData.transcripts.slice(0, 10).forEach(tr => {
+          html += `<div class="card" style="margin-bottom:8px"><div class="card-title">${Utils.esc(tr.ticker || '')} — ${Utils.esc(tr.quarter || '')}</div><div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6">${Utils.esc((tr.summary || tr.content || '').substring(0, 600))}…</div></div>`;
+        });
+      } else {
+        html += '<div style="color:var(--text-muted);font-size:0.75rem;padding:4px 0">Full call transcripts require an FMP API key (not configured).</div>';
+      }
     } else {
-      html += '<div class="card"><div class="card-title">Earnings Transcripts</div>';
-      html += '<div class="empty-state" style="padding:24px;text-align:center;color:var(--text-muted)">Not yet wired to an automated pipeline — no earnings data has been generated. The fetcher exists on the Pi (<code>fetch_earnings.py</code>, Financial Modeling Prep) but has no cron. Ask to enable it.</div></div>';
+      html += '<div class="card"><div class="card-title">Earnings</div>';
+      html += '<div class="empty-state" style="padding:24px;text-align:center;color:var(--text-muted)">No earnings data generated yet — the pipeline runs weekday mornings at 7:08.</div></div>';
     }
     html += '</div>';
 
@@ -407,7 +430,7 @@ const Research = {
       html += '</tbody></table></div></div>';
     } else {
       html += '<div class="card"><div class="card-title">SEC EDGAR Filings</div>';
-      html += '<div class="empty-state" style="padding:24px;text-align:center;color:var(--text-muted)">Not yet wired to an automated pipeline — no filings data has been generated. The fetcher exists on the Pi (<code>fetch_sec_filings.py</code>, EDGAR) but has no cron. Ask to enable it.</div></div>';
+      html += '<div class="empty-state" style="padding:24px;text-align:center;color:var(--text-muted)">No filings data generated yet — the pipeline runs weekday mornings at 7:08.</div></div>';
     }
     html += '</div>';
 

@@ -125,7 +125,8 @@
   </footer>
 
   <!-- TradingView lightweight-charts -->
-  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+  <!-- vendored v4 build: the CSP (script-src self) blocks CDN scripts, which left LightweightCharts undefined -->
+  <script src="/assets/js/vendor/lightweight-charts.standalone.production.js"></script>
 
   <script>
     (function() {
