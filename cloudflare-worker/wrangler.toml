@@ -2,20 +2,27 @@ name = "morning-briefing-chat"
 main = "src/index.js"
 compatibility_date = "2026-06-01"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = true
 
 [[d1_databases]]
 binding = "DB"
 database_name = "maplegamma"
 database_id = "6585930e-61a6-4679-a492-73b1ea643e88"
 
+# Route auth/api on the canonical domain to this Worker (Pages serves everything
+# else). chat/feedback still work via the workers.dev URL + CORS allow-list.
+[[routes]]
+pattern = "maplegamma.com/api/*"
+zone_name = "maplegamma.com"
+
 [vars]
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 OPENROUTER_MODEL = "deepseek/deepseek-v4-pro"
 RATE_LIMIT_PER_MIN = 10
-APP_URL = "https://briefing.arshadkazi.ca"
+APP_URL = "https://maplegamma.com"
 MOCK_BILLING = "1"
 TERMS_VERSION = "2026-07-08"
 ACK_VERSION = "2026-07-08"
-RP_ID = "briefing.arshadkazi.ca"
+RP_ID = "maplegamma.com"
 RP_NAME = "MapleGamma"
 GOOGLE_CLIENT_ID = "PLACEHOLDER_WEB_CLIENT_ID"
