@@ -1,4 +1,7 @@
-const ITER = 210000;
+// Cloudflare Workers' WebCrypto caps PBKDF2 at 100,000 iterations — exceeding it
+// throws NotSupportedError at runtime (Miniflare/local does NOT enforce this cap,
+// so 210k passed local tests but 500'd in production). 100k is the platform max.
+const ITER = 100000;
 const enc = new TextEncoder();
 
 function b64(buf) { return btoa(String.fromCharCode(...new Uint8Array(buf))); }
