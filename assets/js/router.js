@@ -13,11 +13,13 @@ const Router = {
     this.handleRoute(); // Handle initial load
   },
 
-  register(path, handler) {
-    this.routes[path] = handler;
+  register(path, handler, guard) {
+    // Store an entry object so routes can carry an optional async guard.
+    // Routes registered without a guard behave exactly as before.
+    this.routes[path] = { handler: handler, guard: guard };
   },
 
-  handleRoute() {
+  async handleRoute() {
     const fullHash = window.location.hash.slice(1) || '/';
     const hash = fullHash.split('?')[0]; // Strip query string from hash
     this.currentHash = hash;
@@ -37,8 +39,15 @@ const Router = {
 
     // Try exact match first
     if (this.routes[hash]) {
+      const entry = this.routes[hash];
+      // Run the route guard (if any) before rendering. A false result means
+      // the guard already redirected — abort so we don't render the page.
+      if (entry.guard) {
+        const ok = await entry.guard();
+        if (!ok) return;
+      }
       try {
-        Promise.resolve(this.routes[hash](app)).then(function () {
+        Promise.resolve(entry.handler(app)).then(function () {
           // Fade-in the page content after route renders
           requestAnimationFrame(function () {
             app.classList.add('page-enter');
@@ -60,7 +69,7 @@ const Router = {
 
     // Try parameterized route (e.g., #/ticker/NVDA)
     const parts = hash.split('/');
-    for (const [pattern, handler] of Object.entries(this.routes)) {
+    for (const [pattern, entry] of Object.entries(this.routes)) {
       const patternParts = pattern.split('/');
       if (patternParts.length === parts.length) {
         const params = {};
@@ -74,8 +83,12 @@ const Router = {
           }
         }
         if (match) {
+          if (entry.guard) {
+            const ok = await entry.guard();
+            if (!ok) return;
+          }
           try {
-            Promise.resolve(handler(app, params)).then(function () {
+            Promise.resolve(entry.handler(app, params)).then(function () {
               requestAnimationFrame(function () {
                 app.classList.add('page-enter');
               });

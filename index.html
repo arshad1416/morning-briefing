@@ -88,6 +88,7 @@
       <a href="#/research" class="nav-link">Research</a>
       <a href="#/charts" class="nav-link">Charts</a>
       <a href="#/models"  class="nav-link">Models</a>
+      <a href="#/account" class="nav-link" id="nav-auth">Sign in</a>
     </div>
     <button
       id="theme-toggle"
@@ -154,6 +155,13 @@
         '/assets/js/charts.js',
         '/assets/js/realtime.js',
         '/assets/js/router.js',
+        // Auth layer + gated pages — must load before app.js (registers routes,
+        // wires the nav affordance). Vendored WebAuthn lib first (CSP blocks CDN).
+        '/assets/js/vendor/simplewebauthn-browser.umd.min.js',
+        '/assets/js/auth.js',
+        '/assets/js/pages/account.js',
+        '/assets/js/pages/pricing.js',
+        '/assets/js/pages/paywall.js',
         '/assets/js/app.js',
         '/assets/js/feedback.js'
       ];

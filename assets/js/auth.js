@@ -1,0 +1,71 @@
+/**
+ * Auth — client-side auth + entitlement layer for the MapleGamma SPA.
+ * Talks to the Cloudflare Worker under /api/auth/* and /api/billing/*.
+ * Attaches to window (plain-script global pattern, no ES modules).
+ */
+const Auth = {
+  _me: undefined,
+  async me(force = false) {
+    if (this._me !== undefined && !force) return this._me;
+    try {
+      const res = await fetch('/api/auth/me', { credentials: 'include' });
+      this._me = res.ok ? await res.json() : null;
+    } catch { this._me = null; }
+    return this._me;
+  },
+  async signup(payload) {
+    const res = await fetch('/api/auth/signup', {
+      method: 'POST', credentials: 'include',
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
+    });
+    this._me = undefined;
+    return { ok: res.ok, status: res.status, body: await res.json().catch(() => ({})) };
+  },
+  async login(email, password) {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST', credentials: 'include',
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }),
+    });
+    this._me = undefined;
+    return { ok: res.ok, status: res.status, body: await res.json().catch(() => ({})) };
+  },
+  async logout() {
+    await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+    this._me = null;
+    window.location.hash = '#/';
+  },
+  googleStart() { window.location.href = '/api/auth/oauth/google/start'; },
+  async passkeyRegister() {
+    const opts = await (await fetch('/api/auth/passkey/register/options', { method: 'POST', credentials: 'include' })).json();
+    const att = await SimpleWebAuthnBrowser.startRegistration(opts);
+    const res = await fetch('/api/auth/passkey/register/verify', {
+      method: 'POST', credentials: 'include',
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ challengeId: opts.challengeId, response: att }),
+    });
+    return res.ok;
+  },
+  async passkeyLogin(email) {
+    const opts = await (await fetch('/api/auth/passkey/login/options', {
+      method: 'POST', credentials: 'include',
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }),
+    })).json();
+    const asrt = await SimpleWebAuthnBrowser.startAuthentication(opts);
+    const res = await fetch('/api/auth/passkey/login/verify', {
+      method: 'POST', credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ challengeId: opts.challengeId, credentialId: asrt.id, response: asrt }),
+    });
+    this._me = undefined;
+    return res.ok;
+  },
+  async guard(needTier) {
+    const me = await this.me();
+    if (!me) { window.location.hash = '#/account'; return false; }
+    const e = me.entitlement || {};
+    const rank = { basic: 1, pro: 2 };
+    const have = e.tier === 'trial' && e.entitled ? 2 : (e.entitled ? (rank[e.tier] || 0) : 0);
+    if (have < (rank[needTier] || 0)) { window.location.hash = '#/pricing'; return false; }
+    return true;
+  },
+};
+window.Auth = Auth;
