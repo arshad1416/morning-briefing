@@ -30,6 +30,13 @@ zone_name = "arshadkazi.ca"
 pattern = "maplegamma.arshadkazi.ca/api/*"
 zone_name = "arshadkazi.ca"
 
+# Passkey Related Origin Requests: the browser fetches this from the rpID host
+# (maplegamma.com) during the ceremony to authorize passkeys on the other
+# domains. Only needed on the canonical host.
+[[routes]]
+pattern = "maplegamma.com/.well-known/webauthn"
+zone_name = "maplegamma.com"
+
 [vars]
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 OPENROUTER_MODEL = "deepseek/deepseek-v4-pro"
@@ -38,6 +45,8 @@ APP_URL = "https://maplegamma.com"
 MOCK_BILLING = "1"
 TERMS_VERSION = "2026-07-08"
 ACK_VERSION = "2026-07-08"
-RP_ID = "maplegamma.com"
-RP_NAME = "MapleGamma"
+# Passkeys use ONE canonical rpID across all domains (Related Origin Requests).
+WEBAUTHN_RP_ID = "maplegamma.com"
+WEBAUTHN_RP_NAME = "MapleGamma"
+WEBAUTHN_ORIGINS = "https://maplegamma.com,https://maplegamma.ca,https://maplegamma.arshadkazi.ca,https://briefing.arshadkazi.ca"
 GOOGLE_CLIENT_ID = "PLACEHOLDER_WEB_CLIENT_ID"

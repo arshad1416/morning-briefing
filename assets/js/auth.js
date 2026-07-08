@@ -35,25 +35,29 @@ const Auth = {
     window.location.hash = '#/';
   },
   googleStart() { window.location.href = '/api/auth/oauth/google/start'; },
+  passkeysSupported() {
+    return !!(window.SimpleWebAuthnBrowser && SimpleWebAuthnBrowser.browserSupportsWebAuthn());
+  },
+  // Register a passkey on the current device (signed-in). Challenge is carried
+  // by an httpOnly cookie, so verify just posts the attestation. v13 API.
   async passkeyRegister() {
-    const opts = await (await fetch('/api/auth/passkey/register/options', { method: 'POST', credentials: 'include' })).json();
-    const att = await SimpleWebAuthnBrowser.startRegistration(opts);
+    const optionsJSON = await (await fetch('/api/auth/passkey/register/options', { method: 'POST', credentials: 'include' })).json();
+    const attestation = await SimpleWebAuthnBrowser.startRegistration({ optionsJSON });
     const res = await fetch('/api/auth/passkey/register/verify', {
       method: 'POST', credentials: 'include',
-      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ challengeId: opts.challengeId, response: att }),
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(attestation),
     });
     return res.ok;
   },
-  async passkeyLogin(email) {
-    const opts = await (await fetch('/api/auth/passkey/login/options', {
-      method: 'POST', credentials: 'include',
-      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }),
-    })).json();
-    const asrt = await SimpleWebAuthnBrowser.startAuthentication(opts);
+  // Usernameless sign-in: no email — the authenticator offers its discoverable
+  // passkey and the server looks it up by assertion id. Works across all
+  // MapleGamma domains via Related Origin Requests (one rpID = maplegamma.com).
+  async passkeyLogin() {
+    const optionsJSON = await (await fetch('/api/auth/passkey/login/options', { method: 'POST', credentials: 'include' })).json();
+    const assertion = await SimpleWebAuthnBrowser.startAuthentication({ optionsJSON });
     const res = await fetch('/api/auth/passkey/login/verify', {
       method: 'POST', credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ challengeId: opts.challengeId, credentialId: asrt.id, response: asrt }),
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(assertion),
     });
     this._me = undefined;
     return res.ok;
