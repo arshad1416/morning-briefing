@@ -1,17 +1,17 @@
 {
   "meta": {
-    "generated_at": "2026-07-08T16:20:49.262097+00:00",
+    "generated_at": "2026-07-08T18:20:44.665918+00:00",
     "experts_consulted": 5,
-    "experts_succeeded": 4,
-    "total_cost_usd": 0.001461,
+    "experts_succeeded": 5,
+    "total_cost_usd": 0.00179,
     "aggregator": "gemini-3.1-flash-lite-preview",
     "context_variant": "a"
   },
   "market_pulse": {
-    "one_liner": "Structural gamma pinning at 730 masks significant underlying delta and vega fragility.",
+    "one_liner": "Index-level gamma support masks underlying breadth deterioration and risk-off rotation.",
     "score": 4,
-    "regime": "neutral",
-    "confidence": 6
+    "regime": "bearish",
+    "confidence": 7
   },
   "key_levels": {
     "SPY": {
@@ -25,36 +25,27 @@
   },
   "gamma_landscape": {
     "pinning_zone": 730.0,
-    "notes": "Max GEX at 730 creates a synthetic floor, but the massive negative VEX (-$1.05B) indicates high sensitivity to volatility spikes."
+    "notes": "Positive GEX at 730 provides a structural floor, but the massive negative DEX and VEX suggest high tail-risk sensitivity if the 730 level is breached."
   },
   "risks": [
-    "Dealer short vega exposure suggests a potential vol-explosion if 730 support fails.",
-    "Contradiction between bullish gamma pinning and risk-off macro sentiment.",
-    "Low model accuracy across all sources suggests high probability of signal failure."
+    "Dealer gamma flip if SPY drops below 730",
+    "Breadth deterioration as small-caps (IWM) and financials (XLF) lag",
+    "High VEX indicating hidden tail-risk hedging",
+    "Low model accuracy necessitates strict position sizing"
   ],
   "trades": [
     {
       "ticker": "SPY",
       "direction": "long",
-      "entry": 734.5,
-      "stop": 727.5,
-      "target": 746.0,
+      "entry": 738.0,
+      "stop": 728.5,
+      "target": 748.0,
       "conviction": 6,
-      "source": "Qwen 3.7 Max"
-    },
-    {
-      "ticker": "SPY",
-      "direction": "short",
-      "entry": 728.0,
-      "stop": 733.5,
-      "target": 715.0,
-      "conviction": 5,
       "source": "Qwen 3.7 Max"
     }
   ],
   "disagreements": [
-    "Conflict between bullish gamma-based support and DS Pro's risk-off macro regime.",
-    "Disagreement on whether the 730 level acts as a reliable bounce point or a trap for cascading dealer selling."
+    "Quantitative models (GEX) favor a bullish drift/pinning, while fundamental and sentiment models flag a risk-off regime and breadth decay."
   ],
-  "narrative": "The market is currently trapped in a gamma-induced pin at 730, which suppresses volatility despite underlying structural fragility indicated by negative DEX and VEX. While the gamma regime supports a range-bound strategy, the macro risk-off backdrop suggests that any breach of the 730 level will likely trigger a violent, non-linear move to the downside as dealers unwind hedges."
+  "narrative": "The market is currently caught in a structural trap where bullish dealer positioning at the 730 strike creates a false sense of stability, masking a broader risk-off rotation. While the gamma profile supports a grind toward the 730 pin, the underlying deterioration in small-caps and financials suggests the index is vulnerable to a violent unwind if the 730 support fails. We prioritize capital preservation and limit new exposure to a single, tightly-stopped SPY position to capitalize on the gamma pin while respecting the broader risk-off signal."
 }
