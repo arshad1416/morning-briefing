@@ -9,7 +9,7 @@ import { mountBilling } from './billing.js';
 
 const app = new Hono();
 
-app.use('/api/*', async (c, next) => {
+app.use('*', async (c, next) => {
   const origin = getOrigin(c.req.raw);
   if (c.req.method === 'OPTIONS') {
     return new Response(null, {
@@ -28,6 +28,7 @@ app.use('/api/*', async (c, next) => {
   c.res.headers.set('Access-Control-Allow-Credentials', 'true');
 });
 
+app.post('/', (c) => handleChat(c.req.raw, c.env));
 app.post('/chat', (c) => handleChat(c.req.raw, c.env));
 app.post('/feedback', (c) => handleFeedback(c.req.raw, c.env));
 mountPasswordAuth(app);

@@ -34,7 +34,7 @@ export function mountPasskey(app) {
 
   app.post('/api/auth/passkey/register/verify', requireSession(), async (c) => {
     const { user } = c.get('session');
-    const { challengeId, response } = await c.req.json();
+    const { challengeId, response } = await c.req.json().catch(() => ({}));
     const ch = await takeChallenge(c.env.DB, challengeId);
     if (!ch || ch.user_id !== user.id || ch.type !== 'register') return c.json({ error: 'bad_challenge' }, 400);
     let result;
@@ -71,7 +71,7 @@ export function mountPasskey(app) {
   });
 
   app.post('/api/auth/passkey/login/verify', async (c) => {
-    const { challengeId, credentialId, response } = await c.req.json();
+    const { challengeId, credentialId, response } = await c.req.json().catch(() => ({}));
     const ch = await takeChallenge(c.env.DB, challengeId);
     if (!ch || ch.type !== 'login') return c.json({ error: 'bad_challenge' }, 400);
     const cred = await getCredentialById(c.env.DB, credentialId);

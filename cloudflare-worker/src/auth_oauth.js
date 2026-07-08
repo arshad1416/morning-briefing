@@ -45,7 +45,7 @@ export function mountOauth(app) {
     });
     if (!uiRes.ok) return c.json({ error: 'userinfo_failed' }, 400);
     const profile = await uiRes.json();
-    if (!profile.email || profile.email_verified === false) return c.json({ error: 'email_unverified' }, 400);
+    if (!profile.email || profile.email_verified !== true) return c.json({ error: 'email_unverified' }, 400);
 
     const email = String(profile.email).toLowerCase();
     const ip = clientIp(c.req.raw);
@@ -56,6 +56,12 @@ export function mountOauth(app) {
       userId = identity.user_id;
     } else {
       const existing = await getUserByEmail(c.env.DB, email);
+      // Anti-hijack: never silently link Google onto a row that already has a
+      // password — an attacker could pre-register the victim's email. Linking
+      // stays allowed only for OAuth/passkey-created rows (no pw_hash).
+      if (existing && existing.pw_hash) {
+        return c.redirect(`${c.env.APP_URL}/#/account?error=use_password`, 302);
+      }
       const user = existing || (await createUser(c.env.DB, { email, pwHash: null, ip }));
       userId = user.id;
       await linkOauthIdentity(c.env.DB, { provider: 'google', providerUserId: profile.sub, userId, email });

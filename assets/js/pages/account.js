@@ -7,7 +7,7 @@
 const Account = {
   async render(app) {
     const me = await Auth.me();
-    if (me) { app.innerHTML = `<div class="section"><p>Signed in as ${me.email}. <a href="#/pricing">Manage plan</a> · <a href="#" id="lo">Log out</a></p></div>`;
+    if (me) { app.innerHTML = `<div class="section"><p>Signed in as ${Utils.esc(me.email)}. <a href="#/pricing">Manage plan</a> · <a href="#" id="lo">Log out</a></p></div>`;
       app.querySelector('#lo').onclick = (e) => { e.preventDefault(); Auth.logout(); }; return; }
     app.innerHTML = `
       <div class="section" style="max-width:460px;margin:0 auto">

@@ -40,7 +40,9 @@ export function mountPasswordAuth(app) {
     await logAuthEvent(c.env.DB, { email, ip, type: 'signup' });
 
     const deviceId = ensureDevice(c);
-    await startTrial(c.env.DB, { userId: user.id, deviceId, ip });
+    // Best-effort trial: the account already exists, so a DB hiccup here must
+    // not fail the signup.
+    try { await startTrial(c.env.DB, { userId: user.id, deviceId, ip }); } catch (e) { /* best-effort */ }
 
     const token = await issueSession(user.id, c.env.SESSION_SECRET);
     setSessionCookie(c, token);
@@ -53,21 +55,24 @@ export function mountPasswordAuth(app) {
     const password = String(body.password || '');
     const ip = clientIp(c.req.raw);
 
-    if (await recentAuthFailures(c.env.DB, email, 15 * 60 * 1000) >= 8) {
-      await logAuthEvent(c.env.DB, { email, ip, type: 'rate_limited' });
-      return c.json({ error: 'too_many_attempts' }, 429);
-    }
+    // Verify the password FIRST so a correct password is never throttled — only
+    // repeated FAILURES are rate-limited (prevents a targeted lockout DoS where
+    // an attacker floods wrong guesses to lock a victim out of their own login).
     const user = await getUserByEmail(c.env.DB, email);
     const ok = await verifyPassword(password, user?.pw_hash || DUMMY_HASH);
-    if (!user || !user.pw_hash || !ok) {
-      await logAuthEvent(c.env.DB, { email, ip, type: 'login_fail' });
-      return c.json({ error: 'invalid_credentials' }, 401);
+    if (user && user.pw_hash && ok) {
+      await logAuthEvent(c.env.DB, { email, ip, type: 'login_ok' });
+      ensureDevice(c);
+      const token = await issueSession(user.id, c.env.SESSION_SECRET);
+      setSessionCookie(c, token);
+      return c.json({ ok: true, email });
     }
-    await logAuthEvent(c.env.DB, { email, ip, type: 'login_ok' });
-    ensureDevice(c);
-    const token = await issueSession(user.id, c.env.SESSION_SECRET);
-    setSessionCookie(c, token);
-    return c.json({ ok: true, email });
+    // failure path — throttle repeated failures
+    await logAuthEvent(c.env.DB, { email, ip, type: 'login_fail' });
+    if (await recentAuthFailures(c.env.DB, email, 15 * 60 * 1000) >= 8) {
+      return c.json({ error: 'too_many_attempts' }, 429);
+    }
+    return c.json({ error: 'invalid_credentials' }, 401);
   });
 
   app.post('/api/auth/logout', (c) => { clearSessionCookie(c); return c.json({ ok: true }); });

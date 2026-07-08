@@ -41,6 +41,24 @@ describe('password auth', () => {
     expect(bad.status).toBe(401);
   });
 
+  it('a correct password is never throttled, even after repeated failures (lockout DoS)', async () => {
+    const cred = { ...base, email: 'dos@test.ca' };
+    expect((await signup(cred)).status).toBe(200); // create within this test (isolatedStorage)
+    const login = (password) => app.request('/api/auth/login', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'dos@test.ca', password }),
+    }, env);
+    // Attacker floods wrong guesses to try to lock the victim out.
+    for (let i = 0; i < 8; i++) {
+      const bad = await login('wrongwrongwrong');
+      expect([401, 429]).toContain(bad.status);
+    }
+    // The real owner's CORRECT password must still succeed — not throttled.
+    const good = await login('hunter2hunter2');
+    expect(good.status).toBe(200);
+    expect(sessionCookie(good)).toContain('mg_session=');
+  });
+
   it('me returns entitlement for a signed-in user', async () => {
     const res = await signup({ ...base, email: 'me@test.ca' });
     const cookie = sessionCookie(res);
