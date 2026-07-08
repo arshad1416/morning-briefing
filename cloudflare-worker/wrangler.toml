@@ -15,6 +15,21 @@ database_id = "6585930e-61a6-4679-a492-73b1ea643e88"
 pattern = "maplegamma.com/api/*"
 zone_name = "maplegamma.com"
 
+# Until the 301 redirects to maplegamma.com are set up in the CF dashboard, also
+# route /api/* on the other live domains so email/password auth works there too
+# (passkeys/OAuth remain .com-only via RP_ID/redirect).
+[[routes]]
+pattern = "maplegamma.ca/api/*"
+zone_name = "maplegamma.ca"
+
+[[routes]]
+pattern = "briefing.arshadkazi.ca/api/*"
+zone_name = "arshadkazi.ca"
+
+[[routes]]
+pattern = "maplegamma.arshadkazi.ca/api/*"
+zone_name = "arshadkazi.ca"
+
 [vars]
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 OPENROUTER_MODEL = "deepseek/deepseek-v4-pro"
