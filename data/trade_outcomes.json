@@ -1,6 +1,45 @@
 {
   "entries": [
     {
+      "date": "2026-07-07",
+      "council_query": "Market outlook analysis for 2026-07-07",
+      "recommendations": [
+        {
+          "model": "gemini-3.1-flash-lite-preview-aggregator",
+          "prediction": "bullish",
+          "confidence": 0.4,
+          "source": "market_pulse",
+          "correct": false,
+          "actual_direction": "bearish"
+        },
+        {
+          "model": "Qwen 3.7 Max / Quantitative Synthesis",
+          "prediction": "long",
+          "confidence": 0.4,
+          "source": "trade_recommendation",
+          "ticker": "SPY",
+          "entry": 738.0,
+          "target": 750.0,
+          "stop": 727.5,
+          "actual_direction": "bearish"
+        }
+      ],
+      "actual_outcome": {
+        "direction": "bearish",
+        "return_pct": -0.446,
+        "total_pnl": 0.0,
+        "unrealized_pnl": 0.0,
+        "open_positions_count": 0,
+        "generated_at": "2026-07-07 15:30:02",
+        "positions": [],
+        "portfolio_direction": "neutral",
+        "portfolio_return_pct": 0.0,
+        "outcome_source": "market_^GSPC"
+      },
+      "correct_models": [],
+      "correlation_score": 0.0
+    },
+    {
       "date": "2026-07-06",
       "council_query": "Market outlook analysis for 2026-07-06",
       "recommendations": [

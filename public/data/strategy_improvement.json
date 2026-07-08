@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-05T04:55:34.971756+00:00",
-  "date": "2026-07-05",
+  "generated_at": "2026-07-07T21:00:02.005732+00:00",
+  "date": "2026-07-07",
   "model_accuracy": {
     "Qwen 3.7 Max": {
       "total_predictions": 44,
@@ -55,6 +55,19 @@
         "long->bullish": 1
       }
     },
+    "Qwen 3.7 Max / Quantitative Synthesis": {
+      "total_predictions": 2,
+      "correct_predictions": 0,
+      "win_rate": 0.0,
+      "avg_return_all": 0.139,
+      "avg_return_when_correct": 0.0,
+      "avg_return_when_incorrect": 0.139,
+      "best_asset_classes": [],
+      "confusion_matrix": {
+        "long->bearish": 1,
+        "long->bullish": 1
+      }
+    },
     "gemini-2.0-flash-aggregator": {
       "total_predictions": 5,
       "correct_predictions": 1,
@@ -76,36 +89,36 @@
       }
     },
     "gemini-3.1-flash-lite-preview-aggregator": {
-      "total_predictions": 22,
-      "correct_predictions": 9,
-      "win_rate": 0.4091,
-      "avg_return_all": -0.0942,
-      "avg_return_when_correct": -0.0111,
-      "avg_return_when_incorrect": -0.1518,
+      "total_predictions": 24,
+      "correct_predictions": 10,
+      "win_rate": 0.4167,
+      "avg_return_all": -0.0748,
+      "avg_return_when_correct": 0.0624,
+      "avg_return_when_incorrect": -0.1728,
       "best_asset_classes": [],
       "confusion_matrix": {
+        "bullish->bearish": 4,
+        "bullish->bullish": 5,
         "neutral->neutral": 3,
         "bearish->neutral": 1,
         "neutral->bearish": 3,
-        "bullish->bearish": 3,
         "bearish->bullish": 3,
-        "bullish->bullish": 4,
         "bearish->bearish": 2,
         "neutral->bullish": 3
       }
     }
   },
-  "prompt_weights": "Model accuracy weighting based on recent outcomes:\nModel gemini-3.1-flash-lite-preview-aggregator has 41% accuracy (9/22 predictions).\nModel Qwen 3.7 Max has 39% accuracy (17/44 predictions).\nModel gemini-2.0-flash-aggregator has 20% accuracy (1/5 predictions), best on STOCK (67% win rate).",
+  "prompt_weights": "Model accuracy weighting based on recent outcomes:\nModel gemini-3.1-flash-lite-preview-aggregator has 42% accuracy (10/24 predictions).\nModel Qwen 3.7 Max has 39% accuracy (17/44 predictions).\nModel gemini-2.0-flash-aggregator has 20% accuracy (1/5 predictions), best on STOCK (67% win rate).\nModel Qwen 3.7 Max / Quantitative Synthesis has 0% accuracy (0/2 predictions).",
   "position_sizing": {
-    "base_multiplier": 0.87,
+    "base_multiplier": 0.86,
     "max_position_pct": 4.3,
     "min_conviction_threshold": 5,
-    "updated_at": "2026-07-05T04:55:34.969909+00:00"
+    "updated_at": "2026-07-07T21:00:02.004005+00:00"
   },
   "strategy_weights": {
     "gemini-3.1-flash-lite-preview-aggregator": {
-      "weight": 0.4091,
-      "samples": 22,
+      "weight": 0.4167,
+      "samples": 24,
       "enabled": true
     },
     "Qwen 3.7 Max": {
@@ -127,7 +140,12 @@
       "weight": 0.0,
       "samples": 1,
       "enabled": false
+    },
+    "Qwen 3.7 Max / Quantitative Synthesis": {
+      "weight": 0.0,
+      "samples": 2,
+      "enabled": false
     }
   },
-  "total_outcomes_analyzed": 27
+  "total_outcomes_analyzed": 29
 }

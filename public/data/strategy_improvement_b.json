@@ -1,133 +1,70 @@
 {
-  "generated_at": "2026-07-05T04:55:34.971756+00:00",
-  "date": "2026-07-05",
+  "generated_at": "2026-07-07T21:02:02.049853+00:00",
+  "date": "2026-07-07",
   "model_accuracy": {
     "Qwen 3.7 Max": {
-      "total_predictions": 44,
-      "correct_predictions": 17,
-      "win_rate": 0.3864,
-      "avg_return_all": -0.0942,
-      "avg_return_when_correct": 0.6985,
-      "avg_return_when_incorrect": -0.5934,
+      "total_predictions": 2,
+      "correct_predictions": 0,
+      "win_rate": 0.0,
+      "avg_return_all": 0.139,
+      "avg_return_when_correct": 0.0,
+      "avg_return_when_incorrect": 0.139,
       "best_asset_classes": [],
       "confusion_matrix": {
-        "long->neutral": 7,
-        "long->bearish": 15,
-        "long->bullish": 16,
-        "short->bearish": 1,
-        "short->bullish": 4,
-        "short->neutral": 1
-      }
-    },
-    "Qwen 3.7 Max (Trade Idea 1)": {
-      "total_predictions": 1,
-      "correct_predictions": 0,
-      "win_rate": 0.0,
-      "avg_return_all": 0.0,
-      "avg_return_when_correct": 0.0,
-      "avg_return_when_incorrect": 0.0,
-      "best_asset_classes": [
-        {
-          "class": "STOCK",
-          "win_rate": 0.8,
-          "samples": 5
-        }
-      ],
-      "confusion_matrix": {
+        "long->bearish": 1,
         "long->bullish": 1
       }
     },
-    "Qwen 3.7 Max (Trade Idea 2)": {
-      "total_predictions": 1,
+    "Qwen 3.7 Max / DeepSeek V4 Pro": {
+      "total_predictions": 2,
       "correct_predictions": 0,
       "win_rate": 0.0,
-      "avg_return_all": 0.0,
+      "avg_return_all": 0.139,
       "avg_return_when_correct": 0.0,
-      "avg_return_when_incorrect": 0.0,
-      "best_asset_classes": [
-        {
-          "class": "STOCK",
-          "win_rate": 0.8,
-          "samples": 5
-        }
-      ],
+      "avg_return_when_incorrect": 0.139,
+      "best_asset_classes": [],
       "confusion_matrix": {
+        "long->bearish": 1,
         "long->bullish": 1
-      }
-    },
-    "gemini-2.0-flash-aggregator": {
-      "total_predictions": 5,
-      "correct_predictions": 1,
-      "win_rate": 0.2,
-      "avg_return_all": 0.0,
-      "avg_return_when_correct": 0.0,
-      "avg_return_when_incorrect": 0.0,
-      "best_asset_classes": [
-        {
-          "class": "STOCK",
-          "win_rate": 0.667,
-          "samples": 12
-        }
-      ],
-      "confusion_matrix": {
-        "neutral->bearish": 2,
-        "neutral->bullish": 2,
-        "bullish->bullish": 1
       }
     },
     "gemini-3.1-flash-lite-preview-aggregator": {
-      "total_predictions": 22,
-      "correct_predictions": 9,
-      "win_rate": 0.4091,
-      "avg_return_all": -0.0942,
-      "avg_return_when_correct": -0.0111,
-      "avg_return_when_incorrect": -0.1518,
+      "total_predictions": 2,
+      "correct_predictions": 1,
+      "win_rate": 0.5,
+      "avg_return_all": 0.139,
+      "avg_return_when_correct": 0.724,
+      "avg_return_when_incorrect": -0.446,
       "best_asset_classes": [],
       "confusion_matrix": {
-        "neutral->neutral": 3,
-        "bearish->neutral": 1,
-        "neutral->bearish": 3,
-        "bullish->bearish": 3,
-        "bearish->bullish": 3,
-        "bullish->bullish": 4,
-        "bearish->bearish": 2,
-        "neutral->bullish": 3
+        "bullish->bearish": 1,
+        "bullish->bullish": 1
       }
     }
   },
-  "prompt_weights": "Model accuracy weighting based on recent outcomes:\nModel gemini-3.1-flash-lite-preview-aggregator has 41% accuracy (9/22 predictions).\nModel Qwen 3.7 Max has 39% accuracy (17/44 predictions).\nModel gemini-2.0-flash-aggregator has 20% accuracy (1/5 predictions), best on STOCK (67% win rate).",
+  "prompt_weights": "Model accuracy weighting based on recent outcomes:\nModel gemini-3.1-flash-lite-preview-aggregator has 50% accuracy (1/2 predictions).\nModel Qwen 3.7 Max has 0% accuracy (0/2 predictions).\nModel Qwen 3.7 Max / DeepSeek V4 Pro has 0% accuracy (0/2 predictions).",
   "position_sizing": {
-    "base_multiplier": 0.87,
-    "max_position_pct": 4.3,
-    "min_conviction_threshold": 5,
-    "updated_at": "2026-07-05T04:55:34.969909+00:00"
+    "base_multiplier": 0.67,
+    "max_position_pct": 3.4,
+    "min_conviction_threshold": 6,
+    "updated_at": "2026-07-07T21:02:02.048590+00:00"
   },
   "strategy_weights": {
     "gemini-3.1-flash-lite-preview-aggregator": {
-      "weight": 0.4091,
-      "samples": 22,
-      "enabled": true
-    },
-    "Qwen 3.7 Max": {
-      "weight": 0.3864,
-      "samples": 44,
-      "enabled": true
-    },
-    "gemini-2.0-flash-aggregator": {
-      "weight": 0.2,
-      "samples": 5,
-      "enabled": true
-    },
-    "Qwen 3.7 Max (Trade Idea 1)": {
-      "weight": 0.0,
-      "samples": 1,
+      "weight": 0.5,
+      "samples": 2,
       "enabled": false
     },
-    "Qwen 3.7 Max (Trade Idea 2)": {
+    "Qwen 3.7 Max": {
       "weight": 0.0,
-      "samples": 1,
+      "samples": 2,
+      "enabled": false
+    },
+    "Qwen 3.7 Max / DeepSeek V4 Pro": {
+      "weight": 0.0,
+      "samples": 2,
       "enabled": false
     }
   },
-  "total_outcomes_analyzed": 27
+  "total_outcomes_analyzed": 2
 }

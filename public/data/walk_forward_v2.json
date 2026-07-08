@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-21T06:01:52.922673",
+  "generated_at": "2026-07-05T06:01:58.212348",
   "description": "Walk-Forward Validation V2 \u2014 3yr train / 1yr test, non-overlapping, 10bps TC",
   "parameters": {
     "tickers": 60,
@@ -45,7 +45,7 @@
             10
           ],
           "is_sharpe": 0.3262,
-          "oos_sharpe": 1.594,
+          "oos_sharpe": 1.5939,
           "oos_degradation_pct": 0.0,
           "is_trades": 218,
           "oos_trades": 24,
@@ -276,7 +276,7 @@
             30,
             21
           ],
-          "is_sharpe": 0.8725,
+          "is_sharpe": 0.8732,
           "oos_sharpe": 0.3814,
           "oos_degradation_pct": 56.3,
           "is_trades": 544,
@@ -390,15 +390,15 @@
         "mean_reversion": {
           "optimal_params": [
             20,
-            30
+            21
           ],
-          "is_sharpe": 0.7567,
-          "oos_sharpe": 1.7604,
+          "is_sharpe": 0.7606,
+          "oos_sharpe": 1.5817,
           "oos_degradation_pct": 0.0,
-          "is_trades": 221,
-          "oos_trades": 75,
-          "is_max_dd_pct": -73.07,
-          "oos_max_dd_pct": -21.81
+          "is_trades": 228,
+          "oos_trades": 76,
+          "is_max_dd_pct": -46.95,
+          "oos_max_dd_pct": -20.14
         },
         "momentum": {
           "optimal_params": [
@@ -580,7 +580,7 @@
             30
           ],
           "is_sharpe": 0.7277,
-          "oos_sharpe": 0.922,
+          "oos_sharpe": 0.9205,
           "oos_degradation_pct": 0.0,
           "is_trades": 812,
           "oos_trades": 76,
@@ -617,14 +617,14 @@
   ],
   "summary": {
     "mean_reversion": {
-      "avg_is_sharpe": 1.1159,
-      "avg_oos_sharpe": 0.8044,
+      "avg_is_sharpe": 1.1163,
+      "avg_oos_sharpe": 0.7865,
       "avg_degradation_pct": 38.7,
-      "total_oos_trades": 624
+      "total_oos_trades": 625
     },
     "momentum": {
       "avg_is_sharpe": 0.6298,
-      "avg_oos_sharpe": 0.7678,
+      "avg_oos_sharpe": 0.7676,
       "avg_degradation_pct": 18.9,
       "total_oos_trades": 2689
     },
