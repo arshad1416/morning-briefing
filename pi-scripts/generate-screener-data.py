@@ -201,7 +201,11 @@ def fetch_ticker_data(ticker):
         # Dividend yield
         div_yield = info.get("dividendYield")
         if div_yield is not None:
-            div_yield = round(div_yield * 100, 2)
+            # yfinance now returns dividendYield already as a percent value
+            # (e.g. 0.44 meaning 0.44%), not a fraction — the old *100 here
+            # inflated every yield 100x (AAPL showed "35.0%" instead of 0.35%,
+            # CI showed "221%" instead of 2.21%). No conversion needed.
+            div_yield = round(div_yield, 2)
         else:
             div_yield = 0
 

@@ -607,7 +607,10 @@ const Screener = {
   _tickerRow(raw) {
     // Sanitize: the generator can emit non-numeric values (e.g. pe:"Infinity"
     // from yfinance) — one bad field must not kill the whole table render.
-    const _n = v => { const n = Number(v); return isFinite(n) ? n : null; };
+    // Number(null) is 0 (and isFinite(0) is true), so null/undefined must be
+    // special-cased first or a genuinely-missing PE renders as "0.0" instead
+    // of "—". Only coerce non-empty values; leave null/undefined as null.
+    const _n = v => { if (v == null) return null; const n = Number(v); return isFinite(n) ? n : null; };
     const t = Object.assign({}, raw, {
       price: _n(raw.price), change_pct: _n(raw.change_pct) || 0, score: _n(raw.score) || 0,
       pe: _n(raw.pe), rsi: _n(raw.rsi), marketCap: _n(raw.marketCap),

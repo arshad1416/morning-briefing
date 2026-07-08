@@ -99,8 +99,10 @@ const TickerDetail = {
       html += '</div></div>';
     }
 
-    // Council analysis narrative
-    if (t.council_analysis) {
+    // Council analysis narrative (only when there's an actual narrative —
+    // council_analysis may be present with just a score, used by the Score
+    // card above, which shouldn't spawn an empty "Council Analysis" section)
+    if (t.council_analysis?.bull_case || t.council_analysis?.bear_case || t.council_analysis?.risk_assessment) {
       const ca = t.council_analysis;
       html += `<div class="section"><h3 class="section-title">Council Analysis</h3><div class="card">`;
       if (ca.bull_case) html += `<div style="margin-bottom:12px"><span class="badge badge-green" style="margin-bottom:4px">Bull Case</span><p style="color:var(--text-secondary);margin-top:8px">${ca.bull_case}</p></div>`;
@@ -112,6 +114,33 @@ const TickerDetail = {
     // Council summary from scan (fallback)
     if (scan.council_summary && !t.council_analysis) {
       html += `<div class="section"><h3 class="section-title">Council Verdict</h3><div class="card"><p style="color:var(--text-secondary)">${scan.council_summary}</p></div></div>`;
+    }
+
+    // Upcoming earnings
+    if (t.upcoming_earnings?.length) {
+      html += `<div class="section"><h3 class="section-title">Upcoming Earnings</h3><div class="card table-wrap"><table><thead><tr><th>Date</th><th>EPS Est.</th></tr></thead><tbody>`;
+      t.upcoming_earnings.forEach(e => {
+        html += `<tr><td>${Utils.esc(e.date)}</td><td>${e.epsEstimate != null ? '$' + e.epsEstimate.toFixed(2) : '—'}</td></tr>`;
+      });
+      html += '</tbody></table></div></div>';
+    }
+
+    // Recent SEC filings
+    if (t.recent_sec_filings?.length) {
+      html += `<div class="section"><h3 class="section-title">Recent SEC Filings</h3><div class="card table-wrap"><table><thead><tr><th>Date</th><th>Form</th><th>Link</th></tr></thead><tbody>`;
+      t.recent_sec_filings.forEach(f => {
+        html += `<tr><td>${Utils.esc(f.date || '')}</td><td>${Utils.esc(f.form || '')}</td><td><a href="${Utils.esc(Utils.safeUrl(f.url || ''))}" target="_blank" rel="noopener">EDGAR ↗</a></td></tr>`;
+      });
+      html += '</tbody></table></div></div>';
+    }
+
+    // Reddit mentions
+    if (t.reddit_mentions?.length) {
+      html += `<div class="section"><h3 class="section-title">Reddit Mentions</h3><div class="card">`;
+      t.reddit_mentions.forEach(m => {
+        html += `<span class="badge badge-green" style="margin:2px">r/${Utils.esc(m.sub)} · ${m.count}</span> `;
+      });
+      html += '</div></div>';
     }
 
     html += '</div>';

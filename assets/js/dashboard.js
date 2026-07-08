@@ -26,7 +26,10 @@ const Dashboard = {
       State.get('latest', '/data/latest.json').catch(() => null),
       State.get('trades', '/data/paper_trades.json').catch(() => null),
       State.get('analysis', '/data/analysis.json').catch(() => null),
-      State.get('gex', '/data/gex_data.json').catch(() => null),
+      // gex_data.json has no writer anymore (dead since ~Jun 11) — read the
+      // actively-maintained maplegamma-data.json instead (push_gex.py, every
+      // 30min during market hours). Ticker key is "SPX" (see push_gex.py).
+      State.get('gex', '/data/maplegamma-data.json').catch(() => null),
       State.get('verdict', '/data/verdict.json').catch(() => null),
       State.get('reddit', '/data/reddit-sentiment.json').catch(() => null),
       State.get('screener', '/data/screener-data.json').catch(() => null),
@@ -255,9 +258,9 @@ const Dashboard = {
     }
 
     // ── 6.5 GEX/DEX/VEX SNAPSHOT ──
-    if (gexData?.modes?.all) {
-      const a = gexData.modes.all;
-      const fmt = (v) => v >= 1e6 ? '$'+(v/1e6).toFixed(1)+'M' : v >= 1e3 ? '$'+(v/1e3).toFixed(0)+'K' : '$'+v.toFixed(0);
+    if (gexData?.tickers?.SPX) {
+      const a = gexData.tickers.SPX;
+      const fmt = (v) => Math.abs(v) >= 1e6 ? '$'+(v/1e6).toFixed(1)+'M' : Math.abs(v) >= 1e3 ? '$'+(v/1e3).toFixed(0)+'K' : '$'+(v||0).toFixed(0);
       const rg = (a.gamma_regime||'').toUpperCase();
       const rc = rg.includes('LONG')||rg.includes('BULL') ? 'var(--green)' : rg.includes('SHORT')||rg.includes('BEAR') ? 'var(--red)' : 'var(--text-primary)';
       html += '<div class="today-section"><div class="today-section-title">GEX/DEX/VEX</div><div style="display:flex;flex-wrap:wrap;gap:12px">';
