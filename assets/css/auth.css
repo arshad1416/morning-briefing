@@ -1,0 +1,204 @@
+/* ==========================================================================
+   auth.css — buttons + account / pricing / paywall surfaces
+   Built on the existing MapleGamma tokens (style.css). Gold is the brand
+   accent; green stays reserved for positive states. No external assets.
+   ========================================================================== */
+
+/* ---- Button system ------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: var(--bg-inset);
+  color: var(--text-primary);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.16s ease, border-color 0.16s ease, transform 0.06s ease, box-shadow 0.16s ease;
+}
+.btn:hover { background: var(--bg-active); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 2px; }
+.btn[disabled] { opacity: 0.55; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--accent-bright);
+  color: var(--accent-on);
+  border-color: var(--accent-bright);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.25), 0 8px 22px -12px rgba(240,191,102,0.55);
+}
+.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-mid);
+}
+.btn-secondary:hover { background: var(--bg-inset); border-color: var(--text-muted); }
+
+.btn-ghost { background: transparent; color: var(--text-secondary); border-color: var(--border-subtle); }
+.btn-ghost:hover { color: var(--text-primary); background: var(--bg-inset); }
+
+/* Recognizable white Google button (with the inline G mark) */
+.btn-google {
+  background: #ffffff;
+  color: #1f1f1f;
+  border-color: #dadce0;
+  font-weight: 600;
+}
+.btn-google:hover { background: #f5f5f5; }
+.btn-google svg { width: 18px; height: 18px; flex: 0 0 18px; }
+
+.btn-block { width: 100%; }
+.btn-lg { padding: 13px 20px; font-size: 0.95rem; }
+
+/* ---- Auth card ----------------------------------------------------------- */
+.auth-wrap {
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+.auth-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--card-radius);
+  padding: 30px 28px 26px;
+  overflow: hidden;
+  animation: auth-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+/* signature gold accent bar across the card top */
+.auth-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent-bright) 30%, var(--accent-hover) 70%, transparent);
+  opacity: 0.9;
+}
+.auth-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 4px 0 4px;
+  letter-spacing: -0.01em;
+}
+.auth-sub { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 18px; }
+
+.auth-msg { color: var(--red); font-size: 0.82rem; min-height: 1.1em; margin-bottom: 8px; }
+.auth-msg.ok { color: var(--green); }
+
+.auth-field {
+  width: 100%;
+  padding: 11px 13px;
+  margin: 7px 0;
+  background: var(--bg-inset);
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.auth-field::placeholder { color: var(--text-disabled); }
+.auth-field:focus {
+  outline: none;
+  border-color: var(--accent-bright);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+.auth-legal { font-size: 0.78rem; color: var(--text-secondary); margin: 12px 0 4px; line-height: 1.55; }
+.auth-legal label { display: flex; gap: 8px; align-items: flex-start; margin: 5px 0; cursor: pointer; }
+.auth-legal input[type="checkbox"] { margin-top: 2px; accent-color: var(--accent-bright); width: 15px; height: 15px; flex: 0 0 15px; }
+.auth-legal a { color: var(--accent-bright); text-decoration: none; }
+.auth-legal a:hover { text-decoration: underline; }
+
+.auth-actions { display: flex; gap: 10px; margin-top: 14px; }
+.auth-actions .btn { flex: 1; }
+
+/* labelled "or" divider */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 14px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+.auth-divider::before, .auth-divider::after {
+  content: ""; flex: 1; height: 1px; background: var(--border-subtle);
+}
+.auth-alt { display: flex; flex-direction: column; gap: 10px; }
+.auth-foot { margin-top: 16px; font-size: 0.75rem; color: var(--text-muted); text-align: center; line-height: 1.5; }
+
+@keyframes auth-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* ---- Pricing ------------------------------------------------------------- */
+.pricing-head { text-align: center; margin: 8px auto 22px; max-width: 560px; }
+.pricing-head .auth-title { font-size: 1.9rem; }
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.price-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--card-radius);
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  animation: auth-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.price-card:nth-child(2) { animation-delay: 0.06s; }
+.price-card:nth-child(3) { animation-delay: 0.12s; }
+.price-card.featured { border-color: var(--accent-border); box-shadow: 0 0 0 1px var(--accent-border), 0 20px 40px -28px rgba(240,191,102,0.4); }
+.price-badge {
+  position: absolute; top: -10px; right: 18px;
+  background: var(--accent-bright); color: var(--accent-on);
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 4px 9px; border-radius: 999px;
+}
+.price-name { font-family: var(--font-serif); font-size: 1.15rem; color: var(--text-primary); }
+.price-tag { font-family: var(--font-mono); font-size: 1.05rem; color: var(--accent-bright); margin: 6px 0 12px; }
+.price-feats { list-style: none; padding: 0; margin: 0 0 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.price-feats li { display: flex; gap: 8px; align-items: flex-start; font-size: 0.86rem; color: var(--text-body); }
+.price-feats li::before { content: "✦"; color: var(--accent-bright); font-size: 0.7rem; margin-top: 3px; }
+.price-feats li.muted { color: var(--text-muted); }
+.price-feats li.muted::before { content: "—"; color: var(--text-disabled); }
+.pricing-note { text-align: center; color: var(--text-muted); font-size: 0.75rem; margin-top: 16px; }
+
+/* ---- Paywall interstitial ------------------------------------------------ */
+.paywall {
+  max-width: 460px; margin: 48px auto; text-align: center;
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--card-radius); padding: 34px 28px;
+  animation: auth-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.paywall-lock { font-size: 1.6rem; }
+.paywall-title { font-family: var(--font-serif); font-size: 1.3rem; color: var(--text-primary); margin: 10px 0 6px; }
+.paywall p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 18px; }
+.paywall .auth-actions { justify-content: center; }
+.paywall .auth-actions .btn { flex: 0 1 auto; }
+
+@media (max-width: 720px) {
+  .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .auth-card, .price-card, .paywall { animation: none; }
+}
