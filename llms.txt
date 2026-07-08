@@ -7,24 +7,51 @@
 > realized ^GSPC direction and the lessons feed back into the next morning
 > prompt. Paper trading only — nothing here is financial advice.
 
-The dashboard is JavaScript-rendered; agents should read the JSON directly.
+## Access model
 
-## Data endpoints (JSON, refreshed weekday mornings ET)
+The **Dashboard** (the site home) and the **Pricing** page are free and open —
+no account needed. Everything else is behind a subscription with a 14-day free
+trial:
 
-- /data/maplegamma_analysis.json : today’s council briefing — market_pulse
-  (regime/score/confidence), key_levels (SPY/QQQ), gamma_landscape, risks,
-  trades, narrative, meta (models, cost, context_variant)
-- /data/maplegamma_analysis_b.json : experimental council arm (adds news,
-  Reddit sentiment and geopolitics to the model context) — context A/B test
-- /data/trade_outcomes.json : per-day scored predictions vs realized ^GSPC
-  direction (entries with backfilled=true are retrodictions — exclude for
-  clean analysis); _b variant for the experimental arm
-- /data/strategy_improvement.json : rolling model-accuracy table and the
-  prompt weighting derived from it; _b variant for the experimental arm
-- /data/council_history.json : historical council runs
-- /data/gex_data.json : gamma exposure snapshot
-- /data/reddit-sentiment.json : WSB/r-stocks sentiment summaries
+- **Basic** — Research and Screener.
+- **Pro** — everything in Basic, plus Charts and Models.
+
+The dashboard is JavaScript-rendered; agents should read the open JSON endpoints
+below directly.
+
+## Open data endpoints (JSON, refreshed weekday mornings ET)
+
+These are public and free to fetch:
+
+- /data/latest.json : market summary snapshot — VIX, 10-year yield, and major
+  index levels/changes (S&P 500, Dow, NASDAQ, TSX, VIX)
+- /data/verdict.json : the day's directional signal and conviction, with a
+  narrative and the underlying model features
+- /data/reddit-sentiment.json : WSB / r-stocks sentiment summaries
+- /data/maplegamma-data.json : gamma-exposure overview per ticker (net GEX/DEX/VEX,
+  gamma regime, gamma profile by strike, key levels)
+- /data/analysis.json : curated market headlines with sentiment tags
+  (Seeking Alpha + BNN Bloomberg)
 - /data/paper_trades.json : paper-trading portfolio state
+
+## Subscription-gated (not open endpoints)
+
+The following data and features power the paid Research, Screener, Charts and
+Models areas and are available only to subscribers via the authenticated app —
+they are not published as fetchable public URLs:
+
+- Council briefing and its context A/B arm (maplegamma_analysis)
+- Screener data (full screener-data)
+- Charts and per-ticker analytics (charts, tickers)
+- Walk-forward validation (walk_forward_v2)
+- Strategy improvement / model-accuracy weighting (strategy_improvement)
+- Scored trade outcomes vs realized ^GSPC (trade_outcomes)
+- Morning analysis (morning_analysis)
+- Web news feed (web-news)
+- Polymarket sentiment (polymarket_sentiment)
+- Earnings data (earnings)
+- SEC filings (sec_filings)
+- Trade journal (journal)
 
 ## Engine
 
