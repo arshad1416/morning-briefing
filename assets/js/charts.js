@@ -87,10 +87,10 @@ const Charts = {
               <div class="ticker-dropdown" id="ticker-dropdown"></div>
             </div>
             <div class="timeframe-group">
-              <button class="timeframe-btn ${this._currentTimeframe === '1D' ? 'active' : ''}" data-tf="1D">1D</button>
-              <button class="timeframe-btn ${this._currentTimeframe === '1W' ? 'active' : ''}" data-tf="1W">1W</button>
-              <button class="timeframe-btn ${this._currentTimeframe === '1M' ? 'active' : ''}" data-tf="1M">1M</button>
-              <button class="timeframe-btn ${this._currentTimeframe === '1Y' ? 'active' : ''}" data-tf="1Y">1Y</button>
+              <button class="timeframe-btn ${this._currentTimeframe === '1D' ? 'active' : ''}" data-tf="1D" title="Daily candles (≈2 years)">Daily</button>
+              <button class="timeframe-btn ${this._currentTimeframe === '1W' ? 'active' : ''}" data-tf="1W" title="Weekly candles (≈2 years)">Weekly</button>
+              <button class="timeframe-btn ${this._currentTimeframe === '1M' ? 'active' : ''}" data-tf="1M" title="Monthly candles (≈2 years)">Monthly</button>
+              <button class="timeframe-btn ${this._currentTimeframe === '1Y' ? 'active' : ''}" data-tf="1Y" title="Yearly candles">Yearly</button>
             </div>
           </div>
         </div>
@@ -252,11 +252,15 @@ const Charts = {
         timeVisible: false,
         secondsVisible: false,
         tickMarkFormatter: (time) => {
-          const d = new Date(time * 1000);
-          const mm = String(d.getMonth() + 1).padStart(2, '0');
-          const dd = String(d.getDate()).padStart(2, '0');
-          const yy = String(d.getFullYear()).slice(-2);
-          return `${mm}/${dd}/${yy}`;
+          // Bars use string dates ('YYYY-MM-DD'); lightweight-charts hands the
+          // formatter a BusinessDay object {year,month,day}. The old code did
+          // `time * 1000` (numeric-timestamp assumption) → NaN → "NaN/NaN/aN".
+          let y, m, dd;
+          if (time && typeof time === 'object' && time.year) { y = time.year; m = time.month; dd = time.day; }
+          else if (typeof time === 'string') { const p = time.split('-'); y = +p[0]; m = +p[1]; dd = +p[2]; }
+          else { const d = new Date(time * 1000); if (isNaN(d)) return ''; y = d.getFullYear(); m = d.getMonth() + 1; dd = d.getDate(); }
+          if (!y) return '';
+          return `${String(m).padStart(2, '0')}/${String(dd).padStart(2, '0')}/${String(y).slice(-2)}`;
         },
       },
       width: document.getElementById('main-chart-container').clientWidth || 800,
