@@ -1,33 +1,11 @@
 /**
- * Paywall — blur-and-overlay gate for premium routes.
- *
- * Gate.route(render, tier) renders the real page, then (for non-subscribers)
- * blurs it and lays the subscription packages over top. The blur is only the
- * visual layer — the *data* is enforced server-side (Worker data_gate.js: premium
- * JSON lives in private R2 and 401/403s for non-subscribers), so the blurred page
- * never actually contains the premium numbers.
- *
+ * Paywall — inline "upgrade to view" upsell markup. The route guards fall back
+ * to a full-page redirect (#/pricing); this module renders an inline upsell used
+ * by teased sections later. Minimal for Phase 1.
  * Attaches to window (plain-script global pattern).
  */
-const Gate = {
-  meets(userTier, need) {
-    const rank = { basic: 1, pro: 2 };
-    const have = userTier === 'trial' ? 2 : (rank[userTier] || 0);
-    return have >= (rank[need] || 0);
-  },
-  // Wrap a page render fn with entitlement enforcement.
-  route(render, needTier) {
-    return async function (app, params) {
-      const me = await Auth.me();
-      const ok = me && me.entitlement && me.entitlement.entitled && Gate.meets(me.entitlement.tier, needTier);
-      await Promise.resolve(render(app, params));
-      if (!ok) Paywall.lock(app, needTier, me);
-    };
-  },
-};
-window.Gate = Gate;
-
 const Paywall = {
+<<<<<<< Updated upstream
   _interval: 'monthly',
 
   // Subscription package cards, reused by the overlay and the /pricing page.
@@ -220,6 +198,19 @@ const Paywall = {
         }
       };
     });
+=======
+  html(needTier) {
+    const tier = needTier === 'pro' ? 'Pro' : 'Basic';
+    return `<div class="section"><div class="paywall">
+      <div class="paywall-lock">🔒</div>
+      <div class="paywall-title">A ${tier} feature</div>
+      <p>Start your 14-day free trial — no card required — or sign in to unlock this.</p>
+      <div class="auth-actions">
+        <a class="btn btn-primary" href="#/pricing">See plans</a>
+        <a class="btn btn-secondary" href="#/account">Sign in</a>
+      </div>
+    </div></div>`;
+>>>>>>> Stashed changes
   },
 };
 window.Paywall = Paywall;

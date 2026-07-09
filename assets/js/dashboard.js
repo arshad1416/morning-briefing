@@ -32,8 +32,7 @@ const Dashboard = {
       State.get('gex', '/data/maplegamma-data.json').catch(() => null),
       State.get('verdict', '/data/verdict.json').catch(() => null),
       State.get('reddit', '/data/reddit-sentiment.json').catch(() => null),
-      // public lite file (top-8 + sector summary) — the full screener is gated
-      State.get('screener', '/data/screener-lite.json').catch(() => null),
+      State.get('screener', '/data/screener-data.json').catch(() => null),
     ]);
 
 

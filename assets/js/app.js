@@ -56,13 +56,12 @@
   Router.register('/account',       function (app)         { Account.render(app); });
   Router.register('/pricing',       function (app)         { Pricing.render(app); });
 
-  // Paid routes — Gate.route renders the page, then blurs it + overlays the
-  // subscription packages for non-subscribers (the data itself is server-gated).
-  Router.register('/positions',     Gate.route(function (app) { return PaperTrades.render(app); }, 'basic'));
-  Router.register('/research',      Gate.route(function (app) { return Research.render(app); },    'basic'));
-  Router.register('/screener',      Gate.route(function (app) { return Screener.render(app); },    'basic'));
-  Router.register('/charts',        Gate.route(function (app) { return Charts.render(app); },      'pro'));
-  Router.register('/models',        Gate.route(function (app) { return Models.render(app); },      'pro'));
+  // Paid routes — gated by entitlement tier (guard redirects if not allowed)
+  Router.register('/positions',     function (app)         { PaperTrades.render(app); }, function () { return Auth.guard('basic'); });
+  Router.register('/research',      function (app)         { Research.render(app); },     function () { return Auth.guard('basic'); });
+  Router.register('/screener',      function (app)         { Screener.render(app); },     function () { return Auth.guard('basic'); });
+  Router.register('/charts',        function (app)         { Charts.render(app); },       function () { return Auth.guard('pro'); });
+  Router.register('/models',        function (app)         { Models.render(app); },       function () { return Auth.guard('pro'); });
 
   // Legacy redirects
   Router.register('/mg',            function (app)         { window.location.hash = '#/maplegamma'; });
