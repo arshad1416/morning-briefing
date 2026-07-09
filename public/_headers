@@ -1,0 +1,21 @@
+# Cloudflare Pages headers
+# HTML: always check for freshness
+# JS/CSS: always revalidate
+# Images: cache long-term
+# Data: short TTL
+
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://secure.helcim.app; connect-src 'self' https://morning-briefing-chat.rcobwq7u.workers.dev; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-src https://secure.helcim.app
+
+/assets/js/*
+  Cache-Control: public, no-cache, must-revalidate
+
+/assets/css/*
+  Cache-Control: public, no-cache, must-revalidate
+
+/assets/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/data/*
+  Cache-Control: public, max-age=0, must-revalidate
