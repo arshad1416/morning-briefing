@@ -10,3 +10,9 @@ out/
 graphify-out/
 
 # Chart data files (generated at runtime)
+
+# ── Premium data — served ONLY via gated /api/data/* from private R2. Never on Pages. ──
+data/screener-data.json morning_analysis.json maplegamma_analysis.json web-news.json polymarket_sentiment.json earnings.json sec_filings.json journal.json walk_forward_v2.json walk_forward.json strategy_improvement.json strategy_improvement_b.json trade_outcomes.json trade_outcomes_b.json prediction-engine.json accuracy.json council_history.json
+public/data/screener-data.json morning_analysis.json maplegamma_analysis.json web-news.json polymarket_sentiment.json earnings.json sec_filings.json journal.json walk_forward_v2.json walk_forward.json strategy_improvement.json strategy_improvement_b.json trade_outcomes.json trade_outcomes_b.json prediction-engine.json accuracy.json council_history.json
+data/charts/
+public/data/charts/
