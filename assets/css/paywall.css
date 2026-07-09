@@ -1,0 +1,97 @@
+/* Paywall — blur + pricing overlay, and the standalone /pricing grid.
+   Theme-aware via the site's CSS variables. */
+
+.pw-locked { position: relative; min-height: 78vh; }
+.pw-blur {
+  filter: blur(7px) saturate(0.9);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.5;
+  max-height: 88vh;
+  overflow: hidden;
+}
+.pw-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px 60px;
+  overflow-y: auto;
+  background: radial-gradient(120% 90% at 50% 0,
+    color-mix(in srgb, var(--bg, #0b0e1a) 55%, transparent) 0%,
+    color-mix(in srgb, var(--bg, #0b0e1a) 82%, transparent) 60%);
+  backdrop-filter: blur(2px);
+}
+.pw-card {
+  width: 100%;
+  max-width: 940px;
+  background: var(--bg-card, #0e1220);
+  border: 1px solid var(--border-dim, #1c2236);
+  border-radius: 16px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+  padding: 28px 26px 22px;
+  text-align: center;
+}
+.pw-lock { font-size: 1.6rem; }
+.pw-heading { font-size: 1.5rem; font-weight: 800; margin: 6px 0 4px; color: var(--text-primary, #e6e8f0); }
+.pw-sub { color: var(--text-secondary, #8a90a6); font-size: 0.92rem; margin: 0 0 20px; }
+
+/* Plans grid (shared by overlay + /pricing) */
+.pw-plans {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  text-align: left;
+}
+@media (max-width: 720px) { .pw-plans { grid-template-columns: 1fr; } }
+.pw-plan {
+  position: relative;
+  background: var(--bg-inset, #11152a);
+  border: 1px solid var(--border-dim, #1c2236);
+  border-radius: 12px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+}
+.pw-plan-pop { border-color: var(--accent, #6366f1); box-shadow: 0 0 0 1px var(--accent, #6366f1) inset; }
+.pw-plan-active { outline: 2px solid var(--green, #16c784); }
+.pw-badge {
+  position: absolute; top: -10px; left: 16px;
+  background: var(--accent, #6366f1); color: #fff;
+  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 999px;
+}
+.pw-plan-name { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted, #8a90a6); }
+.pw-plan-price { font-size: 1.9rem; font-weight: 800; color: var(--text-primary, #e6e8f0); margin: 4px 0 2px; }
+.pw-plan-price span { font-size: 0.72rem; font-weight: 600; color: var(--text-muted, #8a90a6); }
+.pw-plan-blurb { font-size: 0.82rem; color: var(--text-secondary, #8a90a6); min-height: 34px; }
+.pw-feats { list-style: none; margin: 12px 0 16px; padding: 0; flex: 1; }
+.pw-feats li { font-size: 0.84rem; color: var(--text-secondary, #c9cdd8); padding: 4px 0 4px 20px; position: relative; }
+.pw-feats li::before { content: "✓"; position: absolute; left: 0; color: var(--green, #16c784); font-weight: 700; }
+.pw-cta { width: 100%; }
+.pw-plan-foot { text-align: center; font-size: 0.78rem; color: var(--text-muted, #8a90a6); padding: 8px 0; }
+.pw-note { margin: 16px 0 2px; font-size: 0.72rem; color: var(--text-muted, #8a90a6); }
+.pw-foot-actions { margin-top: 14px; }
+.btn-ghost { background: transparent; border: none; color: var(--text-muted, #8a90a6); text-decoration: underline; cursor: pointer; font-size: 0.82rem; }
+
+/* Standalone /pricing page */
+.pw-pricing { max-width: 980px; margin: 0 auto; }
+.pw-pricing-head { text-align: center; margin-bottom: 22px; }
+
+/* Billing toggle */
+.pw-toggle-wrap { display: flex; justify-content: center; margin: 18px 0 6px; }
+.pw-toggle {
+  display: inline-flex; border: 1px solid var(--border-dim, #1c2236); border-radius: 999px;
+  padding: 3px; background: var(--bg-inset, #11152a);
+}
+.pw-toggle-btn {
+  border: none; cursor: pointer; border-radius: 999px; padding: 7px 16px;
+  font-size: 0.82rem; font-weight: 600;
+  background: transparent; color: var(--text-muted, #8a90a6);
+  transition: 0.15s;
+}
+.pw-toggle-btn.active {
+  background: var(--accent, #6366f1); color: #fff;
+}
+.pw-save { font-size: 0.62rem; opacity: 0.8; }
