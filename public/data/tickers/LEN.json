@@ -1,24 +1,26 @@
 {
  "ticker": "LEN",
  "name": "Lennar Corporation",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 87.43,
- "change_pct": -0.25,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 84.04,
+ "change_pct": -3.12,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
   "below_ma",
+  "near_low",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 45.2,
-  "sma_20": 90.05,
-  "sma_50": 89.1
+  "rsi_14": 39.6,
+  "sma_20": 89.68,
+  "sma_50": 88.89
  },
  "fundamentals": {
-  "pe_ratio": 13.703761,
-  "market_cap": "21.1B",
+  "pe_ratio": 13.171631,
+  "market_cap": "20.2B",
   "beta": 1.394,
-  "dividend_yield": 0.022799999999999997
+  "dividend_yield": 0.0231
  },
  "council_analysis": {
   "score": 5

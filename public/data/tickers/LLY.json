@@ -1,9 +1,9 @@
 {
  "ticker": "LLY",
  "name": "Eli Lilly and Company",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 1237.76,
- "change_pct": 3.14,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 1231.32,
+ "change_pct": -0.34,
  "sector": "Healthcare",
  "signals": [
   "extended_rsi",
@@ -12,20 +12,39 @@
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 69.8,
-  "sma_20": 1156.08,
-  "sma_50": 1066.41
+  "rsi_14": 70.2,
+  "sma_20": 1160.08,
+  "sma_50": 1073.34
  },
  "fundamentals": {
-  "pe_ratio": 43.89205,
+  "pe_ratio": 43.710506,
   "market_cap": "1.10T",
   "beta": 0.506,
-  "dividend_yield": 0.0058
+  "dividend_yield": 0.005600000000000001
  },
  "council_analysis": {
   "score": 5
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "LLY",
+   "date": "2026-08-05",
+   "epsEstimate": 8.81,
+   "epsActual": null
+  },
+  {
+   "ticker": "LLY",
+   "date": "2026-04-30",
+   "epsEstimate": 6.79,
+   "epsActual": 8.55
+  },
+  {
+   "ticker": "LLY",
+   "date": "2026-02-04",
+   "epsEstimate": 6.91,
+   "epsActual": 7.54
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

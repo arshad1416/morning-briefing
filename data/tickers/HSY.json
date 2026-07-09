@@ -1,23 +1,25 @@
 {
  "ticker": "HSY",
  "name": "The Hershey Company",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 179.48,
- "change_pct": 1.11,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 174.57,
+ "change_pct": -0.79,
  "sector": "Consumer Defensive",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 48.5,
-  "sma_20": 178.31,
-  "sma_50": 184.2
+  "rsi_14": 42.8,
+  "sma_20": 178.07,
+  "sma_50": 183.82
  },
  "fundamentals": {
-  "pe_ratio": 33.359665,
-  "market_cap": "36.4B",
+  "pe_ratio": 32.50745,
+  "market_cap": "35.4B",
   "beta": 0.098,
-  "dividend_yield": 0.0327
+  "dividend_yield": 0.033
  },
  "council_analysis": {
   "score": 4

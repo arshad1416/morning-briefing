@@ -1,30 +1,80 @@
 {
  "ticker": "BAC",
  "name": "Bank of America Corporation",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 60.49,
- "change_pct": 0.99,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 58.9,
+ "change_pct": -1.6,
  "sector": "Financial Services",
  "signals": [
-  "overbought_rsi",
   "above_ma",
-  "near_high"
+  "near_high",
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 76.6,
-  "sma_20": 57.03,
-  "sma_50": 53.79
+  "rsi_14": 62.7,
+  "sma_20": 57.26,
+  "sma_50": 54.07
  },
  "fundamentals": {
-  "pe_ratio": 15.011166,
-  "market_cap": "429.3B",
+  "pe_ratio": 14.6153345,
+  "market_cap": "418.0B",
   "beta": 1.175,
   "dividend_yield": 0.0187
  },
  "council_analysis": {
-  "score": 5
+  "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "BAC",
+   "date": "2026-07-14",
+   "epsEstimate": 1.12,
+   "epsActual": null
+  },
+  {
+   "ticker": "BAC",
+   "date": "2026-04-15",
+   "epsEstimate": 1.02,
+   "epsActual": 1.11
+  },
+  {
+   "ticker": "BAC",
+   "date": "2026-01-14",
+   "epsEstimate": 0.95,
+   "epsActual": 0.98
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "BAC",
+   "date": "2026-05-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000249/0000070858-26-000249-index.htm"
+  },
+  {
+   "ticker": "BAC",
+   "date": "2026-02-25",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/0000070858-26-000157-index.htm"
+  },
+  {
+   "ticker": "BAC",
+   "date": "2025-10-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085825000405/0000070858-25-000405-index.htm"
+  },
+  {
+   "ticker": "BAC",
+   "date": "2025-07-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085825000268/0000070858-25-000268-index.htm"
+  },
+  {
+   "ticker": "BAC",
+   "date": "2025-04-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085825000200/0000070858-25-000200-index.htm"
+  }
+ ],
  "reddit_mentions": []
 }

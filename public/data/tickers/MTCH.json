@@ -1,31 +1,49 @@
 {
  "ticker": "MTCH",
  "name": "Match Group, Inc.",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 38.69,
- "change_pct": 2.71,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 37.97,
+ "change_pct": -3.09,
  "sector": "Communication Services",
  "signals": [
-  "extended_rsi",
   "above_ma",
   "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 65.4,
-  "sma_20": 36.16,
-  "sma_50": 36.21
+  "rsi_14": 58.1,
+  "sma_20": 36.2,
+  "sma_50": 36.06
  },
  "fundamentals": {
-  "pe_ratio": 14.767176,
-  "market_cap": "9.0B",
+  "pe_ratio": 14.492368,
+  "market_cap": "8.9B",
   "beta": 1.302,
-  "dividend_yield": 0.0212
+  "dividend_yield": 0.0204
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "MTCH",
+   "date": "2026-08-04",
+   "epsEstimate": 0.96,
+   "epsActual": null
+  },
+  {
+   "ticker": "MTCH",
+   "date": "2026-05-05",
+   "epsEstimate": 0.86,
+   "epsActual": 0.97
+  },
+  {
+   "ticker": "MTCH",
+   "date": "2026-02-03",
+   "epsEstimate": 1.02,
+   "epsActual": 1.06
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

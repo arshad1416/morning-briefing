@@ -1,31 +1,49 @@
 {
  "ticker": "RF",
  "name": "Regions Financial Corporation",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 30.73,
- "change_pct": 0.82,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 29.84,
+ "change_pct": -2.45,
  "sector": "Financial Services",
  "signals": [
-  "overbought_rsi",
   "above_ma",
   "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 76.2,
-  "sma_20": 29.46,
-  "sma_50": 28.41
+  "rsi_14": 59.8,
+  "sma_20": 29.51,
+  "sma_50": 28.45
  },
  "fundamentals": {
-  "pe_ratio": 12.751037,
-  "market_cap": "26.2B",
+  "pe_ratio": 12.3817425,
+  "market_cap": "25.5B",
   "beta": 1.012,
-  "dividend_yield": 0.0348
+  "dividend_yield": 0.0347
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "RF",
+   "date": "2026-07-17",
+   "epsEstimate": 0.63,
+   "epsActual": null
+  },
+  {
+   "ticker": "RF",
+   "date": "2026-04-17",
+   "epsEstimate": 0.59,
+   "epsActual": 0.62
+  },
+  {
+   "ticker": "RF",
+   "date": "2026-01-16",
+   "epsEstimate": 0.61,
+   "epsActual": 0.57
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

@@ -1,26 +1,28 @@
 {
  "ticker": "TAP",
  "name": "Molson Coors Beverage Company",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 40.63,
- "change_pct": 4.55,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 39.17,
+ "change_pct": -0.25,
  "sector": "Consumer Defensive",
  "signals": [
-  "above_ma"
+  "rsi_dip",
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 48.7,
-  "sma_20": 40.12,
-  "sma_50": 40.62
+  "rsi_14": 41.8,
+  "sma_20": 40.03,
+  "sma_50": 40.54
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "7.6B",
+  "market_cap": "7.3B",
   "beta": 0.419,
-  "dividend_yield": 0.049400000000000006
+  "dividend_yield": 0.0489
  },
  "council_analysis": {
-  "score": 6
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

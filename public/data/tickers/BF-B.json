@@ -1,21 +1,24 @@
 {
  "ticker": "BF-B",
  "name": "Brown Forman Inc",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 26.58,
- "change_pct": 3.22,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 25.8,
+ "change_pct": -0.42,
  "sector": "Consumer Defensive",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 47.7,
-  "sma_20": 26.76,
-  "sma_50": 26.26
+  "rsi_14": 44.2,
+  "sma_20": 26.71,
+  "sma_50": 26.2
  },
  "fundamentals": {
-  "pe_ratio": 17.37255,
-  "market_cap": "12.2B",
+  "pe_ratio": 16.753246,
+  "market_cap": "11.8B",
   "beta": 0.344,
-  "dividend_yield": 0.035699999999999996
+  "dividend_yield": 0.0355
  },
  "council_analysis": {
   "score": 5

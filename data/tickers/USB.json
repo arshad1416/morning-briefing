@@ -1,31 +1,49 @@
 {
  "ticker": "USB",
  "name": "U.S. Bancorp",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 63.33,
- "change_pct": 0.8,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 61.14,
+ "change_pct": -2.78,
  "sector": "Financial Services",
  "signals": [
-  "overbought_rsi",
   "above_ma",
   "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 80.9,
-  "sma_20": 59.13,
-  "sma_50": 56.28
+  "rsi_14": 63.8,
+  "sma_20": 59.42,
+  "sma_50": 56.39
  },
  "fundamentals": {
-  "pe_ratio": 13.27673,
-  "market_cap": "98.7B",
+  "pe_ratio": 12.81738,
+  "market_cap": "95.2B",
   "beta": 0.979,
   "dividend_yield": 0.0331
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "USB",
+   "date": "2026-07-16",
+   "epsEstimate": 1.28,
+   "epsActual": null
+  },
+  {
+   "ticker": "USB",
+   "date": "2026-04-16",
+   "epsEstimate": 1.14,
+   "epsActual": 1.18
+  },
+  {
+   "ticker": "USB",
+   "date": "2026-01-20",
+   "epsEstimate": 1.19,
+   "epsActual": 1.26
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

@@ -1,21 +1,24 @@
 {
  "ticker": "VST",
  "name": "Vistra Corp.",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 155.18,
- "change_pct": -1.29,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 153.35,
+ "change_pct": -1.53,
  "sector": "Utilities",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 51.9,
-  "sma_20": 156.01,
-  "sma_50": 154.24
+  "rsi_14": 44.5,
+  "sma_20": 156.37,
+  "sma_50": 154.04
  },
  "fundamentals": {
-  "pe_ratio": 25.994139,
-  "market_cap": "52.3B",
+  "pe_ratio": 25.903717,
+  "market_cap": "51.7B",
   "beta": 1.409,
-  "dividend_yield": 0.0058
+  "dividend_yield": 0.0059
  },
  "council_analysis": {
   "score": 5
