@@ -58,7 +58,7 @@ const Paywall = {
         else html += `<button class="btn ${t.popular ? 'btn-primary' : 'btn-secondary'} pw-cta" data-cta="${t.cta}">Choose ${t.name}</button>`;
       } else if (trialAvailable) {
         // Free tier, visitor not signed in → let them create a free account.
-        html += '<button class="btn btn-secondary pw-cta" data-cta="free">Sign Up for Free</button>';
+        html += '<button class="btn btn-primary pw-cta" data-cta="free">Sign Up for Free</button>';
       } else {
         html += '<div class="pw-plan-foot">Included</div>';
       }
