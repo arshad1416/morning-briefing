@@ -50,10 +50,19 @@ const Utils = {
     } catch { return '#'; }
   },
 
-  /** Safe JSON fetch with error handling */
+  // Premium files live behind the hard gate: fetch them from /api/data/* with
+  // credentials (subscriber-only). Must mirror the Worker's data_gate.js set.
+  _PRIVATE_RE: /\/data\/(charts\/|screener-data\.json|morning_analysis\.json|maplegamma_analysis\.json|web-news\.json|polymarket_sentiment\.json|earnings\.json|sec_filings\.json|journal\.json|walk_forward(_v2)?\.json|strategy_improvement(_b)?\.json|trade_outcomes(_b)?\.json|prediction-engine\.json|accuracy\.json|council_history\.json)/,
+
+  /** Safe JSON fetch with error handling. Premium files route through the gate. */
   async fetchJSON(url) {
+    let opts;
+    if (this._PRIVATE_RE.test(url)) {
+      url = url.replace('/data/', '/api/data/');
+      opts = { credentials: 'include' };
+    }
     try {
-      const res = await fetch(url);
+      const res = await fetch(url, opts);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return await res.json();
     } catch (err) {
