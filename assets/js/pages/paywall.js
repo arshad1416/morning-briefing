@@ -5,7 +5,6 @@
  * Attaches to window (plain-script global pattern).
  */
 const Paywall = {
-<<<<<<< Updated upstream
   _interval: 'monthly',
 
   // Subscription package cards, reused by the overlay and the /pricing page.
@@ -198,19 +197,6 @@ const Paywall = {
         }
       };
     });
-=======
-  html(needTier) {
-    const tier = needTier === 'pro' ? 'Pro' : 'Basic';
-    return `<div class="section"><div class="paywall">
-      <div class="paywall-lock">🔒</div>
-      <div class="paywall-title">A ${tier} feature</div>
-      <p>Start your 14-day free trial — no card required — or sign in to unlock this.</p>
-      <div class="auth-actions">
-        <a class="btn btn-primary" href="#/pricing">See plans</a>
-        <a class="btn btn-secondary" href="#/account">Sign in</a>
-      </div>
-    </div></div>`;
->>>>>>> Stashed changes
   },
 };
 window.Paywall = Paywall;

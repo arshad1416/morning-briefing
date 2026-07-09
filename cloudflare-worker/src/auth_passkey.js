@@ -7,26 +7,15 @@ import {
   getUserByEmail, addCredential, getCredentialsByUser, getCredentialById,
   bumpCredentialCounter, putChallenge, takeChallenge, logAuthEvent,
 } from './db.js';
-import { clientIp } from './util.js';
+import { clientIp, randomId } from './util.js';
 
-<<<<<<< Updated upstream
 const WA_COOKIE = 'mg_wa_key';
-
-const DEFAULT_ORIGINS = [
-  'https://maplegamma.com',
-  'https://maplegamma.ca',
-  'https://briefing.arshadkazi.ca',
-];
 
 function rpId(env) { return env.WEBAUTHN_RP_ID || 'localhost'; }
 function rpName(env) { return env.WEBAUTHN_RP_NAME || 'MapleGamma'; }
-function expectedOrigins(env) {
-  const raw = env.WEBAUTHN_ORIGINS;
-  return raw ? raw.split(',').map((s) => s.trim()).filter(Boolean) : DEFAULT_ORIGINS;
-=======
+
 function b64url(buf) {
   return btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
->>>>>>> Stashed changes
 }
 function unb64url(s) {
   s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '=';
@@ -34,11 +23,12 @@ function unb64url(s) {
 }
 
 export function mountPasskey(app) {
+  // ── Registration (signed-in users adding a passkey) ──
   app.post('/api/auth/passkey/register/options', requireSession(), async (c) => {
     const { user } = c.get('session');
     const existing = await getCredentialsByUser(c.env.DB, user.id);
     const options = await generateRegistrationOptions({
-      rpName: c.env.RP_NAME, rpID: c.env.RP_ID,
+      rpName: rpName(c.env), rpID: rpId(c.env),
       userID: new TextEncoder().encode(user.id), userName: user.email,
       attestationType: 'none',
       excludeCredentials: existing.map((cr) => ({ id: cr.credential_id })),
@@ -57,28 +47,26 @@ export function mountPasskey(app) {
     try {
       result = await verifyRegistrationResponse({
         response, expectedChallenge: ch.challenge,
-        expectedOrigin: c.env.APP_URL, expectedRPID: c.env.RP_ID,
+        expectedOrigin: c.env.APP_URL, expectedRPID: rpId(c.env),
       });
     } catch { return c.json({ error: 'verify_failed' }, 400); }
     if (!result.verified || !result.registrationInfo) return c.json({ error: 'not_verified' }, 400);
-    // @simplewebauthn/server v11.0.0: registrationInfo.credential = { id, publicKey (Uint8Array), counter, transports }
     const cred = result.registrationInfo.credential;
     await addCredential(c.env.DB, {
-      userId: user.id,
-      credentialId: cred.id,
-      publicKey: b64url(cred.publicKey),
-      counter: cred.counter || 0,
+      userId: user.id, credentialId: cred.id,
+      publicKey: b64url(cred.publicKey), counter: cred.counter || 0,
       transports: (cred.transports || []).join(','),
     });
     return c.json({ ok: true });
   });
 
+  // ── Login ──
   app.post('/api/auth/passkey/login/options', async (c) => {
     const { email } = await c.req.json();
     const user = email ? await getUserByEmail(c.env.DB, email) : null;
     const creds = user ? await getCredentialsByUser(c.env.DB, user.id) : [];
     const options = await generateAuthenticationOptions({
-      rpID: c.env.RP_ID,
+      rpID: rpId(c.env),
       allowCredentials: creds.map((cr) => ({ id: cr.credential_id, transports: (cr.transports || '').split(',').filter(Boolean) })),
       userVerification: 'preferred',
     });
@@ -96,8 +84,7 @@ export function mountPasskey(app) {
     try {
       result = await verifyAuthenticationResponse({
         response, expectedChallenge: ch.challenge,
-        expectedOrigin: c.env.APP_URL, expectedRPID: c.env.RP_ID,
-        // v11.0.0: `credential` param is a WebAuthnCredential { id, publicKey (Uint8Array), counter }
+        expectedOrigin: c.env.APP_URL, expectedRPID: rpId(c.env),
         credential: { id: cred.credential_id, publicKey: unb64url(cred.public_key), counter: cred.counter },
       });
     } catch { return c.json({ error: 'verify_failed' }, 400); }
