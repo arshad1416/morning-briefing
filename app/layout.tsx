@@ -5,8 +5,8 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "MapleGamma — Markets, decoded",
-  description: "Quant-grade market intelligence for retail investors.",
+  title: "MapleGamma — The only options intelligence platform built for Canadian markets",
+  description: "The only options intelligence platform built for Canadian markets. Quant-grade market intelligence for retail investors.",
 };
 
 const NAV = [

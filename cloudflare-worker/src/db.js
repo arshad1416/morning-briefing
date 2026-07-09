@@ -19,15 +19,17 @@ export async function setPassword(DB, userId, pwHash) {
 export async function getSubscription(DB, userId) {
   return DB.prepare('SELECT * FROM subscriptions WHERE user_id=?').bind(userId).first();
 }
-export async function upsertSubscription(DB, userId, { tier, status, trialEndsAt = null, periodEnd = null, helcimCustomerId = null, helcimPlanId = null }) {
+export async function upsertSubscription(DB, userId, { tier, status, trialEndsAt = null, periodEnd = null, helcimCustomerId = null, helcimPlanId = null, billingInterval = 'monthly', helcimSubscriptionId = null }) {
   await DB.prepare(
-    `INSERT INTO subscriptions (user_id,tier,status,trial_ends_at,current_period_end,helcim_customer_id,helcim_plan_id)
-     VALUES (?,?,?,?,?,?,?)
+    `INSERT INTO subscriptions (user_id,tier,status,trial_ends_at,current_period_end,helcim_customer_id,helcim_plan_id,billing_interval,helcim_subscription_id)
+     VALUES (?,?,?,?,?,?,?,?,?)
      ON CONFLICT(user_id) DO UPDATE SET tier=excluded.tier,status=excluded.status,
        trial_ends_at=excluded.trial_ends_at,current_period_end=excluded.current_period_end,
        helcim_customer_id=COALESCE(excluded.helcim_customer_id,subscriptions.helcim_customer_id),
-       helcim_plan_id=COALESCE(excluded.helcim_plan_id,subscriptions.helcim_plan_id)`
-  ).bind(userId, tier, status, trialEndsAt, periodEnd, helcimCustomerId, helcimPlanId).run();
+       helcim_plan_id=COALESCE(excluded.helcim_plan_id,subscriptions.helcim_plan_id),
+       billing_interval=excluded.billing_interval,
+       helcim_subscription_id=COALESCE(excluded.helcim_subscription_id,subscriptions.helcim_subscription_id)`
+  ).bind(userId, tier, status, trialEndsAt, periodEnd, helcimCustomerId, helcimPlanId, billingInterval, helcimSubscriptionId).run();
 }
 export async function insertConsent(DB, userId, { termsVersion, ackVersion, quebecAttested }) {
   await DB.prepare('INSERT INTO consents (user_id,terms_version,ack_version,quebec_attested,ts) VALUES (?,?,?,?,?)')
@@ -89,4 +91,17 @@ export async function takeWebauthnChallenge(DB, key, type) {
   await DB.prepare('DELETE FROM webauthn_challenges WHERE id=?').bind(key).run(); // single-use
   if (!row || row.expires_at < Date.now()) return null;
   return row.challenge;
+}
+
+// ── Billing sessions (HelcimPay.js checkout state) ──
+export async function storeBillingSession(DB, { id, userId, tier, interval, checkoutToken, secretToken }) {
+  await DB.prepare(
+    `INSERT INTO billing_sessions (id,user_id,tier,interval,checkout_token,secret_token,created_at)
+     VALUES (?,?,?,?,?,?,?)`
+  ).bind(id, userId, tier, interval, checkoutToken, secretToken, Date.now()).run();
+}
+export async function takeBillingSession(DB, id) {
+  const row = await DB.prepare('SELECT * FROM billing_sessions WHERE id=?').bind(id).first();
+  await DB.prepare('DELETE FROM billing_sessions WHERE id=?').bind(id).run(); // single-use
+  return row || null;
 }

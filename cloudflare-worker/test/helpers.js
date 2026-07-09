@@ -3,8 +3,12 @@ import { env } from 'cloudflare:test';
 // where node:fs readFileSync is not implemented, so we can't read from disk at
 // runtime — Vite's `?raw` import inlines the file contents at bundle time.
 import initSql from '../migrations/0001_init.sql?raw';
+import migrationSql from '../migrations/0002_billing_sessions.sql?raw';
 export async function migrate() {
   for (const stmt of initSql.split(';').map((s) => s.trim()).filter(Boolean)) {
+    await env.DB.prepare(stmt).run();
+  }
+  for (const stmt of migrationSql.split(';').map((s) => s.trim()).filter(Boolean)) {
     await env.DB.prepare(stmt).run();
   }
 }

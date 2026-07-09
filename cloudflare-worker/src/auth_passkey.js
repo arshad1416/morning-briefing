@@ -32,7 +32,6 @@ const WA_COOKIE = 'mg_wa_key';
 const DEFAULT_ORIGINS = [
   'https://maplegamma.com',
   'https://maplegamma.ca',
-  'https://maplegamma.arshadkazi.ca',
   'https://briefing.arshadkazi.ca',
 ];
 

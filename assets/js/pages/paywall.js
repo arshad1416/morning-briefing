@@ -28,19 +28,24 @@ const Gate = {
 window.Gate = Gate;
 
 const Paywall = {
+  _interval: 'monthly',
+
   // Subscription package cards, reused by the overlay and the /pricing page.
   // `signedIn`=false → offer the 7-day trial CTA; true (no entitlement) → checkout.
   packages(opts) {
     opts = opts || {};
     const trialAvailable = !opts.signedIn;
+    const i = Paywall._interval;
     const tiers = [
       { key: 'free', name: 'Free', price: '$0', unit: '',
-        blurb: 'The daily dashboard, always free.',
+        blurb: 'The daily overview, always free.',
         feats: ['Market regime &amp; indices', 'Headlines &amp; Reddit pulse', 'GEX/DEX snapshot'] },
-      { key: 'basic', name: 'Basic', price: '$19', unit: '/mo CAD',
+      { key: 'basic', name: 'Basic',
+        price: i === 'annual' ? '$490' : '$49', unit: i === 'annual' ? '/yr USD' : '/mo USD',
         blurb: 'Everything in Free, plus the full research desk.',
         feats: ['Full Screener — all tickers, scored', 'Research: analysis, news, earnings, SEC', 'Reddit + prediction-market sentiment'], cta: 'basic' },
-      { key: 'pro', name: 'Pro', price: '$39', unit: '/mo CAD', popular: true,
+      { key: 'pro', name: 'Pro', popular: true,
+        price: i === 'annual' ? '$990' : '$99', unit: i === 'annual' ? '/yr USD' : '/mo USD',
         blurb: 'Everything in Basic, plus charts, models &amp; the AI council.',
         feats: ['Interactive charts — candles, RSI, ATR', 'Model accuracy &amp; walk-forward backtests', 'Prediction engine + council history'], cta: 'pro' },
     ];
@@ -65,6 +70,11 @@ const Paywall = {
       html += '</div>';
     });
     html += '</div>';
+    // Billing period toggle (paid plans only)
+    html += '<div class="pw-toggle-wrap"><div class="pw-toggle" role="tablist" aria-label="Billing period">';
+    html += '<button class="pw-toggle-btn' + (Paywall._interval === 'monthly' ? ' active' : '') + '" data-interval="monthly">Monthly</button>';
+    html += '<button class="pw-toggle-btn' + (Paywall._interval === 'annual' ? ' active' : '') + '" data-interval="annual">Annual <span class="pw-save">Save 16%</span></button>';
+    html += '</div></div>';
     if (trialAvailable) html += '<div class="pw-note">7-day free trial — no card required. Cancel anytime. General information only, not investment advice.</div>';
     return html;
   },
@@ -99,21 +109,117 @@ const Paywall = {
     Paywall.wire(app);
   },
 
+  // Load the HelcimPay.js script on demand
+  _helcimPromise: null,
+  _loadHelcim() {
+    if (!this._helcimPromise) {
+      this._helcimPromise = new Promise((resolve, reject) => {
+        if (window.appendHelcimPayIframe) return resolve();
+        const s = document.createElement('script');
+        s.src = 'https://secure.helcim.app/helcim-pay/services/start.js';
+        s.async = true;
+        s.onload = () => resolve();
+        s.onerror = () => { this._helcimPromise = null; reject(new Error('Helcim failed to load')); };
+        document.head.appendChild(s);
+      });
+    }
+    return this._helcimPromise;
+  },
+
   wire(app) {
     app.querySelectorAll('.pw-cta').forEach((btn) => {
       btn.onclick = async () => {
         const cta = btn.dataset.cta;
+        // Trial and free account flows: redirect to signup
         if (cta === 'trial' || cta === 'free') { window.location.hash = '#/account'; return; }
+
+        // Paid tier: create HelcimPay checkout session
+        btn.disabled = true;
+        btn.textContent = 'Loading…';
+
         const res = await fetch('/api/billing/checkout', {
           method: 'POST', credentials: 'include',
-          headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tier: cta }),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tier: cta, interval: Paywall._interval }),
         });
-        if (res.ok) { Auth._me = undefined; window.location.reload(); }
-        else window.location.hash = '#/account';
+
+        if (!res.ok) { window.location.hash = '#/account'; return; }
+        const j = await res.json();
+
+        // Mock billing → reload to show activated sub
+        if (j.mock) { Auth._me = undefined; window.location.reload(); return; }
+        if (!j.checkoutToken) { window.location.hash = '#/account'; return; }
+
+        // Load HelcimPay.js and show the iframe
+        try {
+          await Paywall._loadHelcim();
+        } catch {
+          btn.disabled = false;
+          btn.textContent = 'Payment unavailable';
+          return;
+        }
+
+        const sessionId = j.sessionId;
+        const identifier = 'helcim-pay-js-' + j.checkoutToken;
+
+        const onMessage = (event) => {
+          if (event.data?.eventName !== identifier) return;
+
+          if (event.data.eventStatus === 'ABORTED') {
+            window.removeEventListener('message', onMessage);
+            window.removeHelcimPayIframe?.();
+            btn.disabled = false;
+            btn.textContent = 'Payment cancelled — try again';
+            return;
+          }
+
+          if (event.data.eventStatus === 'SUCCESS') {
+            window.removeEventListener('message', onMessage);
+            let payload = event.data.eventMessage;
+            if (typeof payload === 'string') { try { payload = JSON.parse(payload); } catch {} }
+
+            fetch('/api/billing/activate', {
+              method: 'POST', credentials: 'include',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ data: payload.data, hash: payload.hash, sessionId }),
+            }).then((actRes) => {
+              window.removeHelcimPayIframe?.();
+              if (actRes.ok) { Auth._me = undefined; window.location.reload(); }
+              else { btn.disabled = false; btn.textContent = 'Activation failed — contact support'; }
+            }).catch(() => {
+              window.removeHelcimPayIframe?.();
+              btn.disabled = false;
+              btn.textContent = 'Activation failed — try again';
+            });
+          }
+        };
+
+        window.addEventListener('message', onMessage);
+        window.appendHelcimPayIframe?.(j.checkoutToken);
       };
     });
     const lo = app.querySelector('#pw-logout');
     if (lo) lo.onclick = (e) => { e.preventDefault(); Auth.logout(); };
+    // Billing interval toggle
+    app.querySelectorAll('.pw-toggle-btn').forEach((tb) => {
+      tb.onclick = () => {
+        const i = tb.dataset.interval;
+        if (i === Paywall._interval) return;
+        Paywall._interval = i;
+        // Re-render packages in place — find the parent pw-card or pw-locked
+        const card = tb.closest('.pw-card') || tb.closest('.pw-locked');
+        if (card) {
+          const wrap = card.querySelector('.pw-plans');
+          if (wrap) {
+            const signedIn = !card.querySelector('[data-cta="trial"]');
+            // Re-render plans + toggle; keep the rest of the card intact
+            const toggleWrap = wrap.nextElementSibling?.classList.contains('pw-toggle-wrap') ? wrap.nextElementSibling : null;
+            wrap.outerHTML = Paywall.packages({ signedIn, active: undefined });
+            Paywall.wire(card);
+          }
+        }
+      };
+    });
   },
 };
 window.Paywall = Paywall;

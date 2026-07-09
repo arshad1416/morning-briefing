@@ -6,7 +6,7 @@
 
 /*
   Cache-Control: public, max-age=0, must-revalidate
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://morning-briefing-chat.rcobwq7u.workers.dev; style-src 'self' 'unsafe-inline'; img-src 'self' data:
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://secure.helcim.app; connect-src 'self' https://morning-briefing-chat.rcobwq7u.workers.dev; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-src https://secure.helcim.app
 
 /assets/js/*
   Cache-Control: public, no-cache, must-revalidate
