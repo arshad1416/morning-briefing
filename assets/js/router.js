@@ -40,15 +40,20 @@ const Router = {
     // Try exact match first
     if (this.routes[hash]) {
       const entry = this.routes[hash];
-      // Run the route guard (if any) before rendering. A false result means
-      // the guard already redirected — abort so we don't render the page.
+      // Run the route guard (if any) before rendering.
+      // If the guard returns { ok: false }, we still render the page (to
+      // get the blurred background content), then overlay the paywall.
+      let guardResult = { ok: true };
       if (entry.guard) {
-        const ok = await entry.guard();
-        if (!ok) return;
+        const r = await entry.guard();
+        guardResult = r || { ok: false };
       }
+      const paywallNeeded = guardResult && guardResult.ok === false && guardResult.needTier;
       try {
         Promise.resolve(entry.handler(app)).then(function () {
-          // Fade-in the page content after route renders
+          if (paywallNeeded) {
+            Paywall.lock(app, guardResult.needTier, guardResult.me);
+          }
           requestAnimationFrame(function () {
             app.classList.add('page-enter');
           });
@@ -83,12 +88,17 @@ const Router = {
           }
         }
         if (match) {
+          let guardResult = { ok: true };
           if (entry.guard) {
-            const ok = await entry.guard();
-            if (!ok) return;
+            const r = await entry.guard();
+            guardResult = r || { ok: false };
           }
+          const paywallNeeded = guardResult && guardResult.ok === false && guardResult.needTier;
           try {
             Promise.resolve(entry.handler(app, params)).then(function () {
+              if (paywallNeeded) {
+                Paywall.lock(app, guardResult.needTier, guardResult.me);
+              }
               requestAnimationFrame(function () {
                 app.classList.add('page-enter');
               });

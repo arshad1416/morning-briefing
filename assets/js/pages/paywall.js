@@ -1,11 +1,7 @@
 /**
- * Paywall — blur-and-overlay gate for premium routes.
- *
- * Gate.route(render, tier) renders the real page, then (for non-subscribers)
- * blurs it and lays the subscription packages over top. The data itself is
- * already off-limits server-side (the hard data gate), so this is the UX
- * enforcement layer — no need to hide the DOM we just rendered.
- *
+ * Paywall — inline "upgrade to view" upsell markup. The route guards fall back
+ * to a full-page redirect (#/pricing); this module renders an inline upsell used
+ * by teased sections later. Minimal for Phase 1.
  * Attaches to window (plain-script global pattern).
  */
 const Paywall = {
@@ -97,6 +93,26 @@ const Paywall = {
     });
     const lo = app.querySelector('#pw-logout');
     if (lo) lo.onclick = (e) => { e.preventDefault(); Auth.logout(); };
+    // Billing interval toggle
+    app.querySelectorAll('.pw-toggle-btn').forEach((tb) => {
+      tb.onclick = () => {
+        const i = tb.dataset.interval;
+        if (i === Paywall._interval) return;
+        Paywall._interval = i;
+        // Re-render packages in place — find the parent pw-card or pw-locked
+        const card = tb.closest('.pw-card') || tb.closest('.pw-locked');
+        if (card) {
+          const wrap = card.querySelector('.pw-plans');
+          if (wrap) {
+            const signedIn = !card.querySelector('[data-cta="trial"]');
+            // Re-render plans + toggle; keep the rest of the card intact
+            const toggleWrap = wrap.nextElementSibling?.classList.contains('pw-toggle-wrap') ? wrap.nextElementSibling : null;
+            wrap.outerHTML = Paywall.packages({ signedIn, active: undefined });
+            Paywall.wire(card);
+          }
+        }
+      };
+    });
   },
 };
 window.Paywall = Paywall;
