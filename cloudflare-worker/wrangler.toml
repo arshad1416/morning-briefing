@@ -9,6 +9,12 @@ binding = "DB"
 database_name = "maplegamma"
 database_id = "6585930e-61a6-4679-a492-73b1ea643e88"
 
+# Private premium data — served only via /api/data/:file after an entitlement
+# check. The Pi uploads these; they are NOT on Pages.
+[[r2_buckets]]
+binding = "PRIVATE"
+bucket_name = "maplegamma-private"
+
 # Route auth/api on the canonical domain to this Worker (Pages serves everything
 # else). chat/feedback still work via the workers.dev URL + CORS allow-list.
 [[routes]]
