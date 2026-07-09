@@ -76,17 +76,6 @@ export async function takeChallenge(DB, id) {
   if (!row || row.expires_at < Date.now()) return null;
   return row;
 }
-<<<<<<< Updated upstream
-// Cookie-keyed, single-use challenge store (CompCeiling passkey technique): the
-// row id IS the value in the mg_wa_key cookie, so the client never echoes a
-// challengeId back. Returns the challenge string (not the row) or null.
-export async function storeWebauthnChallenge(DB, key, challenge, type, userId = null, ttlMs = 600000) {
-  await DB.prepare(
-    `INSERT INTO webauthn_challenges (id,user_id,challenge,type,expires_at) VALUES (?,?,?,?,?)
-     ON CONFLICT(id) DO UPDATE SET user_id=excluded.user_id, challenge=excluded.challenge,
-       type=excluded.type, expires_at=excluded.expires_at`,
-  ).bind(key, userId, challenge, type, Date.now() + ttlMs).run();
-}
 export async function takeWebauthnChallenge(DB, key, type) {
   const row = await DB.prepare('SELECT * FROM webauthn_challenges WHERE id=? AND type=?').bind(key, type).first();
   await DB.prepare('DELETE FROM webauthn_challenges WHERE id=?').bind(key).run(); // single-use
@@ -106,5 +95,3 @@ export async function takeBillingSession(DB, id) {
   await DB.prepare('DELETE FROM billing_sessions WHERE id=?').bind(id).run(); // single-use
   return row || null;
 }
-=======
->>>>>>> Stashed changes
