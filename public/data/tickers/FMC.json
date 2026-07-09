@@ -1,24 +1,28 @@
 {
  "ticker": "FMC",
  "name": "FMC Corporation",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 11.58,
- "change_pct": 1.76,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 11.08,
+ "change_pct": -4.4,
  "sector": "Basic Materials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma",
+  "near_low"
+ ],
  "technical": {
-  "rsi_14": 52.1,
+  "rsi_14": 44.5,
   "sma_20": 11.34,
-  "sma_50": 12.68
+  "sma_50": 12.6
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "1.5B",
+  "market_cap": "1.4B",
   "beta": 0.387,
-  "dividend_yield": 0.0281
+  "dividend_yield": 0.0276
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

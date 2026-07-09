@@ -1,28 +1,29 @@
 {
  "ticker": "L",
  "name": "Loews Corporation",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 118.44,
- "change_pct": 1.84,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 115.88,
+ "change_pct": -0.92,
  "sector": "Financial Services",
  "signals": [
-  "overbought_rsi",
+  "extended_rsi",
   "above_ma",
-  "near_high"
+  "near_high",
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 81.1,
-  "sma_20": 110.77,
-  "sma_50": 108.51
+  "rsi_14": 73.2,
+  "sma_20": 111.19,
+  "sma_50": 108.58
  },
  "fundamentals": {
-  "pe_ratio": 15.068703,
-  "market_cap": "24.4B",
+  "pe_ratio": 14.742366,
+  "market_cap": "23.8B",
   "beta": 0.518,
   "dividend_yield": 0.0021
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

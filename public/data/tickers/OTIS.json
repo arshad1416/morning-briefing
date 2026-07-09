@@ -1,26 +1,28 @@
 {
  "ticker": "OTIS",
  "name": "Otis Worldwide Corporation",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 73.35,
- "change_pct": -0.19,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 72.09,
+ "change_pct": -1.82,
  "sector": "Industrials",
  "signals": [
-  "above_ma"
+  "rsi_dip",
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 56.2,
-  "sma_20": 72.08,
-  "sma_50": 72.78
+  "rsi_14": 44.1,
+  "sma_20": 72.21,
+  "sma_50": 72.67
  },
  "fundamentals": {
-  "pe_ratio": 19.507978,
-  "market_cap": "28.1B",
+  "pe_ratio": 19.17287,
+  "market_cap": "27.7B",
   "beta": 0.891,
-  "dividend_yield": 0.0231
+  "dividend_yield": 0.0232
  },
  "council_analysis": {
-  "score": 6
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

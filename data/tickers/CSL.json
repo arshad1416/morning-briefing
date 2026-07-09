@@ -1,21 +1,24 @@
 {
  "ticker": "CSL",
  "name": "Carlisle Companies Incorporated",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 353.31,
- "change_pct": -3.77,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 336.86,
+ "change_pct": -4.81,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 49.9,
-  "sma_20": 358.51,
-  "sma_50": 351.21
+  "rsi_14": 43.0,
+  "sma_20": 358.47,
+  "sma_50": 350.78
  },
  "fundamentals": {
-  "pe_ratio": 20.601166,
-  "market_cap": "14.3B",
+  "pe_ratio": 19.664915,
+  "market_cap": "13.6B",
   "beta": 0.848,
-  "dividend_yield": 0.012
+  "dividend_yield": 0.0124
  },
  "council_analysis": {
   "score": 5

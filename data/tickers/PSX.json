@@ -1,23 +1,25 @@
 {
  "ticker": "PSX",
  "name": "Phillips 66",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 179.44,
- "change_pct": 1.19,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 186.41,
+ "change_pct": 4.23,
  "sector": "Energy",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 59.1,
-  "sma_20": 174.09,
-  "sma_50": 174.65
+  "rsi_14": 68.1,
+  "sma_20": 174.21,
+  "sma_50": 175.13
  },
  "fundamentals": {
-  "pe_ratio": 17.713722,
-  "market_cap": "71.9B",
+  "pe_ratio": 18.419962,
+  "market_cap": "74.7B",
   "beta": 0.681,
-  "dividend_yield": 0.0286
+  "dividend_yield": 0.028399999999999998
  },
  "council_analysis": {
   "score": 6

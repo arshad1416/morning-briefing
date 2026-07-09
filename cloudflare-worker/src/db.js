@@ -76,6 +76,7 @@ export async function takeChallenge(DB, id) {
   if (!row || row.expires_at < Date.now()) return null;
   return row;
 }
+<<<<<<< Updated upstream
 // Cookie-keyed, single-use challenge store (CompCeiling passkey technique): the
 // row id IS the value in the mg_wa_key cookie, so the client never echoes a
 // challengeId back. Returns the challenge string (not the row) or null.
@@ -105,3 +106,5 @@ export async function takeBillingSession(DB, id) {
   await DB.prepare('DELETE FROM billing_sessions WHERE id=?').bind(id).run(); // single-use
   return row || null;
 }
+=======
+>>>>>>> Stashed changes

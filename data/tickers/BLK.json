@@ -1,21 +1,22 @@
 {
  "ticker": "BLK",
  "name": "BlackRock, Inc.",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 1009.76,
- "change_pct": -0.14,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 989.83,
+ "change_pct": -1.94,
  "sector": "Financial Services",
  "signals": [
-  "rsi_dip"
+  "oversold_rsi",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 41.2,
-  "sma_20": 1008.18,
-  "sma_50": 1033.83
+  "rsi_14": 34.2,
+  "sma_20": 1007.92,
+  "sma_50": 1036.16
  },
  "fundamentals": {
-  "pe_ratio": 25.409159,
-  "market_cap": "164.2B",
+  "pe_ratio": 24.90765,
+  "market_cap": "160.9B",
   "beta": 1.443,
   "dividend_yield": 0.0227
  },

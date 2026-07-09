@@ -1,27 +1,28 @@
 {
  "ticker": "AVY",
  "name": "Avery Dennison Corporation",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 167.79,
- "change_pct": 1.05,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 158.75,
+ "change_pct": -3.41,
  "sector": "Consumer Cyclical",
  "signals": [
-  "extended_rsi",
-  "above_ma"
+  "rsi_dip",
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 65.6,
-  "sma_20": 161.24,
-  "sma_50": 160.63
+  "rsi_14": 44.5,
+  "sma_20": 161.36,
+  "sma_50": 160.43
  },
  "fundamentals": {
-  "pe_ratio": 18.89527,
-  "market_cap": "12.8B",
+  "pe_ratio": 17.897408,
+  "market_cap": "12.1B",
   "beta": 0.826,
-  "dividend_yield": 0.0241
+  "dividend_yield": 0.024300000000000002
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

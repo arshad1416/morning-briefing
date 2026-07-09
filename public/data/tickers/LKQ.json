@@ -1,23 +1,25 @@
 {
  "ticker": "LKQ",
  "name": "LKQ Corporation",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 26.11,
- "change_pct": 0.48,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 25.42,
+ "change_pct": -3.01,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 49.8,
-  "sma_20": 25.98,
-  "sma_50": 26.77
+  "rsi_14": 44.4,
+  "sma_20": 26.01,
+  "sma_50": 26.66
  },
  "fundamentals": {
-  "pe_ratio": 13.0575,
-  "market_cap": "6.7B",
+  "pe_ratio": 12.7125,
+  "market_cap": "6.5B",
   "beta": 0.824,
-  "dividend_yield": 0.0461
+  "dividend_yield": 0.0458
  },
  "council_analysis": {
   "score": 6

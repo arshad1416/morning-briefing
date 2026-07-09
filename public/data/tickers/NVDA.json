@@ -1,27 +1,28 @@
 {
  "ticker": "NVDA",
  "name": "NVIDIA Corporation",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 191.95,
- "change_pct": -1.84,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 197.09,
+ "change_pct": 0.08,
  "sector": "Technology",
  "signals": [
-  "oversold_rsi",
-  "below_ma"
+  "rsi_dip",
+  "below_ma",
+  "premium_pe"
  ],
  "technical": {
-  "rsi_14": 29.1,
-  "sma_20": 201.67,
-  "sma_50": 209.5
+  "rsi_14": 37.7,
+  "sma_20": 201.34,
+  "sma_50": 209.38
  },
  "fundamentals": {
-  "pe_ratio": 29.394335,
-  "market_cap": "4.65T",
+  "pe_ratio": 30.116209,
+  "market_cap": "4.77T",
   "beta": 2.211,
   "dividend_yield": 0.0051
  },
  "council_analysis": {
-  "score": 6
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
