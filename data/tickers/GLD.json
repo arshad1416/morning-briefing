@@ -1,18 +1,18 @@
 {
  "ticker": "GLD",
  "name": "SPDR Gold Shares",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 380.55,
- "change_pct": -0.41,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 371.95,
+ "change_pct": -1.47,
  "sector": null,
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma"
  ],
  "technical": {
-  "rsi_14": 36.9,
-  "sma_20": 381.23,
-  "sma_50": 404.3
+  "rsi_14": 31.3,
+  "sma_20": 379.82,
+  "sma_50": 403.01
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -21,7 +21,7 @@
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,49 +1,29 @@
 {
  "ticker": "ALLY",
  "name": "Ally Financial Inc.",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 46.09,
- "change_pct": -0.3,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 44.08,
+ "change_pct": -2.92,
  "sector": "Financial Services",
  "signals": [
-  "above_ma",
-  "near_high",
+  "rsi_dip",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 55.4,
-  "sma_20": 45.22,
-  "sma_50": 43.8
+  "rsi_14": 39.9,
+  "sma_20": 45.27,
+  "sma_50": 43.79
  },
  "fundamentals": {
-  "pe_ratio": 11.186893,
-  "market_cap": "14.1B",
+  "pe_ratio": 10.697816,
+  "market_cap": "13.5B",
   "beta": 1.078,
-  "dividend_yield": 0.026000000000000002
+  "dividend_yield": 0.0264
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
- "upcoming_earnings": [
-  {
-   "ticker": "ALLY",
-   "date": "2026-07-21",
-   "epsEstimate": 1.24,
-   "epsActual": null
-  },
-  {
-   "ticker": "ALLY",
-   "date": "2026-04-17",
-   "epsEstimate": 0.94,
-   "epsActual": 1.11
-  },
-  {
-   "ticker": "ALLY",
-   "date": "2026-01-21",
-   "epsEstimate": 1.02,
-   "epsActual": 1.09
-  }
- ],
+ "upcoming_earnings": [],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

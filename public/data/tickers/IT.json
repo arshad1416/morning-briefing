@@ -1,21 +1,23 @@
 {
  "ticker": "IT",
  "name": "Gartner, Inc.",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 139.98,
- "change_pct": 3.6,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 136.3,
+ "change_pct": -3.19,
  "sector": "Technology",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 47.3,
-  "sma_20": 138.51,
-  "sma_50": 148.76
+  "rsi_14": 44.8,
+  "sma_20": 137.35,
+  "sma_50": 148.49
  },
  "fundamentals": {
-  "pe_ratio": 13.832016,
-  "market_cap": "9.4B",
+  "pe_ratio": 13.468873,
+  "market_cap": "9.1B",
   "beta": 0.963,
   "dividend_yield": null
  },

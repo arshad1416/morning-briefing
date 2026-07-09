@@ -1,26 +1,28 @@
 {
  "ticker": "TLT",
  "name": "iShares 20+ Year Treasury Bond ",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 84.95,
- "change_pct": -0.58,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 84.16,
+ "change_pct": -0.46,
  "sector": null,
  "signals": [
-  "below_ma"
+  "oversold_rsi",
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 45.7,
-  "sma_20": 85.8,
-  "sma_50": 85.23
+  "rsi_14": 34.7,
+  "sma_20": 85.77,
+  "sma_50": 85.19
  },
  "fundamentals": {
   "pe_ratio": null,
   "market_cap": null,
   "beta": null,
-  "dividend_yield": 0.0455
+  "dividend_yield": 0.0453
  },
  "council_analysis": {
-  "score": 4
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

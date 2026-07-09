@@ -1,21 +1,23 @@
 {
  "ticker": "CVNA",
  "name": "Carvana Co.",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 68.94,
- "change_pct": -2.05,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 65.75,
+ "change_pct": -2.57,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 50.1,
-  "sma_20": 66.99,
-  "sma_50": 70.25
+  "rsi_14": 43.7,
+  "sma_20": 66.74,
+  "sma_50": 69.9
  },
  "fundamentals": {
-  "pe_ratio": 40.081394,
-  "market_cap": "75.6B",
+  "pe_ratio": 38.008667,
+  "market_cap": "72.1B",
   "beta": 3.462,
   "dividend_yield": null
  },

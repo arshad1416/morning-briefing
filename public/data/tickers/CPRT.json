@@ -1,21 +1,23 @@
 {
  "ticker": "CPRT",
  "name": "Copart, Inc.",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 29.41,
- "change_pct": 0.58,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 28.88,
+ "change_pct": -1.33,
  "sector": "Industrials",
  "signals": [
-  "below_ma"
+  "rsi_dip",
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 45.6,
-  "sma_20": 30.0,
-  "sma_50": 31.73
+  "rsi_14": 40.7,
+  "sma_20": 29.89,
+  "sma_50": 31.65
  },
  "fundamentals": {
-  "pe_ratio": 18.26708,
-  "market_cap": "28.3B",
+  "pe_ratio": 17.937887,
+  "market_cap": "27.8B",
   "beta": 1.023,
   "dividend_yield": null
  },
