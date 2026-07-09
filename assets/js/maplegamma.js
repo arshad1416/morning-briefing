@@ -123,8 +123,8 @@ const MapleGamma = {
         <div class="mg-pricing" id="mg-pricing">
           <div class="mg-pricing-card most-popular">
             <div class="plan-name">MapleGamma Pro</div>
-            <div class="price">$150 <span style="font-size:1rem;color:var(--text-muted)">CAD/month</span></div>
-            <div class="price-note">Includes portfolio tracker + ticker watchlist</div>
+            <div class="price">$99 <span style="font-size:1rem;color:var(--text-muted)">USD/month</span></div>
+            <div class="price-note">$990/year (2 months free). Includes portfolio tracker + ticker watchlist</div>
             <ul class="features">
               <li>Real-time GEX/DEX/VEX for SPX</li>
               <li>Gamma profile charts with floor/ceiling zones</li>
@@ -203,7 +203,7 @@ const MapleGamma = {
                 <tr><td>Beginner Mode</td><td class="mg-check">✓ Zones-first layout</td><td class="mg-cross">✗</td><td class="mg-cross">✗</td></tr>
                 <tr><td>AI Narrative</td><td class="mg-check">✓</td><td class="mg-cross">✗</td><td>Mr. Whale</td></tr>
                 <tr><td>Unusual Options Flow</td><td class="mg-check">✓</td><td class="mg-cross">✗</td><td>✓</td></tr>
-                <tr><td>Price</td><td class="mg-check">$150 CAD/mo — Pro</td><td>$50/mo basic</td><td>$63–$170/mo</td></tr>
+                <tr><td>Price</td><td class="mg-check">$99 USD/mo — Pro</td><td>$49/mo basic</td><td>$63–$170/mo</td></tr>
               </tbody>
             </table>
           </div>

@@ -13,7 +13,7 @@ const Portfolio = {
       html += '<div class="card" style="text-align:center;padding:40px">';
       html += '<div style="font-size:2rem;margin-bottom:12px">📊</div>';
       html += '<h3 style="margin-bottom:8px">Portfolio Tracker</h3>';
-      html += '<p style="color:var(--text-muted);margin-bottom:16px">Track your holdings with live prices. Included in Pro ($150 CAD/mo).<br>Upgrade for AI-powered rebalancing and P&L tracking.</p>';
+      html += '<p style="color:var(--text-muted);margin-bottom:16px">Track your holdings with live prices. Included in Pro ($99 USD/mo).<br>Upgrade for AI-powered rebalancing and P&L tracking.</p>';
       html += '<a href="#/maplegamma" class="mg-btn mg-btn-primary" style="display:inline-block;padding:10px 24px;text-decoration:none">View Pro →</a>';
       html += '</div>';
       app.innerHTML = html;
@@ -111,7 +111,7 @@ const Portfolio = {
   _renderRebalance(portfolio) {
     var hasRebalance = localStorage.getItem('mg-addon-rebalance') === 'true';
     if (!hasRebalance) {
-      return '<div class="card" style="text-align:center;padding:40px"><div style="font-size:2rem;margin-bottom:12px">🤖</div><h3 style="margin-bottom:8px">AI Portfolio Rebalancing</h3><p style="color:var(--text-muted);margin-bottom:16px">Add the AI Rebalance add-on for $50 CAD/mo. Our AI will analyze your holdings and suggest optimal allocations.</p><a href="#/maplegamma" class="mg-btn mg-btn-primary" style="display:inline-block;padding:10px 24px;text-decoration:none">Upgrade →</a></div>';
+      return '<div class="card" style="text-align:center;padding:40px"><div style="font-size:2rem;margin-bottom:12px">🤖</div><h3 style="margin-bottom:8px">AI Portfolio Rebalancing</h3><p style="color:var(--text-muted);margin-bottom:16px">Add the AI Rebalance add-on for $49 USD/mo. Our AI will analyze your holdings and suggest optimal allocations.</p><a href="#/maplegamma" class="mg-btn mg-btn-primary" style="display:inline-block;padding:10px 24px;text-decoration:none">Upgrade →</a></div>';
     }
     if (!portfolio.holdings.length) {
       return '<div class="card" style="text-align:center;padding:40px;color:var(--text-muted)"><p>Add holdings first on the Holdings tab.</p></div>';
@@ -122,7 +122,7 @@ const Portfolio = {
   _renderApiKeys(portfolio) {
     var hasApi = localStorage.getItem('mg-addon-api') === 'true';
     if (!hasApi) {
-      return '<div class="card" style="text-align:center;padding:40px"><div style="font-size:2rem;margin-bottom:12px">🔑</div><h3 style="margin-bottom:8px">API Access</h3><p style="color:var(--text-muted);margin-bottom:16px">Add the API Access add-on for $100 CAD/mo. Generate API keys to pull GEX/DEX/VEX and market data programmatically.</p><a href="#/maplegamma" class="mg-btn mg-btn-primary" style="display:inline-block;padding:10px 24px;text-decoration:none">Upgrade →</a></div>';
+      return '<div class="card" style="text-align:center;padding:40px"><div style="font-size:2rem;margin-bottom:12px">🔑</div><h3 style="margin-bottom:8px">API Access</h3><p style="color:var(--text-muted);margin-bottom:16px">Add the API Access add-on for $99 USD/mo. Generate API keys to pull GEX/DEX/VEX and market data programmatically.</p><a href="#/maplegamma" class="mg-btn mg-btn-primary" style="display:inline-block;padding:10px 24px;text-decoration:none">Upgrade →</a></div>';
     }
     var keys = portfolio.apikeys || [];
     var html = '<div class="card" style="margin-bottom:12px">';
