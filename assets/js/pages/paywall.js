@@ -56,8 +56,11 @@ const Paywall = {
         if (opts.active === t.key) html += '<div class="pw-plan-foot">Your plan</div>';
         else if (trialAvailable) html += '<button class="btn btn-primary pw-cta" data-cta="trial">Start 7-day free trial</button>';
         else html += `<button class="btn ${t.popular ? 'btn-primary' : 'btn-secondary'} pw-cta" data-cta="${t.cta}">Choose ${t.name}</button>`;
+      } else if (trialAvailable) {
+        // Free tier, visitor not signed in → let them create a free account.
+        html += '<button class="btn btn-secondary pw-cta" data-cta="free">Sign Up for Free</button>';
       } else {
-        html += '<div class="pw-plan-foot">Always free</div>';
+        html += '<div class="pw-plan-foot">Included</div>';
       }
       html += '</div>';
     });
@@ -100,7 +103,7 @@ const Paywall = {
     app.querySelectorAll('.pw-cta').forEach((btn) => {
       btn.onclick = async () => {
         const cta = btn.dataset.cta;
-        if (cta === 'trial') { window.location.hash = '#/account'; return; }
+        if (cta === 'trial' || cta === 'free') { window.location.hash = '#/account'; return; }
         const res = await fetch('/api/billing/checkout', {
           method: 'POST', credentials: 'include',
           headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tier: cta }),
