@@ -42,16 +42,16 @@ const Router = {
       const entry = this.routes[hash];
       // Run the route guard (if any) before rendering.
       // Two failure modes:
-      //   • needTier = null  → not authenticated; guard already redirected to
-      //     #/account. Skip rendering entirely (no paywall overlay).
-      //   • needTier = 'basic'|'pro' → authenticated but tier insufficient.
+      //   • needTier = null  → guard returned a hard stop (not used currently).
+      //     Skip rendering entirely.
+      //   • needTier = 'basic'|'pro' → not authenticated OR tier insufficient.
       //     Render the page (blurred background), then overlay the paywall.
       let guardResult = { ok: true };
       if (entry.guard) {
         const r = await entry.guard();
         guardResult = r || { ok: false };
       }
-      if (!guardResult.ok && !guardResult.needTier) return; // auth redirect — don't render
+      if (!guardResult.ok && !guardResult.needTier) return; // hard stop — don't render
       const paywallNeeded = guardResult && guardResult.ok === false && guardResult.needTier;
       try {
         Promise.resolve(entry.handler(app)).then(function () {
@@ -97,7 +97,7 @@ const Router = {
             const r = await entry.guard();
             guardResult = r || { ok: false };
           }
-          if (!guardResult.ok && !guardResult.needTier) return; // auth redirect — don't render
+          if (!guardResult.ok && !guardResult.needTier) return; // hard stop — don't render
           const paywallNeeded = guardResult && guardResult.ok === false && guardResult.needTier;
           try {
             Promise.resolve(entry.handler(app, params)).then(function () {
