@@ -1,6 +1,6 @@
 /**
  * Simulation — AI-powered portfolio simulator.
- * Add-on: $50 CAD/mo. Build, track, and rebalance a simulated portfolio
+ * Add-on: $49 USD/mo. Build, track, and rebalance a simulated portfolio
  * based on user's capital, risk tolerance, and asset class preferences.
  */
 const Simulation = {
@@ -15,7 +15,7 @@ const Simulation = {
         '<p style="color:var(--text-muted);margin-bottom:8px;max-width:500px;margin-left:auto;margin-right:auto">' +
         'Enter your available capital, pick your asset classes, and let AI build you a simulated portfolio. ' +
         'Track it live, get rebalance suggestions, and exit signals.</p>' +
-        '<p style="color:var(--text-muted);margin-bottom:24px">Add the <strong>Simulation</strong> add-on for <strong>$50 CAD/mo</strong>.</p>' +
+        '<p style="color:var(--text-muted);margin-bottom:24px">Add the <strong>Simulation</strong> add-on for <strong>$49 USD/mo</strong>.</p>' +
         '<a href="#/maplegamma" class="mg-btn mg-btn-primary" style="display:inline-block;padding:12px 32px;text-decoration:none">Upgrade →</a>' +
         '</div></div>';
       return;
