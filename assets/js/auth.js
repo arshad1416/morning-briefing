@@ -60,12 +60,12 @@ const Auth = {
   },
   async guard(needTier) {
     const me = await this.me();
-    if (!me) { window.location.hash = '#/account'; return false; }
+    if (!me) return { ok: false, needTier, me: null };
     const e = me.entitlement || {};
     const rank = { basic: 1, pro: 2 };
     const have = e.tier === 'trial' && e.entitled ? 2 : (e.entitled ? (rank[e.tier] || 0) : 0);
-    if (have < (rank[needTier] || 0)) { window.location.hash = '#/pricing'; return false; }
-    return true;
+    if (have < (rank[needTier] || 0)) return { ok: false, needTier, me };
+    return { ok: true, needTier, me };
   },
 };
 window.Auth = Auth;
