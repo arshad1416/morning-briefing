@@ -60,10 +60,14 @@ const Auth = {
   },
   async guard(needTier) {
     const me = await this.me();
-    if (!me) return { ok: false, needTier, me: null };
+    // Not authenticated → redirect to account/login, signal "auth redirect" (needTier = null)
+    // so the router skips rendering and the paywall overlay is NOT shown.
+    if (!me) { window.location.hash = '#/account'; return { ok: false, needTier: null, me: null }; }
     const e = me.entitlement || {};
     const rank = { basic: 1, pro: 2 };
     const have = e.tier === 'trial' && e.entitled ? 2 : (e.entitled ? (rank[e.tier] || 0) : 0);
+    // Authenticated but insufficient tier → return { ok: false, needTier, me }
+    // The router will render the page (blurred) and overlay the paywall.
     if (have < (rank[needTier] || 0)) return { ok: false, needTier, me };
     return { ok: true, needTier, me };
   },
