@@ -9,12 +9,6 @@ binding = "DB"
 database_name = "maplegamma"
 database_id = "6585930e-61a6-4679-a492-73b1ea643e88"
 
-# Private premium data — served only via /api/data/:file after an entitlement
-# check. The Pi uploads these; they are NOT on Pages.
-[[r2_buckets]]
-binding = "PRIVATE"
-bucket_name = "maplegamma-private"
-
 # Route auth/api on the canonical domain to this Worker (Pages serves everything
 # else). chat/feedback still work via the workers.dev URL + CORS allow-list.
 [[routes]]
@@ -36,13 +30,6 @@ zone_name = "arshadkazi.ca"
 pattern = "maplegamma.arshadkazi.ca/api/*"
 zone_name = "arshadkazi.ca"
 
-# Passkey Related Origin Requests: the browser fetches this from the rpID host
-# (maplegamma.com) during the ceremony to authorize passkeys on the other
-# domains. Only needed on the canonical host.
-[[routes]]
-pattern = "maplegamma.com/.well-known/webauthn"
-zone_name = "maplegamma.com"
-
 [vars]
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 OPENROUTER_MODEL = "deepseek/deepseek-v4-pro"
@@ -51,8 +38,34 @@ APP_URL = "https://maplegamma.com"
 MOCK_BILLING = "1"
 TERMS_VERSION = "2026-07-08"
 ACK_VERSION = "2026-07-08"
+<<<<<<< Updated upstream
 # Passkeys use ONE canonical rpID across all domains (Related Origin Requests).
 WEBAUTHN_RP_ID = "maplegamma.com"
 WEBAUTHN_RP_NAME = "MapleGamma"
-WEBAUTHN_ORIGINS = "https://maplegamma.com,https://maplegamma.ca,https://maplegamma.arshadkazi.ca,https://briefing.arshadkazi.ca"
+WEBAUTHN_ORIGINS = "https://maplegamma.com,https://maplegamma.ca,https://www.maplegamma.ca,https://briefing.arshadkazi.ca"
+# ── Google OAuth setup ──
+# 1. Create a Google Web OAuth client in Google Cloud Console:
+#    https://console.cloud.google.com/apis/credentials
+#    Redirect URI: https://maplegamma.com/api/auth/oauth/google/callback
+# 2. Put the client ID here (replace PLACEHOLDER_WEB_CLIENT_ID).
+# 3. Set the client secret via: wrangler secret put GOOGLE_CLIENT_SECRET
+GOOGLE_CLIENT_ID = "64962355277-05lc5e8hh00bogo3f5llho4qtv66m95a.apps.googleusercontent.com"
+
+# ── Helcim billing ──
+# API token set via: wrangler secret put HELCIM_API_TOKEN
+# Payment Plan IDs — set via wrangler secret after creating the plans in the
+# Helcim dashboard. Four plans needed:
+#   HELCIM_PLAN_BASIC_MONTHLY — $49/mo USD
+#   HELCIM_PLAN_BASIC_ANNUAL  — $490/yr USD (10 months, 2 free)
+#   HELCIM_PLAN_PRO_MONTHLY   — $99/mo USD
+#   HELCIM_PLAN_PRO_ANNUAL    — $990/yr USD (10 months, 2 free)
+# Create them at Helcim → Settings → Payment Plans, then:
+#   printf '<id>' | npx wrangler secret put HELCIM_PLAN_BASIC_MONTHLY --name morning-briefing-chat
+PRICE_BASIC = "49"
+PRICE_PRO = "99"
+CURRENCY = "USD"
+=======
+RP_ID = "maplegamma.com"
+RP_NAME = "MapleGamma"
 GOOGLE_CLIENT_ID = "PLACEHOLDER_WEB_CLIENT_ID"
+>>>>>>> Stashed changes
