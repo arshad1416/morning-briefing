@@ -1,17 +1,17 @@
 {
   "meta": {
-    "generated_at": "2026-07-08T11:22:49.574165+00:00",
+    "generated_at": "2026-07-09T11:22:49.899497+00:00",
     "experts_consulted": 5,
     "experts_succeeded": 3,
-    "total_cost_usd": 0.001669,
+    "total_cost_usd": 0.000382,
     "aggregator": "gemini-3.1-flash-lite-preview",
     "context_variant": "b"
   },
   "market_pulse": {
-    "one_liner": "Market in transitional tug-of-war between bullish gamma support and geopolitical/retail bearishness.",
-    "score": 5,
-    "regime": "neutral",
-    "confidence": 6
+    "one_liner": "Complacency gap between bullish gamma positioning and escalating geopolitical risk-off reality.",
+    "score": 4,
+    "regime": "bearish",
+    "confidence": 8
   },
   "key_levels": {
     "SPY": {
@@ -19,42 +19,43 @@
       "resistance": 750.0
     },
     "QQQ": {
-      "support": 0.0,
-      "resistance": 0.0
+      "support": 485.0,
+      "resistance": 505.0
     }
   },
   "gamma_landscape": {
     "pinning_zone": 730.0,
-    "notes": "Massive put wall at 730.0 acts as a magnetic floor; bullish gamma regime suggests upside potential if support holds."
+    "notes": "Dealer hedging is heavily skewed by massive negative DEX and high VEX, suggesting that while the 730 strike acts as a temporary put-wall, the underlying structure is fragile and prone to rapid unwinding if volatility spikes."
   },
   "risks": [
-    "Geopolitical escalation in Persian Gulf and Eastern Europe impacting energy/inflation.",
-    "Crowded retail bearishness creating potential for unexpected volatility.",
-    "Transitional regime fragility leading to low conviction in directional moves."
+    "Geopolitical escalation in Ukraine triggering a sudden risk-off liquidity drain.",
+    "Dealer delta hedging amplification due to negative DEX exposure.",
+    "Portfolio over-extension with minimal cash reserves to manage drawdown.",
+    "Contrarian signal from retail bullishness (Reddit) vs. institutional hedging."
   ],
   "trades": [
     {
       "ticker": "SPY",
-      "direction": "long",
-      "entry": 732.5,
-      "stop": 726.5,
-      "target": 748.0,
-      "conviction": 8,
-      "source": "Qwen 3.7 Max"
+      "direction": "short",
+      "entry": 737.89,
+      "stop": 745.0,
+      "target": 725.0,
+      "conviction": 7,
+      "source": "GLM 5.2 / MiMo V2.5"
     },
     {
-      "ticker": "XLE",
-      "direction": "long",
-      "entry": 105.2,
-      "stop": 101.5,
-      "target": 112.0,
+      "ticker": "XLF",
+      "direction": "short",
+      "entry": 55.06,
+      "stop": 56.5,
+      "target": 53.5,
       "conviction": 6,
-      "source": "Qwen 3.7 Max"
+      "source": "Kimi K2.6"
     }
   ],
   "disagreements": [
-    "Divergence between quantitative gamma support (bullish) and retail sentiment (heavily bearish).",
-    "Contrarian risk: WSB pessimism is viewed as a potential catalyst for a short squeeze rather than a signal to follow."
+    "Retail sentiment (bullish) vs. Quantitative dealer positioning (defensive/hedged).",
+    "Short-term gamma stability vs. long-term geopolitical macro headwinds."
   ],
-  "narrative": "The market is currently anchored by a significant gamma-driven support level at $730 on SPY, which provides a structural floor despite high geopolitical uncertainty and retail pessimism. We are favoring a rotation into energy and hard assets to hedge against supply-side shocks, while utilizing the $730 put wall as a primary risk management boundary for long positions."
+  "narrative": "The market is currently trapped in a complacency gap where surface-level gamma support masks deep-seated institutional hedging against geopolitical volatility. While retail sentiment remains bullish, the combination of negative dealer delta and a confirmed risk-off macro regime suggests the current price levels are vulnerable to a sharp correction if the 730 support level is breached."
 }

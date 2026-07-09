@@ -74,6 +74,7 @@ export async function takeChallenge(DB, id) {
   if (!row || row.expires_at < Date.now()) return null;
   return row;
 }
+<<<<<<< Updated upstream
 // Cookie-keyed, single-use challenge store (CompCeiling passkey technique): the
 // row id IS the value in the mg_wa_key cookie, so the client never echoes a
 // challengeId back. Returns the challenge string (not the row) or null.
@@ -90,3 +91,18 @@ export async function takeWebauthnChallenge(DB, key, type) {
   if (!row || row.expires_at < Date.now()) return null;
   return row.challenge;
 }
+
+// ── Billing sessions (HelcimPay.js checkout state) ──
+export async function storeBillingSession(DB, { id, userId, tier, interval, checkoutToken, secretToken }) {
+  await DB.prepare(
+    `INSERT INTO billing_sessions (id,user_id,tier,interval,checkout_token,secret_token,created_at)
+     VALUES (?,?,?,?,?,?,?)`
+  ).bind(id, userId, tier, interval, checkoutToken, secretToken, Date.now()).run();
+}
+export async function takeBillingSession(DB, id) {
+  const row = await DB.prepare('SELECT * FROM billing_sessions WHERE id=?').bind(id).first();
+  await DB.prepare('DELETE FROM billing_sessions WHERE id=?').bind(id).run(); // single-use
+  return row || null;
+}
+=======
+>>>>>>> Stashed changes

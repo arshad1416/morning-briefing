@@ -1,6 +1,6 @@
 import { upsertSubscription } from './db.js';
 
-export const TRIAL_MS = 7 * 24 * 60 * 60 * 1000;
+export const TRIAL_MS = 14 * 24 * 60 * 60 * 1000;
 const IP_LIMIT = 3;
 const IP_WINDOW_MS = 30 * 24 * 60 * 60 * 1000;
 
