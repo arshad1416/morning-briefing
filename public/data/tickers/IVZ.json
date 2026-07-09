@@ -1,23 +1,24 @@
 {
  "ticker": "IVZ",
  "name": "Invesco Ltd",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 27.44,
- "change_pct": -1.38,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 26.72,
+ "change_pct": -2.5,
  "sector": "Financial Services",
  "signals": [
-  "rsi_dip"
+  "oversold_rsi",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 38.3,
-  "sma_20": 27.55,
-  "sma_50": 27.21
+  "rsi_14": 33.8,
+  "sma_20": 27.5,
+  "sma_50": 27.24
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "12.2B",
+  "market_cap": "11.8B",
   "beta": 1.597,
-  "dividend_yield": 0.030899999999999997
+  "dividend_yield": 0.031400000000000004
  },
  "council_analysis": {
   "score": 6

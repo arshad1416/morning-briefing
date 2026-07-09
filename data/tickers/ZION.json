@@ -1,31 +1,49 @@
 {
  "ticker": "ZION",
  "name": "Zions Bancorporation N.A.",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 70.93,
- "change_pct": 0.47,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 68.43,
+ "change_pct": -3.2,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
   "above_ma",
   "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 73.4,
-  "sma_20": 67.78,
-  "sma_50": 64.13
+  "rsi_14": 57.4,
+  "sma_20": 68.03,
+  "sma_50": 64.28
  },
  "fundamentals": {
-  "pe_ratio": 11.013975,
-  "market_cap": "10.4B",
+  "pe_ratio": 10.625776,
+  "market_cap": "10.1B",
   "beta": 0.791,
   "dividend_yield": 0.0255
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "ZION",
+   "date": "2026-07-20",
+   "epsEstimate": 1.86,
+   "epsActual": null
+  },
+  {
+   "ticker": "ZION",
+   "date": "2026-04-20",
+   "epsEstimate": 1.43,
+   "epsActual": 1.54
+  },
+  {
+   "ticker": "ZION",
+   "date": "2026-01-20",
+   "epsEstimate": 1.57,
+   "epsActual": 1.76
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

@@ -1,26 +1,28 @@
 {
  "ticker": "LOW",
  "name": "Lowe's Companies, Inc.",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 223.15,
- "change_pct": -0.28,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 213.35,
+ "change_pct": -3.42,
  "sector": "Consumer Cyclical",
  "signals": [
-  "above_ma"
+  "rsi_dip",
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 53.1,
-  "sma_20": 219.87,
-  "sma_50": 221.54
+  "rsi_14": 40.1,
+  "sma_20": 220.02,
+  "sma_50": 220.87
  },
  "fundamentals": {
-  "pe_ratio": 18.846706,
-  "market_cap": "125.2B",
+  "pe_ratio": 18.019848,
+  "market_cap": "119.7B",
   "beta": 0.85,
-  "dividend_yield": 0.0223
+  "dividend_yield": 0.0226
  },
  "council_analysis": {
-  "score": 6
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

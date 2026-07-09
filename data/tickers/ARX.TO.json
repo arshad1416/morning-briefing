@@ -1,29 +1,49 @@
 {
  "ticker": "ARX.TO",
  "name": "ARC RESOURCES LTD.",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 30.75,
- "change_pct": 2.64,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 31.21,
+ "change_pct": 0.16,
  "sector": "Energy",
  "signals": [
+  "above_ma",
   "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 50.7,
-  "sma_20": 30.33,
-  "sma_50": 30.84
+  "rsi_14": 60.2,
+  "sma_20": 30.34,
+  "sma_50": 30.85
  },
  "fundamentals": {
-  "pe_ratio": 12.15415,
-  "market_cap": "17.4B",
+  "pe_ratio": 12.335968,
+  "market_cap": "17.7B",
   "beta": 0.115,
-  "dividend_yield": 0.027999999999999997
+  "dividend_yield": 0.027000000000000003
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "ARX.TO",
+   "date": "2026-07-30",
+   "epsEstimate": 0.54,
+   "epsActual": null
+  },
+  {
+   "ticker": "ARX.TO",
+   "date": "2026-04-28",
+   "epsEstimate": 0.67,
+   "epsActual": 1.23
+  },
+  {
+   "ticker": "ARX.TO",
+   "date": "2026-02-05",
+   "epsEstimate": 0.41,
+   "epsActual": 0.55
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

@@ -1,21 +1,24 @@
 {
  "ticker": "MAXI",
  "name": "Simplify Bitcoin Strategy PLUS ",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 9.1,
- "change_pct": -1.83,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 8.79,
+ "change_pct": -5.38,
  "sector": null,
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.8,
+  "rsi_14": 43.3,
   "sma_20": 8.8,
-  "sma_50": 10.03
+  "sma_50": 9.98
  },
  "fundamentals": {
-  "pe_ratio": 26.350977,
+  "pe_ratio": 25.43933,
   "market_cap": null,
   "beta": null,
-  "dividend_yield": 0.574
+  "dividend_yield": 0.6906
  },
  "council_analysis": {
   "score": 5

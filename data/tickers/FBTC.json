@@ -1,17 +1,18 @@
 {
  "ticker": "FBTC",
  "name": "Fidelity Wise Origin Bitcoin Fu",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 54.66,
- "change_pct": -1.39,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 53.81,
+ "change_pct": -3.09,
  "sector": null,
  "signals": [
-  "rsi_dip"
+  "rsi_dip",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 40.1,
-  "sma_20": 54.23,
-  "sma_50": 61.35
+  "rsi_14": 40.2,
+  "sma_20": 54.21,
+  "sma_50": 61.09
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -20,7 +21,7 @@
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

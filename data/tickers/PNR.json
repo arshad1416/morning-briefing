@@ -1,23 +1,25 @@
 {
  "ticker": "PNR",
  "name": "Pentair plc.",
- "generated_at": "2026-07-08T11:45:01.745733+00:00",
- "price": 74.48,
- "change_pct": -1.39,
+ "generated_at": "2026-07-09T11:45:01.813655+00:00",
+ "price": 73.16,
+ "change_pct": -2.69,
  "sector": "Industrials",
  "signals": [
-  "below_ma"
+  "rsi_dip",
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 51.2,
-  "sma_20": 74.63,
-  "sma_50": 75.59
+  "rsi_14": 41.4,
+  "sma_20": 74.69,
+  "sma_50": 75.23
  },
  "fundamentals": {
-  "pe_ratio": 18.713568,
-  "market_cap": "12.0B",
+  "pe_ratio": 18.38191,
+  "market_cap": "11.8B",
   "beta": 1.029,
-  "dividend_yield": 0.013999999999999999
+  "dividend_yield": 0.0141
  },
  "council_analysis": {
   "score": 4
