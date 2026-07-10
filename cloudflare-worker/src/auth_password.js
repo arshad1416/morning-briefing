@@ -1,7 +1,7 @@
 import { getCookie, setCookie } from 'hono/cookie';
 import { hashPassword, verifyPassword, DUMMY_HASH } from './password.js';
 import {
-  createUser, getUserByEmail, getUserById, insertConsent, logAuthEvent, recentAuthFailures,
+  createUser, getUserByEmail, getUserById, insertConsent, logAuthEvent, recentAuthFailures, setBriefingOptIn,
 } from './db.js';
 import { issueSession, setSessionCookie, clearSessionCookie, requireSession, entitlement } from './session.js';
 import { validateConsent } from './legal.js';
@@ -35,7 +35,9 @@ export function mountPasswordAuth(app) {
 
     const ip = clientIp(c.req.raw);
     const pwHash = await hashPassword(password);
-    const user = await createUser(c.env.DB, { email, pwHash, ip });
+    // briefingOptIn is an OPTIONAL, separate preference (CASL): default off,
+    // never bundled with the required consent gate above.
+    const user = await createUser(c.env.DB, { email, pwHash, ip, briefingOptIn: !!body.briefingOptIn });
     await insertConsent(c.env.DB, user.id, consent.consent);
     await logAuthEvent(c.env.DB, { email, ip, type: 'signup' });
 
@@ -80,6 +82,15 @@ export function mountPasswordAuth(app) {
   app.get('/api/auth/me', requireSession(), async (c) => {
     const { user } = c.get('session');
     const ent = await entitlement(c.env.DB, user.id);
-    return c.json({ id: user.id, email: user.email, entitlement: ent });
+    return c.json({ id: user.id, email: user.email, briefingOptIn: !!user.briefing_opt_in, entitlement: ent });
+  });
+
+  // Toggle the Morning Briefing email opt-in from the account page.
+  app.post('/api/account/briefing', requireSession(), async (c) => {
+    const { user } = c.get('session');
+    const body = await c.req.json().catch(() => ({}));
+    const optIn = !!body.optIn;
+    await setBriefingOptIn(c.env.DB, user.id, optIn);
+    return c.json({ ok: true, briefingOptIn: optIn });
   });
 }

@@ -4,8 +4,9 @@ import { env } from 'cloudflare:test';
 // runtime — Vite's `?raw` import inlines the file contents at bundle time.
 import initSql from '../migrations/0001_init.sql?raw';
 import billingSql from '../migrations/0002_billing.sql?raw';
+import briefingSql from '../migrations/0003_briefing_optin.sql?raw';
 export async function migrate() {
-  for (const sql of [initSql, billingSql]) {
+  for (const sql of [initSql, billingSql, briefingSql]) {
     // Strip full-line `--` comments first so a semicolon inside a comment
     // doesn't split into a statement-less fragment (D1 rejects those).
     const clean = sql.replace(/^\s*--.*$/gm, '');

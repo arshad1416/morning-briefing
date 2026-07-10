@@ -73,4 +73,33 @@ describe('password auth', () => {
     const me = await app.request('/api/auth/me', {}, env);
     expect(me.status).toBe(401);
   });
+
+  it('briefing opt-in defaults off, is captured at signup, and toggles from the account endpoint', async () => {
+    // Default: no briefingOptIn in the payload → off.
+    const off = await signup({ ...base, email: 'brief-off@test.ca' });
+    const offMe = await (await app.request('/api/auth/me', { headers: { Cookie: sessionCookie(off) } }, env)).json();
+    expect(offMe.briefingOptIn).toBe(false);
+
+    // Opted in at signup → on.
+    const on = await signup({ ...base, email: 'brief-on@test.ca', briefingOptIn: true });
+    const cookie = sessionCookie(on);
+    const onMe = await (await app.request('/api/auth/me', { headers: { Cookie: cookie } }, env)).json();
+    expect(onMe.briefingOptIn).toBe(true);
+
+    // Toggle off via the account endpoint.
+    const upd = await app.request('/api/account/briefing', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Cookie: cookie },
+      body: JSON.stringify({ optIn: false }),
+    }, env);
+    expect(upd.status).toBe(200);
+    const after = await (await app.request('/api/auth/me', { headers: { Cookie: cookie } }, env)).json();
+    expect(after.briefingOptIn).toBe(false);
+  });
+
+  it('briefing toggle requires a session', async () => {
+    const res = await app.request('/api/account/briefing', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ optIn: true }),
+    }, env);
+    expect(res.status).toBe(401);
+  });
 });

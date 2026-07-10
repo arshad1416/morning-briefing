@@ -129,6 +129,16 @@
 .auth-legal a { color: var(--accent-bright); text-decoration: none; }
 .auth-legal a:hover { text-decoration: underline; }
 
+/* Optional Morning-Briefing opt-in — kept visually separate (thin rule above)
+   from the three REQUIRED consent boxes. CASL: commercial-email consent must
+   be a distinct, unchecked-by-default choice, not bundled with ToS acceptance. */
+.auth-optin { display: flex; gap: 8px; align-items: flex-start; margin: 10px 0 0; padding-top: 11px;
+  border-top: 1px solid var(--border-dim); font-size: 0.78rem; color: var(--text-secondary);
+  line-height: 1.55; cursor: pointer; }
+.auth-optin input[type="checkbox"] { margin: 3px 0 0; accent-color: var(--accent-bright);
+  width: 16px; height: 16px; min-height: 0; flex: 0 0 16px; align-self: flex-start; }
+.auth-optin-tag { color: var(--text-muted); }
+
 .auth-actions { display: flex; gap: 10px; margin-top: 14px; }
 .auth-actions .btn { flex: 1; }
 

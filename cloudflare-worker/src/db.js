@@ -1,11 +1,16 @@
 import { randomId } from './util.js';
 
-export async function createUser(DB, { email, pwHash = null, ip = null }) {
+export async function createUser(DB, { email, pwHash = null, ip = null, briefingOptIn = false }) {
   const id = randomId();
   const now = Date.now();
-  await DB.prepare('INSERT INTO users (id,email,pw_hash,created_at,signup_ip) VALUES (?,?,?,?,?)')
-    .bind(id, email.toLowerCase(), pwHash, now, ip).run();
+  await DB.prepare('INSERT INTO users (id,email,pw_hash,created_at,signup_ip,briefing_opt_in) VALUES (?,?,?,?,?,?)')
+    .bind(id, email.toLowerCase(), pwHash, now, ip, briefingOptIn ? 1 : 0).run();
   return { id, email: email.toLowerCase(), created_at: now };
+}
+// Morning Briefing email opt-in (CASL: explicit, default off). Toggled from the
+// account page; delivery pipeline consumes this flag separately.
+export async function setBriefingOptIn(DB, userId, optIn) {
+  await DB.prepare('UPDATE users SET briefing_opt_in=? WHERE id=?').bind(optIn ? 1 : 0, userId).run();
 }
 export async function getUserById(DB, id) {
   return DB.prepare('SELECT * FROM users WHERE id=?').bind(id).first();

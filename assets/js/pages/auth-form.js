@@ -27,6 +27,10 @@ const AuthForm = {
             <label><input type="checkbox" id="cQC"> <span>I am not a resident of Quebec</span></label>
           </div>` : '';
 
+      // Optional (CASL) opt-in — separate from the required consents above.
+      const optin = isSignup ? `
+          <label class="auth-optin"><input type="checkbox" id="cBrief"> <span>Email me the free daily Morning Briefing <span class="auth-optin-tag">— optional, unsubscribe anytime</span></span></label>` : '';
+
       const alt = isSignup ? `
           <div class="auth-alt">
             <button id="google" class="btn btn-google btn-block">${gSvg}<span>Continue with Google</span></button>
@@ -46,8 +50,8 @@ const AuthForm = {
             <div id="msg" class="auth-msg"></div>
             <input id="email" class="auth-field" type="email" autocomplete="email" placeholder="Email">
             <input id="pw" class="auth-field" type="password" autocomplete="${isSignup ? 'new-password' : 'current-password'}" placeholder="${isSignup ? 'Password (10+ characters)' : 'Password'}">
-            ${legal}
-            <button id="submit" class="btn btn-primary btn-block btn-lg">${isSignup ? 'Create account' : 'Log in'}</button>
+            ${legal}${optin}
+            <button id="submit" class="btn btn-primary btn-block btn-lg"${isSignup ? ' style="margin-top:12px"' : ''}>${isSignup ? 'Create account' : 'Log in'}</button>
             <div class="auth-divider">or</div>
             ${alt}
             <div class="auth-foot">${isSignup
@@ -74,7 +78,7 @@ const AuthForm = {
         app.querySelector('#submit').onclick = async () => {
           if (!consentOk()) return msg(consentMsg);
           if (v('#pw').length < 10) return msg('Password must be at least 10 characters.');
-          const r = await Auth.signup({ email: v('#email'), password: v('#pw'), acceptTerms: true, acceptAck: true, notQuebec: true });
+          const r = await Auth.signup({ email: v('#email'), password: v('#pw'), acceptTerms: true, acceptAck: true, notQuebec: true, briefingOptIn: chk('#cBrief') });
           if (r.ok) window.location.hash = '#/'; else msg(errText(r.body.error));
         };
         app.querySelector('#google').onclick = () => {

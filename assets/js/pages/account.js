@@ -22,6 +22,7 @@ const Account = {
       // format in UTC so "2026-07-24" doesn't render as Jul 23 in Eastern.
       const fmtDate = (ms) => ms ? new Date(ms).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' }) : '';
       const daysLeft = ent.trialEndsAt ? Math.max(0, Math.ceil((ent.trialEndsAt - Date.now()) / 86400000)) : null;
+      const optedIn = !!me.briefingOptIn;
 
       let subCard;
       if (paid && ent.entitled && !canceled) {
@@ -73,6 +74,15 @@ const Account = {
             <div class="acct-actions"><button class="btn btn-secondary" id="add-pk">Add a passkey</button></div>
             <p class="acct-muted acct-hint" id="pk-msg"></p>
           </div>
+          <div class="acct-card">
+            <h3>Morning Briefing email</h3>
+            <p class="acct-muted">The free daily Morning Briefing — the market regime call, key levels, and headlines — emailed each weekday morning. Unsubscribe anytime.</p>
+            <p class="acct-line">${optedIn
+              ? 'Subscribed <span class="acct-badge ok">on</span>'
+              : 'Not subscribed <span class="acct-badge off">off</span>'}</p>
+            <div class="acct-actions"><button class="btn ${optedIn ? 'btn-secondary' : 'btn-primary'}" id="brief-toggle">${optedIn ? 'Unsubscribe' : 'Subscribe'}</button></div>
+            <p class="acct-muted acct-hint" id="brief-msg">Daily delivery is rolling out shortly.</p>
+          </div>
         </div>`;
 
       const cs = app.querySelector('#cancel-sub');
@@ -98,6 +108,18 @@ const Account = {
             : 'Passkey setup failed — ' + ((e && e.message) || 'please try again') + '.';
         }
         pk.disabled = false;
+      };
+      const bt = app.querySelector('#brief-toggle');
+      const bm = app.querySelector('#brief-msg');
+      if (bt) bt.onclick = async () => {
+        const next = !optedIn;
+        bt.disabled = true; bt.textContent = next ? 'Subscribing…' : 'Unsubscribing…';
+        const r = await fetch('/api/account/briefing', {
+          method: 'POST', credentials: 'include',
+          headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ optIn: next }),
+        });
+        if (r.ok) { Auth._me = undefined; Account.render(app); }
+        else { bt.disabled = false; bt.textContent = optedIn ? 'Unsubscribe' : 'Subscribe'; bm.textContent = 'Could not update — please try again.'; }
       };
       app.querySelector('#lo').onclick = (e) => { e.preventDefault(); Auth.logout(); }; return;
     }
