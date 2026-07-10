@@ -1,23 +1,24 @@
 {
  "ticker": "DRI",
  "name": "Darden Restaurants, Inc.",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 202.56,
- "change_pct": -0.95,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 201.02,
+ "change_pct": -0.04,
  "sector": "Consumer Cyclical",
  "signals": [
-  "rsi_dip"
+  "oversold_rsi",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 39.5,
-  "sma_20": 208.01,
-  "sma_50": 201.77
+  "rsi_14": 32.9,
+  "sma_20": 207.94,
+  "sma_50": 201.79
  },
  "fundamentals": {
-  "pe_ratio": 19.383732,
-  "market_cap": "23.2B",
+  "pe_ratio": 19.254791,
+  "market_cap": "23.0B",
   "beta": 0.585,
-  "dividend_yield": 0.029900000000000003
+  "dividend_yield": 0.0304
  },
  "council_analysis": {
   "score": 6

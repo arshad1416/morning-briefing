@@ -1,25 +1,26 @@
 {
  "ticker": "MOS",
  "name": "Mosaic Company (The)",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 20.88,
- "change_pct": -1.14,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 20.6,
+ "change_pct": -0.24,
  "sector": "Basic Materials",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
+  "near_low",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 44.0,
-  "sma_20": 21.6,
-  "sma_50": 22.2
+  "rsi_14": 34.5,
+  "sma_20": 21.55,
+  "sma_50": 22.15
  },
  "fundamentals": {
-  "pe_ratio": 149.14357,
-  "market_cap": "6.6B",
+  "pe_ratio": 147.14285,
+  "market_cap": "6.5B",
   "beta": 0.825,
-  "dividend_yield": 0.0417
+  "dividend_yield": 0.0426
  },
  "council_analysis": {
   "score": 4

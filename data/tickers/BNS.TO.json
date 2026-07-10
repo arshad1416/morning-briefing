@@ -1,29 +1,49 @@
 {
  "ticker": "BNS.TO",
  "name": "BANK OF NOVA SCOTIA",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 120.83,
- "change_pct": -1.21,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 121.61,
+ "change_pct": 1.07,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
+  "volume_surge",
   "near_high"
  ],
  "technical": {
-  "rsi_14": 50.5,
-  "sma_20": 120.07,
-  "sma_50": 112.43
+  "rsi_14": 48.8,
+  "sma_20": 120.48,
+  "sma_50": 112.78
  },
  "fundamentals": {
-  "pe_ratio": 16.666206,
-  "market_cap": "148.1B",
+  "pe_ratio": 16.750689,
+  "market_cap": "149.1B",
   "beta": 1.21,
-  "dividend_yield": 0.0373
+  "dividend_yield": 0.0379
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "BNS.TO",
+   "date": "2026-08-25",
+   "epsEstimate": 2.09,
+   "epsActual": null
+  },
+  {
+   "ticker": "BNS.TO",
+   "date": "2026-05-27",
+   "epsEstimate": 1.94,
+   "epsActual": 2.02
+  },
+  {
+   "ticker": "BNS.TO",
+   "date": "2026-02-24",
+   "epsEstimate": 1.95,
+   "epsActual": 2.05
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

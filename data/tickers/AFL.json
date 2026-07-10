@@ -1,49 +1,31 @@
 {
  "ticker": "AFL",
  "name": "AFLAC Incorporated",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 120.94,
- "change_pct": -0.46,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 121.74,
+ "change_pct": 0.25,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
   "above_ma",
   "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 60.2,
-  "sma_20": 118.21,
-  "sma_50": 116.23
+  "rsi_14": 67.4,
+  "sma_20": 118.54,
+  "sma_50": 116.4
  },
  "fundamentals": {
-  "pe_ratio": 13.821315,
-  "market_cap": "61.6B",
+  "pe_ratio": 13.89726,
+  "market_cap": "62.0B",
   "beta": 0.603,
   "dividend_yield": 0.020099999999999996
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
- "upcoming_earnings": [
-  {
-   "ticker": "AFL",
-   "date": "2026-08-06",
-   "epsEstimate": 1.77,
-   "epsActual": null
-  },
-  {
-   "ticker": "AFL",
-   "date": "2026-04-29",
-   "epsEstimate": 1.8,
-   "epsActual": 1.75
-  },
-  {
-   "ticker": "AFL",
-   "date": "2026-02-04",
-   "epsEstimate": 1.69,
-   "epsActual": 1.57
-  }
- ],
+ "upcoming_earnings": [],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

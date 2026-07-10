@@ -1,21 +1,23 @@
 {
  "ticker": "EBAY",
  "name": "eBay Inc.",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 112.93,
- "change_pct": -1.55,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 116.76,
+ "change_pct": 1.31,
  "sector": "Consumer Cyclical",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 57.8,
-  "sma_20": 109.86,
-  "sma_50": 109.65
+  "rsi_14": 70.2,
+  "sma_20": 110.38,
+  "sma_50": 110.03
  },
  "fundamentals": {
-  "pe_ratio": 26.142359,
-  "market_cap": "50.1B",
+  "pe_ratio": 26.965359,
+  "market_cap": "51.8B",
   "beta": 1.365,
   "dividend_yield": 0.0108
  },

@@ -1,28 +1,48 @@
 {
  "ticker": "MS",
  "name": "Morgan Stanley",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 218.32,
- "change_pct": -1.68,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 223.74,
+ "change_pct": 2.6,
  "sector": "Financial Services",
  "signals": [
-  "above_ma"
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 47.3,
-  "sma_20": 217.28,
-  "sma_50": 205.68
+  "rsi_14": 48.8,
+  "sma_20": 217.94,
+  "sma_50": 206.37
  },
  "fundamentals": {
-  "pe_ratio": 19.77491,
-  "market_cap": "344.3B",
+  "pe_ratio": 20.28468,
+  "market_cap": "352.9B",
   "beta": 1.218,
-  "dividend_yield": 0.018000000000000002
+  "dividend_yield": 0.0183
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "MS",
+   "date": "2026-07-15",
+   "epsEstimate": 2.93,
+   "epsActual": null
+  },
+  {
+   "ticker": "MS",
+   "date": "2026-04-15",
+   "epsEstimate": 3.02,
+   "epsActual": 3.43
+  },
+  {
+   "ticker": "MS",
+   "date": "2026-01-15",
+   "epsEstimate": 2.45,
+   "epsActual": 2.68
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

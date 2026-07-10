@@ -1,30 +1,48 @@
 {
  "ticker": "KO",
  "name": "Coca-Cola Company (The)",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 84.13,
- "change_pct": 0.1,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 82.31,
+ "change_pct": -1.31,
  "sector": "Consumer Defensive",
  "signals": [
-  "extended_rsi",
   "above_ma",
   "near_high"
  ],
  "technical": {
-  "rsi_14": 67.3,
-  "sma_20": 81.62,
-  "sma_50": 80.01
+  "rsi_14": 59.6,
+  "sma_20": 81.66,
+  "sma_50": 80.14
  },
  "fundamentals": {
-  "pe_ratio": 26.455973,
-  "market_cap": "362.0B",
+  "pe_ratio": 25.883646,
+  "market_cap": "354.1B",
   "beta": 0.349,
-  "dividend_yield": 0.0252
+  "dividend_yield": 0.0254
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "KO",
+   "date": "2026-07-28",
+   "epsEstimate": 0.93,
+   "epsActual": null
+  },
+  {
+   "ticker": "KO",
+   "date": "2026-04-28",
+   "epsEstimate": 0.81,
+   "epsActual": 0.86
+  },
+  {
+   "ticker": "KO",
+   "date": "2026-02-10",
+   "epsEstimate": 0.56,
+   "epsActual": 0.58
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

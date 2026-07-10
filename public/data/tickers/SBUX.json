@@ -1,22 +1,24 @@
 {
  "ticker": "SBUX",
  "name": "Starbucks Corporation",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 102.68,
- "change_pct": -0.9,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 106.64,
+ "change_pct": 2.67,
  "sector": "Consumer Cyclical",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 52.8,
-  "sma_20": 102.0,
-  "sma_50": 102.05
+  "rsi_14": 69.3,
+  "sma_20": 102.52,
+  "sma_50": 102.27
  },
  "fundamentals": {
-  "pe_ratio": 77.19925,
-  "market_cap": "117.0B",
+  "pe_ratio": 81.40459,
+  "market_cap": "121.5B",
   "beta": 0.969,
   "dividend_yield": 0.0239
  },

@@ -1,9 +1,9 @@
 {
  "ticker": "CB",
  "name": "Chubb Limited",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 357.44,
- "change_pct": -0.52,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 353.51,
+ "change_pct": -0.44,
  "sector": "Financial Services",
  "signals": [
   "extended_rsi",
@@ -12,20 +12,39 @@
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 71.5,
-  "sma_20": 337.54,
-  "sma_50": 327.72
+  "rsi_14": 68.4,
+  "sma_20": 338.89,
+  "sma_50": 328.28
  },
  "fundamentals": {
-  "pe_ratio": 12.639321,
-  "market_cap": "138.6B",
+  "pe_ratio": 12.504775,
+  "market_cap": "137.1B",
   "beta": 0.406,
-  "dividend_yield": 0.011399999999999999
+  "dividend_yield": 0.0115
  },
  "council_analysis": {
   "score": 7
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "CB",
+   "date": "2026-07-21",
+   "epsEstimate": 6.73,
+   "epsActual": null
+  },
+  {
+   "ticker": "CB",
+   "date": "2026-04-21",
+   "epsEstimate": 6.61,
+   "epsActual": 6.82
+  },
+  {
+   "ticker": "CB",
+   "date": "2026-02-03",
+   "epsEstimate": 6.78,
+   "epsActual": 7.52
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

@@ -1,23 +1,25 @@
 {
  "ticker": "TFC",
  "name": "Truist Financial Corporation",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 49.8,
- "change_pct": -3.04,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 51.0,
+ "change_pct": 2.63,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
+  "above_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 54.3,
-  "sma_20": 49.99,
+  "rsi_14": 67.3,
+  "sma_20": 50.07,
   "sma_50": 49.14
  },
  "fundamentals": {
-  "pe_ratio": 12.326733,
-  "market_cap": "62.0B",
+  "pe_ratio": 12.622549,
+  "market_cap": "63.5B",
   "beta": 0.875,
-  "dividend_yield": 0.0405
+  "dividend_yield": 0.04190000000000001
  },
  "council_analysis": {
   "score": 6

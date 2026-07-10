@@ -1,27 +1,29 @@
 {
  "ticker": "MKTX",
  "name": "MarketAxess Holdings, Inc.",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 118.49,
- "change_pct": -0.09,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 113.27,
+ "change_pct": -3.3,
  "sector": "Financial Services",
  "signals": [
   "rsi_dip",
+  "below_ma",
+  "near_low",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 40.6,
-  "sma_20": 116.71,
-  "sma_50": 130.34
+  "rsi_14": 40.3,
+  "sma_20": 116.48,
+  "sma_50": 129.39
  },
  "fundamentals": {
-  "pe_ratio": 14.0391,
-  "market_cap": "4.2B",
+  "pe_ratio": 13.404734,
+  "market_cap": "4.0B",
   "beta": 0.87,
-  "dividend_yield": 0.0263
+  "dividend_yield": 0.026600000000000002
  },
  "council_analysis": {
-  "score": 7
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

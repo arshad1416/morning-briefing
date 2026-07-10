@@ -1,29 +1,49 @@
 {
  "ticker": "KEY",
  "name": "KeyCorp",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 22.69,
- "change_pct": -2.89,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 22.93,
+ "change_pct": 1.28,
  "sector": "Financial Services",
  "signals": [
+  "above_ma",
   "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 49.1,
-  "sma_20": 22.85,
-  "sma_50": 22.03
+  "rsi_14": 55.3,
+  "sma_20": 22.89,
+  "sma_50": 22.05
  },
  "fundamentals": {
-  "pe_ratio": 13.923313,
-  "market_cap": "24.5B",
+  "pe_ratio": 14.512658,
+  "market_cap": "24.7B",
   "beta": 1.024,
-  "dividend_yield": 0.0351
+  "dividend_yield": 0.0362
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "KEY",
+   "date": "2026-07-21",
+   "epsEstimate": 0.42,
+   "epsActual": null
+  },
+  {
+   "ticker": "KEY",
+   "date": "2026-04-16",
+   "epsEstimate": 0.41,
+   "epsActual": 0.44
+  },
+  {
+   "ticker": "KEY",
+   "date": "2026-01-20",
+   "epsEstimate": 0.39,
+   "epsActual": 0.41
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

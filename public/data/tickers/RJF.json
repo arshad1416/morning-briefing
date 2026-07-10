@@ -1,23 +1,25 @@
 {
  "ticker": "RJF",
  "name": "Raymond James Financial, Inc.",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 165.43,
- "change_pct": -1.29,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 171.34,
+ "change_pct": 3.62,
  "sector": "Financial Services",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 61.1,
-  "sma_20": 155.85,
-  "sma_50": 153.31
+  "rsi_14": 66.4,
+  "sma_20": 156.87,
+  "sma_50": 153.66
  },
  "fundamentals": {
-  "pe_ratio": 15.519231,
-  "market_cap": "32.2B",
+  "pe_ratio": 16.194706,
+  "market_cap": "33.4B",
   "beta": 0.939,
-  "dividend_yield": 0.0129
+  "dividend_yield": 0.0131
  },
  "council_analysis": {
   "score": 6

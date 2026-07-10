@@ -1,29 +1,79 @@
 {
  "ticker": "JPM",
  "name": "JP Morgan Chase & Co.",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 334.0,
- "change_pct": -1.54,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 334.67,
+ "change_pct": 1.22,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
   "near_high"
  ],
  "technical": {
-  "rsi_14": 54.5,
-  "sma_20": 326.99,
-  "sma_50": 312.85
+  "rsi_14": 52.5,
+  "sma_20": 327.99,
+  "sma_50": 313.27
  },
  "fundamentals": {
-  "pe_ratio": 15.980862,
-  "market_cap": "895.0B",
+  "pe_ratio": 16.01292,
+  "market_cap": "896.8B",
   "beta": 0.982,
-  "dividend_yield": 0.0177
+  "dividend_yield": 0.0181
  },
  "council_analysis": {
   "score": 7
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "JPM",
+   "date": "2026-07-14",
+   "epsEstimate": 5.79,
+   "epsActual": null
+  },
+  {
+   "ticker": "JPM",
+   "date": "2026-04-14",
+   "epsEstimate": 5.51,
+   "epsActual": 5.94
+  },
+  {
+   "ticker": "JPM",
+   "date": "2026-01-13",
+   "epsEstimate": 4.82,
+   "epsActual": 4.63
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "JPM",
+   "date": "2026-05-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026029344/0001628280-26-029344-index.htm"
+  },
+  {
+   "ticker": "JPM",
+   "date": "2026-02-13",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/0001628280-26-008131-index.htm"
+  },
+  {
+   "ticker": "JPM",
+   "date": "2025-11-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/0001628280-25-048859-index.htm"
+  },
+  {
+   "ticker": "JPM",
+   "date": "2025-08-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000615/0000019617-25-000615-index.htm"
+  },
+  {
+   "ticker": "JPM",
+   "date": "2025-05-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000421/0000019617-25-000421-index.htm"
+  }
+ ],
  "reddit_mentions": []
 }

@@ -1,23 +1,24 @@
 {
  "ticker": "DDOG",
  "name": "Datadog, Inc.",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 254.38,
- "change_pct": -0.95,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 267.45,
+ "change_pct": 2.44,
  "sector": "Technology",
  "signals": [
-  "extended_rsi",
+  "overbought_rsi",
   "above_ma",
+  "near_high",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 66.4,
-  "sma_20": 237.93,
-  "sma_50": 215.48
+  "rsi_14": 77.4,
+  "sma_20": 240.27,
+  "sma_50": 218.31
  },
  "fundamentals": {
-  "pe_ratio": 652.2436,
-  "market_cap": "90.5B",
+  "pe_ratio": 685.78204,
+  "market_cap": "95.2B",
   "beta": 1.543,
   "dividend_yield": null
  },

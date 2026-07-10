@@ -1,21 +1,24 @@
 {
  "ticker": "XOM",
  "name": "ExxonMobil Holdings Corporation",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 142.56,
- "change_pct": 0.61,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 138.42,
+ "change_pct": -1.92,
  "sector": "Energy",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 51.8,
-  "sma_20": 140.52,
-  "sma_50": 147.05
+  "rsi_14": 44.4,
+  "sma_20": 139.93,
+  "sma_50": 146.84
  },
  "fundamentals": {
-  "pe_ratio": 24.0,
-  "market_cap": "590.9B",
+  "pe_ratio": 23.42132,
+  "market_cap": "573.7B",
   "beta": 0.162,
-  "dividend_yield": 0.0291
+  "dividend_yield": 0.0292
  },
  "council_analysis": {
   "score": 5

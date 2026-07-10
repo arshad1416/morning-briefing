@@ -1,28 +1,79 @@
 {
  "ticker": "GS",
  "name": "Goldman Sachs Group, Inc. (The)",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 1025.43,
- "change_pct": -1.68,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 1060.47,
+ "change_pct": 2.99,
  "sector": "Financial Services",
  "signals": [
-  "oversold_rsi"
+  "rsi_dip",
+  "above_ma"
  ],
  "technical": {
-  "rsi_14": 32.9,
-  "sma_20": 1052.63,
-  "sma_50": 1005.06
+  "rsi_14": 40.7,
+  "sma_20": 1054.26,
+  "sma_50": 1007.6
  },
  "fundamentals": {
-  "pe_ratio": 18.725897,
-  "market_cap": "302.5B",
+  "pe_ratio": 19.358707,
+  "market_cap": "312.8B",
   "beta": 1.292,
-  "dividend_yield": 0.0173
+  "dividend_yield": 0.0175
  },
  "council_analysis": {
   "score": 7
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "GS",
+   "date": "2026-07-14",
+   "epsEstimate": 14.51,
+   "epsActual": null
+  },
+  {
+   "ticker": "GS",
+   "date": "2026-04-13",
+   "epsEstimate": 16.24,
+   "epsActual": 17.55
+  },
+  {
+   "ticker": "GS",
+   "date": "2026-01-15",
+   "epsEstimate": 11.76,
+   "epsActual": 14.01
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "GS",
+   "date": "2026-05-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000118/0000886982-26-000118-index.htm"
+  },
+  {
+   "ticker": "GS",
+   "date": "2026-02-25",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000091/0000886982-26-000091-index.htm"
+  },
+  {
+   "ticker": "GS",
+   "date": "2025-10-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/886982/000088698225001411/0000886982-25-001411-index.htm"
+  },
+  {
+   "ticker": "GS",
+   "date": "2025-08-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/886982/000088698225000022/0000886982-25-000022-index.htm"
+  },
+  {
+   "ticker": "GS",
+   "date": "2025-05-02",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/886982/000088698225000009/0000886982-25-000009-index.htm"
+  }
+ ],
  "reddit_mentions": []
 }

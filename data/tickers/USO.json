@@ -1,20 +1,22 @@
 {
  "ticker": "USO",
  "name": "United States Oil Fund",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 114.43,
- "change_pct": 5.06,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 109.68,
+ "change_pct": -2.26,
  "sector": null,
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 48.5,
-  "sma_20": 113.96,
-  "sma_50": 129.62
+  "rsi_14": 43.1,
+  "sma_20": 112.76,
+  "sma_50": 129.07
  },
  "fundamentals": {
-  "pe_ratio": 34.6233,
+  "pe_ratio": 33.18457,
   "market_cap": null,
   "beta": null,
   "dividend_yield": null

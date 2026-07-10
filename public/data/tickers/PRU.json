@@ -1,34 +1,35 @@
 {
  "ticker": "PRU",
  "name": "Prudential Financial, Inc.",
- "generated_at": "2026-07-09T11:45:01.813655+00:00",
- "price": 113.94,
- "change_pct": -1.32,
+ "generated_at": "2026-07-10T11:45:01.664242+00:00",
+ "price": 116.25,
+ "change_pct": 3.18,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
   "above_ma",
   "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 61.9,
-  "sma_20": 108.92,
-  "sma_50": 103.67
+  "rsi_14": 70.3,
+  "sma_20": 109.48,
+  "sma_50": 104.08
  },
  "fundamentals": {
-  "pe_ratio": 11.734809,
-  "market_cap": "39.6B",
+  "pe_ratio": 11.972194,
+  "market_cap": "40.4B",
   "beta": 0.84,
-  "dividend_yield": 0.048499999999999995
+  "dividend_yield": 0.049699999999999994
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
  "upcoming_earnings": [
   {
    "ticker": "PRU",
-   "date": "2026-07-29",
-   "epsEstimate": 3.36,
+   "date": "2026-08-04",
+   "epsEstimate": 3.38,
    "epsActual": null
   },
   {
