@@ -6,11 +6,21 @@ import { clientIp, randomId } from './util.js';
 
 const STATE_COOKIE = 'mg_oauth_state';
 const DEVICE_COOKIE = 'mg_device';
+// Set only when /start is hit with ?c=1 (from the signup page, after the
+// Terms/not-advice/not-Quebec boxes are ticked). The callback requires it
+// before minting a brand-new Google account, so "Continue with Google" on the
+// consent-free login page can't create an un-attested account.
+const CONSENT_COOKIE = 'mg_oauth_consent';
 
 export function mountOauth(app) {
   app.get('/api/auth/oauth/google/start', (c) => {
     const state = randomId();
     setCookie(c, STATE_COOKIE, state, { httpOnly: true, secure: true, sameSite: 'Lax', path: '/', maxAge: 600 });
+    // Consent attestation carried from the signup page (?c=1). Short-lived; read
+    // and cleared at the callback. Absent for the login page's Google button.
+    if (c.req.query('c') === '1') {
+      setCookie(c, CONSENT_COOKIE, '1', { httpOnly: true, secure: true, sameSite: 'Lax', path: '/', maxAge: 600 });
+    }
     const p = new URLSearchParams({
       client_id: c.env.GOOGLE_CLIENT_ID,
       redirect_uri: `${c.env.APP_URL}/api/auth/oauth/google/callback`,
@@ -60,7 +70,17 @@ export function mountOauth(app) {
       // password — an attacker could pre-register the victim's email. Linking
       // stays allowed only for OAuth/passkey-created rows (no pw_hash).
       if (existing && existing.pw_hash) {
-        return c.redirect(`${c.env.APP_URL}/#/account?error=use_password`, 302);
+        return c.redirect(`${c.env.APP_URL}/#/login?error=use_password`, 302);
+      }
+      // Consent gate for brand-new Google accounts. Read + clear the attestation
+      // cookie set by /start?c=1 (signup page). A never-seen Google email
+      // arriving without it (e.g. from the login page's Google button) is
+      // bounced to signup to accept the Terms / not-advice / not-Quebec gate
+      // rather than being created here — matching the password signup path.
+      const consented = getCookie(c, CONSENT_COOKIE) === '1';
+      deleteCookie(c, CONSENT_COOKIE, { path: '/' });
+      if (!existing && !consented) {
+        return c.redirect(`${c.env.APP_URL}/#/signup?error=consent`, 302);
       }
       const user = existing || (await createUser(c.env.DB, { email, pwHash: null, ip }));
       userId = user.id;

@@ -99,7 +99,7 @@ const Paywall = {
             <div class="pw-foot-actions">
               ${signedIn
                 ? '<button class="btn btn-ghost" id="pw-logout">Log out</button>'
-                : '<a class="btn btn-ghost" href="#/account">I already have an account</a>'}
+                : '<a class="btn btn-ghost" href="#/login">I already have an account</a>'}
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@ const Paywall = {
     app.querySelectorAll('.pw-cta').forEach((btn) => {
       btn.onclick = () => {
         const cta = btn.dataset.cta;
-        if (cta === 'trial' || cta === 'free') { window.location.hash = '#/account'; return; }
+        if (cta === 'trial' || cta === 'free') { window.location.hash = '#/signup'; return; }
         Paywall.startCheckout(cta, btn);
       };
     });

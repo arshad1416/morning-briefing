@@ -35,7 +35,11 @@ const Auth = {
     // Full reload so the nav label + all cached state reset to signed-out.
     window.location.href = '/';
   },
-  googleStart() { window.location.href = '/api/auth/oauth/google/start'; },
+  // consent=true (only from the signup page, where the Terms/not-advice/not-Quebec
+  // boxes are ticked) passes ?c=1 so the server may mint a brand-new Google
+  // account. From the login page we omit it — the server then bounces a
+  // never-seen Google email to #/signup for consent instead of creating it.
+  googleStart(consent) { window.location.href = '/api/auth/oauth/google/start' + (consent ? '?c=1' : ''); },
   async passkeyRegister() {
     const opts = await (await fetch('/api/auth/passkey/register/options', { method: 'POST', credentials: 'include' })).json();
     // @simplewebauthn/browser v11+ takes { optionsJSON }, not the options directly.

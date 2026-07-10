@@ -88,7 +88,9 @@
       <a href="#/research" class="nav-link">Research</a>
       <a href="#/charts" class="nav-link">Charts</a>
       <a href="#/models"  class="nav-link">Models</a>
-      <a href="#/account" class="nav-link" id="nav-auth">Sign Up / Login</a>
+      <a href="#/login"  class="nav-link" id="nav-login">Log in</a>
+      <a href="#/signup" class="nav-link nav-cta" id="nav-signup">Sign up</a>
+      <a href="#/account" class="nav-link" id="nav-auth" style="display:none">Account</a>
     </div>
     <button
       id="theme-toggle"
@@ -160,6 +162,7 @@
         // wires the nav affordance). Vendored WebAuthn lib first (CSP blocks CDN).
         '/assets/js/vendor/simplewebauthn-browser.umd.min.js',
         '/assets/js/auth.js',
+        '/assets/js/pages/auth-form.js',
         '/assets/js/pages/account.js',
         '/assets/js/pages/pricing.js',
         '/assets/js/pages/paywall.js',

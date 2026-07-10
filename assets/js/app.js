@@ -52,7 +52,11 @@
   Router.register('/options',       function (app)         { OptionsFlow.render(app); });
   Router.register('/maplegamma',    function (app)         { MapleGamma.renderDashboard(app); });
 
-  // Auth / billing pages (public)
+  // Auth / billing pages (public). Login and signup are now separate pages
+  // (like CompCeiling); #/account is the signed-in hub (redirects to #/login
+  // when signed out).
+  Router.register('/login',         function (app)         { return AuthForm.render(app, 'login'); });
+  Router.register('/signup',        function (app)         { return AuthForm.render(app, 'signup'); });
   Router.register('/account',       function (app)         { Account.render(app); });
   Router.register('/pricing',       function (app)         { Pricing.render(app); });
 
@@ -87,17 +91,21 @@
   // than as an inline <script> in index.html — the dynamic script loader would
   // execute an inline tag before auth.js runs, leaving Auth undefined.
   function updateAuthNav() {
-    var el = document.getElementById('nav-auth');
-    if (!el || typeof Auth === 'undefined') return;
+    var loginEl  = document.getElementById('nav-login');
+    var signupEl = document.getElementById('nav-signup');
+    var acctEl   = document.getElementById('nav-auth');
+    if (typeof Auth === 'undefined') return;
     Auth.me().then(function (me) {
-      if (me && me.email) {
-        el.textContent = me.email;
-        el.setAttribute('title', 'Signed in as ' + me.email);
-      } else {
-        el.textContent = 'Sign Up / Login';
-        el.removeAttribute('title');
+      var signedIn = !!(me && me.email);
+      // Signed out → "Log in" link + "Sign up" button. Signed in → email/account
+      // link only. Default markup (index.html) shows the signed-out pair.
+      if (loginEl)  loginEl.style.display  = signedIn ? 'none' : '';
+      if (signupEl) signupEl.style.display = signedIn ? 'none' : '';
+      if (acctEl) {
+        acctEl.style.display = signedIn ? '' : 'none';
+        if (signedIn) { acctEl.textContent = me.email; acctEl.setAttribute('title', 'Signed in as ' + me.email); }
       }
-    }).catch(function () { /* leave default "Sign Up / Login" label */ });
+    }).catch(function () { /* leave default signed-out affordances */ });
   }
   updateAuthNav();
   // Re-check on route changes so login/logout refresh the nav label (it was

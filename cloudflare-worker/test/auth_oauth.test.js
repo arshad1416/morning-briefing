@@ -21,8 +21,14 @@ describe('google oauth', () => {
     expect(res.headers.get('Set-Cookie')).toContain('mg_oauth_state=');
   });
 
-  it('callback exchanges code, creates user, sets session', async () => {
-    const start = await app.request('/api/auth/oauth/google/start', {}, env);
+  it('start with ?c=1 sets the consent cookie', async () => {
+    const res = await app.request('/api/auth/oauth/google/start?c=1', {}, env);
+    expect(res.status).toBe(302);
+    expect(res.headers.get('Set-Cookie')).toContain('mg_oauth_consent=1');
+  });
+
+  it('callback creates a new user + session when consent was given (signup Google)', async () => {
+    const start = await app.request('/api/auth/oauth/google/start?c=1', {}, env);
     const stateCookie = (start.headers.get('Set-Cookie').match(/mg_oauth_state=([^;]+)/))[1];
     const state = new URL(start.headers.get('Location')).searchParams.get('state');
 
@@ -34,11 +40,34 @@ describe('google oauth', () => {
       throw new Error('unexpected fetch ' + url);
     });
 
+    // Consent cookie present → account is minted.
     const res = await app.request(`/api/auth/oauth/google/callback?code=abc&state=${state}`,
-      { headers: { Cookie: `mg_oauth_state=${stateCookie}` } }, env);
+      { headers: { Cookie: `mg_oauth_state=${stateCookie}; mg_oauth_consent=1` } }, env);
     expect(res.status).toBe(302);
     expect(sessionCookie(res)).toContain('mg_session=');
     expect(await getUserByEmail(env.DB, 'goog@test.ca')).toBeTruthy();
+  });
+
+  it('callback bounces a brand-new Google user WITHOUT consent to signup (login-page Google)', async () => {
+    const start = await app.request('/api/auth/oauth/google/start', {}, env);
+    const stateCookie = (start.headers.get('Set-Cookie').match(/mg_oauth_state=([^;]+)/))[1];
+    const state = new URL(start.headers.get('Location')).searchParams.get('state');
+
+    vi.spyOn(globalThis, 'fetch').mockImplementation(async (url) => {
+      if (String(url).includes('oauth2.googleapis.com/token'))
+        return new Response(JSON.stringify({ access_token: 'at' }), { status: 200 });
+      if (String(url).includes('googleapis.com/oauth2/v3/userinfo'))
+        return new Response(JSON.stringify({ sub: 'g-new', email: 'unconsented@test.ca', email_verified: true }), { status: 200 });
+      throw new Error('unexpected fetch ' + url);
+    });
+
+    // No consent cookie → not created; redirected to signup to accept the gate.
+    const res = await app.request(`/api/auth/oauth/google/callback?code=abc&state=${state}`,
+      { headers: { Cookie: `mg_oauth_state=${stateCookie}` } }, env);
+    expect(res.status).toBe(302);
+    expect(res.headers.get('Location')).toContain('/#/signup?error=consent');
+    expect(sessionCookie(res)).toBe('');
+    expect(await getUserByEmail(env.DB, 'unconsented@test.ca')).toBeFalsy();
   });
 
   it('callback rejects mismatched state (CSRF)', async () => {

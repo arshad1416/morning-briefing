@@ -350,6 +350,21 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
+/* Sign-up rendered as a filled button in the nav (amber, matches .btn-primary).
+   It's a .nav-link too, so it inherits padding/radius/focus. Selectors use
+   .nav-link.nav-cta (0,2,0) so the fill wins over .nav-link.active (0,2,0,
+   declared later) on the /signup route — otherwise the button flips to the dim
+   "active" treatment when you're on its own page. */
+.nav-link.nav-cta {
+  background: var(--accent-bright);
+  color: var(--accent-on);
+  font-weight: 600;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.25), 0 8px 22px -14px rgba(240,191,102,0.55);
+}
+.nav-link.nav-cta:hover { background: var(--accent-hover); color: var(--accent-on); }
+.nav-link.nav-cta.active { background: var(--accent-bright); color: var(--accent-on); }
+.nav-link.nav-cta.active::after { display: none; }
+
 .nav-link.active {
   color: var(--accent);
   background: var(--accent-dim);
