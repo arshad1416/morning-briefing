@@ -1,0 +1,15 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "private": true,
+  "description": "E2E tests for MapleGamma charts page — mobile Safari alignment validation",
+  "scripts": {
+    "test": "npx playwright test --config=playwright.config.js",
+    "test:chrome": "npx playwright test --config=playwright.config.js --project=chromium",
+    "test:safari": "npx playwright test --config=playwright.config.js --project=mobile-safari",
+    "report": "npx playwright show-report"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.61.1"
+  }
+}
