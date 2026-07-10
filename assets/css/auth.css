@@ -208,3 +208,38 @@
 @media (prefers-reduced-motion: reduce) {
   .auth-card, .price-card, .paywall { animation: none; }
 }
+
+/* ── Account page (signed-in) — CompCeiling-style stacked cards ── */
+.acct-wrap { max-width: 560px; margin: 0 auto; padding: 28px 16px 60px; }
+.acct-title { font-family: var(--font-display, inherit); font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin: 0 0 16px; }
+.acct-card {
+  background: var(--bg-card, #1F1E1A);
+  border: 1px solid var(--border-dim, rgba(255,255,255,0.14));
+  border-radius: var(--card-radius, 12px);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+.acct-card h3 {
+  margin: 0 0 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted, #8a90a6);
+}
+.acct-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.acct-email { color: var(--text-primary); font-weight: 600; overflow-wrap: anywhere; }
+.acct-line { margin: 0 0 6px; color: var(--text-primary); font-size: 0.95rem; }
+.acct-muted { margin: 0 0 4px; color: var(--text-secondary, #8a90a6); font-size: 0.84rem; line-height: 1.5; }
+.acct-hint { margin-top: 8px; font-size: 0.76rem; }
+.acct-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.acct-badge {
+  display: inline-block; margin-left: 6px; padding: 2px 9px; border-radius: 999px;
+  font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  vertical-align: 2px;
+}
+.acct-badge.ok   { background: color-mix(in srgb, var(--green, #4CAF50) 18%, transparent); color: var(--green, #4CAF50); }
+.acct-badge.warn { background: color-mix(in srgb, var(--accent-bright, #f0bf66) 20%, transparent); color: var(--accent-bright, #f0bf66); }
+.acct-badge.off  { background: color-mix(in srgb, var(--red, #f44336) 16%, transparent); color: var(--red, #f44336); }
+.btn-sm { padding: 6px 14px; font-size: 0.8rem; min-height: 0; }
