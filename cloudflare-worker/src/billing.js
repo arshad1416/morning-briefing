@@ -126,11 +126,14 @@ export function mountBilling(app) {
     const customerCode = data.customerCode || data.customer?.customerCode;
     if (!customerCode) return c.json({ error: 'no_customer' }, 400);
 
-    // Honor any remaining free trial: first charge is scheduled at trial end;
-    // if the trial has lapsed (or none), activate today.
+    // The Helcim plan carries its OWN 7-day free trial (freeTrialPeriod=7,
+    // dateBilling="Sign-up"), so activate the subscription TODAY and let Helcim
+    // grant the trial before the first charge. Do NOT future-date to the app's
+    // trial end: a future dateActivated produced verify-only subscriptions that
+    // never persisted in Helcim (the cause of the vanished first subscription).
     const existing = await getSubscription(c.env.DB, user.id);
     const now = Date.now();
-    const startMs = existing?.trial_ends_at && existing.trial_ends_at > now ? existing.trial_ends_at : now;
+    const startMs = now;
     const pid = planId(c.env, sess.tier, sess.interval);
 
     // Body is an OBJECT wrapping a `subscriptions` array (a bare array is
@@ -155,10 +158,15 @@ export function mountBilling(app) {
     const subId = String(s.id || s.subscriptionId || '');
     const nextBill = s.dateBilling ? Date.parse(s.dateBilling) : startMs;
 
+    // Access is good through Helcim's next-bill date (≈ trial end for a fresh
+    // sub); the renewal webhook must extend it on each successful charge. Fall
+    // back to one period only if Helcim omits the date, so we don't lock out a
+    // just-paid customer while never granting free access past a real bill.
+    const fullPeriod = startMs + (sess.interval === 'annual' ? YEAR_MS : MONTH_MS);
     await upsertSubscription(c.env.DB, user.id, {
       tier: sess.tier, status: 'active', billingInterval: sess.interval,
       trialEndsAt: existing?.trial_ends_at || null,
-      periodEnd: nextBill || startMs,
+      periodEnd: nextBill || fullPeriod,
       helcimCustomerId: customerCode, helcimPlanId: String(pid), helcimSubscriptionId: subId,
     });
     return c.json({ ok: true, tier: sess.tier, interval: sess.interval });
