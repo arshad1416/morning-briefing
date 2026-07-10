@@ -230,7 +230,10 @@
             "neutral",
             "bearish",
             "bearish",
-            "neutral"
+            "bearish",
+            "neutral",
+            "neutral",
+            "bullish"
           ]
         }
       ]
@@ -387,6 +390,14 @@
     ]
   },
   "analysis_ideas": [
+    {
+      "type": "BULLISH_CONVERGENCE",
+      "tickers": [
+        "QQQ"
+      ],
+      "signal": "Positive news sentiment + heavy call buying",
+      "action": "Consider bullish bias"
+    },
     {
       "type": "BEARISH_CONVERGENCE",
       "tickers": [
