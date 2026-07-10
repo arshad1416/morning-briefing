@@ -23,7 +23,8 @@
    page's top-level blocks — one wave, front-loaded, done in <0.6s so it never
    gets in a trader's way. No markup opt-in needed. */
 #app.page-enter > * {
-  animation: pol-rise 0.42s var(--ease-out-expo) both;
+  animation: pol-rise 0.52s var(--ease-out-expo) both;
+  will-change: transform, opacity, filter;
 }
 #app.page-enter > *:nth-child(1) { animation-delay: 0s; }
 #app.page-enter > *:nth-child(2) { animation-delay: 0.045s; }
@@ -35,9 +36,11 @@
 #app.page-enter > *:nth-child(n+8) { animation-delay: 0.25s; }
 
 @keyframes pol-rise {
-  from { opacity: 0; transform: translateY(var(--pol-rise)); }
-  to   { opacity: 1; transform: none; }
+  from { opacity: 0; transform: translateY(14px); filter: blur(6px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
 }
+/* clear the will-change hint once the entrance settles (don't hold layers) */
+#app:not(.page-enter) > * { will-change: auto; }
 
 /* ---- 2. Terminal numerics ------------------------------------------------
    Columns of prices/P&L must align digit-for-digit or they can't be scanned. */
@@ -150,11 +153,38 @@ body {
 h1, h2, h3 { text-wrap: balance; }
 p { text-wrap: pretty; }
 
+
+/* ---- 8. Signature motion (impeccable: state + hierarchy, not theatrics) --- */
+
+/* Hero regime banner: one light sheen sweeps across on entrance — "live feed
+   connected," not decoration. One-shot, then gone. */
+.today-regime { position: relative; overflow: hidden; }
+.today-regime::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 34%,
+    color-mix(in srgb, var(--accent-bright) 20%, transparent) 50%, transparent 66%);
+  transform: translateX(-130%);
+  animation: pol-sheen 1.2s var(--ease-out-expo) 0.25s 1 both;
+  pointer-events: none;
+}
+@keyframes pol-sheen { to { transform: translateX(130%); } }
+
+/* Decisive button press — quick scale-down acknowledges the tap under 100ms. */
+.btn:active, .pw-cta:active, .pw-toggle-btn:active { transform: scale(0.97); }
+.btn { transition: background 0.16s ease, border-color 0.16s ease, transform 0.08s var(--ease-out-expo), box-shadow 0.16s ease; }
+
+/* Index cards get the same confident lift as pricing cards. */
+.index-card { transition: transform 0.18s var(--ease-out-expo), border-color 0.18s ease, box-shadow 0.18s ease; }
+.index-card:hover { transform: translateY(-2px); border-color: var(--accent-border); box-shadow: 0 12px 30px -20px rgba(0,0,0,0.55); }
+
 /* ---- 7. Reduced motion: everything off, instantly ------------------------ */
 @media (prefers-reduced-motion: reduce) {
   #app.page-enter > * { animation: none; }
   #app > .loading { animation: none; }
   .nav-link::after { transition: none; }
   .card, .price-card, .pw-plan, .acct-card { transition: none; }
-  .price-card:hover, .pw-plan:hover { transform: none; }
+  .price-card:hover, .pw-plan:hover, .index-card:hover { transform: none; }
+  .today-regime::after { animation: none; display: none; }
+  .btn:active, .pw-cta:active, .pw-toggle-btn:active { transform: none; }
 }
