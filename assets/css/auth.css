@@ -93,9 +93,12 @@
   margin: 4px 0 4px;
   letter-spacing: -0.01em;
 }
-.auth-sub { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 18px; }
+.auth-sub { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px; }
 
 .auth-msg { color: var(--red); font-size: 0.82rem; min-height: 1.1em; margin-bottom: 8px; }
+/* Collapse the reserved error space when empty so it doesn't pad the gap between
+   the subtitle and the email field (msg() sets textContent → :empty applies). */
+.auth-msg:empty { min-height: 0; margin-bottom: 0; }
 .auth-msg.ok { color: var(--green); }
 
 .auth-field {
