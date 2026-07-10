@@ -19,15 +19,35 @@ export async function setPassword(DB, userId, pwHash) {
 export async function getSubscription(DB, userId) {
   return DB.prepare('SELECT * FROM subscriptions WHERE user_id=?').bind(userId).first();
 }
-export async function upsertSubscription(DB, userId, { tier, status, trialEndsAt = null, periodEnd = null, helcimCustomerId = null, helcimPlanId = null }) {
+// Reconcile a Helcim webhook back to a user: prefer the subscription id, fall
+// back to the customer id.
+export async function getSubscriptionByHelcim(DB, { subscriptionId = null, customerId = null }) {
+  if (subscriptionId) {
+    const r = await DB.prepare('SELECT * FROM subscriptions WHERE helcim_subscription_id=?').bind(subscriptionId).first();
+    if (r) return r;
+  }
+  if (customerId) {
+    return DB.prepare('SELECT * FROM subscriptions WHERE helcim_customer_id=?').bind(customerId).first();
+  }
+  return null;
+}
+export async function upsertSubscription(DB, userId, { tier, status, trialEndsAt = null, periodEnd = null, helcimCustomerId = null, helcimPlanId = null, billingInterval = null, helcimSubscriptionId = null }) {
   await DB.prepare(
-    `INSERT INTO subscriptions (user_id,tier,status,trial_ends_at,current_period_end,helcim_customer_id,helcim_plan_id)
-     VALUES (?,?,?,?,?,?,?)
+    `INSERT INTO subscriptions (user_id,tier,status,trial_ends_at,current_period_end,helcim_customer_id,helcim_plan_id,billing_interval,helcim_subscription_id)
+     VALUES (?,?,?,?,?,?,?,COALESCE(?,'monthly'),?)
      ON CONFLICT(user_id) DO UPDATE SET tier=excluded.tier,status=excluded.status,
        trial_ends_at=excluded.trial_ends_at,current_period_end=excluded.current_period_end,
        helcim_customer_id=COALESCE(excluded.helcim_customer_id,subscriptions.helcim_customer_id),
-       helcim_plan_id=COALESCE(excluded.helcim_plan_id,subscriptions.helcim_plan_id)`
-  ).bind(userId, tier, status, trialEndsAt, periodEnd, helcimCustomerId, helcimPlanId).run();
+       helcim_plan_id=COALESCE(excluded.helcim_plan_id,subscriptions.helcim_plan_id),
+       billing_interval=COALESCE(excluded.billing_interval,subscriptions.billing_interval),
+       helcim_subscription_id=COALESCE(excluded.helcim_subscription_id,subscriptions.helcim_subscription_id)`
+  ).bind(userId, tier, status, trialEndsAt, periodEnd, helcimCustomerId, helcimPlanId, billingInterval, helcimSubscriptionId).run();
+}
+// Targeted state update for webhook events (keeps tier/plan intact).
+export async function updateSubscriptionState(DB, userId, { status, periodEnd = null }) {
+  await DB.prepare(
+    'UPDATE subscriptions SET status=?, current_period_end=COALESCE(?,current_period_end) WHERE user_id=?'
+  ).bind(status, periodEnd, userId).run();
 }
 export async function insertConsent(DB, userId, { termsVersion, ackVersion, quebecAttested }) {
   await DB.prepare('INSERT INTO consents (user_id,terms_version,ack_version,quebec_attested,ts) VALUES (?,?,?,?,?)')
