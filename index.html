@@ -60,7 +60,7 @@
   <script>
     (function() {
       var v = Date.now().toString(36);
-      var sheets = ['/assets/css/style.css', '/assets/css/maplegamma.css', '/assets/css/screener.css', '/assets/css/charts.css', '/assets/css/animations.css', '/assets/css/auth.css', '/assets/css/paywall.css'];
+      var sheets = ['/assets/css/style.css', '/assets/css/maplegamma.css', '/assets/css/screener.css', '/assets/css/charts.css', '/assets/css/animations.css', '/assets/css/auth.css', '/assets/css/paywall.css', '/assets/css/mobile.css'];
       sheets.forEach(function(href) {
         var l = document.createElement('link');
         l.rel = 'stylesheet';
@@ -79,7 +79,7 @@
     <a href="#/" class="nav-brand">
       <img src="/assets/img/maplegamma-logo.svg" alt="MapleGamma" height="42" style="height:42px;vertical-align:middle;margin-top:-4px">
     </a>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links">
       <a href="#/"     class="nav-link">Dashboard</a>
       <a href="#/today" class="nav-link" style="display:none">Today</a>
       <a href="#/positions" class="nav-link">Positions</a>
@@ -88,7 +88,7 @@
       <a href="#/research" class="nav-link">Research</a>
       <a href="#/charts" class="nav-link">Charts</a>
       <a href="#/models"  class="nav-link">Models</a>
-      <a href="#/account" class="nav-link" id="nav-auth">Sign in</a>
+      <a href="#/account" class="nav-link" id="nav-auth">Sign Up / Login</a>
     </div>
     <button
       id="theme-toggle"
@@ -100,6 +100,7 @@
       <span class="theme-toggle-label"></span>
     </button>
     <a href="#/maplegamma" class="nav-link-mg" title="MapleGamma GEX/DEX Dashboard" style="font-size:0.68rem;color:var(--text-muted);text-decoration:none;padding:4px 6px;border:1px solid var(--border-dim);border-radius:4px;white-space:nowrap;margin-left:4px">Γ</a>
+    <button id="nav-toggle" class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">☰</button>
   </nav>
 
   <main id="app">

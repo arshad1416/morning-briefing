@@ -148,6 +148,11 @@ const Account = {
     app.querySelector('#pkLogin').onclick = async () => {
       const ok = await Auth.passkeyLogin(v('#email')); if (ok) window.location.hash = '#/'; else msg('Passkey sign-in failed.');
     };
+    // Clear a stale validation message the moment the user edits a field, so
+    // "Password must be at least 10 characters" goes away once it's fixed.
+    ['#email', '#pw'].forEach((id) => app.querySelector(id).addEventListener('input', () => {
+      if (app.querySelector('#msg').textContent) msg('');
+    }));
     function errText(e) {
       return ({ email_taken: 'That email already has an account — log in instead.',
         quebec_not_available: 'Sorry, this service is not available to Quebec residents.',

@@ -94,15 +94,31 @@
         el.textContent = me.email;
         el.setAttribute('title', 'Signed in as ' + me.email);
       } else {
-        el.textContent = 'Sign in';
+        el.textContent = 'Sign Up / Login';
         el.removeAttribute('title');
       }
-    }).catch(function () { /* leave default "Sign in" label */ });
+    }).catch(function () { /* leave default "Sign Up / Login" label */ });
   }
   updateAuthNav();
   // Re-check on route changes so login/logout refresh the nav label (it was
   // previously painted once at load and went stale after signing out).
   window.addEventListener('hashchange', updateAuthNav);
+
+  // ── Mobile nav: hamburger toggles the .nav-links dropdown (see mobile.css) ──
+  (function () {
+    var toggle = document.getElementById('nav-toggle');
+    var bar = document.querySelector('.nav-bar');
+    var links = document.getElementById('nav-links');
+    if (!toggle || !bar) return;
+    function close() { bar.classList.remove('nav-open'); toggle.setAttribute('aria-expanded', 'false'); }
+    toggle.addEventListener('click', function () {
+      var open = bar.classList.toggle('nav-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    // Close when a link is tapped or the route changes.
+    if (links) links.addEventListener('click', function (e) { if (e.target.closest('a')) close(); });
+    window.addEventListener('hashchange', close);
+  })();
 
   // ── Shimmer loading helper ──
   window.showShimmer = function (container, lines) {
