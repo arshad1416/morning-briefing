@@ -21,19 +21,19 @@ bucket_name = "maplegamma-private"
 pattern = "maplegamma.com/api/*"
 zone_name = "maplegamma.com"
 
-# Until the 301 redirects to maplegamma.com are set up in the CF dashboard, also
-# route /api/* on the other live domains so email/password auth works there too
-# (passkeys/OAuth remain .com-only via RP_ID/redirect).
+# maplegamma.com is the canonical domain. The other hosts route their FULL
+# traffic (/*) to this Worker, which 301-redirects everything to maplegamma.com
+# (see REDIRECT_HOSTS in src/index.js) so shared links + SEO consolidate.
 [[routes]]
-pattern = "maplegamma.ca/api/*"
+pattern = "maplegamma.ca/*"
 zone_name = "maplegamma.ca"
 
 [[routes]]
-pattern = "briefing.arshadkazi.ca/api/*"
+pattern = "briefing.arshadkazi.ca/*"
 zone_name = "arshadkazi.ca"
 
 [[routes]]
-pattern = "maplegamma.arshadkazi.ca/api/*"
+pattern = "maplegamma.arshadkazi.ca/*"
 zone_name = "arshadkazi.ca"
 
 # Passkey Related Origin Requests: the browser fetches this from the rpID host
