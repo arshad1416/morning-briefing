@@ -9,7 +9,6 @@ import {
 } from './db.js';
 import { clientIp } from './util.js';
 
-<<<<<<< Updated upstream
 const WA_COOKIE = 'mg_wa_key';
 
 const DEFAULT_ORIGINS = [
@@ -24,10 +23,9 @@ function rpName(env) { return env.WEBAUTHN_RP_NAME || 'MapleGamma'; }
 function expectedOrigins(env) {
   const raw = env.WEBAUTHN_ORIGINS;
   return raw ? raw.split(',').map((s) => s.trim()).filter(Boolean) : DEFAULT_ORIGINS;
-=======
+}
 function b64url(buf) {
   return btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
->>>>>>> Stashed changes
 }
 function unb64url(s) {
   s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '=';

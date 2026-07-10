@@ -9,6 +9,12 @@ binding = "DB"
 database_name = "maplegamma"
 database_id = "6585930e-61a6-4679-a492-73b1ea643e88"
 
+# Premium data (screener/research/model JSON + charts) lives here, served ONLY
+# via the entitlement-gated /api/data/* route. Never on Pages.
+[[r2_buckets]]
+binding = "PRIVATE"
+bucket_name = "maplegamma-private"
+
 # Route auth/api on the canonical domain to this Worker (Pages serves everything
 # else). chat/feedback still work via the workers.dev URL + CORS allow-list.
 [[routes]]
@@ -30,6 +36,13 @@ zone_name = "arshadkazi.ca"
 pattern = "maplegamma.arshadkazi.ca/api/*"
 zone_name = "arshadkazi.ca"
 
+# Passkey Related Origin Requests: the browser fetches this from the rpID host
+# (maplegamma.com) during the ceremony to authorize passkeys on the other
+# domains. Canonical host only.
+[[routes]]
+pattern = "maplegamma.com/.well-known/webauthn"
+zone_name = "maplegamma.com"
+
 [vars]
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 OPENROUTER_MODEL = "deepseek/deepseek-v4-pro"
@@ -38,7 +51,6 @@ APP_URL = "https://maplegamma.com"
 MOCK_BILLING = "1"
 TERMS_VERSION = "2026-07-08"
 ACK_VERSION = "2026-07-08"
-<<<<<<< Updated upstream
 # Passkeys use ONE canonical rpID across all domains (Related Origin Requests).
 WEBAUTHN_RP_ID = "maplegamma.com"
 WEBAUTHN_RP_NAME = "MapleGamma"
@@ -64,8 +76,3 @@ GOOGLE_CLIENT_ID = "64962355277-05lc5e8hh00bogo3f5llho4qtv66m95a.apps.googleuser
 PRICE_BASIC = "49"
 PRICE_PRO = "99"
 CURRENCY = "USD"
-=======
-RP_ID = "maplegamma.com"
-RP_NAME = "MapleGamma"
-GOOGLE_CLIENT_ID = "PLACEHOLDER_WEB_CLIENT_ID"
->>>>>>> Stashed changes
