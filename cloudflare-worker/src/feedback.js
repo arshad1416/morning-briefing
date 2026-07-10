@@ -47,6 +47,17 @@ export async function handleFeedback(request, env) {
     }
   } catch (e) {}
 
+  // Durable store for the AgenticOS dashboard + the Pi feedback→kanban cron, in
+  // addition to the Telegram ping. Best-effort — never fail the request on a DB
+  // hiccup. Rows start status='new'; the cron cards bug/feature, logs general.
+  try {
+    if (env?.DB) {
+      await env.DB.prepare(
+        "INSERT INTO feedback (id, type, message, email, page, ip, created_at, status) VALUES (?,?,?,?,?,?,?, 'new')"
+      ).bind(crypto.randomUUID(), type, message, email || null, page || null, ip, Date.now()).run();
+    }
+  } catch (e) {}
+
   try {
     const tg = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
