@@ -13,12 +13,12 @@ const Pricing = {
       if (res.ok) { Auth._me = undefined; window.location.hash = '#/'; }
       else alert('Checkout unavailable right now.');
     };
-    const proTag = me?.entitlement?.entitled ? '' : '<div class="price-badge">14-day trial</div>';
+    const proTag = me?.entitlement?.entitled ? '' : '<div class="price-badge">7-day trial</div>';
     app.innerHTML = `
       <div class="section">
         <div class="pricing-head">
           <div class="auth-title">Choose your plan</div>
-          <div class="auth-sub">The daily Dashboard is always free. Unlock the rest with a 14-day trial — no card required.</div>
+          <div class="auth-sub">The daily Dashboard is always free. Unlock the rest with a 7-day trial — no card required.</div>
         </div>
         <div class="pricing-grid">
           <div class="price-card">

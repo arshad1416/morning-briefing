@@ -32,7 +32,9 @@ const Dashboard = {
       State.get('gex', '/data/maplegamma-data.json').catch(() => null),
       State.get('verdict', '/data/verdict.json').catch(() => null),
       State.get('reddit', '/data/reddit-sentiment.json').catch(() => null),
-      State.get('screener', '/data/screener-data.json').catch(() => null),
+      // Free Dashboard uses the PUBLIC lite teaser (sector_breakdown only).
+      // Distinct key from the gated /screener page so the cache can't collide.
+      State.get('screenerLite', '/data/screener-lite.json').catch(() => null),
     ]);
 
 

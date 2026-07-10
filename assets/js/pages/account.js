@@ -27,7 +27,7 @@ const Account = {
       <div class="auth-wrap">
         <div class="auth-card">
           <div class="auth-title">Welcome to MapleGamma</div>
-          <div class="auth-sub">Sign in, or create an account to start your 14-day free trial.</div>
+          <div class="auth-sub">Sign in, or create an account to start your 7-day free trial.</div>
           <div id="msg" class="auth-msg"></div>
           <input id="email" class="auth-field" type="email" autocomplete="email" placeholder="Email">
           <input id="pw" class="auth-field" type="password" autocomplete="current-password" placeholder="Password (10+ characters)">

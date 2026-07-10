@@ -56,12 +56,15 @@
   Router.register('/account',       function (app)         { Account.render(app); });
   Router.register('/pricing',       function (app)         { Pricing.render(app); });
 
-  // Paid routes — gated by entitlement tier (guard redirects if not allowed)
-  Router.register('/positions',     function (app)         { PaperTrades.render(app); }, function () { return Auth.guard('basic'); });
-  Router.register('/research',      function (app)         { Research.render(app); },     function () { return Auth.guard('basic'); });
-  Router.register('/screener',      function (app)         { Screener.render(app); },     function () { return Auth.guard('basic'); });
-  Router.register('/charts',        function (app)         { Charts.render(app); },       function () { return Auth.guard('pro'); });
-  Router.register('/models',        function (app)         { Models.render(app); },       function () { return Auth.guard('pro'); });
+  // Paid routes — Gate: render the page then (for non-subscribers) blur it and
+  // overlay the paywall. The handler MUST `return` the render promise so the
+  // Router awaits it before calling Paywall.lock — otherwise the async page
+  // render resolves AFTER the overlay and overwrites it (paywall bypass).
+  Router.register('/positions',     function (app)         { return PaperTrades.render(app); }, function () { return Auth.guard('basic'); });
+  Router.register('/research',      function (app)         { return Research.render(app); },     function () { return Auth.guard('basic'); });
+  Router.register('/screener',      function (app)         { return Screener.render(app); },     function () { return Auth.guard('basic'); });
+  Router.register('/charts',        function (app)         { return Charts.render(app); },       function () { return Auth.guard('pro'); });
+  Router.register('/models',        function (app)         { return Models.render(app); },       function () { return Auth.guard('pro'); });
 
   // Legacy redirects
   Router.register('/mg',            function (app)         { window.location.hash = '#/maplegamma'; });
