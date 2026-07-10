@@ -119,7 +119,10 @@
 
 .auth-legal { font-size: 0.78rem; color: var(--text-secondary); margin: 12px 0 4px; line-height: 1.55; }
 .auth-legal label { display: flex; gap: 8px; align-items: flex-start; margin: 5px 0; cursor: pointer; }
-.auth-legal input[type="checkbox"] { margin-top: 2px; accent-color: var(--accent-bright); width: 15px; height: 15px; flex: 0 0 15px; }
+/* The global `min-height:44px` (WCAG target) inflates the checkbox to 44px so the
+   control floats mid-block; the <label> is the real 44px target, so pin the box to
+   16px and top-align it with the first text line. */
+.auth-legal input[type="checkbox"] { margin: 3px 0 0; accent-color: var(--accent-bright); width: 16px; height: 16px; min-height: 0; flex: 0 0 16px; align-self: flex-start; }
 .auth-legal a { color: var(--accent-bright); text-decoration: none; }
 .auth-legal a:hover { text-decoration: underline; }
 
