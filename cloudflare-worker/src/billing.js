@@ -157,9 +157,16 @@ export function mountBilling(app) {
       console.warn('billing webhook: HELCIM_WEBHOOK_VERIFIER unset — ignoring');
       return c.json({ ok: true, ignored: true });
     }
-    const sig = c.req.header('webhook-signature') || '';
-    const expected = await sha256Hex(raw + verifier);
-    if (!sig || sig !== expected) return c.json({ error: 'bad_signature' }, 401);
+    // Helcim: HMAC-SHA256 over `${webhook-id}.${webhook-timestamp}.${body}`,
+    // keyed by the BASE64-DECODED verifier token, signature base64-encoded. The
+    // webhook-signature header may carry space-separated "v1,<sig>" tokens.
+    const signedContent = `${c.req.header('webhook-id') || ''}.${c.req.header('webhook-timestamp') || ''}.${raw}`;
+    const keyBytes = Uint8Array.from(atob(verifier), (ch) => ch.charCodeAt(0));
+    const macKey = await crypto.subtle.importKey('raw', keyBytes, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+    const mac = await crypto.subtle.sign('HMAC', macKey, new TextEncoder().encode(signedContent));
+    const expected = btoa(String.fromCharCode(...new Uint8Array(mac)));
+    const provided = (c.req.header('webhook-signature') || '').split(' ').map((s) => (s.includes(',') ? s.split(',')[1] : s));
+    if (!provided.includes(expected)) return c.json({ error: 'bad_signature' }, 401);
 
     let evt; try { evt = JSON.parse(raw); } catch { return c.json({ error: 'bad_body' }, 400); }
     const subId = String(evt.subscriptionId || evt.id || evt.data?.subscriptionId || '');
