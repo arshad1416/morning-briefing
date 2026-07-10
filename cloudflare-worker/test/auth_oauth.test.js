@@ -45,7 +45,11 @@ describe('google oauth', () => {
       { headers: { Cookie: `mg_oauth_state=${stateCookie}; mg_oauth_consent=1` } }, env);
     expect(res.status).toBe(302);
     expect(sessionCookie(res)).toContain('mg_session=');
-    expect(await getUserByEmail(env.DB, 'goog@test.ca')).toBeTruthy();
+    const u = await getUserByEmail(env.DB, 'goog@test.ca');
+    expect(u).toBeTruthy();
+    // A consent row must be written (server-side audit trail, parity with password signup).
+    const consent = await env.DB.prepare('SELECT COUNT(*) n FROM consents WHERE user_id=?').bind(u.id).first();
+    expect(consent.n).toBe(1);
   });
 
   it('callback bounces a brand-new Google user WITHOUT consent to signup (login-page Google)', async () => {

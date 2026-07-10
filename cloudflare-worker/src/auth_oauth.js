@@ -1,5 +1,5 @@
 import { getCookie, setCookie, deleteCookie } from 'hono/cookie';
-import { createUser, getUserByEmail, getOauthIdentity, linkOauthIdentity, logAuthEvent } from './db.js';
+import { createUser, getUserByEmail, getOauthIdentity, linkOauthIdentity, logAuthEvent, insertConsent } from './db.js';
 import { issueSession, setSessionCookie } from './session.js';
 import { startTrial } from './trial.js';
 import { clientIp, randomId } from './util.js';
@@ -86,6 +86,13 @@ export function mountOauth(app) {
       userId = user.id;
       await linkOauthIdentity(c.env.DB, { provider: 'google', providerUserId: profile.sub, userId, email });
       if (!existing) {
+        // Record the consent attested on the signup page (we only reach account
+        // creation when the ?c=1 consent cookie was set — i.e. the Terms /
+        // not-advice / not-Quebec boxes were ticked). Gives Google sign-ups the
+        // same server-side consent audit trail as the password path.
+        await insertConsent(c.env.DB, userId, {
+          termsVersion: c.env.TERMS_VERSION, ackVersion: c.env.ACK_VERSION, quebecAttested: true,
+        });
         await logAuthEvent(c.env.DB, { email, ip, type: 'signup' });
         const deviceId = getCookie(c, DEVICE_COOKIE) || randomId();
         setCookie(c, DEVICE_COOKIE, deviceId, { httpOnly: true, secure: true, sameSite: 'Lax', path: '/', maxAge: 400 * 24 * 3600 });
