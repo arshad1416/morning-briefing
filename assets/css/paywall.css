@@ -25,8 +25,8 @@
   justify-content: center;
   padding: 40px 16px 60px;
   background: radial-gradient(120% 90% at 50% 0,
-    color-mix(in srgb, var(--bg, #0b0e1a) 55%, transparent) 0%,
-    color-mix(in srgb, var(--bg, #0b0e1a) 82%, transparent) 60%);
+    color-mix(in srgb, var(--bg-page, #171612) 85%, transparent) 0%,
+    color-mix(in srgb, var(--bg-page, #171612) 96%, transparent) 55%);
   backdrop-filter: blur(2px);
 }
 /* No outer box — the heading, toggle and (already-boxed) plan cards sit directly
@@ -86,9 +86,9 @@
 /* Billing-interval toggle (packages component) */
 .pw-toggle { display: flex; width: fit-content; margin: 0 auto 18px; gap: 3px; padding: 3px; background: var(--bg-inset, #2A2824); border: 1px solid var(--border-dim, rgba(255,255,255,0.14)); border-radius: 999px; }
 .pw-toggle-btn { border: none; background: transparent; color: var(--text-secondary, #c9cdd8); font-size: 0.82rem; font-weight: 600; padding: 7px 18px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: background .15s, color .15s; }
-.pw-toggle-btn.active { background: var(--accent-bright, #f4c430); color: #17181d; }
+.pw-toggle-btn.active { background: var(--accent-bright, #f4c430); color: var(--accent-on, #17181d); }
 .pw-save { font-size: 0.66rem; font-weight: 700; color: var(--green, #16c784); white-space: nowrap; }
-.pw-toggle-btn.active .pw-save { color: #10592f; }
+.pw-toggle-btn.active .pw-save { color: var(--accent-on, #10592f); opacity: 0.82; }
 
 /* /pricing reuses the overlay's package cards without the dialog chrome */
 .pw-card-standalone { background: transparent; border: none; box-shadow: none; padding: 0; max-width: 980px; margin: 0 auto; }
