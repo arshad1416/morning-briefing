@@ -38,11 +38,9 @@
     el.__pol = 1;
 
     var dec = (numStr.split('.')[1] || '').length;
-    var grouped = numStr.indexOf(',') >= 0;
+    // Always group thousands so the comma never flickers in/out mid-count.
     function fmt(v) {
-      var s = grouped
-        ? v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec })
-        : v.toFixed(dec);
+      var s = v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
       return sign + pre + s + suf;
     }
 
