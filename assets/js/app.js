@@ -86,7 +86,7 @@
   // Runs here (after auth.js is loaded, since app.js is ordered last) rather
   // than as an inline <script> in index.html — the dynamic script loader would
   // execute an inline tag before auth.js runs, leaving Auth undefined.
-  (function wireAuthNav() {
+  function updateAuthNav() {
     var el = document.getElementById('nav-auth');
     if (!el || typeof Auth === 'undefined') return;
     Auth.me().then(function (me) {
@@ -95,9 +95,14 @@
         el.setAttribute('title', 'Signed in as ' + me.email);
       } else {
         el.textContent = 'Sign in';
+        el.removeAttribute('title');
       }
     }).catch(function () { /* leave default "Sign in" label */ });
-  })();
+  }
+  updateAuthNav();
+  // Re-check on route changes so login/logout refresh the nav label (it was
+  // previously painted once at load and went stale after signing out).
+  window.addEventListener('hashchange', updateAuthNav);
 
   // ── Shimmer loading helper ──
   window.showShimmer = function (container, lines) {

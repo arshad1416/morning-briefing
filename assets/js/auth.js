@@ -32,7 +32,8 @@ const Auth = {
   async logout() {
     await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
     this._me = null;
-    window.location.hash = '#/';
+    // Full reload so the nav label + all cached state reset to signed-out.
+    window.location.href = '/';
   },
   googleStart() { window.location.href = '/api/auth/oauth/google/start'; },
   async passkeyRegister() {
