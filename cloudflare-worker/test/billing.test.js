@@ -9,7 +9,7 @@ beforeAll(async () => {
   await migrate();
   Object.assign(env, {
     SESSION_SECRET: 'test-secret', MOCK_BILLING: '0',
-    PRICE_BASIC: '49', PRICE_PRO: '99', CURRENCY: 'USD',
+    PRICE_BASIC: '49', PRICE_PRO: '99', CURRENCY: 'CAD',
     HELCIM_API_TOKEN: 'tok',
     HELCIM_PLAN_BASIC_MONTHLY: '101', HELCIM_PLAN_BASIC_ANNUAL: '102',
     HELCIM_PLAN_PRO_MONTHLY: '103', HELCIM_PLAN_PRO_ANNUAL: '104',
@@ -50,8 +50,10 @@ describe('helcim billing', () => {
     expect(res.status).toBe(200);
     expect((await res.json()).checkoutToken).toBe('CHK');
     expect(billKey(res)).toMatch(/mg_bill_key=/);
+    // verify = card capture only; Helcim requires amount 0 (the recurring amount
+    // is set on the subscription in /confirm). Currency follows env (CAD).
     const bodySent = JSON.parse(spy.mock.calls[0][1].body);
-    expect(bodySent).toMatchObject({ paymentType: 'verify', amount: 990, currency: 'USD' });
+    expect(bodySent).toMatchObject({ paymentType: 'verify', amount: 0, currency: 'CAD' });
   });
 
   it('confirm validates the hash and creates the subscription', async () => {
@@ -68,7 +70,7 @@ describe('helcim billing', () => {
       new Response(JSON.stringify({ data: [{ id: 555, dateBilling: '2030-01-01' }] }), { status: 200 }));
     const res = await post('/api/billing/confirm', `${cookie}; ${bill}`, { data, hash });
     expect(res.status).toBe(200);
-    const sent = JSON.parse(subSpy.mock.calls[0][1].body)[0];
+    const sent = JSON.parse(subSpy.mock.calls[0][1].body).subscriptions[0];
     expect(sent).toMatchObject({ paymentPlanId: 101, customerCode: 'CST9', recurringAmount: 49 });
     const sub = await getSubscription(env.DB, u.id);
     expect(sub.status).toBe('active');

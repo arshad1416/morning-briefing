@@ -38,13 +38,18 @@ async function sha256Hex(str) {
 
 // Thin Helcim v2 client. api-token comes from a Worker secret; never logged.
 async function helcim(env, path, method, body) {
+  const headers = {
+    'api-token': env.HELCIM_API_TOKEN,
+    'content-type': 'application/json',
+    accept: 'application/json',
+  };
+  // Helcim requires a unique idempotency-key (max 25 chars) on mutating requests.
+  if (method && method !== 'GET') {
+    headers['idempotency-key'] = crypto.randomUUID().replace(/-/g, '').slice(0, 25);
+  }
   const res = await fetch(`${HELCIM_API}${path}`, {
     method,
-    headers: {
-      'api-token': env.HELCIM_API_TOKEN,
-      'content-type': 'application/json',
-      accept: 'application/json',
-    },
+    headers,
     body: body ? JSON.stringify(body) : undefined,
   });
   let data = null;
@@ -71,12 +76,19 @@ export function mountBilling(app) {
     }
     if (!planId(c.env, tier, interval)) return c.json({ error: 'plan_not_configured' }, 503);
 
+    // Mirrors CompCeiling's initializeCheckout (src/lib/helcim.ts): verify mode
+    // requires amount 0, and the card must be stored as the customer's DEFAULT
+    // payment method or the subscription has nothing to bill.
     const init = await helcim(c.env, '/helcim-pay/initialize', 'POST', {
       paymentType: 'verify',
-      amount: amountFor(c.env, tier, interval),
-      currency: c.env.CURRENCY || 'USD',
+      amount: 0,
+      currency: c.env.CURRENCY || 'CAD',
+      setAsDefaultPaymentMethod: 1,
       customerRequest: { contactName: user.email, email: user.email },
+      paymentMethod: 'cc',
     });
+    // Never log init.data here — it contains the secretToken.
+    if (!init.ok) console.log('[billing] init failed', tier, interval, 'status', init.status);
     if (!init.ok || !init.data.checkoutToken) {
       return c.json({ error: 'helcim_init_failed', detail: init.data }, 502);
     }
@@ -98,12 +110,18 @@ export function mountBilling(app) {
     if (!sess || sess.user_id !== user.id) return c.json({ error: 'checkout_expired' }, 400);
 
     const body = await c.req.json().catch(() => ({}));
-    const data = body.data;
-    const hash = body.hash;
+    // HelcimPay success envelope: { data: { hash, data: {transaction} }, status, ... }.
+    // Tolerate a flatter { data, hash } shape too.
+    const env = (body.data && body.data.data) ? body.data : body;
+    const data = env.data;   // transaction object (customerCode, transactionId, cardToken, …)
+    const hash = env.hash;
     if (!data || !hash) return c.json({ error: 'bad_response' }, 400);
     // Helcim: hash = sha256_hex( JSON.stringify(transactionData) + secretToken )
     const expected = await sha256Hex(JSON.stringify(data) + sess.secret_token);
-    if (expected !== hash) return c.json({ error: 'hash_mismatch' }, 400);
+    if (expected !== hash) {
+      console.log('[billing] confirm hash mismatch; payload keys', Object.keys(data || {}).join(','));
+      return c.json({ error: 'hash_mismatch' }, 400);
+    }
 
     const customerCode = data.customerCode || data.customer?.customerCode;
     if (!customerCode) return c.json({ error: 'no_customer' }, 400);
@@ -115,14 +133,25 @@ export function mountBilling(app) {
     const startMs = existing?.trial_ends_at && existing.trial_ends_at > now ? existing.trial_ends_at : now;
     const pid = planId(c.env, sess.tier, sess.interval);
 
-    const sub = await helcim(c.env, '/subscriptions', 'POST', [{
-      paymentPlanId: Number(pid),
-      customerCode,
-      recurringAmount: amountFor(c.env, sess.tier, sess.interval),
-      dateActivated: ymd(startMs),
-    }]);
-    if (!sub.ok) return c.json({ error: 'subscription_failed', detail: sub.data }, 502);
-    const s = Array.isArray(sub.data?.data) ? sub.data.data[0] : (sub.data?.data || sub.data || {});
+    // Body is an OBJECT wrapping a `subscriptions` array (a bare array is
+    // rejected as "Request is malformed").
+    // Mirrors CompCeiling's createSubscription: object wrapping a `subscriptions`
+    // array, dateActivated YYYY-MM-DD, numeric paymentPlanId, paymentMethod "card".
+    const sub = await helcim(c.env, '/subscriptions', 'POST', {
+      subscriptions: [{
+        dateActivated: ymd(startMs),
+        paymentPlanId: Number(pid),
+        customerCode,
+        recurringAmount: amountFor(c.env, sess.tier, sess.interval),
+        paymentMethod: 'card',
+      }],
+    });
+    if (!sub.ok) {
+      console.log('[billing] subscription create failed', sub.status, JSON.stringify(sub.data).slice(0, 300));
+      return c.json({ error: 'subscription_failed', detail: sub.data }, 502);
+    }
+    const arr = sub.data?.data || sub.data?.subscriptions || sub.data;
+    const s = Array.isArray(arr) ? (arr[0] || {}) : (arr || {});
     const subId = String(s.id || s.subscriptionId || '');
     const nextBill = s.dateBilling ? Date.parse(s.dateBilling) : startMs;
 
