@@ -12,10 +12,15 @@
 }
 
 .charts-header {
+  display: -webkit-flex;
   display: flex;
+  -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-align-items: center;
   align-items: center;
   gap: 12px;
+  row-gap: 12px;
+  column-gap: 12px;
   margin-bottom: 16px;
   padding: 12px 16px;
   background: var(--bg-card);
@@ -29,10 +34,15 @@
 }
 
 .charts-controls {
+  display: -webkit-flex;
   display: flex;
+  -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-align-items: center;
   align-items: center;
   gap: 12px;
+  row-gap: 12px;
+  column-gap: 12px;
   margin-left: auto;
 }
 
@@ -99,8 +109,11 @@
   font-family: var(--font-mono, 'Spline Sans Mono', monospace);
   border-bottom: 1px solid var(--border-subtle);
   transition: background 0.1s;
+  display: -webkit-flex;
   display: flex;
+  -webkit-justify-content: space-between;
   justify-content: space-between;
+  -webkit-align-items: center;
   align-items: center;
 }
 
@@ -121,8 +134,11 @@
 
 /* ── Timeframe Toggle ── */
 .timeframe-group {
+  display: -webkit-flex;
   display: flex;
   gap: 2px;
+  row-gap: 2px;
+  column-gap: 2px;
   background: var(--bg-inset);
   border-radius: var(--radius-sm, 4px);
   padding: 2px;
@@ -155,9 +171,12 @@
 
 /* ── Chart Containers ── */
 .charts-main {
+  display: -webkit-flex;
   display: flex;
+  -webkit-flex-direction: column;
   flex-direction: column;
   gap: 4px;
+  row-gap: 4px;
 }
 
 .chart-card {
@@ -165,6 +184,7 @@
   border: 1px solid var(--border-dim);
   border-radius: var(--radius-lg, 8px);
   overflow: hidden;
+  -webkit-mask-image: radial-gradient(white, black);
   animation: fadeIn 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -232,9 +252,13 @@
 
 /* ── Chart info bar ── */
 .chart-info-bar {
+  display: -webkit-flex;
   display: flex;
+  -webkit-align-items: center;
   align-items: center;
   gap: 16px;
+  row-gap: 16px;
+  column-gap: 16px;
   padding: 8px 16px;
   background: var(--bg-inset);
   border-top: 1px solid var(--border-subtle);
@@ -243,9 +267,13 @@
 }
 
 .chart-info-item {
+  display: -webkit-flex;
   display: flex;
+  -webkit-align-items: center;
   align-items: center;
   gap: 4px;
+  row-gap: 4px;
+  column-gap: 4px;
 }
 
 .chart-info-label {
@@ -281,18 +309,26 @@
 
 /* ── Legend / Indicator labels ── */
 .chart-legend {
+  display: -webkit-flex;
   display: flex;
+  -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
   gap: 12px;
+  row-gap: 12px;
+  column-gap: 12px;
   padding: 8px 16px;
   border-top: 1px solid var(--border-subtle);
   font-size: 0.72rem;
 }
 
 .chart-legend-item {
+  display: -webkit-flex;
   display: flex;
+  -webkit-align-items: center;
   align-items: center;
   gap: 5px;
+  row-gap: 5px;
+  column-gap: 5px;
   font-family: var(--font-mono, 'Spline Sans Mono', monospace);
   color: var(--text-secondary);
 }
@@ -347,17 +383,67 @@
   }
 }
 
+/* Narrow viewports — iPhone SE, older iPhones (≤400px) */
+@media (max-width: 400px) {
+  .charts-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    row-gap: 8px;
+    column-gap: 0;
+  }
+
+  .ticker-selector-wrapper {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .timeframe-group {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .timeframe-btn {
+    padding: 4px 8px;
+    font-size: 0.62rem;
+  }
+
+  .charts-header {
+    padding: 10px 12px;
+  }
+
+  .chart-info-bar {
+    gap: 6px;
+    row-gap: 6px;
+    column-gap: 6px;
+    padding: 6px 10px;
+    font-size: 0.68rem;
+  }
+
+  .chart-legend {
+    gap: 6px;
+    row-gap: 6px;
+    column-gap: 6px;
+    padding: 6px 10px;
+  }
+}
+
 /* ── Drawing Tools Toolbar ── */
 .drawing-toolbar {
+  display: -webkit-flex;
   display: flex;
+  -webkit-align-items: center;
   align-items: center;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
   gap: 4px;
+  row-gap: 4px;
+  column-gap: 4px;
   padding: 6px 12px;
   background: var(--bg-card);
   border: 1px solid var(--border-dim);
   border-radius: var(--radius-lg, 8px);
   margin-bottom: 8px;
-  flex-wrap: wrap;
 }
 .drawing-btn {
   width: 32px;

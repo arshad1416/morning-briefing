@@ -187,18 +187,21 @@ const Charts = {
         </div>
       `;
 
-      // Render charts
-      this._renderCharts(ohlcv);
+      // Render charts after DOM layout is complete — Safari needs this
+      // rAF to ensure clientWidth is available (avoids 800px fallback flash)
+      requestAnimationFrame(() => {
+        this._renderCharts(ohlcv);
 
-      // Mark indicator panes as loaded for fade-in animation
-      var rsiPane = document.getElementById('rsi-chart-container');
-      var atrPane = document.getElementById('atr-chart-container');
-      if (rsiPane) rsiPane.classList.add('loaded');
-      if (atrPane) atrPane.classList.add('loaded');
+        // Mark indicator panes as loaded for fade-in animation
+        var rsiPane = document.getElementById('rsi-chart-container');
+        var atrPane = document.getElementById('atr-chart-container');
+        if (rsiPane) rsiPane.classList.add('loaded');
+        if (atrPane) atrPane.classList.add('loaded');
 
-      // Wire drawing tools and render saved annotations
-      this._wireDrawingTools();
-      this._renderAnnotations();
+        // Wire drawing tools and render saved annotations
+        this._wireDrawingTools();
+        this._renderAnnotations();
+      });
 
     } catch (err) {
       console.error('Charts load error:', err);
