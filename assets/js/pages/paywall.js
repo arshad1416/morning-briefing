@@ -27,8 +27,8 @@ const Paywall = {
   price(tier) {
     const p = this._plans[tier];
     return this._interval === 'annual'
-      ? { big: `$${p.annual}`, unit: '/yr USD' }
-      : { big: `$${p.monthly}`, unit: '/mo USD' };
+      ? { big: `$${p.annual}`, unit: '/yr CAD' }
+      : { big: `$${p.monthly}`, unit: '/mo CAD' };
   },
 
   // Subscription package cards (with billing-interval toggle), reused by the
