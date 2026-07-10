@@ -1,36 +1,40 @@
 /* Paywall — blur + pricing overlay, and the standalone /pricing grid.
    Theme-aware via the site's CSS variables. */
 
-.pw-locked { position: relative; min-height: 78vh; }
+.pw-locked { position: relative; }
+/* Blurred page content sits BEHIND as an absolute backdrop; it must not add its
+   own height (that + the overlay's old overflow-y:auto caused a nested scrollbar). */
 .pw-blur {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   filter: blur(7px) saturate(0.9);
   pointer-events: none;
   user-select: none;
   opacity: 0.5;
-  max-height: 88vh;
   overflow: hidden;
 }
+/* Overlay flows in the document (grows with content → one page scrollbar), no
+   longer an absolutely-positioned overflow container. */
 .pw-overlay {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  z-index: 1;
+  min-height: 70vh;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   padding: 40px 16px 60px;
-  overflow-y: auto;
   background: radial-gradient(120% 90% at 50% 0,
     color-mix(in srgb, var(--bg, #0b0e1a) 55%, transparent) 0%,
     color-mix(in srgb, var(--bg, #0b0e1a) 82%, transparent) 60%);
   backdrop-filter: blur(2px);
 }
+/* No outer box — the heading, toggle and (already-boxed) plan cards sit directly
+   on the blurred backdrop + scrim. Avoids a container-in-container + its scrollbar. */
 .pw-card {
   width: 100%;
   max-width: 940px;
-  background: var(--bg-card, #0e1220);
-  border: 1px solid var(--border-dim, #1c2236);
-  border-radius: 16px;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
-  padding: 28px 26px 22px;
+  padding: 8px 6px 20px;
   text-align: center;
 }
 .pw-lock { font-size: 1.6rem; }
