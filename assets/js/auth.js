@@ -38,7 +38,8 @@ const Auth = {
   googleStart() { window.location.href = '/api/auth/oauth/google/start'; },
   async passkeyRegister() {
     const opts = await (await fetch('/api/auth/passkey/register/options', { method: 'POST', credentials: 'include' })).json();
-    const att = await SimpleWebAuthnBrowser.startRegistration(opts);
+    // @simplewebauthn/browser v11+ takes { optionsJSON }, not the options directly.
+    const att = await SimpleWebAuthnBrowser.startRegistration({ optionsJSON: opts });
     const res = await fetch('/api/auth/passkey/register/verify', {
       method: 'POST', credentials: 'include',
       headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ challengeId: opts.challengeId, response: att }),
@@ -50,7 +51,7 @@ const Auth = {
       method: 'POST', credentials: 'include',
       headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }),
     })).json();
-    const asrt = await SimpleWebAuthnBrowser.startAuthentication(opts);
+    const asrt = await SimpleWebAuthnBrowser.startAuthentication({ optionsJSON: opts });
     const res = await fetch('/api/auth/passkey/login/verify', {
       method: 'POST', credentials: 'include',
       headers: { 'Content-Type': 'application/json' },

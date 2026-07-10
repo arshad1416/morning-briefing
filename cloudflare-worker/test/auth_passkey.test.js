@@ -19,9 +19,12 @@ vi.mock('@simplewebauthn/server', async (importOriginal) => {
 beforeAll(async () => {
   await migrate();
   env.SESSION_SECRET = 'test-secret';
-  env.RP_ID = 'briefing.arshadkazi.ca';
-  env.RP_NAME = 'MapleGamma';
-  env.APP_URL = 'https://briefing.arshadkazi.ca';
+  // Use the same env var names as production (WEBAUTHN_*), so the handlers'
+  // rpId()/rpName()/expectedOrigins() helpers resolve the way they do live.
+  env.WEBAUTHN_RP_ID = 'maplegamma.com';
+  env.WEBAUTHN_RP_NAME = 'MapleGamma';
+  env.WEBAUTHN_ORIGINS = 'https://maplegamma.com';
+  env.APP_URL = 'https://maplegamma.com';
 });
 afterEach(() => vi.restoreAllMocks());
 

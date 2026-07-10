@@ -37,7 +37,7 @@ export function mountPasskey(app) {
     const { user } = c.get('session');
     const existing = await getCredentialsByUser(c.env.DB, user.id);
     const options = await generateRegistrationOptions({
-      rpName: c.env.RP_NAME, rpID: c.env.RP_ID,
+      rpName: rpName(c.env), rpID: rpId(c.env),
       userID: new TextEncoder().encode(user.id), userName: user.email,
       attestationType: 'none',
       excludeCredentials: existing.map((cr) => ({ id: cr.credential_id })),
@@ -56,7 +56,7 @@ export function mountPasskey(app) {
     try {
       result = await verifyRegistrationResponse({
         response, expectedChallenge: ch.challenge,
-        expectedOrigin: c.env.APP_URL, expectedRPID: c.env.RP_ID,
+        expectedOrigin: expectedOrigins(c.env), expectedRPID: rpId(c.env),
       });
     } catch { return c.json({ error: 'verify_failed' }, 400); }
     if (!result.verified || !result.registrationInfo) return c.json({ error: 'not_verified' }, 400);
@@ -77,7 +77,7 @@ export function mountPasskey(app) {
     const user = email ? await getUserByEmail(c.env.DB, email) : null;
     const creds = user ? await getCredentialsByUser(c.env.DB, user.id) : [];
     const options = await generateAuthenticationOptions({
-      rpID: c.env.RP_ID,
+      rpID: rpId(c.env),
       allowCredentials: creds.map((cr) => ({ id: cr.credential_id, transports: (cr.transports || '').split(',').filter(Boolean) })),
       userVerification: 'preferred',
     });
@@ -95,7 +95,7 @@ export function mountPasskey(app) {
     try {
       result = await verifyAuthenticationResponse({
         response, expectedChallenge: ch.challenge,
-        expectedOrigin: c.env.APP_URL, expectedRPID: c.env.RP_ID,
+        expectedOrigin: expectedOrigins(c.env), expectedRPID: rpId(c.env),
         // v11.0.0: `credential` param is a WebAuthnCredential { id, publicKey (Uint8Array), counter }
         credential: { id: cred.credential_id, publicKey: unb64url(cred.public_key), counter: cred.counter },
       });

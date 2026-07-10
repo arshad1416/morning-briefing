@@ -89,7 +89,13 @@ const Account = {
         try {
           const ok = await Auth.passkeyRegister();
           pkMsg.textContent = ok ? 'Passkey added — you can now sign in without a password.' : 'Passkey setup failed — please try again.';
-        } catch { pkMsg.textContent = 'Passkey setup was cancelled.'; }
+        } catch (e) {
+          // Only a real user-dismissal is a "cancel"; surface anything else so
+          // config/registration errors aren't silently mislabeled.
+          pkMsg.textContent = (e && (e.name === 'NotAllowedError' || e.name === 'AbortError'))
+            ? 'Passkey setup was cancelled or timed out.'
+            : 'Passkey setup failed — ' + ((e && e.message) || 'please try again') + '.';
+        }
         pk.disabled = false;
       };
       app.querySelector('#lo').onclick = (e) => { e.preventDefault(); Auth.logout(); }; return;
