@@ -7,6 +7,7 @@ import { mountOauth } from './auth_oauth.js';
 import { mountPasskey } from './auth_passkey.js';
 import { mountBilling } from './billing.js';
 import { mountDataGate } from './data_gate.js';
+import { mountBriefing } from './briefing.js';
 
 const app = new Hono();
 
@@ -54,6 +55,7 @@ mountOauth(app);
 mountPasskey(app);
 mountBilling(app);
 mountDataGate(app);
+mountBriefing(app);
 
 app.get('/api/health', (c) => c.json({ ok: true }));
 
