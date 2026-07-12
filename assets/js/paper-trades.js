@@ -276,8 +276,8 @@ const PaperTrades = {
   async render(app) {
     app.innerHTML = '<div class="loading">Loading trade data...</div>';
     const [data, accuracy] = await Promise.all([
-      Utils.fetchJSON('/data/paper_trades.json'),
-      Utils.fetchJSON('/data/accuracy.json')
+      Utils.fetchJSON('/api/data/paper_trades.json'),
+      Utils.fetchJSON('/api/data/accuracy.json')
     ]);
 
     let html = '<div class="section">';

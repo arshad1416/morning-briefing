@@ -24,7 +24,7 @@ const Dashboard = {
     
     const [marketData, tradesData, analysisData, gexData, verdictData, redditData, screenerData] = await Promise.all([
       State.get('latest', '/data/latest.json').catch(() => null),
-      State.get('trades', '/data/paper_trades.json').catch(() => null),
+      State.get('trades', '/api/data/paper_trades.json').catch(() => null),
       State.get('analysis', '/data/analysis.json').catch(() => null),
       // gex_data.json has no writer anymore (dead since ~Jun 11) — read the
       // actively-maintained maplegamma-data.json instead (push_gex.py, every

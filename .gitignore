@@ -26,6 +26,8 @@ data/sec_filings.json
 public/data/sec_filings.json
 data/journal.json
 public/data/journal.json
+data/paper_trades.json
+public/data/paper_trades.json
 data/walk_forward_v2.json
 public/data/walk_forward_v2.json
 data/walk_forward.json
@@ -53,3 +55,4 @@ public/data/*.bak*
 e2e/test-results/
 e2e/results.json
 e2e/node_modules/
+cloudflare-worker/dist/
