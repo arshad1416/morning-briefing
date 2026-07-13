@@ -1,24 +1,25 @@
 {
  "ticker": "WU",
  "name": "Western Union Company (The)",
- "generated_at": "2026-07-10T11:45:01.664242+00:00",
- "price": 7.77,
- "change_pct": 0.65,
+ "generated_at": "2026-07-13T17:49:57.773881+00:00",
+ "price": 7.93,
+ "change_pct": 1.08,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
+  "overbought_rsi",
+  "above_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 70.5,
-  "sma_20": 7.45,
-  "sma_50": 7.89
+  "rsi_14": 77.2,
+  "sma_20": 7.54,
+  "sma_50": 7.86
  },
  "fundamentals": {
-  "pe_ratio": 5.8863635,
-  "market_cap": "2.4B",
+  "pe_ratio": 5.827206,
+  "market_cap": "2.5B",
   "beta": 0.499,
-  "dividend_yield": 0.12179999999999999
+  "dividend_yield": 0.1199
  },
  "council_analysis": {
   "score": 5

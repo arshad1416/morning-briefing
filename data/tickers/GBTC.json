@@ -1,15 +1,18 @@
 {
  "ticker": "GBTC",
  "name": "Grayscale Bitcoin Trust (BTC)",
- "generated_at": "2026-07-10T11:45:01.664242+00:00",
- "price": 48.62,
- "change_pct": 0.8,
+ "generated_at": "2026-07-13T17:49:57.773881+00:00",
+ "price": 48.04,
+ "change_pct": -3.07,
  "sector": null,
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.6,
-  "sma_20": 48.35,
-  "sma_50": 54.27
+  "rsi_14": 43.2,
+  "sma_20": 48.38,
+  "sma_50": 53.87
  },
  "fundamentals": {
   "pe_ratio": null,

@@ -1,24 +1,25 @@
 {
  "ticker": "WDC",
  "name": "Western Digital Corporation",
- "generated_at": "2026-07-10T11:45:01.664242+00:00",
- "price": 587.28,
- "change_pct": 6.72,
+ "generated_at": "2026-07-13T17:49:57.773881+00:00",
+ "price": 541.07,
+ "change_pct": -7.13,
  "sector": "Technology",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 39.1,
-  "sma_20": 617.97,
-  "sma_50": 542.63
+  "rsi_14": 33.0,
+  "sma_20": 622.72,
+  "sma_50": 548.78
  },
  "fundamentals": {
-  "pe_ratio": 33.986397,
-  "market_cap": "202.4B",
+  "pe_ratio": 32.36065,
+  "market_cap": "186.5B",
   "beta": 2.166,
-  "dividend_yield": 0.0011
+  "dividend_yield": 0.001
  },
  "council_analysis": {
   "score": 5

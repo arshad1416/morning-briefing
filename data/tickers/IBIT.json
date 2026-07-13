@@ -1,15 +1,18 @@
 {
  "ticker": "IBIT",
  "name": "iShares Bitcoin Trust ETF",
- "generated_at": "2026-07-10T11:45:01.664242+00:00",
- "price": 35.54,
- "change_pct": 0.88,
+ "generated_at": "2026-07-13T17:49:57.773881+00:00",
+ "price": 35.12,
+ "change_pct": -3.05,
  "sector": null,
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 46.0,
-  "sma_20": 35.32,
-  "sma_50": 39.61
+  "rsi_14": 43.4,
+  "sma_20": 35.35,
+  "sma_50": 39.33
  },
  "fundamentals": {
   "pe_ratio": null,

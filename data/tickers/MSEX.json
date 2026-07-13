@@ -1,21 +1,24 @@
 {
  "ticker": "MSEX",
  "name": "Middlesex Water Company",
- "generated_at": "2026-07-10T11:45:01.664242+00:00",
- "price": 54.13,
- "change_pct": -1.29,
+ "generated_at": "2026-07-13T17:49:57.773881+00:00",
+ "price": 55.09,
+ "change_pct": 0.15,
  "sector": "Utilities",
- "signals": [],
+ "signals": [
+  "extended_rsi",
+  "above_ma"
+ ],
  "technical": {
-  "rsi_14": 61.8,
-  "sma_20": 54.23,
-  "sma_50": 52.74
+  "rsi_14": 67.7,
+  "sma_20": 54.45,
+  "sma_50": 52.85
  },
  "fundamentals": {
-  "pe_ratio": 22.554167,
+  "pe_ratio": 22.954166,
   "market_cap": "1.0B",
   "beta": 0.769,
-  "dividend_yield": 0.0259
+  "dividend_yield": 0.0258
  },
  "council_analysis": {
   "score": 5

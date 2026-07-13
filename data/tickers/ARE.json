@@ -1,21 +1,24 @@
 {
  "ticker": "ARE",
  "name": "Alexandria Real Estate Equities",
- "generated_at": "2026-07-10T11:45:01.664242+00:00",
- "price": 48.66,
- "change_pct": 1.29,
+ "generated_at": "2026-07-13T17:49:57.773881+00:00",
+ "price": 47.81,
+ "change_pct": -0.15,
  "sector": "Real Estate",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 50.3,
-  "sma_20": 51.3,
-  "sma_50": 48.39
+  "rsi_14": 41.8,
+  "sma_20": 50.89,
+  "sma_50": 48.69
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "8.5B",
+  "market_cap": "8.3B",
   "beta": 1.183,
-  "dividend_yield": 0.06
+  "dividend_yield": 0.0602
  },
  "council_analysis": {
   "score": 5

@@ -1,80 +1,30 @@
 {
  "ticker": "V",
  "name": "Visa Inc.",
- "generated_at": "2026-07-10T11:45:01.664242+00:00",
- "price": 347.37,
- "change_pct": -0.05,
+ "generated_at": "2026-07-13T17:49:57.773881+00:00",
+ "price": 358.27,
+ "change_pct": 2.66,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
   "above_ma",
-  "near_high",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 64.8,
-  "sma_20": 336.77,
-  "sma_50": 329.14
+  "rsi_14": 74.6,
+  "sma_20": 340.07,
+  "sma_50": 330.44
  },
  "fundamentals": {
-  "pe_ratio": 30.28509,
-  "market_cap": "660.6B",
+  "pe_ratio": 31.207756,
+  "market_cap": "681.3B",
   "beta": 0.754,
   "dividend_yield": 0.0077
  },
  "council_analysis": {
-  "score": 6
+  "score": 4
  },
- "upcoming_earnings": [
-  {
-   "ticker": "V",
-   "date": "2026-07-28",
-   "epsEstimate": 3.22,
-   "epsActual": null
-  },
-  {
-   "ticker": "V",
-   "date": "2026-04-28",
-   "epsEstimate": 3.1,
-   "epsActual": 3.31
-  },
-  {
-   "ticker": "V",
-   "date": "2026-01-29",
-   "epsEstimate": 3.14,
-   "epsActual": 3.17
-  }
- ],
- "recent_sec_filings": [
-  {
-   "ticker": "V",
-   "date": "2026-04-28",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316126000079/0001403161-26-000079-index.htm"
-  },
-  {
-   "ticker": "V",
-   "date": "2026-01-29",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316126000045/0001403161-26-000045-index.htm"
-  },
-  {
-   "ticker": "V",
-   "date": "2025-11-06",
-   "form": "Annual Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316125000089/0001403161-25-000089-index.htm"
-  },
-  {
-   "ticker": "V",
-   "date": "2025-07-29",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316125000052/0001403161-25-000052-index.htm"
-  },
-  {
-   "ticker": "V",
-   "date": "2025-04-29",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316125000037/0001403161-25-000037-index.htm"
-  }
- ],
+ "upcoming_earnings": [],
+ "recent_sec_filings": [],
  "reddit_mentions": []
 }

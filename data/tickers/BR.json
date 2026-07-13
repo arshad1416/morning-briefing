@@ -1,19 +1,22 @@
 {
  "ticker": "BR",
  "name": "Broadridge Financial Solutions,",
- "generated_at": "2026-07-10T11:45:01.664242+00:00",
- "price": 146.44,
- "change_pct": -0.43,
+ "generated_at": "2026-07-13T17:49:57.773881+00:00",
+ "price": 151.48,
+ "change_pct": 2.72,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "extended_rsi",
+  "above_ma"
+ ],
  "technical": {
-  "rsi_14": 61.1,
-  "sma_20": 141.45,
-  "sma_50": 146.78
+  "rsi_14": 74.6,
+  "sma_20": 141.98,
+  "sma_50": 146.43
  },
  "fundamentals": {
-  "pe_ratio": 15.662032,
-  "market_cap": "16.9B",
+  "pe_ratio": 16.201069,
+  "market_cap": "17.5B",
   "beta": 0.903,
   "dividend_yield": 0.0265
  },

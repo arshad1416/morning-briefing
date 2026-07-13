@@ -1,15 +1,18 @@
 {
  "ticker": "BITO",
  "name": "ProShares Bitcoin ETF",
- "generated_at": "2026-07-10T11:45:01.664242+00:00",
- "price": 8.52,
- "change_pct": 0.89,
+ "generated_at": "2026-07-13T17:49:57.773881+00:00",
+ "price": 8.41,
+ "change_pct": -3.03,
  "sector": null,
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.7,
-  "sma_20": 8.46,
-  "sma_50": 9.52
+  "rsi_14": 42.9,
+  "sma_20": 8.47,
+  "sma_50": 9.44
  },
  "fundamentals": {
   "pe_ratio": null,

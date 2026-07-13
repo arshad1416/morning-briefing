@@ -1,50 +1,30 @@
 {
  "ticker": "PRU",
  "name": "Prudential Financial, Inc.",
- "generated_at": "2026-07-10T11:45:01.664242+00:00",
- "price": 116.25,
- "change_pct": 3.18,
+ "generated_at": "2026-07-13T17:49:57.773881+00:00",
+ "price": 116.99,
+ "change_pct": 1.4,
  "sector": "Financial Services",
  "signals": [
   "extended_rsi",
   "above_ma",
-  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 70.3,
-  "sma_20": 109.48,
-  "sma_50": 104.08
+  "rsi_14": 70.5,
+  "sma_20": 110.46,
+  "sma_50": 104.89
  },
  "fundamentals": {
-  "pe_ratio": 11.972194,
-  "market_cap": "40.4B",
+  "pe_ratio": 12.048404,
+  "market_cap": "40.6B",
   "beta": 0.84,
-  "dividend_yield": 0.049699999999999994
+  "dividend_yield": 0.048499999999999995
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
- "upcoming_earnings": [
-  {
-   "ticker": "PRU",
-   "date": "2026-08-04",
-   "epsEstimate": 3.38,
-   "epsActual": null
-  },
-  {
-   "ticker": "PRU",
-   "date": "2026-05-05",
-   "epsEstimate": 3.1,
-   "epsActual": 3.61
-  },
-  {
-   "ticker": "PRU",
-   "date": "2026-02-03",
-   "epsEstimate": 3.37,
-   "epsActual": 2.55
-  }
- ],
+ "upcoming_earnings": [],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

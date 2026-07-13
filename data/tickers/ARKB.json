@@ -1,15 +1,18 @@
 {
  "ticker": "ARKB",
  "name": "ARK 21Shares Bitcoin ETF",
- "generated_at": "2026-07-10T11:45:01.664242+00:00",
- "price": 20.8,
- "change_pct": 0.82,
+ "generated_at": "2026-07-13T17:49:57.773881+00:00",
+ "price": 20.56,
+ "change_pct": -3.02,
  "sector": null,
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.8,
-  "sma_20": 20.67,
-  "sma_50": 23.19
+  "rsi_14": 43.4,
+  "sma_20": 20.69,
+  "sma_50": 23.02
  },
  "fundamentals": {
   "pe_ratio": null,

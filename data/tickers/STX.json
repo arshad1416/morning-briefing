@@ -1,24 +1,25 @@
 {
  "ticker": "STX",
  "name": "Seagate Technology Holdings PLC",
- "generated_at": "2026-07-10T11:45:01.664242+00:00",
- "price": 916.81,
- "change_pct": 6.6,
+ "generated_at": "2026-07-13T17:49:57.773881+00:00",
+ "price": 849.91,
+ "change_pct": -6.64,
  "sector": "Technology",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 39.1,
-  "sma_20": 949.4,
-  "sma_50": 862.19
+  "rsi_14": 32.8,
+  "sma_20": 951.93,
+  "sma_50": 872.43
  },
  "fundamentals": {
-  "pe_ratio": 86.65501,
-  "market_cap": "205.6B",
+  "pe_ratio": 80.48343,
+  "market_cap": "190.6B",
   "beta": 2.067,
-  "dividend_yield": 0.0034000000000000002
+  "dividend_yield": 0.0033
  },
  "council_analysis": {
   "score": 5
