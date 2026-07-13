@@ -481,7 +481,8 @@ export default function MapleGammaLanding() {
               Start free. Upgrade when it pays for itself.
             </h2>
             <p className="mt-4 text-[var(--color-text-tertiary)]">
-              No card required to explore the daily verdict.
+              The daily dashboard is always free. Unlock the rest with a 7-day trial — no card
+              required.
             </p>
           </motion.div>
 
@@ -490,20 +491,34 @@ export default function MapleGammaLanding() {
             initial="hidden"
             whileInView="show"
             viewport={viewport}
-            className="mt-12 grid items-stretch gap-6 sm:grid-cols-2"
+            className="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             <motion.div variants={fadeUp}>
               <PricingCard
                 name="Free"
                 price="$0"
                 period="forever"
-                blurb="A daily read on the market's mood."
+                blurb="The daily dashboard, always free."
                 cta="Create account"
                 features={[
-                  "Daily verdict on 5 core tickers",
-                  "Basic GEX snapshot",
-                  "Delayed news feed",
-                  "Community watchlist",
+                  "Market regime & indices",
+                  "Headlines & Reddit pulse",
+                  "GEX/DEX snapshot",
+                ]}
+              />
+            </motion.div>
+
+            <motion.div variants={fadeUp}>
+              <PricingCard
+                name="Basic"
+                price="$49"
+                period="/ month CAD"
+                blurb="Everything in Free, plus the full research desk."
+                cta="Start 7-day free trial"
+                features={[
+                  "Full Screener — all tickers, scored",
+                  "Research: analysis, news, earnings, SEC",
+                  "Reddit + prediction-market sentiment",
                 ]}
               />
             </motion.div>
@@ -511,21 +526,29 @@ export default function MapleGammaLanding() {
             <motion.div variants={fadeUp}>
               <PricingCard
                 name="Pro"
-                price="$29"
-                period="/ month"
-                blurb="The full intelligence stack, real time."
-                cta="Go Pro"
+                price="$99"
+                period="/ month CAD"
+                blurb="Everything in Basic, plus charts, models & the AI council."
+                cta="Start 7-day free trial"
                 featured
                 features={[
-                  "All 59 tickers, live GEX & DEX",
-                  "AI price predictions & ranges",
-                  "Real-time news + sentiment",
-                  "The Verdict bar on every symbol",
-                  "26-year backtested regimes",
+                  "Interactive charts — candles, RSI, ATR",
+                  "Model accuracy & walk-forward backtests",
+                  "Prediction engine + council history",
                 ]}
               />
             </motion.div>
           </motion.div>
+
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={viewport}
+            className="mt-8 text-center text-sm text-[var(--color-text-tertiary)]"
+          >
+            Annual billing: $490 / $990 CAD per year — 2 months free. Cancel anytime.
+          </motion.p>
         </section>
       </main>
 
