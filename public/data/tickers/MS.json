@@ -1,7 +1,7 @@
 {
  "ticker": "MS",
  "name": "Morgan Stanley",
- "generated_at": "2026-07-13T17:49:57.773881+00:00",
+ "generated_at": "2026-07-13T22:26:30.388013+00:00",
  "price": 219.69,
  "change_pct": -1.17,
  "sector": "Financial Services",
@@ -23,7 +23,26 @@
  "council_analysis": {
   "score": 7
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "MS",
+   "date": "2026-07-15",
+   "epsEstimate": 2.93,
+   "epsActual": null
+  },
+  {
+   "ticker": "MS",
+   "date": "2026-04-15",
+   "epsEstimate": 3.02,
+   "epsActual": 3.43
+  },
+  {
+   "ticker": "MS",
+   "date": "2026-01-15",
+   "epsEstimate": 2.45,
+   "epsActual": 2.68
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }
