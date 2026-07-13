@@ -50,7 +50,7 @@ const Research = {
     if (marketData?.generated_at) html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Last updated: ${this.formatTimestamp(marketData.generated_at)}</div>`;
 
     // ── Audio Briefing Player ──
-    var todayStr = new Date().toISOString().slice(0, 10);
+    var todayStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto' }).format(new Date()); // Eastern, matches the Pi publishing schedule (UTC rolled over at 8pm EDT and hid today's briefing)
     var audioUrl = '/data/audio/briefing-' + todayStr + '.mp3';
     html += '<div class="card" style="margin-bottom:12px;padding:12px 16px">';
     html += '<div style="display:flex;align-items:center;gap:12px">';
@@ -388,7 +388,7 @@ const Research = {
     const earningsData = await Utils.fetchJSON('/data/earnings.json').catch(() => null);
     if (earningsData?.calendar?.length) {
       if (earningsData.generated_at) html += `<div style="color:var(--text-muted);font-size:0.75rem;margin-bottom:12px">Last updated: ${this.formatTimestamp(earningsData.generated_at)}</div>`;
-      const today = new Date().toISOString().slice(0, 10);
+      const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto' }).format(new Date());
       const upcoming = earningsData.calendar.filter(r => r.date >= today).sort((a, b) => a.date.localeCompare(b.date));
       const recent = earningsData.calendar.filter(r => r.date < today).slice(0, 20);
       const table = (rows, title, showActual) => {
