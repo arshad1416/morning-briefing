@@ -31,7 +31,7 @@ export function DeltaBadge({ value, suffix = '%', className = '' }: DeltaBadgePr
 
   return (
     <span
-      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-[var(--radius-chip)] text-sm font-medium ${className}`}
+      className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-[var(--radius-chip)] text-xs font-medium ${className}`}
       style={{
         color,
         backgroundColor: bg,

@@ -38,9 +38,9 @@ export function ConvictionGauge({ value, size = 140, className = '' }: Convictio
     return `M ${s.x} ${s.y} A ${radius} ${radius} 0 ${largeArc} 1 ${e.x} ${e.y}`;
   }
 
-  // Color: bearish (red) → neutral (yellow) → bullish (green)
-  const hue = normalized < 0.5 ? 0 + normalized * 2 * 40 : 40 + (normalized - 0.5) * 2 * 110;
-  const color = `hsl(${hue}, 75%, 55%)`;
+  // Color: token stops — bearish below 4, cautious 4–6, bullish above 6
+  const color =
+    normalized < 0.4 ? 'var(--color-bear)' : normalized <= 0.6 ? 'var(--color-caution)' : 'var(--color-bull)';
 
   return (
     <div className={`relative inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
@@ -60,6 +60,7 @@ export function ConvictionGauge({ value, size = 140, className = '' }: Convictio
           stroke={color}
           strokeWidth={strokeWidth}
           strokeLinecap="round"
+          style={{ filter: `drop-shadow(0 0 6px color-mix(in srgb, ${color} 55%, transparent))` }}
         />
       </svg>
       {/* Center value */}

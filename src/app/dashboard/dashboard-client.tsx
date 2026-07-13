@@ -1,7 +1,7 @@
 // app/dashboard/dashboard-client.tsx — The Briefing (client component)
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BentoGrid, BentoTile } from '@/components/layout/BentoGrid';
 import { VerdictBar } from '@/components/feature/verdict/VerdictBar';
 import { IndicesCard } from '@/components/feature/market/IndicesCard';
@@ -13,9 +13,32 @@ import { FomcCountdown } from '@/components/feature/calendar/FomcCountdown';
 import { NewsFeed } from '@/components/feature/news/NewsFeed';
 import { EarningsIntelligence, ScenarioSimulator, TimeMachine } from '@/components/feature/MissedOpportunities';
 
+function BriefingDate() {
+  // Render the date only after mount — build-time HTML must match the first client render.
+  const [today, setToday] = useState<string | null>(null);
+  useEffect(() => {
+    setToday(
+      new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+    );
+  }, []);
+
+  return (
+    <p className="text-xs text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]" style={{ fontFamily: 'var(--font-mono)' }}>
+      {today ?? ' '}
+    </p>
+  );
+}
+
 export function DashboardClient() {
   return (
     <div className="space-y-4">
+      <header className="pt-1 pb-2">
+        <BriefingDate />
+        <h1 className="text-2xl font-semibold tracking-tight text-[var(--color-text-primary)] mt-1">
+          The Briefing
+        </h1>
+      </header>
+
       <BentoGrid>
         {/* A1: Verdict hero */}
         <BentoTile span="hero">

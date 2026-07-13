@@ -23,7 +23,12 @@ export function DayPnLCard() {
         <div className="h-2 bg-[var(--color-bg-elevated)] rounded-full overflow-hidden">
           <div className="h-full rounded-full" style={{ width: `${deployedPct}%`, backgroundColor: 'var(--color-accent)' }} />
         </div>
-        <Sparkline data={sparkData} title="Equity trend" />
+        <Sparkline
+          data={sparkData}
+          fill
+          color={sparkData[sparkData.length - 1] >= sparkData[0] ? 'var(--color-bull)' : 'var(--color-bear)'}
+          title="Equity trend"
+        />
       </div>
     </Surface>
   );

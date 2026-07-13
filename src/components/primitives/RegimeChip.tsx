@@ -19,8 +19,12 @@ export function RegimeChip({ regime, className = '' }: RegimeChipProps) {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-[var(--radius-chip)] text-xs font-semibold uppercase tracking-wider ${className}`}
-      style={{ color: config.color, backgroundColor: config.bg }}
+      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-[var(--radius-chip)] text-xs font-semibold uppercase tracking-wider border ${className}`}
+      style={{
+        color: config.color,
+        backgroundColor: config.bg,
+        borderColor: `color-mix(in srgb, ${config.color} 25%, transparent)`,
+      }}
     >
       <span aria-hidden="true">{config.glyph}</span>
       <span>{config.label}</span>

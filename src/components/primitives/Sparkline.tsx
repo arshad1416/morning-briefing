@@ -8,11 +8,12 @@ interface SparklineProps {
   width?: number;
   height?: number;
   color?: string;
+  fill?: boolean;
   className?: string;
   title?: string;
 }
 
-export function Sparkline({ data, width = 120, height = 32, color = 'var(--color-accent)', className = '', title }: SparklineProps) {
+export function Sparkline({ data, width = 120, height = 32, color = 'var(--color-accent)', fill, className = '', title }: SparklineProps) {
   if (!data.length) return null;
 
   const min = Math.min(...data);
@@ -20,13 +21,13 @@ export function Sparkline({ data, width = 120, height = 32, color = 'var(--color
   const range = max - min || 1;
   const padding = 2;
 
-  const points = data
-    .map((v, i) => {
-      const x = padding + (i / (data.length - 1)) * (width - padding * 2);
-      const y = padding + (1 - (v - min) / range) * (height - padding * 2);
-      return `${x},${y}`;
-    })
-    .join(' ');
+  const coords = data.map((v, i) => {
+    const x = padding + (i / (data.length - 1)) * (width - padding * 2);
+    const y = padding + (1 - (v - min) / range) * (height - padding * 2);
+    return { x, y };
+  });
+  const points = coords.map(({ x, y }) => `${x},${y}`).join(' ');
+  const areaPoints = `${points} ${coords[coords.length - 1].x},${height - padding} ${coords[0].x},${height - padding}`;
 
   return (
     <svg
@@ -38,6 +39,7 @@ export function Sparkline({ data, width = 120, height = 32, color = 'var(--color
       aria-label={title || 'Sparkline chart'}
     >
       {title && <title>{title}</title>}
+      {fill && <polygon points={areaPoints} fill={color} opacity={0.08} />}
       <polyline
         points={points}
         fill="none"

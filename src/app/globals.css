@@ -1,46 +1,53 @@
 @import "tailwindcss";
 
 @theme {
-  /* ---- Surfaces (dark base) ---- */
-  --color-bg-base: #0A0B0D;
-  --color-bg-surface: #121316;
-  --color-bg-elevated: #1A1C20;
-  --color-bg-overlay: #22252A;
-  --color-border-subtle: #24272D;
-  --color-border-default: #383C44;
+  /* ---- Surfaces (dark base — rich off-black, zinc-tinted) ---- */
+  --color-bg-base: #09090B;
+  --color-bg-surface: #0E0E11;
+  --color-bg-elevated: #16161A;
+  --color-bg-overlay: #1C1C21;
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-border-default: rgba(255, 255, 255, 0.10);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
 
   /* ---- Text (all ≥4.5:1 on bg-base) ---- */
-  --color-text-primary: #F2F4F7;
-  --color-text-secondary: #A7AEBA;
-  --color-text-tertiary: #8A91A0;
+  --color-text-primary: #F4F4F5;
+  --color-text-secondary: #A1A1AA;
+  --color-text-tertiary: #7C7C87;
 
-  /* ---- Semantic: direction ---- */
-  --color-bull: #2DD4A7;
-  --color-bull-soft: #0E3B33;
-  --color-bear: #FF5C72;
-  --color-bear-soft: #3A1620;
-  --color-neutral: #8B93A1;
-  --color-caution: #FFB020;
+  /* ---- Semantic: direction (emerald = support/calls, electric red = resistance/puts) ---- */
+  --color-bull: #10B981;
+  --color-bull-soft: rgba(16, 185, 129, 0.10);
+  --color-bear: #FF4557;
+  --color-bear-soft: rgba(255, 69, 87, 0.10);
+  --color-neutral: #8B8B96;
+  --color-caution: #EAB308;
 
-  /* ---- Brand ---- */
-  --color-accent: #7C6CFF;
-  --color-accent-fg: #9A8CFF;
-  --color-maple: #F0883E;
+  /* ---- Brand: signature maple orange ---- */
+  --color-accent: #FF7A1A;
+  --color-accent-fg: #FF9A4D;
+  --color-accent-dim: rgba(255, 122, 26, 0.10);
+  --color-on-accent: #1A0C02;
+  --color-maple: #FF7A1A;
 
   /* ---- Conviction gradient ---- */
-  --gradient-conviction: linear-gradient(90deg, #FF5C72 0%, #FFB020 50%, #2DD4A7 100%);
+  --gradient-conviction: linear-gradient(90deg, #FF4557 0%, #EAB308 50%, #10B981 100%);
 
   /* ---- Type ---- */
-  --font-sans: "Geist", system-ui, -apple-system, sans-serif;
+  --font-sans: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
 
   /* ---- Spacing & radius ---- */
-  --radius-tile: 14px;
+  --radius-tile: 16px;
   --radius-chip: 8px;
 
   /* ---- Elevation ---- */
-  --shadow-tile: 0 1px 0 0 rgba(255,255,255,.03) inset, 0 8px 24px -12px rgba(0,0,0,.6);
-  --shadow-accent: 0 0 0 1px var(--color-accent), 0 0 24px -6px var(--color-accent);
+  --shadow-tile: 0 1px 0 0 rgba(255,255,255,.04) inset, 0 16px 40px -20px rgba(0,0,0,.8);
+  --shadow-accent: 0 0 0 1px rgba(255,122,26,.25), 0 0 40px -10px rgba(255,122,26,.35);
+
+  /* ---- Motion ---- */
+  --animate-marquee: marquee 45s linear infinite;
 }
 
 /* ---- Base ---- */
@@ -64,6 +71,12 @@ body {
 [data-numeric], .font-mono, .stat-value {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
+}
+
+/* ---- Display serif is single-weight (Instrument Serif 400) ---- */
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
 }
 
 /* ---- Focus ring ---- */
@@ -95,20 +108,30 @@ body {
   }
 }
 
-/* ---- Light theme override ---- */
+/* ---- Light theme override (dark is the flagship) ---- */
 :root[data-theme="light"] {
-  --color-bg-base: #FBFBFD;
+  --color-bg-base: #FAFAF9;
   --color-bg-surface: #FFFFFF;
-  --color-bg-elevated: #F5F5F7;
-  --color-bg-overlay: #ECECF0;
-  --color-border-subtle: #E0E0E5;
-  --color-border-default: #C8C8D0;
-  --color-text-primary: #0A0B0D;
-  --color-text-secondary: #4A4E5A;
-  --color-text-tertiary: #6B6F7A;
-  --color-bull-soft: #D4F5E9;
-  --color-bear-soft: #FFE4EA;
-  --shadow-tile: 0 1px 0 0 rgba(0,0,0,.04) inset, 0 4px 12px -4px rgba(0,0,0,.1);
+  --color-bg-elevated: #F4F4F5;
+  --color-bg-overlay: #ECECEE;
+  --color-border-subtle: rgba(0, 0, 0, 0.08);
+  --color-border-default: rgba(0, 0, 0, 0.14);
+  --color-border-strong: rgba(0, 0, 0, 0.22);
+  --color-text-primary: #111113;
+  --color-text-secondary: #52525B;
+  --color-text-tertiary: #6E6E76;
+  --color-bull: #059669;
+  --color-bull-soft: rgba(5, 150, 105, 0.10);
+  --color-bear: #DC2626;
+  --color-bear-soft: rgba(220, 38, 38, 0.08);
+  --color-caution: #A16207;
+  --color-accent: #C2410C;
+  --color-accent-fg: #9A3412;
+  --color-accent-dim: rgba(194, 65, 12, 0.10);
+  --color-on-accent: #FFFFFF;
+  --color-maple: #C2410C;
+  --shadow-tile: 0 1px 0 0 rgba(0,0,0,.03) inset, 0 8px 24px -12px rgba(0,0,0,.10);
+  --shadow-accent: 0 0 0 1px rgba(194,65,12,.25), 0 0 24px -8px rgba(194,65,12,.20);
   color-scheme: light;
 }
 
@@ -153,4 +176,44 @@ body {
   .span-half   { grid-column: span 6; }
   .span-third  { grid-column: span 4; }
   .span-quarter{ grid-column: span 3; }
+}
+
+/* ---- Ticker marquee ---- */
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.ticker-mask {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: var(--animate-marquee);
+  will-change: transform;
+}
+.ticker-mask:hover .ticker-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+  .ticker-mask {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+  .ticker-track [data-dupe] { display: none; }
+}
+
+/* ---- Radial glow behind key metrics (decorative; parent must be relative) ---- */
+.glow-orb {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 240px;
+  height: 240px;
+  border-radius: 9999px;
+  background: radial-gradient(closest-side, var(--glow-color, rgba(255,122,26,.12)), transparent 70%);
+  filter: blur(32px);
 }
