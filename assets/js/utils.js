@@ -52,7 +52,7 @@ const Utils = {
 
   // Premium files live behind the hard gate: fetch them from /api/data/* with
   // credentials (subscriber-only). Must mirror the Worker's data_gate.js set.
-  _PRIVATE_RE: /\/data\/(charts\/|screener-data\.json|morning_analysis\.json|maplegamma_analysis\.json|web-news\.json|polymarket_sentiment\.json|earnings\.json|sec_filings\.json|journal\.json|walk_forward(_v2)?\.json|strategy_improvement(_b)?\.json|trade_outcomes(_b)?\.json|prediction-engine\.json|simulation\.json|accuracy\.json|council_history\.json)/,
+  _PRIVATE_RE: /\/data\/(charts\/|screener-data\.json|morning_analysis\.json|maplegamma_analysis\.json|web-news\.json|polymarket_sentiment\.json|earnings\.json|sec_filings\.json|journal\.json|walk_forward(_v2)?\.json|strategy_improvement(_b)?\.json|trade_outcomes(_b)?\.json|prediction-engine\.json|simulation\.json|ibkr_(account|positions|trades)\.json|accuracy\.json|council_history\.json)/,
 
   /** Safe JSON fetch with error handling. Premium files route through the gate. */
   async fetchJSON(url) {
