@@ -1,0 +1,12 @@
+# Cloudflare Pages headers — applies to the Next.js static export in out/
+# Later rules override same-named headers (Cache-Control) from /* for their paths.
+
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://secure.helcim.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://morning-briefing-chat.rcobwq7u.workers.dev https://secure.helcim.app; frame-src https://secure.helcim.app; img-src 'self' data:
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/data/*
+  Cache-Control: public, max-age=0, must-revalidate

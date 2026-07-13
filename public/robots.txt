@@ -1,0 +1,23 @@
+# maplegamma.com — all crawlers welcome, including AI agents.
+# Machine-readable data endpoints are documented in /llms.txt
+
+User-agent: *
+Disallow: /api/
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://maplegamma.com/sitemap.xml
