@@ -16,6 +16,7 @@ const PRO_FILES = new Set([
   'walk_forward_v2.json', 'walk_forward.json', 'strategy_improvement.json',
   'strategy_improvement_b.json', 'trade_outcomes.json', 'trade_outcomes_b.json',
   'prediction-engine.json', 'accuracy.json', 'council_history.json',
+  'simulation.json',
 ]);
 const BASIC_FILES = new Set([
   'screener-data.json', 'morning_analysis.json', 'maplegamma_analysis.json',
