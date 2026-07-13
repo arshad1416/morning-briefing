@@ -73,7 +73,7 @@ export function mountPasskey(app) {
   });
 
   app.post('/api/auth/passkey/login/options', async (c) => {
-    const { email } = await c.req.json();
+    const { email } = await c.req.json().catch(() => ({}));
     const user = email ? await getUserByEmail(c.env.DB, email) : null;
     const creds = user ? await getCredentialsByUser(c.env.DB, user.id) : [];
     const options = await generateAuthenticationOptions({
