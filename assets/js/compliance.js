@@ -30,6 +30,12 @@ const Compliance = {
    * Returns '' when nothing overlaps (or holdings feed unavailable).
    */
   async positionDisclosureHTML(tickers) {
+    // DISABLED 2026-07-13: the IBKR account feeding ibkr_positions.json is a
+    // PAPER (simulated) account — no real money exists. Rendering \"the site
+    // operator currently holds a position in X\" would be a false statement.
+    // Re-enable only if a real-money account ever replaces the paper feed.
+    return '';
+    /* eslint-disable no-unreachable */
     const held = await this.heldTickers();
     if (!held.size) return '';
     const seen = new Set();
@@ -44,6 +50,7 @@ const Compliance = {
       + '<strong>' + hits.map(t => Utils.esc(t)).join(', ') + '</strong> (Interactive Brokers). '
       + 'Coverage of these securities is general information only — not a recommendation.'
       + '</div>';
+    /* eslint-enable no-unreachable */
   },
 
   /** Full-width banner for paper-trading / simulated portfolio views. */

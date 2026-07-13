@@ -2,7 +2,7 @@
  * Paper Trades — Live open positions, strategy performance, backtest accuracy.
  * Shows V1-V100 backtest results with live trade tracking.
  * Includes clickable strategy names with explanation modals.
- * + IBKR Real Portfolio tab alongside the paper trading tab.
+ * + IBKR Paper Account tab alongside the paper trading tab. The IBKR\n * account is SIMULATED (paper) — no real money exists anywhere on this site.
  */
 const PaperTrades = {
   // Strategy explanations in plain English
@@ -286,7 +286,7 @@ const PaperTrades = {
     // ── TAB NAVIGATION ──
     html += '<div class="research-tabs" style="display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap">';
     html += '<button class="research-tab active" data-tab="paper">📝 Paper Trading</button>';
-    html += '<button class="research-tab" data-tab="ibkr">🏦 IBKR Real Portfolio</button>';
+    html += '<button class="research-tab" data-tab="ibkr">🏦 IBKR Paper Account</button>';
     html += '<button class="research-tab" data-tab="journal">📓 Journal</button>';
     html += '</div>';
 
