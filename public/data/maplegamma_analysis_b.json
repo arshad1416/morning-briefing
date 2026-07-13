@@ -1,50 +1,17 @@
 {
   "meta": {
-    "generated_at": "2026-07-10T11:22:49.712104+00:00",
+    "generated_at": "2026-07-13T11:22:37.655875+00:00",
     "experts_consulted": 5,
-    "experts_succeeded": 2,
-    "total_cost_usd": 0.000316,
-    "aggregator": "gemini-3.1-flash-lite-preview",
+    "experts_succeeded": 5,
+    "total_cost_usd": 0.0,
+    "status": "aggregator_failed",
     "context_variant": "b"
   },
-  "market_pulse": {
-    "one_liner": "Market is pinned in a bullish gamma trap while geopolitical volatility risks a sharp reversal.",
-    "score": 4,
-    "regime": "neutral",
-    "confidence": 6
-  },
-  "key_levels": {
-    "SPY": {
-      "support": 730.0,
-      "resistance": 740.0
-    },
-    "QQQ": {
-      "support": 475.0,
-      "resistance": 490.0
-    }
-  },
-  "gamma_landscape": {
-    "pinning_zone": 730.0,
-    "notes": "Dealer long gamma at 730 strike acts as a magnet; current price is elevated above this, suggesting a range-bound coiling effect until liquidity shifts."
-  },
-  "risks": [
-    "Over-leveraged long portfolio with insufficient cash buffer.",
-    "Escalating geopolitical conflict in Ukraine impacting energy and risk sentiment.",
-    "Contrarian signal from uniform bullish Reddit sentiment suggesting a potential blow-off top."
-  ],
-  "trades": [
-    {
-      "ticker": "SPY",
-      "direction": "short",
-      "entry": 738.0,
-      "stop": 742.0,
-      "target": 730.0,
-      "conviction": 6,
-      "source": "MiMo V2.5 Pro / DeepSeek V4 Pro"
-    }
-  ],
-  "disagreements": [
-    "Quantitative models see stability via gamma pinning, while risk-contrarian analysis warns of an imminent liquidity-driven reversal."
-  ],
-  "narrative": "The market is currently trapped in a bullish gamma pin at the 730 strike, which provides technical support but masks underlying fragility. Given the 100% long exposure and escalating geopolitical risks, the portfolio is highly vulnerable to a volatility spike; a defensive posture is recommended to lock in gains and increase cash reserves."
+  "expert_outputs": {
+    "DeepSeek V4 Pro (Quantitative)": "Dealer gamma is net positive (bullish regime) with SPY at $737.89, meaning dealer hedging suppresses intraday volatility and dampens sharp moves. The max GEX strike at 730 (puts) acts as a magnetic pin level; dealers are long puts there and hedge by buying into dips, reinforcing support. As long as price remains above 730, the positive GEX environment favors a slow grind higher, with any pullbacks likely contained near that strike.",
+    "GLM 5.2 (Momentum/Sentiment)": "The market is in a confirmed risk-on regime with bullish gamma positioning (positive GEX, max gamma support at 730) reinforcing price stability, while DS Pro's model aligns with this constructive backdrop. Cathie Wood's rotation into Meta and Eli Lilly while paring AMD and Roku signals a broader narrative shift toward mega-cap quality and healthcare momentum over speculative or semiconductor names. WSB's heavily bearish sentiment\u2014despite the risk-on tape\u2014acts as a contrarian bullish signal, especially with balanced sentiment on the broader stocks subreddit suggesting retail fear isn't broadly contagious. Momentum is strongest in large-cap tech and healthcare, while semiconductors and speculative growth face fading enthusiasm.",
+    "MiMo V2.5 Pro (Risk Contrarian)": "The portfolio faces a dangerous divergence: while the \"bullish\" gamma regime (max GEX strike at 730) suggests dealer support, the deeply negative total delta exposure (-5.78M) indicates a massive put overhang that could accelerate downside moves if price dips below this gamma flip point. Crowding risk is extreme in mega-caps (META, QQQ) as evidenced by WSB's bearish sentiment and Cathie Wood's concentrated reshuffling, making them vulnerable to any liquidity drain. Geopolitical risk from Black Sea shipping disruptions (medium impact) remains underpriced, posing a direct threat to energy costs and the broader \"risk-on\" narrative.",
+    "GLM 5.2 (Fundamental Analyst)": "SPY at 737.89 sits in a bullish gamma regime with max GEX at the 730 put (201K gamma), structurally suppressing downside \u2014 yet VEX at 1.05B dwarfs GEX (6.18M) and DEX (86.28M), meaning the market is overpaying for volatility hedges against geopolitical risks rated only low-to-medium impact. Financial conditions are bifurcated: WELL Health's 6.875% senior notes signal punitive funding costs for sub-IG issuers \u2014 a credit stress the index ignores while DS Pro flags risk-on at confidence 7. Earnings are holding up (InMode guiding above estimates, Lazard AUM at $279.1B), making WSB's heavily bearish sentiment (1,063 bearish vs. 663 bullish upvotes) a contrarian flag \u2014 the mispricing is long-vol and bearish-positioned against stable fundamentals and dealer gamma that pins 730 support.",
+    "Qwen 3.7 Max (Trade Selector)": "### Trade 1: SPY Directional Long (Swing)\n- **Entry:** $738.00\n- **Stop Loss:** $728.50 (Just below the massive 730 Put wall)\n- **Target:** $750.00 (Next major GEX strike/resistance)\n- **Conviction:** 8/10\n- **Rationale:** SPY is trading in a \"bullish\" gamma regime with a \"risk-on\" macro backdrop. The 730 strike holds a massive 165,097 Put OI, creating a formidable support floor (Max GEX). Retail sentiment on WSB is heavily bearish, which historically acts as a contrarian bullish indicator when institutional flows are risk-on. A break above current consolidation targets the 750 strike.\n\n### Trade 2: SPY Put Credit Spread (Theta/Income)\n- **Entry:** Sell $730 Put / Buy $720 Put (30-45 DTE)\n- **Stop Loss:** 2x the initial credit received (or close if SPY closes below $729)\n- **Target:** 50% of max profit (or hold through expiration if 730 holds)\n- **Conviction:** 7/10\n- **Rationale:** Capitalizing on the high implied volatility and the strong dealer gamma support at the 730 strike. Market makers will likely defend this level to avoid negative gamma exposure. The heavy put OI at 730 acts as a magnet for support, making a breach below 720 highly unlikely in the near term absent a major macro shock."
+  }
 }
