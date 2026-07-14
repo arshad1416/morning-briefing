@@ -87,6 +87,31 @@ export const billingCancel = () => post('/api/billing/cancel');
 
 // ---- Passkeys (SimpleWebAuthn v11 contract; server issues a challengeId) ----
 type PasskeyOptions = Record<string, unknown> & { challengeId?: string };
+async function requestNoBody<T = Record<string, unknown>>(method: 'GET' | 'DELETE', path: string): Promise<ApiResult<T>> {
+  let res: Response;
+  try {
+    res = await fetch(path, { method, credentials: 'include' });
+  } catch {
+    return { ok: false, status: 0, body: { error: 'network' } as ApiResult<T>['body'] };
+  }
+  let body = {} as ApiResult<T>['body'];
+  try {
+    body = await res.json();
+  } catch {}
+  return { ok: res.ok, status: res.status, body };
+}
+
+export interface PasskeyCredential {
+  credentialId: string;
+  createdAt: number;
+  transports: string[];
+}
+
+export const passkeyCredentials = () =>
+  requestNoBody<{ credentials: PasskeyCredential[] }>('GET', '/api/auth/passkey/credentials');
+export const passkeyCredentialDelete = (credentialId: string) =>
+  requestNoBody('DELETE', `/api/auth/passkey/credentials/${encodeURIComponent(credentialId)}`);
+
 export const passkeyRegisterOptions = () => post<PasskeyOptions>('/api/auth/passkey/register/options');
 export const passkeyRegisterVerify = (challengeId: string, response: unknown) =>
   post('/api/auth/passkey/register/verify', { challengeId, response });

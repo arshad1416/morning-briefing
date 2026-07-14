@@ -5,7 +5,7 @@ import {
 import { requireSession, issueSession, setSessionCookie } from './session.js';
 import {
   getUserByEmail, addCredential, getCredentialsByUser, getCredentialById,
-  bumpCredentialCounter, putChallenge, takeChallenge, logAuthEvent,
+  bumpCredentialCounter, deleteCredential, putChallenge, takeChallenge, logAuthEvent,
 } from './db.js';
 import { clientIp } from './util.js';
 
@@ -69,6 +69,28 @@ export function mountPasskey(app) {
       counter: cred.counter || 0,
       transports: (cred.transports || []).join(','),
     });
+    return c.json({ ok: true });
+  });
+
+  // List the caller's registered passkeys — safe metadata only, never key
+  // material. Backs the account page's Security card (CompCeiling parity).
+  app.get('/api/auth/passkey/credentials', requireSession(), async (c) => {
+    const { user } = c.get('session');
+    const creds = await getCredentialsByUser(c.env.DB, user.id);
+    return c.json({
+      credentials: creds.map((cr) => ({
+        credentialId: cr.credential_id,
+        createdAt: cr.created_at,
+        transports: (cr.transports || '').split(',').filter(Boolean),
+      })),
+    });
+  });
+
+  app.delete('/api/auth/passkey/credentials/:credentialId', requireSession(), async (c) => {
+    const { user } = c.get('session');
+    const removed = await deleteCredential(c.env.DB, user.id, c.req.param('credentialId'));
+    if (!removed) return c.json({ error: 'not_found' }, 404);
+    await logAuthEvent(c.env.DB, { email: user.email, ip: clientIp(c.req.raw), type: 'passkey_removed' });
     return c.json({ ok: true });
   });
 

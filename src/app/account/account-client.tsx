@@ -13,9 +13,12 @@ import {
   setBriefingOptIn,
   passkeyRegisterOptions,
   passkeyRegisterVerify,
+  passkeyCredentials,
+  passkeyCredentialDelete,
   type BillingTier,
   type BillingInterval,
   type Entitlement,
+  type PasskeyCredential,
 } from '@/lib/auth/api';
 import { errorMessage } from '@/lib/auth/errors';
 import { openHelcimCheckout } from '@/lib/billing/helcim';
@@ -30,6 +33,14 @@ const PLANS: { tier: BillingTier; name: string; monthly: number; blurb: string }
 function fmtDate(ms?: number) {
   if (!ms) return '—';
   return new Date(ms).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+/** Human label for a credential's transport hints. */
+function passkeyKindLabel(transports: string[]) {
+  if (transports.includes('internal')) return 'This device';
+  if (transports.includes('hybrid')) return 'Phone or tablet';
+  if (transports.some((t) => ['usb', 'nfc', 'ble'].includes(t))) return 'Security key';
+  return 'Passkey';
 }
 
 function daysLeft(ms?: number) {
@@ -123,6 +134,16 @@ export function AccountClient() {
   const [error, setError] = useState<string | null>(null);
   const [note, setNote] = useState<string | null>(null);
   const autoCheckoutDone = useRef(false);
+
+  // Registered passkeys (null until the first load resolves).
+  const [passkeys, setPasskeys] = useState<PasskeyCredential[] | null>(null);
+  const loadPasskeys = useCallback(async () => {
+    const res = await passkeyCredentials();
+    if (res.ok && Array.isArray(res.body.credentials)) setPasskeys(res.body.credentials);
+  }, []);
+  useEffect(() => {
+    if (me) loadPasskeys();
+  }, [me, loadPasskeys]);
 
   const startCheckout = useCallback(
     async (tier: BillingTier, chosenInterval: BillingInterval) => {
@@ -240,17 +261,32 @@ export function AccountClient() {
       const verify = await passkeyRegisterVerify(challengeId, attestation);
       if (!verify.ok) throw new Error(verify.body.error || 'verify_failed');
       setNote('Passkey added — you can now sign in without a password.');
+      loadPasskeys();
     } catch (err) {
       // DOMException carries the signal in .name, not .message.
       if (err instanceof Error && err.name === 'InvalidStateError') {
         // The server's excludeCredentials matched this authenticator: the
         // passkey is ALREADY registered — success state, not a failure.
         setNote('This device already has a passkey for your account — you can sign in with it.');
+        loadPasskeys();
       } else if (!(err instanceof Error && err.name === 'NotAllowedError')) {
         setError(errorMessage(err instanceof Error ? err.message : undefined, 'Could not add the passkey.'));
       }
     } finally {
       setBusy(false);
+    }
+  }
+
+  async function onRemovePasskey(credentialId: string) {
+    if (!window.confirm('Remove this passkey? You can add it back anytime from the same device.')) return;
+    setError(null);
+    setNote(null);
+    const res = await passkeyCredentialDelete(credentialId);
+    if (res.ok) {
+      setNote('Passkey removed.');
+      loadPasskeys();
+    } else {
+      setError(errorMessage(res.body.error, 'Could not remove the passkey.'));
     }
   }
 
@@ -356,14 +392,40 @@ export function AccountClient() {
       {/* Security */}
       <Surface span="hero" className="!min-h-0">
         <SurfaceHeader title="Security" />
-        <div className="flex flex-wrap items-center justify-between gap-4 p-5">
-          <p className="max-w-sm text-sm text-[var(--color-text-secondary)]">
-            Add a passkey to sign in with Face ID, Touch ID, or a security key — no password needed.
-          </p>
-          <div className="w-48">
-            <GhostButton onClick={onAddPasskey} busy={busy}>
-              <PasskeyIcon /> Add a passkey
-            </GhostButton>
+        <div className="p-5">
+          {passkeys && passkeys.length > 0 && (
+            <ul className="mb-4 divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
+              {passkeys.map((pk) => (
+                <li key={pk.credentialId} className="flex items-center justify-between gap-4 py-2.5 first:pt-0">
+                  <span className="flex items-center gap-3 text-sm text-[var(--color-text-primary)]">
+                    <PasskeyIcon />
+                    <span>
+                      {passkeyKindLabel(pk.transports)}
+                      <span className="ml-2 text-xs text-[var(--color-text-tertiary)]">Added {fmtDate(pk.createdAt)}</span>
+                    </span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => onRemovePasskey(pk.credentialId)}
+                    className="rounded-lg px-2.5 py-1.5 text-xs font-medium text-[var(--color-text-tertiary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-bear)]"
+                  >
+                    Remove
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <p className="max-w-sm text-sm text-[var(--color-text-secondary)]">
+              {passkeys && passkeys.length > 0
+                ? 'Add another passkey from a different device anytime.'
+                : 'Add a passkey to sign in with Face ID, Touch ID, or a security key — no password needed.'}
+            </p>
+            <div className="w-48">
+              <GhostButton onClick={onAddPasskey} busy={busy}>
+                <PasskeyIcon /> Add a passkey
+              </GhostButton>
+            </div>
           </div>
         </div>
       </Surface>

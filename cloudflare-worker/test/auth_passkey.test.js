@@ -79,4 +79,43 @@ describe('passkey', () => {
     expect(res.status).toBe(200);
     expect(sessionCookie(res)).toContain('mg_session=');
   });
+
+  it('credentials list requires a session and returns safe metadata', async () => {
+    const unauth = await app.request('/api/auth/passkey/credentials', { method: 'GET' }, env);
+    expect(unauth.status).toBe(401);
+
+    const u = await createUser(env.DB, { email: 'pk-list@test.ca', pwHash: 'h', ip: '1' });
+    await env.DB.prepare('INSERT INTO credentials (id,user_id,credential_id,public_key,counter,transports,created_at) VALUES (?,?,?,?,?,?,?)')
+      .bind('row-l1', u.id, 'cred-list-1', btoa('key'), 0, 'internal,hybrid', Date.now()).run();
+    const cookie = `mg_session=${await issueSession(u.id, env.SESSION_SECRET)}`;
+    const res = await app.request('/api/auth/passkey/credentials', { method: 'GET', headers: { Cookie: cookie } }, env);
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.credentials).toHaveLength(1);
+    expect(body.credentials[0].credentialId).toBe('cred-list-1');
+    expect(body.credentials[0].transports).toEqual(['internal', 'hybrid']);
+    expect(body.credentials[0].createdAt).toBeTypeOf('number');
+    expect(JSON.stringify(body)).not.toContain(btoa('key')); // never leak key material
+  });
+
+  it('credential delete removes only the caller\'s own passkey', async () => {
+    const owner = await createUser(env.DB, { email: 'pk-del@test.ca', pwHash: 'h', ip: '1' });
+    const other = await createUser(env.DB, { email: 'pk-other@test.ca', pwHash: 'h', ip: '1' });
+    await env.DB.prepare('INSERT INTO credentials (id,user_id,credential_id,public_key,counter,transports,created_at) VALUES (?,?,?,?,?,?,?)')
+      .bind('row-d1', owner.id, 'cred-del-1', btoa('key'), 0, 'internal', Date.now()).run();
+
+    // Someone else cannot delete it (404, row survives).
+    const otherCookie = `mg_session=${await issueSession(other.id, env.SESSION_SECRET)}`;
+    const stranger = await app.request('/api/auth/passkey/credentials/cred-del-1', { method: 'DELETE', headers: { Cookie: otherCookie } }, env);
+    expect(stranger.status).toBe(404);
+    expect(await getCredentialsByUser(env.DB, owner.id)).toHaveLength(1);
+
+    // The owner can; a second delete 404s (single-use).
+    const cookie = `mg_session=${await issueSession(owner.id, env.SESSION_SECRET)}`;
+    const res = await app.request('/api/auth/passkey/credentials/cred-del-1', { method: 'DELETE', headers: { Cookie: cookie } }, env);
+    expect(res.status).toBe(200);
+    expect(await getCredentialsByUser(env.DB, owner.id)).toHaveLength(0);
+    const again = await app.request('/api/auth/passkey/credentials/cred-del-1', { method: 'DELETE', headers: { Cookie: cookie } }, env);
+    expect(again.status).toBe(404);
+  });
 });
