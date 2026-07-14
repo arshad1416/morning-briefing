@@ -188,7 +188,7 @@ function PricingCard({
 }) {
   return (
     <div
-      className="relative flex flex-col rounded-2xl border p-6 sm:p-8"
+      className="relative flex h-full flex-col rounded-2xl border p-6 sm:p-8"
       style={
         featured
           ? {
@@ -493,7 +493,7 @@ export default function MapleGammaLanding() {
             viewport={viewport}
             className="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
-            <motion.div variants={fadeUp}>
+            <motion.div variants={fadeUp} className="h-full">
               <PricingCard
                 name="Free"
                 price="$0"
@@ -508,7 +508,7 @@ export default function MapleGammaLanding() {
               />
             </motion.div>
 
-            <motion.div variants={fadeUp}>
+            <motion.div variants={fadeUp} className="h-full">
               <PricingCard
                 name="Basic"
                 price="$49"
@@ -523,7 +523,7 @@ export default function MapleGammaLanding() {
               />
             </motion.div>
 
-            <motion.div variants={fadeUp}>
+            <motion.div variants={fadeUp} className="h-full">
               <PricingCard
                 name="Pro"
                 price="$99"
