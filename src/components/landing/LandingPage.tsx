@@ -196,6 +196,7 @@ function PricingCard({
   cta,
   href,
   featured = false,
+  ctaPrimary = featured,
 }: {
   name: string;
   price: string;
@@ -205,6 +206,7 @@ function PricingCard({
   cta: string;
   href: string;
   featured?: boolean;
+  ctaPrimary?: boolean;
 }) {
   return (
     <div
@@ -256,7 +258,7 @@ function PricingCard({
         className={[
           "mt-8 inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]",
-          featured
+          ctaPrimary
             ? "bg-[var(--color-accent)] text-[var(--color-on-accent)] hover:bg-[var(--color-accent-fg)]"
             : "border border-[var(--color-border-default)] text-[var(--color-text-primary)] hover:bg-[var(--color-bg-elevated)]",
         ].join(" ")}
@@ -614,6 +616,7 @@ export default function MapleGammaLanding() {
                 period={annual ? "/ year CAD" : "/ month CAD"}
                 blurb="Everything in Free, plus the full research desk."
                 cta="Start 7-day free trial"
+                ctaPrimary
                 href={`/signup/?plan=basic${annual ? "&interval=annual" : ""}`}
                 features={[
                   "Full Screener — all tickers, scored",
