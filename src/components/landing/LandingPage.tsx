@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { GammaMark } from "@/components/brand/GammaMark";
 import { useMe } from "@/lib/auth/useMe";
@@ -274,6 +274,7 @@ function PricingCard({
 export default function MapleGammaLanding() {
   const { fadeUp, stagger, viewport } = useMotionKit();
   const { data: me } = useMe();
+  const [annual, setAnnual] = useState(false);
 
   // Redirect legacy hash routes to their new homes.
   useEffect(() => {
@@ -523,11 +524,72 @@ export default function MapleGammaLanding() {
           </motion.div>
 
           <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={viewport}
+            className="mt-10 flex justify-center"
+          >
+            <div
+              role="tablist"
+              aria-label="Billing interval"
+              className="inline-flex items-center gap-1 rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)] p-1"
+            >
+              <button
+                type="button"
+                role="tab"
+                aria-selected={!annual}
+                onClick={() => setAnnual(false)}
+                className={[
+                  "rounded-full px-4 py-1.5 text-sm font-semibold transition",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
+                  !annual
+                    ? "bg-[var(--color-accent)] text-[var(--color-on-accent)]"
+                    : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]",
+                ].join(" ")}
+              >
+                Monthly
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={annual}
+                onClick={() => setAnnual(true)}
+                className={[
+                  "flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold transition",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
+                  annual
+                    ? "bg-[var(--color-accent)] text-[var(--color-on-accent)]"
+                    : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]",
+                ].join(" ")}
+              >
+                Annual
+                <span
+                  className="rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
+                  style={
+                    annual
+                      ? {
+                          backgroundColor: "rgba(0,0,0,0.18)",
+                          color: "var(--color-on-accent)",
+                        }
+                      : {
+                          backgroundColor: "var(--color-accent-dim)",
+                          color: "var(--color-accent)",
+                        }
+                  }
+                >
+                  2 months free
+                </span>
+              </button>
+            </div>
+          </motion.div>
+
+          <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={viewport}
-            className="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            className="mt-8 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             <motion.div variants={fadeUp} className="h-full">
               <PricingCard
@@ -548,11 +610,11 @@ export default function MapleGammaLanding() {
             <motion.div variants={fadeUp} className="h-full">
               <PricingCard
                 name="Basic"
-                price="$49"
-                period="/ month CAD"
+                price={annual ? "$490" : "$49"}
+                period={annual ? "/ year CAD" : "/ month CAD"}
                 blurb="Everything in Free, plus the full research desk."
                 cta="Start 7-day free trial"
-                href="/signup/?plan=basic"
+                href={`/signup/?plan=basic${annual ? "&interval=annual" : ""}`}
                 features={[
                   "Full Screener — all tickers, scored",
                   "Research: analysis, news, earnings, SEC",
@@ -564,11 +626,11 @@ export default function MapleGammaLanding() {
             <motion.div variants={fadeUp} className="h-full">
               <PricingCard
                 name="Pro"
-                price="$99"
-                period="/ month CAD"
+                price={annual ? "$990" : "$99"}
+                period={annual ? "/ year CAD" : "/ month CAD"}
                 blurb="Everything in Basic, plus charts, models & the AI council."
                 cta="Start 7-day free trial"
-                href="/signup/?plan=pro"
+                href={`/signup/?plan=pro${annual ? "&interval=annual" : ""}`}
                 featured
                 features={[
                   "Interactive charts — candles, RSI, ATR",
@@ -586,7 +648,7 @@ export default function MapleGammaLanding() {
             viewport={viewport}
             className="mt-8 text-center text-sm text-[var(--color-text-tertiary)]"
           >
-            Annual billing: $490 / $990 CAD per year — 2 months free. Cancel anytime.
+            Cancel anytime. General information only, not investment advice.
           </motion.p>
         </section>
       </main>
