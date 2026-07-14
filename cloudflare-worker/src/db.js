@@ -87,6 +87,12 @@ export async function getCredentialById(DB, credentialId) {
 export async function bumpCredentialCounter(DB, credentialId, counter) {
   await DB.prepare('UPDATE credentials SET counter=? WHERE credential_id=?').bind(counter, credentialId).run();
 }
+// Scoped to user_id so a caller can only ever delete their own passkey.
+export async function deleteCredential(DB, userId, credentialId) {
+  const r = await DB.prepare('DELETE FROM credentials WHERE user_id=? AND credential_id=?')
+    .bind(userId, credentialId).run();
+  return (r.meta?.changes || 0) > 0;
+}
 export async function putChallenge(DB, { userId = null, challenge, type, ttlMs = 300000 }) {
   const id = randomId();
   await DB.prepare('INSERT INTO webauthn_challenges (id,user_id,challenge,type,expires_at) VALUES (?,?,?,?,?)')
