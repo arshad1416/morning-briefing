@@ -1,7 +1,25 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { GammaMark } from "@/components/brand/GammaMark";
+import { useMe } from "@/lib/auth/useMe";
+
+// Legacy hash-router routes (old bookmarks + the Worker's OAuth redirects,
+// e.g. /#/login?error=use_password) → their new locations.
+const LEGACY_ROUTES: Record<string, string> = {
+  "": "/dashboard/",
+  login: "/login/",
+  signup: "/signup/",
+  account: "/account/",
+  positions: "/positions/",
+  options: "/options/",
+  models: "/models/",
+  charts: "/models/",
+  screener: "/dashboard/",
+  research: "/dashboard/",
+  maplegamma: "/options/",
+};
 
 /* ------------------------------------------------------------------ */
 /*  Motion variants (reduced-motion aware)                            */
@@ -176,6 +194,7 @@ function PricingCard({
   blurb,
   features,
   cta,
+  href,
   featured = false,
 }: {
   name: string;
@@ -184,6 +203,7 @@ function PricingCard({
   blurb: string;
   features: string[];
   cta: string;
+  href: string;
   featured?: boolean;
 }) {
   return (
@@ -232,7 +252,7 @@ function PricingCard({
       </ul>
 
       <a
-        href="#"
+        href={href}
         className={[
           "mt-8 inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]",
@@ -253,6 +273,16 @@ function PricingCard({
 
 export default function MapleGammaLanding() {
   const { fadeUp, stagger, viewport } = useMotionKit();
+  const { data: me } = useMe();
+
+  // Redirect legacy hash routes to their new homes.
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash.startsWith("#/")) return;
+    const [seg, query] = hash.slice(2).split("?");
+    const target = LEGACY_ROUTES[seg.replace(/\/+$/, "")];
+    if (target) window.location.replace(target + (query ? `?${query}` : ""));
+  }, []);
 
   const stats = [
     { value: "162K", label: "trades analyzed" },
@@ -315,10 +345,16 @@ export default function MapleGammaLanding() {
             Pricing
           </a>
           <a
-            href="#pricing"
+            href={me ? "/dashboard/" : "/login/"}
+            className="rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+          >
+            {me ? "Dashboard" : "Sign in"}
+          </a>
+          <a
+            href={me ? "/account/" : "/signup/"}
             className="rounded-lg bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-on-accent)] transition hover:bg-[var(--color-accent-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
           >
-            Get started
+            {me ? "Account" : "Get started"}
           </a>
         </nav>
       </header>
@@ -368,7 +404,7 @@ export default function MapleGammaLanding() {
               className="mt-9 flex flex-col gap-3 sm:flex-row"
             >
               <a
-                href="#pricing"
+                href="/signup/"
                 className="inline-flex items-center justify-center rounded-xl bg-[var(--color-accent)] px-6 py-3 text-sm font-semibold text-[var(--color-on-accent)] transition hover:bg-[var(--color-accent-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
               >
                 Start free
@@ -500,6 +536,7 @@ export default function MapleGammaLanding() {
                 period="forever"
                 blurb="The daily dashboard, always free."
                 cta="Create account"
+                href="/signup/"
                 features={[
                   "Market regime & indices",
                   "Headlines & Reddit pulse",
@@ -515,6 +552,7 @@ export default function MapleGammaLanding() {
                 period="/ month CAD"
                 blurb="Everything in Free, plus the full research desk."
                 cta="Start 7-day free trial"
+                href="/signup/?plan=basic"
                 features={[
                   "Full Screener — all tickers, scored",
                   "Research: analysis, news, earnings, SEC",
@@ -530,6 +568,7 @@ export default function MapleGammaLanding() {
                 period="/ month CAD"
                 blurb="Everything in Basic, plus charts, models & the AI council."
                 cta="Start 7-day free trial"
+                href="/signup/?plan=pro"
                 featured
                 features={[
                   "Interactive charts — candles, RSI, ATR",

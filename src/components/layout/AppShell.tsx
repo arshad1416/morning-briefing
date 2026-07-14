@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useUI } from '@/stores/ui';
+import { useMe } from '@/lib/auth/useMe';
 import { GammaMark } from '@/components/brand/GammaMark';
 import { TickerTape } from './TickerTape';
 
@@ -83,6 +84,46 @@ function IconBook({ className }: IconProps) {
       <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5V5.5Z" />
       <path d="M4 18a2.5 2.5 0 0 1 2.5-2.5H20" />
     </svg>
+  );
+}
+
+function IconUser({ className }: IconProps) {
+  return (
+    <svg {...iconDefaults} className={className} aria-hidden="true">
+      <circle cx="12" cy="8" r="3.5" />
+      <path d="M5 20a7 7 0 0 1 14 0" />
+    </svg>
+  );
+}
+
+function SessionButton() {
+  const { data: me, isLoading } = useMe();
+
+  // Render nothing until the session check resolves — the prerendered HTML and
+  // the first client render agree (both loading), so no hydration mismatch.
+  if (isLoading) return <span className="min-w-11" aria-hidden="true" />;
+
+  if (me) {
+    return (
+      <Link
+        href="/account/"
+        className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)]"
+        title={me.email}
+      >
+        <IconUser />
+        <span className="hidden sm:inline">Account</span>
+      </Link>
+    );
+  }
+
+  return (
+    <Link
+      href="/login/"
+      className="inline-flex min-h-9 items-center rounded-lg px-3.5 text-sm font-semibold transition hover:bg-[var(--color-accent-fg)]"
+      style={{ backgroundColor: 'var(--color-accent)', color: 'var(--color-on-accent)' }}
+    >
+      Sign in
+    </Link>
   );
 }
 
@@ -194,9 +235,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // The marketing landing page ships its own header, footer, and compliance
-  // text — render it without the app chrome.
-  if (normalizePath(pathname) === '/') {
+  // The marketing landing and the auth pages ship their own chrome —
+  // render them without the app shell.
+  const bare = ['/', '/login', '/signup'].includes(normalizePath(pathname));
+  if (bare) {
     return <>{children}</>;
   }
 
@@ -220,9 +262,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </Link>
             <MarketStatusPill />
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             <LearningModeToggle />
             <ThemeToggle />
+            <SessionButton />
           </div>
         </div>
         {/* Live index strip */}
