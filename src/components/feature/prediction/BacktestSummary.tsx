@@ -5,18 +5,30 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { accuracyQuery } from '@/lib/query/options';
 import { Surface, SurfaceHeader } from '@/components/primitives';
+import { GateError } from '@/lib/api/gated';
+import { GateCard } from '@/components/feature/gating/GateCard';
 
 export function BacktestSummary() {
-  const { data, isLoading, isError } = useQuery(accuracyQuery());
+  const { data, isLoading, isError, error } = useQuery(accuracyQuery());
 
-  // accuracy.json is gated premium data — absent in local/preview builds.
+  // accuracy.json is Pro-gated — surface the server's sign-in/upgrade state.
   if (isError) {
+    if (error instanceof GateError && error.kind !== 'unavailable') {
+      return (
+        <Surface span="half">
+          <SurfaceHeader title="Backtest Summary" />
+          <div className="p-4">
+            <GateCard kind={error.kind} need={error.need ?? 'pro'} feature="Backtest summary" />
+          </div>
+        </Surface>
+      );
+    }
     return (
       <Surface span="half">
         <SurfaceHeader title="Backtest Summary" />
         <div className="p-6 flex flex-col items-center justify-center text-center min-h-[120px]">
           <p className="text-sm text-[var(--color-text-tertiary)]">
-            Backtest data is available on the live deployment.
+            Backtest data isn&apos;t available right now.
           </p>
         </div>
       </Surface>

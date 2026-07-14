@@ -31,3 +31,10 @@ export const accuracyQuery = () =>
     queryFn: () => api.accuracy(),
     staleTime: POLL.backtest.stale,
   });
+
+export const screenerQuery = () =>
+  queryOptions({
+    queryKey: qk.screener(),
+    queryFn: () => api.screener(),
+    staleTime: POLL.calendar.stale,
+  });

@@ -4,4 +4,5 @@ export const qk = {
   verdict: () => ['verdict'] as const,
   gex: () => ['gex'] as const,
   accuracy: () => ['accuracy'] as const,
+  screener: () => ['screener'] as const,
 };

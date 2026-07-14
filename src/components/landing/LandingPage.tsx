@@ -1,7 +1,63 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { GammaMark } from "@/components/brand/GammaMark";
+import { useMe } from "@/lib/auth/useMe";
+import { useUI } from "@/stores/ui";
+
+// Legacy hash-router routes (old bookmarks, briefing-email deep links, and
+// the Worker's OAuth redirects, e.g. /#/login?error=use_password) → their
+// new locations. #/ticker/NVDA-style prefix links are handled in the shim.
+const LEGACY_ROUTES: Record<string, string> = {
+  "": "/dashboard/",
+  today: "/dashboard/",
+  login: "/login/",
+  signup: "/signup/",
+  account: "/account/",
+  pricing: "/#pricing",
+  positions: "/positions/",
+  options: "/options/",
+  models: "/models/",
+  charts: "/charts/",
+  screener: "/screener/",
+  research: "/research/",
+  maplegamma: "/options/",
+};
+
+/* ------------------------------------------------------------------ */
+/*  Theme toggle (same mg-ui store the app shell uses)                */
+/* ------------------------------------------------------------------ */
+
+function LandingThemeToggle() {
+  const { theme, setTheme } = useUI();
+  // Render only after mount — the persisted theme isn't known at build time,
+  // so the prerendered HTML must not commit to an icon.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return <span className="min-w-11 min-h-11" aria-hidden="true" />;
+
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      className="flex min-h-11 min-w-11 items-center justify-center rounded-lg text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+    >
+      {theme === "dark" ? (
+        <svg {...iconProps} aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M18.7 5.3l-1.8 1.8M7.1 16.9l-1.8 1.8" />
+        </svg>
+      ) : (
+        <svg {...iconProps} aria-hidden="true">
+          <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z" />
+        </svg>
+      )}
+    </button>
+  );
+}
 
 /* ------------------------------------------------------------------ */
 /*  Motion variants (reduced-motion aware)                            */
@@ -176,7 +232,9 @@ function PricingCard({
   blurb,
   features,
   cta,
+  href,
   featured = false,
+  ctaPrimary = featured,
 }: {
   name: string;
   price: string;
@@ -184,7 +242,9 @@ function PricingCard({
   blurb: string;
   features: string[];
   cta: string;
+  href: string;
   featured?: boolean;
+  ctaPrimary?: boolean;
 }) {
   return (
     <div
@@ -232,11 +292,11 @@ function PricingCard({
       </ul>
 
       <a
-        href="#"
+        href={href}
         className={[
           "mt-8 inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]",
-          featured
+          ctaPrimary
             ? "bg-[var(--color-accent)] text-[var(--color-on-accent)] hover:bg-[var(--color-accent-fg)]"
             : "border border-[var(--color-border-default)] text-[var(--color-text-primary)] hover:bg-[var(--color-bg-elevated)]",
         ].join(" ")}
@@ -253,6 +313,28 @@ function PricingCard({
 
 export default function MapleGammaLanding() {
   const { fadeUp, stagger, viewport } = useMotionKit();
+  const { data: me } = useMe();
+  const [annual, setAnnual] = useState(false);
+
+  // Redirect legacy hash routes to their new homes.
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash.startsWith("#/")) return;
+    const [seg, query] = hash.slice(2).split("?");
+    const cleaned = seg.replace(/\/+$/, "");
+    let target = LEGACY_ROUTES[cleaned];
+    if (!target) {
+      // Prefix routes: #/ticker/NVDA → /ticker/?symbol=NVDA
+      const [head, ...rest] = cleaned.split("/");
+      if (head === "ticker" && rest[0]) {
+        target = `/ticker/?symbol=${encodeURIComponent(rest[0].toUpperCase())}`;
+      }
+    }
+    if (target) {
+      const sep = target.includes("?") ? "&" : "?";
+      window.location.replace(target + (query ? `${sep}${query}` : ""));
+    }
+  }, []);
 
   const stats = [
     { value: "162K", label: "trades analyzed" },
@@ -302,6 +384,27 @@ export default function MapleGammaLanding() {
         </motion.a>
 
         <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-2">
+          {/* App routes — the free dashboard and the section pages */}
+          {[
+            { href: "/dashboard/", label: "Dashboard" },
+            { href: "/screener/", label: "Screener" },
+            { href: "/research/", label: "Research" },
+            { href: "/charts/", label: "Charts" },
+            { href: "/models/", label: "Models" },
+          ].map((r) => (
+            <a
+              key={r.href}
+              href={r.href}
+              className="hidden rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] lg:inline-block"
+            >
+              {r.label}
+            </a>
+          ))}
+          <span
+            aria-hidden="true"
+            className="hidden h-5 w-px lg:inline-block"
+            style={{ backgroundColor: "var(--color-border-subtle)" }}
+          />
           <a
             href="#features"
             className="hidden rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:inline-block"
@@ -314,11 +417,26 @@ export default function MapleGammaLanding() {
           >
             Pricing
           </a>
+          <LandingThemeToggle />
           <a
-            href="#pricing"
+            href="/dashboard/"
+            className="rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] lg:hidden"
+          >
+            Dashboard
+          </a>
+          {!me && (
+            <a
+              href="/login/"
+              className="hidden rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] lg:inline-block"
+            >
+              Sign in
+            </a>
+          )}
+          <a
+            href={me ? "/account/" : "/signup/"}
             className="rounded-lg bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-on-accent)] transition hover:bg-[var(--color-accent-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
           >
-            Get started
+            {me ? "Account" : "Get started"}
           </a>
         </nav>
       </header>
@@ -368,7 +486,7 @@ export default function MapleGammaLanding() {
               className="mt-9 flex flex-col gap-3 sm:flex-row"
             >
               <a
-                href="#pricing"
+                href="/signup/"
                 className="inline-flex items-center justify-center rounded-xl bg-[var(--color-accent)] px-6 py-3 text-sm font-semibold text-[var(--color-on-accent)] transition hover:bg-[var(--color-accent-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
               >
                 Start free
@@ -487,11 +605,72 @@ export default function MapleGammaLanding() {
           </motion.div>
 
           <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={viewport}
+            className="mt-10 flex justify-center"
+          >
+            <div
+              role="tablist"
+              aria-label="Billing interval"
+              className="inline-flex items-center gap-1 rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)] p-1"
+            >
+              <button
+                type="button"
+                role="tab"
+                aria-selected={!annual}
+                onClick={() => setAnnual(false)}
+                className={[
+                  "rounded-full px-4 py-1.5 text-sm font-semibold transition",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
+                  !annual
+                    ? "bg-[var(--color-accent)] text-[var(--color-on-accent)]"
+                    : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]",
+                ].join(" ")}
+              >
+                Monthly
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={annual}
+                onClick={() => setAnnual(true)}
+                className={[
+                  "flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold transition",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
+                  annual
+                    ? "bg-[var(--color-accent)] text-[var(--color-on-accent)]"
+                    : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]",
+                ].join(" ")}
+              >
+                Annual
+                <span
+                  className="rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
+                  style={
+                    annual
+                      ? {
+                          backgroundColor: "rgba(0,0,0,0.18)",
+                          color: "var(--color-on-accent)",
+                        }
+                      : {
+                          backgroundColor: "var(--color-accent-dim)",
+                          color: "var(--color-accent)",
+                        }
+                  }
+                >
+                  2 months free
+                </span>
+              </button>
+            </div>
+          </motion.div>
+
+          <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={viewport}
-            className="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            className="mt-8 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             <motion.div variants={fadeUp} className="h-full">
               <PricingCard
@@ -500,6 +679,7 @@ export default function MapleGammaLanding() {
                 period="forever"
                 blurb="The daily dashboard, always free."
                 cta="Create account"
+                href="/signup/"
                 features={[
                   "Market regime & indices",
                   "Headlines & Reddit pulse",
@@ -511,10 +691,12 @@ export default function MapleGammaLanding() {
             <motion.div variants={fadeUp} className="h-full">
               <PricingCard
                 name="Basic"
-                price="$49"
-                period="/ month CAD"
+                price={annual ? "$490" : "$49"}
+                period={annual ? "/ year CAD" : "/ month CAD"}
                 blurb="Everything in Free, plus the full research desk."
                 cta="Start 7-day free trial"
+                ctaPrimary
+                href={`/signup/?plan=basic${annual ? "&interval=annual" : ""}`}
                 features={[
                   "Full Screener — all tickers, scored",
                   "Research: analysis, news, earnings, SEC",
@@ -526,10 +708,11 @@ export default function MapleGammaLanding() {
             <motion.div variants={fadeUp} className="h-full">
               <PricingCard
                 name="Pro"
-                price="$99"
-                period="/ month CAD"
+                price={annual ? "$990" : "$99"}
+                period={annual ? "/ year CAD" : "/ month CAD"}
                 blurb="Everything in Basic, plus charts, models & the AI council."
                 cta="Start 7-day free trial"
+                href={`/signup/?plan=pro${annual ? "&interval=annual" : ""}`}
                 featured
                 features={[
                   "Interactive charts — candles, RSI, ATR",
@@ -547,7 +730,7 @@ export default function MapleGammaLanding() {
             viewport={viewport}
             className="mt-8 text-center text-sm text-[var(--color-text-tertiary)]"
           >
-            Annual billing: $490 / $990 CAD per year — 2 months free. Cancel anytime.
+            Cancel anytime. General information only, not investment advice.
           </motion.p>
         </section>
       </main>
