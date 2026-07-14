@@ -36,4 +36,31 @@ describe('session', () => {
     const e = await entitlement(env.DB, u.id);
     expect(e.entitled).toBe(false);
   });
+  // Canceled = "don't renew", not "revoke": paid access runs to period end.
+  it('entitlement: canceled with future period end = still entitled', async () => {
+    const u = await createUser(env.DB, { email: 'cxl-live@test.ca', pwHash: 'h', ip: '1' });
+    await upsertSubscription(env.DB, u.id, { tier: 'pro', status: 'canceled', periodEnd: Date.now() + 86400000 });
+    const e = await entitlement(env.DB, u.id);
+    expect(e.entitled).toBe(true);
+    expect(e.status).toBe('canceled');
+    expect(e.tier).toBe('pro');
+  });
+  it('entitlement: canceled past period end = not entitled', async () => {
+    const u = await createUser(env.DB, { email: 'cxl-done@test.ca', pwHash: 'h', ip: '1' });
+    await upsertSubscription(env.DB, u.id, { tier: 'basic', status: 'canceled', periodEnd: Date.now() - 1 });
+    const e = await entitlement(env.DB, u.id);
+    expect(e.entitled).toBe(false);
+  });
+  it('entitlement: canceled with NO period end = not entitled (no open-ended access)', async () => {
+    const u = await createUser(env.DB, { email: 'cxl-null@test.ca', pwHash: 'h', ip: '1' });
+    await upsertSubscription(env.DB, u.id, { tier: 'pro', status: 'canceled', periodEnd: null });
+    const e = await entitlement(env.DB, u.id);
+    expect(e.entitled).toBe(false);
+  });
+  it('entitlement: active with NO period end = entitled (legacy rows keep working)', async () => {
+    const u = await createUser(env.DB, { email: 'act-null@test.ca', pwHash: 'h', ip: '1' });
+    await upsertSubscription(env.DB, u.id, { tier: 'pro', status: 'active', periodEnd: null });
+    const e = await entitlement(env.DB, u.id);
+    expect(e.entitled).toBe(true);
+  });
 });

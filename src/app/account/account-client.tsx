@@ -77,7 +77,9 @@ function SubscriptionSummary({ ent }: { ent: Entitlement }) {
     return (
       <div className="space-y-1">
         {chip(`${plan.name} — ${price} CAD`, 'var(--color-bull)')}
-        <p className="text-sm text-[var(--color-text-secondary)]">Renews on {fmtDate(ent.periodEnd)}.</p>
+        <p className="text-sm text-[var(--color-text-secondary)]">
+          {ent.periodEnd ? `Renews on ${fmtDate(ent.periodEnd)}.` : `Renews ${ent.billingInterval === 'annual' ? 'annually' : 'monthly'}.`}
+        </p>
       </div>
     );
   }
@@ -86,7 +88,9 @@ function SubscriptionSummary({ ent }: { ent: Entitlement }) {
       <div className="space-y-1">
         {chip('Canceled', 'var(--color-caution)')}
         <p className="text-sm text-[var(--color-text-secondary)]">
-          Access continues until {fmtDate(ent.periodEnd)}. Resubscribe below anytime.
+          {ent.periodEnd
+            ? `Access continues until ${fmtDate(ent.periodEnd)}. Resubscribe below anytime.`
+            : 'Subscription canceled — choose a plan below to resume.'}
         </p>
       </div>
     );
@@ -207,14 +211,18 @@ export function AccountClient() {
   }
 
   async function onCancel() {
-    if (!window.confirm('Cancel your subscription? You keep access until the end of the paid period.')) return;
+    // Only promise access-until-period-end when we actually know the period
+    // end — the Worker keeps canceled subs entitled through periodEnd, but a
+    // row without one is locked out immediately.
+    const untilCopy = ent.periodEnd ? 'You keep access until the end of the paid period.' : 'Access ends immediately.';
+    if (!window.confirm(`Cancel your subscription? ${untilCopy}`)) return;
     setBusy(true);
     setError(null);
     const res = await billingCancel();
     setBusy(false);
     if (res.ok) {
       refreshMe();
-      setNote('Subscription canceled — access continues until the period ends.');
+      setNote(ent.periodEnd ? 'Subscription canceled — access continues until the period ends.' : 'Subscription canceled.');
     } else {
       setError(errorMessage(res.body.error));
     }
