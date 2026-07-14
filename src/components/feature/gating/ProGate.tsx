@@ -1,9 +1,15 @@
-// components/feature/gating/ProGate.tsx — monetization wrapper (gatingEnabled: false)
+// components/feature/gating/ProGate.tsx — client-side monetization wrapper.
+//
+// Unlike GateCard (which reflects a server 401/403 for R2-gated files), this
+// wraps features whose data is public — the gate is cosmetic. It derives the
+// tier from the real session (/api/auth/me) so it agrees with the
+// server-gated pages: trial counts as pro, basic ranks below pro.
 'use client';
 
 import React from 'react';
 import Link from 'next/link';
-import { useEntitlements, FEATURES, type FeatureKey } from '@/stores/entitlements';
+import { FEATURES, type FeatureKey } from '@/stores/entitlements';
+import { useMe } from '@/lib/auth/useMe';
 
 interface ProGateProps {
   feature: FeatureKey;
@@ -39,11 +45,23 @@ function LockIcon() {
 }
 
 export function ProGate({ feature, children }: ProGateProps) {
-  const can = useEntitlements((s) => s.can(feature));
+  const { data: me, isLoading } = useMe();
+
+  const { minTier, teaser } = FEATURES[feature];
+  const ent = me?.entitlement;
+  const userRank = !ent?.entitled
+    ? 0
+    : ent.tier === 'trial' || ent.tier === 'pro'
+      ? 2
+      : ent.tier === 'basic'
+        ? 1
+        : 0;
+  const needRank = minTier === 'pro' ? 2 : 0;
+  // While the session check is in flight, render ungated — a brief expose
+  // beats flashing a lock at every entitled user on every load.
+  const can = isLoading || userRank >= needRank;
 
   if (can) return <>{children}</>;
-
-  const { teaser } = FEATURES[feature];
 
   return (
     <div className="relative">

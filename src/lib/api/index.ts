@@ -31,6 +31,8 @@ export const api = {
   latest: () => fetchJson<LatestData>('/data/latest.json', LatestDataSchema),
   verdict: () => fetchJson<Verdict>('/data/verdict.json', VerdictSchema),
   gex: () => fetchJson<GexData>('/data/gex_data.json', GexDataSchema),
-  accuracy: () => fetchJson<Accuracy>('/data/accuracy.json', AccuracySchema),
+  // accuracy.json is Pro-gated R2 data (see data_gate.js) — it never exists
+  // under public /data/ on Pages, so it must go through the Worker gate.
+  accuracy: () => fetchGated<Accuracy>('accuracy.json', AccuracySchema),
   screener,
 };

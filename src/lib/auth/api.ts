@@ -37,12 +37,19 @@ export interface ApiResult<T = Record<string, unknown>> {
 }
 
 async function post<T = Record<string, unknown>>(path: string, payload?: unknown): Promise<ApiResult<T>> {
-  const res = await fetch(path, {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: payload === undefined ? undefined : JSON.stringify(payload),
-  });
+  let res: Response;
+  try {
+    res = await fetch(path, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload === undefined ? undefined : JSON.stringify(payload),
+    });
+  } catch {
+    // Network-level failure (offline, dropped connection) — callers treat it
+    // like any other error result instead of an unhandled rejection.
+    return { ok: false, status: 0, body: { error: 'network' } as ApiResult<T>['body'] };
+  }
   let body = {} as ApiResult<T>['body'];
   try {
     body = await res.json();

@@ -15,8 +15,12 @@ export function useMe() {
   });
 }
 
-/** Call after login/logout/signup/checkout so every consumer re-reads the session. */
+/** Call after login/logout/signup/checkout. Entitlements affect every gated
+ *  query — and the screener even caches its gate state as a *successful*
+ *  result — so drop the whole cache: premium data must not survive a logout,
+ *  and stale teasers must not survive a sign-in. Active queries refetch
+ *  automatically under the new session. */
 export function useRefreshMe() {
   const qc = useQueryClient();
-  return () => qc.invalidateQueries({ queryKey: ME_KEY });
+  return () => qc.clear();
 }

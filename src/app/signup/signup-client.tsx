@@ -40,6 +40,9 @@ export function SignupClient() {
   const [busy, setBusy] = useState(false);
   const [plan, setPlan] = useState<BillingTier | undefined>(undefined);
   const [interval, setInterval] = useState<BillingInterval>('monthly');
+  // Set once we navigate after a successful signup, so the already-signed-in
+  // effect below can't race the session refetch and override the destination.
+  const navigated = React.useRef(false);
 
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get('error');
@@ -51,7 +54,9 @@ export function SignupClient() {
 
   // Already signed in → account (carrying an intended plan into checkout).
   useEffect(() => {
-    if (me) router.replace(plan ? `/account/?checkout=${plan}&interval=${interval}` : '/account/');
+    if (me && !navigated.current) {
+      router.replace(plan ? `/account/?checkout=${plan}&interval=${interval}` : '/account/');
+    }
   }, [me, router, plan, interval]);
 
   const consentOk = acceptTerms && acceptAck && notQuebec;
@@ -71,6 +76,7 @@ export function SignupClient() {
     const res = await signup({ email: email.trim(), password, acceptTerms, acceptAck, notQuebec, briefingOptIn });
     setBusy(false);
     if (res.ok) {
+      navigated.current = true;
       refreshMe();
       router.push(plan ? `/account/?checkout=${plan}&interval=${interval}` : '/dashboard/');
     } else {

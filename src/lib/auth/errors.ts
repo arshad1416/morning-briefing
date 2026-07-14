@@ -1,6 +1,8 @@
 // lib/auth/errors.ts — Worker error codes → human copy
 
 const MESSAGES: Record<string, string> = {
+  // transport
+  network: 'Network error — check your connection and try again.',
   // auth
   invalid_email: "That email address doesn't look right.",
   weak_password: 'Password must be at least 10 characters.',

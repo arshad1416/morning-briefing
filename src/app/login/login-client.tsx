@@ -28,6 +28,9 @@ export function LoginClient() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  // Set once we navigate after a successful auth, so the already-signed-in
+  // effect below can't race the session refetch and override the destination.
+  const navigated = React.useRef(false);
 
   // OAuth error redirects arrive as ?error=use_password (search params read in an
   // effect — static export renders this page without request context).
@@ -38,7 +41,7 @@ export function LoginClient() {
 
   // Already signed in → account.
   useEffect(() => {
-    if (me) router.replace('/account/');
+    if (me && !navigated.current) router.replace('/account/');
   }, [me, router]);
 
   async function onSubmit(e: React.FormEvent) {
@@ -48,6 +51,7 @@ export function LoginClient() {
     const res = await login(email.trim(), password);
     setBusy(false);
     if (res.ok) {
+      navigated.current = true;
       refreshMe();
       router.push('/dashboard/');
     } else {
@@ -66,12 +70,15 @@ export function LoginClient() {
       const assertion = await webauthn.startAuthentication({ optionsJSON });
       const verify = await passkeyLoginVerify(challengeId, assertion.id, assertion);
       if (!verify.ok) throw new Error(verify.body.error || 'verify_failed');
+      navigated.current = true;
       refreshMe();
       router.push('/dashboard/');
     } catch (err) {
-      // NotAllowedError = user dismissed the browser prompt; stay quiet-ish
-      const code = err instanceof Error ? err.message : undefined;
-      if (code !== 'NotAllowedError') setError(errorMessage(code, 'Passkey sign-in failed — please try again.'));
+      // User dismissed the browser prompt: DOMException carries the cancel
+      // signal in .name, not .message — stay quiet for that case only.
+      if (!(err instanceof Error && err.name === 'NotAllowedError')) {
+        setError(errorMessage(err instanceof Error ? err.message : undefined, 'Passkey sign-in failed — please try again.'));
+      }
     } finally {
       setBusy(false);
     }

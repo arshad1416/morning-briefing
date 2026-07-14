@@ -421,28 +421,33 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </main>
       </div>
 
-      {/* Mobile bottom nav */}
+      {/* Mobile bottom nav — nine destinations don't fit a narrow viewport,
+          so the strip scrolls horizontally (scrollbar hidden). This is also
+          the only mobile path to the deep-dive pages. */}
       <nav
-        className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t backdrop-blur-md flex justify-around py-2 px-4"
+        className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t backdrop-blur-md overflow-x-auto"
         style={{
           borderColor: 'var(--color-border-subtle)',
           backgroundColor: 'color-mix(in srgb, var(--color-bg-base) 75%, transparent)',
+          scrollbarWidth: 'none',
         }}
       >
-        {NAV_ITEMS.map((item) => {
-          const isActive = isNavActive(pathname, item.href);
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="flex flex-col items-center gap-1 text-[11px] min-w-11 min-h-11 justify-center"
-              style={{ color: isActive ? 'var(--color-accent)' : 'var(--color-text-tertiary)' }}
-            >
-              <item.Icon />
-              {item.label}
-            </Link>
-          );
-        })}
+        <div className="flex w-max min-w-full items-stretch justify-around gap-1 px-2 py-2">
+          {[...NAV_ITEMS, ...SECONDARY_NAV_ITEMS].map((item) => {
+            const isActive = isNavActive(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="flex min-h-11 min-w-14 shrink-0 flex-col items-center justify-center gap-1 whitespace-nowrap text-[10px]"
+                style={{ color: isActive ? 'var(--color-accent)' : 'var(--color-text-tertiary)' }}
+              >
+                <item.Icon />
+                {item.label}
+              </Link>
+            );
+          })}
+        </div>
       </nav>
     </div>
   );

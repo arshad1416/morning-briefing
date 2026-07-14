@@ -38,7 +38,9 @@ export function GateCard({
   need?: 'basic' | 'pro';
   feature: string;
 }) {
-  const tierLabel = need === 'pro' ? 'Pro' : 'Basic';
+  // The Worker's 403 doesn't always carry a `need` tier (e.g. no_subscription).
+  // Never guess a tier we don't know — a wrong upsell sells the wrong plan.
+  const tierLabel = need === 'pro' ? 'Pro' : need === 'basic' ? 'Basic' : null;
 
   const copy =
     kind === 'signin'
@@ -51,9 +53,9 @@ export function GateCard({
         }
       : kind === 'upgrade'
         ? {
-            title: `${feature} is a ${tierLabel} feature`,
+            title: tierLabel ? `${feature} is a ${tierLabel} feature` : `${feature} is a premium feature`,
             sub: `Upgrade your plan to keep going — cancel anytime.`,
-            cta: `Upgrade to ${tierLabel}`,
+            cta: tierLabel ? `Upgrade to ${tierLabel}` : 'See plans',
             href: '/#pricing',
             alt: null,
           }

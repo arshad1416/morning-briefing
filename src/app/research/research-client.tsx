@@ -94,20 +94,24 @@ function ExtLink({ href, children }: { href: string; children: React.ReactNode }
   );
 }
 
-/** Renders a gated query state: gate card, empty state, or content. */
+/** Renders a gated query state: gate card, empty state, or content.
+ *  `need` is the file's own tier, used when the Worker's 403 carries none
+ *  (e.g. no_subscription) so the upsell never names the wrong plan. */
 function GatedPane<T>({
   q,
   feature,
+  need: fallbackNeed = 'basic',
   children,
 }: {
   q: { data?: T; error: unknown; isLoading: boolean };
   feature: string;
+  need?: 'basic' | 'pro';
   children: (data: T) => React.ReactNode;
 }) {
   if (q.isLoading) return <Empty>Loading…</Empty>;
   if (q.error) {
     const kind = q.error instanceof GateError ? q.error.kind : 'unavailable';
-    const need = q.error instanceof GateError ? q.error.need : undefined;
+    const need = (q.error instanceof GateError ? q.error.need : undefined) ?? fallbackNeed;
     return <GateCard kind={kind} need={need} feature={feature} />;
   }
   if (q.data == null) return <Empty>No data available yet.</Empty>;
@@ -617,7 +621,7 @@ function BacktestTab() {
   const q = useGated<Any>('walk-forward', 'walk_forward_v2.json');
 
   return (
-    <GatedPane q={q} feature="Backtest research">
+    <GatedPane q={q} feature="Backtest research" need="pro">
       {(wf) => (
         <div className="space-y-4">
           <Card title="Research-Backed Backtest Validation">

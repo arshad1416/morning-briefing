@@ -567,7 +567,10 @@ export function ScreenerClient() {
               max={10}
               step={0.1}
               value={filters.scoreMin}
-              onChange={(e) => set('scoreMin', parseFloat(e.target.value) || 0)}
+              onChange={(e) => {
+                const v = parseFloat(e.target.value);
+                set('scoreMin', Number.isFinite(v) ? v : 0);
+              }}
               className={selectCls}
               style={selectStyle}
             />
@@ -579,7 +582,10 @@ export function ScreenerClient() {
               max={10}
               step={0.1}
               value={filters.scoreMax}
-              onChange={(e) => set('scoreMax', parseFloat(e.target.value) || 10)}
+              onChange={(e) => {
+                const v = parseFloat(e.target.value);
+                set('scoreMax', Number.isFinite(v) ? v : 10);
+              }}
               className={selectCls}
               style={selectStyle}
             />

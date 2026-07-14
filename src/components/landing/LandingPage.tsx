@@ -5,19 +5,22 @@ import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { GammaMark } from "@/components/brand/GammaMark";
 import { useMe } from "@/lib/auth/useMe";
 
-// Legacy hash-router routes (old bookmarks + the Worker's OAuth redirects,
-// e.g. /#/login?error=use_password) → their new locations.
+// Legacy hash-router routes (old bookmarks, briefing-email deep links, and
+// the Worker's OAuth redirects, e.g. /#/login?error=use_password) → their
+// new locations. #/ticker/NVDA-style prefix links are handled in the shim.
 const LEGACY_ROUTES: Record<string, string> = {
   "": "/dashboard/",
+  today: "/dashboard/",
   login: "/login/",
   signup: "/signup/",
   account: "/account/",
+  pricing: "/#pricing",
   positions: "/positions/",
   options: "/options/",
   models: "/models/",
-  charts: "/models/",
-  screener: "/dashboard/",
-  research: "/dashboard/",
+  charts: "/charts/",
+  screener: "/screener/",
+  research: "/research/",
   maplegamma: "/options/",
 };
 
@@ -283,8 +286,19 @@ export default function MapleGammaLanding() {
     const hash = window.location.hash;
     if (!hash.startsWith("#/")) return;
     const [seg, query] = hash.slice(2).split("?");
-    const target = LEGACY_ROUTES[seg.replace(/\/+$/, "")];
-    if (target) window.location.replace(target + (query ? `?${query}` : ""));
+    const cleaned = seg.replace(/\/+$/, "");
+    let target = LEGACY_ROUTES[cleaned];
+    if (!target) {
+      // Prefix routes: #/ticker/NVDA → /ticker/?symbol=NVDA
+      const [head, ...rest] = cleaned.split("/");
+      if (head === "ticker" && rest[0]) {
+        target = `/ticker/?symbol=${encodeURIComponent(rest[0].toUpperCase())}`;
+      }
+    }
+    if (target) {
+      const sep = target.includes("?") ? "&" : "?";
+      window.location.replace(target + (query ? `${sep}${query}` : ""));
+    }
   }, []);
 
   const stats = [

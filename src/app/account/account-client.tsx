@@ -111,7 +111,7 @@ function SubscriptionSummary({ ent }: { ent: Entitlement }) {
 
 export function AccountClient() {
   const router = useRouter();
-  const { data: me, isLoading } = useMe();
+  const { data: me, isLoading, isFetching } = useMe();
   const refreshMe = useRefreshMe();
 
   const [interval, setInterval] = useState<BillingInterval>('monthly');
@@ -163,22 +163,28 @@ export function AccountClient() {
     [refreshMe, router],
   );
 
-  // Signed out → login (after the session check resolves).
+  // Signed out → login. Wait for any in-flight session refetch too: right
+  // after signup the cache can briefly hold a stale signed-out `null` while
+  // /api/auth/me re-resolves — redirecting on it would drop the ?checkout plan.
   useEffect(() => {
-    if (!isLoading && !me) router.replace('/login/');
-  }, [isLoading, me, router]);
+    if (!isLoading && !isFetching && !me) router.replace('/login/');
+  }, [isLoading, isFetching, me, router]);
 
-  // ?checkout=basic|pro&interval=... (arriving from signup with a chosen plan)
+  // ?checkout=basic|pro&interval=... (arriving from signup with a chosen plan).
+  // Strip the params immediately so a reload or bookmark can never re-trigger
+  // checkout, and skip entirely when a paid plan is already active.
   useEffect(() => {
     if (!me || autoCheckoutDone.current) return;
     const params = new URLSearchParams(window.location.search);
     const tier = params.get('checkout');
-    if (tier === 'basic' || tier === 'pro') {
-      autoCheckoutDone.current = true;
-      const chosen = params.get('interval') === 'annual' ? 'annual' : 'monthly';
-      setInterval(chosen);
-      startCheckout(tier, chosen);
-    }
+    if (tier !== 'basic' && tier !== 'pro') return;
+    autoCheckoutDone.current = true;
+    window.history.replaceState(null, '', window.location.pathname);
+    const ent = me.entitlement;
+    if ((ent.tier === 'basic' || ent.tier === 'pro') && ent.status === 'active') return;
+    const chosen = params.get('interval') === 'annual' ? 'annual' : 'monthly';
+    setInterval(chosen);
+    startCheckout(tier, chosen);
   }, [me, startCheckout]);
 
   if (isLoading || !me) {
@@ -227,8 +233,10 @@ export function AccountClient() {
       if (!verify.ok) throw new Error(verify.body.error || 'verify_failed');
       setNote('Passkey added — you can now sign in without a password.');
     } catch (err) {
-      const code = err instanceof Error ? err.message : undefined;
-      if (code !== 'NotAllowedError') setError(errorMessage(code, 'Could not add the passkey.'));
+      // DOMException carries the cancel signal in .name, not .message.
+      if (!(err instanceof Error && err.name === 'NotAllowedError')) {
+        setError(errorMessage(err instanceof Error ? err.message : undefined, 'Could not add the passkey.'));
+      }
     } finally {
       setBusy(false);
     }
