@@ -135,6 +135,19 @@ export function AccountClient() {
   const [note, setNote] = useState<string | null>(null);
   const autoCheckoutDone = useRef(false);
 
+  // Optimistic, state-derived briefing toggle. The old handler trusted the DOM
+  // event's e.target.checked — a double-fired click event POSTed false-then-
+  // true and the box snapped back every time ("can't check the checkmark").
+  // Deriving the target from React state makes duplicate events idempotent,
+  // the busy flag serializes them, and the local override makes it instant.
+  const [briefingBusy, setBriefingBusy] = useState(false);
+  const [briefingLocal, setBriefingLocal] = useState<boolean | null>(null);
+  const briefingChecked = briefingLocal ?? me?.briefingOptIn ?? false;
+  useEffect(() => {
+    // Drop the optimistic override once the server state catches up.
+    if (briefingLocal !== null && me?.briefingOptIn === briefingLocal) setBriefingLocal(null);
+  }, [me?.briefingOptIn, briefingLocal]);
+
   // Registered passkeys (null until the first load resolves).
   const [passkeys, setPasskeys] = useState<PasskeyCredential[] | null>(null);
   const loadPasskeys = useCallback(async () => {
@@ -290,9 +303,19 @@ export function AccountClient() {
     }
   }
 
-  async function onBriefingToggle(optIn: boolean) {
-    const res = await setBriefingOptIn(optIn);
-    if (res.ok) refreshMe();
+  async function onBriefingToggle() {
+    if (briefingBusy) return;
+    const next = !briefingChecked;
+    setBriefingBusy(true);
+    setBriefingLocal(next);
+    const res = await setBriefingOptIn(next);
+    if (res.ok) {
+      refreshMe();
+    } else {
+      setBriefingLocal(null);
+      setError(errorMessage(res.body.error, 'Could not update the briefing preference.'));
+    }
+    setBriefingBusy(false);
   }
 
   return (
@@ -440,8 +463,9 @@ export function AccountClient() {
             </span>
             <input
               type="checkbox"
-              checked={me.briefingOptIn}
-              onChange={(e) => onBriefingToggle(e.target.checked)}
+              checked={briefingChecked}
+              disabled={briefingBusy}
+              onChange={onBriefingToggle}
               className="h-4 w-4 accent-[var(--color-accent)]"
             />
           </label>
