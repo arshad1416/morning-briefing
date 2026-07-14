@@ -1,0 +1,421 @@
+// app/predictions/predictions-client.tsx — Prediction Engine tuning, ported
+// from the legacy SPA: version history, live-trading accuracy vs backtest
+// predictions, expectancy/drawdown metrics, iteration insights, and the
+// López de Prado-style backtest validation scorecard.
+//
+// Data (all Pro tier via the Worker gate): prediction-engine.json,
+// accuracy.json, walk_forward_v2.json.
+'use client';
+
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { GateCard } from '@/components/feature/gating/GateCard';
+import { fetchGated, GateError } from '@/lib/api/gated';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+type Any = any;
+const raw = { parse: (d: unknown) => d as Any };
+
+const useGatedFile = (name: string, file: string) =>
+  useQuery<Any>({
+    queryKey: ['predictions', name],
+    queryFn: () => fetchGated<Any>(file, raw),
+    staleTime: 300_000,
+    retry: false,
+  });
+
+/* ------------------------------------------------------------------ */
+/*  Atoms                                                             */
+/* ------------------------------------------------------------------ */
+
+function Card({ title, right, children }: { title?: string; right?: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <div
+      className="overflow-hidden rounded-[var(--radius-tile)] border"
+      style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
+    >
+      {title && (
+        <div className="flex items-center justify-between border-b px-4 py-3" style={{ borderColor: 'var(--color-border-subtle)' }}>
+          <h3 className="text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">{title}</h3>
+          {right}
+        </div>
+      )}
+      <div className="p-4">{children}</div>
+    </div>
+  );
+}
+
+function Metric({ label, value, sub, color }: { label: string; value: React.ReactNode; sub?: string; color?: string }) {
+  return (
+    <div
+      className="rounded-[var(--radius-tile)] border p-3 text-center"
+      style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
+    >
+      <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--color-text-tertiary)]">{label}</p>
+      <p className="mt-1 text-xl font-bold" data-numeric style={{ color: color ?? 'var(--color-text-primary)' }}>{value}</p>
+      {sub && <p className="text-[10px] text-[var(--color-text-tertiary)]">{sub}</p>}
+    </div>
+  );
+}
+
+function WrBadge({ wr, hi = 70, mid = 60 }: { wr: number; hi?: number; mid?: number }) {
+  const color = wr >= hi ? 'var(--color-bull)' : wr >= mid ? 'var(--color-caution)' : 'var(--color-text-tertiary)';
+  return (
+    <span
+      className="inline-block rounded-full px-2 py-0.5 text-[11px] font-semibold"
+      data-numeric
+      style={{ backgroundColor: `color-mix(in srgb, ${color} 14%, transparent)`, color }}
+    >
+      {wr}%
+    </span>
+  );
+}
+
+const pnlColor = (v: number) => ((v ?? 0) >= 0 ? 'var(--color-bull)' : 'var(--color-bear)');
+const signed = (v: number) => `${(v ?? 0) >= 0 ? '+' : ''}${v}%`;
+
+const TH = ({ children, align = 'left' }: { children?: React.ReactNode; align?: 'left' | 'right' | 'center' }) => (
+  <th className={`px-3 py-2 text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)] text-${align}`}>{children}</th>
+);
+const TD = ({ children, align = 'left', color, bold }: { children?: React.ReactNode; align?: 'left' | 'right' | 'center'; color?: string; bold?: boolean }) => (
+  <td
+    className={`border-t px-3 py-2 text-${align} ${bold ? 'font-semibold' : ''}`}
+    data-numeric
+    style={{ borderColor: 'var(--color-border-subtle)', color: color ?? 'var(--color-text-secondary)' }}
+  >
+    {children}
+  </td>
+);
+
+/* ------------------------------------------------------------------ */
+/*  Sections                                                          */
+/* ------------------------------------------------------------------ */
+
+function LiveTrading({ lt }: { lt: Any }) {
+  const s = lt.summary || {};
+  return (
+    <Card
+      title="Live Trading Accuracy"
+      right={<span className="text-[10px] text-[var(--color-text-tertiary)]" data-numeric>Updated {(s.generated_at || lt.generated_at || '').substring(0, 16)}</span>}
+    >
+      <div className="mb-4 grid grid-cols-3 gap-2 sm:grid-cols-6">
+        <Metric label="Live WR" value={`${s.win_rate}%`} color={s.win_rate >= 60 ? 'var(--color-bull)' : s.win_rate >= 40 ? 'var(--color-caution)' : 'var(--color-bear)'} />
+        <Metric label="Closed" value={s.closed_trades} />
+        <Metric label="W / L" value={<><span style={{ color: 'var(--color-bull)' }}>{s.winning_trades}W</span> / <span style={{ color: 'var(--color-bear)' }}>{s.losing_trades}L</span></>} />
+        <Metric label="Return" value={`${s.return_pct}%`} color={pnlColor(s.return_pct)} />
+        <Metric label="Days Active" value={s.trading_days_active} />
+        <Metric label="Open" value={s.open_positions} />
+      </div>
+      {!!lt.per_strategy?.length && (
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[640px] text-sm">
+            <thead><tr><TH>Strategy</TH><TH align="center">Trades</TH><TH align="center">W/L</TH><TH align="center">Live WR</TH><TH align="center">Predicted</TH><TH align="center">Status</TH><TH align="right">Avg P&L</TH></tr></thead>
+            <tbody>
+              {lt.per_strategy.map((p: Any, i: number) => {
+                const predVal = parseFloat(p.backtest_predicted_wr);
+                const diff = !isNaN(predVal) && predVal > 0 ? (p.win_rate || 0) - predVal : null;
+                const dot = diff == null ? '' : diff > 5 ? '🟢' : diff < -5 ? '🔴' : '⚪';
+                return (
+                  <tr key={i}>
+                    <TD bold color="var(--color-text-primary)">{p.strategy}</TD>
+                    <TD align="center">{p.closed_trades}</TD>
+                    <TD align="center"><span style={{ color: 'var(--color-bull)' }}>{p.wins}</span>/<span style={{ color: 'var(--color-bear)' }}>{p.losses}</span></TD>
+                    <TD align="center"><WrBadge wr={p.win_rate || 0} hi={60} mid={40} /></TD>
+                    <TD align="center">{p.backtest_predicted_wr || 'N/A'}</TD>
+                    <TD align="center">{dot} <span className="text-[10px]">{String(p.accuracy_vs_prediction || '').substring(0, 24)}</span></TD>
+                    <TD align="right" color={pnlColor(p.avg_pnl_pct || 0)}>{signed(p.avg_pnl_pct || 0)}</TD>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <p className="mt-3 border-t pt-2 text-[10px] text-[var(--color-text-tertiary)]" style={{ borderColor: 'var(--color-border-subtle)' }}>
+        🟢 Outperforming prediction · ⚪ On track · 🔴 Underperforming · Backtest predictions from walk-forward analysis
+      </p>
+    </Card>
+  );
+}
+
+function VersionTable({ title, rows }: { title: string; rows: [string, Any][] }) {
+  return (
+    <Card title={title}>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px] text-sm">
+          <thead><tr><TH>Version</TH><TH align="right">Trades</TH><TH align="right">Avg P&L</TH><TH align="center">Win Rate</TH><TH align="right">PF</TH><TH>Innovation</TH></tr></thead>
+          <tbody>
+            {rows.map(([name, d]) => {
+              const p = d.performance?.overall || {};
+              return (
+                <tr key={name} style={p.is_best || p.star ? { backgroundColor: 'var(--color-accent-dim)' } : undefined}>
+                  <TD bold color="var(--color-text-primary)">{name.split(' ')[0]}</TD>
+                  <TD align="right">{d.total_trades?.toLocaleString?.() ?? ''}</TD>
+                  <TD align="right" color={pnlColor(p.avg_pnl)}>{signed(p.avg_pnl)}</TD>
+                  <TD align="center"><WrBadge wr={p.win_rate ?? 0} /></TD>
+                  <TD align="right">{p.profit_factor}</TD>
+                  <td className="border-t px-3 py-2 text-xs text-[var(--color-text-tertiary)]" style={{ borderColor: 'var(--color-border-subtle)' }}>
+                    {String(d.description || '').substring(0, 80)}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </Card>
+  );
+}
+
+function EnhancedAccuracy() {
+  const q = useGatedFile('accuracy', 'accuracy.json');
+  const d = q.data;
+  if (!d?.expectancy) return null;
+  const exp = d.expectancy;
+  const dd = d.drawdown || {};
+  const slip = d.slippage || {};
+  return (
+    <Card title="Live Performance Metrics">
+      <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
+        <Metric label="Expectancy" value={signed(exp.expectancy_pct)} sub="per trade" color={pnlColor(exp.expectancy_pct)} />
+        <Metric label="Profit Factor" value={typeof exp.profit_factor === 'number' ? exp.profit_factor.toFixed(2) : '∞'} sub="wins/losses" color={exp.profit_factor >= 1.5 ? 'var(--color-bull)' : 'var(--color-caution)'} />
+        <Metric label="Max Drawdown" value={`-${dd.max_drawdown_pct || 0}%`} sub={`${dd.drawdown_duration_trades || 0} trades`} color={dd.max_drawdown_pct < 10 ? 'var(--color-bull)' : dd.max_drawdown_pct < 20 ? 'var(--color-caution)' : 'var(--color-bear)'} />
+        <Metric label="Kelly %" value={`${exp.kelly_fraction || 0}%`} sub="optimal sizing" />
+        {slip.n_measured > 0 && <Metric label="Avg Slippage" value={`${slip.avg_slippage_pct}%`} sub={`${slip.n_measured} measured`} color="var(--color-caution)" />}
+      </div>
+      {!!d.per_strategy?.length && (
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[640px] text-sm">
+            <thead><tr><TH>Strategy</TH><TH align="center">Trades</TH><TH align="center">WR</TH><TH align="center">Expectancy</TH><TH align="center">PF</TH><TH align="center">Max DD</TH><TH align="center">Status</TH></tr></thead>
+            <tbody>
+              {d.per_strategy.map((s: Any, i: number) => (
+                <tr key={i}>
+                  <TD bold color="var(--color-text-primary)">{s.strategy}</TD>
+                  <TD align="center">{s.n_trades}</TD>
+                  <TD align="center">{s.win_rate}%</TD>
+                  <TD align="center" color={pnlColor(s.expectancy_pct)} bold>{signed(s.expectancy_pct)}</TD>
+                  <TD align="center">{typeof s.profit_factor === 'number' ? s.profit_factor.toFixed(2) : '∞'}</TD>
+                  <TD align="center" color={s.max_drawdown_pct < 10 ? 'var(--color-bull)' : s.max_drawdown_pct < 20 ? 'var(--color-caution)' : 'var(--color-bear)'}>-{s.max_drawdown_pct}%</TD>
+                  <TD align="center" color={s.status === 'profitable' ? 'var(--color-bull)' : 'var(--color-bear)'}>{s.status === 'profitable' ? 'Profitable' : 'Losing'}</TD>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </Card>
+  );
+}
+
+function Validation({ data }: { data: Any }) {
+  const wfq = useGatedFile('walk-forward', 'walk_forward_v2.json');
+  const s = data.summary || {};
+  const totalTrades = s.total_backtest_trades || 0;
+  const parseMetric = (str: unknown) => {
+    const m = String(str ?? '').match(/([\d.]+)/);
+    return m ? parseFloat(m[1]) : 0;
+  };
+  const bestWR = parseMetric(s.best_win_rate);
+  const bestPF = parseMetric(s.best_profit_factor);
+
+  // Normalize walk-forward v2 → windows + summary aggregates
+  const wf = (() => {
+    const w = wfq.data;
+    if (!w?.windows?.length) return null;
+    const windows = w.windows.map((win: Any) => {
+      const strats = win.results || {};
+      const keys = Object.keys(strats);
+      const avgOOS = keys.reduce((sum, k) => sum + (strats[k].oos_sharpe || 0), 0) / (keys.length || 1);
+      const avgDeg = keys.reduce((sum, k) => sum + (strats[k].oos_degradation_pct || 0), 0) / (keys.length || 1);
+      return { pass: avgDeg < 30 && avgOOS > 0, oos: avgOOS, deg: avgDeg };
+    });
+    const good = windows.filter((x: Any) => x.pass).length;
+    const avgOOS = windows.reduce((sum: number, x: Any) => sum + x.oos, 0) / windows.length;
+    const avgDeg = windows.reduce((sum: number, x: Any) => sum + x.deg, 0) / windows.length;
+    return {
+      count: w.parameters?.windows ?? windows.length,
+      good,
+      avgOOS,
+      avgDeg,
+      robust: good >= Math.ceil(windows.length * 0.6),
+    };
+  })();
+
+  const dateRange = s.date_range || '2000-2026';
+  const winRate = bestWR / 100;
+  const estRR = winRate > 0 && winRate < 1 ? (bestPF * (1 - winRate)) / winRate : 1;
+  const estSharpe = (bestWR - 50) / 15;
+  const degraded = estSharpe * 0.7;
+  const tickers = s.tickers_tested || 59;
+
+  const checks = [
+    { label: 'Sample Size', pass: totalTrades >= 100, value: `${(totalTrades / 1000).toFixed(0)}K trades`, detail: totalTrades >= 500 ? 'Far exceeds 100-trade minimum' : 'Need 100+ trades' },
+    { label: 'Profit Factor', pass: bestPF >= 1.5, value: bestPF.toFixed(2), detail: bestPF >= 2 ? 'Strong — exceeds 1.5 threshold' : bestPF >= 1.5 ? 'Meets threshold' : 'Below 1.5' },
+    { label: 'Market Cycles', pass: dateRange.includes('2000'), value: dateRange, detail: 'Covers 2008, 2020, 2022 drawdowns' },
+    { label: 'Win Rate / R:R', pass: winRate >= 0.45 || estRR >= 1.5, value: `${bestWR}% / ${estRR.toFixed(2)}R`, detail: winRate >= 0.45 ? 'Strong win rate' : 'Low win rate + low R:R' },
+    { label: 'Live Sharpe (est)', pass: degraded >= 1, value: degraded.toFixed(2), detail: `Backtest: ${estSharpe.toFixed(2)}. ~50% degradation expected` },
+    { label: 'Diversification', pass: tickers >= 20, value: `${tickers} tickers`, detail: tickers >= 50 ? 'Highly diversified' : 'Adequate' },
+    wf
+      ? { label: 'Walk-Forward', pass: wf.good >= Math.ceil(wf.count * 0.7), value: `${wf.good}/${wf.count} windows pass`, detail: `OOS Sharpe ${wf.avgOOS.toFixed(2)} · Degradation ${wf.avgDeg.toFixed(1)}% · ${wf.robust ? 'Robust across regimes' : 'Higher degradation than ideal'}` }
+      : { label: 'Walk-Forward', pass: false, value: 'Not yet run', detail: 'Will validate parameter robustness across regimes' },
+  ];
+  const passed = checks.filter((c) => c.pass).length;
+
+  return (
+    <Card
+      title="Backtest Validation"
+      right={<span className="text-[10px] text-[var(--color-text-tertiary)]">Per López de Prado / Aronson</span>}
+    >
+      <p className="mb-3 text-sm font-semibold text-[var(--color-text-primary)]">
+        Research Score:{' '}
+        <span data-numeric style={{ color: passed >= 6 ? 'var(--color-bull)' : passed >= 4 ? 'var(--color-caution)' : 'var(--color-bear)' }}>
+          {passed}/7 Passed
+        </span>
+      </p>
+      <div className="space-y-1.5">
+        {checks.map((c) => (
+          <div
+            key={c.label}
+            className="flex flex-wrap items-center gap-2 rounded-lg px-3 py-2 text-xs"
+            style={{ backgroundColor: 'var(--color-bg-elevated)' }}
+          >
+            <span aria-hidden="true">{c.pass ? '✅' : '⚠️'}</span>
+            <span className="min-w-[110px] font-semibold text-[var(--color-text-primary)]">{c.label}</span>
+            <span className="min-w-[90px] text-[var(--color-text-secondary)]" data-numeric>{c.value}</span>
+            <span className="flex-1 text-[var(--color-text-tertiary)]">{c.detail}</span>
+          </div>
+        ))}
+      </div>
+    </Card>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Page                                                              */
+/* ------------------------------------------------------------------ */
+
+export function PredictionsClient() {
+  const q = useGatedFile('engine', 'prediction-engine.json');
+
+  const header = (
+    <div
+      className="relative overflow-hidden rounded-[var(--radius-tile)] border p-6"
+      style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
+    >
+      <span aria-hidden="true" className="glow-orb -top-24 -right-8" />
+      <h1 className="relative z-10 font-display text-3xl text-[var(--color-text-primary)]">
+        Engine <em className="italic" style={{ color: 'var(--color-accent)' }}>Tuning</em>
+      </h1>
+      <p className="relative z-10 mt-2 text-sm text-[var(--color-text-secondary)]">
+        Every model version, backtested and compared — and how the live engine tracks its own predictions.
+      </p>
+    </div>
+  );
+
+  if (q.isLoading) {
+    return (
+      <div className="space-y-4">
+        {header}
+        <p className="p-8 text-center text-sm text-[var(--color-text-tertiary)]">Loading engine data…</p>
+      </div>
+    );
+  }
+
+  if (q.error || !q.data) {
+    return (
+      <div className="space-y-4">
+        {header}
+        <GateCard
+          kind={q.error instanceof GateError ? q.error.kind : 'unavailable'}
+          need={q.error instanceof GateError ? (q.error.need ?? 'pro') : 'pro'}
+          feature="Engine tuning"
+        />
+      </div>
+    );
+  }
+
+  const data = q.data;
+  const s = data.summary || {};
+  const allVersions = Object.entries(data.versions || {}).filter(([, v]: [string, Any]) => v.tag) as [string, Any][];
+  const latest10 = allVersions.slice(-10).reverse();
+  const milestoneNums = new Set([1, 2, 3, 5, 6, 10, 18, 23]);
+  const milestones = allVersions.filter(([name]) => milestoneNums.has(parseInt(name.split(' ')[0].replace('V', ''))));
+  const ev = data.evolution;
+
+  return (
+    <div className="space-y-4">
+      {header}
+
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+        <Metric label="Total Trades" value={s.total_backtest_trades?.toLocaleString?.() ?? '—'} />
+        <Metric label="Tickers" value={s.tickers_tested ?? '—'} />
+        <Metric label="Date Range" value={<span className="text-sm">{s.date_range ?? '—'}</span>} />
+        <Metric label="Best WR" value={s.best_win_rate ?? '—'} />
+        <Metric label="Best P&L" value={s.best_avg_pnl ?? '—'} color="var(--color-bull)" />
+      </div>
+
+      {data.live_trading && <LiveTrading lt={data.live_trading} />}
+
+      <EnhancedAccuracy />
+
+      <VersionTable title="Version Comparison" rows={latest10} />
+      {milestones.length > 0 && <VersionTable title="Methodology Milestones" rows={milestones} />}
+
+      {ev?.mr_progression?.length > 0 && (
+        <Card title="Mean-Reversion Evolution">
+          <div className="space-y-2">
+            {ev.mr_progression.slice(-6).map((v: Any) => (
+              <div key={v.version} className="flex items-center gap-3 text-sm">
+                <span className="min-w-[48px] font-semibold text-[var(--color-text-primary)]" data-numeric>{v.version}</span>
+                <WrBadge wr={v.win_rate} />
+                <span className="min-w-[64px] text-right" data-numeric style={{ color: pnlColor(v.avg_pnl) }}>{signed(v.avg_pnl)}</span>
+                <span className="min-w-[40px] text-right text-[var(--color-text-secondary)]" data-numeric>{v.pf}</span>
+                <div className="h-1.5 flex-1 overflow-hidden rounded-full" style={{ backgroundColor: 'var(--color-bg-elevated)' }}>
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: `${Math.min(v.win_rate * 1.2, 100)}%`,
+                      backgroundColor: v.win_rate >= 70 ? 'var(--color-bull)' : 'var(--color-accent)',
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {(ev?.key_innovations || ev?.what_didnt_work) && (
+        <Card title="Iteration Insights">
+          {!!ev.key_innovations?.length && (
+            <>
+              <p className="mb-1 text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--color-bull)' }}>What worked</p>
+              {ev.key_innovations.map((k: string, i: number) => (
+                <p key={i} className="py-0.5 text-sm text-[var(--color-text-secondary)]">{k}</p>
+              ))}
+            </>
+          )}
+          {!!ev.what_didnt_work?.length && (
+            <>
+              <p className="mb-1 mt-3 text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--color-bear)' }}>What did not</p>
+              {ev.what_didnt_work.map((k: string, i: number) => (
+                <p key={i} className="py-0.5 text-sm text-[var(--color-text-secondary)]">{k}</p>
+              ))}
+            </>
+          )}
+        </Card>
+      )}
+
+      <Validation data={data} />
+
+      <Card>
+        <p className="text-xs leading-relaxed text-[var(--color-text-tertiary)]">
+          <strong className="text-[var(--color-text-secondary)]">Methodology:</strong>{' '}
+          {s.date_range || 'N/A'} backtest across {s.tickers_tested || 'N/A'} tickers. 21-day hold.{' '}
+          {data.versions ? Object.keys(data.versions).length : 'N/A'} versions tested.{' '}
+          {s.total_backtest_trades?.toLocaleString?.() ?? 'N/A'} total trades. Council: Gemini, DeepSeek, MiMo, Nemotron.
+        </p>
+      </Card>
+    </div>
+  );
+}

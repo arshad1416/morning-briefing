@@ -96,6 +96,54 @@ function IconUser({ className }: IconProps) {
   );
 }
 
+function IconFunnel({ className }: IconProps) {
+  return (
+    <svg {...iconDefaults} className={className} aria-hidden="true">
+      <path d="M3.5 5h17l-6.5 7.5V19l-4 2v-8.5L3.5 5Z" />
+    </svg>
+  );
+}
+
+function IconNews({ className }: IconProps) {
+  return (
+    <svg {...iconDefaults} className={className} aria-hidden="true">
+      <path d="M4 5h13v14H6a2 2 0 0 1-2-2V5Z" />
+      <path d="M17 8h3v9a2 2 0 0 1-2 2" />
+      <path d="M7 9h7M7 12.5h7M7 16h4" />
+    </svg>
+  );
+}
+
+function IconCandles({ className }: IconProps) {
+  return (
+    <svg {...iconDefaults} className={className} aria-hidden="true">
+      <path d="M7 4v3M7 15v5M17 4v5M17 17v3" />
+      <rect x="5" y="7" width="4" height="8" rx="1" />
+      <rect x="15" y="9" width="4" height="8" rx="1" />
+    </svg>
+  );
+}
+
+function IconArchive({ className }: IconProps) {
+  return (
+    <svg {...iconDefaults} className={className} aria-hidden="true">
+      <rect x="3.5" y="4" width="17" height="4.5" rx="1" />
+      <path d="M5 8.5V19a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19V8.5" />
+      <path d="M10 12.5h4" />
+    </svg>
+  );
+}
+
+function IconDial({ className }: IconProps) {
+  return (
+    <svg {...iconDefaults} className={className} aria-hidden="true">
+      <path d="M5 19a8 8 0 1 1 14 0" />
+      <path d="M12 13l3.5-3.5" />
+      <circle cx="12" cy="13" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 function SessionButton() {
   const { data: me, isLoading } = useMe();
 
@@ -131,7 +179,17 @@ const NAV_ITEMS = [
   { href: '/dashboard/', label: 'Dashboard', Icon: IconGrid },
   { href: '/positions/', label: 'Positions', Icon: IconLayers },
   { href: '/options/', label: 'Options', Icon: IconTarget },
+  { href: '/screener/', label: 'Screener', Icon: IconFunnel },
+  { href: '/research/', label: 'Research', Icon: IconNews },
+  { href: '/charts/', label: 'Charts', Icon: IconCandles },
   { href: '/models/', label: 'Models', Icon: IconPulse },
+];
+
+// Deep-dive pages surfaced in the sidebar only — the mobile bottom nav stays
+// at the seven primary destinations.
+const SECONDARY_NAV_ITEMS = [
+  { href: '/predictions/', label: 'Engine Tuning', Icon: IconDial },
+  { href: '/archive/', label: 'Archive', Icon: IconArchive },
 ];
 
 function normalizePath(p: string) {
@@ -303,6 +361,34 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </Link>
             );
           })}
+
+          {/* Deep dives */}
+          <div className="mt-2 pt-2 border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>
+            {SECONDARY_NAV_ITEMS.map((item) => {
+              const isActive = isNavActive(pathname, item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="relative flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-colors min-h-10"
+                  style={{
+                    backgroundColor: isActive ? 'var(--color-bg-elevated)' : 'transparent',
+                    color: isActive ? 'var(--color-text-primary)' : 'var(--color-text-tertiary)',
+                  }}
+                >
+                  {isActive && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute left-0 top-2 bottom-2 w-0.5 rounded-full"
+                      style={{ backgroundColor: 'var(--color-accent)' }}
+                    />
+                  )}
+                  <item.Icon className={isActive ? 'text-[var(--color-accent)]' : undefined} />
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
 
           {/* Disclaimer */}
           <div className="mt-auto pt-4 border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>

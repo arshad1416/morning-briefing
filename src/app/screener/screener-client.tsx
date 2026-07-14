@@ -1,0 +1,694 @@
+// app/screener/screener-client.tsx — full-featured port of the legacy screener:
+// multi-factor filters, sortable table, Finviz-style treemap, gated full data
+// (Basic) with the public 8-row teaser for visitors.
+'use client';
+
+import React, { useMemo, useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
+import { screenerQuery } from '@/lib/query/options';
+import { GateCard } from '@/components/feature/gating/GateCard';
+import type { ScreenerTicker } from '@/lib/schemas/screener';
+
+/* ------------------------------------------------------------------ */
+/*  Filter model                                                      */
+/* ------------------------------------------------------------------ */
+
+type Filters = {
+  search: string;
+  pe: string;
+  mcap: string;
+  div: string;
+  rsi: string;
+  universe: string;
+  sector: string;
+  volume: string;
+  w52: string;
+  sma: string;
+  strategy: string;
+  direction: string;
+  scoreMin: number;
+  scoreMax: number;
+};
+
+const DEFAULT_FILTERS: Filters = {
+  search: '',
+  pe: '',
+  mcap: '',
+  div: '',
+  rsi: '',
+  universe: '',
+  sector: '',
+  volume: '',
+  w52: '',
+  sma: '',
+  strategy: '',
+  direction: '',
+  scoreMin: 0,
+  scoreMax: 10,
+};
+
+type SortKey = 'ticker' | 'change' | 'score' | 'rsi' | 'mcap' | 'pe' | 'volume_ratio';
+type Sort = { key: SortKey; dir: 'asc' | 'desc' };
+
+const inRange = (value: number | null | undefined, filter: string) => {
+  if (!filter) return true;
+  if (value == null) return false;
+  const [lo, hi] = filter.split('-');
+  if (lo !== '' && value < parseFloat(lo)) return false;
+  if (hi !== '' && hi !== undefined && value > parseFloat(hi)) return false;
+  return true;
+};
+
+const volRatio = (t: ScreenerTicker) => t.volume_ratio ?? t.vol_ratio ?? null;
+
+function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
+  const search = f.search.toLowerCase().trim();
+  const strategy = f.strategy.toLowerCase().trim();
+
+  return tickers.filter((t) => {
+    if (
+      search &&
+      !t.ticker.toLowerCase().includes(search) &&
+      !(t.name || '').toLowerCase().includes(search)
+    )
+      return false;
+    if (!inRange(t.pe, f.pe)) return false;
+    if (f.sector && t.sector !== f.sector) return false;
+    if (!f.sector && f.universe) {
+      const u = t.universe || '';
+      if (f.universe === 'S&P 500' ? !u.startsWith('S&P 500') : u !== f.universe) return false;
+    }
+    const score = t.score ?? 0;
+    if (score < f.scoreMin || score > f.scoreMax) return false;
+    if (strategy && (t.signal || '').toLowerCase().replace(/[^a-z_]/g, '') !== strategy) return false;
+    if (f.mcap) {
+      const b = (t.marketCap ?? 0) / 1e9;
+      if (f.mcap === '0-2B' && b > 2) return false;
+      if (f.mcap === '2B-10B' && (b < 2 || b > 10)) return false;
+      if (f.mcap === '10B-200B' && (b < 10 || b > 200)) return false;
+      if (f.mcap === '200B-' && b < 200) return false;
+      if (f.mcap === '1T-' && b < 1000) return false;
+    }
+    if (!inRange(t.rsi, f.rsi)) return false;
+    if (!inRange(t.divYield, f.div)) return false;
+    if (f.volume) {
+      const vr = volRatio(t) ?? 0;
+      if (f.volume === 'above' && vr < 1) return false;
+      if (f.volume === 'below' && vr >= 1) return false;
+      if (f.volume === '1.5x' && vr < 1.5) return false;
+      if (f.volume === '2x' && vr < 2) return false;
+    }
+    if (f.direction && (t.direction || '').toLowerCase() !== f.direction) return false;
+    if (f.w52) {
+      const hi = t.above_52w_high_pct;
+      const lo = t.below_52w_low_pct;
+      if (f.w52 === 'near-high' && (hi == null || hi > 5)) return false;
+      if (f.w52 === 'near-low' && (lo == null || lo > 5)) return false;
+      if (f.w52 === 'mid-range') {
+        if (hi == null || lo == null) return false;
+        if (hi < 10 && lo < 10) return false;
+      }
+    }
+    if (f.sma) {
+      const a20 = !!t.above_sma20;
+      const a50 = !!t.above_sma50;
+      if (f.sma === 'above-both' && !(a20 && a50)) return false;
+      if (f.sma === 'below-both' && !(!a20 && !a50)) return false;
+      if (f.sma === 'golden-cross' && !(a50 && !a20)) return false;
+      if (f.sma === 'death-cross' && !(!a50 && a20)) return false;
+    }
+    return true;
+  });
+}
+
+function sortTickers(list: ScreenerTicker[], sort: Sort): ScreenerTicker[] {
+  const dir = sort.dir === 'asc' ? 1 : -1;
+  const val = (t: ScreenerTicker): number | string => {
+    switch (sort.key) {
+      case 'ticker': return t.ticker;
+      case 'change': return t.change_pct ?? 0;
+      case 'score': return t.score ?? 0;
+      case 'rsi': return t.rsi ?? 0;
+      case 'mcap': return t.marketCap ?? 0;
+      case 'pe': return t.pe ?? (sort.dir === 'asc' ? Infinity : 0);
+      case 'volume_ratio': return volRatio(t) ?? 0;
+    }
+  };
+  return [...list].sort((a, b) => {
+    const va = val(a);
+    const vb = val(b);
+    if (typeof va === 'string' || typeof vb === 'string')
+      return String(va).localeCompare(String(vb)) * dir;
+    return (va - vb) * dir;
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/*  Small display helpers                                             */
+/* ------------------------------------------------------------------ */
+
+const fmtPrice = (v: number | null | undefined, d = 2) =>
+  v == null ? '—' : v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+const fmtPct = (v: number | null | undefined) =>
+  v == null ? '—' : `${v >= 0 ? '+' : ''}${v.toFixed(2)}%`;
+
+const changeColor = (v: number | null | undefined) =>
+  (v ?? 0) > 0 ? 'var(--color-bull)' : (v ?? 0) < 0 ? 'var(--color-bear)' : 'var(--color-text-secondary)';
+
+const BEARISH_SIGNAL = /over|bear|below|low|extended|death|premium|sell/;
+
+/* ------------------------------------------------------------------ */
+/*  UI atoms                                                          */
+/* ------------------------------------------------------------------ */
+
+const selectCls =
+  'w-full rounded-lg border bg-[var(--color-bg-elevated)] px-2.5 py-1.5 text-sm text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]';
+const selectStyle = { borderColor: 'var(--color-border-subtle)' } as const;
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="flex flex-col gap-1 min-w-0">
+      <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--color-text-tertiary)]">
+        {label}
+      </span>
+      {children}
+    </label>
+  );
+}
+
+function StatCard({ label, value, color }: { label: string; value: React.ReactNode; color?: string }) {
+  return (
+    <div
+      className="rounded-[var(--radius-tile)] border p-4"
+      style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
+    >
+      <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
+        {label}
+      </p>
+      <p className="mt-1 text-2xl font-bold text-[var(--color-text-primary)]" data-numeric style={color ? { color } : undefined}>
+        {value}
+      </p>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Table                                                             */
+/* ------------------------------------------------------------------ */
+
+function HeaderCell({
+  label,
+  sortKey,
+  sort,
+  onSort,
+  align = 'left',
+}: {
+  label: string;
+  sortKey?: SortKey;
+  sort: Sort;
+  onSort: (k: SortKey) => void;
+  align?: 'left' | 'right' | 'center';
+}) {
+  const active = sortKey && sort.key === sortKey;
+  const alignCls = align === 'right' ? 'text-right' : align === 'center' ? 'text-center' : 'text-left';
+  return (
+    <th
+      className={`px-3 py-2.5 text-[10px] font-medium uppercase tracking-[0.14em] whitespace-nowrap ${alignCls} ${sortKey ? 'cursor-pointer select-none hover:text-[var(--color-text-primary)]' : ''}`}
+      style={{ color: active ? 'var(--color-accent)' : 'var(--color-text-tertiary)' }}
+      onClick={sortKey ? () => onSort(sortKey) : undefined}
+      aria-sort={active ? (sort.dir === 'asc' ? 'ascending' : 'descending') : undefined}
+    >
+      {label}
+      {active && <span aria-hidden="true"> {sort.dir === 'asc' ? '↑' : '↓'}</span>}
+    </th>
+  );
+}
+
+function TickerRow({ t }: { t: ScreenerTicker }) {
+  const score = t.score ?? 0;
+  const vr = volRatio(t);
+  const rsi = t.rsi;
+
+  return (
+    <tr
+      className="border-t transition-colors hover:bg-[var(--color-bg-elevated)]"
+      style={{ borderColor: 'var(--color-border-subtle)' }}
+    >
+      <td className="px-3 py-2">
+        <Link
+          href={`/ticker/?symbol=${encodeURIComponent(t.ticker)}`}
+          className="font-semibold text-[var(--color-accent)] hover:underline"
+          data-numeric
+        >
+          {t.ticker}
+        </Link>
+      </td>
+      <td className="px-3 py-2 text-right text-[var(--color-text-primary)]" data-numeric>
+        {fmtPrice(t.price)}
+      </td>
+      <td className="px-3 py-2 text-right font-medium" data-numeric style={{ color: changeColor(t.change_pct) }}>
+        {fmtPct(t.change_pct)}
+      </td>
+      <td className="px-3 py-2 text-center">
+        <span
+          className="inline-block rounded px-1.5 py-0.5 font-bold"
+          data-numeric
+          style={{
+            backgroundColor: `color-mix(in srgb, var(--color-bull) ${Math.round(12 + (score / 10) * 35)}%, transparent)`,
+            color: 'var(--color-text-primary)',
+          }}
+        >
+          {score.toFixed(1)}
+        </span>
+      </td>
+      <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
+        {t.pe != null ? t.pe.toFixed(1) : '—'}
+      </td>
+      <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
+        {t.marketCap ? `${fmtPrice(t.marketCap / 1e9, 1)}B` : '—'}
+      </td>
+      <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
+        {t.divYield != null && t.divYield > 0 ? `${t.divYield.toFixed(2)}%` : '—'}
+      </td>
+      <td
+        className="px-3 py-2 text-right font-medium"
+        data-numeric
+        style={{
+          color: rsi == null ? 'var(--color-text-secondary)' : rsi < 30 ? 'var(--color-bear)' : rsi > 70 ? 'var(--color-bull)' : 'var(--color-text-secondary)',
+        }}
+      >
+        {rsi != null ? rsi.toFixed(1) : '—'}
+      </td>
+      <td
+        className="px-3 py-2 text-right"
+        data-numeric
+        style={{ color: vr != null && vr > 2 ? 'var(--color-accent)' : 'var(--color-text-secondary)', fontWeight: vr != null && vr > 2 ? 700 : undefined }}
+      >
+        {vr != null ? `${vr.toFixed(2)}x` : '—'}
+      </td>
+      <td className="px-3 py-2 text-xs text-[var(--color-text-tertiary)] whitespace-nowrap">
+        {t.sector ? t.sector.substring(0, 14) : '—'}
+      </td>
+      <td className="px-3 py-2">
+        <div className="flex flex-wrap gap-1 max-w-[220px]">
+          {(t.signals || []).map((s) => {
+            const bearish = BEARISH_SIGNAL.test(s);
+            return (
+              <span
+                key={s}
+                className="rounded-full px-1.5 py-0.5 text-[10px] font-medium whitespace-nowrap"
+                style={{
+                  backgroundColor: bearish ? 'var(--color-bear-soft)' : 'var(--color-bull-soft)',
+                  color: bearish ? 'var(--color-bear)' : 'var(--color-bull)',
+                }}
+              >
+                {s.replace(/_/g, ' ')}
+              </span>
+            );
+          })}
+          {!t.signals?.length && <span className="text-[var(--color-text-tertiary)]">—</span>}
+        </div>
+      </td>
+    </tr>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Treemap                                                           */
+/* ------------------------------------------------------------------ */
+
+function Treemap({ tickers }: { tickers: ScreenerTicker[] }) {
+  if (!tickers.length) {
+    return (
+      <p className="p-8 text-center text-sm text-[var(--color-text-tertiary)]">
+        No tickers match your filters.
+      </p>
+    );
+  }
+
+  const hasVolume = tickers.some((t) => (t.volume ?? 0) > 0);
+  const totalVolume = hasVolume
+    ? tickers.reduce((s, t) => s + Math.max(1, t.volume ?? 1), 0)
+    : tickers.length * 100;
+  const gridCols = Math.max(8, Math.min(40, Math.ceil(Math.sqrt(tickers.length * 2))));
+  const changes = tickers.map((t) => t.change_pct ?? 0);
+  const maxPos = Math.max(0.01, ...changes.filter((c) => c > 0));
+  const maxNeg = Math.min(-0.01, ...changes.filter((c) => c < 0));
+
+  return (
+    <div className="grid gap-px p-2" style={{ gridTemplateColumns: `repeat(${gridCols}, 1fr)` }}>
+      {tickers.map((t) => {
+        const chg = t.change_pct ?? 0;
+        const pos = chg >= 0;
+        const vol = hasVolume ? Math.max(1, t.volume ?? 1) : 100;
+        const ratio = vol / totalVolume;
+        const colSpan = Math.max(1, Math.min(4, Math.ceil(ratio * tickers.length * 0.8)));
+        const rowSpan = Math.max(1, Math.min(3, Math.ceil(ratio * tickers.length * 0.4)));
+        const intensity = pos ? Math.min(1, chg / maxPos) : Math.min(1, Math.abs(chg) / Math.abs(maxNeg));
+        const mix = Math.round(15 + intensity * 60);
+
+        return (
+          <Link
+            key={t.ticker}
+            href={`/ticker/?symbol=${encodeURIComponent(t.ticker)}`}
+            className="flex min-h-11 flex-col items-center justify-center overflow-hidden rounded-sm p-1 text-center transition hover:scale-[1.03] hover:z-10"
+            style={{
+              gridColumn: `span ${colSpan}`,
+              gridRow: `span ${rowSpan}`,
+              backgroundColor: `color-mix(in srgb, ${pos ? 'var(--color-bull)' : 'var(--color-bear)'} ${mix}%, var(--color-bg-surface))`,
+            }}
+            title={`${t.ticker} · ${fmtPct(chg)} · score ${(t.score ?? 0).toFixed(1)}${t.rsi != null ? ` · RSI ${t.rsi.toFixed(1)}` : ''}`}
+          >
+            <span className="text-[11px] font-bold leading-tight text-[var(--color-text-primary)]" data-numeric>
+              {t.ticker}
+            </span>
+            <span className="text-[10px] leading-tight text-[var(--color-text-secondary)]" data-numeric>
+              {fmtPct(chg)}
+            </span>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Page                                                              */
+/* ------------------------------------------------------------------ */
+
+export function ScreenerClient() {
+  const { data: result, isLoading } = useQuery(screenerQuery());
+  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
+  const [sort, setSort] = useState<Sort>({ key: 'score', dir: 'desc' });
+  const [view, setView] = useState<'table' | 'treemap'>('table');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('mg-screener-view');
+    if (saved === 'treemap' || saved === 'table') setView(saved);
+  }, []);
+
+  const setViewPersist = (v: 'table' | 'treemap') => {
+    setView(v);
+    localStorage.setItem('mg-screener-view', v);
+  };
+
+  const set = <K extends keyof Filters>(k: K, v: Filters[K]) =>
+    setFilters((f) => ({ ...f, [k]: v }));
+
+  const data = result?.data ?? null;
+  const allTickers = useMemo(() => data?.tickers ?? [], [data]);
+  const sectors = useMemo(
+    () => [...new Set(allTickers.map((t) => t.sector).filter((s): s is string => !!s))].sort(),
+    [allTickers],
+  );
+  const filtered = useMemo(
+    () => sortTickers(applyFilters(allTickers, filters), sort),
+    [allTickers, filters, sort],
+  );
+
+  const onSort = (key: SortKey) =>
+    setSort((s) => ({ key, dir: s.key === key && s.dir === 'desc' ? 'asc' : 'desc' }));
+
+  const ms = data?.market_summary;
+  const isLite = result?.mode === 'lite';
+
+  return (
+    <div className="space-y-4">
+      {/* Header */}
+      <div
+        className="relative overflow-hidden rounded-[var(--radius-tile)] border p-6"
+        style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
+      >
+        <span aria-hidden="true" className="glow-orb -top-24 -right-8" />
+        <h1 className="relative z-10 font-display text-3xl text-[var(--color-text-primary)]">
+          Stock <em className="italic" style={{ color: 'var(--color-accent)' }}>Screener</em>
+        </h1>
+        <p className="relative z-10 mt-2 text-sm text-[var(--color-text-secondary)]">
+          Multi-factor scoring across the full ticker universe — momentum, value, volume and trend in one scan.
+        </p>
+      </div>
+
+      {/* Summary stats */}
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <StatCard label="Scanned" value={data?.ticker_count ?? '—'} />
+        <StatCard label="Avg Score" value={ms?.avg_score != null ? ms.avg_score.toFixed(1) : '—'} />
+        <StatCard label="Green" value={ms?.green_count ?? '—'} color="var(--color-bull)" />
+        <StatCard label="Red" value={ms?.red_count ?? '—'} color="var(--color-bear)" />
+      </div>
+
+      {/* Lite-mode gate banner */}
+      {isLite && result && (
+        <GateCard
+          kind={result.gate}
+          need={result.need ?? 'basic'}
+          feature="The full Screener"
+        />
+      )}
+
+      {/* Filters */}
+      <div
+        className="rounded-[var(--radius-tile)] border p-4"
+        style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
+      >
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          <Field label="Search">
+            <input
+              type="text"
+              value={filters.search}
+              onChange={(e) => set('search', e.target.value)}
+              placeholder="Ticker or name…"
+              className={selectCls}
+              style={selectStyle}
+            />
+          </Field>
+          <Field label="Universe">
+            <select value={filters.universe} onChange={(e) => set('universe', e.target.value)} className={selectCls} style={selectStyle}>
+              <option value="">All Universes</option>
+              <option value="S&P 500">S&amp;P 500</option>
+              <option value="TSX 60">TSX 60</option>
+              <option value="Tech & Growth">Tech &amp; Growth</option>
+              <option value="High Dividend">High Dividend</option>
+              <option value="Fixed Income & Commodities">Fixed Income &amp; Commodities</option>
+            </select>
+          </Field>
+          <Field label="Sector">
+            <select value={filters.sector} onChange={(e) => set('sector', e.target.value)} className={selectCls} style={selectStyle}>
+              <option value="">All Sectors</option>
+              {sectors.map((s) => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+            </select>
+          </Field>
+          <Field label="PE Ratio">
+            <select value={filters.pe} onChange={(e) => set('pe', e.target.value)} className={selectCls} style={selectStyle}>
+              <option value="">Any</option>
+              <option value="0-15">Value (&lt;15)</option>
+              <option value="15-25">Moderate (15–25)</option>
+              <option value="25-50">Premium (25–50)</option>
+              <option value="50-">High (&gt;50)</option>
+            </select>
+          </Field>
+          <Field label="Market Cap">
+            <select value={filters.mcap} onChange={(e) => set('mcap', e.target.value)} className={selectCls} style={selectStyle}>
+              <option value="">Any</option>
+              <option value="0-2B">Micro (&lt;2B)</option>
+              <option value="2B-10B">Small (2–10B)</option>
+              <option value="10B-200B">Mid (10–200B)</option>
+              <option value="200B-">Large (&gt;200B)</option>
+              <option value="1T-">Mega (&gt;1T)</option>
+            </select>
+          </Field>
+          <Field label="Dividend Yield">
+            <select value={filters.div} onChange={(e) => set('div', e.target.value)} className={selectCls} style={selectStyle}>
+              <option value="">Any</option>
+              <option value="0-1">Low (&lt;1%)</option>
+              <option value="1-3">Moderate (1–3%)</option>
+              <option value="3-">High (&gt;3%)</option>
+            </select>
+          </Field>
+          <Field label="RSI">
+            <select value={filters.rsi} onChange={(e) => set('rsi', e.target.value)} className={selectCls} style={selectStyle}>
+              <option value="">Any</option>
+              <option value="0-30">Oversold (&lt;30)</option>
+              <option value="30-45">Weak (30–45)</option>
+              <option value="45-55">Neutral (45–55)</option>
+              <option value="55-70">Strong (55–70)</option>
+              <option value="70-">Overbought (&gt;70)</option>
+            </select>
+          </Field>
+          <Field label="Volume vs Avg">
+            <select value={filters.volume} onChange={(e) => set('volume', e.target.value)} className={selectCls} style={selectStyle}>
+              <option value="">Any</option>
+              <option value="above">Above Average</option>
+              <option value="below">Below Average</option>
+              <option value="1.5x">1.5x+ Surge</option>
+              <option value="2x">2x+ Surge</option>
+            </select>
+          </Field>
+          <Field label="Price vs 52w">
+            <select value={filters.w52} onChange={(e) => set('w52', e.target.value)} className={selectCls} style={selectStyle}>
+              <option value="">Any</option>
+              <option value="near-high">Near High (&lt;5%)</option>
+              <option value="near-low">Near Low (&lt;5%)</option>
+              <option value="mid-range">Mid Range</option>
+            </select>
+          </Field>
+          <Field label="Price vs SMAs">
+            <select value={filters.sma} onChange={(e) => set('sma', e.target.value)} className={selectCls} style={selectStyle}>
+              <option value="">Any</option>
+              <option value="above-both">Above 20 &amp; 50</option>
+              <option value="below-both">Below 20 &amp; 50</option>
+              <option value="golden-cross">Golden Cross</option>
+              <option value="death-cross">Death Cross</option>
+            </select>
+          </Field>
+          <Field label="Strategy">
+            <select value={filters.strategy} onChange={(e) => set('strategy', e.target.value)} className={selectCls} style={selectStyle}>
+              <option value="">All</option>
+              <option value="momentum">Momentum</option>
+              <option value="breakout">Breakout</option>
+              <option value="mean_reversion">Mean Reversion</option>
+              <option value="support_resistance">Support/Resistance</option>
+            </select>
+          </Field>
+          <Field label="Direction">
+            <select value={filters.direction} onChange={(e) => set('direction', e.target.value)} className={selectCls} style={selectStyle}>
+              <option value="">All</option>
+              <option value="long">Long</option>
+              <option value="short">Short</option>
+            </select>
+          </Field>
+          <Field label="Score Min">
+            <input
+              type="number"
+              min={0}
+              max={10}
+              step={0.1}
+              value={filters.scoreMin}
+              onChange={(e) => set('scoreMin', parseFloat(e.target.value) || 0)}
+              className={selectCls}
+              style={selectStyle}
+            />
+          </Field>
+          <Field label="Score Max">
+            <input
+              type="number"
+              min={0}
+              max={10}
+              step={0.1}
+              value={filters.scoreMax}
+              onChange={(e) => set('scoreMax', parseFloat(e.target.value) || 10)}
+              className={selectCls}
+              style={selectStyle}
+            />
+          </Field>
+          <div className="flex items-end gap-2">
+            <button
+              type="button"
+              onClick={() => setFilters(DEFAULT_FILTERS)}
+              className="min-h-9 flex-1 rounded-lg border px-3 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)]"
+              style={{ borderColor: 'var(--color-border-default)' }}
+            >
+              Reset
+            </button>
+            <div
+              className="flex rounded-lg border p-0.5"
+              style={{ borderColor: 'var(--color-border-default)' }}
+              role="tablist"
+              aria-label="View mode"
+            >
+              {(['table', 'treemap'] as const).map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  role="tab"
+                  aria-selected={view === v}
+                  onClick={() => setViewPersist(v)}
+                  className="rounded-md px-2.5 py-1 text-xs font-semibold capitalize transition"
+                  style={
+                    view === v
+                      ? { backgroundColor: 'var(--color-accent)', color: 'var(--color-on-accent)' }
+                      : { color: 'var(--color-text-secondary)' }
+                  }
+                >
+                  {v}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Results */}
+      <div
+        className="overflow-hidden rounded-[var(--radius-tile)] border"
+        style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
+      >
+        {isLoading ? (
+          <p className="p-8 text-center text-sm text-[var(--color-text-tertiary)]">Scanning the universe…</p>
+        ) : !allTickers.length ? (
+          <p className="p-8 text-center text-sm text-[var(--color-text-tertiary)]">
+            Screener data isn&apos;t available right now.
+          </p>
+        ) : view === 'treemap' ? (
+          <Treemap tickers={filtered} />
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[900px] text-sm">
+              <thead>
+                <tr>
+                  <HeaderCell label="Ticker" sortKey="ticker" sort={sort} onSort={onSort} />
+                  <HeaderCell label="Price" align="right" sort={sort} onSort={onSort} />
+                  <HeaderCell label="Chg%" sortKey="change" align="right" sort={sort} onSort={onSort} />
+                  <HeaderCell label="Score" sortKey="score" align="center" sort={sort} onSort={onSort} />
+                  <HeaderCell label="PE" sortKey="pe" align="right" sort={sort} onSort={onSort} />
+                  <HeaderCell label="Mkt Cap" sortKey="mcap" align="right" sort={sort} onSort={onSort} />
+                  <HeaderCell label="Div%" align="right" sort={sort} onSort={onSort} />
+                  <HeaderCell label="RSI" sortKey="rsi" align="right" sort={sort} onSort={onSort} />
+                  <HeaderCell label="Vol Ratio" sortKey="volume_ratio" align="right" sort={sort} onSort={onSort} />
+                  <HeaderCell label="Sector" sort={sort} onSort={onSort} />
+                  <HeaderCell label="Signals" sort={sort} onSort={onSort} />
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.length ? (
+                  filtered.map((t) => <TickerRow key={t.ticker} t={t} />)
+                ) : (
+                  <tr>
+                    <td colSpan={11} className="p-8 text-center text-[var(--color-text-tertiary)]">
+                      No tickers match your filters.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {!isLoading && allTickers.length > 0 && (
+          <div
+            className="flex items-center justify-between border-t px-4 py-2.5 text-xs text-[var(--color-text-tertiary)]"
+            style={{ borderColor: 'var(--color-border-subtle)' }}
+          >
+            <span data-numeric>
+              {filtered.length} of {data?.ticker_count ?? allTickers.length} tickers
+              {isLite && ' — public preview'}
+            </span>
+            {data?.generated_at && (
+              <span>
+                Generated{' '}
+                {new Date(data.generated_at).toLocaleString('en-CA', {
+                  timeZone: 'America/Toronto',
+                  dateStyle: 'medium',
+                  timeStyle: 'short',
+                })}{' '}
+                ET
+              </span>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
