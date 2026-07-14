@@ -94,6 +94,12 @@ function ExtLink({ href, children }: { href: string; children: React.ReactNode }
   );
 }
 
+/** Responsive 2-up layout: 1 column on mobile/tablet, 2 columns at ≥lg (1024px,
+ *  the design system's bento breakpoint). Pure presentation — hydration-safe. */
+function Grid2({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  return <div className={`grid grid-cols-1 gap-4 lg:grid-cols-2 ${className}`}>{children}</div>;
+}
+
 /** Renders a gated query state: gate card, empty state, or content.
  *  `need` is the file's own tier, used when the Worker's 403 carries none
  *  (e.g. no_subscription) so the upsell never names the wrong plan. */
@@ -230,60 +236,68 @@ function OverviewTab() {
           />
         </Card>
       )}
-      {(['fed', 'boc'] as const).map((bank) => {
-        const text = d?.central_banks?.[bank];
-        if (!text) return null;
-        return (
-          <Card key={bank} title={bank === 'fed' ? 'Federal Reserve' : 'Bank of Canada'}>
-            <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{String(text).substring(0, 500)}</p>
-          </Card>
-        );
-      })}
-      {!!d?.insider_trades?.length && (
-        <Card title="Insider Trades — SEC Form 4">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <tbody>
-                {d.insider_trades.slice(0, 10).map((i: Any, idx: number) => (
-                  <tr key={idx} className="border-t first:border-t-0" style={{ borderColor: 'var(--color-border-subtle)' }}>
-                    <td className="py-2 font-semibold text-[var(--color-text-primary)]" data-numeric>{i.ticker}</td>
-                    <td className="py-2">
-                      <Badge tone={i.type === 'Buy' ? 'bull' : i.type === 'Sell' ? 'bear' : 'caution'}>{i.type}</Badge>
-                    </td>
-                    <td className="py-2 text-[var(--color-text-secondary)] truncate max-w-[120px]">{i.insider}</td>
-                    <td className="py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
-                      {i.value ? `$${Number(i.value).toLocaleString()}` : (i.shares ? `${Number(i.shares).toLocaleString()} sh` : '—')}
-                    </td>
-                    <td className="py-2 text-right text-[var(--color-text-tertiary)] text-xs" data-numeric>{i.date}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="mt-2 text-[10px] text-[var(--color-text-tertiary)]">Source: SEC EDGAR Form 4 (public domain). Open-market buys/sells prioritized.</p>
-        </Card>
+      {(d?.central_banks?.fed || d?.central_banks?.boc) && (
+        <Grid2>
+          {(['fed', 'boc'] as const).map((bank) => {
+            const text = d?.central_banks?.[bank];
+            if (!text) return null;
+            return (
+              <Card key={bank} title={bank === 'fed' ? 'Federal Reserve' : 'Bank of Canada'}>
+                <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{String(text).substring(0, 500)}</p>
+              </Card>
+            );
+          })}
+        </Grid2>
       )}
-      {!!d?.congress?.recent_trades?.length && (
-        <Card title="Congressional Trades — House Disclosures">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <tbody>
-                {d.congress.recent_trades.slice(0, 10).map((c: Any, idx: number) => (
-                  <tr key={idx} className="border-t first:border-t-0" style={{ borderColor: 'var(--color-border-subtle)' }}>
-                    <td className="py-2 font-semibold text-[var(--color-text-primary)]" data-numeric>{c.ticker}</td>
-                    <td className="py-2">
-                      <Badge tone={c.action === 'Buy' ? 'bull' : c.action === 'Sell' ? 'bear' : 'caution'}>{c.action}</Badge>
-                    </td>
-                    <td className="py-2 text-[var(--color-text-secondary)] truncate max-w-[130px]">{c.politician}</td>
-                    <td className="py-2 text-right text-[var(--color-text-secondary)] text-xs">{c.amount_range}</td>
-                    <td className="py-2 text-right text-[var(--color-text-tertiary)] text-xs" data-numeric>{c.transaction_date}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="mt-2 text-[10px] text-[var(--color-text-tertiary)]">Source: U.S. House Clerk financial disclosures (public domain).</p>
-        </Card>
+      {(!!d?.insider_trades?.length || !!d?.congress?.recent_trades?.length) && (
+        <Grid2>
+          {!!d?.insider_trades?.length && (
+            <Card title="Insider Trades — SEC Form 4">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <tbody>
+                    {d.insider_trades.slice(0, 10).map((i: Any, idx: number) => (
+                      <tr key={idx} className="border-t first:border-t-0" style={{ borderColor: 'var(--color-border-subtle)' }}>
+                        <td className="py-2 font-semibold text-[var(--color-text-primary)]" data-numeric>{i.ticker}</td>
+                        <td className="py-2">
+                          <Badge tone={i.type === 'Buy' ? 'bull' : i.type === 'Sell' ? 'bear' : 'caution'}>{i.type}</Badge>
+                        </td>
+                        <td className="py-2 text-[var(--color-text-secondary)] truncate max-w-[120px]">{i.insider}</td>
+                        <td className="py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
+                          {i.value ? `$${Number(i.value).toLocaleString()}` : (i.shares ? `${Number(i.shares).toLocaleString()} sh` : '—')}
+                        </td>
+                        <td className="py-2 text-right text-[var(--color-text-tertiary)] text-xs" data-numeric>{i.date}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-2 text-[10px] text-[var(--color-text-tertiary)]">Source: SEC EDGAR Form 4 (public domain). Open-market buys/sells prioritized.</p>
+            </Card>
+          )}
+          {!!d?.congress?.recent_trades?.length && (
+            <Card title="Congressional Trades — House Disclosures">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <tbody>
+                    {d.congress.recent_trades.slice(0, 10).map((c: Any, idx: number) => (
+                      <tr key={idx} className="border-t first:border-t-0" style={{ borderColor: 'var(--color-border-subtle)' }}>
+                        <td className="py-2 font-semibold text-[var(--color-text-primary)]" data-numeric>{c.ticker}</td>
+                        <td className="py-2">
+                          <Badge tone={c.action === 'Buy' ? 'bull' : c.action === 'Sell' ? 'bear' : 'caution'}>{c.action}</Badge>
+                        </td>
+                        <td className="py-2 text-[var(--color-text-secondary)] truncate max-w-[130px]">{c.politician}</td>
+                        <td className="py-2 text-right text-[var(--color-text-secondary)] text-xs">{c.amount_range}</td>
+                        <td className="py-2 text-right text-[var(--color-text-tertiary)] text-xs" data-numeric>{c.transaction_date}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-2 text-[10px] text-[var(--color-text-tertiary)]">Source: U.S. House Clerk financial disclosures (public domain).</p>
+            </Card>
+          )}
+        </Grid2>
       )}
       {!latest.isLoading && !d && <Empty>Market data not available.</Empty>}
     </div>
@@ -334,39 +348,57 @@ function NewsTab() {
         <GateCard kind={gateKind} need={webNews.error instanceof GateError ? webNews.error.need : undefined} feature="The live news wire" />
       ) : null}
 
-      {!!d?.geopolitical?.length && (
-        <Card title="Geopolitical Risks">
-          <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
-            {d.geopolitical.slice(0, 12).map((g: Any, i: number) => {
-              const url = g.url || `https://news.google.com/search?q=${encodeURIComponent(g.title || '')}`;
-              return (
+      <Grid2>
+        {!!d?.geopolitical?.length && (
+          <Card title="Geopolitical Risks">
+            <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
+              {d.geopolitical.slice(0, 12).map((g: Any, i: number) => {
+                const url = g.url || `https://news.google.com/search?q=${encodeURIComponent(g.title || '')}`;
+                return (
+                  <div key={i} className="py-2.5 first:pt-0 last:pb-0">
+                    <ExtLink href={url}>{g.title}</ExtLink>
+                    <p className="text-xs text-[var(--color-text-tertiary)]">
+                      {g.source}
+                      {!g.url && ' · via news search'}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </Card>
+        )}
+
+        {!!d?.market_news?.headlines?.length && (
+          <Card title="Market News">
+            <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
+              {d.market_news.headlines.map((n: Any, i: number) => (
                 <div key={i} className="py-2.5 first:pt-0 last:pb-0">
-                  <ExtLink href={url}>{g.title}</ExtLink>
+                  <ExtLink href={n.url || '#'}>{n.title}</ExtLink>
                   <p className="text-xs text-[var(--color-text-tertiary)]">
-                    {g.source}
-                    {!g.url && ' · via news search'}
+                    {[n.source, n.category].filter(Boolean).join(' · ')}
                   </p>
                 </div>
-              );
-            })}
-          </div>
-        </Card>
-      )}
+              ))}
+            </div>
+          </Card>
+        )}
 
-      {!!d?.market_news?.headlines?.length && (
-        <Card title="Market News">
-          <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
-            {d.market_news.headlines.map((n: Any, i: number) => (
-              <div key={i} className="py-2.5 first:pt-0 last:pb-0">
-                <ExtLink href={n.url || '#'}>{n.title}</ExtLink>
-                <p className="text-xs text-[var(--color-text-tertiary)]">
-                  {[n.source, n.category].filter(Boolean).join(' · ')}
-                </p>
-              </div>
-            ))}
-          </div>
-        </Card>
-      )}
+        {!!analysis.data?.market_overview?.top_headlines?.length && (
+          <Card title="Seeking Alpha Top Stories">
+            <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
+              {analysis.data.market_overview.top_headlines.slice(0, 10).map((h: Any, i: number) => {
+                const title = typeof h === 'string' ? h : h?.title || '';
+                const url = typeof h === 'object' ? h?.url || '' : '';
+                return (
+                  <div key={i} className="py-2 first:pt-0 last:pb-0 text-sm">
+                    {url ? <ExtLink href={url}>{title}</ExtLink> : <span className="text-[var(--color-text-secondary)]">{title}</span>}
+                  </div>
+                );
+              })}
+            </div>
+          </Card>
+        )}
+      </Grid2>
 
       {!!d?.market_news?.analyst_ratings?.length && (
         <Card title="Analyst Ratings">
@@ -398,22 +430,6 @@ function NewsTab() {
           </div>
         </Card>
       )}
-
-      {!!analysis.data?.market_overview?.top_headlines?.length && (
-        <Card title="Seeking Alpha Top Stories">
-          <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
-            {analysis.data.market_overview.top_headlines.slice(0, 10).map((h: Any, i: number) => {
-              const title = typeof h === 'string' ? h : h?.title || '';
-              const url = typeof h === 'object' ? h?.url || '' : '';
-              return (
-                <div key={i} className="py-2 first:pt-0 last:pb-0 text-sm">
-                  {url ? <ExtLink href={url}>{title}</ExtLink> : <span className="text-[var(--color-text-secondary)]">{title}</span>}
-                </div>
-              );
-            })}
-          </div>
-        </Card>
-      )}
     </div>
   );
 }
@@ -427,12 +443,13 @@ function SentimentTab() {
   return (
     <div className="space-y-4">
       <Updated iso={d._generated_at} />
-      {([['wsb', 'r/wallstreetbets'], ['stocks', 'r/stocks']] as const).map(([key, label]) => {
-        const src = d[key];
-        if (!src) return null;
-        const bearish = String(src.sentiment_summary || '').includes('BEARISH');
-        return (
-          <Card key={key} title={label}>
+      <Grid2>
+        {([['wsb', 'r/wallstreetbets'], ['stocks', 'r/stocks']] as const).map(([key, label]) => {
+          const src = d[key];
+          if (!src) return null;
+          const bearish = String(src.sentiment_summary || '').includes('BEARISH');
+          return (
+            <Card key={key} title={label}>
             <div className="mb-2">
               <Badge tone={bearish ? 'bear' : 'bull'}>{bearish ? 'Bearish' : 'Bullish'}</Badge>
             </div>
@@ -463,9 +480,10 @@ function SentimentTab() {
                 ))}
               </div>
             )}
-          </Card>
-        );
-      })}
+            </Card>
+          );
+        })}
+      </Grid2>
     </div>
   );
 }
@@ -479,38 +497,42 @@ function IdeasTab() {
   return (
     <div className="space-y-4">
       <Updated iso={d.generated_at} />
-      {!!d.analysis_ideas?.length && (
-        <Card title="Analysis Ideas">
-          <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
-            {d.analysis_ideas.map((idea: Any, i: number) => (
-              <div key={i} className="py-3 first:pt-0 last:pb-0">
-                <Badge tone={idea.type === 'BULLISH_CONVERGENCE' ? 'bull' : idea.type === 'BEARISH_CONVERGENCE' ? 'bear' : 'caution'}>
-                  {String(idea.type || '').replace(/_/g, ' ')}
-                </Badge>
-                <p className="mt-1.5 text-sm font-semibold text-[var(--color-text-primary)]" data-numeric>
-                  {(idea.tickers || []).join(', ')}
-                </p>
-                <p className="text-sm text-[var(--color-text-secondary)]">{idea.signal}</p>
-                {idea.action && <p className="text-sm" style={{ color: 'var(--color-accent)' }}>{idea.action}</p>}
+      {(!!d.analysis_ideas?.length || !!d.market_overview?.top_headlines?.length) && (
+        <Grid2>
+          {!!d.analysis_ideas?.length && (
+            <Card title="Analysis Ideas">
+              <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
+                {d.analysis_ideas.map((idea: Any, i: number) => (
+                  <div key={i} className="py-3 first:pt-0 last:pb-0">
+                    <Badge tone={idea.type === 'BULLISH_CONVERGENCE' ? 'bull' : idea.type === 'BEARISH_CONVERGENCE' ? 'bear' : 'caution'}>
+                      {String(idea.type || '').replace(/_/g, ' ')}
+                    </Badge>
+                    <p className="mt-1.5 text-sm font-semibold text-[var(--color-text-primary)]" data-numeric>
+                      {(idea.tickers || []).join(', ')}
+                    </p>
+                    <p className="text-sm text-[var(--color-text-secondary)]">{idea.signal}</p>
+                    {idea.action && <p className="text-sm" style={{ color: 'var(--color-accent)' }}>{idea.action}</p>}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </Card>
-      )}
-      {!!d.market_overview?.top_headlines?.length && (
-        <Card title="Seeking Alpha Top Stories">
-          <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
-            {d.market_overview.top_headlines.slice(0, 10).map((h: Any, i: number) => {
-              const title = typeof h === 'string' ? h : h?.title || '';
-              const url = typeof h === 'object' ? h?.url || '' : '';
-              return (
-                <div key={i} className="py-2 first:pt-0 last:pb-0 text-sm">
-                  {url ? <ExtLink href={url}>{title}</ExtLink> : <span className="text-[var(--color-text-secondary)]">{title}</span>}
-                </div>
-              );
-            })}
-          </div>
-        </Card>
+            </Card>
+          )}
+          {!!d.market_overview?.top_headlines?.length && (
+            <Card title="Seeking Alpha Top Stories">
+              <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
+                {d.market_overview.top_headlines.slice(0, 10).map((h: Any, i: number) => {
+                  const title = typeof h === 'string' ? h : h?.title || '';
+                  const url = typeof h === 'object' ? h?.url || '' : '';
+                  return (
+                    <div key={i} className="py-2 first:pt-0 last:pb-0 text-sm">
+                      {url ? <ExtLink href={url}>{title}</ExtLink> : <span className="text-[var(--color-text-secondary)]">{title}</span>}
+                    </div>
+                  );
+                })}
+              </div>
+            </Card>
+          )}
+        </Grid2>
       )}
     </div>
   );
@@ -539,6 +561,7 @@ function MgAnalysisTab() {
                 Confidence: {meta.confidence}/10{meta.model ? ` · ${meta.model}` : ''}
               </span>
             </div>
+            <Grid2>
             {d.market_pulse && (
               <Card title="Market Pulse">
                 <p className="text-sm leading-relaxed text-[var(--color-text-primary)]">{d.market_pulse.one_liner}</p>
@@ -578,6 +601,8 @@ function MgAnalysisTab() {
                 <p className="text-sm text-[var(--color-text-tertiary)]">No open positions to review.</p>
               )}
             </Card>
+            </Grid2>
+            <Grid2>
             {!!d.opportunities?.length && (
               <Card title="Opportunities">
                 <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
@@ -619,6 +644,7 @@ function MgAnalysisTab() {
                 </div>
               </Card>
             )}
+            </Grid2>
             {!!d.portfolio_actions?.immediate?.length && (
               <Card title="Actions">
                 {d.portfolio_actions.immediate.map((a: string, i: number) => (
@@ -722,6 +748,7 @@ function MarketsTab() {
               Source: {d.source || 'Polymarket'}
               {d.fetched_at ? ` · Updated ${fmtTs(d.fetched_at)}` : ''}
             </p>
+            <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
             {sorted.map((m: Any, i: number) => (
               <div
                 key={i}
@@ -760,6 +787,7 @@ function MarketsTab() {
                 )}
               </div>
             ))}
+            </div>
             {d.markets.length > 30 && (
               <p className="text-center text-xs text-[var(--color-text-tertiary)]" data-numeric>
                 Showing top 30 of {d.markets.length} markets by volume
@@ -836,13 +864,15 @@ function EarningsTab() {
             <Table rows={upcoming} title="Upcoming Earnings (watchlist)" showActual={false} />
             <Table rows={recent} title="Recent Results" showActual />
             {d.transcripts?.length ? (
-              d.transcripts.slice(0, 10).map((tr: Any, i: number) => (
-                <Card key={i} title={`${tr.ticker || ''} — ${tr.quarter || ''}`}>
-                  <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-                    {String(tr.summary || tr.content || '').substring(0, 600)}…
-                  </p>
-                </Card>
-              ))
+              <Grid2>
+                {d.transcripts.slice(0, 10).map((tr: Any, i: number) => (
+                  <Card key={i} title={`${tr.ticker || ''} — ${tr.quarter || ''}`}>
+                    <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                      {String(tr.summary || tr.content || '').substring(0, 600)}…
+                    </p>
+                  </Card>
+                ))}
+              </Grid2>
             ) : (
               <p className="text-xs text-[var(--color-text-tertiary)]">Full call transcripts require an FMP API key (not configured).</p>
             )}

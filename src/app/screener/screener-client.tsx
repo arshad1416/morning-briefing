@@ -430,14 +430,6 @@ export function ScreenerClient() {
         </p>
       </div>
 
-      {/* Summary stats */}
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <StatCard label="Scanned" value={data?.ticker_count ?? '—'} />
-        <StatCard label="Avg Score" value={ms?.avg_score != null ? ms.avg_score.toFixed(1) : '—'} />
-        <StatCard label="Green" value={ms?.green_count ?? '—'} color="var(--color-bull)" />
-        <StatCard label="Red" value={ms?.red_count ?? '—'} color="var(--color-bear)" />
-      </div>
-
       {/* Lite-mode gate banner */}
       {isLite && result && (
         <GateCard
@@ -446,6 +438,14 @@ export function ScreenerClient() {
           feature="The full Screener"
         />
       )}
+
+      {/* Summary stats */}
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <StatCard label="Scanned" value={data?.ticker_count ?? '—'} />
+        <StatCard label="Avg Score" value={ms?.avg_score != null ? ms.avg_score.toFixed(1) : '—'} />
+        <StatCard label="Green" value={ms?.green_count ?? '—'} color="var(--color-bull)" />
+        <StatCard label="Red" value={ms?.red_count ?? '—'} color="var(--color-bear)" />
+      </div>
 
       {/* Filters */}
       <div
@@ -590,39 +590,15 @@ export function ScreenerClient() {
               style={selectStyle}
             />
           </Field>
-          <div className="flex items-end gap-2">
+          <div className="flex items-end">
             <button
               type="button"
               onClick={() => setFilters(DEFAULT_FILTERS)}
-              className="min-h-9 flex-1 rounded-lg border px-3 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)]"
+              className="min-h-9 w-full rounded-lg border px-3 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)]"
               style={{ borderColor: 'var(--color-border-default)' }}
             >
               Reset
             </button>
-            <div
-              className="flex rounded-lg border p-0.5"
-              style={{ borderColor: 'var(--color-border-default)' }}
-              role="tablist"
-              aria-label="View mode"
-            >
-              {(['table', 'treemap'] as const).map((v) => (
-                <button
-                  key={v}
-                  type="button"
-                  role="tab"
-                  aria-selected={view === v}
-                  onClick={() => setViewPersist(v)}
-                  className="rounded-md px-2.5 py-1 text-xs font-semibold capitalize transition"
-                  style={
-                    view === v
-                      ? { backgroundColor: 'var(--color-accent)', color: 'var(--color-on-accent)' }
-                      : { color: 'var(--color-text-secondary)' }
-                  }
-                >
-                  {v}
-                </button>
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -632,6 +608,45 @@ export function ScreenerClient() {
         className="overflow-hidden rounded-[var(--radius-tile)] border"
         style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
       >
+        <div
+          className="flex flex-wrap items-center justify-between gap-2 border-b px-4 py-2.5"
+          style={{ borderColor: 'var(--color-border-subtle)' }}
+        >
+          <span className="text-xs text-[var(--color-text-tertiary)]" data-numeric>
+            {!isLoading && allTickers.length > 0 ? (
+              <>
+                {filtered.length} of {data?.ticker_count ?? allTickers.length} tickers
+                {isLite && ' — public preview'}
+              </>
+            ) : (
+              'Results'
+            )}
+          </span>
+          <div
+            className="flex rounded-lg border p-0.5"
+            style={{ borderColor: 'var(--color-border-default)' }}
+            role="tablist"
+            aria-label="View mode"
+          >
+            {(['table', 'treemap'] as const).map((v) => (
+              <button
+                key={v}
+                type="button"
+                role="tab"
+                aria-selected={view === v}
+                onClick={() => setViewPersist(v)}
+                className="rounded-md px-2.5 py-1 text-xs font-semibold capitalize transition"
+                style={
+                  view === v
+                    ? { backgroundColor: 'var(--color-accent)', color: 'var(--color-on-accent)' }
+                    : { color: 'var(--color-text-secondary)' }
+                }
+              >
+                {v}
+              </button>
+            ))}
+          </div>
+        </div>
         {isLoading ? (
           <p className="p-8 text-center text-sm text-[var(--color-text-tertiary)]">Scanning the universe…</p>
         ) : !allTickers.length ? (
@@ -672,26 +687,20 @@ export function ScreenerClient() {
             </table>
           </div>
         )}
-        {!isLoading && allTickers.length > 0 && (
+        {!isLoading && allTickers.length > 0 && data?.generated_at && (
           <div
-            className="flex items-center justify-between border-t px-4 py-2.5 text-xs text-[var(--color-text-tertiary)]"
+            className="flex items-center justify-end border-t px-4 py-2.5 text-xs text-[var(--color-text-tertiary)]"
             style={{ borderColor: 'var(--color-border-subtle)' }}
           >
-            <span data-numeric>
-              {filtered.length} of {data?.ticker_count ?? allTickers.length} tickers
-              {isLite && ' — public preview'}
+            <span>
+              Generated{' '}
+              {new Date(data.generated_at).toLocaleString('en-CA', {
+                timeZone: 'America/Toronto',
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })}{' '}
+              ET
             </span>
-            {data?.generated_at && (
-              <span>
-                Generated{' '}
-                {new Date(data.generated_at).toLocaleString('en-CA', {
-                  timeZone: 'America/Toronto',
-                  dateStyle: 'medium',
-                  timeStyle: 'short',
-                })}{' '}
-                ET
-              </span>
-            )}
           </div>
         )}
       </div>

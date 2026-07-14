@@ -310,7 +310,7 @@ function Pane({ label, legend = false, children }: { label: string; legend?: boo
       className="overflow-hidden rounded-[var(--radius-tile)] border"
       style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
     >
-      <div className="flex items-center justify-between border-b px-4 py-2.5" style={{ borderColor: 'var(--color-border-subtle)' }}>
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b px-4 py-2.5" style={{ borderColor: 'var(--color-border-subtle)' }}>
         <h3 className="text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">{label}</h3>
         {legend && (
           <div className="flex items-center gap-3 text-[10px] text-[var(--color-text-tertiary)]">
@@ -321,6 +321,26 @@ function Pane({ label, legend = false, children }: { label: string; legend?: boo
         )}
       </div>
       <div className="p-2">{children}</div>
+    </div>
+  );
+}
+
+// Loading placeholder that mirrors the live three-pane layout exactly (same
+// Pane chrome, labels, legend, and heights) so the loading→data transition is
+// zero-reflow — the skeleton blocks simply become live canvases.
+function ChartsSkeleton() {
+  return (
+    <div className="space-y-4" aria-busy="true" aria-live="polite">
+      <span className="sr-only">Loading chart data…</span>
+      <Pane label="Price · EMA 20 / EMA 50 / VWAP" legend>
+        <div className="skeleton h-[420px] w-full" />
+      </Pane>
+      <Pane label="RSI (14)">
+        <div className="skeleton h-[140px] w-full" />
+      </Pane>
+      <Pane label="ATR (14)">
+        <div className="skeleton h-[140px] w-full" />
+      </Pane>
     </div>
   );
 }
@@ -461,12 +481,7 @@ export function ChartsClient() {
       </div>
 
       {q.isLoading ? (
-        <div
-          className="flex h-[420px] items-center justify-center rounded-[var(--radius-tile)] border text-sm text-[var(--color-text-tertiary)]"
-          style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
-        >
-          Loading {ticker}…
-        </div>
+        <ChartsSkeleton />
       ) : q.error ? (
         <GateCard
           kind={q.error instanceof GateError ? q.error.kind : 'unavailable'}
@@ -475,7 +490,7 @@ export function ChartsClient() {
         />
       ) : !bars.length ? (
         <div
-          className="rounded-[var(--radius-tile)] border p-10 text-center"
+          className="flex min-h-[420px] flex-col items-center justify-center rounded-[var(--radius-tile)] border p-10 text-center"
           style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
         >
           <p className="text-sm font-medium text-[var(--color-text-primary)]">

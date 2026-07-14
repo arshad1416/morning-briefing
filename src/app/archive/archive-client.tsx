@@ -140,7 +140,8 @@ function BriefingCard({ date }: { date: string }) {
 
       {open && brief && (
         <div className="border-t p-4" style={{ borderColor: 'var(--color-border-subtle)' }}>
-          <table className="mb-4 w-full text-sm">
+          <div className="mb-4 overflow-x-auto">
+          <table className="w-full text-sm">
             <thead>
               <tr className="text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
                 <th className="py-1.5 text-left">Index</th>
@@ -181,6 +182,7 @@ function BriefingCard({ date }: { date: string }) {
               )}
             </tbody>
           </table>
+          </div>
 
           {text &&
             splitSections(text).map((s) => (
@@ -209,7 +211,7 @@ export function ArchiveClient() {
   const dates: string[] = Array.isArray(index.data?.dates) ? index.data.dates : [];
 
   return (
-    <div className="space-y-4">
+    <div className="mx-auto max-w-3xl space-y-4">
       <div
         className="relative overflow-hidden rounded-[var(--radius-tile)] border p-6"
         style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}

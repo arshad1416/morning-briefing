@@ -201,7 +201,7 @@ function PaperTab({ data }: { data: Any }) {
     <div className="space-y-4">
       <SimLabel />
 
-      {/* Hero P&L */}
+      {/* Portfolio summary — hero P&L + detail metrics in one card */}
       <Card>
         <div className="flex flex-wrap items-baseline gap-3">
           <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">Total P&L</span>
@@ -215,11 +215,7 @@ function PaperTab({ data }: { data: Any }) {
             Equity ${fmt(equity)} · Cash ${fmt(p.cash)} · {deployed > 0 ? `${Math.round((deployed / equity) * 100)}% deployed` : 'all cash'}
           </span>
         </div>
-      </Card>
-
-      {/* Detail grid */}
-      <Card>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+        <div className="mt-4 grid grid-cols-2 gap-4 border-t pt-4 sm:grid-cols-5" style={{ borderColor: 'var(--color-border-subtle)' }}>
           <Metric label="Status" value={data.status || '—'} color="var(--color-bull)" />
           <Metric label="Starting" value={`$${fmt(p.starting_balance)}`} />
           <Metric label="Cash" value={`$${fmt(p.cash)}`} />
