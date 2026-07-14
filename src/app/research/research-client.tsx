@@ -240,20 +240,49 @@ function OverviewTab() {
         );
       })}
       {!!d?.insider_trades?.length && (
-        <Card title="Insider Trading Signals">
-          <table className="w-full text-sm">
-            <tbody>
-              {d.insider_trades.slice(0, 10).map((i: Any, idx: number) => (
-                <tr key={idx} className="border-t first:border-t-0" style={{ borderColor: 'var(--color-border-subtle)' }}>
-                  <td className="py-2 font-semibold text-[var(--color-text-primary)]" data-numeric>{i.ticker}</td>
-                  <td className="py-2">
-                    <Badge tone={String(i.signal || '').includes('BULLISH') ? 'bull' : 'bear'}>{i.signal}</Badge>
-                  </td>
-                  <td className="py-2 text-right text-[var(--color-text-secondary)]" data-numeric>{i.ratio?.toFixed?.(1) ?? '—'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <Card title="Insider Trades — SEC Form 4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <tbody>
+                {d.insider_trades.slice(0, 10).map((i: Any, idx: number) => (
+                  <tr key={idx} className="border-t first:border-t-0" style={{ borderColor: 'var(--color-border-subtle)' }}>
+                    <td className="py-2 font-semibold text-[var(--color-text-primary)]" data-numeric>{i.ticker}</td>
+                    <td className="py-2">
+                      <Badge tone={i.type === 'Buy' ? 'bull' : i.type === 'Sell' ? 'bear' : 'caution'}>{i.type}</Badge>
+                    </td>
+                    <td className="py-2 text-[var(--color-text-secondary)] truncate max-w-[120px]">{i.insider}</td>
+                    <td className="py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
+                      {i.value ? `$${Number(i.value).toLocaleString()}` : (i.shares ? `${Number(i.shares).toLocaleString()} sh` : '—')}
+                    </td>
+                    <td className="py-2 text-right text-[var(--color-text-tertiary)] text-xs" data-numeric>{i.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-2 text-[10px] text-[var(--color-text-tertiary)]">Source: SEC EDGAR Form 4 (public domain). Open-market buys/sells prioritized.</p>
+        </Card>
+      )}
+      {!!d?.congress?.recent_trades?.length && (
+        <Card title="Congressional Trades — House Disclosures">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <tbody>
+                {d.congress.recent_trades.slice(0, 10).map((c: Any, idx: number) => (
+                  <tr key={idx} className="border-t first:border-t-0" style={{ borderColor: 'var(--color-border-subtle)' }}>
+                    <td className="py-2 font-semibold text-[var(--color-text-primary)]" data-numeric>{c.ticker}</td>
+                    <td className="py-2">
+                      <Badge tone={c.action === 'Buy' ? 'bull' : c.action === 'Sell' ? 'bear' : 'caution'}>{c.action}</Badge>
+                    </td>
+                    <td className="py-2 text-[var(--color-text-secondary)] truncate max-w-[130px]">{c.politician}</td>
+                    <td className="py-2 text-right text-[var(--color-text-secondary)] text-xs">{c.amount_range}</td>
+                    <td className="py-2 text-right text-[var(--color-text-tertiary)] text-xs" data-numeric>{c.transaction_date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-2 text-[10px] text-[var(--color-text-tertiary)]">Source: U.S. House Clerk financial disclosures (public domain).</p>
         </Card>
       )}
       {!latest.isLoading && !d && <Empty>Market data not available.</Empty>}
