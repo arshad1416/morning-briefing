@@ -12,8 +12,16 @@ function PositionsTablePlaceholder() {
     <Surface span="hero">
       <SurfaceHeader title="Positions" />
       <div className="p-4">
-        <p className="mb-3 px-3 py-2 rounded-lg border border-dashed text-xs leading-relaxed" style={{ borderColor: 'var(--color-border-subtle)', color: 'var(--color-text-tertiary)', backgroundColor: 'var(--color-bg-elevated)' }}>
-          🧪 <strong style={{ color: 'var(--color-text-secondary)' }}>Simulated portfolio — not a recommendation.</strong> Paper-trading results with no real money.
+        <p
+          className="mb-3 px-3 py-2 rounded-lg border text-xs leading-relaxed"
+          style={{
+            borderColor: 'color-mix(in srgb, var(--color-caution) 30%, transparent)',
+            color: 'var(--color-text-tertiary)',
+            backgroundColor: 'color-mix(in srgb, var(--color-caution) 6%, transparent)',
+          }}
+        >
+          <strong style={{ color: 'var(--color-caution)' }}>Simulated portfolio — not a recommendation.</strong>{' '}
+          Paper-trading results with no real money.
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm" style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}>
@@ -32,7 +40,7 @@ function PositionsTablePlaceholder() {
                 { ticker: 'TLT', entry: 115.00, current: 112.50, pnl: -2.2, pnlPct: -2.2, days: 5 },
                 { ticker: 'XLU', entry: 62.00, current: 63.20, pnl: 1.9, pnlPct: 1.9, days: 3 },
               ].map((p) => (
-                <tr key={`${p.ticker}-${p.entry}`} className="border-b hover:bg-[var(--color-bg-elevated)] transition-colors" style={{ borderColor: 'var(--color-border-subtle)' }}>
+                <tr key={`${p.ticker}-${p.entry}`} className="border-b hover:bg-[rgba(255,255,255,0.03)] transition-colors" style={{ borderColor: 'var(--color-border-subtle)' }}>
                   <td className="py-2 px-3 text-[var(--color-text-primary)] font-medium">{p.ticker}</td>
                   <td className="py-2 px-3 text-[var(--color-text-secondary)]" data-numeric>${p.entry.toFixed(2)}</td>
                   <td className="py-2 px-3 text-[var(--color-text-primary)]" data-numeric>${p.current.toFixed(2)}</td>

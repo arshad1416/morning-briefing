@@ -21,9 +21,17 @@ export function VerdictBar() {
   const signalLabel = verdict.signal === 'bullish' ? 'BULLISH' : verdict.signal === 'bearish' ? 'BEARISH' : 'NEUTRAL';
   const signalColor = verdict.signal === 'bullish' ? 'var(--color-bull)' : verdict.signal === 'bearish' ? 'var(--color-bear)' : 'var(--color-neutral)';
 
+  const glowColor =
+    verdict.signal === 'bullish'
+      ? 'rgba(16,185,129,0.14)'
+      : verdict.signal === 'bearish'
+      ? 'rgba(255,69,87,0.14)'
+      : 'rgba(139,139,150,0.10)';
+
   return (
-    <Surface span="hero" glow className="p-6">
-      <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6">
+    <Surface span="hero" glow className="p-6 relative">
+      <span aria-hidden="true" className="glow-orb -top-10 -left-6" style={{ ['--glow-color' as string]: glowColor }} />
+      <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center gap-6">
         <ConvictionGauge value={verdict.conviction * 10} />
 
         <div className="flex-1 min-w-0">
@@ -37,7 +45,7 @@ export function VerdictBar() {
             <DataFreshness timestamp={verdict.generated_at} />
           </div>
 
-          <p className="text-base text-[var(--color-text-secondary)] leading-relaxed">
+          <p className="font-display italic text-lg lg:text-xl text-[var(--color-text-secondary)] leading-relaxed">
             {verdict.narrative}
           </p>
 

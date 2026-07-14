@@ -45,18 +45,30 @@ export function VixRegimeCard() {
           <RegimeChip regime={regime} />
         </div>
 
-        {/* VIX bar */}
-        <div className="relative h-2 bg-[var(--color-bg-elevated)] rounded-full overflow-hidden">
+        {/* VIX scale: calm emerald → stressed red, with a position marker */}
+        <div className="relative h-2 rounded-full" style={{ backgroundColor: 'var(--color-bg-elevated)' }}>
           <div
-            className="h-full rounded-full transition-all"
+            className="absolute inset-0 rounded-full"
             style={{
-              width: `${Math.min(100, (vix / 40) * 100)}%`,
-              backgroundColor: vixColor,
+              background: 'linear-gradient(90deg, #10B981 0%, #EAB308 50%, #FF4557 100%)',
+              opacity: 0.25,
             }}
+            aria-hidden="true"
           />
-          {/* Markers */}
+          {/* Markers at 15 / 25 */}
           <div className="absolute top-0 h-full border-l border-[var(--color-text-tertiary)] opacity-30" style={{ left: '37.5%' }} />
           <div className="absolute top-0 h-full border-l border-[var(--color-text-tertiary)] opacity-30" style={{ left: '62.5%' }} />
+          {/* Position dot */}
+          <span
+            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full border-2 transition-all"
+            style={{
+              left: `${Math.min(100, (vix / 40) * 100)}%`,
+              backgroundColor: 'var(--color-accent)',
+              borderColor: 'var(--color-bg-surface)',
+              boxShadow: '0 0 8px color-mix(in srgb, var(--color-accent) 60%, transparent)',
+            }}
+            aria-hidden="true"
+          />
         </div>
         <div className="flex justify-between text-xs text-[var(--color-text-tertiary)]">
           <span>Low (0)</span>

@@ -16,6 +16,18 @@ export function CalibrationChart() {
       <SurfaceHeader title={<InfoTip term="calibration">Calibration Chart</InfoTip>} />
       <div className="p-4 flex justify-center">
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label="Calibration chart showing predicted vs realized probability">
+          {/* Gridlines at 25/50/75% */}
+          {[0.25, 0.5, 0.75].map((t) => {
+            const x = padding + t * (size - padding * 2);
+            const y = size - padding - t * (size - padding * 2);
+            return (
+              <g key={t}>
+                <line x1={x} y1={padding} x2={x} y2={size - padding} stroke="var(--color-border-subtle)" />
+                <line x1={padding} y1={y} x2={size - padding} y2={y} stroke="var(--color-border-subtle)" />
+              </g>
+            );
+          })}
+
           {/* Perfect calibration diagonal */}
           <line
             x1={padding}
@@ -37,6 +49,8 @@ export function CalibrationChart() {
                 cy={y}
                 r={4}
                 fill="var(--color-accent)"
+                fillOpacity={0.9}
+                style={{ filter: 'drop-shadow(0 0 4px color-mix(in srgb, var(--color-accent) 50%, transparent))' }}
               />
             );
           })}

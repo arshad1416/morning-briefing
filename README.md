@@ -4,8 +4,13 @@ Static market briefing site on Cloudflare Pages, data piped from Raspberry Pi.
 
 ## Architecture
 
-- **Site:** Plain HTML/CSS/JS on Cloudflare Pages (zero build step)
-- **Data:** Pi cron generates JSON → commits to GitHub → auto-deploys
+- **Site:** Next.js 15 static export (`output: 'export'`) on Cloudflare Pages
+  - Build command: `npm run build` → output dir `out/` (configured in the Pages dashboard)
+  - `_headers`, `robots.txt`, `sitemap.xml`, `llms.txt`, and the legal pages live in
+    `public/` and are copied verbatim into `out/` at build time
+- **Data:** Pi cron generates JSON → commits `data/**` + `public/data/**` → each push
+  triggers a Pages rebuild so `out/data/` stays fresh (~20–25 builds/weekday; the free
+  tier allows 500 builds/month — watch the quota)
 - **Chat:** Cloudflare Worker proxies to OpenRouter (API key stays server-side)
 - **Design:** Dark theme, professional financial dashboard, mobile-responsive
 - **Engine code:** The MapleGamma council learn loop (5-expert council, trade
@@ -20,8 +25,9 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md) for full design.
 ## Quick Start
 
 ```bash
-# Deploy site to Cloudflare Pages
-npx wrangler pages deploy .
+# Site deploys automatically via git-connected Cloudflare Pages
+# (build: npm run build, output: out/). Manual deploy if ever needed:
+npm run build && npx wrangler pages deploy out --project-name morningbriefing
 
 # Deploy chat worker
 cd cloudflare-worker && npx wrangler deploy

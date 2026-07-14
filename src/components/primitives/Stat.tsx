@@ -11,10 +11,11 @@ interface StatProps {
   prefix?: string;
   suffix?: string;
   size?: 'sm' | 'md' | 'lg';
+  glow?: boolean;
   className?: string;
 }
 
-export function Stat({ label, value, delta, prefix = '', suffix = '', size = 'md', className = '' }: StatProps) {
+export function Stat({ label, value, delta, prefix = '', suffix = '', size = 'md', glow, className = '' }: StatProps) {
   const sizeClasses = {
     sm: 'text-lg',
     md: 'text-2xl',
@@ -22,9 +23,16 @@ export function Stat({ label, value, delta, prefix = '', suffix = '', size = 'md
   };
 
   return (
-    <div className={`flex flex-col gap-1 ${className}`}>
-      <span className="text-xs text-[var(--color-text-tertiary)] uppercase tracking-wider">{label}</span>
-      <div className="flex items-baseline gap-2">
+    <div className={`relative flex flex-col gap-1 ${className}`}>
+      {glow && (
+        <span
+          aria-hidden="true"
+          className="glow-orb -top-16 -left-10"
+          style={{ width: 160, height: 160 }}
+        />
+      )}
+      <span className="relative z-10 text-[10px] text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">{label}</span>
+      <div className="relative z-10 flex items-baseline gap-2">
         <span
           className={`font-[var(--font-mono)] font-variant-numeric-tabular-nums font-semibold text-[var(--color-text-primary)] ${sizeClasses[size]}`}
           style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}

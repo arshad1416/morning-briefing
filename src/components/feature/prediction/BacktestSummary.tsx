@@ -7,7 +7,21 @@ import { accuracyQuery } from '@/lib/query/options';
 import { Surface, SurfaceHeader } from '@/components/primitives';
 
 export function BacktestSummary() {
-  const { data, isLoading } = useQuery(accuracyQuery());
+  const { data, isLoading, isError } = useQuery(accuracyQuery());
+
+  // accuracy.json is gated premium data — absent in local/preview builds.
+  if (isError) {
+    return (
+      <Surface span="half">
+        <SurfaceHeader title="Backtest Summary" />
+        <div className="p-6 flex flex-col items-center justify-center text-center min-h-[120px]">
+          <p className="text-sm text-[var(--color-text-tertiary)]">
+            Backtest data is available on the live deployment.
+          </p>
+        </div>
+      </Surface>
+    );
+  }
 
   if (isLoading || !data) {
     return (

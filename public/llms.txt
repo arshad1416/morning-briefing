@@ -1,0 +1,60 @@
+# MapleGamma (morning briefing)
+
+> Automated daily market dashboard. A 5-model AI council (risk-contrarian,
+> quantitative/GEX, momentum, trade-selector, fundamental analyst + an
+> aggregator) produces an S&P 500 regime call, key levels, risks and paper
+> trades every weekday morning (~7:20 ET). Outcomes are scored nightly against
+> realized ^GSPC direction and the lessons feed back into the next morning
+> prompt. Paper trading only — nothing here is financial advice.
+
+## Access model
+
+The **Dashboard** (the site home) and the **Pricing** page are free and open —
+no account needed. Everything else is behind a subscription with a 14-day free
+trial:
+
+- **Basic** — Research and Screener.
+- **Pro** — everything in Basic, plus Charts and Models.
+
+The dashboard is JavaScript-rendered; agents should read the open JSON endpoints
+below directly.
+
+## Open data endpoints (JSON, refreshed weekday mornings ET)
+
+These are public and free to fetch:
+
+- /data/latest.json : market summary snapshot — VIX, 10-year yield, and major
+  index levels/changes (S&P 500, Dow, NASDAQ, TSX, VIX)
+- /data/verdict.json : the day's directional signal and conviction, with a
+  narrative and the underlying model features
+- /data/reddit-sentiment.json : WSB / r-stocks sentiment summaries
+- /data/maplegamma-data.json : gamma-exposure overview per ticker (net GEX/DEX/VEX,
+  gamma regime, gamma profile by strike, key levels)
+- /data/analysis.json : curated market headlines with sentiment tags
+  (Seeking Alpha + BNN Bloomberg)
+- /data/paper_trades.json : paper-trading portfolio state
+
+## Subscription-gated (not open endpoints)
+
+The following data and features power the paid Research, Screener, Charts and
+Models areas and are available only to subscribers via the authenticated app —
+they are not published as fetchable public URLs:
+
+- Council briefing and its context A/B arm (maplegamma_analysis)
+- Screener data (full screener-data)
+- Charts and per-ticker analytics (charts, tickers)
+- Walk-forward validation (walk_forward_v2)
+- Strategy improvement / model-accuracy weighting (strategy_improvement)
+- Scored trade outcomes vs realized ^GSPC (trade_outcomes)
+- Morning analysis (morning_analysis)
+- Web news feed (web-news)
+- Polymarket sentiment (polymarket_sentiment)
+- Earnings data (earnings)
+- SEC filings (sec_filings)
+- Trade journal (journal)
+
+## Engine
+
+- Code: https://github.com/arshad1416/hermes-scripts (runs on a Raspberry Pi;
+  this site only hosts the outputs)
+- Site repo: https://github.com/arshad1416/morning-briefing

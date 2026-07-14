@@ -37,7 +37,7 @@ export function InfoTip({ term, children, className = '' }: InfoTipProps) {
       <span className="border-b border-dotted border-[var(--color-accent)] cursor-help">{children}</span>
       <span
         role="tooltip"
-        className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 text-xs text-[var(--color-text-primary)] bg-[var(--color-bg-overlay)] border border-[var(--color-border-default)] rounded-[var(--radius-chip)] shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50"
+        className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 text-xs leading-relaxed text-[var(--color-text-primary)] bg-[color-mix(in_srgb,var(--color-bg-overlay)_88%,transparent)] backdrop-blur-md border border-[var(--color-border-default)] rounded-[var(--radius-chip)] shadow-[var(--shadow-tile)] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50"
       >
         {definition}
       </span>

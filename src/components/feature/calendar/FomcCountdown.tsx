@@ -18,14 +18,29 @@ function getTimeRemaining() {
 }
 
 export function FomcCountdown() {
-  const [remaining, setRemaining] = useState(getTimeRemaining);
+  // Countdown derives from the clock — compute only after mount so the
+  // static-export HTML and first client render match.
+  const [remaining, setRemaining] = useState<ReturnType<typeof getTimeRemaining> | null>(null);
 
   useEffect(() => {
+    setRemaining(getTimeRemaining());
     const timer = setInterval(() => setRemaining(getTimeRemaining()), 60000);
     return () => clearInterval(timer);
   }, []);
 
   const { fedNote } = demoFomc;
+
+  if (!remaining) {
+    return (
+      <Surface span="third">
+        <SurfaceHeader title="FOMC Countdown" />
+        <div className="p-4 space-y-3">
+          <div className="skeleton h-12 w-40" />
+          <p className="text-xs text-[var(--color-text-tertiary)] leading-relaxed">{fedNote}</p>
+        </div>
+      </Surface>
+    );
+  }
 
   return (
     <Surface span="third">

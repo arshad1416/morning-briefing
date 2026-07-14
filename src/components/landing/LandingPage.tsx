@@ -1,91 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
-
-/* ------------------------------------------------------------------ */
-/*  Animated gamma-symbol logo with gamma-ray pulse                    */
-/* ------------------------------------------------------------------ */
-
-function MapleGammaMark({ size = 40 }: { size?: number }) {
-  const reduce = useReducedMotion();
-
-  return (
-    <span
-      className="relative inline-flex items-center justify-center"
-      style={{ width: size, height: size }}
-      aria-hidden="true"
-    >
-      {/* Soft pulsing glow behind the leaf */}
-      <motion.span
-        className="pointer-events-none absolute inset-0 rounded-full blur-md"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(244,63,94,0.55), rgba(244,63,94,0) 70%)",
-        }}
-        animate={
-          reduce ? undefined : { opacity: [0.4, 0.85, 0.4], scale: [0.9, 1.15, 0.9] }
-        }
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      <svg viewBox="0 0 100 100" width={size} height={size} className="relative">
-        <defs>
-          <linearGradient id="mg-leaf" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#fb7185" />
-            <stop offset="55%" stopColor="#ef4444" />
-            <stop offset="100%" stopColor="#f59e0b" />
-          </linearGradient>
-        </defs>
-
-        {/* Gamma-ray pulse: rings emanating from the core */}
-        {[0, 1, 2].map((i) =>
-          reduce ? (
-            <circle
-              key={i}
-              cx="50"
-              cy="50"
-              r={26 + i * 8}
-              fill="none"
-              stroke="#34d399"
-              strokeWidth="1.25"
-              opacity={0.16}
-            />
-          ) : (
-            <motion.circle
-              key={i}
-              cx="50"
-              cy="50"
-              fill="none"
-              stroke="#34d399"
-              strokeWidth="1.5"
-              initial={{ r: 18, opacity: 0 }}
-              animate={{ r: [18, 50], opacity: [0.55, 0] }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeOut",
-                delay: i * 1,
-              }}
-            />
-          )
-        )}
-
-        <text
-          x="50"
-          y="50"
-          textAnchor="middle"
-          dominantBaseline="central"
-          fontSize="64"
-          fontWeight="700"
-          fill="url(#mg-leaf)"
-          style={{ fontFamily: "'IBM Plex Mono', 'Geist Mono', monospace" }}
-        >
-          Γ
-        </text>
-      </svg>
-    </span>
-  );
-}
+import { GammaMark } from "@/components/brand/GammaMark";
 
 /* ------------------------------------------------------------------ */
 /*  Motion variants (reduced-motion aware)                            */
@@ -120,7 +36,6 @@ const useMotionKit = () => {
 type Feature = {
   title: string;
   body: string;
-  accent: string;
   icon: React.ReactNode;
 };
 
@@ -139,7 +54,6 @@ const FEATURES: Feature[] = [
   {
     title: "GEX / DEX Mapping",
     body: "See exactly where dealers are pinned. Live gamma & delta exposure by strike reveals the walls that move price.",
-    accent: "text-emerald-400",
     icon: (
       <svg {...iconProps} aria-hidden="true">
         <path d="M3 21h18" />
@@ -152,7 +66,6 @@ const FEATURES: Feature[] = [
   {
     title: "AI Predictions",
     body: "Probabilistic next-day and next-week ranges modeled on 26 years of regime-tagged market behavior.",
-    accent: "text-sky-400",
     icon: (
       <svg {...iconProps} aria-hidden="true">
         <path d="M3 17l5-6 4 4 6-8" />
@@ -163,7 +76,6 @@ const FEATURES: Feature[] = [
   {
     title: "Real-Time News",
     body: "Filings, headlines and catalysts streamed and ranked by impact — the noise stripped out, the signal surfaced.",
-    accent: "text-amber-400",
     icon: (
       <svg {...iconProps} aria-hidden="true">
         <path d="M4 5h13v14H6a2 2 0 0 1-2-2V5z" />
@@ -175,7 +87,6 @@ const FEATURES: Feature[] = [
   {
     title: "Market Sentiment",
     body: "Crowd positioning, options skew and social momentum fused into a single, readable bull-vs-bear pulse.",
-    accent: "text-fuchsia-400",
     icon: (
       <svg {...iconProps} aria-hidden="true">
         <path d="M3 12a9 9 0 0 1 18 0" />
@@ -214,9 +125,13 @@ function VerdictBar() {
         role="img"
         aria-label={`Verdict reading: ${score} out of 100, leaning bullish`}
       >
-        <div className="relative h-3 w-full rounded-full bg-linear-to-r from-rose-500 via-amber-400 to-emerald-500">
+        <div
+          className="relative h-3 w-full rounded-full"
+          style={{ background: "var(--gradient-conviction)" }}
+        >
           <motion.span
-            className="absolute top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#070708] bg-white shadow-[0_0_12px_rgba(255,255,255,0.6)]"
+            className="absolute top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white shadow-[0_0_12px_rgba(255,255,255,0.6)]"
+            style={{ borderColor: "var(--color-bg-base)" }}
             initial={{ left: reduce ? `${score}%` : "50%" }}
             whileInView={{ left: `${score}%` }}
             viewport={viewport}
@@ -224,9 +139,9 @@ function VerdictBar() {
           />
         </div>
         <div className="mt-3 flex justify-between text-xs font-medium uppercase tracking-wider">
-          <span className="text-rose-400">Bearish</span>
-          <span className="text-amber-300">Neutral</span>
-          <span className="text-emerald-400">Bullish</span>
+          <span style={{ color: "var(--color-bear)" }}>Bearish</span>
+          <span style={{ color: "var(--color-caution)" }}>Neutral</span>
+          <span style={{ color: "var(--color-bull)" }}>Bullish</span>
         </div>
       </div>
     </motion.div>
@@ -243,11 +158,11 @@ const Check = () => (
     height="18"
     viewBox="0 0 24 24"
     fill="none"
-    stroke="currentColor"
+    stroke="var(--color-bull)"
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="mt-0.5 shrink-0 text-emerald-400"
+    className="mt-0.5 shrink-0"
     aria-hidden="true"
   >
     <path d="M20 6 9 17l-5-5" />
@@ -273,15 +188,25 @@ function PricingCard({
 }) {
   return (
     <div
-      className={[
-        "relative flex flex-col rounded-2xl border p-6 sm:p-8",
+      className="relative flex h-full flex-col rounded-2xl border p-6 sm:p-8"
+      style={
         featured
-          ? "border-emerald-400/40 bg-linear-to-b from-emerald-400/[0.08] to-transparent"
-          : "border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)]",
-      ].join(" ")}
+          ? {
+              borderColor: "rgba(255,122,26,0.35)",
+              background:
+                "linear-gradient(180deg, rgba(255,122,26,0.08) 0%, transparent 55%) var(--color-bg-surface)",
+            }
+          : {
+              borderColor: "var(--color-border-subtle)",
+              backgroundColor: "var(--color-bg-surface)",
+            }
+      }
     >
       {featured && (
-        <span className="absolute -top-3 left-6 rounded-full bg-emerald-400 px-3 py-1 text-xs font-semibold text-emerald-950">
+        <span
+          className="absolute -top-3 left-6 rounded-full px-3 py-1 text-xs font-semibold"
+          style={{ backgroundColor: "var(--color-accent)", color: "var(--color-on-accent)" }}
+        >
           Most popular
         </span>
       )}
@@ -290,7 +215,9 @@ function PricingCard({
         {name}
       </h3>
       <div className="mt-3 flex items-baseline gap-1">
-        <span className="text-4xl font-bold text-[var(--color-text-primary)]">{price}</span>
+        <span className="text-4xl font-bold text-[var(--color-text-primary)]" data-numeric>
+          {price}
+        </span>
         {period && <span className="text-[var(--color-text-tertiary)]">{period}</span>}
       </div>
       <p className="mt-3 text-sm text-[var(--color-text-tertiary)]">{blurb}</p>
@@ -308,10 +235,10 @@ function PricingCard({
         href="#"
         className={[
           "mt-8 inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold transition",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]",
           featured
-            ? "bg-emerald-400 text-emerald-950 hover:bg-emerald-300 focus-visible:ring-emerald-400"
-            : "border border-white/15 text-[var(--color-text-primary)] hover:bg-[var(--color-bg-elevated)] focus-visible:ring-white/60",
+            ? "bg-[var(--color-accent)] text-[var(--color-on-accent)] hover:bg-[var(--color-accent-fg)]"
+            : "border border-[var(--color-border-default)] text-[var(--color-text-primary)] hover:bg-[var(--color-bg-elevated)]",
         ].join(" ")}
       >
         {cta}
@@ -334,21 +261,21 @@ export default function MapleGammaLanding() {
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[var(--color-bg-base)] text-[var(--color-text-secondary)] antialiased selection:bg-emerald-400/30">
+    <div className="relative min-h-screen overflow-hidden bg-[var(--color-bg-base)] text-[var(--color-text-secondary)] antialiased selection:bg-[rgba(255,122,26,0.30)]">
       {/* Ambient background glows */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div
           className="absolute -top-40 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full blur-3xl"
           style={{
             background:
-              "radial-gradient(circle, rgba(244,63,94,0.18), rgba(244,63,94,0) 70%)",
+              "radial-gradient(circle, rgba(255,122,26,0.12), rgba(255,122,26,0) 70%)",
           }}
         />
         <div
           className="absolute top-1/3 -right-40 h-[28rem] w-[28rem] rounded-full blur-3xl"
           style={{
             background:
-              "radial-gradient(circle, rgba(52,211,153,0.14), rgba(52,211,153,0) 70%)",
+              "radial-gradient(circle, rgba(16,185,129,0.08), rgba(16,185,129,0) 70%)",
           }}
         />
       </div>
@@ -366,30 +293,30 @@ export default function MapleGammaLanding() {
         <motion.a
           variants={fadeUp}
           href="#"
-          className="flex items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
+          className="flex items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
         >
-          <MapleGammaMark size={36} />
+          <GammaMark size={36} />
           <span className="text-lg font-semibold tracking-tight text-[var(--color-text-primary)]">
-            Maple<span className="bg-linear-to-r from-rose-400 via-red-400 to-amber-300 bg-clip-text text-transparent">Gamma</span>
+            Maple<span style={{ color: "var(--color-accent)" }}>Gamma</span>
           </span>
         </motion.a>
 
         <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-2">
           <a
             href="#features"
-            className="hidden rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 sm:inline-block"
+            className="hidden rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:inline-block"
           >
             Features
           </a>
           <a
             href="#pricing"
-            className="hidden rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 sm:inline-block"
+            className="hidden rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:inline-block"
           >
             Pricing
           </a>
           <a
             href="#pricing"
-            className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
+            className="rounded-lg bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-on-accent)] transition hover:bg-[var(--color-accent-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
           >
             Get started
           </a>
@@ -409,18 +336,21 @@ export default function MapleGammaLanding() {
               variants={fadeUp}
               className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-bg-elevated)] px-4 py-1.5 text-xs font-medium text-[var(--color-text-secondary)]"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <span
+                className="h-1.5 w-1.5 rounded-full animate-pulse"
+                style={{ backgroundColor: "var(--color-accent)" }}
+              />
               Institutional-grade options intelligence
             </motion.span>
 
             <motion.h1
               variants={fadeUp}
-              className="mt-6 text-balance text-4xl font-bold leading-[1.05] tracking-tight text-[var(--color-text-primary)] sm:text-6xl"
+              className="font-display mt-6 text-balance text-5xl leading-[1.04] tracking-tight text-[var(--color-text-primary)] sm:text-7xl"
             >
               Trade with the math the{" "}
-              <span className="bg-linear-to-r from-rose-400 via-red-400 to-amber-300 bg-clip-text text-transparent">
+              <em className="italic" style={{ color: "var(--color-accent)" }}>
                 desks
-              </span>{" "}
+              </em>{" "}
               already use.
             </motion.h1>
 
@@ -439,13 +369,13 @@ export default function MapleGammaLanding() {
             >
               <a
                 href="#pricing"
-                className="inline-flex items-center justify-center rounded-xl bg-emerald-400 px-6 py-3 text-sm font-semibold text-emerald-950 transition hover:bg-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
+                className="inline-flex items-center justify-center rounded-xl bg-[var(--color-accent)] px-6 py-3 text-sm font-semibold text-[var(--color-on-accent)] transition hover:bg-[var(--color-accent-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
               >
                 Start free
               </a>
               <a
                 href="#features"
-                className="inline-flex items-center justify-center rounded-xl border border-white/15 px-6 py-3 text-sm font-semibold text-[var(--color-text-primary)] transition hover:bg-[var(--color-bg-elevated)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
+                className="inline-flex items-center justify-center rounded-xl border border-[var(--color-border-default)] px-6 py-3 text-sm font-semibold text-[var(--color-text-primary)] transition hover:bg-[var(--color-bg-elevated)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
               >
                 See how it works
               </a>
@@ -462,14 +392,17 @@ export default function MapleGammaLanding() {
           aria-label="Platform coverage"
           className="mx-auto max-w-4xl px-5"
         >
-          <div className="grid grid-cols-3 divide-x divide-white/10 rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)] py-6">
+          <div className="grid grid-cols-3 divide-x divide-[var(--color-border-subtle)] rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)] py-6">
             {stats.map((s) => (
               <motion.div
                 key={s.label}
                 variants={fadeUp}
                 className="px-2 text-center"
               >
-                <div className="text-2xl font-bold text-[var(--color-text-primary)] sm:text-3xl">
+                <div
+                  className="text-2xl font-semibold text-[var(--color-text-primary)] sm:text-3xl"
+                  data-numeric
+                >
                   {s.value}
                 </div>
                 <div className="mt-1 text-xs text-[var(--color-text-tertiary)] sm:text-sm">
@@ -489,7 +422,7 @@ export default function MapleGammaLanding() {
             viewport={viewport}
             className="mx-auto max-w-2xl text-center"
           >
-            <h2 className="text-3xl font-bold tracking-tight text-[var(--color-text-primary)] sm:text-4xl">
+            <h2 className="font-display text-4xl tracking-tight text-[var(--color-text-primary)] sm:text-5xl">
               Every edge, on one screen
             </h2>
             <p className="mt-4 text-[var(--color-text-tertiary)]">
@@ -509,10 +442,16 @@ export default function MapleGammaLanding() {
               <motion.li
                 key={f.title}
                 variants={fadeUp}
-                className="group rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)] p-6 transition hover:border-white/20 hover:bg-white/[0.04]"
+                whileHover={{ y: -2 }}
+                className="group rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)] p-6 transition hover:border-[var(--color-border-strong)] hover:bg-[rgba(255,255,255,0.03)]"
               >
                 <div
-                  className={`inline-flex rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-elevated)] p-2.5 ${f.accent}`}
+                  className="inline-flex rounded-xl border p-2.5"
+                  style={{
+                    backgroundColor: "var(--color-accent-dim)",
+                    borderColor: "rgba(255,122,26,0.20)",
+                    color: "var(--color-accent)",
+                  }}
                 >
                   {f.icon}
                 </div>
@@ -538,11 +477,12 @@ export default function MapleGammaLanding() {
             viewport={viewport}
             className="mx-auto max-w-2xl text-center"
           >
-            <h2 className="text-3xl font-bold tracking-tight text-[var(--color-text-primary)] sm:text-4xl">
+            <h2 className="font-display text-4xl tracking-tight text-[var(--color-text-primary)] sm:text-5xl">
               Start free. Upgrade when it pays for itself.
             </h2>
             <p className="mt-4 text-[var(--color-text-tertiary)]">
-              No card required to explore the daily verdict.
+              The daily dashboard is always free. Unlock the rest with a 7-day trial — no card
+              required.
             </p>
           </motion.div>
 
@@ -551,42 +491,64 @@ export default function MapleGammaLanding() {
             initial="hidden"
             whileInView="show"
             viewport={viewport}
-            className="mt-12 grid items-stretch gap-6 sm:grid-cols-2"
+            className="mt-12 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
-            <motion.div variants={fadeUp}>
+            <motion.div variants={fadeUp} className="h-full">
               <PricingCard
                 name="Free"
                 price="$0"
                 period="forever"
-                blurb="A daily read on the market's mood."
+                blurb="The daily dashboard, always free."
                 cta="Create account"
                 features={[
-                  "Daily verdict on 5 core tickers",
-                  "Basic GEX snapshot",
-                  "Delayed news feed",
-                  "Community watchlist",
+                  "Market regime & indices",
+                  "Headlines & Reddit pulse",
+                  "GEX/DEX snapshot",
                 ]}
               />
             </motion.div>
 
-            <motion.div variants={fadeUp}>
+            <motion.div variants={fadeUp} className="h-full">
+              <PricingCard
+                name="Basic"
+                price="$49"
+                period="/ month CAD"
+                blurb="Everything in Free, plus the full research desk."
+                cta="Start 7-day free trial"
+                features={[
+                  "Full Screener — all tickers, scored",
+                  "Research: analysis, news, earnings, SEC",
+                  "Reddit + prediction-market sentiment",
+                ]}
+              />
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="h-full">
               <PricingCard
                 name="Pro"
-                price="$29"
-                period="/ month"
-                blurb="The full intelligence stack, real time."
-                cta="Go Pro"
+                price="$99"
+                period="/ month CAD"
+                blurb="Everything in Basic, plus charts, models & the AI council."
+                cta="Start 7-day free trial"
                 featured
                 features={[
-                  "All 59 tickers, live GEX & DEX",
-                  "AI price predictions & ranges",
-                  "Real-time news + sentiment",
-                  "The Verdict bar on every symbol",
-                  "26-year backtested regimes",
+                  "Interactive charts — candles, RSI, ATR",
+                  "Model accuracy & walk-forward backtests",
+                  "Prediction engine + council history",
                 ]}
               />
             </motion.div>
           </motion.div>
+
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={viewport}
+            className="mt-8 text-center text-sm text-[var(--color-text-tertiary)]"
+          >
+            Annual billing: $490 / $990 CAD per year — 2 months free. Cancel anytime.
+          </motion.p>
         </section>
       </main>
 
@@ -594,16 +556,33 @@ export default function MapleGammaLanding() {
       <footer className="relative z-10 border-t border-[var(--color-border-subtle)]">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-8 sm:flex-row">
           <div className="flex items-center gap-2.5">
-            <MapleGammaMark size={28} />
+            <GammaMark size={28} />
             <span className="text-sm font-semibold text-[var(--color-text-primary)]">
-              Maple<span className="text-emerald-400">Gamma</span>
+              Maple<span style={{ color: "var(--color-accent)" }}>Gamma</span>
             </span>
           </div>
-          <p className="text-center text-xs text-slate-500 sm:text-right">
+          <p className="text-center text-xs text-[var(--color-text-tertiary)] sm:text-right">
             For informational purposes only. Not investment advice. ·{" "}
             <span className="whitespace-nowrap">
               © {new Date().getFullYear()} MapleGamma
             </span>
+          </p>
+        </div>
+
+        {/* Compliance — general disclaimer, position-disclosure policy, Quebec notice */}
+        <div className="mx-auto max-w-6xl px-5 pb-8 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
+          <p className="mb-2">
+            MapleGamma provides general market information and simulated (paper-trading) results for
+            educational purposes only. Nothing on this site is investment advice or a recommendation,
+            and nothing is tailored to any person&apos;s circumstances. The site operator may hold positions
+            in securities discussed; current Interactive Brokers holdings are disclosed on pages where
+            those securities appear. Past performance — real or simulated — does not guarantee future results.
+          </p>
+          <p>
+            <strong>Quebec notice:</strong> this service is not directed at, or intended for use by, residents
+            of Quebec. <span lang="fr">Avis&nbsp;: ce service ne s&apos;adresse pas aux résidents du Québec.
+            L&apos;information fournie est de nature générale et ne constitue pas un conseil en placement ni
+            une recommandation.</span>
           </p>
         </div>
       </footer>
