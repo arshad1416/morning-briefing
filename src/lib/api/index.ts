@@ -1,5 +1,5 @@
 // lib/api/index.ts — typed fetchers
-import { LatestDataSchema, VerdictSchema, GexDataSchema, AccuracySchema, type LatestData, type Verdict, type GexData, type Accuracy } from '@/lib/schemas/market';
+import { LatestDataSchema, VerdictSchema, GexDataSchema, AccuracySchema, PredictionEngineSchema, type LatestData, type Verdict, type GexData, type Accuracy, type PredictionEngine } from '@/lib/schemas/market';
 import { ScreenerDataSchema, type ScreenerResult } from '@/lib/schemas/screener';
 import { fetchGated, GateError } from './gated';
 
@@ -30,9 +30,13 @@ async function screener(): Promise<ScreenerResult> {
 export const api = {
   latest: () => fetchJson<LatestData>('/data/latest.json', LatestDataSchema),
   verdict: () => fetchJson<Verdict>('/data/verdict.json', VerdictSchema),
-  gex: () => fetchJson<GexData>('/data/gex_data.json', GexDataSchema),
+  // Live GEX file (push_gex.py, every 30 min). gex_data.json is a dead
+  // June-2026 artifact — do not point back at it.
+  gex: () => fetchJson<GexData>('/data/maplegamma-data.json', GexDataSchema),
   // accuracy.json is Pro-gated R2 data (see data_gate.js) — it never exists
   // under public /data/ on Pages, so it must go through the Worker gate.
   accuracy: () => fetchGated<Accuracy>('accuracy.json', AccuracySchema),
+  // Pro-gated: the V-series backtest corpus + live-trading summary.
+  predictionEngine: () => fetchGated<PredictionEngine>('prediction-engine.json', PredictionEngineSchema),
   screener,
 };

@@ -82,6 +82,13 @@ export const LatestDataSchema = z.object({
   }),
 });
 
+// ── GEX ─────────────────────────────────────────────────────────────────────
+// Source of truth is data/maplegamma-data.json (push_gex.py, refreshed every
+// 30 min in market hours). The schema below parses that file and TRANSFORMS
+// it into the GexData/GexMode shape the components consume. The previous
+// schema modeled gex_data.json — a dead artifact last written 2026-06-11,
+// which fed the redesigned Options page month-old gamma levels.
+
 export const GexStrikeSchema = z.object({
   strike: z.number(),
   type: z.string(),
@@ -107,33 +114,203 @@ export const GexModeSchema = z.object({
   strikes: z.array(GexStrikeSchema),
 });
 
-export const GexDataSchema = z.object({
-  generated_at: z.string(),
-  ticker: z.string(),
-  price_source: z.string(),
-  modes: z.object({
-    all: GexModeSchema,
-    weeklies: GexModeSchema.optional(),
-    monthly: GexModeSchema.optional(),
-  }),
+const MgGammaRowSchema = z
+  .object({
+    strike: z.number(),
+    call_gex: z.number().default(0),
+    put_gex: z.number().default(0),
+    net_gex: z.number().default(0),
+    dex: z.number().default(0),
+    vex: z.number().default(0),
+    oi: z.number().default(0),
+  })
+  .passthrough();
+
+const MgBucketSchema = z
+  .object({
+    expiry_count: z.number().default(0),
+    gamma_profile: z.array(MgGammaRowSchema).default([]),
+    total_gex: z.number().default(0),
+    total_dex: z.number().default(0),
+    total_vex: z.number().default(0),
+  })
+  .passthrough();
+
+const MapleGammaFileSchema = z
+  .object({
+    generated_at: z.string(),
+    tickers: z.object({
+      SPX: z
+        .object({
+          current_price: z.number().default(0),
+          gamma_regime: z.string().default('neutral'),
+          max_gex_strike: z.number().nullish(),
+          max_gex_value: z.number().nullish(),
+          total_gex: z.number().default(0),
+          total_dex: z.number().default(0),
+          total_vex: z.number().default(0),
+          gamma_profile: z.array(MgGammaRowSchema).default([]),
+          expiry_data: z
+            .object({
+              all: MgBucketSchema.optional(),
+              weekly: MgBucketSchema.optional(),
+              monthly: MgBucketSchema.optional(),
+            })
+            .passthrough()
+            .optional(),
+        })
+        .passthrough(),
+    }),
+  })
+  .passthrough();
+
+type MgBucket = z.infer<typeof MgBucketSchema>;
+type MgTicker = z.infer<typeof MapleGammaFileSchema>['tickers']['SPX'];
+
+function regimeOf(totalGex: number): 'bullish' | 'bearish' | 'neutral' {
+  return totalGex > 0 ? 'bullish' : totalGex < 0 ? 'bearish' : 'neutral';
+}
+
+function toMode(bucket: MgBucket, spx: MgTicker): z.infer<typeof GexModeSchema> {
+  const rows = bucket.gamma_profile;
+  const top = rows.reduce(
+    (best, r) => (Math.abs(r.net_gex) > Math.abs(best?.net_gex ?? 0) ? r : best),
+    rows[0],
+  );
+  return {
+    total_gex: bucket.total_gex,
+    total_dex: bucket.total_dex,
+    total_vex: bucket.total_vex,
+    price: spx.current_price,
+    max_gex_strike: top?.strike ?? spx.max_gex_strike ?? 0,
+    max_gex_value: top?.net_gex ?? spx.max_gex_value ?? 0,
+    expiry: '',
+    expiry_count: bucket.expiry_count,
+    gamma_regime: regimeOf(bucket.total_gex),
+    // Rows are already call/put-merged per strike — expose net values.
+    strikes: rows.map((r) => ({
+      strike: r.strike,
+      type: 'NET',
+      oi: r.oi,
+      gamma: 0,
+      gex: r.net_gex,
+      delta: 0,
+      dex: r.dex,
+      vega: 0,
+      vex: r.vex,
+    })),
+  };
+}
+
+export const GexDataSchema = MapleGammaFileSchema.transform((f) => {
+  const spx = f.tickers.SPX;
+  const ed = spx.expiry_data ?? {};
+  const allBucket: MgBucket =
+    ed.all ??
+    ({
+      expiry_count: 0,
+      gamma_profile: spx.gamma_profile,
+      total_gex: spx.total_gex,
+      total_dex: spx.total_dex,
+      total_vex: spx.total_vex,
+    } as MgBucket);
+  return {
+    generated_at: f.generated_at,
+    ticker: 'SPY',
+    price_source: 'yfinance',
+    modes: {
+      all: toMode(allBucket, spx),
+      weeklies: ed.weekly ? toMode(ed.weekly, spx) : undefined,
+      monthly: ed.monthly ? toMode(ed.monthly, spx) : undefined,
+    },
+  };
 });
 
-export const AccuracySchema = z.object({
-  total_signals: z.number(),
-  hit_rate: z.number(),
-  expectancy: z.number(),
-  profit_factor: z.number(),
-  max_drawdown: z.number(),
-  kelly_fraction: z.number(),
-  win_count: z.number(),
-  loss_count: z.number(),
-});
+// ── Accuracy ─────────────────────────────────────────────────────────────────
+// Parses the REAL accuracy.json emitted by generate_prediction_accuracy.py
+// (nested summary/expectancy/drawdown blocks, percent units) and transforms it
+// to the flat fraction-based shape the components consume. The previous flat
+// schema matched a mock that never existed — every parse threw, so the Models
+// tiles rendered "unavailable" from day one of the redesign.
+
+const RealAccuracyFileSchema = z
+  .object({
+    generated_at: z.string().optional(),
+    summary: z
+      .object({
+        total_trades: z.number().default(0),
+        win_rate: z.number().default(0),
+      })
+      .passthrough(),
+    expectancy: z
+      .object({
+        expectancy_pct: z.number().default(0),
+        profit_factor: z.number().default(0),
+        kelly_fraction: z.number().default(0),
+        win_rate: z.number().default(0),
+        n_trades: z.number().default(0),
+        n_wins: z.number().default(0),
+        n_losses: z.number().default(0),
+      })
+      .passthrough(),
+    drawdown: z
+      .object({
+        max_drawdown_pct: z.number().default(0),
+      })
+      .passthrough(),
+  })
+  .passthrough();
+
+export const AccuracySchema = RealAccuracyFileSchema.transform((f) => ({
+  total_signals: f.expectancy.n_trades || f.summary.total_trades,
+  hit_rate: (f.expectancy.win_rate || f.summary.win_rate) / 100,
+  /** Percent per trade (expectancy_pct) — render with a % suffix, not $. */
+  expectancy: f.expectancy.expectancy_pct,
+  profit_factor: f.expectancy.profit_factor,
+  max_drawdown: f.drawdown.max_drawdown_pct / 100,
+  kelly_fraction: f.expectancy.kelly_fraction / 100,
+  win_count: f.expectancy.n_wins,
+  loss_count: f.expectancy.n_losses,
+}));
+
+// ── Prediction engine (backtest corpus + live trading summary) ───────────────
+// prediction-engine.json (Pro-gated) carries the REAL backtest summary — the
+// 17k-trade V-series corpus — which is what a tile named "Backtest Summary"
+// should show (accuracy.json is live-sim accuracy, a different thing).
+
+export const PredictionEngineSchema = z
+  .object({
+    generated_at: z.string(),
+    summary: z
+      .object({
+        total_backtest_trades: z.number().default(0),
+        tickers_tested: z.number().default(0),
+        date_range: z.string().default(''),
+        best_win_rate: z.string().default(''),
+        best_avg_pnl: z.string().default(''),
+        best_profit_factor: z.string().default(''),
+      })
+      .passthrough(),
+    live_trading: z
+      .object({
+        summary: z
+          .object({
+            win_rate: z.number().default(0),
+            closed_trades: z.number().default(0),
+            return_pct: z.number().default(0),
+            open_positions: z.number().default(0),
+          })
+          .passthrough(),
+      })
+      .passthrough()
+      .optional(),
+  })
+  .passthrough();
 
 export const BacktestSchema = z.object({
   total_trades: z.number(),
   tickers_count: z.number(),
   years: z.number(),
-  accuracy: AccuracySchema.optional(),
 });
 
 // Inferred types
@@ -147,4 +324,5 @@ export type GexStrike = z.infer<typeof GexStrikeSchema>;
 export type GexMode = z.infer<typeof GexModeSchema>;
 export type GexData = z.infer<typeof GexDataSchema>;
 export type Accuracy = z.infer<typeof AccuracySchema>;
+export type PredictionEngine = z.infer<typeof PredictionEngineSchema>;
 export type Backtest = z.infer<typeof BacktestSchema>;

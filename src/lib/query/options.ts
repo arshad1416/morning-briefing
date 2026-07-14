@@ -32,6 +32,13 @@ export const accuracyQuery = () =>
     staleTime: POLL.backtest.stale,
   });
 
+export const predictionEngineQuery = () =>
+  queryOptions({
+    queryKey: qk.predictionEngine(),
+    queryFn: () => api.predictionEngine(),
+    staleTime: POLL.backtest.stale,
+  });
+
 export const screenerQuery = () =>
   queryOptions({
     queryKey: qk.screener(),
