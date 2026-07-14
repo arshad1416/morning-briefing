@@ -10,6 +10,7 @@ import { ProGate } from '@/components/feature/gating/ProGate';
 import { ScenarioSimulator } from '@/components/feature/MissedOpportunities';
 import { WalkForwardTile } from '@/components/feature/prediction/WalkForwardTile';
 import { SimulationTile } from '@/components/feature/prediction/SimulationTile';
+import { CryptoCohortsTile } from '@/components/feature/prediction/CryptoCohortsTile';
 
 export function ModelsClient() {
   return (
@@ -56,6 +57,11 @@ export function ModelsClient() {
           <ProGate feature="simulation">
             <SimulationTile />
           </ProGate>
+        </BentoTile>
+
+        {/* Crypto strategy cohorts — the crypto asset class (public) */}
+        <BentoTile span="hero">
+          <CryptoCohortsTile />
         </BentoTile>
 
       </BentoGrid>

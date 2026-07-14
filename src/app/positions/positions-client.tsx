@@ -125,6 +125,46 @@ function priceIn(t: Any, field: 'entry_price' | 'current_price' | 'exit_price', 
 /*  Paper Trading tab                                                 */
 /* ------------------------------------------------------------------ */
 
+const ASSET_COLORS: Record<string, string> = {
+  equity: '#6366f1',
+  etf: '#0ea5e9',
+  bond: '#10b981',
+  commodity: '#f59e0b',
+  crypto: '#f7931a',
+  forex: '#a855f7',
+  option: '#ec4899',
+};
+const ASSET_LABEL: Record<string, string> = {
+  equity: 'Equities', etf: 'ETFs', bond: 'Bonds', commodity: 'Commodities',
+  crypto: 'Crypto', forex: 'FX', option: 'Options',
+};
+
+function AssetMixCard({ mix }: { mix: Any }) {
+  const entries = mix && typeof mix === 'object'
+    ? Object.entries(mix as Record<string, { count: number; pct: number }>).sort((a, b) => b[1].pct - a[1].pct)
+    : [];
+  if (entries.length === 0) return null;
+  return (
+    <Card title="Asset-Class Mix">
+      <div className="flex h-2.5 w-full overflow-hidden rounded-full" style={{ backgroundColor: 'var(--color-bg-elevated)' }}>
+        {entries.map(([cls, v]) => (
+          <div key={cls} title={`${ASSET_LABEL[cls] || cls}: ${v.pct}%`} style={{ width: `${v.pct}%`, backgroundColor: ASSET_COLORS[cls] || 'var(--color-text-tertiary)' }} />
+        ))}
+      </div>
+      <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+        {entries.map(([cls, v]) => (
+          <div key={cls} className="flex items-center gap-1.5 text-xs">
+            <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: ASSET_COLORS[cls] || 'var(--color-text-tertiary)' }} />
+            <span className="text-[var(--color-text-secondary)]">{ASSET_LABEL[cls] || cls}</span>
+            <span className="font-semibold text-[var(--color-text-primary)]" data-numeric>{v.pct}%</span>
+            <span className="text-[var(--color-text-tertiary)]" data-numeric>({v.count})</span>
+          </div>
+        ))}
+      </div>
+    </Card>
+  );
+}
+
 function PaperTab({ data }: { data: Any }) {
   const accuracy = useGatedFile('accuracy', 'accuracy.json'); // Pro file — sections render only if entitled
   const [pref, setPref] = useState<CurPref>('native');
@@ -205,6 +245,9 @@ function PaperTab({ data }: { data: Any }) {
           />
         </div>
       </Card>
+
+      {/* Asset-class mix — demonstrates true multi-asset coverage */}
+      <AssetMixCard mix={data.asset_class_mix} />
 
       {/* Open positions */}
       <Card
