@@ -49,7 +49,15 @@ export async function entitlement(DB, userId) {
     const live = sub.status === 'active' && sub.trial_ends_at && sub.trial_ends_at > now;
     return { entitled: !!live, tier: 'trial', status: live ? 'active' : 'expired', trialEndsAt: sub.trial_ends_at };
   }
-  const live = sub.status === 'active' && (!sub.current_period_end || sub.current_period_end > now);
+  // 'canceled' means "don't renew", not "revoke" — the subscriber keeps what
+  // they paid for until current_period_end. A canceled row with NO period end
+  // stays locked out (never grant open-ended access to a dead subscription).
+  const live =
+    sub.status === 'active'
+      ? !sub.current_period_end || sub.current_period_end > now
+      : sub.status === 'canceled'
+        ? !!sub.current_period_end && sub.current_period_end > now
+        : false;
   return { entitled: !!live, tier: sub.tier, status: sub.status, periodEnd: sub.current_period_end, billingInterval: sub.billing_interval || 'monthly' };
 }
 
