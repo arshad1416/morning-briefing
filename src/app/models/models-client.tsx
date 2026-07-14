@@ -8,6 +8,8 @@ import { AccuracyStats } from '@/components/feature/prediction/AccuracyStats';
 import { CalibrationChart } from '@/components/feature/prediction/CalibrationChart';
 import { ProGate } from '@/components/feature/gating/ProGate';
 import { ScenarioSimulator } from '@/components/feature/MissedOpportunities';
+import { WalkForwardTile } from '@/components/feature/prediction/WalkForwardTile';
+import { SimulationTile } from '@/components/feature/prediction/SimulationTile';
 
 export function ModelsClient() {
   return (
@@ -42,38 +44,20 @@ export function ModelsClient() {
           </ProGate>
         </BentoTile>
 
-        {/* Walk-forward placeholder */}
+        {/* Walk-forward (real out-of-sample results — was a hardcoded placeholder) */}
         <BentoTile span="half">
-          <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)] overflow-hidden">
-            <div className="px-4 py-3 border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
-              <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">Walk-Forward Analysis</h3>
-            </div>
-            <div className="p-4 flex flex-col items-center justify-center min-h-[200px]">
-              <svg viewBox="0 0 24 24" width={28} height={28} fill="none" stroke="var(--color-text-tertiary)" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="mb-3" aria-hidden="true">
-                <path d="M3 17l5-5 4 4 6-7 3 3" />
-                <path d="M3 21h18" />
-              </svg>
-              <p className="text-sm text-[var(--color-text-tertiary)] text-center">
-                Walk-forward chart showing out-of-sample performance over rolling windows.
-              </p>
-              <span
-                className="mt-3 inline-flex items-center gap-1 px-3 py-1 text-[10px] uppercase tracking-[0.12em] rounded-full border"
-                style={{
-                  backgroundColor: 'var(--color-accent-dim)',
-                  color: 'var(--color-accent)',
-                  borderColor: 'color-mix(in srgb, var(--color-accent) 25%, transparent)',
-                }}
-              >
-                Coming Soon
-              </span>
-            </div>
-          </div>
+          <ProGate feature="walkforward">
+            <WalkForwardTile />
+          </ProGate>
         </BentoTile>
 
-        {/* Scenario simulator placeholder */}
+        {/* Live simulation summary (legacy Models view, lost in the port) */}
         <BentoTile span="hero">
-          <ScenarioSimulator />
+          <ProGate feature="simulation">
+            <SimulationTile />
+          </ProGate>
         </BentoTile>
+
       </BentoGrid>
     </div>
   );

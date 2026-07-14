@@ -1,35 +1,90 @@
-// components/feature/market/DayPnLCard.tsx — portfolio P&L (demo)
+// components/feature/market/DayPnLCard.tsx — portfolio snapshot from the REAL
+// paper-trading ledger (paper_trades.json, Basic-gated). The previous version
+// rendered a hardcoded demo object ($1,177.72 equity, fake sparkline) to every
+// visitor, including subscribers.
 'use client';
 
 import React from 'react';
-import { Surface, SurfaceHeader, Stat, Sparkline } from '@/components/primitives';
-import { demoPortfolio } from '@/mocks';
+import { useQuery } from '@tanstack/react-query';
+import { z } from 'zod';
+import { Surface, SurfaceHeader, Stat } from '@/components/primitives';
+import { fetchGated, GateError } from '@/lib/api/gated';
+
+const PaperPortfolioSchema = z
+  .object({
+    portfolio: z
+      .object({
+        total_balance: z.number().default(0),
+        starting_balance: z.number().default(100000),
+        cash: z.number().default(0),
+        invested: z.number().default(0),
+        return_pct: z.number().default(0),
+        win_rate: z.number().nullable().default(null),
+        total_trades: z.number().nullable().default(null),
+      })
+      .passthrough(),
+  })
+  .passthrough();
 
 export function DayPnLCard() {
-  const { equity, dayPnL, deployedPct, sparkData } = demoPortfolio;
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['paper-portfolio-tile'],
+    queryFn: () => fetchGated('paper_trades.json', PaperPortfolioSchema),
+    staleTime: 5 * 60 * 1000,
+  });
 
-  return (
+  const shell = (body: React.ReactNode) => (
     <Surface span="third">
       <SurfaceHeader title="Portfolio" />
       <div className="p-4 space-y-4">
         <p className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--color-text-tertiary)' }}>
           Simulated portfolio — not a recommendation
         </p>
-        <Stat label="Equity" value={`$${equity.toLocaleString()}`} delta={dayPnL} suffix="" prefix="" />
-        <div className="flex items-center justify-between">
-          <span className="text-xs text-[var(--color-text-tertiary)]">Deployed</span>
-          <span className="text-sm font-medium" style={{ fontFamily: 'var(--font-mono)' }} data-numeric>{deployedPct.toFixed(1)}%</span>
-        </div>
-        <div className="h-2 bg-[var(--color-bg-elevated)] rounded-full overflow-hidden">
-          <div className="h-full rounded-full" style={{ width: `${deployedPct}%`, backgroundColor: 'var(--color-accent)' }} />
-        </div>
-        <Sparkline
-          data={sparkData}
-          fill
-          color={sparkData[sparkData.length - 1] >= sparkData[0] ? 'var(--color-bull)' : 'var(--color-bear)'}
-          title="Equity trend"
-        />
+        {body}
       </div>
     </Surface>
+  );
+
+  if (isError) {
+    const signedOut = error instanceof GateError && error.kind === 'signin';
+    return shell(
+      <p className="text-sm text-[var(--color-text-tertiary)]">
+        {signedOut ? (
+          <>
+            <a href="/login" className="underline text-[var(--color-accent)]">Sign in</a> to view the
+            live $100K paper-trading account.
+          </>
+        ) : (
+          'Portfolio data isn’t available right now.'
+        )}
+      </p>,
+    );
+  }
+
+  if (isLoading || !data) {
+    return shell(<div className="skeleton h-24" />);
+  }
+
+  const p = data.portfolio;
+  const deployedPct = p.total_balance > 0 ? (p.invested / p.total_balance) * 100 : 0;
+
+  return shell(
+    <>
+      <Stat label="Equity" value={`$${p.total_balance.toLocaleString(undefined, { maximumFractionDigits: 0 })}`} delta={p.return_pct} suffix="%" prefix="" />
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-[var(--color-text-tertiary)]">Deployed</span>
+        <span className="text-sm font-medium" style={{ fontFamily: 'var(--font-mono)' }} data-numeric>
+          {deployedPct.toFixed(1)}%
+        </span>
+      </div>
+      <div className="h-2 bg-[var(--color-bg-elevated)] rounded-full overflow-hidden">
+        <div className="h-full rounded-full" style={{ width: `${Math.min(100, deployedPct)}%`, backgroundColor: 'var(--color-accent)' }} />
+      </div>
+      {p.win_rate != null && p.total_trades != null && (
+        <p className="text-xs text-[var(--color-text-tertiary)]">
+          {p.total_trades} trades · {p.win_rate.toFixed(0)}% win rate since inception
+        </p>
+      )}
+    </>,
   );
 }

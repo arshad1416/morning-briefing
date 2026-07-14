@@ -411,9 +411,13 @@ function IbkrTab() {
       </p>
     );
 
-  const s = account.data?.accounts?.[0]?.summary ?? {};
-  const pos: Any[] = positions.data?.positions ?? [];
-  const tr: Any[] = (trades.data?.trades ?? []).slice(-10).reverse();
+  // The agent writes enveloped files: {timestamp, version, data: [...]}.
+  // The old accessors read keys that never existed, so real positions
+  // rendered as em-dashes and "No open positions."
+  const acct = account.data?.data?.[0] ?? {};
+  const s = { ...(acct.summary ?? {}), currency: acct.currency };
+  const pos: Any[] = positions.data?.data ?? [];
+  const tr: Any[] = (trades.data?.data ?? []).slice(-10).reverse();
 
   return (
     <div className="space-y-4">
@@ -504,7 +508,8 @@ const GRADE_POINTS: Record<string, number> = { A: 4, 'A-': 3.7, 'B+': 3.3, B: 3,
 const LOCAL_KEY = 'mg-journal-entries';
 
 function JournalTab() {
-  const q = useGatedFile('journal', 'journal.json');
+  // journal.json has no producer in the pipeline — the gated fetch 404'd on
+  // every visit. The journal is device-local (localStorage) by design.
   const [localEntries, setLocalEntries] = useState<Any[]>([]);
   const [form, setForm] = useState({ ticker: '', grade: 'B', emotion: 'Neutral', strategy: '', lesson: '', mistake: '' });
 
@@ -514,7 +519,7 @@ function JournalTab() {
     } catch {}
   }, []);
 
-  const entries: Any[] = [...(q.data?.entries ?? []), ...localEntries];
+  const entries: Any[] = [...localEntries];
   const sorted = [...entries].reverse();
 
   const submit = () => {
@@ -614,7 +619,7 @@ function JournalTab() {
           </div>
         </Card>
       ) : (
-        !q.isLoading && <p className="p-6 text-center text-sm text-[var(--color-text-tertiary)]">No journal entries yet.</p>
+        <p className="p-6 text-center text-sm text-[var(--color-text-tertiary)]">No journal entries yet.</p>
       )}
     </div>
   );

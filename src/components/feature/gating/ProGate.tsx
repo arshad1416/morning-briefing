@@ -17,6 +17,8 @@ interface ProGateProps {
 }
 
 const FEATURE_LABELS: Record<FeatureKey, string> = {
+  walkforward: 'Walk-forward analysis',
+  simulation: 'Live simulation',
   gammaWalls: 'Gamma Walls',
   calibration: 'Model Calibration',
   scenarioSim: 'Scenario Simulator',

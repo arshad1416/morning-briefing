@@ -407,9 +407,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <p className="mb-2">
               MapleGamma provides general market information and simulated (paper-trading) results for
               educational purposes only. Nothing on this site is investment advice or a recommendation,
-              and nothing is tailored to any person&apos;s circumstances. The site operator may hold positions
-              in securities discussed; current Interactive Brokers holdings are disclosed on pages where
-              those securities appear. Past performance — real or simulated — does not guarantee future results.
+              and nothing is tailored to any person&apos;s circumstances. All trading results shown are simulated
+              (paper-trading) — the site operator deploys no real capital in the strategies or
+              securities discussed. Past performance — real or simulated — does not guarantee future results.{' '}
+              <a href="/terms" className="underline hover:text-[var(--color-text-secondary)]">Terms</a>
+              {' · '}
+              <a href="/privacy" className="underline hover:text-[var(--color-text-secondary)]">Privacy</a>
             </p>
             <p>
               <strong>Quebec notice:</strong> this service is not directed at, or intended for use by, residents

@@ -95,7 +95,7 @@ function LiveTrading({ lt }: { lt: Any }) {
   const s = lt.summary || {};
   return (
     <Card
-      title="Live Trading Accuracy"
+      title="Live Paper-Trading Accuracy"
       right={<span className="text-[10px] text-[var(--color-text-tertiary)]" data-numeric>Updated {(s.generated_at || lt.generated_at || '').substring(0, 16)}</span>}
     >
       <div className="mb-4 grid grid-cols-3 gap-2 sm:grid-cols-6">
@@ -175,7 +175,7 @@ function EnhancedAccuracy() {
   const dd = d.drawdown || {};
   const slip = d.slippage || {};
   return (
-    <Card title="Live Performance Metrics">
+    <Card title="Live Simulation Metrics">
       <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
         <Metric label="Expectancy" value={signed(exp.expectancy_pct)} sub="per trade" color={pnlColor(exp.expectancy_pct)} />
         <Metric label="Profit Factor" value={typeof exp.profit_factor === 'number' ? exp.profit_factor.toFixed(2) : '∞'} sub="wins/losses" color={exp.profit_factor >= 1.5 ? 'var(--color-bull)' : 'var(--color-caution)'} />

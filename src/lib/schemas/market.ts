@@ -187,18 +187,19 @@ function toMode(bucket: MgBucket, spx: MgTicker): z.infer<typeof GexModeSchema> 
     expiry: '',
     expiry_count: bucket.expiry_count,
     gamma_regime: regimeOf(bucket.total_gex),
-    // Rows are already call/put-merged per strike — expose net values.
-    strikes: rows.map((r) => ({
-      strike: r.strike,
-      type: 'NET',
-      oi: r.oi,
-      gamma: 0,
-      gex: r.net_gex,
-      delta: 0,
-      dex: r.dex,
-      vega: 0,
-      vex: r.vex,
-    })),
+    // Rows arrive call/put-merged per strike; split back into C and P rows
+    // because the flow table and GammaWallChart branch on type === 'C'.
+    // (A previous 'NET' emission put every strike in the put bucket.)
+    strikes: rows.flatMap((r) => {
+      const out: Array<z.infer<typeof GexStrikeSchema>> = [];
+      if (r.call_gex !== 0) {
+        out.push({ strike: r.strike, type: 'C', oi: r.oi, gamma: 0, gex: r.call_gex, delta: 0, dex: r.dex, vega: 0, vex: r.vex });
+      }
+      if (r.put_gex !== 0) {
+        out.push({ strike: r.strike, type: 'P', oi: r.call_gex === 0 ? r.oi : 0, gamma: 0, gex: r.put_gex, delta: 0, dex: r.call_gex === 0 ? r.dex : 0, vega: 0, vex: r.call_gex === 0 ? r.vex : 0 });
+      }
+      return out;
+    }),
   };
 }
 
@@ -306,6 +307,36 @@ export const PredictionEngineSchema = z
       .optional(),
   })
   .passthrough();
+
+// simulation.json — daily live-sim summary (generate_prediction_engine.py).
+export const SimulationSchema = z
+  .object({
+    generated_at: z.string().optional(),
+    summary: z
+      .object({
+        total_return: z.number().nullable().default(null),
+        sharpe: z.number().nullable().default(null),
+        max_drawdown: z.number().nullable().default(null),
+        win_rate: z.number().nullable().default(null),
+        total_trades: z.number().nullable().default(null),
+        avg_trade: z.number().nullable().default(null),
+      })
+      .passthrough(),
+    strategies: z
+      .array(
+        z
+          .object({
+            name: z.string(),
+            return: z.number().nullable().default(null),
+            trades: z.number().nullable().default(null),
+            win_rate: z.number().nullable().default(null),
+          })
+          .passthrough(),
+      )
+      .default([]),
+  })
+  .passthrough();
+export type Simulation = z.infer<typeof SimulationSchema>;
 
 export const BacktestSchema = z.object({
   total_trades: z.number(),

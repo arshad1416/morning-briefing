@@ -1,68 +1,46 @@
-// components/feature/prediction/CalibrationChart.tsx — predicted vs realized
+// components/feature/prediction/CalibrationChart.tsx — predicted vs realized.
+//
+// HONEST EMPTY STATE. The previous version plotted fabricated demo points and
+// asserted "Our 80% calls hit ~79%" behind the Pro gate — invented accuracy
+// presented as model transparency. Real calibration requires the forward-test
+// signal history (shadow p_win tracking, accumulating since Jul 2026) to reach
+// a meaningful sample; until that dataset is published, this tile says so
+// instead of inventing a curve.
 'use client';
 
 import React from 'react';
 import { Surface, SurfaceHeader, InfoTip } from '@/components/primitives';
-import { demoCalibrationData } from '@/mocks';
 
 export function CalibrationChart() {
-  const data = demoCalibrationData;
-
-  const size = 200;
-  const padding = 30;
-
   return (
     <Surface span="half">
       <SurfaceHeader title={<InfoTip term="calibration">Calibration Chart</InfoTip>} />
-      <div className="p-4 flex justify-center">
-        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label="Calibration chart showing predicted vs realized probability">
-          {/* Gridlines at 25/50/75% */}
-          {[0.25, 0.5, 0.75].map((t) => {
-            const x = padding + t * (size - padding * 2);
-            const y = size - padding - t * (size - padding * 2);
-            return (
-              <g key={t}>
-                <line x1={x} y1={padding} x2={x} y2={size - padding} stroke="var(--color-border-subtle)" />
-                <line x1={padding} y1={y} x2={size - padding} y2={y} stroke="var(--color-border-subtle)" />
-              </g>
-            );
-          })}
-
-          {/* Perfect calibration diagonal */}
-          <line
-            x1={padding}
-            y1={size - padding}
-            x2={size - padding}
-            y2={padding}
-            stroke="var(--color-border-default)"
-            strokeDasharray="4,4"
-          />
-
-          {/* Data points */}
-          {data.map((d, i) => {
-            const x = padding + d.predicted * (size - padding * 2);
-            const y = size - padding - d.actual * (size - padding * 2);
-            return (
-              <circle
-                key={i}
-                cx={x}
-                cy={y}
-                r={4}
-                fill="var(--color-accent)"
-                fillOpacity={0.9}
-                style={{ filter: 'drop-shadow(0 0 4px color-mix(in srgb, var(--color-accent) 50%, transparent))' }}
-              />
-            );
-          })}
-
-          {/* Axes */}
-          <text x={size / 2} y={size - 5} textAnchor="middle" fill="var(--color-text-tertiary)" fontSize="10">Predicted</text>
-          <text x={5} y={size / 2} textAnchor="middle" fill="var(--color-text-tertiary)" fontSize="10" transform={`rotate(-90, 10, ${size/2})`}>Actual</text>
+      <div className="p-6 flex flex-col items-center justify-center text-center min-h-[200px]">
+        <svg
+          viewBox="0 0 24 24"
+          width={28}
+          height={28}
+          fill="none"
+          stroke="var(--color-text-tertiary)"
+          strokeWidth={1.5}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="mb-3"
+          aria-hidden="true"
+        >
+          <path d="M4 20L20 4" strokeDasharray="3,3" />
+          <path d="M4 20h16" />
+          <path d="M4 20V4" />
         </svg>
+        <p className="text-sm text-[var(--color-text-secondary)]">
+          Calibration tracking is live — every signal&apos;s predicted probability is recorded
+          against its realized outcome.
+        </p>
+        <p className="mt-2 text-xs text-[var(--color-text-tertiary)]">
+          The curve publishes once the forward-test sample is statistically meaningful. We won&apos;t
+          show a calibration line built on too few trades.
+        </p>
       </div>
-      <p className="text-xs text-[var(--color-text-tertiary)] text-center px-4 pb-3">
-        Our 80% calls hit ~79%. Perfect calibration means points fall on the diagonal.
-      </p>
     </Surface>
   );
 }

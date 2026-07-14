@@ -23,12 +23,17 @@ import { fetchGated, GateError } from '@/lib/api/gated';
 /* ------------------------------------------------------------------ */
 
 const TICKERS = [
-  'AAPL','MSFT','GOOGL','AMZN','NVDA','META','TSLA','SPY','QQQ','IWM',
-  'DIA','AMD','AVGO','NFLX','ADBE','CRM','INTC','CSCO','PYPL','QCOM',
-  'TXN','AMGN','GILD','SBUX','COST','WMT','HD','MCD','NKE','DIS',
-  'JPM','BAC','GS','V','MA','UNH','JNJ','PFE','MRK','ABBV',
-  'XOM','CVX','BA','CAT','GE','HON','LIN','UPS','RTX','LMT',
-  'VZ','T','CMCSA','NEE','SO','DUK','PLD','AMT','CCI','EQIX',
+  // Kept in sync with the Pi generator's universe (fetch_ohlcv.py →
+  // data/charts/*.json). 27 of the old hardcoded names had no chart file in
+  // production — entitled Pro users got a gate card on ~45% of the picker.
+  'SPY', 'QQQ', 'DIA', 'IWM',
+  'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'META', 'TSLA', 'AVGO', 'AMD', 'INTC',
+  'ADBE', 'CRM', 'CSCO', 'ORCL', 'PLTR', 'MSTR', 'NFLX', 'IBIT',
+  'JPM', 'GS', 'MA', 'V', 'BA', 'CAT', 'GE',
+  'JNJ', 'UNH', 'PFE', 'MRK', 'ABBV', 'LLY',
+  'KO', 'PEP', 'MCD', 'NKE', 'WMT',
+  'XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV',
+  'GLD', 'SLV', 'TLT', 'AGG', 'SHY', 'USO', 'UNG', 'DBC', 'CPER', 'WEAT',
 ];
 
 type Timeframe = '1D' | '1W' | '1M' | '1Y';

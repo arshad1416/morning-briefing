@@ -2,9 +2,11 @@
 import { create } from 'zustand';
 
 type Tier = 'free' | 'pro';
-export type FeatureKey = 'gammaWalls' | 'calibration' | 'scenarioSim' | 'congressTrades' | 'briefingExport';
+export type FeatureKey = 'gammaWalls' | 'calibration' | 'scenarioSim' | 'congressTrades' | 'briefingExport' | 'walkforward' | 'simulation';
 
 export const FEATURES: Record<FeatureKey, { minTier: Tier; teaser: 'blur' | 'lock' | 'cta' }> = {
+  walkforward: { minTier: 'pro', teaser: 'lock' },
+  simulation: { minTier: 'pro', teaser: 'lock' },
   gammaWalls:     { minTier: 'pro', teaser: 'blur' },
   calibration:    { minTier: 'pro', teaser: 'blur' },
   scenarioSim:    { minTier: 'pro', teaser: 'lock' },

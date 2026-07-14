@@ -337,7 +337,7 @@ export default function MapleGammaLanding() {
   }, []);
 
   const stats = [
-    { value: "162K", label: "trades analyzed" },
+    { value: "17.5K", label: "backtested trades" },
     { value: "59", label: "tickers covered" },
     { value: "26", label: "years of data" },
   ];
@@ -374,7 +374,7 @@ export default function MapleGammaLanding() {
       <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-5 py-5">
         <motion.a
           variants={fadeUp}
-          href="#"
+          href="/"
           className="flex items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
         >
           <GammaMark size={36} />
@@ -738,9 +738,12 @@ export default function MapleGammaLanding() {
           <p className="mb-2">
             MapleGamma provides general market information and simulated (paper-trading) results for
             educational purposes only. Nothing on this site is investment advice or a recommendation,
-            and nothing is tailored to any person&apos;s circumstances. The site operator may hold positions
-            in securities discussed; current Interactive Brokers holdings are disclosed on pages where
-            those securities appear. Past performance — real or simulated — does not guarantee future results.
+            and nothing is tailored to any person&apos;s circumstances. All trading results shown are simulated
+            (paper-trading) — the site operator deploys no real capital in the strategies or
+            securities discussed. Past performance — real or simulated — does not guarantee future results.{' '}
+            <a href="/terms" className="underline hover:text-[var(--color-text-secondary)]">Terms</a>
+            {' · '}
+            <a href="/privacy" className="underline hover:text-[var(--color-text-secondary)]">Privacy</a>
           </p>
           <p>
             <strong>Quebec notice:</strong> this service is not directed at, or intended for use by, residents
