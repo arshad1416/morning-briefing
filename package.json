@@ -10,6 +10,9 @@
     "test:e2e": "cd e2e && npm test"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@tanstack/react-query": "^5.62.0",
     "framer-motion": "^12.40.0",
     "lightweight-charts": "^4.2.3",

@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { BentoGrid, BentoTile } from '@/components/layout/BentoGrid';
+import { DraggableBentoGrid, type GridItem } from '@/components/layout/DraggableBentoGrid';
 import { VerdictBar } from '@/components/feature/verdict/VerdictBar';
 import { IndicesCard } from '@/components/feature/market/IndicesCard';
 import { VixRegimeCard } from '@/components/feature/market/VixRegimeCard';
@@ -39,50 +39,25 @@ export function DashboardClient() {
         </h1>
       </header>
 
-      <BentoGrid>
-        {/* A1: Verdict hero */}
-        <BentoTile span="hero">
-          <VerdictBar />
-        </BentoTile>
-
-        {/* A2: Market context row */}
-        <BentoTile span="half">
-          <IndicesCard />
-        </BentoTile>
-        <BentoTile span="third">
-          <VixRegimeCard />
-        </BentoTile>
-        <BentoTile span="third">
-          <DayPnLCard />
-        </BentoTile>
-
-        {/* A2: Action + Options + Calendar row */}
-        <BentoTile span="third">
-          <ActionQueue />
-        </BentoTile>
-        <BentoTile span="third">
-          <GexDexVexCard />
-        </BentoTile>
-        <BentoTile span="third">
-          <FomcCountdown />
-        </BentoTile>
-
-        {/* A2: News + Missed opportunities */}
-        <BentoTile span="half">
-          <NewsFeed />
-        </BentoTile>
-        <BentoTile span="half">
-          <EarningsIntelligence />
-        </BentoTile>
-
-        {/* Missed opportunity placeholders */}
-        <BentoTile span="half">
-          <ScenarioSimulator />
-        </BentoTile>
-        <BentoTile span="half">
-          <TimeMachine />
-        </BentoTile>
-      </BentoGrid>
+      <DraggableBentoGrid pageId="dashboard" items={DASHBOARD_ITEMS} />
     </div>
   );
 }
+
+// Cleaner default layout (rows balanced to 12): Verdict hero / market trio
+// (Indices+VIX+Portfolio, 4+4+4 — fixes the old 6+4+4=14 overflow that cascaded
+// into orphan rows) / action trio / NewsFeed hero / placeholder trio demoted
+// to the bottom. Each item has a stable id so a user's custom order survives.
+const DASHBOARD_ITEMS: GridItem[] = [
+  { id: 'verdict', span: 'hero', node: <VerdictBar /> },
+  { id: 'indices', span: 'third', node: <IndicesCard /> },
+  { id: 'vix', span: 'third', node: <VixRegimeCard /> },
+  { id: 'portfolio', span: 'third', node: <DayPnLCard /> },
+  { id: 'actions', span: 'third', node: <ActionQueue /> },
+  { id: 'gex', span: 'third', node: <GexDexVexCard /> },
+  { id: 'fomc', span: 'third', node: <FomcCountdown /> },
+  { id: 'news', span: 'hero', node: <NewsFeed /> },
+  { id: 'earnings', span: 'third', node: <EarningsIntelligence /> },
+  { id: 'scenario', span: 'third', node: <ScenarioSimulator /> },
+  { id: 'timemachine', span: 'third', node: <TimeMachine /> },
+];

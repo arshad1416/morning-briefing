@@ -2,7 +2,7 @@
 'use client';
 
 import React from 'react';
-import { BentoGrid, BentoTile } from '@/components/layout/BentoGrid';
+import { DraggableBentoGrid, type GridItem } from '@/components/layout/DraggableBentoGrid';
 import { BacktestSummary } from '@/components/feature/prediction/BacktestSummary';
 import { AccuracyStats } from '@/components/feature/prediction/AccuracyStats';
 import { CalibrationChart } from '@/components/feature/prediction/CalibrationChart';
@@ -30,47 +30,19 @@ export function ModelsClient() {
         </p>
       </div>
 
-      <BentoGrid>
-        {/* A2: Backtest + Accuracy */}
-        <BentoTile span="half">
-          <BacktestSummary />
-        </BentoTile>
-        <BentoTile span="half">
-          <AccuracyStats />
-        </BentoTile>
-
-        {/* A3: Calibration chart */}
-        <BentoTile span="half">
-          <ProGate feature="calibration">
-            <CalibrationChart />
-          </ProGate>
-        </BentoTile>
-
-        {/* Walk-forward (real out-of-sample results — was a hardcoded placeholder) */}
-        <BentoTile span="half">
-          <ProGate feature="walkforward">
-            <WalkForwardTile />
-          </ProGate>
-        </BentoTile>
-
-        {/* Live simulation summary (legacy Models view, lost in the port) */}
-        <BentoTile span="hero">
-          <ProGate feature="simulation">
-            <SimulationTile />
-          </ProGate>
-        </BentoTile>
-
-        {/* Options strategies status — options as a live, regime-gated class */}
-        <BentoTile span="hero">
-          <OptionsStrategiesTile />
-        </BentoTile>
-
-        {/* Crypto strategy cohorts — the crypto asset class (public) */}
-        <BentoTile span="hero">
-          <CryptoCohortsTile />
-        </BentoTile>
-
-      </BentoGrid>
+      <DraggableBentoGrid pageId="models" items={MODELS_ITEMS} />
     </div>
   );
 }
+
+// Paired compact tiles (Backtest+Accuracy, Calibration+Walk-Forward), then the
+// full-width performance sections. Each has a stable id for user reordering.
+const MODELS_ITEMS: GridItem[] = [
+  { id: 'backtest', span: 'half', node: <BacktestSummary /> },
+  { id: 'accuracy', span: 'half', node: <AccuracyStats /> },
+  { id: 'calibration', span: 'half', node: <ProGate feature="calibration"><CalibrationChart /></ProGate> },
+  { id: 'walkforward', span: 'half', node: <ProGate feature="walkforward"><WalkForwardTile /></ProGate> },
+  { id: 'simulation', span: 'hero', node: <ProGate feature="simulation"><SimulationTile /></ProGate> },
+  { id: 'options', span: 'hero', node: <OptionsStrategiesTile /> },
+  { id: 'crypto', span: 'hero', node: <CryptoCohortsTile /> },
+];

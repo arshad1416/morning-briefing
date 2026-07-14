@@ -2,7 +2,7 @@
 'use client';
 
 import React from 'react';
-import { BentoGrid, BentoTile } from '@/components/layout/BentoGrid';
+import { DraggableBentoGrid, type GridItem } from '@/components/layout/DraggableBentoGrid';
 import { GexDexVexCard } from '@/components/feature/options/GexDexVexCard';
 import { GammaWallChart } from '@/components/feature/options/GammaWallChart';
 import { DealerPositioningCard } from '@/components/feature/options/DealerPositioningCard';
@@ -98,39 +98,28 @@ export function OptionsClient() {
         </p>
       </div>
 
-      <BentoGrid>
-        {/* A2: GEX/DEX/VEX summary */}
-        <BentoTile span="half">
-          <GexDexVexCard />
-        </BentoTile>
-
-        {/* A2: Options flow table */}
-        <BentoTile span="half">
-          <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)] overflow-hidden">
-            <div className="px-4 py-3 border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
-              <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">Options Flow — Top Strikes</h3>
-            </div>
-            <div className="p-2">
-              <OptionsFlowTable />
-            </div>
-          </div>
-        </BentoTile>
-
-        {/* A3: Gamma Wall (hero) */}
-        <BentoTile span="hero">
-          <ProGate feature="gammaWalls">
-            <GammaWallChart />
-          </ProGate>
-        </BentoTile>
-
-        {/* Dealer positioning (reconstructed greeks — vanna/charm/flip/max-pain) */}
-        <BentoTile span="half">
-          <DealerPositioningCard />
-        </BentoTile>
-        <BentoTile span="half">
-          <AlertRuleBuilder />
-        </BentoTile>
-      </BentoGrid>
+      <DraggableBentoGrid pageId="options" items={OPTIONS_ITEMS} />
     </div>
   );
 }
+
+const FlowCard = (
+  <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)] overflow-hidden">
+    <div className="px-4 py-3 border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
+      <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">Options Flow — Top Strikes</h3>
+    </div>
+    <div className="p-2">
+      <OptionsFlowTable />
+    </div>
+  </div>
+);
+
+// Cleaner default: the two compact metric cards paired (even heights), the tall
+// flow table and Pro gamma wall full-width, the Coming-Soon builder last.
+const OPTIONS_ITEMS: GridItem[] = [
+  { id: 'gexdexvex', span: 'half', node: <GexDexVexCard /> },
+  { id: 'dealer', span: 'half', node: <DealerPositioningCard /> },
+  { id: 'flow', span: 'hero', node: FlowCard },
+  { id: 'gammawall', span: 'hero', node: <ProGate feature="gammaWalls"><GammaWallChart /></ProGate> },
+  { id: 'alertbuilder', span: 'hero', node: <AlertRuleBuilder /> },
+];

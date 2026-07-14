@@ -8,6 +8,7 @@ import { useUI } from '@/stores/ui';
 import { useMe } from '@/lib/auth/useMe';
 import { GammaMark } from '@/components/brand/GammaMark';
 import { TickerTape } from './TickerTape';
+import { LayoutEditToggle } from './LayoutEditToggle';
 
 type IconProps = { className?: string };
 
@@ -321,6 +322,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <MarketStatusPill />
           </div>
           <div className="flex items-center gap-1.5">
+            <LayoutEditToggle />
             <LearningModeToggle />
             <ThemeToggle />
             <SessionButton />
