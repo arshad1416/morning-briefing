@@ -1,19 +1,22 @@
 {
  "ticker": "PG",
  "name": "Procter & Gamble Company (The)",
- "generated_at": "2026-07-14T11:45:02.021652+00:00",
- "price": 147.78,
- "change_pct": 0.5,
+ "generated_at": "2026-07-14T14:45:01.923571+00:00",
+ "price": 146.31,
+ "change_pct": -1.39,
  "sector": "Consumer Defensive",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 50.2,
-  "sma_20": 149.38,
+  "rsi_14": 41.7,
+  "sma_20": 149.25,
   "sma_50": 146.36
  },
  "fundamentals": {
-  "pe_ratio": 21.605263,
-  "market_cap": "344.1B",
+  "pe_ratio": 21.39035,
+  "market_cap": "340.7B",
   "beta": 0.38,
   "dividend_yield": 0.028999999999999998
  },

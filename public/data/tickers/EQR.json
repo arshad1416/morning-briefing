@@ -1,27 +1,28 @@
 {
  "ticker": "EQR",
  "name": "Equity Residential",
- "generated_at": "2026-07-14T11:45:02.021652+00:00",
- "price": 69.61,
- "change_pct": 1.34,
+ "generated_at": "2026-07-14T14:45:01.923571+00:00",
+ "price": 69.37,
+ "change_pct": -0.5,
  "sector": "Real Estate",
  "signals": [
-  "overbought_rsi",
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 76.4,
-  "sma_20": 67.18,
-  "sma_50": 66.14
+  "rsi_14": 71.8,
+  "sma_20": 67.32,
+  "sma_50": 66.24
  },
  "fundamentals": {
-  "pe_ratio": 27.844,
-  "market_cap": "26.9B",
+  "pe_ratio": 27.311026,
+  "market_cap": "26.8B",
   "beta": 0.754,
   "dividend_yield": 0.0409
  },
  "council_analysis": {
-  "score": 4
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

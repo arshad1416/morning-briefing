@@ -1,17 +1,18 @@
 {
  "ticker": "BND",
  "name": "Vanguard Total Bond Market ETF",
- "generated_at": "2026-07-14T11:45:02.021652+00:00",
- "price": 72.53,
- "change_pct": -0.34,
+ "generated_at": "2026-07-14T14:45:01.923571+00:00",
+ "price": 72.72,
+ "change_pct": 0.31,
  "sector": null,
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 40.4,
-  "sma_20": 73.04,
+  "rsi_14": 44.0,
+  "sma_20": 73.02,
   "sma_50": 72.84
  },
  "fundamentals": {
@@ -21,7 +22,7 @@
   "dividend_yield": 0.0395
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

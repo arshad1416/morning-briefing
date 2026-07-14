@@ -1,28 +1,29 @@
 {
  "ticker": "AGG",
  "name": "iShares Core U.S. Aggregate Bon",
- "generated_at": "2026-07-14T11:45:02.021652+00:00",
- "price": 97.78,
- "change_pct": -0.31,
+ "generated_at": "2026-07-14T14:45:01.923571+00:00",
+ "price": 98.04,
+ "change_pct": 0.34,
  "sector": null,
  "signals": [
   "rsi_dip",
   "below_ma",
+  "near_high",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 39.9,
-  "sma_20": 98.48,
-  "sma_50": 98.22
+  "rsi_14": 44.2,
+  "sma_20": 98.46,
+  "sma_50": 98.21
  },
  "fundamentals": {
-  "pe_ratio": 124.71301,
+  "pe_ratio": 125.051025,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.0397
  },
  "council_analysis": {
-  "score": 4
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

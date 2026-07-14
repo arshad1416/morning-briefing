@@ -1,26 +1,28 @@
 {
  "ticker": "ENB.TO",
  "name": "ENBRIDGE INC",
- "generated_at": "2026-07-14T11:45:02.021652+00:00",
- "price": 78.04,
- "change_pct": 0.91,
+ "generated_at": "2026-07-14T14:45:01.923571+00:00",
+ "price": 78.21,
+ "change_pct": 0.31,
  "sector": "Energy",
  "signals": [
-  "above_ma"
+  "rsi_dip",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 51.7,
-  "sma_20": 77.84,
-  "sma_50": 77.13
+  "rsi_14": 44.4,
+  "sma_20": 77.83,
+  "sma_50": 77.22
  },
  "fundamentals": {
-  "pe_ratio": 26.454237,
-  "market_cap": "170.4B",
+  "pe_ratio": 26.511864,
+  "market_cap": "170.8B",
   "beta": 0.795,
-  "dividend_yield": 0.050199999999999995
+  "dividend_yield": 0.049800000000000004
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

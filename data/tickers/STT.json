@@ -1,21 +1,23 @@
 {
  "ticker": "STT",
  "name": "State Street Corporation",
- "generated_at": "2026-07-14T11:45:02.021652+00:00",
- "price": 177.32,
- "change_pct": -1.61,
+ "generated_at": "2026-07-14T14:45:01.923571+00:00",
+ "price": 183.68,
+ "change_pct": 3.09,
  "sector": "Financial Services",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 57.7,
-  "sma_20": 172.03,
-  "sma_50": 161.54
+  "rsi_14": 66.1,
+  "sma_20": 172.92,
+  "sma_50": 162.19
  },
  "fundamentals": {
-  "pe_ratio": 17.983774,
-  "market_cap": "49.1B",
+  "pe_ratio": 18.64746,
+  "market_cap": "50.8B",
   "beta": 1.433,
   "dividend_yield": 0.018600000000000002
  },

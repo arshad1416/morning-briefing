@@ -1,21 +1,23 @@
 {
  "ticker": "BSX",
  "name": "Boston Scientific Corporation",
- "generated_at": "2026-07-14T11:45:02.021652+00:00",
- "price": 44.77,
- "change_pct": 0.0,
+ "generated_at": "2026-07-14T14:45:01.923571+00:00",
+ "price": 42.9,
+ "change_pct": -3.92,
  "sector": "Healthcare",
  "signals": [
-  "below_ma"
+  "rsi_dip",
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 52.5,
-  "sma_20": 44.86,
-  "sma_50": 49.62
+  "rsi_14": 35.7,
+  "sma_20": 44.66,
+  "sma_50": 49.33
  },
  "fundamentals": {
-  "pe_ratio": 18.732218,
-  "market_cap": "66.5B",
+  "pe_ratio": 18.02521,
+  "market_cap": "63.8B",
   "beta": 0.577,
   "dividend_yield": null
  },
