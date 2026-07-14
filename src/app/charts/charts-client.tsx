@@ -150,6 +150,25 @@ function cssVar(name: string): string {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
 
+// lightweight-charts parses series colors itself (canvas), so CSS color-mix()
+// is not an option — derive rgba() from the theme's hex tokens instead.
+function withAlpha(color: string, alpha: number): string {
+  const hex = color.replace('#', '');
+  if (/^[0-9a-f]{6}$/i.test(hex)) {
+    const r = parseInt(hex.slice(0, 2), 16);
+    const g = parseInt(hex.slice(2, 4), 16);
+    const b = parseInt(hex.slice(4, 6), 16);
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+  if (/^[0-9a-f]{3}$/i.test(hex)) {
+    const r = parseInt(hex[0] + hex[0], 16);
+    const g = parseInt(hex[1] + hex[1], 16);
+    const b = parseInt(hex[2] + hex[2], 16);
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+  return color;
+}
+
 /* ------------------------------------------------------------------ */
 /*  Chart rendering                                                   */
 /* ------------------------------------------------------------------ */
@@ -207,11 +226,13 @@ function ChartPanes({ bars, theme }: { bars: Bar[]; theme: string }) {
       priceScaleId: 'vol',
     });
     main.priceScale('vol').applyOptions({ scaleMargins: { top: 0.82, bottom: 0 } });
+    const volUp = withAlpha(up, 0.4);
+    const volDown = withAlpha(down, 0.4);
     volume.setData(
       bars.map((b) => ({
         time: asTime(b.time),
         value: b.volume,
-        color: b.close >= b.open ? `color-mix(in srgb, ${up} 40%, transparent)` : `color-mix(in srgb, ${down} 40%, transparent)`,
+        color: b.close >= b.open ? volUp : volDown,
       })),
     );
 
