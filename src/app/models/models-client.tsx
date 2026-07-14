@@ -11,6 +11,7 @@ import { ScenarioSimulator } from '@/components/feature/MissedOpportunities';
 import { WalkForwardTile } from '@/components/feature/prediction/WalkForwardTile';
 import { SimulationTile } from '@/components/feature/prediction/SimulationTile';
 import { CryptoCohortsTile } from '@/components/feature/prediction/CryptoCohortsTile';
+import { OptionsStrategiesTile } from '@/components/feature/prediction/OptionsStrategiesTile';
 
 export function ModelsClient() {
   return (
@@ -57,6 +58,11 @@ export function ModelsClient() {
           <ProGate feature="simulation">
             <SimulationTile />
           </ProGate>
+        </BentoTile>
+
+        {/* Options strategies status — options as a live, regime-gated class */}
+        <BentoTile span="hero">
+          <OptionsStrategiesTile />
         </BentoTile>
 
         {/* Crypto strategy cohorts — the crypto asset class (public) */}
