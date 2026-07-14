@@ -384,27 +384,14 @@ export default function MapleGammaLanding() {
         </motion.a>
 
         <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-2">
-          {/* App routes — the free dashboard and the section pages */}
-          {[
-            { href: "/dashboard/", label: "Dashboard" },
-            { href: "/screener/", label: "Screener" },
-            { href: "/research/", label: "Research" },
-            { href: "/charts/", label: "Charts" },
-            { href: "/models/", label: "Models" },
-          ].map((r) => (
-            <a
-              key={r.href}
-              href={r.href}
-              className="hidden rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] lg:inline-block"
-            >
-              {r.label}
-            </a>
-          ))}
-          <span
-            aria-hidden="true"
-            className="hidden h-5 w-px lg:inline-block"
-            style={{ backgroundColor: "var(--color-border-subtle)" }}
-          />
+          {/* Single app entry — the section pages are all reachable from the
+              Dashboard's own nav once inside. */}
+          <a
+            href="/dashboard/"
+            className="rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+          >
+            Dashboard
+          </a>
           <a
             href="#features"
             className="hidden rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:inline-block"
@@ -418,16 +405,10 @@ export default function MapleGammaLanding() {
             Pricing
           </a>
           <LandingThemeToggle />
-          <a
-            href="/dashboard/"
-            className="rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] lg:hidden"
-          >
-            Dashboard
-          </a>
           {!me && (
             <a
               href="/login/"
-              className="hidden rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] lg:inline-block"
+              className="rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
             >
               Sign in
             </a>
