@@ -241,8 +241,12 @@ export function AccountClient() {
       if (!verify.ok) throw new Error(verify.body.error || 'verify_failed');
       setNote('Passkey added — you can now sign in without a password.');
     } catch (err) {
-      // DOMException carries the cancel signal in .name, not .message.
-      if (!(err instanceof Error && err.name === 'NotAllowedError')) {
+      // DOMException carries the signal in .name, not .message.
+      if (err instanceof Error && err.name === 'InvalidStateError') {
+        // The server's excludeCredentials matched this authenticator: the
+        // passkey is ALREADY registered — success state, not a failure.
+        setNote('This device already has a passkey for your account — you can sign in with it.');
+      } else if (!(err instanceof Error && err.name === 'NotAllowedError')) {
         setError(errorMessage(err instanceof Error ? err.message : undefined, 'Could not add the passkey.'));
       }
     } finally {
