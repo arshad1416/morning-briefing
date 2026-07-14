@@ -5,11 +5,12 @@ import React from 'react';
 import { BentoGrid, BentoTile } from '@/components/layout/BentoGrid';
 import { GexDexVexCard } from '@/components/feature/options/GexDexVexCard';
 import { GammaWallChart } from '@/components/feature/options/GammaWallChart';
+import { DealerPositioningCard } from '@/components/feature/options/DealerPositioningCard';
 import { RegimeChip } from '@/components/primitives';
 import { useQuery } from '@tanstack/react-query';
 import { gexQuery } from '@/lib/query/options';
 import { ProGate } from '@/components/feature/gating/ProGate';
-import { CompareMode, AlertRuleBuilder } from '@/components/feature/MissedOpportunities';
+import { AlertRuleBuilder } from '@/components/feature/MissedOpportunities';
 import { formatCompact } from '@/lib/format';
 
 function OptionsFlowTable() {
@@ -122,9 +123,9 @@ export function OptionsClient() {
           </ProGate>
         </BentoTile>
 
-        {/* Missed opportunity placeholders */}
+        {/* Dealer positioning (reconstructed greeks — vanna/charm/flip/max-pain) */}
         <BentoTile span="half">
-          <CompareMode />
+          <DealerPositioningCard />
         </BentoTile>
         <BentoTile span="half">
           <AlertRuleBuilder />

@@ -149,6 +149,12 @@ const MapleGammaFileSchema = z
           total_gex: z.number().default(0),
           total_dex: z.number().default(0),
           total_vex: z.number().default(0),
+          // Reconstructed greeks (push_gex.py, from IBKR/yfinance chains)
+          total_vanna: z.number().nullish(),
+          total_charm: z.number().nullish(),
+          total_dealer_gex: z.number().nullish(),
+          gamma_flip: z.number().nullish(),
+          max_pain: z.number().nullish(),
           gamma_profile: z.array(MgGammaRowSchema).default([]),
           expiry_data: z
             .object({
@@ -223,6 +229,25 @@ export const GexDataSchema = MapleGammaFileSchema.transform((f) => {
       all: toMode(allBucket, spx),
       weeklies: ed.weekly ? toMode(ed.weekly, spx) : undefined,
       monthly: ed.monthly ? toMode(ed.monthly, spx) : undefined,
+    },
+    // Ticker-level dealer positioning (reconstructed greeks). dealer_gamma
+    // signs puts negative (true dealer convention) — total_gex above is the
+    // legacy gross number. flip = zero-gamma spot; regime derived from signed.
+    positioning: {
+      spot: spx.current_price,
+      dealer_gamma: spx.total_dealer_gex ?? null,
+      gamma_flip: spx.gamma_flip ?? null,
+      max_pain: spx.max_pain ?? null,
+      vanna: spx.total_vanna ?? null,
+      charm: spx.total_charm ?? null,
+      signed_regime:
+        spx.total_dealer_gex == null
+          ? 'neutral'
+          : spx.total_dealer_gex > 0
+          ? 'long'
+          : spx.total_dealer_gex < 0
+          ? 'short'
+          : 'neutral',
     },
   };
 });
