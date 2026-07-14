@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { GammaMark } from "@/components/brand/GammaMark";
 import { useMe } from "@/lib/auth/useMe";
+import { useUI } from "@/stores/ui";
 
 // Legacy hash-router routes (old bookmarks, briefing-email deep links, and
 // the Worker's OAuth redirects, e.g. /#/login?error=use_password) → their
@@ -23,6 +24,40 @@ const LEGACY_ROUTES: Record<string, string> = {
   research: "/research/",
   maplegamma: "/options/",
 };
+
+/* ------------------------------------------------------------------ */
+/*  Theme toggle (same mg-ui store the app shell uses)                */
+/* ------------------------------------------------------------------ */
+
+function LandingThemeToggle() {
+  const { theme, setTheme } = useUI();
+  // Render only after mount — the persisted theme isn't known at build time,
+  // so the prerendered HTML must not commit to an icon.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return <span className="min-w-11 min-h-11" aria-hidden="true" />;
+
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      className="flex min-h-11 min-w-11 items-center justify-center rounded-lg text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+    >
+      {theme === "dark" ? (
+        <svg {...iconProps} aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M18.7 5.3l-1.8 1.8M7.1 16.9l-1.8 1.8" />
+        </svg>
+      ) : (
+        <svg {...iconProps} aria-hidden="true">
+          <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z" />
+        </svg>
+      )}
+    </button>
+  );
+}
 
 /* ------------------------------------------------------------------ */
 /*  Motion variants (reduced-motion aware)                            */
@@ -349,6 +384,27 @@ export default function MapleGammaLanding() {
         </motion.a>
 
         <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-2">
+          {/* App routes — the free dashboard and the section pages */}
+          {[
+            { href: "/dashboard/", label: "Dashboard" },
+            { href: "/screener/", label: "Screener" },
+            { href: "/research/", label: "Research" },
+            { href: "/charts/", label: "Charts" },
+            { href: "/models/", label: "Models" },
+          ].map((r) => (
+            <a
+              key={r.href}
+              href={r.href}
+              className="hidden rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] lg:inline-block"
+            >
+              {r.label}
+            </a>
+          ))}
+          <span
+            aria-hidden="true"
+            className="hidden h-5 w-px lg:inline-block"
+            style={{ backgroundColor: "var(--color-border-subtle)" }}
+          />
           <a
             href="#features"
             className="hidden rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:inline-block"
@@ -361,12 +417,21 @@ export default function MapleGammaLanding() {
           >
             Pricing
           </a>
+          <LandingThemeToggle />
           <a
-            href={me ? "/dashboard/" : "/login/"}
-            className="rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+            href="/dashboard/"
+            className="rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] lg:hidden"
           >
-            {me ? "Dashboard" : "Sign in"}
+            Dashboard
           </a>
+          {!me && (
+            <a
+              href="/login/"
+              className="hidden rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] lg:inline-block"
+            >
+              Sign in
+            </a>
+          )}
           <a
             href={me ? "/account/" : "/signup/"}
             className="rounded-lg bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-on-accent)] transition hover:bg-[var(--color-accent-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
