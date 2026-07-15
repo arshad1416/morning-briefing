@@ -13,6 +13,8 @@ beforeAll(async () => {
 // Per-test storage is isolated (rolled back), so seed R2 inside each test frame.
 beforeEach(async () => {
   await env.PRIVATE.put('screener-data.json', JSON.stringify({ tickers: [{ ticker: 'AAPL' }] }));
+  await env.PRIVATE.put('paper_trades.json', JSON.stringify({ portfolio: {} }));
+  await env.PRIVATE.put('gex-detail.json', JSON.stringify({ tickers: { SPX: {} } }));
   await env.PRIVATE.put('charts/AAPL.json', JSON.stringify({ ticker: 'AAPL', timeframes: {} }));
 });
 
@@ -49,10 +51,30 @@ describe('hard data gate', () => {
     expect(pro.status).toBe(403);
   });
 
+  it('serves paper trades to Basic but not an unsubscribed session', async () => {
+    const { cookie: basicCookie } = await sessionFor('paper-basic@test.ca', { tier: 'basic', status: 'active' });
+    const basic = await app.request('/api/data/paper_trades.json', { headers: { Cookie: basicCookie } }, env);
+    expect(basic.status).toBe(200);
+
+    const { cookie: noSubCookie } = await sessionFor('paper-nosub@test.ca', null);
+    const noSub = await app.request('/api/data/paper_trades.json', { headers: { Cookie: noSubCookie } }, env);
+    expect(noSub.status).toBe(403);
+  });
+
   it('pro subscriber gets charts', async () => {
     const { cookie } = await sessionFor('pro@test.ca', { tier: 'pro', status: 'active' });
     const res = await app.request('/api/data/charts/AAPL.json', { headers: { Cookie: cookie } }, env);
     expect(res.status).toBe(200);
+  });
+
+  it('keeps strike-level GEX detail Pro-only', async () => {
+    const { cookie: basicCookie } = await sessionFor('gex-basic@test.ca', { tier: 'basic', status: 'active' });
+    const basic = await app.request('/api/data/gex-detail.json', { headers: { Cookie: basicCookie } }, env);
+    expect(basic.status).toBe(403);
+
+    const { cookie: proCookie } = await sessionFor('gex-pro@test.ca', { tier: 'pro', status: 'active' });
+    const pro = await app.request('/api/data/gex-detail.json', { headers: { Cookie: proCookie } }, env);
+    expect(pro.status).toBe(200);
   });
 
   it('404 for a non-gated (public) filename', async () => {

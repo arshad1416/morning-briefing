@@ -8,13 +8,13 @@ import { GammaWallChart } from '@/components/feature/options/GammaWallChart';
 import { DealerPositioningCard } from '@/components/feature/options/DealerPositioningCard';
 import { RegimeChip } from '@/components/primitives';
 import { useQuery } from '@tanstack/react-query';
-import { gexQuery } from '@/lib/query/options';
+import { gexDetailQuery, gexQuery } from '@/lib/query/options';
 import { ProGate } from '@/components/feature/gating/ProGate';
 import { AlertRuleBuilder } from '@/components/feature/MissedOpportunities';
 import { formatCompact } from '@/lib/format';
 
 function OptionsFlowTable() {
-  const { data } = useQuery(gexQuery());
+  const { data } = useQuery(gexDetailQuery());
   const mode = data?.modes.all;
 
   if (!mode) return null;

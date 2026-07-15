@@ -38,8 +38,8 @@ export function ModelsClient() {
 // Paired compact tiles (Backtest+Accuracy, Calibration+Walk-Forward), then the
 // full-width performance sections. Each has a stable id for user reordering.
 const MODELS_ITEMS: GridItem[] = [
-  { id: 'backtest', span: 'half', node: <BacktestSummary /> },
-  { id: 'accuracy', span: 'half', node: <AccuracyStats /> },
+  { id: 'backtest', span: 'half', node: <ProGate feature="walkforward"><BacktestSummary /></ProGate> },
+  { id: 'accuracy', span: 'half', node: <ProGate feature="walkforward"><AccuracyStats /></ProGate> },
   { id: 'calibration', span: 'half', node: <ProGate feature="calibration"><CalibrationChart /></ProGate> },
   { id: 'walkforward', span: 'half', node: <ProGate feature="walkforward"><WalkForwardTile /></ProGate> },
   { id: 'simulation', span: 'hero', node: <ProGate feature="simulation"><SimulationTile /></ProGate> },

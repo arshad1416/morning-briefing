@@ -7,7 +7,8 @@ import { startTrial, TRIAL_MS } from '../src/trial.js';
 beforeAll(() => migrate());
 
 describe('trial', () => {
-  it('starts a 14-day trial and records the claim', async () => {
+  it('starts a 7-day trial and records the claim', async () => {
+    expect(TRIAL_MS).toBe(7 * 24 * 60 * 60 * 1000);
     const u = await createUser(env.DB, { email: 't1@test.ca', pwHash: 'h', ip: '9.9.9.9' });
     const r = await startTrial(env.DB, { userId: u.id, deviceId: 'devA', ip: '9.9.9.9' });
     expect(r.ok).toBe(true);

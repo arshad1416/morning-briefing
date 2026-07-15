@@ -13,9 +13,14 @@ The **Dashboard** (the site home) and the **Pricing** page are free and open —
 no account needed. Everything else is behind a subscription with a 7-day free
 trial:
 
-- **Basic** — Research and Screener.
-- **Pro** — everything in Basic, plus Charts, Models, gamma walls, simulations,
-  options-strategy status and crypto strategy cohorts.
+- **Basic** — everything in Free, plus the full screener, research desk,
+  prediction-market sentiment and trade ideas, and the simulated portfolio,
+  positions and trade journal.
+- **Pro** — everything in Basic, plus interactive charts, gamma walls,
+  strike-level exposure, model/backtest data, walk-forward validation, the
+  prediction engine, live simulation and council history. Options-strategy and
+  crypto-cohort previews are currently public; deeper subscriber controls and
+  analysis are planned for Pro.
 
 The dashboard is JavaScript-rendered; agents should read the open JSON endpoints
 below directly.
@@ -33,7 +38,7 @@ These are public and free to fetch:
   gamma regime, gamma profile by strike, key levels)
 - /data/analysis.json : curated market headlines with sentiment tags
   (Seeking Alpha + BNN Bloomberg)
-- /data/paper_trades.json : paper-trading portfolio state
+
 
 ## Subscription-gated (not open endpoints)
 
@@ -41,18 +46,14 @@ The following data and features power the paid Research, Screener, Charts and
 Models areas and are available only to subscribers via the authenticated app —
 they are not published as fetchable public URLs:
 
-- Council briefing and its context A/B arm (maplegamma_analysis)
-- Screener data (full screener-data)
-- Charts and per-ticker analytics (charts, tickers)
-- Walk-forward validation (walk_forward_v2)
-- Strategy improvement / model-accuracy weighting (strategy_improvement)
-- Scored trade outcomes vs realized ^GSPC (trade_outcomes)
-- Morning analysis (morning_analysis)
-- Web news feed (web-news)
-- Polymarket sentiment (polymarket_sentiment)
-- Earnings data (earnings)
-- SEC filings (sec_filings)
-- Trade journal (journal)
+- **Basic:** council briefing/context A/B arm (maplegamma_analysis), full
+  screener (screener-data), morning analysis, web news, Polymarket sentiment,
+  earnings, SEC filings, trade journal, simulated portfolio (paper_trades), and
+  IBKR account/positions/trades data.
+- **Pro:** charts and per-ticker analytics (charts), walk-forward validation
+  (walk_forward and walk_forward_v2), strategy-improvement/model-accuracy
+  weights (including the B arm), scored trade outcomes (including the B arm),
+  prediction-engine, accuracy, council history, and simulation data.
 
 ## Engine
 

@@ -9,7 +9,7 @@ classifier recovery + owner Helcim account.
 
 The site (briefing.arshadkazi.ca) is a static Cloudflare Pages SPA; every
 `/data/*.json` is publicly fetchable. We want a real, enforced paywall — not a
-client-side flag — with self-serve accounts, a 14-day trial, two paid tiers,
+client-side flag — with self-serve accounts, a 7-day trial, two paid tiers,
 Helcim billing, and a legal/consent gate. CompCeiling did this with a Next.js
 backend; this site has none, so we add one via the existing Cloudflare Worker.
 
@@ -72,7 +72,7 @@ via Worker route `/api/data/:file` (session + tier check → stream from R2).
   for private files vs `/data/:file` for public.
 
 ### 4. Trial + anti-farming
-14-day trial per account, pinned to httpOnly device cookie (`mg_device`, 400d)
+7-day trial per account, pinned to httpOnly device cookie (`mg_device`, 400d)
 + IP in `trial_claims`; one trial/device, N/IP/30d. Cookie-clearing alone can't
 mint a new trial. `subscriptionIsLive` enforces `trial_ends_at`.
 

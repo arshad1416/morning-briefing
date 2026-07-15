@@ -30,9 +30,10 @@ async function screener(): Promise<ScreenerResult> {
 export const api = {
   latest: () => fetchJson<LatestData>('/data/latest.json', LatestDataSchema),
   verdict: () => fetchJson<Verdict>('/data/verdict.json', VerdictSchema),
-  // Live GEX file (push_gex.py, every 30 min). gex_data.json is a dead
-  // June-2026 artifact — do not point back at it.
+  // Free users receive the aggregate GEX summary. Strike-level gamma walls,
+  // OI and positioning live in the Pro-gated R2 detail file.
   gex: () => fetchJson<GexData>('/data/maplegamma-data.json', GexDataSchema),
+  gexDetail: () => fetchGated<GexData>('gex-detail.json', GexDataSchema),
   // accuracy.json is Pro-gated R2 data (see data_gate.js) — it never exists
   // under public /data/ on Pages, so it must go through the Worker gate.
   accuracy: () => fetchGated<Accuracy>('accuracy.json', AccuracySchema),

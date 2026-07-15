@@ -5,7 +5,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { motion, useReducedMotion } from 'framer-motion';
-import { gexQuery } from '@/lib/query/options';
+import { gexDetailQuery } from '@/lib/query/options';
 import { Surface, SurfaceHeader, InfoTip } from '@/components/primitives';
 import { formatCompact } from '@/lib/format';
 import type { GexStrike } from '@/lib/schemas/market';
@@ -88,7 +88,7 @@ function TooltipSide({ label, s, color }: { label: string; s?: GexStrike; color:
 }
 
 export function GammaWallChart() {
-  const { data, isLoading } = useQuery(gexQuery());
+  const { data, isLoading } = useQuery(gexDetailQuery());
   const reduce = useReducedMotion();
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
 
