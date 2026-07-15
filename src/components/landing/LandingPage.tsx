@@ -662,9 +662,10 @@ export default function MapleGammaLanding() {
                 cta="Create account"
                 href="/signup/"
                 features={[
-                  "Market regime & indices",
-                  "Headlines & Reddit pulse",
-                  "GEX/DEX snapshot",
+                  "Daily market regime, indices & AI verdict",
+                  "Headlines, Reddit pulse & key catalysts",
+                  "GEX/DEX/VEX snapshot + dealer gamma regime",
+                  "Customizable dashboard layout",
                 ]}
               />
             </motion.div>
@@ -679,9 +680,11 @@ export default function MapleGammaLanding() {
                 ctaPrimary
                 href={`/signup/?plan=basic${annual ? "&interval=annual" : ""}`}
                 features={[
-                  "Full Screener — all tickers, scored",
-                  "Research: analysis, news, earnings, SEC",
-                  "Reddit + prediction-market sentiment",
+                  "Everything in Free",
+                  "Full multi-factor screener — all tickers scored",
+                  "Research desk: AI analysis, news, earnings & SEC filings",
+                  "Prediction-market sentiment + trade ideas",
+                  "Simulated portfolio, positions & trade journal",
                 ]}
               />
             </motion.div>
@@ -696,13 +699,26 @@ export default function MapleGammaLanding() {
                 href={`/signup/?plan=pro${annual ? "&interval=annual" : ""}`}
                 featured
                 features={[
-                  "Interactive charts — candles, RSI, ATR",
-                  "Model accuracy & walk-forward backtests",
-                  "Prediction engine + council history",
+                  "Everything in Basic",
+                  "Interactive charts — candles, RSI, ATR & volume",
+                  "Gamma walls + strike-level options exposure",
+                  "Model calibration, accuracy & walk-forward validation",
+                  "Prediction engine, live simulation & 5-model council history",
+                  "Options strategy status + crypto strategy cohorts¹",
                 ]}
               />
             </motion.div>
           </motion.div>
+
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={viewport}
+            className="mt-4 text-center text-xs text-[var(--color-text-tertiary)]"
+          >
+            ¹ Preview data is public today; subscriber-only controls and deeper analysis are rolling out with Pro.
+          </motion.p>
 
           <motion.p
             variants={fadeUp}

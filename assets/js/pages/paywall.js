@@ -15,12 +15,25 @@ const Paywall = {
     basic: {
       name: 'Basic', monthly: 49, annual: 490,
       blurb: 'Everything in Free, plus the full research desk.',
-      feats: ['Full Screener — all tickers, scored', 'Research: analysis, news, earnings, SEC', 'Reddit + prediction-market sentiment'],
+      feats: [
+        'Everything in Free',
+        'Full multi-factor screener — all tickers scored',
+        'Research desk: AI analysis, news, earnings &amp; SEC filings',
+        'Prediction-market sentiment + trade ideas',
+        'Simulated portfolio, positions &amp; trade journal',
+      ],
     },
     pro: {
       name: 'Pro', monthly: 99, annual: 990, popular: true,
       blurb: 'Everything in Basic, plus charts, models &amp; the AI council.',
-      feats: ['Interactive charts — candles, RSI, ATR', 'Model accuracy &amp; walk-forward backtests', 'Prediction engine + council history'],
+      feats: [
+        'Everything in Basic',
+        'Interactive charts — candles, RSI, ATR &amp; volume',
+        'Gamma walls + strike-level options exposure',
+        'Model calibration, accuracy &amp; walk-forward validation',
+        'Prediction engine, live simulation &amp; 5-model council history',
+        'Options strategy status + crypto strategy cohorts¹',
+      ],
     },
   },
 
@@ -66,11 +79,17 @@ const Paywall = {
 
     const free = { key: 'free', name: 'Free',
       blurb: 'The daily dashboard, always free.',
-      feats: ['Market regime &amp; indices', 'Headlines &amp; Reddit pulse', 'GEX/DEX snapshot'] };
+      feats: [
+        'Daily market regime, indices &amp; AI verdict',
+        'Headlines, Reddit pulse &amp; key catalysts',
+        'GEX/DEX/VEX snapshot + dealer gamma regime',
+        'Customizable dashboard layout',
+      ] };
 
     let html = '<div class="pw-billing">' + toggle + '<div class="pw-plans">';
     html += card(free) + card({ key: 'basic', ...this._plans.basic }) + card({ key: 'pro', ...this._plans.pro });
     html += '</div>';
+    html += '<div class="pw-note">¹ Preview data is public today; subscriber-only controls and deeper analysis are rolling out with Pro.</div>';
     html += trialAvailable
       ? '<div class="pw-note">7-day free trial — no card required. Cancel anytime. General information only, not investment advice.</div>'
       : '<div class="pw-note">Cancel anytime. General information only, not investment advice.</div>';
