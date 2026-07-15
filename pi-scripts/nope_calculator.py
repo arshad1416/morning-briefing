@@ -381,7 +381,7 @@ def write_nope_detail(snapshots, destination, generated_at=None):
     """Write the Pro product artifact without calibration or raw-delta internals."""
     payload = {
         "generated_at": generated_at or datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
-        "methodology": "End-of-day calculated estimate from option-chain volume and Black-Scholes delta; not real-time order flow or investment advice.",
+        "methodology": "Calculated estimate from option-chain volume and Black-Scholes delta. Data coverage may be delayed or incomplete intraday; not real-time order flow or investment advice.",
         "symbols": {},
     }
     fields = {
