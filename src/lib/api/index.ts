@@ -1,5 +1,5 @@
 // lib/api/index.ts — typed fetchers
-import { LatestDataSchema, VerdictSchema, GexDataSchema, AccuracySchema, PredictionEngineSchema, type LatestData, type Verdict, type GexData, type Accuracy, type PredictionEngine } from '@/lib/schemas/market';
+import { LatestDataSchema, VerdictSchema, GexDataSchema, NopeDetailSchema, AccuracySchema, PredictionEngineSchema, type LatestData, type Verdict, type GexData, type NopeDetail, type Accuracy, type PredictionEngine } from '@/lib/schemas/market';
 import { ScreenerDataSchema, type ScreenerResult } from '@/lib/schemas/screener';
 import { fetchGated, GateError } from './gated';
 
@@ -34,6 +34,7 @@ export const api = {
   // OI and positioning live in the Pro-gated R2 detail file.
   gex: () => fetchJson<GexData>('/data/maplegamma-data.json', GexDataSchema),
   gexDetail: () => fetchGated<GexData>('gex-detail.json', GexDataSchema),
+  nopeDetail: () => fetchGated<NopeDetail>('nope-detail.json', NopeDetailSchema),
   // accuracy.json is Pro-gated R2 data (see data_gate.js) — it never exists
   // under public /data/ on Pages, so it must go through the Worker gate.
   accuracy: () => fetchGated<Accuracy>('accuracy.json', AccuracySchema),

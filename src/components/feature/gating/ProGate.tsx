@@ -20,6 +20,7 @@ const FEATURE_LABELS: Record<FeatureKey, string> = {
   walkforward: 'Walk-forward analysis',
   simulation: 'Live simulation',
   gammaWalls: 'Gamma Walls',
+  nope: 'NOPE Flow Estimate',
   calibration: 'Model Calibration',
   scenarioSim: 'Scenario Simulator',
   congressTrades: 'Congress Trades',

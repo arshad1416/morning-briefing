@@ -252,6 +252,24 @@ export const GexDataSchema = MapleGammaFileSchema.transform((f) => {
   };
 });
 
+// ── NOPE ────────────────────────────────────────────────────────────────────
+// Pro-gated end-of-day calculation produced by pi-scripts/nope_calculator.py.
+// The artifact intentionally excludes raw deltas and calibration coefficients.
+const NopeSymbolSchema = z.object({
+  spot_price: z.number().nullable(),
+  stock_volume: z.number().int().nullable(),
+  call_volume: z.number().int().nullable(),
+  put_volume: z.number().int().nullable(),
+  nope: z.number().nullable(),
+  nope_fill: z.number().nullable(),
+});
+
+export const NopeDetailSchema = z.object({
+  generated_at: z.string(),
+  methodology: z.string(),
+  symbols: z.record(NopeSymbolSchema),
+});
+
 // ── Accuracy ─────────────────────────────────────────────────────────────────
 // Parses the REAL accuracy.json emitted by generate_prediction_accuracy.py
 // (nested summary/expectancy/drawdown blocks, percent units) and transforms it
@@ -379,6 +397,7 @@ export type LatestData = z.infer<typeof LatestDataSchema>;
 export type GexStrike = z.infer<typeof GexStrikeSchema>;
 export type GexMode = z.infer<typeof GexModeSchema>;
 export type GexData = z.infer<typeof GexDataSchema>;
+export type NopeDetail = z.infer<typeof NopeDetailSchema>;
 export type Accuracy = z.infer<typeof AccuracySchema>;
 export type PredictionEngine = z.infer<typeof PredictionEngineSchema>;
 export type Backtest = z.infer<typeof BacktestSchema>;
