@@ -1,4 +1,5 @@
 import math
+from pathlib import Path
 
 from nope_calculator import NopeCalculator
 
@@ -200,3 +201,11 @@ def test_nope_private_policy_fails_closed_when_not_in_private_list(tmp_path):
         assert "NOPE detail" in str(error)
     else:
         raise AssertionError("expected missing NOPE private policy to fail closed")
+
+
+def test_noop_publish_still_retries_git_push():
+    source = Path(__file__).with_name("push_dashboard.py").read_text()
+    nothing_to_commit = source.index("_nothing_to_commit =")
+    push = source.index('subprocess.run("git push origin main"', nothing_to_commit)
+
+    assert push > nothing_to_commit
