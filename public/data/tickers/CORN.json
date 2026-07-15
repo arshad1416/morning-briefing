@@ -1,15 +1,18 @@
 {
  "ticker": "CORN",
  "name": "Teucrium Corn Fund ETV",
- "generated_at": "2026-07-15T11:45:01.157484+00:00",
- "price": 17.48,
- "change_pct": -0.43,
+ "generated_at": "2026-07-15T14:45:01.380089+00:00",
+ "price": 17.76,
+ "change_pct": 1.23,
  "sector": null,
- "signals": [],
+ "signals": [
+  "extended_rsi",
+  "above_ma"
+ ],
  "technical": {
-  "rsi_14": 62.1,
-  "sma_20": 17.05,
-  "sma_50": 17.67
+  "rsi_14": 66.2,
+  "sma_20": 17.07,
+  "sma_50": 17.68
  },
  "fundamentals": {
   "pe_ratio": null,
