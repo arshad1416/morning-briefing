@@ -7,6 +7,7 @@ import json, os, datetime, subprocess, sys, math, yfinance as yf, pandas as pd
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from yfinance_session import download as yf_download, ticker as yf_ticker
+from publish_policy import enforce_private_pages_exclusion, pages_excludes
 
 LEDGER = os.path.expanduser("~/.hermes/market-intel/paper_trading.json")
 DEMO_ACCOUNT = os.path.expanduser("~/.hermes/market-intel/demo_account.json")
@@ -665,21 +666,28 @@ def main():
         try:
             sys.path.insert(0, os.path.expanduser("~/.hermes/scripts"))
             import r2_sync
-            r2_sync.run()
+            _uploaded, _skipped = r2_sync.run()
+            if _skipped:
+                raise RuntimeError(f"R2 sync skipped {_skipped} private artifact(s)")
+            if os.path.exists(os.path.join(DASHBOARD_REPO, 'data', 'nope-detail.json')) and not _uploaded:
+                raise RuntimeError("NOPE artifact exists but private R2 upload did not run")
         except Exception as _e:
-            print(f"R2 sync skipped: {_e}")
+            raise RuntimeError(f"Private R2 sync failed; refusing to publish Pages data: {_e}") from _e
         # Sync data/ → public/data/ for Cloudflare Pages static export
         # (next.config.ts output:'export'), EXCLUDING premium files — those are
         # R2-only and must never land in the deployed static dir.
         _rsync_cmd = ['rsync', '-a']
         try:
             import r2_sync as _rs
-            for _f in _rs.PRIVATE_FILES:
+            _private_files = _rs.PRIVATE_FILES
+            for _f in pages_excludes(_private_files):
                 _rsync_cmd += ['--exclude', _f]
         except Exception:
-            _rs = None
+            raise RuntimeError("Private R2 policy unavailable; refusing to publish Pages data")
         _rsync_cmd += [os.path.join(DASHBOARD_REPO, 'data/'), os.path.join(DASHBOARD_REPO, 'public/data/')]
-        subprocess.run(_rsync_cmd, capture_output=True)
+        _sync_result = subprocess.run(_rsync_cmd, capture_output=True, text=True)
+        if _sync_result.returncode != 0:
+            raise RuntimeError(f"Pages data sync failed: {_sync_result.stderr}")
         # Remove private files from public/data ONLY (stale copies from previous
         # deploys). KEEP the data/ working copies: they are gitignored (never
         # deployed) and are the live inputs for the Pi's own downstream jobs —
@@ -688,20 +696,21 @@ def main():
         # publish_ticker_details (screener-data.json). Deleting them starved all
         # four from Jul 10–13 (no audio after Jul 10, executor A "No council
         # output" 15 min after the council wrote its file).
-        if _rs is not None:
-            for _f in _rs.PRIVATE_FILES:
-                _p = os.path.join(DASHBOARD_REPO, 'public/data', _f)
-                if os.path.exists(_p):
-                    os.remove(_p)
-        subprocess.run("git add -A", shell=True)
+        enforce_private_pages_exclusion(DASHBOARD_REPO, _private_files)
+        _stage_result = subprocess.run("git add -A", shell=True, capture_output=True, text=True)
+        if _stage_result.returncode != 0:
+            raise RuntimeError(f"Git staging failed; refusing to publish: {_stage_result.stderr or _stage_result.stdout}")
         ts = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
-        r = subprocess.run(f'git commit -m "Live portfolio {ts}"', shell=True, capture_output=True, text=True)
-        if r.returncode != 0 and "nothing to commit" not in r.stderr and "nothing to commit" not in r.stdout:
-            print(f"GIT COMMIT: {r.stderr or r.stdout}")
-        r = subprocess.run("git push origin main", shell=True, capture_output=True, text=True)
-        if r.returncode != 0:
-            print(f"GIT PUSH FAILED: {r.stderr or r.stdout}")
-            sys.exit(1)
+        _commit_result = subprocess.run(
+            f'git commit -m "Live portfolio {ts}"', shell=True, capture_output=True, text=True,
+        )
+        _nothing_to_commit = "nothing to commit" in (_commit_result.stderr + _commit_result.stdout).lower()
+        if _commit_result.returncode != 0 and not _nothing_to_commit:
+            raise RuntimeError(f"Git commit failed; refusing to publish: {_commit_result.stderr or _commit_result.stdout}")
+        if not _nothing_to_commit:
+            _push_result = subprocess.run("git push origin main", shell=True, capture_output=True, text=True)
+            if _push_result.returncode != 0:
+                raise RuntimeError(f"Git push failed: {_push_result.stderr or _push_result.stdout}")
     
     print(f"Pushed {len(positions)} positions — all prices from yfinance:")
     for p in positions:

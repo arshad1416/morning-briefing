@@ -175,3 +175,28 @@ def test_calculate_and_publish_nope_does_not_depend_on_tiingo_or_turso(tmp_path,
 
     assert calculate_and_publish_nope(["SPY", "QQQ"], output_path=destination) == str(destination)
     assert __import__("json").loads(destination.read_text())["symbols"].keys() == {"SPY", "QQQ"}
+
+
+def test_nope_private_policy_removes_stale_public_copy(tmp_path):
+    from publish_policy import enforce_private_pages_exclusion, pages_excludes
+
+    public_nope = tmp_path / "public" / "data" / "nope-detail.json"
+    public_nope.parent.mkdir(parents=True)
+    public_nope.write_text('{"symbols": {}}')
+
+    private_files = ["nope-detail.json", "gex-detail.json"]
+    enforce_private_pages_exclusion(tmp_path, private_files)
+
+    assert not public_nope.exists()
+    assert "nope-detail.json" in pages_excludes(private_files)
+
+
+def test_nope_private_policy_fails_closed_when_not_in_private_list(tmp_path):
+    from publish_policy import enforce_private_pages_exclusion
+
+    try:
+        enforce_private_pages_exclusion(tmp_path, ["gex-detail.json"])
+    except RuntimeError as error:
+        assert "NOPE detail" in str(error)
+    else:
+        raise AssertionError("expected missing NOPE private policy to fail closed")
