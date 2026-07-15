@@ -376,7 +376,52 @@ def fetch_tiingo_underlying(ticker, api_key):
         print(f"Error fetching Tiingo underlying data for {ticker}: {e}")
     return None
 
-def calculate_and_log_daily_nope(symbols=["SPY", "QQQ"]):
+
+def write_nope_detail(snapshots, destination, generated_at=None):
+    """Write the Pro product artifact without calibration or raw-delta internals."""
+    payload = {
+        "generated_at": generated_at or datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
+        "methodology": "Calculated estimate from option-chain volume and Black-Scholes delta. Data coverage may be delayed or incomplete intraday; not real-time order flow or investment advice.",
+        "symbols": {},
+    }
+    fields = {
+        "spot_price": "spot_price",
+        "stock_vol": "stock_volume",
+        "call_vol": "call_volume",
+        "put_vol": "put_volume",
+        "nope_est": "nope",
+        "nope_fill_est": "nope_fill",
+    }
+    for symbol, snapshot in snapshots.items():
+        payload["symbols"][symbol] = {output: snapshot.get(source) for source, output in fields.items()}
+
+    destination = os.fspath(destination)
+    os.makedirs(os.path.dirname(destination) or ".", exist_ok=True)
+    temporary = f"{destination}.tmp"
+    with open(temporary, "w") as file:
+        json.dump(payload, file, indent=2)
+    os.replace(temporary, destination)
+    return destination
+
+
+def calculate_and_publish_nope(symbols=("SPY", "QQQ"), output_path=None):
+    """Publish the website artifact without coupling the release to optional history feeds."""
+    calculator = NopeCalculator()
+    snapshots = {}
+    for symbol in symbols:
+        try:
+            snapshots[symbol] = calculator.calculate_snapshot(symbol)
+        except Exception as error:
+            print(f"Error calculating NOPE for {symbol}: {error}", file=sys.stderr)
+    if not snapshots:
+        raise RuntimeError("No NOPE snapshots were generated; refusing to publish an empty artifact.")
+    detail_path = output_path or os.path.join(os.getcwd(), "data", "nope-detail.json")
+    detail_path = write_nope_detail(snapshots, detail_path)
+    print(f"Published NOPE product artifact: {detail_path}")
+    return detail_path
+
+
+def calculate_and_log_daily_nope(symbols=["SPY", "QQQ"], output_path=None):
     print("Starting daily NOPE ingestion...")
     # Get Tiingo key
     import sys
@@ -422,6 +467,7 @@ def calculate_and_log_daily_nope(symbols=["SPY", "QQQ"]):
 
     calculator = NopeCalculator()
     sqls = []
+    snapshots = {}
     created_at = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
     for symbol in symbols:
@@ -429,6 +475,7 @@ def calculate_and_log_daily_nope(symbols=["SPY", "QQQ"]):
             print(f"Processing {symbol}...")
             # Fetch options chain snapshot from yfinance
             snap = calculator.calculate_snapshot(symbol)
+            snapshots[symbol] = snap
             
             # Fetch exact closing spot price and stock volume from Tiingo
             tiingo_data = fetch_tiingo_underlying(symbol, api_key)
@@ -464,10 +511,27 @@ def calculate_and_log_daily_nope(symbols=["SPY", "QQQ"]):
             print(f"Error uploading daily NOPE records to Turso: {res['error']}")
         else:
             print("Successfully uploaded daily NOPE indicators to Turso!")
+    if snapshots:
+        detail_path = output_path or os.path.join(
+            os.getcwd(), "data", "nope-detail.json"
+        )
+        write_nope_detail(snapshots, detail_path)
+        print(f"Published NOPE product artifact: {detail_path}")
+    else:
+        raise RuntimeError("No NOPE snapshots were generated; refusing to publish an empty artifact.")
 
 if __name__ == "__main__":
-    if "--daily" in sys.argv:
-        calculate_and_log_daily_nope(["SPY", "QQQ"])
+    if "--daily" in sys.argv or "--publish" in sys.argv:
+        output_path = None
+        if "--output" in sys.argv:
+            output_index = sys.argv.index("--output") + 1
+            if output_index >= len(sys.argv):
+                raise ValueError("--output requires a path")
+            output_path = sys.argv[output_index]
+        if "--daily" in sys.argv:
+            calculate_and_log_daily_nope(["SPY", "QQQ"], output_path=output_path)
+        else:
+            calculate_and_publish_nope(["SPY", "QQQ"], output_path=output_path)
     else:
         # If run directly, run a quick SPY snapshot and calibration
         calculator = NopeCalculator()

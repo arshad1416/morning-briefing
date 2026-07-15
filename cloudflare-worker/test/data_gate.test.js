@@ -15,6 +15,7 @@ beforeEach(async () => {
   await env.PRIVATE.put('screener-data.json', JSON.stringify({ tickers: [{ ticker: 'AAPL' }] }));
   await env.PRIVATE.put('paper_trades.json', JSON.stringify({ portfolio: {} }));
   await env.PRIVATE.put('gex-detail.json', JSON.stringify({ tickers: { SPX: {} } }));
+  await env.PRIVATE.put('nope-detail.json', JSON.stringify({ symbols: { SPY: { nope: 1.2 } } }));
   await env.PRIVATE.put('charts/AAPL.json', JSON.stringify({ ticker: 'AAPL', timeframes: {} }));
 });
 
@@ -75,6 +76,17 @@ describe('hard data gate', () => {
     const { cookie: proCookie } = await sessionFor('gex-pro@test.ca', { tier: 'pro', status: 'active' });
     const pro = await app.request('/api/data/gex-detail.json', { headers: { Cookie: proCookie } }, env);
     expect(pro.status).toBe(200);
+  });
+
+  it('keeps NOPE detail Pro-only', async () => {
+    const { cookie: basicCookie } = await sessionFor('nope-basic@test.ca', { tier: 'basic', status: 'active' });
+    const basic = await app.request('/api/data/nope-detail.json', { headers: { Cookie: basicCookie } }, env);
+    expect(basic.status).toBe(403);
+
+    const { cookie: proCookie } = await sessionFor('nope-pro@test.ca', { tier: 'pro', status: 'active' });
+    const pro = await app.request('/api/data/nope-detail.json', { headers: { Cookie: proCookie } }, env);
+    expect(pro.status).toBe(200);
+    expect((await pro.json()).symbols.SPY.nope).toBe(1.2);
   });
 
   it('404 for a non-gated (public) filename', async () => {

@@ -32,6 +32,13 @@ export const gexDetailQuery = () =>
     staleTime: POLL.options.stale,
   });
 
+export const nopeDetailQuery = () =>
+  queryOptions({
+    queryKey: qk.nope(),
+    queryFn: () => api.nopeDetail(),
+    staleTime: POLL.options.stale,
+  });
+
 export const accuracyQuery = () =>
   queryOptions({
     queryKey: qk.accuracy(),

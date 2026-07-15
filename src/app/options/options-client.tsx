@@ -6,6 +6,7 @@ import { DraggableBentoGrid, type GridItem } from '@/components/layout/Draggable
 import { GexDexVexCard } from '@/components/feature/options/GexDexVexCard';
 import { GammaWallChart } from '@/components/feature/options/GammaWallChart';
 import { DealerPositioningCard } from '@/components/feature/options/DealerPositioningCard';
+import { NopeCard } from '@/components/feature/options/NopeCard';
 import { RegimeChip } from '@/components/primitives';
 import { useQuery } from '@tanstack/react-query';
 import { gexDetailQuery, gexQuery } from '@/lib/query/options';
@@ -119,6 +120,7 @@ const FlowCard = (
 const OPTIONS_ITEMS: GridItem[] = [
   { id: 'gexdexvex', span: 'half', node: <GexDexVexCard /> },
   { id: 'dealer', span: 'half', node: <DealerPositioningCard /> },
+  { id: 'nope', span: 'half', node: <ProGate feature="nope"><NopeCard /></ProGate> },
   { id: 'flow', span: 'hero', node: FlowCard },
   { id: 'gammawall', span: 'hero', node: <ProGate feature="gammaWalls"><GammaWallChart /></ProGate> },
   { id: 'alertbuilder', span: 'hero', node: <AlertRuleBuilder /> },

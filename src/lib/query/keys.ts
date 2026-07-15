@@ -3,6 +3,7 @@ export const qk = {
   latest: () => ['latest'] as const,
   verdict: () => ['verdict'] as const,
   gex: () => ['gex'] as const,
+  nope: () => ['nope'] as const,
   accuracy: () => ['accuracy'] as const,
   predictionEngine: () => ['prediction-engine'] as const,
   screener: () => ['screener'] as const,

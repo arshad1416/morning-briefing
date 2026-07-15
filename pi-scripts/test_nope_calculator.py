@@ -118,3 +118,60 @@ def test_fetch_unusual_whales_retries_transient_failure(monkeypatch):
 
     assert calc.fetch_unusual_whales_nope("SPY") == [{"nope": "1.0"}]
     assert len(calls) == 2
+
+
+def test_write_nope_detail_publishes_only_safe_product_fields(tmp_path):
+    from nope_calculator import write_nope_detail
+
+    destination = tmp_path / "nope-detail.json"
+    result = write_nope_detail(
+        {
+            "SPY": {
+                "timestamp": "2026-07-15T20:15:00Z",
+                "spot_price": 753.44,
+                "stock_vol": 50_000_000,
+                "call_vol": 1_000_000,
+                "put_vol": 800_000,
+                "nope_est": 1.24,
+                "nope_fill_est": 0.92,
+                "call_delta_raw": 999,
+                "put_delta_raw": -111,
+            }
+        },
+        destination,
+        generated_at="2026-07-15T20:20:00Z",
+    )
+
+    assert result == str(destination)
+    payload = __import__("json").loads(destination.read_text())
+    assert payload["generated_at"] == "2026-07-15T20:20:00Z"
+    assert payload["symbols"]["SPY"] == {
+        "spot_price": 753.44,
+        "stock_volume": 50_000_000,
+        "call_volume": 1_000_000,
+        "put_volume": 800_000,
+        "nope": 1.24,
+        "nope_fill": 0.92,
+    }
+    assert "call_delta_raw" not in str(payload)
+
+
+def test_calculate_and_publish_nope_does_not_depend_on_tiingo_or_turso(tmp_path, monkeypatch):
+    from nope_calculator import calculate_and_publish_nope
+
+    class FakeCalculator:
+        def calculate_snapshot(self, symbol):
+            return {
+                "spot_price": 753.44,
+                "stock_vol": 50_000_000,
+                "call_vol": 1_000_000,
+                "put_vol": 800_000,
+                "nope_est": 1.24,
+                "nope_fill_est": 0.92,
+            }
+
+    monkeypatch.setattr("nope_calculator.NopeCalculator", FakeCalculator)
+    destination = tmp_path / "nope-detail.json"
+
+    assert calculate_and_publish_nope(["SPY", "QQQ"], output_path=destination) == str(destination)
+    assert __import__("json").loads(destination.read_text())["symbols"].keys() == {"SPY", "QQQ"}

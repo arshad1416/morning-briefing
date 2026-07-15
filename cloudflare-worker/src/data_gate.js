@@ -17,6 +17,7 @@ const PRO_FILES = new Set([
   'strategy_improvement_b.json', 'trade_outcomes.json', 'trade_outcomes_b.json',
   'prediction-engine.json', 'accuracy.json', 'council_history.json',
   'simulation.json', 'gex-detail.json',
+  'nope-detail.json',
 ]);
 const BASIC_FILES = new Set([
   'screener-data.json', 'morning_analysis.json', 'maplegamma_analysis.json',
