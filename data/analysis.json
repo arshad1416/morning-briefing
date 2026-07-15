@@ -1,9 +1,23 @@
 {
-  "generated_at": "2026-07-15 07:17:12",
+  "generated_at": "2026-07-15 07:22:17",
   "date": "2026-07-15",
   "market_overview": {
     "source": "Seeking Alpha + BNN Bloomberg",
     "top_headlines": [
+      {
+        "title": "Nuvini appoints Rodrigo Natale as CFO",
+        "url": "https://seekingalpha.com/news/4613918-nuvini-appoints-rodrigo-natale-as-cfo?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Cameco resumes mining at Cigar Lake after mill disruption",
+        "url": "https://seekingalpha.com/news/4613924-cameco-resumes-mining-at-cigar-lake-after-mill-disruption?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
       {
         "title": "Earnings Snapshot: Johnson & Johnson Q2 beats on top and bottom lines, hikes FY2026 guidance",
         "url": "https://seekingalpha.com/news/4613822-earnings-snapshot-johnson--johnson-q2-beats-on-top-and-bottom-lines-hikes-fy2026-guidance?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
@@ -40,20 +54,6 @@
         "summary": ""
       },
       {
-        "title": "Entegris declares $0.10 dividend",
-        "url": "https://seekingalpha.com/news/4613919-entegris-declares-0_10-dividend?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Apple Intelligence gets China nod; to use Alibaba's AI models",
-        "url": "https://seekingalpha.com/news/4613870-apple-intelligence-gets-china-nod-to-use-alibaba-ai-models?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
         "title": "Sterling Infrastructure: America's Data Center Builder With A Still Long Runway",
         "url": "https://seekingalpha.com/article/4922183-sterling-infrastructure-stock-americas-data-center-builder-still-long-runway?source=feed",
         "source": "Seeking Alpha",
@@ -79,8 +79,9 @@
       [
         "C",
         {
-          "news_count": 20,
+          "news_count": 16,
           "articles": [
+            "Cameco resumes mining at Cigar Lake after mill disruption",
             "Earnings Snapshot: Johnson & Johnson Q2 beats on top and bottom lines, hikes FY2026 guidance",
             "Molina, Centene, and Oscar are down after Elevance Health\u2019s Q2 report",
             "PNC Financial beats Q2 earnings estimates despite FirstBank integration costs, significant items",
@@ -89,38 +90,29 @@
             "China Gold Market Update: June Concludes A Divided H1",
             "Goldman Sachs Just Beat Q2. Here's What It Really Means For Banks And The Economy",
             "Top 10 Stocks For H2 2026",
-            "The Top Is In For Micron",
-            "The Tectonic AI Shift Is Here",
             "Why I Doubled Down On Micron",
             "Oracle: Could Be One Of The First Dominos To Fall",
             "SK hynix Over Micron: No Brainer",
-            "My Ultimate Low-Stress Reliable Retirement Income Portfolio",
             "Micron: The Cycle Is Turning, And Nobody Is Ready",
-            "AI Bubble Burst: Tech Operating Cash Flows Could Be Massively Inflated",
             "Micron: The Mirage Of A Single-Digit P/E Ratio",
-            "The Credit Market Is Sending A Warning On AI Stocks",
             "2 BDCs To Sell Before They Slash Their Dividends",
             "If I Could Only Buy 2 Dividend Growth Stocks Today, They Would Be These"
           ],
           "sentiments": [
-            "bullish",
             "neutral",
             "bullish",
-            "neutral",
-            "neutral",
             "neutral",
             "bullish",
             "neutral",
             "neutral",
+            "neutral",
+            "bullish",
             "neutral",
             "neutral",
             "bearish",
             "neutral",
             "neutral",
             "neutral",
-            "neutral",
-            "neutral",
-            "bearish",
             "neutral",
             "bullish"
           ]
@@ -129,8 +121,9 @@
       [
         "V",
         {
-          "news_count": 13,
+          "news_count": 14,
           "articles": [
+            "Nuvini appoints Rodrigo Natale as CFO",
             "Molina, Centene, and Oscar are down after Elevance Health\u2019s Q2 report",
             "Nvidia CEO dismisses delay reports, says next-gen Rubin AI tech on track",
             "SK hynix Just Changed Its AI Game Forever",
@@ -153,6 +146,7 @@
             "neutral",
             "neutral",
             "neutral",
+            "neutral",
             "bearish",
             "neutral",
             "neutral",
@@ -163,55 +157,40 @@
         }
       ],
       [
-        "F",
+        "MU",
+        {
+          "news_count": 8,
+          "articles": [
+            "Top 10 Stocks For H2 2026",
+            "The Top Is In For Micron",
+            "Why I Doubled Down On Micron",
+            "Oracle: Could Be One Of The First Dominos To Fall",
+            "SK hynix Over Micron: No Brainer",
+            "My Ultimate Low-Stress Reliable Retirement Income Portfolio",
+            "Micron: The Cycle Is Turning, And Nobody Is Ready",
+            "Micron: The Mirage Of A Single-Digit P/E Ratio"
+          ],
+          "sentiments": [
+            "neutral",
+            "neutral",
+            "neutral",
+            "bearish",
+            "neutral",
+            "neutral",
+            "neutral",
+            "neutral"
+          ]
+        }
+      ],
+      [
+        "AI",
         {
           "news_count": 6,
           "articles": [
-            "Oracle: Could Be One Of The First Dominos To Fall",
-            "SK hynix Over Micron: No Brainer",
-            "Micron: The Cycle Is Turning, And Nobody Is Ready",
-            "Micron: The Mirage Of A Single-Digit P/E Ratio",
-            "2 Mega Yields To Retire In Style And Splendor",
-            "2 BDCs To Sell Before They Slash Their Dividends"
-          ],
-          "sentiments": [
-            "bearish",
-            "neutral",
-            "neutral",
-            "neutral",
-            "neutral",
-            "neutral"
-          ]
-        }
-      ],
-      [
-        "NVDA",
-        {
-          "news_count": 5,
-          "articles": [
             "Nvidia CEO dismisses delay reports, says next-gen Rubin AI tech on track",
             "SK hynix Just Changed Its AI Game Forever",
-            "Top 10 Stocks For H2 2026",
-            "The Top Is In For Micron",
-            "Oracle: Could Be One Of The First Dominos To Fall"
-          ],
-          "sentiments": [
-            "neutral",
-            "neutral",
-            "neutral",
-            "neutral",
-            "bearish"
-          ]
-        }
-      ],
-      [
-        "QQQ",
-        {
-          "news_count": 5,
-          "articles": [
-            "June CPI Report: A Welcome, But Temporary, Sigh Of Relief",
             "The Tectonic AI Shift Is Here",
-            "My Ultimate Low-Stress Reliable Retirement Income Portfolio",
+            "High-Yield Opportunities From AI Investments, Fat Monthly Income",
             "AI Bubble Burst: Tech Operating Cash Flows Could Be Massively Inflated",
             "The Credit Market Is Sending A Warning On AI Stocks"
           ],
@@ -220,68 +199,89 @@
             "neutral",
             "neutral",
             "neutral",
+            "neutral",
             "bearish"
+          ]
+        }
+      ],
+      [
+        "F",
+        {
+          "news_count": 5,
+          "articles": [
+            "SK hynix Over Micron: No Brainer",
+            "Micron: The Cycle Is Turning, And Nobody Is Ready",
+            "Micron: The Mirage Of A Single-Digit P/E Ratio",
+            "2 Mega Yields To Retire In Style And Splendor",
+            "2 BDCs To Sell Before They Slash Their Dividends"
+          ],
+          "sentiments": [
+            "neutral",
+            "neutral",
+            "neutral",
+            "neutral",
+            "neutral"
           ]
         }
       ]
     ],
     "sentiment_by_ticker": {
       "C": {
-        "mentions": 20,
+        "mentions": 16,
         "bullish": 4,
-        "bearish": 2,
-        "net_sentiment": 2
+        "bearish": 1,
+        "net_sentiment": 3
       },
       "V": {
-        "mentions": 13,
+        "mentions": 14,
         "bullish": 0,
         "bearish": 2,
         "net_sentiment": -2
       },
-      "F": {
-        "mentions": 6,
-        "bullish": 0,
-        "bearish": 1,
-        "net_sentiment": -1
-      },
-      "NVDA": {
-        "mentions": 5,
-        "bullish": 0,
-        "bearish": 1,
-        "net_sentiment": -1
-      },
-      "QQQ": {
-        "mentions": 5,
+      "MU": {
+        "mentions": 8,
         "bullish": 0,
         "bearish": 1,
         "net_sentiment": -1
       },
       "AI": {
-        "mentions": 4,
+        "mentions": 6,
+        "bullish": 0,
+        "bearish": 1,
+        "net_sentiment": -1
+      },
+      "F": {
+        "mentions": 5,
         "bullish": 0,
         "bearish": 0,
         "net_sentiment": 0
       },
-      "BA": {
+      "NVDA": {
         "mentions": 4,
-        "bullish": 1,
-        "bearish": 0,
-        "net_sentiment": 1
+        "bullish": 0,
+        "bearish": 1,
+        "net_sentiment": -1
+      },
+      "SPY": {
+        "mentions": 4,
+        "bullish": 0,
+        "bearish": 1,
+        "net_sentiment": -1
+      },
+      "MA": {
+        "mentions": 3,
+        "bullish": 0,
+        "bearish": 1,
+        "net_sentiment": -1
       },
       "DIA": {
-        "mentions": 4,
+        "mentions": 3,
         "bullish": 0,
         "bearish": 1,
         "net_sentiment": -1
       },
-      "IWM": {
-        "mentions": 4,
-        "bullish": 0,
-        "bearish": 1,
-        "net_sentiment": -1
-      },
-      "MU": {
-        "mentions": 4,
+      "BA": {
+        "mentions": 2,
         "bullish": 0,
         "bearish": 0,
         "net_sentiment": 0
@@ -380,8 +380,7 @@
     {
       "type": "BEARISH_CONVERGENCE",
       "tickers": [
-        "NVDA",
-        "QQQ"
+        "NVDA"
       ],
       "signal": "Negative news sentiment + heavy put buying",
       "action": "Consider bearish bias / hedge"
