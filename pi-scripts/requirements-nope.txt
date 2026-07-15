@@ -1,0 +1,9 @@
+# Runtime dependencies for the standalone NOPE/GEX calibration utilities.
+yfinance==1.5.1
+curl_cffi>=0.15,<0.16
+numpy>=2.0
+pandas>=2.0
+scipy>=1.13
+
+# Test dependency
+pytest>=8,<10
