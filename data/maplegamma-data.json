@@ -1,46 +1,46 @@
 {
-  "generated_at": "2026-07-16T09:30:50-04:00",
+  "generated_at": "2026-07-16T10:00:47-04:00",
   "market_overview": {
-    "total_net_gex": 1621736,
-    "total_oi": 3073151,
-    "current_price": 753.38,
-    "change_pct": -0.19
+    "total_net_gex": 1859290,
+    "total_oi": 2725138,
+    "current_price": 752.33,
+    "change_pct": -0.33
   },
   "tickers": {
     "SPX": {
-      "current_price": 753.38,
-      "change_pct": -0.19,
+      "current_price": 752.33,
+      "change_pct": -0.33,
       "gamma_regime": "bullish",
-      "total_gex": 1621736,
-      "total_dex": 138953669,
-      "total_vex": 79551426,
-      "total_vanna": 6610727,
-      "total_charm": -995863,
-      "total_dealer_gex": 8197535,
-      "gamma_flip": 746.53,
+      "total_gex": 1859290,
+      "total_dex": 122243132,
+      "total_vex": 402595827,
+      "total_vanna": 5484017,
+      "total_charm": -1192164,
+      "total_dealer_gex": 1962377,
+      "gamma_flip": 754.19,
       "max_pain": 736.0,
-      "max_gex_strike": 755.0,
-      "max_gex_value": 3544857,
+      "max_gex_strike": 753.0,
+      "max_gex_value": 988680,
       "neutral_range": [],
       "floor_zone": {
-        "strike": 665.0,
-        "net_gex": 18886,
-        "total_gex": 18886,
-        "range_start": 660.0,
-        "range_end": 670.0,
+        "strike": 750.0,
+        "net_gex": 342315,
+        "total_gex": 342315,
+        "range_start": 745.0,
+        "range_end": 755.0,
         "strength": "strong",
-        "narrative": "Gamma floor at $665"
+        "narrative": "Gamma floor at $750"
       },
       "ceiling_zone": {
-        "strike": 755.0,
-        "net_gex": 3544857,
-        "total_gex": 3544857,
-        "range_start": 750.0,
-        "range_end": 760.0,
+        "strike": 753.0,
+        "net_gex": 1030119,
+        "total_gex": 1030119,
+        "range_start": 748.0,
+        "range_end": 758.0,
         "strength": "strong",
-        "narrative": "Gamma ceiling at $755"
+        "narrative": "Gamma ceiling at $753"
       },
-      "narrative": "Net GEX: $+1,621,736 \u2014 dealers are long gamma (range-bound)"
+      "narrative": "Net GEX: $+1,859,290 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
