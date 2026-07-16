@@ -1,24 +1,25 @@
 {
  "ticker": "AON",
  "name": "Aon plc",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 357.74,
- "change_pct": -2.62,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 362.92,
+ "change_pct": 2.19,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
-  "above_ma"
+  "overbought_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 71.2,
-  "sma_20": 339.1,
-  "sma_50": 327.82
+  "rsi_14": 78.2,
+  "sma_20": 342.01,
+  "sma_50": 329.68
  },
  "fundamentals": {
-  "pe_ratio": 19.623697,
-  "market_cap": "76.4B",
+  "pe_ratio": 19.918772,
+  "market_cap": "77.5B",
   "beta": 0.705,
-  "dividend_yield": 0.0091
+  "dividend_yield": 0.0092
  },
  "council_analysis": {
   "score": 5

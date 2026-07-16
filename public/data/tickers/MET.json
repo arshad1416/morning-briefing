@@ -1,26 +1,28 @@
 {
  "ticker": "MET",
  "name": "MetLife, Inc.",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 92.14,
- "change_pct": -0.96,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 93.79,
+ "change_pct": 1.72,
  "sector": "Financial Services",
  "signals": [
-  "above_ma"
+  "overbought_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 61.0,
-  "sma_20": 88.27,
-  "sma_50": 84.43
+  "rsi_14": 77.4,
+  "sma_20": 88.83,
+  "sma_50": 85.0
  },
  "fundamentals": {
-  "pe_ratio": 17.82205,
-  "market_cap": "59.3B",
+  "pe_ratio": 18.1412,
+  "market_cap": "60.3B",
   "beta": 0.778,
-  "dividend_yield": 0.0256
+  "dividend_yield": 0.025699999999999997
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

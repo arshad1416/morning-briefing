@@ -1,24 +1,25 @@
 {
  "ticker": "SCHW",
  "name": "Charles Schwab Corporation (The",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 102.44,
- "change_pct": 0.06,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 103.0,
+ "change_pct": 0.2,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
-  "above_ma"
+  "overbought_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 74.5,
-  "sma_20": 95.86,
-  "sma_50": 91.98
+  "rsi_14": 87.0,
+  "sma_20": 96.85,
+  "sma_50": 92.42
  },
  "fundamentals": {
-  "pe_ratio": 20.363617,
-  "market_cap": "178.1B",
+  "pe_ratio": 20.477137,
+  "market_cap": "179.1B",
   "beta": 0.762,
-  "dividend_yield": 0.0127
+  "dividend_yield": 0.0125
  },
  "council_analysis": {
   "score": 5

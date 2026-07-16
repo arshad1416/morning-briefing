@@ -1,28 +1,29 @@
 {
  "ticker": "DBA",
  "name": "Invesco DB Agriculture Fund",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 27.85,
- "change_pct": 0.47,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 27.73,
+ "change_pct": -0.89,
  "sector": null,
  "signals": [
-  "overbought_rsi",
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 75.1,
-  "sma_20": 27.03,
-  "sma_50": 27.32
+  "rsi_14": 65.3,
+  "sma_20": 27.15,
+  "sma_50": 27.3
  },
  "fundamentals": {
-  "pe_ratio": 11.760811,
+  "pe_ratio": 11.710303,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.0342
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

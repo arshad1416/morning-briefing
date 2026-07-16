@@ -1,20 +1,22 @@
 {
  "ticker": "PFG",
  "name": "Principal Financial Group Inc",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 112.38,
- "change_pct": -1.09,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 112.32,
+ "change_pct": -0.57,
  "sector": "Financial Services",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 50.0,
-  "sma_20": 110.36,
-  "sma_50": 105.71
+  "rsi_14": 72.5,
+  "sma_20": 110.56,
+  "sma_50": 106.25
  },
  "fundamentals": {
-  "pe_ratio": 16.12267,
+  "pe_ratio": 16.123386,
   "market_cap": "24.3B",
   "beta": 0.888,
   "dividend_yield": 0.028999999999999998

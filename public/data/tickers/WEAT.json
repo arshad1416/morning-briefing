@@ -1,18 +1,19 @@
 {
  "ticker": "WEAT",
  "name": "Teucrium Wheat Fund ETV",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 24.77,
- "change_pct": 4.69,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 25.06,
+ "change_pct": 0.54,
  "sector": null,
  "signals": [
-  "extended_rsi",
-  "above_ma"
+  "overbought_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 74.1,
-  "sma_20": 22.81,
-  "sma_50": 23.34
+  "rsi_14": 75.5,
+  "sma_20": 23.0,
+  "sma_50": 23.36
  },
  "fundamentals": {
   "pe_ratio": null,

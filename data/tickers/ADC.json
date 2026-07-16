@@ -1,28 +1,29 @@
 {
  "ticker": "ADC",
  "name": "Agree Realty Corporation",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 78.62,
- "change_pct": 0.01,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 79.0,
+ "change_pct": 1.75,
  "sector": "Real Estate",
  "signals": [
-  "overbought_rsi",
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 75.2,
-  "sma_20": 76.15,
-  "sma_50": 75.18
+  "rsi_14": 67.0,
+  "sma_20": 76.52,
+  "sma_50": 75.28
  },
  "fundamentals": {
-  "pe_ratio": 42.5,
+  "pe_ratio": 42.7027,
   "market_cap": "9.5B",
   "beta": 0.473,
-  "dividend_yield": 0.041100000000000005
+  "dividend_yield": 0.041299999999999996
  },
  "council_analysis": {
-  "score": 3
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

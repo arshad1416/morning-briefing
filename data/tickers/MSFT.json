@@ -1,24 +1,26 @@
 {
  "ticker": "MSFT",
  "name": "Microsoft Corporation",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 395.0,
- "change_pct": 1.03,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 395.92,
+ "change_pct": 0.07,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "overbought_rsi"
+ ],
  "technical": {
-  "rsi_14": 61.6,
-  "sma_20": 380.76,
-  "sma_50": 402.44
+  "rsi_14": 76.1,
+  "sma_20": 380.15,
+  "sma_50": 401.54
  },
  "fundamentals": {
-  "pe_ratio": 23.92671,
-  "market_cap": "2.93T",
+  "pe_ratio": 23.608826,
+  "market_cap": "2.94T",
   "beta": 1.13,
-  "dividend_yield": 0.0095
+  "dividend_yield": 0.0092
  },
  "council_analysis": {
-  "score": 5
+  "score": 3
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

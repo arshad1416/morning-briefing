@@ -1,24 +1,25 @@
 {
  "ticker": "NRG",
  "name": "NRG Energy, Inc.",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 140.96,
- "change_pct": 1.06,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 135.15,
+ "change_pct": -2.0,
  "sector": "Utilities",
  "signals": [
-  "above_ma",
+  "oversold_rsi",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 54.4,
-  "sma_20": 139.77,
-  "sma_50": 137.09
+  "rsi_14": 30.8,
+  "sma_20": 140.17,
+  "sma_50": 136.34
  },
  "fundamentals": {
-  "pe_ratio": 154.8956,
-  "market_cap": "29.7B",
+  "pe_ratio": 148.51099,
+  "market_cap": "28.5B",
   "beta": 1.201,
-  "dividend_yield": 0.0137
+  "dividend_yield": 0.0138
  },
  "council_analysis": {
   "score": 5

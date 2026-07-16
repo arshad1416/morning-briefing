@@ -1,28 +1,29 @@
 {
  "ticker": "AGNC",
  "name": "AGNC Investment Corp.",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 11.35,
- "change_pct": 3.28,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 11.37,
+ "change_pct": 0.44,
  "sector": "Real Estate",
  "signals": [
-  "overbought_rsi",
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 75.8,
-  "sma_20": 10.74,
-  "sma_50": 10.44
+  "rsi_14": 73.7,
+  "sma_20": 10.83,
+  "sma_50": 10.47
  },
  "fundamentals": {
-  "pe_ratio": 8.867266,
-  "market_cap": "13.0B",
+  "pe_ratio": 8.8828125,
+  "market_cap": "13.1B",
   "beta": 1.298,
-  "dividend_yield": 0.12890000000000001
+  "dividend_yield": 0.1272
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

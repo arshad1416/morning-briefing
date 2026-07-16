@@ -1,24 +1,27 @@
 {
  "ticker": "XEL",
  "name": "Xcel Energy Inc.",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 80.05,
- "change_pct": -0.53,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 80.09,
+ "change_pct": 1.06,
  "sector": "Utilities",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "near_high"
+ ],
  "technical": {
-  "rsi_14": 48.8,
-  "sma_20": 80.1,
-  "sma_50": 79.34
+  "rsi_14": 43.3,
+  "sma_20": 80.16,
+  "sma_50": 79.28
  },
  "fundamentals": {
-  "pe_ratio": 23.069164,
+  "pe_ratio": 23.08069,
   "market_cap": "50.0B",
   "beta": 0.405,
-  "dividend_yield": 0.0296
+  "dividend_yield": 0.029900000000000003
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,19 +1,22 @@
 {
  "ticker": "GOOGL",
  "name": "Alphabet Inc.",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 366.48,
- "change_pct": 3.96,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 372.66,
+ "change_pct": 0.47,
  "sector": "Communication Services",
- "signals": [],
+ "signals": [
+  "extended_rsi",
+  "above_ma"
+ ],
  "technical": {
-  "rsi_14": 64.6,
-  "sma_20": 357.96,
-  "sma_50": 372.32
+  "rsi_14": 69.8,
+  "sma_20": 357.66,
+  "sma_50": 371.68
  },
  "fundamentals": {
-  "pe_ratio": 27.932928,
-  "market_cap": "4.47T",
+  "pe_ratio": 28.46906,
+  "market_cap": "4.55T",
   "beta": 1.247,
   "dividend_yield": 0.0024
  },

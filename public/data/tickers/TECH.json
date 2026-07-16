@@ -1,28 +1,29 @@
 {
  "ticker": "TECH",
  "name": "Bio-Techne Corp",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 71.42,
- "change_pct": 0.08,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 71.56,
+ "change_pct": 0.11,
  "sector": "Healthcare",
  "signals": [
-  "overbought_rsi",
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 95.1,
-  "sma_20": 65.93,
-  "sma_50": 56.27
+  "rsi_14": 65.5,
+  "sma_20": 67.47,
+  "sma_50": 56.94
  },
  "fundamentals": {
-  "pe_ratio": 102.02143,
+  "pe_ratio": 102.22857,
   "market_cap": "11.1B",
   "beta": 1.289,
   "dividend_yield": 0.0045000000000000005
  },
  "council_analysis": {
-  "score": 3
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

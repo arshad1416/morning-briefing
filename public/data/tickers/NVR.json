@@ -1,24 +1,27 @@
 {
  "ticker": "NVR",
  "name": "NVR, Inc.",
- "generated_at": "2026-07-16T11:45:01.566038+00:00",
- "price": 6473.5,
- "change_pct": 0.55,
+ "generated_at": "2026-07-16T14:45:01.616912+00:00",
+ "price": 6606.15,
+ "change_pct": 1.67,
  "sector": "Consumer Cyclical",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "above_ma"
+ ],
  "technical": {
-  "rsi_14": 53.6,
-  "sma_20": 6569.86,
-  "sma_50": 6254.84
+  "rsi_14": 39.6,
+  "sma_20": 6581.68,
+  "sma_50": 6273.29
  },
  "fundamentals": {
-  "pe_ratio": 15.807531,
-  "market_cap": "17.5B",
+  "pe_ratio": 16.138157,
+  "market_cap": "17.8B",
   "beta": 0.902,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
