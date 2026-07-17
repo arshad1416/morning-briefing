@@ -1,21 +1,23 @@
 {
  "ticker": "CAN",
  "name": "Canaan Inc.",
- "generated_at": "2026-07-17T11:45:01.207957+00:00",
- "price": 0.28,
- "change_pct": -3.77,
+ "generated_at": "2026-07-17T14:45:01.770122+00:00",
+ "price": 0.27,
+ "change_pct": -1.16,
  "sector": "Technology",
  "signals": [
-  "below_ma"
+  "rsi_dip",
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 45.5,
-  "sma_20": 0.31,
-  "sma_50": 0.38
+  "rsi_14": 42.6,
+  "sma_20": 0.3,
+  "sma_50": 0.37
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "209M",
+  "market_cap": "203M",
   "beta": 2.583,
   "dividend_yield": null
  },

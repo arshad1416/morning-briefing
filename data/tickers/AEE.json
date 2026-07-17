@@ -1,26 +1,28 @@
 {
  "ticker": "AEE",
  "name": "Ameren Corporation",
- "generated_at": "2026-07-17T11:45:01.207957+00:00",
- "price": 112.12,
- "change_pct": 0.67,
+ "generated_at": "2026-07-17T14:45:01.770122+00:00",
+ "price": 113.84,
+ "change_pct": 0.65,
  "sector": "Utilities",
  "signals": [
-  "rsi_dip"
+  "rsi_dip",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 44.8,
-  "sma_20": 112.76,
-  "sma_50": 110.03
+  "rsi_14": 39.5,
+  "sma_20": 113.05,
+  "sma_50": 110.11
  },
  "fundamentals": {
-  "pe_ratio": 20.166367,
-  "market_cap": "31.0B",
+  "pe_ratio": 20.47482,
+  "market_cap": "31.5B",
   "beta": 0.481,
-  "dividend_yield": 0.0269
+  "dividend_yield": 0.0265
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,27 +1,28 @@
 {
  "ticker": "SYF",
  "name": "Synchrony Financial",
- "generated_at": "2026-07-17T11:45:01.207957+00:00",
- "price": 74.42,
- "change_pct": 0.51,
+ "generated_at": "2026-07-17T14:45:01.770122+00:00",
+ "price": 73.06,
+ "change_pct": -1.64,
  "sector": "Financial Services",
  "signals": [
   "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 39.5,
-  "sma_20": 75.07,
-  "sma_50": 73.09
+  "rsi_14": 36.4,
+  "sma_20": 75.01,
+  "sma_50": 73.07
  },
  "fundamentals": {
-  "pe_ratio": 7.7034163,
-  "market_cap": "25.0B",
+  "pe_ratio": 7.563147,
+  "market_cap": "24.6B",
   "beta": 1.308,
   "dividend_yield": 0.016200000000000003
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,26 +1,28 @@
 {
  "ticker": "PKG",
  "name": "Packaging Corporation of Americ",
- "generated_at": "2026-07-17T11:45:01.207957+00:00",
- "price": 232.4,
- "change_pct": 1.99,
+ "generated_at": "2026-07-17T14:45:01.770122+00:00",
+ "price": 234.77,
+ "change_pct": 0.31,
  "sector": "Consumer Cyclical",
  "signals": [
-  "rsi_dip"
+  "rsi_dip",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 37.0,
-  "sma_20": 232.8,
-  "sma_50": 224.58
+  "rsi_14": 40.4,
+  "sma_20": 233.16,
+  "sma_50": 224.89
  },
  "fundamentals": {
-  "pe_ratio": 28.238153,
-  "market_cap": "20.7B",
+  "pe_ratio": 28.491507,
+  "market_cap": "20.9B",
   "beta": 0.818,
-  "dividend_yield": 0.0263
+  "dividend_yield": 0.0256
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
