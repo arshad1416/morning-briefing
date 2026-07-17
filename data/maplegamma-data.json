@@ -1,46 +1,46 @@
 {
-  "generated_at": "2026-07-17T11:00:49-04:00",
+  "generated_at": "2026-07-17T11:30:44-04:00",
   "market_overview": {
-    "total_net_gex": 2428814,
-    "total_oi": 3157863,
-    "current_price": 744.73,
-    "change_pct": -0.8
+    "total_net_gex": 2414854,
+    "total_oi": 3149264,
+    "current_price": 745.76,
+    "change_pct": -0.66
   },
   "tickers": {
     "SPX": {
-      "current_price": 744.73,
-      "change_pct": -0.8,
+      "current_price": 745.76,
+      "change_pct": -0.66,
       "gamma_regime": "bullish",
-      "total_gex": 2428814,
-      "total_dex": 37222133,
-      "total_vex": 1013705034,
-      "total_vanna": 8001729,
-      "total_charm": -2307899,
-      "total_dealer_gex": -1427336,
-      "gamma_flip": 752.62,
+      "total_gex": 2414854,
+      "total_dex": 40393516,
+      "total_vex": 1014189607,
+      "total_vanna": 8039612,
+      "total_charm": -2244445,
+      "total_dealer_gex": -1106298,
+      "gamma_flip": 751.28,
       "max_pain": 740.0,
       "max_gex_strike": 750.0,
-      "max_gex_value": 304059,
+      "max_gex_value": 281506,
       "neutral_range": [],
       "floor_zone": {
-        "strike": 740.0,
-        "net_gex": 250382,
-        "total_gex": 250382,
-        "range_start": 735.0,
-        "range_end": 745.0,
+        "strike": 745.0,
+        "net_gex": 321193,
+        "total_gex": 321193,
+        "range_start": 740.0,
+        "range_end": 750.0,
         "strength": "strong",
-        "narrative": "Gamma floor at $740"
+        "narrative": "Gamma floor at $745"
       },
       "ceiling_zone": {
         "strike": 750.0,
-        "net_gex": 446445,
-        "total_gex": 446445,
+        "net_gex": 441215,
+        "total_gex": 441215,
         "range_start": 745.0,
         "range_end": 755.0,
         "strength": "strong",
         "narrative": "Gamma ceiling at $750"
       },
-      "narrative": "Net GEX: $+2,428,814 \u2014 dealers are long gamma (range-bound)"
+      "narrative": "Net GEX: $+2,414,854 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
