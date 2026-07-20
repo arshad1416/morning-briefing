@@ -67,7 +67,10 @@ const useMotionKit = () => {
   const reduce = useReducedMotion();
 
   const fadeUp: Variants = {
-    hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 },
+    hidden: {
+      opacity: "var(--landing-reveal-opacity)",
+      y: "var(--landing-reveal-y)",
+    },
     show: {
       opacity: 1,
       y: 0,
@@ -343,7 +346,7 @@ export default function MapleGammaLanding() {
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[var(--color-bg-base)] text-[var(--color-text-secondary)] antialiased selection:bg-[rgba(255,122,26,0.30)]">
+    <div className="landing-motion-root relative min-h-screen overflow-hidden bg-[var(--color-bg-base)] text-[var(--color-text-secondary)] antialiased selection:bg-[rgba(255,122,26,0.30)]">
       {/* Ambient background glows */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div
