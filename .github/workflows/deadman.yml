@@ -19,7 +19,8 @@ jobs:
           PRIMARY_URL: https://maplegamma.com/data/maplegamma-data.json
           PRIMARY_MAX_AGE_HOURS: "26"
           SECONDARY_URL: https://maplegamma.com/data/crypto-cohorts.json
-          SECONDARY_MAX_AGE_HOURS: "2"
+          # Public freshness follows the shared Git/Cloudflare deployment cadence, not the Pi's 15-minute local generation cadence.
+          SECONDARY_MAX_AGE_HOURS: "26"
         run: |
           python3 - <<'PY'
           import json, os, sys, urllib.request
