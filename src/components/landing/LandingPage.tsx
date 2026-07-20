@@ -378,10 +378,10 @@ export default function MapleGammaLanding() {
         <motion.a
           variants={fadeUp}
           href="/"
-          className="flex items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
+          className="flex shrink-0 items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
         >
           <GammaMark size={36} />
-          <span className="text-lg font-semibold tracking-tight text-[var(--color-text-primary)]">
+          <span className="hidden text-lg font-semibold tracking-tight text-[var(--color-text-primary)] sm:inline">
             Maple<span style={{ color: "var(--color-accent)" }}>Gamma</span>
           </span>
         </motion.a>
@@ -391,7 +391,7 @@ export default function MapleGammaLanding() {
               Dashboard's own nav once inside. */}
           <a
             href="/dashboard/"
-            className="rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+            className={`${me ? "inline-flex" : "hidden sm:inline-flex"} min-h-11 shrink-0 items-center whitespace-nowrap rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]`}
           >
             Dashboard
           </a>
@@ -411,14 +411,14 @@ export default function MapleGammaLanding() {
           {!me && (
             <a
               href="/login/"
-              className="rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+              className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-lg px-3 py-2 text-sm text-[var(--color-text-secondary)] transition hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
             >
               Sign in
             </a>
           )}
           <a
             href={me ? "/account/" : "/signup/"}
-            className="rounded-lg bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-on-accent)] transition hover:bg-[var(--color-accent-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
+            className="inline-flex min-h-11 shrink-0 items-center whitespace-nowrap rounded-lg bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-on-accent)] transition hover:bg-[var(--color-accent-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)]"
           >
             {me ? "Account" : "Get started"}
           </a>

@@ -255,6 +255,28 @@ test.describe('320px regression contracts', () => {
     }
   });
 
+  test('guest landing actions stay single-line and inside 320px', async ({ page }) => {
+    await installMocks(page, { loggedIn: false });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await settleLayout(page);
+
+    for (const name of ['Sign in', 'Get started']) {
+      const action = page.getByRole('link', { name, exact: true });
+      await expect(action).toBeVisible();
+      const metrics = await action.evaluate((element) => {
+        const bounds = element.getBoundingClientRect();
+        const text = element.firstChild;
+        const range = document.createRange();
+        if (text) range.selectNodeContents(text);
+        const lines = new Set([...range.getClientRects()].map((rect) => Math.round(rect.top)));
+        return { left: bounds.left, right: bounds.right, lines: lines.size };
+      });
+      expect(metrics.left, `${name} started outside the viewport`).toBeGreaterThanOrEqual(0);
+      expect(metrics.right, `${name} ended outside the viewport`).toBeLessThanOrEqual(320);
+      expect(metrics.lines, `${name} wrapped onto multiple lines`).toBe(1);
+    }
+  });
+
   test('feedback is absent from login and signup', async ({ page }) => {
     for (const routePath of ['/login/', '/signup/']) {
       await test.step(routePath, async () => {
