@@ -387,7 +387,7 @@ test.describe('landing motion contracts', () => {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await settleLayout(page);
 
-    const reveal = page.locator('#features > div').first();
+    const reveal = page.locator('#pricing > div').first();
     const state = await reveal.evaluate((element) => ({
       opacity: Number(getComputedStyle(element).opacity),
       belowViewport: element.getBoundingClientRect().top >= window.innerHeight,
