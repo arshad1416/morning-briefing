@@ -40,7 +40,7 @@ export function LayoutEditToggle() {
       <button
         type="button"
         onClick={toggleEditing}
-        className="flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-xs font-medium transition-colors"
+        className="flex h-11 w-11 shrink-0 items-center justify-center gap-1.5 rounded-lg text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:w-auto sm:px-2.5"
         style={{ color: 'var(--color-text-secondary)' }}
         aria-label="Edit layout"
         title="Rearrange cards"
@@ -57,21 +57,23 @@ export function LayoutEditToggle() {
   }
 
   return (
-    <div className="flex items-center gap-1.5">
+    <div className="flex shrink-0 items-center gap-0 sm:gap-1.5">
       <button
         type="button"
         onClick={() => reset(pageId)}
-        className="h-8 rounded-lg px-2.5 text-xs font-medium transition-colors"
+        className="min-h-11 rounded-lg px-2 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] min-[360px]:px-2.5 min-[360px]:text-xs"
         style={{ color: 'var(--color-text-tertiary)' }}
         title="Reset this page to the default layout"
+        aria-label="Reset layout"
       >
         Reset
       </button>
       <button
         type="button"
         onClick={toggleEditing}
-        className="h-8 rounded-lg px-3 text-xs font-semibold transition-colors"
+        className="min-h-11 rounded-lg px-2 text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] min-[360px]:px-3 min-[360px]:text-xs"
         style={{ backgroundColor: 'var(--color-accent)', color: '#0b0e1a' }}
+        aria-label="Done editing layout"
       >
         Done
       </button>

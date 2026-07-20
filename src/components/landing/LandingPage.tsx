@@ -67,7 +67,7 @@ const useMotionKit = () => {
   const reduce = useReducedMotion();
 
   const fadeUp: Variants = {
-    hidden: { opacity: 0, y: reduce ? 0 : 24 },
+    hidden: { opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 },
     show: {
       opacity: 1,
       y: 0,
