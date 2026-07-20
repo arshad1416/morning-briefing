@@ -99,7 +99,17 @@ body {
 }
 
 /* ---- Reduced motion ---- */
+.landing-motion-root {
+  --landing-reveal-opacity: 0;
+  --landing-reveal-y: 24px;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .landing-motion-root {
+    --landing-reveal-opacity: 1;
+    --landing-reveal-y: 0px;
+  }
+
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
