@@ -365,12 +365,19 @@ test.describe('landing motion contracts', () => {
     ).toBe(true);
 
     for (let step = 0; step < 12; step += 1) {
-      const visible = await reveal.evaluate((element) => Number(getComputedStyle(element).opacity) > 0.99);
-      if (visible) break;
+      const inViewport = await reveal.evaluate((element) => {
+        const bounds = element.getBoundingClientRect();
+        return bounds.top < window.innerHeight && bounds.bottom > 0;
+      });
+      if (inViewport) break;
       await page.evaluate(() => window.scrollBy(0, window.innerHeight * 0.7));
       await settleLayout(page);
     }
 
+    await expect.poll(() => reveal.evaluate((element) => {
+      const bounds = element.getBoundingClientRect();
+      return bounds.top < window.innerHeight && bounds.bottom > 0;
+    })).toBe(true);
     await expect(reveal).toHaveCSS('opacity', '1');
   });
 
