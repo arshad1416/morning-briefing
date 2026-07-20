@@ -5,7 +5,7 @@
 // Telegram — no backend on the static site itself.
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 const ENDPOINT = 'https://morning-briefing-chat.rcobwq7u.workers.dev/feedback';
@@ -25,6 +25,36 @@ export function FeedbackBubble() {
   const [email, setEmail] = useState('');
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState<{ ok: boolean; text: string } | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const normalizedPath = (pathname || '/').replace(/\/+$/, '') || '/';
+  const isAuthPage = normalizedPath === '/login' || normalizedPath === '/signup';
+  const hasAppNavigation = normalizedPath !== '/';
+
+  useEffect(() => {
+    setOpen(false);
+    setStatus(null);
+  }, [normalizedPath]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    dialogRef.current?.querySelector<HTMLElement>('[data-feedback-autofocus]')?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      setOpen(false);
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      requestAnimationFrame(() => {
+        document.querySelector<HTMLButtonElement>('[data-feedback-trigger]')?.focus();
+      });
+    };
+  }, [open]);
+
+  if (isAuthPage) return null;
 
   const send = async () => {
     if (sending) return;
@@ -75,21 +105,30 @@ export function FeedbackBubble() {
   };
 
   return (
-    <div className="fixed bottom-[72px] right-4 z-50 md:bottom-5 md:right-5">
+    <div
+      className={`fixed right-[max(1rem,env(safe-area-inset-right))] z-50 md:right-5 ${
+        hasAppNavigation
+          ? 'bottom-[calc(4.75rem+env(safe-area-inset-bottom))] md:bottom-5'
+          : 'bottom-[max(1rem,env(safe-area-inset-bottom))] md:bottom-5'
+      }`}
+    >
       {open ? (
         <div
+          id="feedback-dialog"
+          ref={dialogRef}
           role="dialog"
-          aria-label="Feedback form"
+          aria-labelledby="feedback-dialog-title"
           className="w-80 max-w-[calc(100vw-32px)] rounded-2xl border p-4 shadow-2xl"
           style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-default)' }}
         >
           <div className="mb-3 flex items-center justify-between">
-            <span className="text-sm font-semibold text-[var(--color-text-primary)]">Send feedback</span>
+            <h2 id="feedback-dialog-title" className="text-sm font-semibold text-[var(--color-text-primary)]">Feedback form</h2>
             <button
               type="button"
+              data-feedback-autofocus
               onClick={() => setOpen(false)}
-              aria-label="Close"
-              className="px-1 text-xl leading-none text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)]"
+              aria-label="Close feedback form"
+              className="flex h-11 w-11 items-center justify-center rounded-lg text-xl leading-none text-[var(--color-text-tertiary)] hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
             >
               ×
             </button>
@@ -100,7 +139,7 @@ export function FeedbackBubble() {
                 key={t.key}
                 type="button"
                 onClick={() => setType(t.key)}
-                className="flex-1 rounded-lg border px-1 py-1.5 text-xs font-medium transition"
+                className="min-h-11 flex-1 rounded-lg border px-1 py-1.5 text-xs font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
                 style={
                   type === t.key
                     ? { borderColor: 'var(--color-accent)', backgroundColor: 'var(--color-accent-dim)', color: 'var(--color-text-primary)' }
@@ -133,7 +172,7 @@ export function FeedbackBubble() {
             type="button"
             onClick={send}
             disabled={sending}
-            className="w-full rounded-lg py-2.5 text-sm font-semibold transition hover:bg-[var(--color-accent-fg)] disabled:opacity-60"
+            className="min-h-11 w-full rounded-lg py-2.5 text-sm font-semibold transition hover:bg-[var(--color-accent-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:opacity-60"
             style={{ backgroundColor: 'var(--color-accent)', color: 'var(--color-on-accent)' }}
           >
             {sending ? 'Sending…' : 'Send'}
@@ -148,9 +187,11 @@ export function FeedbackBubble() {
         </div>
       ) : (
         <button
+          data-feedback-trigger
           type="button"
           onClick={() => setOpen(true)}
           aria-label="Send feedback"
+          aria-haspopup="dialog"
           title="Send feedback"
           className="flex h-12 items-center gap-2 rounded-full px-5 text-sm font-semibold shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl"
           style={{ backgroundColor: 'var(--color-accent)', color: 'var(--color-on-accent)' }}

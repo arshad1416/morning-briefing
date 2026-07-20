@@ -1,7 +1,7 @@
 // components/layout/AppShell.tsx — providers + shell + nav
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useUI } from '@/stores/ui';
@@ -145,18 +145,28 @@ function IconDial({ className }: IconProps) {
   );
 }
 
+function IconMore({ className }: IconProps) {
+  return (
+    <svg {...iconDefaults} className={className} aria-hidden="true">
+      <circle cx="5" cy="12" r="1.25" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="12" r="1.25" fill="currentColor" stroke="none" />
+      <circle cx="19" cy="12" r="1.25" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 function SessionButton() {
   const { data: me, isLoading } = useMe();
 
   // Render nothing until the session check resolves — the prerendered HTML and
   // the first client render agree (both loading), so no hydration mismatch.
-  if (isLoading) return <span className="min-w-11" aria-hidden="true" />;
+  if (isLoading) return <span className="h-11 w-11 shrink-0" aria-hidden="true" />;
 
   if (me) {
     return (
       <Link
         href="/account/"
-        className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)]"
+        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:w-auto sm:gap-2 sm:px-3"
         title={me.email}
       >
         <IconUser />
@@ -168,7 +178,7 @@ function SessionButton() {
   return (
     <Link
       href="/login/"
-      className="inline-flex min-h-9 items-center rounded-lg px-3.5 text-sm font-semibold transition hover:bg-[var(--color-accent-fg)]"
+      className="inline-flex min-h-11 shrink-0 items-center rounded-lg px-2.5 text-xs font-semibold transition hover:bg-[var(--color-accent-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] min-[360px]:px-3.5 min-[360px]:text-sm"
       style={{ backgroundColor: 'var(--color-accent)', color: 'var(--color-on-accent)' }}
     >
       Sign in
@@ -176,15 +186,20 @@ function SessionButton() {
   );
 }
 
-const NAV_ITEMS = [
+const MOBILE_PRIMARY_ITEMS = [
   { href: '/dashboard/', label: 'Dashboard', Icon: IconGrid },
   { href: '/positions/', label: 'Positions', Icon: IconLayers },
   { href: '/options/', label: 'Options', Icon: IconTarget },
   { href: '/screener/', label: 'Screener', Icon: IconFunnel },
+];
+
+const MOBILE_MORE_CORE_ITEMS = [
   { href: '/research/', label: 'Research', Icon: IconNews },
   { href: '/charts/', label: 'Charts', Icon: IconCandles },
   { href: '/models/', label: 'Models', Icon: IconPulse },
 ];
+
+const NAV_ITEMS = [...MOBILE_PRIMARY_ITEMS, ...MOBILE_MORE_CORE_ITEMS];
 
 // Deep-dive pages surfaced in the sidebar only — the mobile bottom nav stays
 // at the seven primary destinations.
@@ -192,6 +207,8 @@ const SECONDARY_NAV_ITEMS = [
   { href: '/predictions/', label: 'Engine Tuning', Icon: IconDial },
   { href: '/archive/', label: 'Archive', Icon: IconArchive },
 ];
+
+const MOBILE_MORE_ITEMS = [...MOBILE_MORE_CORE_ITEMS, ...SECONDARY_NAV_ITEMS];
 
 function normalizePath(p: string) {
   const stripped = p.replace(/\/+$/, '');
@@ -279,6 +296,180 @@ function LearningModeToggle() {
   );
 }
 
+function MobileNavigation({ pathname }: { pathname: string }) {
+  const [moreOpen, setMoreOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const restoreFocusRef = useRef(true);
+  const moreIsActive = MOBILE_MORE_ITEMS.some((item) => isNavActive(pathname, item.href));
+
+  useEffect(() => {
+    restoreFocusRef.current = false;
+    setMoreOpen(false);
+  }, [pathname]);
+
+  const closeMore = (restoreFocus = true) => {
+    restoreFocusRef.current = restoreFocus;
+    setMoreOpen(false);
+  };
+
+  const toggleMore = () => {
+    if (moreOpen) {
+      closeMore();
+      return;
+    }
+    restoreFocusRef.current = true;
+    setMoreOpen(true);
+  };
+
+  useEffect(() => {
+    if (!moreOpen) return;
+
+    const sheet = sheetRef.current;
+    const trigger = triggerRef.current;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    sheet?.querySelector<HTMLElement>('[data-sheet-autofocus]')?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        restoreFocusRef.current = true;
+        setMoreOpen(false);
+        return;
+      }
+
+      if (event.key !== 'Tab' || !sheet) return;
+      const focusable = Array.from(
+        sheet.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'),
+      ).filter((element) => element.getClientRects().length > 0);
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      if (restoreFocusRef.current) trigger?.focus();
+    };
+  }, [moreOpen]);
+
+  return (
+    <>
+      {moreOpen && (
+        <>
+          <button
+            type="button"
+            aria-label="Close More menu"
+            className="fixed inset-0 z-[70] cursor-default bg-black/55 md:hidden"
+            onClick={() => closeMore()}
+          />
+          <div
+            id="mobile-more-sheet"
+            ref={sheetRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="mobile-more-title"
+            className="fixed inset-x-0 bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-[80] max-h-[70vh] overflow-y-auto rounded-t-2xl border-t p-4 shadow-2xl md:hidden"
+            style={{
+              borderColor: 'var(--color-border-default)',
+              backgroundColor: 'var(--color-bg-surface)',
+            }}
+          >
+            <div className="mb-3 flex items-center justify-between">
+              <h2 id="mobile-more-title" className="text-base font-semibold text-[var(--color-text-primary)]">
+                More destinations
+              </h2>
+              <button
+                type="button"
+                data-sheet-autofocus
+                aria-label="Close More menu"
+                className="flex h-11 w-11 items-center justify-center rounded-lg text-2xl leading-none text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+                onClick={() => closeMore()}
+              >
+                ×
+              </button>
+            </div>
+            <div className="grid gap-1">
+              {MOBILE_MORE_ITEMS.map((item) => {
+                const isActive = isNavActive(pathname, item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={isActive ? 'page' : undefined}
+                    onClick={() => closeMore(false)}
+                    className="flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+                    style={{
+                      backgroundColor: isActive ? 'var(--color-bg-elevated)' : 'transparent',
+                      color: isActive ? 'var(--color-text-primary)' : 'var(--color-text-secondary)',
+                    }}
+                  >
+                    <item.Icon className={isActive ? 'text-[var(--color-accent)]' : undefined} />
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </>
+      )}
+
+      <nav
+        aria-label="Mobile navigation"
+        aria-hidden={moreOpen ? true : undefined}
+        inert={moreOpen}
+        className="fixed inset-x-0 bottom-0 z-[60] border-t px-1 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-md md:hidden"
+        style={{
+          borderColor: 'var(--color-border-subtle)',
+          backgroundColor: 'color-mix(in srgb, var(--color-bg-base) 82%, transparent)',
+        }}
+      >
+        <div className="grid grid-cols-5 items-stretch">
+          {MOBILE_PRIMARY_ITEMS.map((item) => {
+            const isActive = isNavActive(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={isActive ? 'page' : undefined}
+                className="flex min-h-11 min-w-0 flex-col items-center justify-center gap-1 rounded-lg px-0.5 text-[10px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+                style={{ color: isActive ? 'var(--color-accent)' : 'var(--color-text-tertiary)' }}
+              >
+                <item.Icon />
+                <span className="max-w-full truncate">{item.label}</span>
+              </Link>
+            );
+          })}
+          <button
+            ref={triggerRef}
+            type="button"
+            aria-expanded={moreOpen}
+            aria-controls={moreOpen ? 'mobile-more-sheet' : undefined}
+            aria-current={moreIsActive ? 'page' : undefined}
+            className="flex min-h-11 min-w-0 flex-col items-center justify-center gap-1 rounded-lg px-0.5 text-[10px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+            style={{ color: moreIsActive || moreOpen ? 'var(--color-accent)' : 'var(--color-text-tertiary)' }}
+            onClick={toggleMore}
+          >
+            <IconMore />
+            More
+          </button>
+        </div>
+      </nav>
+    </>
+  );
+}
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
@@ -311,17 +502,21 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           backgroundColor: 'color-mix(in srgb, var(--color-bg-base) 65%, transparent)',
         }}
       >
-        <div className="max-w-[1400px] mx-auto px-4 h-14 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <Link href="/" className="flex items-center gap-2.5">
+        <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-1 px-2 min-[360px]:px-3 sm:gap-4 sm:px-4">
+          <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-4">
+            <Link
+              href="/"
+              aria-label="MapleGamma home"
+              className="flex shrink-0 items-center gap-2.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+            >
               <GammaMark size={28} />
-              <span className="text-[15px] font-semibold tracking-tight text-[var(--color-text-primary)]">
+              <span className="hidden text-[15px] font-semibold tracking-tight text-[var(--color-text-primary)] sm:inline">
                 Maple<span style={{ color: 'var(--color-accent)' }}>Gamma</span>
               </span>
             </Link>
             <MarketStatusPill />
           </div>
-          <div className="flex items-center gap-1.5">
+          <div className="flex shrink-0 items-center gap-0 sm:gap-1.5">
             <LayoutEditToggle />
             <LearningModeToggle />
             <ThemeToggle />
@@ -405,7 +600,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {children}
 
           {/* Compliance footer — general disclaimer, position-disclosure policy, Quebec notice */}
-          <footer className="mt-8 pt-4 pb-16 md:pb-4 border-t text-[11px] leading-relaxed text-[var(--color-text-tertiary)]" style={{ borderColor: 'var(--color-border-subtle)' }}>
+          <footer className="mt-8 border-t pt-4 pb-[calc(5rem+env(safe-area-inset-bottom))] text-[11px] leading-relaxed text-[var(--color-text-tertiary)] md:pb-4" style={{ borderColor: 'var(--color-border-subtle)' }}>
             <p className="mb-2">
               MapleGamma provides general market information and simulated (paper-trading) results for
               educational purposes only. Nothing on this site is investment advice or a recommendation,
@@ -426,34 +621,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </main>
       </div>
 
-      {/* Mobile bottom nav — nine destinations don't fit a narrow viewport,
-          so the strip scrolls horizontally (scrollbar hidden). This is also
-          the only mobile path to the deep-dive pages. */}
-      <nav
-        className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t backdrop-blur-md overflow-x-auto"
-        style={{
-          borderColor: 'var(--color-border-subtle)',
-          backgroundColor: 'color-mix(in srgb, var(--color-bg-base) 75%, transparent)',
-          scrollbarWidth: 'none',
-        }}
-      >
-        <div className="flex w-max min-w-full items-stretch justify-around gap-1 px-2 py-2">
-          {[...NAV_ITEMS, ...SECONDARY_NAV_ITEMS].map((item) => {
-            const isActive = isNavActive(pathname, item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex min-h-11 min-w-14 shrink-0 flex-col items-center justify-center gap-1 whitespace-nowrap text-[10px]"
-                style={{ color: isActive ? 'var(--color-accent)' : 'var(--color-text-tertiary)' }}
-              >
-                <item.Icon />
-                {item.label}
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
+      <MobileNavigation pathname={pathname} />
     </div>
   );
 }
