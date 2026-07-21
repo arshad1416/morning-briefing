@@ -1,24 +1,27 @@
 {
  "ticker": "YUM",
  "name": "Yum! Brands, Inc.",
- "generated_at": "2026-07-20T14:45:02.077866+00:00",
- "price": 155.4,
- "change_pct": 2.17,
+ "generated_at": "2026-07-21T11:45:01.745255+00:00",
+ "price": 147.91,
+ "change_pct": -0.01,
  "sector": "Consumer Cyclical",
- "signals": [],
+ "signals": [
+  "oversold_rsi",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.4,
-  "sma_20": 158.2,
-  "sma_50": 154.17
+  "rsi_14": 33.4,
+  "sma_20": 157.62,
+  "sma_50": 153.87
  },
  "fundamentals": {
-  "pe_ratio": 25.024153,
-  "market_cap": "42.8B",
+  "pe_ratio": 23.856453,
+  "market_cap": "40.8B",
   "beta": 0.56,
-  "dividend_yield": 0.0197
+  "dividend_yield": 0.0203
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

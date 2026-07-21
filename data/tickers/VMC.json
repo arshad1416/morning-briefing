@@ -1,24 +1,25 @@
 {
  "ticker": "VMC",
  "name": "Vulcan Materials Company (Holdi",
- "generated_at": "2026-07-20T14:45:02.077866+00:00",
- "price": 294.71,
- "change_pct": 0.42,
+ "generated_at": "2026-07-21T11:45:01.745255+00:00",
+ "price": 282.68,
+ "change_pct": -1.96,
  "sector": "Basic Materials",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 37.2,
-  "sma_20": 298.61,
-  "sma_50": 286.39
+  "rsi_14": 34.2,
+  "sma_20": 297.29,
+  "sma_50": 286.02
  },
  "fundamentals": {
-  "pe_ratio": 34.388565,
-  "market_cap": "38.2B",
+  "pe_ratio": 33.453846,
+  "market_cap": "36.7B",
   "beta": 1.05,
-  "dividend_yield": 0.0070999999999999995
+  "dividend_yield": 0.0072
  },
  "council_analysis": {
   "score": 5

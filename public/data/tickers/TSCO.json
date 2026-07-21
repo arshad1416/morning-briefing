@@ -1,23 +1,25 @@
 {
  "ticker": "TSCO",
  "name": "Tractor Supply Company",
- "generated_at": "2026-07-20T14:45:02.077866+00:00",
- "price": 31.33,
- "change_pct": 1.03,
+ "generated_at": "2026-07-21T11:45:01.745255+00:00",
+ "price": 30.38,
+ "change_pct": -0.44,
  "sector": "Consumer Cyclical",
  "signals": [
-  "above_ma"
+  "rsi_dip",
+  "below_ma",
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 50.8,
-  "sma_20": 30.63,
-  "sma_50": 30.63
+  "rsi_14": 44.4,
+  "sma_20": 30.6,
+  "sma_50": 30.57
  },
  "fundamentals": {
-  "pe_ratio": 15.433497,
-  "market_cap": "16.4B",
+  "pe_ratio": 14.963055,
+  "market_cap": "15.9B",
   "beta": 0.456,
-  "dividend_yield": 0.031
+  "dividend_yield": 0.0315
  },
  "council_analysis": {
   "score": 6

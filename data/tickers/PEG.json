@@ -1,23 +1,24 @@
 {
  "ticker": "PEG",
  "name": "Public Service Enterprise Group",
- "generated_at": "2026-07-20T14:45:02.077866+00:00",
- "price": 80.31,
- "change_pct": 0.97,
+ "generated_at": "2026-07-21T11:45:01.745255+00:00",
+ "price": 78.68,
+ "change_pct": 0.05,
  "sector": "Utilities",
  "signals": [
-  "rsi_dip"
+  "oversold_rsi",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 35.1,
-  "sma_20": 81.06,
-  "sma_50": 79.2
+  "rsi_14": 31.2,
+  "sma_20": 80.92,
+  "sma_50": 79.16
  },
  "fundamentals": {
-  "pe_ratio": 17.766594,
-  "market_cap": "40.0B",
+  "pe_ratio": 17.40708,
+  "market_cap": "39.2B",
   "beta": 0.527,
-  "dividend_yield": 0.0337
+  "dividend_yield": 0.0341
  },
  "council_analysis": {
   "score": 6

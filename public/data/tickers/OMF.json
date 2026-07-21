@@ -1,29 +1,49 @@
 {
  "ticker": "OMF",
  "name": "OneMain Holdings, Inc.",
- "generated_at": "2026-07-20T14:45:02.077866+00:00",
- "price": 60.08,
- "change_pct": -1.91,
+ "generated_at": "2026-07-21T11:45:01.745255+00:00",
+ "price": 60.54,
+ "change_pct": 0.4,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
   "above_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 48.7,
-  "sma_20": 59.64,
-  "sma_50": 56.66
+  "rsi_14": 42.1,
+  "sma_20": 59.77,
+  "sma_50": 56.78
  },
  "fundamentals": {
-  "pe_ratio": 8.9538,
-  "market_cap": "6.9B",
+  "pe_ratio": 9.022355,
+  "market_cap": "7.0B",
   "beta": 1.184,
-  "dividend_yield": 0.06860000000000001
+  "dividend_yield": 0.0697
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "OMF",
+   "date": "2026-07-29",
+   "epsEstimate": 1.29,
+   "epsActual": null
+  },
+  {
+   "ticker": "OMF",
+   "date": "2026-05-01",
+   "epsEstimate": 1.86,
+   "epsActual": 1.95
+  },
+  {
+   "ticker": "OMF",
+   "date": "2026-02-05",
+   "epsEstimate": 1.54,
+   "epsActual": 1.59
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

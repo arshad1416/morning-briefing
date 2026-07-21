@@ -1,18 +1,18 @@
 {
  "ticker": "VCIT",
  "name": "Vanguard Intermediate-Term Corp",
- "generated_at": "2026-07-20T14:45:02.077866+00:00",
- "price": 81.99,
- "change_pct": 0.14,
+ "generated_at": "2026-07-21T11:45:01.745255+00:00",
+ "price": 81.82,
+ "change_pct": -0.15,
  "sector": null,
  "signals": [
-  "rsi_dip",
-  "near_high"
+  "oversold_rsi",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 38.1,
-  "sma_20": 82.09,
-  "sma_50": 81.94
+  "rsi_14": 33.8,
+  "sma_20": 82.07,
+  "sma_50": 81.93
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -21,7 +21,7 @@
   "dividend_yield": 0.0478
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

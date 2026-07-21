@@ -1,29 +1,48 @@
 {
  "ticker": "PHM",
  "name": "PulteGroup, Inc.",
- "generated_at": "2026-07-20T14:45:02.077866+00:00",
- "price": 128.13,
- "change_pct": -0.69,
+ "generated_at": "2026-07-21T11:45:01.745255+00:00",
+ "price": 123.72,
+ "change_pct": -1.87,
  "sector": "Consumer Cyclical",
  "signals": [
   "oversold_rsi",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 32.1,
-  "sma_20": 129.66,
-  "sma_50": 122.35
+  "rsi_14": 26.7,
+  "sma_20": 129.4,
+  "sma_50": 122.39
  },
  "fundamentals": {
-  "pe_ratio": 12.042762,
-  "market_cap": "24.4B",
+  "pe_ratio": 11.965667,
+  "market_cap": "23.6B",
   "beta": 1.186,
-  "dividend_yield": 0.008100000000000001
+  "dividend_yield": 0.008199999999999999
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "PHM",
+   "date": "2026-07-22",
+   "epsEstimate": 2.36,
+   "epsActual": null
+  },
+  {
+   "ticker": "PHM",
+   "date": "2026-04-23",
+   "epsEstimate": 1.81,
+   "epsActual": 1.79
+  },
+  {
+   "ticker": "PHM",
+   "date": "2026-01-29",
+   "epsEstimate": 2.81,
+   "epsActual": 2.88
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

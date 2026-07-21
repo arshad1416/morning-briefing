@@ -1,22 +1,23 @@
 {
  "ticker": "WAB",
  "name": "Westinghouse Air Brake Technolo",
- "generated_at": "2026-07-20T14:45:02.077866+00:00",
- "price": 264.63,
- "change_pct": 0.28,
+ "generated_at": "2026-07-21T11:45:01.745255+00:00",
+ "price": 259.26,
+ "change_pct": -1.08,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 39.8,
-  "sma_20": 266.05,
-  "sma_50": 264.27
+  "rsi_14": 33.1,
+  "sma_20": 265.19,
+  "sma_50": 264.0
  },
  "fundamentals": {
-  "pe_ratio": 37.429817,
-  "market_cap": "44.9B",
+  "pe_ratio": 36.61794,
+  "market_cap": "44.0B",
   "beta": 0.937,
   "dividend_yield": 0.004699999999999999
  },
