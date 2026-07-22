@@ -111,8 +111,8 @@ const iconProps = {
 
 const FEATURES: Feature[] = [
   {
-    title: "GEX / DEX Mapping",
-    body: "See exactly where dealers are pinned. Live gamma & delta exposure by strike reveals the walls that move price.",
+    title: "Where the Big Money Is Pinned",
+    body: "The price levels the banks that sell options have to defend — the invisible floors and ceilings that quietly push a stock around. Shown level by level (GEX / DEX).",
     icon: (
       <svg {...iconProps} aria-hidden="true">
         <path d="M3 21h18" />
@@ -123,8 +123,8 @@ const FEATURES: Feature[] = [
     ),
   },
   {
-    title: "AI Predictions",
-    body: "Probabilistic next-day and next-week ranges modeled on 26 years of regime-tagged market behavior.",
+    title: "A Daily Call, and Its Track Record",
+    body: "One 0–10 score for how the day is leaning, graded against how similar conditions played out before — shown next to how often it has actually been right.",
     icon: (
       <svg {...iconProps} aria-hidden="true">
         <path d="M3 17l5-6 4 4 6-8" />
@@ -134,7 +134,7 @@ const FEATURES: Feature[] = [
   },
   {
     title: "Real-Time News",
-    body: "Filings, headlines and catalysts streamed and ranked by impact — the noise stripped out, the signal surfaced.",
+    body: "Company filings and headlines as they land, each one summarised in a sentence and tagged as good, bad or neutral news — so you can skim the day in a minute.",
     icon: (
       <svg {...iconProps} aria-hidden="true">
         <path d="M4 5h13v14H6a2 2 0 0 1-2-2V5z" />
@@ -144,8 +144,8 @@ const FEATURES: Feature[] = [
     ),
   },
   {
-    title: "Market Sentiment",
-    body: "Crowd positioning, options skew and social momentum fused into a single, readable bull-vs-bear pulse.",
+    title: "What the Crowd Is Doing",
+    body: "Where retail traders are piling in, what options buyers are paying up to protect against, and what's loud online — combined into one bullish-to-bearish reading.",
     icon: (
       <svg {...iconProps} aria-hidden="true">
         <path d="M3 12a9 9 0 0 1 18 0" />
@@ -175,7 +175,7 @@ function VerdictBar() {
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h3 className="text-lg font-semibold text-[var(--color-text-primary)]">The Verdict</h3>
         <p className="text-sm text-[var(--color-text-tertiary)]">
-          One synthesized call per ticker — updated every minute.
+          Everything above, boiled down to one reading per stock.
         </p>
       </div>
 
@@ -340,9 +340,9 @@ export default function MapleGammaLanding() {
   }, []);
 
   const stats = [
-    { value: "17.5K", label: "backtested trades" },
-    { value: "59", label: "tickers covered" },
-    { value: "26", label: "years of data" },
+    { value: "17.5K", label: "trades tested on past data" },
+    { value: "59", label: "stocks covered" },
+    { value: "26", label: "years of market history" },
   ];
 
   return (
@@ -442,7 +442,7 @@ export default function MapleGammaLanding() {
                 className="h-1.5 w-1.5 rounded-full animate-pulse"
                 style={{ backgroundColor: "var(--color-accent)" }}
               />
-              Institutional-grade options intelligence
+              Professional options data, explained in plain English
             </motion.span>
 
             <motion.h1
@@ -460,9 +460,10 @@ export default function MapleGammaLanding() {
               variants={fadeUp}
               className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-[var(--color-text-tertiary)]"
             >
-              MapleGamma turns dealer gamma, delta exposure, live news and
-              sentiment into one clear verdict — so retail investors can read the
-              market the way the pros do.
+              MapleGamma reads the options market, the news and the crowd, then
+              turns all of it into one plain-English call on the day — with every
+              term explained as you go, whether it&apos;s your first year investing
+              or your fifteenth.
             </motion.p>
 
             <motion.div
@@ -528,8 +529,8 @@ export default function MapleGammaLanding() {
               Every edge, on one screen
             </h2>
             <p className="mt-4 text-[var(--color-text-tertiary)]">
-              Five signals, continuously fused into a decision you can actually
-              act on.
+              Four readings of the market, combined into one call you can
+              actually act on — and every term on the page explains itself.
             </p>
           </motion.div>
 
@@ -665,10 +666,10 @@ export default function MapleGammaLanding() {
                 cta="Create account"
                 href="/signup/"
                 features={[
-                  "Daily market regime, indices & AI verdict",
-                  "Headlines, Reddit pulse & key catalysts",
-                  "GEX/DEX/VEX snapshot + dealer gamma regime",
-                  "Customizable dashboard layout",
+                  "The day's market mood, major indexes & one clear call",
+                  "Headlines, what Reddit is saying & events worth watching",
+                  "Options positioning snapshot (GEX / DEX / VEX), explained",
+                  "Dashboard you can rearrange to suit you",
                 ]}
               />
             </motion.div>
@@ -684,10 +685,10 @@ export default function MapleGammaLanding() {
                 href={`/signup/?plan=basic${annual ? "&interval=annual" : ""}`}
                 features={[
                   "Everything in Free",
-                  "Full multi-factor screener — all tickers scored",
-                  "Research desk: AI analysis, news, earnings & SEC filings",
-                  "Prediction-market sentiment + trade ideas",
-                  "Simulated portfolio, positions & trade journal",
+                  "Full stock screener — every stock scored out of 10",
+                  "Research desk: AI analysis, news, earnings & company filings",
+                  "What betting markets expect, plus trade ideas",
+                  "Practice portfolio, positions & a trade diary",
                 ]}
               />
             </motion.div>
@@ -703,11 +704,11 @@ export default function MapleGammaLanding() {
                 featured
                 features={[
                   "Everything in Basic",
-                  "Interactive charts — candles, RSI, ATR & volume",
-                  "Gamma walls + strike-level options exposure",
-                  "Model calibration, accuracy & walk-forward validation",
-                  "Prediction engine, live simulation & 5-model council history",
-                  "Options strategy status + crypto strategy cohorts¹",
+                  "Interactive charts — price bars, momentum, swing size & volume",
+                  "The price levels options activity is defending, level by level",
+                  "Is the model honest? Accuracy, and tests on data it never saw",
+                  "Prediction engine, live practice account & 5-model AI council",
+                  "Options strategy status + crypto strategy groups¹",
                 ]}
               />
             </motion.div>
