@@ -4,13 +4,15 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { nopeDetailQuery } from '@/lib/query/options';
 import { formatCompact } from '@/lib/format';
+import { GateError } from '@/lib/api/gated';
+import { GateCard } from '@/components/feature/gating/GateCard';
 
 function metric(value: number | null | undefined, digits = 3) {
   return value == null ? '—' : value.toFixed(digits);
 }
 
 export function NopeCard() {
-  const { data, isLoading } = useQuery(nopeDetailQuery());
+  const { data, isLoading, isError, error } = useQuery(nopeDetailQuery());
   const spy = data?.symbols.SPY;
   const qqq = data?.symbols.QQQ;
   const symbols = [
@@ -25,7 +27,16 @@ export function NopeCard() {
         <span className="text-[10px] font-medium text-[var(--color-text-tertiary)]">PRO · EOD</span>
       </div>
       <div className="p-4">
-        {isLoading || !data ? (
+        {/* Without this branch a failed/missing R2 file left an infinite skeleton. */}
+        {isError ? (
+          error instanceof GateError && error.kind !== 'unavailable' ? (
+            <GateCard kind={error.kind} need={error.need ?? 'pro'} feature="NOPE flow" flush />
+          ) : (
+            <p className="py-6 text-center text-sm text-[var(--color-text-tertiary)]">
+              NOPE data isn&apos;t available right now.
+            </p>
+          )
+        ) : isLoading || !data ? (
           // Ghost skeleton: the loaded markup with transparent text so heights
           // match the loaded state exactly and the load causes no shift.
           <div aria-busy="true">

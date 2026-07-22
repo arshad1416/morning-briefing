@@ -1,0 +1,505 @@
+{
+  "generated_at": "2026-07-22T07:22:22-04:00",
+  "market_summary": {
+    "vix": 17.4,
+    "ten_year_yield": 4.63,
+    "indices": [
+      {
+        "ticker": "S&P 500",
+        "price": 7509.2,
+        "change_pct": 0.89
+      },
+      {
+        "ticker": "Dow Jones",
+        "price": 52224.64,
+        "change_pct": 0.74
+      },
+      {
+        "ticker": "NASDAQ",
+        "price": 25837.21,
+        "change_pct": 1.29
+      },
+      {
+        "ticker": "TSX",
+        "price": 35369.1,
+        "change_pct": 1.17
+      },
+      {
+        "ticker": "VIX",
+        "price": 17.4,
+        "change_pct": 2.05
+      },
+      {
+        "ticker": "10Y Yield",
+        "price": 4.63,
+        "change_pct": 0.65
+      }
+    ],
+    "fx_rates": [
+      {
+        "pair": "USD/CAD",
+        "price": 1.41
+      }
+    ]
+  },
+  "narrative": {
+    "summary_paragraph": "The portfolio is currently **defensive\u2011leaning but idiosyncratically concentrated**: cash sits at $1,120.36 of a $1,177.72 balance (\u224895% cash), leaving only $57.36 deployed across seven open positions. The bulk of that exposure is in three separate IBIT entries (\u2248$172 notional if priced near current levels), creating a single\u2011stock over\u2011weight that outweighs the modest macro hedge (TLT long) and sector bets (XLU, TD, EFA). With a YTD return of \u201341.1% and a 4W/3L record, the strategy mix is producing marginal gains while the large drawdown stems from a few losing momentum trades (ON \u201327.7%, \u201328.4%).  \n\n**Three quantitative insights** emerge from the data:  \n1. **Macro deterioration** \u2013 the smoothed recession probability jumped to 1.82% (+1.36\u202fpp) and U.Mich sentiment fell \u20136.57\u202fpp, while real disposable income slipped \u20130.48\u202fpp and housing starts dropped \u20132.79\u202f%.  \n2. **IBIT over\u2011concentration** \u2013 three entries on May\u202f27\u201129 at $58.74, $56.85, $57.36 represent roughly 50\u202f% of the invested capital with no clear edge; recent IBIT trades have breakeven P&L.  \n3. **Strategy performance divergence** \u2013 sector_rotation (JETS +0.8\u202f%, +0.7\u202f%) and mean_reversion (NKE +3.7\u202f%) delivered the only positive trades, whereas momentum contributed a mere +$0.01 on one trade and the momentum\u2011options ON trade lost \u201327.7\u202f%.  \n\n**Strategy tilt & macro signals:** given the rising recession odds, widening HY spread (+0.01\u202fpp), PPI up +2.66\u202f% and falling real income, favor defensive assets: increase the TLT hedge (target entry \u2264$115.00) and add to XLU on dips below $62.00. Reduce IBIT exposure by scaling out two of the three lots (e.g., sell 2\u202f\u00d7\u202fIBIT at market) to bring the crypto\u2011equity weight under 20\u202f% of deployed capital. Pause new momentum entries until volatility contracts; instead, lean into mean\u2011reversion on large\u2011cap value (TD, EFA) and sector_rotation on consumer discretionary (JETS) only on pull\u2011backs of 3\u20115\u202f% from recent highs.  \n\n**Watchlist & sizing:**  \n- **RIVN** \u2013 long if price"
+  },
+  "watchlist_summary": {
+    "total_scanned": 0,
+    "avg_change": 0,
+    "green_count": 0,
+    "red_count": 0
+  },
+  "central_banks": {
+    "fed": "The Federal Reserve held rates steady at 4.25-4.50% at its June meeting. Chair Powell noted inflation remains elevated but the labor market is cooling. Markets are pricing in one rate cut by September.",
+    "boc": "The Bank of Canada held its overnight rate at 3.25% in June. Governor Macklem highlighted that while core inflation is trending toward the 2% target, shelter costs remain sticky."
+  },
+  "insider_trades": [
+    {
+      "ticker": "AMD",
+      "insider": "Papermaster Mark D",
+      "title": "Chief Technology Officer &amp; EVP",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 6000,
+      "price": 556.43,
+      "value": 3338580,
+      "date": "2026-07-15",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000117/xslF345X06/wk-form4_1784318998.xml"
+    },
+    {
+      "ticker": "PLTR",
+      "insider": "Moore Alexander D.",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 11800,
+      "price": 133.75,
+      "value": 1578256,
+      "date": "2026-07-15",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000182395226000018/xslF345X06/wk-form4_1784333024.xml"
+    },
+    {
+      "ticker": "PLTR",
+      "insider": "Moore Alexander D.",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 3100,
+      "price": 134.55,
+      "value": 417120,
+      "date": "2026-07-15",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000182395226000018/xslF345X06/wk-form4_1784333024.xml"
+    },
+    {
+      "ticker": "PLTR",
+      "insider": "Moore Alexander D.",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 1000,
+      "price": 135.72,
+      "value": 135715,
+      "date": "2026-07-15",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000182395226000018/xslF345X06/wk-form4_1784333024.xml"
+    },
+    {
+      "ticker": "PLTR",
+      "insider": "Moore Alexander D.",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 100,
+      "price": 136.79,
+      "value": 13679,
+      "date": "2026-07-15",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000182395226000018/xslF345X06/wk-form4_1784333024.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Olivan Javier",
+      "title": "Chief Operating Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 1534,
+      "price": 660.98,
+      "value": 1013936,
+      "date": "2026-07-13",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326010694/xslF345X06/ownership.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Olivan Javier",
+      "title": "Chief Operating Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 82,
+      "price": 661.13,
+      "value": 54213,
+      "date": "2026-07-13",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326010694/xslF345X06/ownership.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Olivan Javier",
+      "title": "Chief Operating Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 57,
+      "price": 661.13,
+      "value": 37684,
+      "date": "2026-07-13",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326010694/xslF345X06/ownership.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Olivan Javier",
+      "title": "Chief Operating Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 82,
+      "price": 661.13,
+      "value": 54213,
+      "date": "2026-07-13",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326010694/xslF345X06/ownership.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Olivan Javier",
+      "title": "Chief Operating Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 408,
+      "price": 661.13,
+      "value": 269741,
+      "date": "2026-07-13",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326010694/xslF345X06/ownership.xml"
+    }
+  ],
+  "market_news": {
+    "headlines": [
+      {
+        "title": "NovaGold to buy Paulson's stake in Donlin Gold, creating U.S. miner valued at $4.2B",
+        "url": "https://seekingalpha.com/news/4616471-novagold-to-buy-paulsons-stake-in-donlin-gold-creating-us-miner-valued-at-42b?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Earnings Snapshot: AT&T tops Q2 profit expectations despite revenue miss, accelerates share repurchases",
+        "url": "https://seekingalpha.com/news/4616312-earnings-snapshot-att-tops-q2-profit-expectations-despite-revenue-miss-accelerates-share-repurchases?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Philip Morris points to strong momentum as it tops estimates; tobacco peers on watch",
+        "url": "https://seekingalpha.com/news/4616479-philip-morris-points-to-strong-momentum-as-it-tops-estimates-tobacco-peers-on-watch?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "OceanaGold to renew normal course issuer bid",
+        "url": "https://seekingalpha.com/news/4616480-oceanagold-to-renew-normal-course-issuer-bid?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Iridium Communications GAAP EPS of $0.09 misses by $0.17, revenue of $225.2M beats by $4.75M",
+        "url": "https://seekingalpha.com/news/4616482-iridium-communications-gaap-eps-of-0_09-misses-by-0_17-revenue-of-225_2m-beats-by-4_75m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Old National Bancorp Non-GAAP EPS of $0.65 beats by $0.02, revenue of $740.06M beats by $23.82M",
+        "url": "https://seekingalpha.com/news/4616481-old-national-bancorp-non-gaap-eps-of-065-beats-by-002-revenue-of-74006m-beats-by-2382m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Summit updates survival data for Akeso-partnered lung cancer drug",
+        "url": "https://seekingalpha.com/news/4616477-summit-data-akeso-partnered-lung-cancer-drug?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "GPU Depreciation May Crush The Software Sector Margins",
+        "url": "https://seekingalpha.com/article/4924057-gpu-depreciation-may-crush-the-software-sector-margins?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Broadcom: Why We Keep Loading Up At ATHs",
+        "url": "https://seekingalpha.com/article/4924025-broadcom-why-we-keep-loading-up-at-aths?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Celestica: The Market Just Started To Agree, And Q2 Isn't Priced Yet",
+        "url": "https://seekingalpha.com/article/4924017-celestica-the-market-just-started-to-agree-and-q2-isnt-priced-yet?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      }
+    ],
+    "earnings": [],
+    "analyst_ratings": []
+  },
+  "geopolitical": [
+    {
+      "title": "Putin says there is 'no point' meeting Zelensky over ending Ukraine war",
+      "source": "BBC World",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Ukraine strikes cargo ships and admits Romania drone blast",
+      "source": "BBC World",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Astronauts return to ISS after sheltering during air leak repair attempt",
+      "source": "BBC World",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Fury in France after child murder suspect's criminal record released",
+      "source": "BBC World",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Nearly 50 people die of thirst in Sahara desert after lorry breaks down",
+      "source": "BBC World",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Iran footballers issued US visas for World Cup, says White House",
+      "source": "Al Jazeera",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Zelenskyy: Putin choosing war by rejecting offer for in-person talks",
+      "source": "Al Jazeera",
+      "url": "",
+      "date": "",
+      "summary": ""
+    },
+    {
+      "title": "Trump hails jobs surge, says Iran talks \u2018going well\u2019",
+      "source": "Al Jazeera",
+      "url": "",
+      "date": "",
+      "summary": ""
+    }
+  ],
+  "premarket_top_setups": [
+    {
+      "ticker": "MSFT",
+      "price": 426.989990234375,
+      "change_pct": 3.47,
+      "score": 11,
+      "signals": [
+        "neutral_rsi",
+        "strong_momentum",
+        "above_20ma",
+        "above_50ma",
+        "elevated_volume"
+      ],
+      "rsi": 55.5,
+      "above_sma_20": true,
+      "above_sma_50": true
+    },
+    {
+      "ticker": "ARKK",
+      "price": 81.01000213623047,
+      "change_pct": 3.93,
+      "score": 10,
+      "signals": [
+        "neutral_rsi",
+        "strong_momentum",
+        "above_20ma",
+        "above_50ma"
+      ],
+      "rsi": 59.7,
+      "above_sma_20": true,
+      "above_sma_50": true
+    },
+    {
+      "ticker": "IBIT",
+      "price": 41.560001373291016,
+      "change_pct": -2.1,
+      "score": 10,
+      "signals": [
+        "oversold",
+        "pullback"
+      ],
+      "rsi": 29.0,
+      "above_sma_20": false,
+      "above_sma_50": false
+    }
+  ],
+  "congress": {
+    "recent_trades": [
+      {
+        "politician": "James A. Himes",
+        "chamber": "House",
+        "state": "CT04",
+        "ticker": "BAC",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/20/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035047.pdf"
+      },
+      {
+        "politician": "James A. Himes",
+        "chamber": "House",
+        "state": "CT04",
+        "ticker": "XOM",
+        "action": "Sell",
+        "amount_range": "$15,001 - $50,000",
+        "amount_low": 15001,
+        "transaction_date": "07/20/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035047.pdf"
+      },
+      {
+        "politician": "James A. Himes",
+        "chamber": "House",
+        "state": "CT04",
+        "ticker": "HD",
+        "action": "Sell",
+        "amount_range": "$15,001 - $50,000",
+        "amount_low": 15001,
+        "transaction_date": "07/20/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035047.pdf"
+      },
+      {
+        "politician": "Laurel Lee",
+        "chamber": "House",
+        "state": "FL15",
+        "ticker": "BAC",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "06/02/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034694.pdf"
+      },
+      {
+        "politician": "Laurel Lee",
+        "chamber": "House",
+        "state": "FL15",
+        "ticker": "GE",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "06/16/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034694.pdf"
+      },
+      {
+        "politician": "Laurel Lee",
+        "chamber": "House",
+        "state": "FL15",
+        "ticker": "NOK",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/06/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034694.pdf"
+      },
+      {
+        "politician": "Laurel Lee",
+        "chamber": "House",
+        "state": "FL15",
+        "ticker": "NOK",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/06/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034694.pdf"
+      },
+      {
+        "politician": "Laurel Lee",
+        "chamber": "House",
+        "state": "FL15",
+        "ticker": "NOK",
+        "action": "Sell",
+        "amount_range": "$15,001 - $50,000",
+        "amount_low": 15001,
+        "transaction_date": "05/11/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034694.pdf"
+      },
+      {
+        "politician": "Laurel Lee",
+        "chamber": "House",
+        "state": "FL15",
+        "ticker": "NOK",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "06/02/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034694.pdf"
+      },
+      {
+        "politician": "William R. Timmons",
+        "chamber": "House",
+        "state": "SC04",
+        "ticker": "SPCX",
+        "action": "Buy",
+        "amount_range": "$50,001 - $100,000",
+        "amount_low": 50001,
+        "transaction_date": "06/15/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20022577.pdf"
+      }
+    ],
+    "summary": "60 recent congressional trades from 10 House periodic transaction reports (18 buys, 37 sells)."
+  }
+}

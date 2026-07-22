@@ -1,24 +1,26 @@
 {
  "ticker": "NSA",
  "name": "National Storage Affiliates Tru",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 44.15,
- "change_pct": -0.79,
+ "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "price": 43.41,
+ "change_pct": -1.74,
  "sector": "Real Estate",
  "signals": [
   "rsi_dip",
+  "below_ma",
+  "volume_surge",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 43.5,
-  "sma_20": 44.95,
-  "sma_50": 43.67
+  "rsi_14": 44.1,
+  "sma_20": 44.88,
+  "sma_50": 43.68
  },
  "fundamentals": {
-  "pe_ratio": 58.86667,
-  "market_cap": "6.5B",
+  "pe_ratio": 57.88,
+  "market_cap": "6.4B",
   "beta": 1.061,
-  "dividend_yield": 0.0512
+  "dividend_yield": 0.0525
  },
  "council_analysis": {
   "score": 5

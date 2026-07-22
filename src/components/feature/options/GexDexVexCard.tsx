@@ -130,7 +130,7 @@ export function GexDexVexCard() {
 
         <div className="flex items-center justify-between text-xs text-[var(--color-text-tertiary)] relative z-10">
           <span>
-            <InfoTip term="max_pain">Max GEX Strike</InfoTip>:{' '}
+            <InfoTip term="gamma_wall">Max GEX Strike</InfoTip>:{' '}
             <span className="text-[var(--color-text-primary)]" style={{ fontFamily: 'var(--font-mono)' }} data-numeric>
               ${mode.max_gex_strike.toFixed(0)}
             </span>

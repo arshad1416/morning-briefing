@@ -19,6 +19,7 @@ const PaperPortfolioSchema = z
         starting_balance: z.number().default(100000),
         cash: z.number().default(0),
         invested: z.number().default(0),
+        market_value: z.number().optional(),
         return_pct: z.number().default(0),
         win_rate: z.number().nullable().default(null),
         total_trades: z.number().nullable().default(null),
@@ -49,6 +50,7 @@ export function DayPnLCard() {
   if (isError) {
     // Both gate states get a conversion affordance: the signed-out trial pitch
     // and — previously missing — the signed-in-without-subscription upgrade.
+    // (GateInline routes upgrades to /account/, where checkout lives.)
     if (error instanceof GateError && error.kind !== 'unavailable') {
       return shell(
         <GateInline
@@ -68,7 +70,9 @@ export function DayPnLCard() {
   }
 
   const p = data.portfolio;
-  const deployedPct = p.total_balance > 0 ? (p.invested / p.total_balance) * 100 : 0;
+  // Deployed = open book at market over total equity; falling back to cost
+  // basis (invested) only for pre-market_value data.
+  const deployedPct = p.total_balance > 0 ? ((p.market_value ?? p.invested) / p.total_balance) * 100 : 0;
 
   return shell(
     <>

@@ -1,28 +1,29 @@
 {
  "ticker": "TIP",
  "name": "iShares TIPS Bond ETF",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 108.18,
- "change_pct": -0.08,
+ "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "price": 107.86,
+ "change_pct": -0.02,
  "sector": null,
  "signals": [
   "rsi_dip",
   "below_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 36.2,
-  "sma_20": 108.21,
-  "sma_50": 108.38
+  "rsi_14": 42.4,
+  "sma_20": 108.2,
+  "sma_50": 108.34
  },
  "fundamentals": {
-  "pe_ratio": 12.155057,
+  "pe_ratio": 12.119102,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.0377
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

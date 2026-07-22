@@ -321,8 +321,9 @@ def compute_score(data):
         except (ValueError, TypeError):
             pass
 
-    # 6. Analyst recommendation
-    rec = data.get('recommendation', '')
+    # 6. Analyst recommendation (yfinance returns lowercase, e.g. "buy",
+    # "strong_buy" — normalize before comparing)
+    rec = (data.get('recommendation') or '').upper()
     if rec in ('BUY', 'STRONG_BUY'):
         score += 1
         reasons.append("analyst_buy")
@@ -346,7 +347,7 @@ def compute_market_summary(tickers):
 
     sectors = {}
     for t in tickers:
-        s = t.get('sector', 'Unknown')
+        s = t.get('sector') or 'Unknown'  # sector can be present-but-None (ETFs)
         if s not in sectors:
             sectors[s] = {'count': 0, 'avg_change': 0}
         sectors[s]['count'] += 1
@@ -354,7 +355,7 @@ def compute_market_summary(tickers):
     # Compute average change per sector
     sector_changes = {}
     for t in tickers:
-        s = t.get('sector', 'Unknown')
+        s = t.get('sector') or 'Unknown'
         if s not in sector_changes:
             sector_changes[s] = []
         if t.get('change_pct') is not None:

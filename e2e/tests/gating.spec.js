@@ -8,9 +8,11 @@ const { test, expect } = require('@playwright/test');
 const { readFileSync } = require('node:fs');
 const path = require('node:path');
 
-// Raw pipeline file — GexDataSchema parses this shape directly.
+// Synthetic fixture in the raw pipeline shape — GexDataSchema parses it
+// directly. (The real gex-detail.json is Pro-tier R2 data and is deliberately
+// not committed to the repo.)
 const GEX_DETAIL = JSON.parse(
-  readFileSync(path.resolve(__dirname, '../../data/gex-detail.json'), 'utf8'),
+  readFileSync(path.resolve(__dirname, '../fixtures/gex-detail.fixture.json'), 'utf8'),
 );
 
 const IN_5_DAYS = Date.now() + 5 * 86_400_000;

@@ -1,29 +1,50 @@
 {
  "ticker": "HIG",
  "name": "The Hartford Insurance Group, I",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 140.1,
- "change_pct": -0.11,
+ "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "price": 141.57,
+ "change_pct": -0.29,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 63.7,
-  "sma_20": 135.95,
-  "sma_50": 132.89
+  "rsi_14": 66.2,
+  "sma_20": 137.1,
+  "sma_50": 133.31
  },
  "fundamentals": {
-  "pe_ratio": 9.859255,
-  "market_cap": "38.4B",
+  "pe_ratio": 9.962351,
+  "market_cap": "38.8B",
   "beta": 0.468,
-  "dividend_yield": 0.0171
+  "dividend_yield": 0.0169
  },
  "council_analysis": {
   "score": 7
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "HIG",
+   "date": "2026-07-23",
+   "epsEstimate": 3.13,
+   "epsActual": null
+  },
+  {
+   "ticker": "HIG",
+   "date": "2026-04-23",
+   "epsEstimate": 3.39,
+   "epsActual": 3.09
+  },
+  {
+   "ticker": "HIG",
+   "date": "2026-01-29",
+   "epsEstimate": 3.22,
+   "epsActual": 4.06
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

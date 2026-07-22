@@ -1,27 +1,28 @@
 {
  "ticker": "PSA",
  "name": "Public Storage",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 315.01,
- "change_pct": -0.95,
+ "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "price": 310.46,
+ "change_pct": 0.23,
  "sector": "Real Estate",
  "signals": [
   "rsi_dip",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 42.9,
-  "sma_20": 321.32,
-  "sma_50": 312.39
+  "rsi_14": 39.7,
+  "sma_20": 320.28,
+  "sma_50": 312.52
  },
  "fundamentals": {
-  "pe_ratio": 32.576008,
-  "market_cap": "55.3B",
+  "pe_ratio": 32.006184,
+  "market_cap": "54.5B",
   "beta": 0.952,
-  "dividend_yield": 0.0377
+  "dividend_yield": 0.0387
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -131,9 +131,11 @@ function LegendSpacer() {
   );
 }
 
-// Skeleton and gated states mirror the loaded chart's DOM (header, legend,
-// aspect box, mobile detail slot) so every state occupies identical pixels.
-function ChartFrame({ loading }: { loading: boolean }) {
+// Skeleton, gated, and unavailable states mirror the loaded chart's DOM
+// (header, legend, aspect box, mobile detail slot) so every state occupies
+// identical pixels.
+function ChartFrame({ state }: { state: 'loading' | 'gated' | 'unavailable' }) {
+  const loading = state === 'loading';
   return (
     <Surface span="hero">
       <SurfaceHeader
@@ -148,6 +150,11 @@ function ChartFrame({ loading }: { loading: boolean }) {
         <LegendSpacer />
         <div className={FRAME}>
           <div className={loading ? 'skeleton w-full h-full' : 'w-full h-full rounded-[var(--radius-chip)] bg-[var(--color-bg-elevated)]'} />
+          {state === 'unavailable' && (
+            <p className="absolute inset-0 flex items-center justify-center px-6 text-center text-sm text-[var(--color-text-tertiary)]">
+              Gamma wall data isn’t available right now — retrying automatically.
+            </p>
+          )}
         </div>
         <div className={DETAIL_SLOT} />
         {loading && <span className="sr-only">Loading gamma data…</span>}
@@ -208,9 +215,14 @@ export function GammaWallChart() {
 
   if (!data) {
     // Hard-gated 401/403 gets a non-pulsing frame behind the gate overlay;
-    // loading and transient failures keep the pulse (polling continues).
-    const hardGated = error instanceof GateError && error.kind !== 'unavailable';
-    return <ChartFrame loading={!hardGated} />;
+    // settled failures say so honestly (polling keeps retrying); otherwise pulse.
+    const state =
+      error instanceof GateError && error.kind !== 'unavailable'
+        ? 'gated'
+        : error
+          ? 'unavailable'
+          : 'loading';
+    return <ChartFrame state={state} />;
   }
 
   const g = isDesktop ? GEOM.desktop : GEOM.mobile;

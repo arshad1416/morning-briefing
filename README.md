@@ -6,9 +6,9 @@ Static market briefing site on Cloudflare Pages, data piped from Raspberry Pi.
 
 - **Site:** Next.js 15 static export (`output: 'export'`) on Cloudflare Pages
   - Build command: `npm run build` → output dir `out/` (configured in the Pages dashboard)
-  - `_headers`, `robots.txt`, `llms.txt`, and the legal pages live in `public/` and are
-    copied verbatim into `out/` at build time; `sitemap.xml` is generated at build time
-    by `src/app/sitemap.ts`
+  - `_headers`, `llms.txt`, and legal pages live in `public/`; `robots.txt` and
+    `sitemap.xml` are generated at build time from route/archive/ticker coverage
+    (`src/app/robots.ts`, `src/app/sitemap.ts`)
 - **Data:** Pi cron generates JSON → commits `data/**` + `public/data/**` → each push
   triggers a Pages rebuild so `out/data/` stays fresh (~20–25 builds/weekday; the free
   tier allows 500 builds/month — watch the quota)
@@ -40,14 +40,35 @@ hermes cron create '15 7 * * 1-5' \
   --no-agent
 ```
 
+## Pipeline hardening
+
+Install the validation dependency on the Pi before running the publisher:
+
+```bash
+python3 -m pip install -r pi-scripts/requirements-pipeline.txt
+```
+
+The SEC, earnings, and Tiingo collectors share a bounded asyncio worker pool,
+transient HTTP retry/backoff, rate-limit spacing, and atomic JSON writes. Tiingo
+falls back to yfinance when its key or response is unavailable. Before any
+premium JSON is uploaded to R2, `pipeline_schemas.py` rejects malformed council
+envelopes and every NaN/Infinity value. Validation failure is fail-closed: the
+publisher refuses to continue rather than exposing a corrupt artifact.
+
+`council_weighting.py` contains the provider-neutral five-mandate weighting
+engine. The live council executor remains in `arshad1416/hermes-scripts`; map
+its provider IDs to the five stable mandates and call `dynamic_model_weights`
+there before aggregation.
+
 ## Directory Structure
 
 ```
-├── index.html                   # SPA entry point
-├── assets/
-│   ├── css/style.css            # Dark theme
-│   └── js/                      # Route-based vanilla JS
+├── src/app/                     # Next.js 15 app router pages (the live site)
+├── src/components|lib|stores/   # UI components, schemas/queries, state
+├── public/                      # Static assets + public data (copied into out/)
 ├── data/                        # JSON files (committed by Pi)
-├── cloudflare-worker/           # Chat API proxy
-└── pi-scripts/                  # Data generation scripts
+├── cloudflare-worker/           # /api/* Worker (auth, billing, gated data, chat)
+├── pi-scripts/                  # Data generation scripts (synced copies of Pi's ~/.hermes/scripts)
+├── index.html, assets/          # LEGACY vanilla-JS SPA — unused, pending removal
+└── e2e/                         # Playwright tests
 ```

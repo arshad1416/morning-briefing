@@ -48,7 +48,7 @@ export function AccuracyStats() {
     // expectancy is percent-per-trade (expectancy_pct) — not dollars.
     { label: 'Expectancy / Trade', value: `${data.expectancy >= 0 ? '+' : ''}${data.expectancy.toFixed(2)}%` },
     { label: 'Win Rate', value: `${(data.hit_rate * 100).toFixed(1)}%` },
-    { label: 'Profit Factor', value: data.profit_factor.toFixed(2) },
+    { label: 'Profit Factor', value: data.profit_factor == null ? '—' : data.profit_factor.toFixed(2) },
     { label: 'Max Drawdown', value: `${(data.max_drawdown * 100).toFixed(1)}%` },
     { label: 'Kelly Fraction', value: `${(data.kelly_fraction * 100).toFixed(1)}%` },
     { label: 'Total Trades', value: data.total_signals.toLocaleString() },

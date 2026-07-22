@@ -26,8 +26,8 @@ type Filters = {
   volume: string;
   w52: string;
   sma: string;
-  strategy: string;
-  direction: string;
+  signal: string;
+  recommendation: string;
   scoreMin: number;
   scoreMax: number;
 };
@@ -43,14 +43,17 @@ const DEFAULT_FILTERS: Filters = {
   volume: '',
   w52: '',
   sma: '',
-  strategy: '',
-  direction: '',
+  signal: '',
+  recommendation: '',
   scoreMin: 0,
   scoreMax: 10,
 };
 
 type SortKey = 'ticker' | 'change' | 'score' | 'rsi' | 'mcap' | 'pe' | 'volume_ratio';
 type Sort = { key: SortKey; dir: 'asc' | 'desc' };
+type StoredPreset = { name: string; filters: Filters };
+
+const PRESET_KEY = 'mg-screener-presets';
 
 const inRange = (value: number | null | undefined, filter: string) => {
   if (!filter) return true;
@@ -65,7 +68,6 @@ const volRatio = (t: ScreenerTicker) => t.volume_ratio ?? t.vol_ratio ?? null;
 
 function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
   const search = f.search.toLowerCase().trim();
-  const strategy = f.strategy.toLowerCase().trim();
 
   return tickers.filter((t) => {
     if (
@@ -82,7 +84,7 @@ function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
     }
     const score = t.score ?? 0;
     if (score < f.scoreMin || score > f.scoreMax) return false;
-    if (strategy && (t.signal || '').toLowerCase().replace(/[^a-z_]/g, '') !== strategy) return false;
+    if (f.signal && !(t.signals || []).includes(f.signal)) return false;
     if (f.mcap) {
       const b = (t.marketCap ?? 0) / 1e9;
       if (f.mcap === '0-2B' && b > 2) return false;
@@ -100,7 +102,7 @@ function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
       if (f.volume === '1.5x' && vr < 1.5) return false;
       if (f.volume === '2x' && vr < 2) return false;
     }
-    if (f.direction && (t.direction || '').toLowerCase() !== f.direction) return false;
+    if (f.recommendation && (t.recommendation || 'none') !== f.recommendation) return false;
     if (f.w52) {
       const hi = t.above_52w_high_pct;
       const lo = t.below_52w_low_pct;
@@ -259,7 +261,7 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
     >
       <td className={COL.ticker}>
         <Link
-          href={`/ticker/?symbol=${encodeURIComponent(t.ticker)}`}
+          href={`/ticker/${encodeURIComponent(t.ticker)}/`}
           className="font-semibold text-[var(--color-accent)] hover:underline"
           data-numeric
         >
@@ -373,7 +375,7 @@ function Treemap({ tickers }: { tickers: ScreenerTicker[] }) {
         return (
           <Link
             key={t.ticker}
-            href={`/ticker/?symbol=${encodeURIComponent(t.ticker)}`}
+            href={`/ticker/${encodeURIComponent(t.ticker)}/`}
             className="flex min-h-11 flex-col items-center justify-center overflow-hidden rounded-sm p-1 text-center transition hover:scale-[1.03] hover:z-10"
             style={{
               gridColumn: `span ${colSpan}`,
@@ -404,10 +406,16 @@ export function ScreenerClient() {
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [sort, setSort] = useState<Sort>({ key: 'score', dir: 'desc' });
   const [view, setView] = useState<'table' | 'treemap'>('table');
+  const [presets, setPresets] = useState<StoredPreset[]>([]);
+  const [presetName, setPresetName] = useState('');
 
   useEffect(() => {
     const saved = localStorage.getItem('mg-screener-view');
     if (saved === 'treemap' || saved === 'table') setView(saved);
+    try {
+      const stored = JSON.parse(localStorage.getItem(PRESET_KEY) || '[]');
+      if (Array.isArray(stored)) setPresets(stored.filter((item) => item?.name && item?.filters));
+    } catch {}
   }, []);
 
   const setViewPersist = (v: 'table' | 'treemap') => {
@@ -417,6 +425,18 @@ export function ScreenerClient() {
 
   const set = <K extends keyof Filters>(k: K, v: Filters[K]) =>
     setFilters((f) => ({ ...f, [k]: v }));
+
+  const persistPresets = (next: StoredPreset[]) => {
+    setPresets(next);
+    localStorage.setItem(PRESET_KEY, JSON.stringify(next));
+  };
+
+  const savePreset = () => {
+    const name = presetName.trim();
+    if (!name) return;
+    persistPresets([...presets.filter((preset) => preset.name !== name), { name, filters }]);
+    setPresetName('');
+  };
 
   const data = result?.data ?? null;
   const allTickers = useMemo(() => data?.tickers ?? [], [data]);
@@ -565,20 +585,33 @@ export function ScreenerClient() {
               <option value="death-cross">Death Cross</option>
             </select>
           </Field>
-          <Field label="Strategy">
-            <select value={filters.strategy} onChange={(e) => set('strategy', e.target.value)} className={selectCls} style={selectStyle}>
+          {/* Options mirror the tag vocabulary generate-screener-data.py emits in
+              signals[] — the old Strategy/Direction filters tested fields no
+              producer ever wrote, so they always returned zero rows. */}
+          <Field label="Signal">
+            <select value={filters.signal} onChange={(e) => set('signal', e.target.value)} className={selectCls} style={selectStyle}>
               <option value="">All</option>
-              <option value="momentum">Momentum</option>
-              <option value="breakout">Breakout</option>
-              <option value="mean_reversion">Mean Reversion</option>
-              <option value="support_resistance">Support/Resistance</option>
+              <option value="oversold_rsi">Oversold RSI</option>
+              <option value="rsi_dip">RSI Dip</option>
+              <option value="overbought_rsi">Overbought RSI</option>
+              <option value="extended_rsi">Extended RSI</option>
+              <option value="above_ma">Above MAs</option>
+              <option value="below_ma">Below MAs</option>
+              <option value="volume_surge">Volume Surge</option>
+              <option value="near_high">Near 52w High</option>
+              <option value="near_low">Near 52w Low</option>
+              <option value="value_pe">Value P/E</option>
+              <option value="premium_pe">Premium P/E</option>
+              <option value="analyst_buy">Analyst Buy</option>
+              <option value="analyst_sell">Analyst Sell</option>
             </select>
           </Field>
-          <Field label="Direction">
-            <select value={filters.direction} onChange={(e) => set('direction', e.target.value)} className={selectCls} style={selectStyle}>
+          <Field label="Analyst Rec">
+            <select value={filters.recommendation} onChange={(e) => set('recommendation', e.target.value)} className={selectCls} style={selectStyle}>
               <option value="">All</option>
-              <option value="long">Long</option>
-              <option value="short">Short</option>
+              <option value="strong_buy">Strong Buy</option>
+              <option value="buy">Buy</option>
+              <option value="none">No Coverage</option>
             </select>
           </Field>
           <Field label="Score Min">
@@ -621,6 +654,36 @@ export function ScreenerClient() {
               Reset
             </button>
           </div>
+        </div>
+        <div className="mt-3 flex flex-wrap items-center gap-2 border-t pt-3" style={{ borderColor: 'var(--color-border-subtle)' }}>
+          <input
+            value={presetName}
+            onChange={(event) => setPresetName(event.target.value)}
+            placeholder="Preset name"
+            className={`${selectCls} max-w-48`}
+            style={selectStyle}
+          />
+          <button type="button" onClick={savePreset} className="rounded-lg border px-3 py-2 text-sm font-medium" style={{ borderColor: 'var(--color-border-default)' }}>
+            Save preset
+          </button>
+          <select
+            defaultValue=""
+            onChange={(event) => {
+              const preset = presets.find((item) => item.name === event.target.value);
+              if (preset) setFilters({ ...DEFAULT_FILTERS, ...preset.filters });
+            }}
+            className={`${selectCls} max-w-56`}
+            style={selectStyle}
+            aria-label="Load screener preset"
+          >
+            <option value="">Load preset…</option>
+            {presets.map((preset) => <option key={preset.name} value={preset.name}>{preset.name}</option>)}
+          </select>
+          {presets.length > 0 && (
+            <button type="button" onClick={() => persistPresets([])} className="text-xs text-[var(--color-text-tertiary)] hover:text-[var(--color-bear)]">
+              Clear saved presets
+            </button>
+          )}
         </div>
       </div>
 

@@ -1,27 +1,28 @@
 {
  "ticker": "AZO",
  "name": "AutoZone, Inc.",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 3010.05,
- "change_pct": -1.19,
+ "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "price": 3010.31,
+ "change_pct": -0.09,
  "sector": "Consumer Cyclical",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 41.3,
-  "sma_20": 3069.2,
-  "sma_50": 3151.49
+  "rsi_14": 37.0,
+  "sma_20": 3069.8,
+  "sma_50": 3130.62
  },
  "fundamentals": {
-  "pe_ratio": 20.713287,
+  "pe_ratio": 20.558,
   "market_cap": "49.1B",
   "beta": 0.335,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

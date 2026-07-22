@@ -1,17 +1,19 @@
 {
  "ticker": "EMB",
  "name": "iShares J.P. Morgan USD Emergin",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 95.54,
- "change_pct": 0.01,
+ "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "price": 95.17,
+ "change_pct": -0.22,
  "sector": null,
  "signals": [
-  "oversold_rsi"
+  "oversold_rsi",
+  "below_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 33.4,
-  "sma_20": 95.92,
-  "sma_50": 95.46
+  "rsi_14": 33.8,
+  "sma_20": 95.84,
+  "sma_50": 95.45
  },
  "fundamentals": {
   "pe_ratio": null,

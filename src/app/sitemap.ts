@@ -4,6 +4,7 @@
 import type { MetadataRoute } from 'next';
 import fs from 'node:fs';
 import path from 'node:path';
+import { getTickerCoverage } from '@/lib/seo/ticker-coverage';
 
 const SITE = 'https://maplegamma.com';
 
@@ -14,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const routes: MetadataRoute.Sitemap = [
     { url: `${SITE}/`, lastModified: now, changeFrequency: 'daily', priority: 1 },
-    ...['dashboard', 'options', 'screener', 'models', 'research', 'charts', 'positions', 'predictions', 'archive', 'ticker'].map((r) => ({
+    ...['dashboard', 'options', 'screener', 'models', 'research', 'charts', 'positions', 'predictions', 'archive'].map((r) => ({
       url: `${SITE}/${r}/`,
       lastModified: now,
       changeFrequency: 'daily' as const,
@@ -43,5 +44,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...routes, ...archive];
+  const tickers: MetadataRoute.Sitemap = getTickerCoverage().map((ticker) => ({
+    url: `${SITE}/ticker/${encodeURIComponent(ticker.symbol)}/`,
+    lastModified: ticker.generatedAt ? new Date(ticker.generatedAt) : now,
+    changeFrequency: 'daily',
+    priority: 0.7,
+  }));
+
+  return [...routes, ...tickers, ...archive];
 }

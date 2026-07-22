@@ -1,23 +1,25 @@
 {
  "ticker": "FRT",
  "name": "Federal Realty Investment Trust",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 125.99,
- "change_pct": -0.02,
+ "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "price": 125.79,
+ "change_pct": 0.16,
  "sector": "Real Estate",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 55.7,
-  "sma_20": 122.55,
-  "sma_50": 119.97
+  "rsi_14": 72.7,
+  "sma_20": 122.94,
+  "sma_50": 120.4
  },
  "fundamentals": {
-  "pe_ratio": 21.835356,
-  "market_cap": "11.0B",
+  "pe_ratio": 21.838541,
+  "market_cap": "10.9B",
   "beta": 0.932,
-  "dividend_yield": 0.0359
+  "dividend_yield": 0.036000000000000004
  },
  "council_analysis": {
   "score": 6

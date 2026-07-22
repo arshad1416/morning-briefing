@@ -1,23 +1,25 @@
 {
  "ticker": "PM",
  "name": "Philip Morris International Inc",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 192.42,
- "change_pct": -0.29,
+ "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "price": 193.38,
+ "change_pct": 2.84,
  "sector": "Consumer Defensive",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 60.5,
-  "sma_20": 182.22,
-  "sma_50": 181.01
+  "rsi_14": 65.6,
+  "sma_20": 183.86,
+  "sma_50": 181.86
  },
  "fundamentals": {
-  "pe_ratio": 27.101408,
-  "market_cap": "299.9B",
+  "pe_ratio": 27.863832,
+  "market_cap": "301.4B",
   "beta": 0.405,
-  "dividend_yield": 0.0305
+  "dividend_yield": 0.0313
  },
  "council_analysis": {
   "score": 6

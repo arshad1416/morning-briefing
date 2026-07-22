@@ -198,11 +198,15 @@ function toMode(bucket: MgBucket, spx: MgTicker): z.infer<typeof GexModeSchema> 
     // (A previous 'NET' emission put every strike in the put bucket.)
     strikes: rows.flatMap((r) => {
       const out: Array<z.infer<typeof GexStrikeSchema>> = [];
+      // oi/dex/vex are strike-level (the producer doesn't split them by side),
+      // so both rows carry them. Zeroing the put side at dual-sided strikes
+      // made the biggest put walls tooltip as "OI 0". Consumers only display
+      // these per-row — nothing sums them — so duplication is safe.
       if (r.call_gex !== 0) {
         out.push({ strike: r.strike, type: 'C', oi: r.oi, gamma: 0, gex: r.call_gex, delta: 0, dex: r.dex, vega: 0, vex: r.vex });
       }
       if (r.put_gex !== 0) {
-        out.push({ strike: r.strike, type: 'P', oi: r.call_gex === 0 ? r.oi : 0, gamma: 0, gex: r.put_gex, delta: 0, dex: r.call_gex === 0 ? r.dex : 0, vega: 0, vex: r.call_gex === 0 ? r.vex : 0 });
+        out.push({ strike: r.strike, type: 'P', oi: r.oi, gamma: 0, gex: r.put_gex, delta: 0, dex: r.dex, vega: 0, vex: r.vex });
       }
       return out;
     }),
@@ -289,7 +293,7 @@ const RealAccuracyFileSchema = z
     expectancy: z
       .object({
         expectancy_pct: z.number().default(0),
-        profit_factor: z.number().default(0),
+        profit_factor: z.number().nullable().default(null),
         kelly_fraction: z.number().default(0),
         win_rate: z.number().default(0),
         n_trades: z.number().default(0),

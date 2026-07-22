@@ -56,7 +56,10 @@ export async function handleFeedback(request, env) {
         "INSERT INTO feedback (id, type, message, email, page, ip, created_at, status) VALUES (?,?,?,?,?,?,?, 'new')"
       ).bind(crypto.randomUUID(), type, message, email || null, page || null, ip, Date.now()).run();
     }
-  } catch (e) {}
+  } catch (e) {
+    // Best-effort by design, but loud: a silent catch hid a missing table for weeks.
+    console.error('feedback insert failed:', e?.message || e);
+  }
 
   try {
     const tg = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {

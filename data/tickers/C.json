@@ -1,49 +1,30 @@
 {
  "ticker": "C",
  "name": "Citigroup, Inc.",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 129.26,
- "change_pct": -0.08,
+ "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "price": 132.67,
+ "change_pct": -0.13,
  "sector": "Financial Services",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 28.9,
-  "sma_20": 139.26,
-  "sma_50": 133.86
+  "rsi_14": 38.9,
+  "sma_20": 137.97,
+  "sma_50": 134.07
  },
  "fundamentals": {
-  "pe_ratio": 13.928879,
-  "market_cap": "216.8B",
+  "pe_ratio": 14.280947,
+  "market_cap": "222.5B",
   "beta": 1.094,
-  "dividend_yield": 0.018600000000000002
+  "dividend_yield": 0.0181
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
- "upcoming_earnings": [
-  {
-   "ticker": "C",
-   "date": "2026-10-13",
-   "epsEstimate": 2.56,
-   "epsActual": null
-  },
-  {
-   "ticker": "C",
-   "date": "2026-07-14",
-   "epsEstimate": 2.71,
-   "epsActual": 3.14
-  },
-  {
-   "ticker": "C",
-   "date": "2026-04-14",
-   "epsEstimate": 2.6,
-   "epsActual": 3.06
-  }
- ],
+ "upcoming_earnings": [],
  "recent_sec_filings": [
   {
    "ticker": "C",

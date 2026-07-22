@@ -106,6 +106,41 @@ describe('helcim billing', () => {
     expect((await getSubscription(env.DB, u.id)).status).toBe('canceled');
   });
 
+  it('cancel does NOT mark canceled when Helcim rejects the delete', async () => {
+    const { cookie, u } = await session();
+    await upsertSubscription(env.DB, u.id, {
+      tier: 'pro', status: 'active', billingInterval: 'monthly',
+      helcimSubscriptionId: '888', periodEnd: Date.now() + 1e9,
+    });
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ error: 'nope' }), { status: 500 }));
+    const res = await post('/api/billing/cancel', cookie, {});
+    // User must be told it failed — silently keeping Helcim charging while the
+    // site says "canceled" was the bug.
+    expect(res.status).toBe(502);
+    expect((await res.json()).error).toBe('cancel_failed');
+    expect((await getSubscription(env.DB, u.id)).status).toBe('active');
+  });
+
+  it('confirm grants a full period when Helcim omits dateBilling', async () => {
+    const { cookie, u } = await session();
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ checkoutToken: 'CHK', secretToken: 'SEC' }), { status: 200 }));
+    const co = await post('/api/billing/checkout', cookie, { tier: 'basic', interval: 'monthly' });
+    const bill = billKey(co);
+    vi.restoreAllMocks();
+    const data = { transactionId: 'T2', customerCode: 'CST10', status: 'APPROVED' };
+    const hash = await sha256Hex(JSON.stringify(data) + 'SEC');
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ data: [{ id: 556 }] }), { status: 200 })); // no dateBilling
+    const res = await post('/api/billing/confirm', `${cookie}; ${bill}`, { data, hash });
+    expect(res.status).toBe(200);
+    const sub = await getSubscription(env.DB, u.id);
+    // Old code set periodEnd to "now", locking a just-paid customer out
+    // immediately; the fallback must grant roughly a month.
+    expect(sub.current_period_end).toBeGreaterThan(Date.now() + 25 * 86400 * 1000);
+  });
+
   it('webhook is inert until the verifier secret is set', async () => {
     delete env.HELCIM_WEBHOOK_VERIFIER;
     const res = await app.request('/api/billing/webhook', {

@@ -27,12 +27,22 @@ function OptionsFlowTable() {
       // gex-detail.json is Pro in the Worker's file map — the fallback isn't a guess.
       return <GateCard kind={error.kind} need={error.need ?? 'pro'} feature="Strike-level options flow" flush />;
     }
-    return <p className="p-4 text-sm text-[var(--color-text-tertiary)]">Flow data isn’t available right now.</p>;
+    return (
+      <p className="p-8 text-center text-sm text-[var(--color-text-tertiary)]">
+        Options flow data isn&apos;t available right now.
+      </p>
+    );
   }
 
-  // The feed lists strikes ascending by price, not by exposure — sort before
-  // slicing or "Top Strikes" would show the 10 deepest-OTM rows.
-  const topStrikes = mode ? [...mode.strikes].sort((a, b) => b.gex - a.gex).slice(0, 10) : undefined;
+  // strikes[] arrives in ascending strike order (from gamma_profile rows), so
+  // a plain slice would show the 10 LOWEST strikes. Rank by |GEX| to find the
+  // top 10, then re-sort by strike so the table reads as a price ladder.
+  const topStrikes = mode
+    ? [...mode.strikes]
+        .sort((a, b) => Math.abs(b.gex) - Math.abs(a.gex))
+        .slice(0, 10)
+        .sort((a, b) => a.strike - b.strike)
+    : undefined;
 
   return (
     <div className="overflow-x-auto" aria-busy={isPending || undefined}>
@@ -105,7 +115,25 @@ function OptionsFlowTable() {
 
 export function OptionsClient() {
   const { data } = useQuery(gexQuery());
-  const regime = data?.modes.all.gamma_regime ?? 'neutral';
+  // modes.all.gamma_regime is derived from the legacy GROSS total_gex, which
+  // is positive by construction — it can never read bearish. Use the signed
+  // dealer greeks instead (the same signal DealerPositioningCard shows):
+  // dealers long gamma stabilize (bullish), short gamma amplify moves
+  // (bearish); fall back to spot vs the zero-gamma flip when the signed
+  // number is missing.
+  const p = data?.positioning;
+  const regime: 'bullish' | 'bearish' | 'neutral' =
+    p == null
+      ? 'neutral'
+      : p.signed_regime === 'long'
+      ? 'bullish'
+      : p.signed_regime === 'short'
+      ? 'bearish'
+      : p.gamma_flip != null && p.spot != null
+      ? p.spot >= p.gamma_flip
+        ? 'bullish'
+        : 'bearish'
+      : 'neutral';
 
   return (
     <div className="space-y-4">

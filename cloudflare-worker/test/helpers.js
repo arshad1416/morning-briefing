@@ -5,8 +5,10 @@ import { env } from 'cloudflare:test';
 import initSql from '../migrations/0001_init.sql?raw';
 import billingSql from '../migrations/0002_billing.sql?raw';
 import briefingSql from '../migrations/0003_briefing_optin.sql?raw';
+import feedbackSql from '../migrations/0004_feedback.sql?raw';
+import chatRateSql from '../migrations/0005_chat_ratelimit.sql?raw';
 export async function migrate() {
-  for (const sql of [initSql, billingSql, briefingSql]) {
+  for (const sql of [initSql, billingSql, briefingSql, feedbackSql, chatRateSql]) {
     // Strip full-line `--` comments first so a semicolon inside a comment
     // doesn't split into a statement-less fragment (D1 rejects those).
     const clean = sql.replace(/^\s*--.*$/gm, '');

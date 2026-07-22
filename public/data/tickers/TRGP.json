@@ -1,26 +1,28 @@
 {
  "ticker": "TRGP",
  "name": "Targa Resources, Inc.",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 284.72,
- "change_pct": 0.64,
+ "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "price": 283.45,
+ "change_pct": 1.15,
  "sector": "Energy",
  "signals": [
-  "above_ma"
+  "overbought_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 61.7,
-  "sma_20": 272.52,
-  "sma_50": 267.64
+  "rsi_14": 76.9,
+  "sma_20": 273.92,
+  "sma_50": 268.86
  },
  "fundamentals": {
-  "pe_ratio": 29.082737,
-  "market_cap": "61.1B",
+  "pe_ratio": 28.982107,
+  "market_cap": "60.8B",
   "beta": 0.704,
-  "dividend_yield": 0.0177
+  "dividend_yield": 0.0178
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

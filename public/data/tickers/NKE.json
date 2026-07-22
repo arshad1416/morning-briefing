@@ -1,27 +1,28 @@
 {
  "ticker": "NKE",
  "name": "Nike, Inc.",
- "generated_at": "2026-07-20T14:45:02.077866+00:00",
- "price": 44.41,
- "change_pct": -0.36,
+ "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "price": 41.65,
+ "change_pct": -3.05,
  "sector": "Consumer Cyclical",
  "signals": [
-  "extended_rsi",
-  "above_ma"
+  "rsi_dip",
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 67.2,
-  "sma_20": 42.94,
-  "sma_50": 43.51
+  "rsi_14": 43.1,
+  "sma_20": 42.78,
+  "sma_50": 43.44
  },
  "fundamentals": {
-  "pe_ratio": 21.147955,
-  "market_cap": "65.9B",
+  "pe_ratio": 19.833336,
+  "market_cap": "61.8B",
   "beta": 1.128,
-  "dividend_yield": 0.0368
+  "dividend_yield": 0.0382
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

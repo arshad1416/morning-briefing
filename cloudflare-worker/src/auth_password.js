@@ -57,9 +57,15 @@ export function mountPasswordAuth(app) {
     const password = String(body.password || '');
     const ip = clientIp(c.req.raw);
 
-    // Verify the password FIRST so a correct password is never throttled — only
-    // repeated FAILURES are rate-limited (prevents a targeted lockout DoS where
-    // an attacker floods wrong guesses to lock a victim out of their own login).
+    // Brute-force block BEFORE the (expensive) verification, keyed on the
+    // (email, ip) PAIR: an attacker hammering guesses gets 429s from their own
+    // address without a single hash computed, while the real owner logging in
+    // from their own IP is untouched — so this cannot be used to lock a victim
+    // out (the reason the old code verified first; but verify-first made the
+    // throttle purely decorative and allowed unlimited guessing).
+    if (await recentAuthFailures(c.env.DB, email, 15 * 60 * 1000, ip) >= 8) {
+      return c.json({ error: 'too_many_attempts' }, 429);
+    }
     const user = await getUserByEmail(c.env.DB, email);
     const ok = await verifyPassword(password, user?.pw_hash || DUMMY_HASH);
     if (user && user.pw_hash && ok) {
