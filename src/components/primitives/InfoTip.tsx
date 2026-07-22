@@ -40,7 +40,17 @@ const MARGIN = 8;
 
 export function InfoTip({ term, children, className = '' }: InfoTipProps) {
   const learningMode = useUI((s) => s.learningMode);
-  const [open, setOpen] = useState(false);
+  // Hover/focus and tap are tracked separately. With a single toggled flag, a
+  // mouse user who hovers (opening it) and then clicks would immediately close
+  // it again — the click would toggle off what the hover had just turned on.
+  const [peek, setPeek] = useState(false);
+  const [pinned, setPinned] = useState(false);
+  const open = peek || pinned;
+
+  const close = useCallback(() => {
+    setPeek(false);
+    setPinned(false);
+  }, []);
   // `persist` rehydrates from localStorage on the client, so the prerendered
   // HTML must not commit to a decorated or undecorated state.
   const [mounted, setMounted] = useState(false);
@@ -78,17 +88,17 @@ export function InfoTip({ term, children, className = '' }: InfoTipProps) {
     if (!open) return;
 
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') close();
     }
     // A tap anywhere else dismisses it — without this, an open tooltip on a
     // phone could only be closed by tapping the same trigger again.
     function onPointerDown(e: PointerEvent) {
-      if (!triggerRef.current?.contains(e.target as Node)) setOpen(false);
+      if (!triggerRef.current?.contains(e.target as Node)) close();
     }
     // The panel is position:fixed, so it would otherwise detach from its
     // trigger as soon as the page or a table scrolls underneath it.
     function onScroll() {
-      setOpen(false);
+      close();
     }
 
     document.addEventListener('keydown', onKeyDown);
@@ -101,7 +111,7 @@ export function InfoTip({ term, children, className = '' }: InfoTipProps) {
       window.removeEventListener('scroll', onScroll, true);
       window.removeEventListener('resize', onScroll);
     };
-  }, [open]);
+  }, [open, close]);
 
   const entry = lookup(term);
 
@@ -114,26 +124,39 @@ export function InfoTip({ term, children, className = '' }: InfoTipProps) {
       <button
         ref={triggerRef}
         type="button"
-        aria-describedby={open ? tooltipId : undefined}
+        aria-describedby={tooltipId}
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
-        onFocus={() => setOpen(true)}
-        onBlur={() => setOpen(false)}
+        onClick={() => setPinned((v) => !v)}
+        onMouseEnter={() => setPeek(true)}
+        onMouseLeave={() => setPeek(false)}
+        onFocus={() => setPeek(true)}
+        onBlur={() => setPeek(false)}
         className="border-b border-dotted border-[var(--color-accent)] cursor-help text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] rounded-[2px]"
         style={{ font: 'inherit', letterSpacing: 'inherit', textTransform: 'inherit', color: 'inherit' }}
       >
         {children}
-        <span className="sr-only"> — what does this mean?</span>
       </button>
+
+      {/* The definition is always in the DOM, visually hidden, and permanently
+          referenced by aria-describedby. A screen reader therefore announces
+          "RSI, button, <definition>" without the sighted-user tooltip having to
+          be open. An earlier version appended a visible-to-AT "what does this
+          mean?" here, which read as an interruption mid-sentence when a term
+          sits inside running prose. */}
+      <span id={tooltipId} className="sr-only">
+        {entry.plain}
+        {entry.detail ? ` ${entry.detail}` : ''}
+      </span>
 
       {open &&
         createPortal(
           <span
             ref={panelRef}
-            role="tooltip"
-            id={tooltipId}
+            // aria-hidden: the same text is already exposed to assistive tech
+            // through the always-present description span above, so announcing
+            // the visual panel too would read it twice.
+            aria-hidden="true"
+            data-infotip-panel=""
             style={{
               position: 'fixed',
               top: pos?.top ?? -9999,
