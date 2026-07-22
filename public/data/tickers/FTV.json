@@ -1,27 +1,28 @@
 {
  "ticker": "FTV",
  "name": "Fortive Corporation",
- "generated_at": "2026-07-22T11:45:02.024909+00:00",
- "price": 61.24,
- "change_pct": 0.41,
+ "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "price": 60.4,
+ "change_pct": -0.45,
  "sector": "Technology",
  "signals": [
-  "near_high",
+  "rsi_dip",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 50.6,
-  "sma_20": 61.54,
-  "sma_50": 60.61
+  "rsi_14": 43.7,
+  "sma_20": 61.52,
+  "sma_50": 60.6
  },
  "fundamentals": {
-  "pe_ratio": 36.02353,
-  "market_cap": "18.7B",
+  "pe_ratio": 35.52647,
+  "market_cap": "18.4B",
   "beta": 0.977,
-  "dividend_yield": 0.0039000000000000003
+  "dividend_yield": 0.004
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

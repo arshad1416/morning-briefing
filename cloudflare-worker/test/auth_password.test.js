@@ -41,22 +41,43 @@ describe('password auth', () => {
     expect(bad.status).toBe(401);
   });
 
-  it('a correct password is never throttled, even after repeated failures (lockout DoS)', async () => {
+  it('a correct password from the owner is never throttled by another IP’s failures (lockout DoS)', async () => {
     const cred = { ...base, email: 'dos@test.ca' };
     expect((await signup(cred)).status).toBe(200); // create within this test (isolatedStorage)
-    const login = (password) => app.request('/api/auth/login', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
+    const login = (password, ip) => app.request('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...(ip ? { 'CF-Connecting-IP': ip } : {}) },
       body: JSON.stringify({ email: 'dos@test.ca', password }),
     }, env);
-    // Attacker floods wrong guesses to try to lock the victim out.
-    for (let i = 0; i < 8; i++) {
-      const bad = await login('wrongwrongwrong');
+    // Attacker floods wrong guesses from THEIR address to try to lock the victim out.
+    for (let i = 0; i < 10; i++) {
+      const bad = await login('wrongwrongwrong', '9.9.9.9');
       expect([401, 429]).toContain(bad.status);
     }
-    // The real owner's CORRECT password must still succeed — not throttled.
-    const good = await login('hunter2hunter2');
+    // The real owner logging in from a DIFFERENT address must still succeed —
+    // the pre-verify block is keyed on the (email, ip) pair.
+    const good = await login('hunter2hunter2', '10.0.0.7');
     expect(good.status).toBe(200);
     expect(sessionCookie(good)).toContain('mg_session=');
+  });
+
+  it('same-IP brute force is blocked BEFORE verification (429 even for the right password)', async () => {
+    const cred = { ...base, email: 'brute@test.ca' };
+    expect((await signup(cred)).status).toBe(200);
+    const login = (password) => app.request('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '6.6.6.6' },
+      body: JSON.stringify({ email: 'brute@test.ca', password }),
+    }, env);
+    // (the 8th failure already answers 429 via the post-failure counter)
+    for (let i = 0; i < 8; i++) {
+      expect([401, 429]).toContain((await login('wrongwrongwrong')).status);
+    }
+    // 9th attempt from the same IP: rejected up front — a lucky correct guess
+    // must not slip through (this was the decorative-throttle bug).
+    const blocked = await login('hunter2hunter2');
+    expect(blocked.status).toBe(429);
+    expect((await blocked.json()).error).toBe('too_many_attempts');
   });
 
   it('me returns entitlement for a signed-in user', async () => {

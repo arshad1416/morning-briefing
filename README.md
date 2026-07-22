@@ -8,6 +8,7 @@ Static market briefing site on Cloudflare Pages, data piped from Raspberry Pi.
   - Build command: `npm run build` → output dir `out/` (configured in the Pages dashboard)
   - `_headers`, `llms.txt`, and legal pages live in `public/`; `robots.txt` and
     `sitemap.xml` are generated at build time from route/archive/ticker coverage
+    (`src/app/robots.ts`, `src/app/sitemap.ts`)
 - **Data:** Pi cron generates JSON → commits `data/**` + `public/data/**` → each push
   triggers a Pages rebuild so `out/data/` stays fresh (~20–25 builds/weekday; the free
   tier allows 500 builds/month — watch the quota)
@@ -62,11 +63,12 @@ there before aggregation.
 ## Directory Structure
 
 ```
-├── index.html                   # SPA entry point
-├── assets/
-│   ├── css/style.css            # Dark theme
-│   └── js/                      # Route-based vanilla JS
+├── src/app/                     # Next.js 15 app router pages (the live site)
+├── src/components|lib|stores/   # UI components, schemas/queries, state
+├── public/                      # Static assets + public data (copied into out/)
 ├── data/                        # JSON files (committed by Pi)
-├── cloudflare-worker/           # Chat API proxy
-└── pi-scripts/                  # Data generation scripts
+├── cloudflare-worker/           # /api/* Worker (auth, billing, gated data, chat)
+├── pi-scripts/                  # Data generation scripts (synced copies of Pi's ~/.hermes/scripts)
+├── index.html, assets/          # LEGACY vanilla-JS SPA — unused, pending removal
+└── e2e/                         # Playwright tests
 ```

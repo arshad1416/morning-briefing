@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { screenerQuery } from '@/lib/query/options';
 import { GateCard } from '@/components/feature/gating/GateCard';
-import { InfoTip, PlainLabel } from '@/components/primitives';
+import { InfoTip, PlainLabel, DensityToggle } from '@/components/primitives';
 import type { ScreenerTicker } from '@/lib/schemas/screener';
 
 /* ------------------------------------------------------------------ */
@@ -26,12 +26,15 @@ type Filters = {
   volume: string;
   w52: string;
   sma: string;
-  // strategy / direction filters were removed here: they compared against
-  // `t.signal` (singular) and `t.direction`, neither of which
+  // The original Strategy/Direction filters compared against `t.signal`
+  // (singular) and `t.direction`, neither of which
   // pi-scripts/generate-screener-data.py ever emits (it writes only the
-  // plural `signals` array). Both selects always returned zero rows against
-  // every real data file, so the dead controls were removed rather than kept
-  // as traps. See DATA-BUGS-2026-07-22.md for the trace.
+  // plural `signals` array and `recommendation`) — both always returned zero
+  // rows against every real data file. See DATA-BUGS-2026-07-22.md for the
+  // trace. Replaced below with filters wired to the fields the generator
+  // actually writes.
+  signal: string;
+  recommendation: string;
   scoreMin: number;
   scoreMax: number;
 };
@@ -47,6 +50,8 @@ const DEFAULT_FILTERS: Filters = {
   volume: '',
   w52: '',
   sma: '',
+  signal: '',
+  recommendation: '',
   scoreMin: 0,
   scoreMax: 10,
 };
@@ -86,6 +91,7 @@ function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
     }
     const score = t.score ?? 0;
     if (score < f.scoreMin || score > f.scoreMax) return false;
+    if (f.signal && !(t.signals || []).includes(f.signal)) return false;
     if (f.mcap) {
       // Was (t.marketCap ?? 0) / 1e9, which silently coerced a MISSING
       // market cap to 0 and dropped the row into the smallest bucket
@@ -108,6 +114,7 @@ function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
       if (f.volume === '1.5x' && vr < 1.5) return false;
       if (f.volume === '2x' && vr < 2) return false;
     }
+    if (f.recommendation && (t.recommendation || 'none') !== f.recommendation) return false;
     if (f.w52) {
       const hi = t.above_52w_high_pct;
       const lo = t.below_52w_low_pct;
@@ -275,6 +282,23 @@ function StatCard({
 /*  Table                                                             */
 /* ------------------------------------------------------------------ */
 
+/* Column visibility by breakpoint — one map shared by the header row and
+   TickerRow so the two can never drift. Core columns always render; the rest
+   earn their space as the viewport grows (mobile keeps ticker/price/chg/score
+   instead of forcing an 11-column horizontal scroll). */
+const COL = {
+  ticker: '',
+  price: '',
+  change: '',
+  score: '',
+  pe: 'hidden lg:table-cell',
+  mcap: 'hidden lg:table-cell',
+  div: 'hidden lg:table-cell',
+  rsi: 'hidden sm:table-cell',
+  volRatio: 'hidden sm:table-cell',
+  sector: 'hidden lg:table-cell',
+  signals: 'hidden xl:table-cell',
+} as const;
 
 function HeaderCell({
   label,
@@ -282,18 +306,20 @@ function HeaderCell({
   sort,
   onSort,
   align = 'left',
+  className = '',
 }: {
   label: React.ReactNode;
   sortKey?: SortKey;
   sort: Sort;
   onSort: (k: SortKey) => void;
   align?: 'left' | 'right' | 'center';
+  className?: string;
 }) {
   const active = sortKey && sort.key === sortKey;
   const alignCls = align === 'right' ? 'text-right' : align === 'center' ? 'text-center' : 'text-left';
   return (
     <th
-      className={`px-3 py-2.5 text-[10px] font-medium uppercase tracking-[0.14em] whitespace-nowrap ${alignCls} ${sortKey ? 'cursor-pointer select-none hover:text-[var(--color-text-primary)]' : ''}`}
+      className={`text-[10px] font-medium uppercase tracking-[0.14em] whitespace-nowrap ${alignCls} ${className} ${sortKey ? 'cursor-pointer select-none hover:text-[var(--color-text-primary)]' : ''}`}
       style={{ color: active ? 'var(--color-accent)' : 'var(--color-text-tertiary)' }}
       // A header that carries an InfoTip contains a real <button>. Without this
       // guard its click bubbles up and re-sorts the table, so on a touch device
@@ -325,7 +351,7 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
       className="border-t transition-colors hover:bg-[var(--color-bg-elevated)]"
       style={{ borderColor: 'var(--color-border-subtle)' }}
     >
-      <td className="px-3 py-2">
+      <td className={COL.ticker}>
         <Link
           href={`/ticker/${encodeURIComponent(t.ticker)}/`}
           className="font-semibold text-[var(--color-accent)] hover:underline"
@@ -334,13 +360,13 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
           {t.ticker}
         </Link>
       </td>
-      <td className="px-3 py-2 text-right text-[var(--color-text-primary)]" data-numeric>
+      <td className={`${COL.price} text-right text-[var(--color-text-primary)]`} data-numeric>
         {fmtPrice(t.price)}
       </td>
-      <td className="px-3 py-2 text-right font-medium" data-numeric style={{ color: changeColor(t.change_pct) }}>
+      <td className={`${COL.change} text-right font-medium`} data-numeric style={{ color: changeColor(t.change_pct) }}>
         {fmtPct(t.change_pct)}
       </td>
-      <td className="px-3 py-2 text-center">
+      <td className={`${COL.score} text-center`}>
         <span
           className="inline-block rounded px-1.5 py-0.5 font-bold"
           data-numeric
@@ -356,17 +382,17 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
           {Math.round(score)}
         </span>
       </td>
-      <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
+      <td className={`${COL.pe} text-right text-[var(--color-text-secondary)]`} data-numeric>
         {t.pe != null ? t.pe.toFixed(1) : '—'}
       </td>
-      <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
+      <td className={`${COL.mcap} text-right text-[var(--color-text-secondary)]`} data-numeric>
         {fmtMarketCap(t.marketCap)}
       </td>
-      <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
+      <td className={`${COL.div} text-right text-[var(--color-text-secondary)]`} data-numeric>
         {t.divYield != null && t.divYield > 0 ? `${t.divYield.toFixed(2)}%` : '—'}
       </td>
       <td
-        className="px-3 py-2 text-right font-medium"
+        className={`${COL.rsi} text-right font-medium`}
         data-numeric
         // Was rsi < 30 -> bear-red, rsi > 70 -> bull-green — backwards from
         // compute_score(), which treats RSI under 35 (oversold_rsi) as its
@@ -381,16 +407,16 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
         {rsi != null ? rsi.toFixed(1) : '—'}
       </td>
       <td
-        className="px-3 py-2 text-right"
+        className={`${COL.volRatio} text-right`}
         data-numeric
         style={{ color: vr != null && vr > 2 ? 'var(--color-accent)' : 'var(--color-text-secondary)', fontWeight: vr != null && vr > 2 ? 700 : undefined }}
       >
         {vr != null ? `${vr.toFixed(2)}x` : '—'}
       </td>
-      <td className="px-3 py-2 text-xs text-[var(--color-text-tertiary)] whitespace-nowrap">
+      <td className={`${COL.sector} text-xs text-[var(--color-text-tertiary)] whitespace-nowrap`}>
         {t.sector ? t.sector.substring(0, 14) : '—'}
       </td>
-      <td className="px-3 py-2">
+      <td className={COL.signals}>
         <div className="flex flex-wrap gap-1 max-w-[220px]">
           {(t.signals || []).map((s) => {
             const bearish = BEARISH_SIGNALS.has(s);
@@ -750,10 +776,35 @@ export function ScreenerClient() {
               <option value="death-cross">Above 20-Day, Below 50-Day</option>
             </select>
           </Field>
-          {/* Strategy / Direction selects removed: they filtered on `signal`
-              and `direction` fields the generator never writes (it emits
-              only the plural `signals` array), so both always returned zero
-              rows against every real data file. See applyFilters() above. */}
+          {/* Options mirror the tag vocabulary generate-screener-data.py emits in
+              signals[] — the old Strategy/Direction filters tested fields no
+              producer ever wrote, so they always returned zero rows. */}
+          <Field label="Signal">
+            <select value={filters.signal} onChange={(e) => set('signal', e.target.value)} className={selectCls} style={selectStyle}>
+              <option value="">All</option>
+              <option value="oversold_rsi">Oversold RSI</option>
+              <option value="rsi_dip">RSI Dip</option>
+              <option value="overbought_rsi">Overbought RSI</option>
+              <option value="extended_rsi">Extended RSI</option>
+              <option value="above_ma">Above MAs</option>
+              <option value="below_ma">Below MAs</option>
+              <option value="volume_surge">Volume Surge</option>
+              <option value="near_high">Near 52w High</option>
+              <option value="near_low">Near 52w Low</option>
+              <option value="value_pe">Value P/E</option>
+              <option value="premium_pe">Premium P/E</option>
+              <option value="analyst_buy">Analyst Buy</option>
+              <option value="analyst_sell">Analyst Sell</option>
+            </select>
+          </Field>
+          <Field label="Analyst Rec">
+            <select value={filters.recommendation} onChange={(e) => set('recommendation', e.target.value)} className={selectCls} style={selectStyle}>
+              <option value="">All</option>
+              <option value="strong_buy">Strong Buy</option>
+              <option value="buy">Buy</option>
+              <option value="none">No Coverage</option>
+            </select>
+          </Field>
           <Field label="Score Min">
             {/* step was 0.1, implying a continuous scale; compute_score()
                 always returns a whole number clamped to 1-10, so whole steps
@@ -849,6 +900,8 @@ export function ScreenerClient() {
               'Results'
             )}
           </span>
+          <div className="flex items-center gap-2">
+          <DensityToggle />
           <div
             className="flex rounded-lg border p-0.5"
             style={{ borderColor: 'var(--color-border-default)' }}
@@ -873,6 +926,7 @@ export function ScreenerClient() {
               </button>
             ))}
           </div>
+          </div>
         </div>
         {isLoading ? (
           <p className="p-8 text-center text-sm text-[var(--color-text-tertiary)]">Loading the latest scan…</p>
@@ -884,20 +938,22 @@ export function ScreenerClient() {
           <Treemap tickers={filtered} />
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[900px] text-sm">
+            {/* Base width fits the always-on 4 columns; min-widths step up as
+                breakpoints reveal more columns (overflow-x stays as safety). */}
+            <table className="mg-table w-full sm:min-w-[560px] lg:min-w-[760px] xl:min-w-[900px]">
               <thead>
                 <tr>
-                  <HeaderCell label="Ticker" sortKey="ticker" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Price" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Chg%" sortKey="change" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Score" sortKey="score" align="center" sort={sort} onSort={onSort} />
-                  <HeaderCell label={<InfoTip term="p_e">PE</InfoTip>} sortKey="pe" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label={<InfoTip term="market_cap">Mkt Cap</InfoTip>} sortKey="mcap" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label={<InfoTip term="div_yield">Div%</InfoTip>} sortKey="div" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label={<InfoTip term="rsi">RSI</InfoTip>} sortKey="rsi" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Volume vs Avg" sortKey="volume_ratio" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Sector" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Why This Score" sort={sort} onSort={onSort} />
+                  <HeaderCell label="Ticker" sortKey="ticker" sort={sort} onSort={onSort} className={COL.ticker} />
+                  <HeaderCell label="Price" align="right" sort={sort} onSort={onSort} className={COL.price} />
+                  <HeaderCell label="Chg%" sortKey="change" align="right" sort={sort} onSort={onSort} className={COL.change} />
+                  <HeaderCell label="Score" sortKey="score" align="center" sort={sort} onSort={onSort} className={COL.score} />
+                  <HeaderCell label={<InfoTip term="p_e">PE</InfoTip>} sortKey="pe" align="right" sort={sort} onSort={onSort} className={COL.pe} />
+                  <HeaderCell label={<InfoTip term="market_cap">Mkt Cap</InfoTip>} sortKey="mcap" align="right" sort={sort} onSort={onSort} className={COL.mcap} />
+                  <HeaderCell label={<InfoTip term="div_yield">Div%</InfoTip>} sortKey="div" align="right" sort={sort} onSort={onSort} className={COL.div} />
+                  <HeaderCell label={<InfoTip term="rsi">RSI</InfoTip>} sortKey="rsi" align="right" sort={sort} onSort={onSort} className={COL.rsi} />
+                  <HeaderCell label="Volume vs Avg" sortKey="volume_ratio" align="right" sort={sort} onSort={onSort} className={COL.volRatio} />
+                  <HeaderCell label="Sector" sort={sort} onSort={onSort} className={COL.sector} />
+                  <HeaderCell label="Why This Score" sort={sort} onSort={onSort} className={COL.signals} />
                 </tr>
               </thead>
               <tbody>
@@ -905,8 +961,11 @@ export function ScreenerClient() {
                   filtered.map((t) => <TickerRow key={t.ticker} t={t} />)
                 ) : (
                   <tr>
-                    <td colSpan={11} className="p-8 text-center text-[var(--color-text-tertiary)]">
-                      No tickers match your filters.
+                    {/* padding on an inner div — .mg-table td would override p-8 */}
+                    <td colSpan={11}>
+                      <div className="p-8 text-center text-[var(--color-text-tertiary)]">
+                        No tickers match your filters.
+                      </div>
                     </td>
                   </tr>
                 )}

@@ -140,7 +140,7 @@ def ticker_currency(ticker, trade_currency=None):
     _CURRENCY_CACHE[ticker] = cur
     return cur
 
-RATE = 1.38  # CAD→USD approximate
+RATE = 1.38  # USDCAD fallback only — overwritten with the live rate at the top of main()
 
 def dual_price(price, currency):
     """Convert a price to both USD and CAD.
@@ -304,6 +304,7 @@ def load_demo_account():
             "strategy": t.get("strategy", "?"),
             "pnl": pnl,
             "size": t.get("size", 0),
+            "quantity": t.get("size", 0),
             "sleeve": t.get("sleeve", ""),
             "score": t.get("score", 0),
             "entry_currency": "CAD" if is_canadian_ticker(ticker) else "USD",
@@ -321,9 +322,9 @@ def load_demo_account():
     # Compute cash from sleeves or balance
     cash = sleeves.get("cash", {}).get("allocated", balance - total_allocated)
     
-    # Starting balance: use initial balance (balance - total_sleeve_pnl approximates it,
-    # but for a demo account we use balance as starting since trades are still running)
-    starting_balance = balance
+    # Starting balance: back out sleeve P&L from the current balance so
+    # return_pct reflects actual gains (balance alone would make it ~0).
+    starting_balance = balance - total_sleeve_pnl
     
     transformed = {
         "metadata": {
@@ -344,8 +345,20 @@ def load_demo_account():
 
 
 def main():
+    global RATE
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
+
+    # ── Fetch live USDCAD rate FIRST so every conversion below (dual_price,
+    # to_native, get_entry_price, get_current_price) uses it; the module
+    # default 1.38 is only the fallback when the fetch fails. Also published
+    # as fx_rate_usdcad for the frontend currency toggle.
+    try:
+        fx_hist = yf_ticker(yf, "USDCAD=X").history(period="5d")
+        if not fx_hist.empty:
+            RATE = round(float(fx_hist["Close"].iloc[-1]), 4)
+    except Exception:
+        pass  # keep 1.38 fallback
+
     # ── Try demo account first (if balance > threshold) ──
     demo_data, risk_metrics = load_demo_account()
     if demo_data is not None:
@@ -362,6 +375,7 @@ def main():
     
     meta = pt.get("metadata", {})
     acct = pt.get("account", {})
+    is_demo = meta.get("source") == "demo_account"
     wins = meta.get("winning_trades", 0) or 0
     losses = meta.get("losing_trades", 0) or 0
     total = wins + losses
@@ -377,7 +391,9 @@ def main():
     for c in all_closed[-40:]:  # process up to 40 for P&L (yfinance is slow)
         ticker = c.get('ticker','?')
         yf_t = YF_MAP.get(ticker, ticker)
-        cur = ticker_currency(ticker)
+        cur = ticker_currency(ticker, c.get("entry_currency", ""))
+        qty = float(c.get('quantity') or 1)
+        qty = int(qty) if qty.is_integer() else qty
         
         entry_date = str(c.get('entry_date',''))[:10]
         exit_date = str(c.get('exit_date',''))[:10]
@@ -419,14 +435,16 @@ def main():
             exit_price = to_native(raw_exit, ticker, cur)
         
         pnl_pct = round((exit_price - entry_price) / entry_price * 100, 2) if entry_price > 0 else 0
-        pnl_usd = round(exit_price - entry_price, 2)
+        # Position-level P&L: per-share move × share count from the ledger
+        pnl_usd = round((exit_price - entry_price) * qty, 2)
         realized_pnl += pnl_usd
-        
+
         display_ticker = DISPLAY_MAP.get(ticker, ticker)
         entry_usd, entry_cad = dual_price(entry_price, cur)
         exit_usd, exit_cad = dual_price(exit_price, cur)
         recent.append({
             'ticker': display_ticker,
+            'quantity': qty,
             'type': ASSET_TYPES.get(display_ticker, 'ETF'),
             'asset_class': asset_class(ticker, c.get('trade_type', 'stock')),
             'direction': c.get('direction','?'),
@@ -454,9 +472,10 @@ def main():
     # Only show last 20 for display
     recent = recent[-20:]
     
+    # Row-based sum kept only as the demo-account fallback; the ledger path
+    # derives realized P&L from the cash identity further down.
     realized_pnl = round(realized_pnl, 2)
-    total_pnl = realized_pnl  # Use yfinance-based P&L as the source of truth
-    
+
     # Build open positions from yfinance historical data
     positions = []
     # Check if trade has explicit currency — use it instead of guessing
@@ -469,7 +488,13 @@ def main():
         entry_date = str(t.get("entry_date", ""))[:10]
         strategy = t.get("strategy", t.get("entry_rationale", "?"))
         raw_entry = float(t.get("entry_price_cad", t.get("entry_price", 0)))
-        
+        # Share/contract count and dollars the engine actually debited from cash.
+        # The ledger stores both (paper_trading.py debits entry_value on entry);
+        # fall back to price×qty only for pre-fix trades that lack entry_value.
+        qty = float(t.get("quantity") or 1)
+        qty = int(qty) if qty.is_integer() else qty
+        ledger_entry_value = float(t.get("entry_value") or 0) or round(float(t.get("entry_price") or 0) * qty, 2)
+
         # Options: use premium as-is, don't fetch underlying price
         if trade_type == "option":
             premium = float(t.get("entry_price", 0))
@@ -487,8 +512,14 @@ def main():
                 'type': 'Option',
                 'entry_date': entry_date,
                 'entry_price': premium,
+                # No live option pricing — current_price is just the entry
+                # premium; flag it so the frontend can show a dash, not $0 P&L.
                 'current_price': premium,
+                'premium_stale': True,
                 'currency': 'USD',
+                'quantity': qty,
+                'entry_value': ledger_entry_value,
+                'market_value': ledger_entry_value,
                 'pnl': 0.0,
                 'pnl_pct': 0.0,
                 'strategy': strategy,
@@ -541,7 +572,10 @@ def main():
             'entry_price_cad': entry_cad,
             'current_price_usd': current_usd,
             'current_price_cad': current_cad,
-            'pnl': round(current_price - entry_price, 2),
+            'quantity': qty,
+            'entry_value': ledger_entry_value,
+            'market_value': round(current_price * qty, 2),
+            'pnl': round((current_price - entry_price) * qty, 2),
             'pnl_pct': pnl_pct,
             'strategy': strategy,
             'direction': 'long',
@@ -549,24 +583,18 @@ def main():
             'asset_class': ac,
         })
     
-    # Compute portfolio stats from actual positions
-    # NOT FIXED HERE (see DATA-BUGS-2026-07-22.md, MEDIUM, this file:553):
-    # this sums per-share entry_price with no quantity multiplier — a
-    # "1 share per position" shadow portfolio. The deployed Pi copy at
-    # ~/.hermes/scripts/push_dashboard.py was fixed 2026-07-21 to
-    # quantity-scale invested/market_value from ledger `quantity` and
-    # `entry_value` fields (see project memory:
-    # paper-trading-ledger-semantics.md), so production is NOT affected by
-    # this. Left unfixed in THIS repo copy because the ledger schema can't
-    # be verified from here (gated R2 file, no Pi access permitted in this
-    # task) and this script's realized_pnl is independently reconstructed
-    # via yfinance closes rather than the ledger cash-identity the Pi fix
-    # relies on — patching just `invested` here without also verifying
-    # those other paths would risk a mismatched, guessed-at "fix" instead
-    # of just a stale one. Do not scp this file to the Pi; it would
-    # regress the already-fixed production script.
-    invested = round(sum(p['entry_price'] for p in positions), 2)
-    unrealized_pnl = round(sum(p['current_price'] - p['entry_price'] for p in positions), 2)
+    # Compute portfolio stats from actual positions, at full position size.
+    # invested = dollars debited from cash (cost basis), market_value = what the
+    # open book is worth now.
+    invested = round(sum(float(p.get('entry_value') or 0) for p in positions), 2)
+    market_value = round(sum(float(p.get('market_value') or 0) for p in positions), 2)
+    unrealized_pnl = round(market_value - invested, 2)
+    # Realized P&L from the cash ledger identity (cash = start − Σopen cost +
+    # Σclosed realized), not from summing closed-trade rows: closed trades get
+    # archived out of paper_trading.json, so a row sum silently loses history.
+    if not is_demo:
+        realized_pnl = round(cash + invested - start, 2)
+    realized_pnl = round(realized_pnl, 2)
     total_pnl_val = round(realized_pnl + unrealized_pnl, 2)
     return_pct = round(total_pnl_val / start * 100, 2) if start > 0 else 0
 
@@ -577,7 +605,7 @@ def main():
         _cls = _p.get("asset_class", "equity")
         _m = _mix.setdefault(_cls, {"count": 0, "value": 0.0})
         _m["count"] += 1
-        _m["value"] += float(_p.get("entry_price", 0) or 0)
+        _m["value"] += float(_p.get("entry_value", 0) or 0)
     _mix_total = sum(m["value"] for m in _mix.values()) or 1.0
     asset_class_mix = {
         k: {"count": v["count"], "value": round(v["value"], 2),
@@ -585,23 +613,21 @@ def main():
         for k, v in sorted(_mix.items(), key=lambda kv: -kv[1]["value"])
     }
 
-    # Fetch live FX rate for frontend currency toggle
-    try:
-        fx_hist = yf_ticker(yf, "USDCAD=X").history(period="5d")
-        live_fx = round(float(fx_hist["Close"].iloc[-1]), 4) if not fx_hist.empty else RATE
-    except Exception:
-        live_fx = RATE
-
     live_data = {
         'status': 'LIVE',
         'generated_at': now,
         'price_source': 'yfinance historical closes — no CAD/USD math',
-        'fx_rate_usdcad': live_fx,
+        # Live rate fetched once at the top of main(); 1.38 only if the fetch failed.
+        'fx_rate_usdcad': RATE,
         'portfolio': {
             'starting_balance': start, 'cash': cash,
             'invested': invested,
-            'total_balance': round(start + total_pnl_val, 2),
-            'total_pnl': round(realized_pnl, 2),
+            'market_value': market_value,
+            # True account value: cash on hand + open book marked to market.
+            # Identical to starting_balance + total_pnl by the cash identity.
+            'total_balance': round(cash + market_value, 2),
+            'realized_pnl': realized_pnl,
+            'total_pnl': total_pnl_val,
             'unrealized_pnl': unrealized_pnl,
             'return_pct': return_pct,
             'win_rate': wr, 'total_trades': total,

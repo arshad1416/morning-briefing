@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 import { Surface, SurfaceHeader, Stat, InfoTip } from '@/components/primitives';
 import { fetchGated, GateError } from '@/lib/api/gated';
+import { GateInline } from '@/components/feature/gating/GateInline';
 
 const PaperPortfolioSchema = z
   .object({
@@ -18,6 +19,7 @@ const PaperPortfolioSchema = z
         starting_balance: z.number().default(100000),
         cash: z.number().default(0),
         invested: z.number().default(0),
+        market_value: z.number().optional(),
         return_pct: z.number().default(0),
         win_rate: z.number().nullable().default(null),
         total_trades: z.number().nullable().default(null),
@@ -46,18 +48,20 @@ export function DayPnLCard() {
   );
 
   if (isError) {
-    const signedOut = error instanceof GateError && error.kind === 'signin';
+    // Both gate states get a conversion affordance: the signed-out trial pitch
+    // and — previously missing — the signed-in-without-subscription upgrade.
+    // (GateInline routes upgrades to /account/, where checkout lives.)
+    if (error instanceof GateError && error.kind !== 'unavailable') {
+      return shell(
+        <GateInline
+          kind={error.kind}
+          need={error.need ?? 'basic'}
+          feature="the live $100K paper-trading portfolio"
+        />,
+      );
+    }
     return shell(
-      <p className="text-sm text-[var(--color-text-tertiary)]">
-        {signedOut ? (
-          <>
-            <a href="/login" className="underline text-[var(--color-accent)]">Sign in</a> to follow the
-            $100K practice account — simulated trades, no real money at stake.
-          </>
-        ) : (
-          'Portfolio data isn’t available right now.'
-        )}
-      </p>,
+      <p className="text-sm text-[var(--color-text-tertiary)]">Portfolio data isn’t available right now.</p>,
     );
   }
 
@@ -66,7 +70,9 @@ export function DayPnLCard() {
   }
 
   const p = data.portfolio;
-  const deployedPct = p.total_balance > 0 ? (p.invested / p.total_balance) * 100 : 0;
+  // Deployed = open book at market over total equity; falling back to cost
+  // basis (invested) only for pre-market_value data.
+  const deployedPct = p.total_balance > 0 ? ((p.market_value ?? p.invested) / p.total_balance) * 100 : 0;
 
   return shell(
     <>

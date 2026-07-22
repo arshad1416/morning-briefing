@@ -1,9 +1,32 @@
 // app/layout.tsx — root layout
 import type { Metadata, Viewport } from 'next';
+import { IBM_Plex_Mono, Instrument_Serif, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
 import { AppShell } from '@/components/layout/AppShell';
 import { FeedbackBubble } from '@/components/feature/feedback/FeedbackBubble';
+
+// Self-hosted at build time with size-adjusted fallbacks — the previous Google
+// Fonts <link> caused a visible swap reflow (layout shift) on narrow viewports.
+const fontSans = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-space-grotesk',
+  display: 'swap',
+});
+const fontDisplay = Instrument_Serif({
+  subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
+  variable: '--font-instrument-serif',
+  display: 'swap',
+});
+const fontMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-ibm-plex-mono',
+  display: 'swap',
+});
 
 const SITE = 'https://maplegamma.com';
 const DESCRIPTION =
@@ -56,14 +79,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${fontSans.variable} ${fontDisplay.variable} ${fontMono.variable}`}
+    >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_LD) }}
@@ -78,8 +99,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               (function() {
                 var saved = localStorage.getItem('mg-ui');
                 var theme = 'dark';
-                try { if (saved) theme = JSON.parse(saved).state.theme || 'dark'; } catch(e) {}
+                var density = 'comfortable';
+                try {
+                  if (saved) {
+                    var s = JSON.parse(saved).state;
+                    theme = s.theme || 'dark';
+                    density = s.density || 'comfortable';
+                  }
+                } catch(e) {}
                 document.documentElement.setAttribute('data-theme', theme);
+                document.documentElement.setAttribute('data-density', density);
               })();
             `,
           }}

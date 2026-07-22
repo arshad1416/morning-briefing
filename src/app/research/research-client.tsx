@@ -10,7 +10,7 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { GateCard } from '@/components/feature/gating/GateCard';
-import { InfoTip, PlainLabel } from '@/components/primitives';
+import { InfoTip, PlainLabel, DensityToggle } from '@/components/primitives';
 import type { GlossaryTerm } from '@/lib/glossary';
 import { fetchGated, GateError } from '@/lib/api/gated';
 
@@ -45,6 +45,12 @@ const useGated = <T,>(name: string, file: string, enabled = true) =>
 
 const fmtTs = (iso?: string | null) => {
   if (!iso) return '';
+  // Pi artifacts carry timezone-NAIVE ET wall time ("2026-07-21 17:15").
+  // new Date() would parse that in the viewer's zone (Invalid Date on Safari),
+  // so render naive strings as-is; only real ISO strings with Z/offset get
+  // converted to ET.
+  const hasOffset = /[zZ]$|[+-]\d{2}:?\d{2}$/.test(iso.trim());
+  if (!hasOffset) return `${iso.trim().slice(0, 16)} ET`;
   const d = new Date(iso);
   if (isNaN(d.getTime())) return '';
   return `${d.toLocaleString('en-CA', { timeZone: 'America/Toronto', dateStyle: 'long', timeStyle: 'short' })} ET`;
@@ -745,7 +751,7 @@ function OverviewTab() {
                 record — not a leak or a tip.
               </p>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="mg-table mg-table-tight w-full">
                   <tbody>
                     {d.insider_trades.slice(0, 10).map((i: Any, idx: number) => (
                       <tr key={idx} className="border-t first:border-t-0" style={{ borderColor: 'var(--color-border-subtle)' }}>
@@ -772,7 +778,7 @@ function OverviewTab() {
                 Shares bought or sold by members of the U.S. House of Representatives, who have to declare their own trades.
               </p>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="mg-table mg-table-tight w-full">
                   <tbody>
                     {d.congress.recent_trades.slice(0, 10).map((c: Any, idx: number) => (
                       <tr key={idx} className="border-t first:border-t-0" style={{ borderColor: 'var(--color-border-subtle)' }}>
@@ -904,7 +910,7 @@ function NewsTab() {
           }
         >
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[480px] text-sm">
+            <table className="mg-table mg-table-tight w-full min-w-[480px]">
               <thead>
                 <tr className="text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
                   <th className="py-1.5 text-left">Symbol</th>
@@ -1358,7 +1364,7 @@ function BacktestTab() {
               }
             >
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[520px] text-sm">
+                <table className="mg-table mg-table-tight w-full min-w-[520px]">
                   <thead>
                     {/* No <InfoTip> in these header cells: the table sits in an
                         `overflow-x-auto` wrapper, which also clips vertically, so an
@@ -1516,7 +1522,7 @@ function EarningsTab() {
           rows.length ? (
             <Card title={title}>
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[420px] text-sm">
+                <table className="mg-table mg-table-tight w-full min-w-[420px]">
                   <thead>
                     {/* Same reason as the walk-forward table: no tooltip inside an
                         `overflow-x-auto` header row, because it would be clipped. */}
@@ -1635,7 +1641,7 @@ function SecTab() {
               American market regulator. Each one is public and free to read.
             </p>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[420px] text-sm">
+              <table className="mg-table mg-table-tight w-full min-w-[420px]">
                 <thead>
                   <tr className="text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
                     <th className="py-1.5 text-left">Date</th>
@@ -1711,6 +1717,7 @@ export function ResearchClient() {
         </p>
       </div>
 
+      <div className="flex items-center gap-2">
       <div className="overflow-x-auto">
         <div className="flex min-w-max gap-1 rounded-full border p-1" style={{ borderColor: 'var(--color-border-subtle)', backgroundColor: 'var(--color-bg-surface)' }} role="tablist" aria-label="Research sections">
           {TABS.map((t) => (
@@ -1731,6 +1738,8 @@ export function ResearchClient() {
             </button>
           ))}
         </div>
+      </div>
+      <DensityToggle className="ml-auto shrink-0" />
       </div>
 
       <Active />

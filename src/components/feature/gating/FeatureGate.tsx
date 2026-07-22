@@ -1,4 +1,4 @@
-// components/feature/gating/ProGate.tsx — client-side monetization wrapper.
+// components/feature/gating/FeatureGate.tsx — client-side monetization wrapper.
 //
 // Unlike GateCard (which reflects a server 401/403 for R2-gated files), this
 // wraps features whose data is public — the gate is cosmetic. It derives the
@@ -8,12 +8,13 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { FEATURES, type FeatureKey } from '@/stores/entitlements';
+import { FEATURES, NEED_RANK, entitlementRank, type FeatureKey } from '@/stores/entitlements';
 import { useMe } from '@/lib/auth/useMe';
 import type { GlossaryTerm } from '@/lib/glossary';
 import { PlainLabel } from '@/components/primitives';
+import { LockIcon } from './LockIcon';
 
-interface ProGateProps {
+interface FeatureGateProps {
   feature: FeatureKey;
   children: React.ReactNode;
 }
@@ -30,9 +31,6 @@ const FEATURE_LABELS: Record<FeatureKey, string> = {
   // real-time order flow — so the word "Flow" claimed the one thing it isn't.
   nope: 'NOPE options-pressure estimate',
   calibration: 'Model Calibration',
-  scenarioSim: 'Scenario Simulator',
-  congressTrades: 'US lawmakers’ stock trades',
-  briefingExport: 'Briefing Export',
 };
 
 // Plain-English caption under the lock label, read from the glossary. Only keys
@@ -45,44 +43,25 @@ const FEATURE_TERMS: Partial<Record<FeatureKey, GlossaryTerm>> = {
   calibration: 'calibration',
 };
 
-function LockIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width={18}
-      height={18}
-      fill="none"
-      stroke="var(--color-accent)"
-      strokeWidth={1.6}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <rect x="5" y="11" width="14" height="9" rx="2" />
-      <path d="M8 11V7.5a4 4 0 0 1 8 0V11" />
-      <circle cx="12" cy="15.5" r="1" fill="var(--color-accent)" stroke="none" />
-    </svg>
-  );
-}
+const TIER_LABELS = { basic: 'Basic', pro: 'Pro' } as const;
 
-export function ProGate({ feature, children }: ProGateProps) {
+export function FeatureGate({ feature, children }: FeatureGateProps) {
   const { data: me, isLoading } = useMe();
 
   const { minTier, teaser } = FEATURES[feature];
-  const ent = me?.entitlement;
-  const userRank = !ent?.entitled
-    ? 0
-    : ent.tier === 'trial' || ent.tier === 'pro'
-      ? 2
-      : ent.tier === 'basic'
-        ? 1
-        : 0;
-  const needRank = minTier === 'pro' ? 2 : 0;
+  const userRank = entitlementRank(me?.entitlement);
   // While the session check is in flight, render ungated — a brief expose
   // beats flashing a lock at every entitled user on every load.
-  const can = isLoading || userRank >= needRank;
+  const can = isLoading || userRank >= NEED_RANK[minTier];
 
   if (can) return <>{children}</>;
+
+  // Signed-out visitors get the trial pitch (every new account starts a 7-day
+  // trial); signed-in under-tier users have already consumed their trial, so
+  // never promise a second one — send them to their account's plan cards,
+  // where checkout actually lives.
+  const signedOut = !me;
+  const tierLabel = TIER_LABELS[minTier];
 
   return (
     <div className="relative">
@@ -112,15 +91,18 @@ export function ProGate({ feature, children }: ProGateProps) {
           </p>
           {FEATURE_TERMS[feature] && <PlainLabel term={FEATURE_TERMS[feature]!} className="mt-1" />}
           <p className="text-xs text-[var(--color-text-tertiary)] mt-1">
-            Unlock with MapleGamma Pro
+            Included with MapleGamma {tierLabel}
           </p>
           <Link
-            href="/#pricing"
+            href={signedOut ? '/signup/' : '/account/'}
             className="mt-4 inline-flex items-center justify-center px-4 py-2 text-xs font-semibold rounded-lg transition hover:bg-[var(--color-accent-fg)]"
             style={{ backgroundColor: 'var(--color-accent)', color: 'var(--color-on-accent)' }}
           >
-            Upgrade to Pro
+            {signedOut ? 'Start 7-day free trial' : `Upgrade to ${tierLabel}`}
           </Link>
+          {signedOut && (
+            <p className="text-[10px] text-[var(--color-text-tertiary)] mt-2">No card required</p>
+          )}
         </div>
       </div>
     </div>

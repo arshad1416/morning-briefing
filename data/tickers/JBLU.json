@@ -1,21 +1,22 @@
 {
  "ticker": "JBLU",
  "name": "JetBlue Airways Corporation",
- "generated_at": "2026-07-22T11:45:02.024909+00:00",
- "price": 5.34,
- "change_pct": -1.93,
+ "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "price": 5.12,
+ "change_pct": -4.3,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip"
+  "oversold_rsi",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 42.0,
-  "sma_20": 5.7,
+  "rsi_14": 33.6,
+  "sma_20": 5.68,
   "sma_50": 5.28
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "2.0B",
+  "market_cap": "1.9B",
   "beta": 1.731,
   "dividend_yield": null
  },

@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import { nopeDetailQuery } from '@/lib/query/options';
 import { InfoTip, PlainLabel } from '@/components/primitives';
 import { formatCompact } from '@/lib/format';
+import { GateError } from '@/lib/api/gated';
+import { GateCard } from '@/components/feature/gating/GateCard';
 
 function metric(value: number | null | undefined, digits = 3) {
   return value == null ? '—' : value.toFixed(digits);
@@ -19,7 +21,7 @@ export function NopeCard() {
   // passes exactly ["SPY", "QQQ"]. There is no other caller anywhere in
   // pi-scripts/. The card's fixed two-symbol layout matches the sole real
   // producer's fixed contract, so nothing is ever silently dropped today.
-  const { data, isLoading } = useQuery(nopeDetailQuery());
+  const { data, isLoading, isError, error } = useQuery(nopeDetailQuery());
   const spy = data?.symbols.SPY;
   const qqq = data?.symbols.QQQ;
   const symbols = [
@@ -48,8 +50,40 @@ export function NopeCard() {
         </span>
       </div>
       <div className="p-4">
-        {isLoading || !data ? (
-          <div className="skeleton h-24" />
+        {/* Without this branch a failed/missing R2 file left an infinite skeleton. */}
+        {isError ? (
+          error instanceof GateError && error.kind !== 'unavailable' ? (
+            <GateCard kind={error.kind} need={error.need ?? 'pro'} feature="NOPE flow" flush />
+          ) : (
+            <p className="py-6 text-center text-sm text-[var(--color-text-tertiary)]">
+              NOPE data isn&apos;t available right now.
+            </p>
+          )
+        ) : isLoading || !data ? (
+          // Ghost skeleton: the loaded markup with transparent text so heights
+          // match the loaded state exactly and the load causes no shift.
+          <div aria-busy="true">
+            <div className="grid grid-cols-2 gap-4" style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }} aria-hidden="true">
+              {['SPY', 'QQQ'].map((symbol) => (
+                <div key={symbol} className="min-w-0">
+                  <p className="text-xs">
+                    <span className="skeleton rounded text-transparent select-none">{symbol} NOPE</span>
+                  </p>
+                  <p className="text-xl font-bold mt-0.5">
+                    <span className="skeleton rounded text-transparent select-none">0.000</span>
+                  </p>
+                  <p className="text-[10px] mt-1">
+                    <span className="skeleton rounded text-transparent select-none">Fill 0.000 · 00.0M shares</span>
+                  </p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 text-[10px] leading-relaxed skeleton rounded text-transparent select-none" aria-hidden="true">
+              Net options pricing effect estimated from option volume delta against share volume.
+              Last calculation: pending.
+            </p>
+            <span className="sr-only">Loading NOPE data…</span>
+          </div>
         ) : (
           <>
             <div className="grid grid-cols-2 gap-4" style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}>

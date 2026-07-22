@@ -69,14 +69,17 @@ const DISCLAIMER_FOOTER =
   '\n\n---\n*General information only — not investment advice, not a recommendation, and not tailored to any person’s circumstances.*';
 
 /** Standing IBKR position disclosure: appended when the analyzed ticker is held. */
-async function positionDisclosure(ticker) {
+async function positionDisclosure(env, ticker) {
+  // ibkr_positions.json is R2-private now — the old public URL 301s to a 404,
+  // which silently killed this disclosure. Read straight from the bucket. The
+  // portfolio agent writes enveloped files {timestamp, version, data:[...]};
+  // tolerate the older flat {positions:[...]} shape too.
   try {
-    const res = await fetch('https://briefing.arshadkazi.ca/data/ibkr_positions.json', {
-      headers: { Accept: 'application/json' },
-    });
-    if (!res.ok) return '';
-    const data = await res.json();
-    const held = (data?.positions || []).some(
+    const obj = await env?.PRIVATE?.get('ibkr_positions.json');
+    if (!obj) return '';
+    const data = await obj.json();
+    const arr = Array.isArray(data?.data) ? data.data : data?.positions || [];
+    const held = arr.some(
       (p) => String(p.ticker || p.symbol || '').toUpperCase().trim() === ticker,
     );
     return held
@@ -84,6 +87,32 @@ async function positionDisclosure(ticker) {
       : '';
   } catch {
     return '';
+  }
+}
+
+/**
+ * Fixed-window (60s) per-IP limiter for this unauthenticated, LLM-backed
+ * endpoint — enforces RATE_LIMIT_PER_MIN (wrangler [vars]), which was
+ * previously configured but never checked. Fail-open: a D1 hiccup must never
+ * break chat.
+ */
+async function rateLimited(request, env) {
+  const limit = Number(env?.RATE_LIMIT_PER_MIN || 10);
+  if (!env?.DB || !(limit > 0)) return false;
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  try {
+    const windowStart = Math.floor(Date.now() / 60000) * 60000;
+    const row = await env.DB.prepare(
+      'INSERT INTO chat_rate (ip, window_start, count) VALUES (?,?,1) ' +
+        'ON CONFLICT(ip, window_start) DO UPDATE SET count = count + 1 RETURNING count',
+    ).bind(ip, windowStart).first();
+    if ((row?.count || 0) === 1) {
+      // Opportunistic prune of stale windows, best-effort.
+      try { await env.DB.prepare('DELETE FROM chat_rate WHERE window_start < ?').bind(windowStart - 120000).run(); } catch {}
+    }
+    return (row?.count || 0) > limit;
+  } catch {
+    return false;
   }
 }
 
@@ -97,6 +126,9 @@ export async function handleChat(request, env) {
   const ticker = (body?.ticker || '').trim().toUpperCase();
   if (!ticker || !/^[A-Z]{1,5}(\.[A-Z]{1,4})?$/.test(ticker))
     return json({ error: 'Invalid ticker' }, 400, request);
+
+  if (await rateLimited(request, env))
+    return json({ error: 'rate_limited', detail: 'Too many requests — please wait a minute and try again.' }, 429, request);
 
   const apiKey = env?.OPENROUTER_API_KEY;
   if (!apiKey) return json({ error: 'API key not configured' }, 500, request);
@@ -144,7 +176,7 @@ export async function handleChat(request, env) {
 
     const result = await resp.json();
     let content = result?.choices?.[0]?.message?.content || 'No analysis.';
-    content += await positionDisclosure(ticker);
+    content += await positionDisclosure(env, ticker);
     content += DISCLAIMER_FOOTER;
     let ctxBlock = '';
     if (liveData) {

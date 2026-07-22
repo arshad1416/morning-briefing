@@ -10,15 +10,29 @@ import { NopeCard } from '@/components/feature/options/NopeCard';
 import { RegimeChip, InfoTip, PlainLabel } from '@/components/primitives';
 import { useQuery } from '@tanstack/react-query';
 import { gexDetailQuery, gexQuery } from '@/lib/query/options';
-import { ProGate } from '@/components/feature/gating/ProGate';
+import { FeatureGate } from '@/components/feature/gating/FeatureGate';
+import { GateCard } from '@/components/feature/gating/GateCard';
+import { GateError } from '@/lib/api/gated';
 import { AlertRuleBuilder } from '@/components/feature/MissedOpportunities';
 import { formatCompact } from '@/lib/format';
 
 function OptionsFlowTable() {
-  const { data } = useQuery(gexDetailQuery());
+  const { data, isPending, error } = useQuery(gexDetailQuery());
   const mode = data?.modes.all;
 
-  if (!mode) return null;
+  // Query settled without data: show the gate instead of silently rendering
+  // an empty flow card (previously free users saw a header and nothing else).
+  if (!mode && !isPending) {
+    if (error instanceof GateError && error.kind !== 'unavailable') {
+      // gex-detail.json is Pro in the Worker's file map — the fallback isn't a guess.
+      return <GateCard kind={error.kind} need={error.need ?? 'pro'} feature="Strike-level options flow" flush />;
+    }
+    return (
+      <p className="p-8 text-center text-sm text-[var(--color-text-tertiary)]">
+        Options flow data isn&apos;t available right now.
+      </p>
+    );
+  }
 
   // BUG FIX: was mode.strikes.slice(0, 10) — strikes[] is in ascending-strike
   // order (see the schema transform in lib/schemas/market.ts), so this always
@@ -27,17 +41,22 @@ function OptionsFlowTable() {
   // strike (750, the biggest |GEX| on the chain) never appeared. Rank by
   // |gex| to pick the ten rows that actually matter, then restore ascending-
   // strike order so the table still reads top-to-bottom as a price ladder.
-  const topStrikes = [...mode.strikes]
-    .sort((a, b) => Math.abs(b.gex) - Math.abs(a.gex))
-    .slice(0, 10)
-    .sort((a, b) => a.strike - b.strike);
+  // mode is undefined while the query is pending, so this stays a ternary —
+  // the ghost rows below cover that state instead of crashing on it.
+  const topStrikes = mode
+    ? [...mode.strikes]
+        .sort((a, b) => Math.abs(b.gex) - Math.abs(a.gex))
+        .slice(0, 10)
+        .sort((a, b) => a.strike - b.strike)
+    : undefined;
 
   return (
     <>
-      {/* The caption lives here, not in the card header: this component renders
-          nothing until `gexDetailQuery` resolves, and that file is Pro-gated, so
-          a header-level caption described rows that signed-out visitors never
-          see. Column attribution matters — see the note on the columns below. */}
+      {/* The caption lives here, not in the card header: this component may
+          bail out to a GateCard or an unavailable-data message above, so a
+          header-level caption would describe rows that signed-out or
+          errored-out visitors never see. Column attribution matters — see
+          the note on the columns below. */}
       <p className="px-3 pt-1 pb-3 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
         Each row is one price level — its <InfoTip term="strike">strike</InfoTip> — split into its{' '}
         <InfoTip term="call">call</InfoTip> leg, which profits if the price rises, and its{' '}
@@ -50,7 +69,7 @@ function OptionsFlowTable() {
         strike can appear twice if both its call and put make the cut), sorted back into price
         order below — a periodic snapshot of open interest, not live order flow.
       </p>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto" aria-busy={isPending || undefined}>
         <table className="w-full text-sm" style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}>
           <thead>
             <tr className="border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
@@ -63,7 +82,32 @@ function OptionsFlowTable() {
             </tr>
           </thead>
           <tbody>
-            {topStrikes.map((s) => {
+            {/* Ghost pending rows: same markup as the loaded top-10 slice with
+                transparent text, so pending → loaded is height-identical. */}
+            {!topStrikes &&
+              Array.from({ length: 10 }, (_, i) => (
+                <tr key={i} className="border-b" style={{ borderColor: 'var(--color-border-subtle)' }} aria-hidden="true">
+                  <td className="py-2 px-3" data-numeric>
+                    <span className="skeleton rounded text-transparent select-none">$000</span>
+                  </td>
+                  <td className="py-2 px-3">
+                    <span className="inline-flex px-1.5 py-0.5 rounded text-[10px] font-semibold tracking-wider border border-transparent skeleton text-transparent select-none">
+                      CALL
+                    </span>
+                  </td>
+                  {/* ghost widths approximate real values so auto table layout
+                      doesn't redistribute columns when data lands */}
+                  <td className="py-2 px-3 text-right" data-numeric>
+                    <span className="skeleton rounded text-transparent select-none">00,000</span>
+                  </td>
+                  {[0, 1, 2].map((c) => (
+                    <td key={c} className="py-2 px-3 text-right" data-numeric>
+                      <span className="skeleton rounded text-transparent select-none">000.0M</span>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            {topStrikes?.map((s) => {
               const isCall = s.type === 'C';
               return (
                 <tr key={`${s.strike}-${s.type}`} className="border-b hover:bg-[rgba(255,255,255,0.03)] transition-colors" style={{ borderColor: 'var(--color-border-subtle)' }}>
@@ -96,14 +140,36 @@ function OptionsFlowTable() {
 
 export function OptionsClient() {
   const { data } = useQuery(gexQuery());
-  const regime = data?.modes.all.gamma_regime ?? 'neutral';
+  // modes.all.gamma_regime is derived from the legacy GROSS total_gex, which
+  // is positive by construction — it can never read bearish. Use the signed
+  // dealer greeks instead (the same signal DealerPositioningCard shows):
+  // dealers long gamma stabilize (bullish), short gamma amplify moves
+  // (bearish); fall back to spot vs the zero-gamma flip when the signed
+  // number is missing.
+  const p = data?.positioning;
+  const regime: 'bullish' | 'bearish' | 'neutral' =
+    p == null
+      ? 'neutral'
+      : p.signed_regime === 'long'
+      ? 'bullish'
+      : p.signed_regime === 'short'
+      ? 'bearish'
+      : p.gamma_flip != null && p.spot != null
+      ? p.spot >= p.gamma_flip
+        ? 'bullish'
+        : 'bearish'
+      : 'neutral';
 
   return (
     <div className="space-y-4">
-      {/* A1: Regime header */}
-      {/* Stacks below sm: the chip column now carries a two-line plain-English
-          caption and the sentence beside it grew from ~55 to ~340 characters, so
-          a single unwrapped flex row squeezed both at phone widths. */}
+      {/* A1: Regime header. Stacks below sm: the chip column carries a
+          two-line plain-English caption and the sentence beside it runs up
+          to ~340 characters, so a single unwrapped flex row squeezed both
+          at phone widths. Within the sentence, an invisible sizer built
+          from the longest of the three regime variants reserves the text
+          block's height at every width, and the chip gets a fixed
+          min-width, so a live-data swap between regimes never shifts the
+          grid. */}
       <div
         className="relative overflow-hidden flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4 p-4 rounded-[var(--radius-tile)] border"
         style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
@@ -123,26 +189,35 @@ export function OptionsClient() {
         {/* The chip reads BULLISH/BEARISH, but it is the sign of gross gamma
             exposure — a read on market stability, not a direction call. The
             subtitle and the sentence beside it say so, since the chip wording
-            itself lives in a shared primitive. */}
+            itself lives in a shared primitive. min-w/justify-center keep the
+            chip's own footprint stable across regimes. */}
         <div className="relative z-10 flex flex-col items-start gap-1">
           <InfoTip term="gamma_regime">
-            <RegimeChip regime={regime} />
+            <RegimeChip regime={regime} className="min-w-[104px] justify-center" />
           </InfoTip>
           <PlainLabel term="gamma_regime" />
         </div>
-        <p className="relative z-10 text-sm text-[var(--color-text-secondary)]">
+        <p className="relative z-10 flex-1 text-sm text-[var(--color-text-secondary)]">
           {/* This sentence must describe SIGNED dealer gamma, not the gross GEX
               figure shown in the card below. The regime used to be derived from
               the gross total, in which puts are stored positive — so it was
               structurally almost always "bullish" and said so. It now comes from
               signed dealer gamma, which can be negative while gross GEX is
               positive; wording that referred to "total gamma exposure" would
-              therefore contradict the number displayed alongside it. */}
-          {regime === 'bullish'
-            ? 'Dealers are net long gamma, so their hedging leans toward damping moves rather than amplifying them. That is a read on how steady the market is, not a forecast that prices will rise. The gross GEX figure below adds calls and puts together, so it stays positive either way — this reading counts puts as negative.'
-            : regime === 'bearish'
-            ? 'Dealers are net short gamma, so their hedging leans toward amplifying moves rather than damping them. That means bigger swings in either direction — it is not a forecast that prices will fall. The gross GEX figure below adds calls and puts together, so it can look positive even now; this reading counts puts as negative.'
-            : 'Dealer gamma is close to flat, so hedging is not pushing the market either way right now.'}
+              therefore contradict the number displayed alongside it.
+              The invisible span below is the longest (bearish) variant — it
+              reserves the block's height so the live-data swap between
+              regimes never shifts the grid; the real text is layered on top. */}
+          <span aria-hidden="true" className="invisible block">
+            Dealers are net short gamma, so their hedging leans toward amplifying moves rather than damping them. That means bigger swings in either direction — it is not a forecast that prices will fall. The gross GEX figure below adds calls and puts together, so it can look positive even now; this reading counts puts as negative.
+          </span>
+          <span className="absolute inset-0 flex items-center">
+            {regime === 'bullish'
+              ? 'Dealers are net long gamma, so their hedging leans toward damping moves rather than amplifying them. That is a read on how steady the market is, not a forecast that prices will rise. The gross GEX figure below adds calls and puts together, so it stays positive either way — this reading counts puts as negative.'
+              : regime === 'bearish'
+              ? 'Dealers are net short gamma, so their hedging leans toward amplifying moves rather than damping them. That means bigger swings in either direction — it is not a forecast that prices will fall. The gross GEX figure below adds calls and puts together, so it can look positive even now; this reading counts puts as negative.'
+              : 'Dealer gamma is close to flat, so hedging is not pushing the market either way right now.'}
+          </span>
         </p>
       </div>
 
@@ -162,9 +237,9 @@ const FlowCard = (
     <div className="px-4 py-3 border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
       <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">Open Interest &amp; Exposure by Strike</h3>
       {/* The explanation of the columns lives inside <OptionsFlowTable />, which
-          renders only once the Pro-gated detail file has loaded. Keeping it here
-          left signed-out visitors with a paragraph describing a table that is
-          not on their screen. */}
+          may render a GateCard instead of the table for signed-out visitors.
+          Keeping it here left those visitors with a paragraph describing a
+          table that is not on their screen. */}
     </div>
     <div className="p-2">
       <OptionsFlowTable />
@@ -177,8 +252,8 @@ const FlowCard = (
 const OPTIONS_ITEMS: GridItem[] = [
   { id: 'gexdexvex', span: 'half', node: <GexDexVexCard /> },
   { id: 'dealer', span: 'half', node: <DealerPositioningCard /> },
-  { id: 'nope', span: 'half', node: <ProGate feature="nope"><NopeCard /></ProGate> },
+  { id: 'nope', span: 'half', node: <FeatureGate feature="nope"><NopeCard /></FeatureGate> },
   { id: 'flow', span: 'hero', node: FlowCard },
-  { id: 'gammawall', span: 'hero', node: <ProGate feature="gammaWalls"><GammaWallChart /></ProGate> },
+  { id: 'gammawall', span: 'hero', node: <FeatureGate feature="gammaWalls"><GammaWallChart /></FeatureGate> },
   { id: 'alertbuilder', span: 'hero', node: <AlertRuleBuilder /> },
 ];

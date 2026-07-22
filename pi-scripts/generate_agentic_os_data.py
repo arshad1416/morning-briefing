@@ -118,7 +118,9 @@ def get_rec_cron_status():
         "hours_since_last_send": (now - last_sent) // 3600 if last_sent else None,
         "unacked_since": unacked,
         "kill_clock_running": unacked > 0,
-        "hours_until_auto_disable": max(0, (168 - (now - unacked)) // 3600) if unacked else None,
+        # 168h (7d) budget; unacked is a unix timestamp, so convert the
+        # budget to seconds before subtracting the elapsed seconds
+        "hours_until_auto_disable": max(0, (168 * 3600 - (now - unacked)) // 3600) if unacked else None,
     }
 
 

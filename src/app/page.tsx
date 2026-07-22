@@ -1,8 +1,10 @@
 // app/page.tsx — Landing page (default route)
 import MapleGammaLanding from '@/components/landing/LandingPage';
 
-// Product + FAQ structured data (landing only). Pricing mirrors the live
-// pricing section — keep in sync if tiers change.
+// Product + FAQ structured data. Deliberately on the landing page only, NOT in
+// layout.tsx — putting it in the layout would duplicate product/FAQ markup on
+// every route. Pricing mirrors the live pricing section — keep in sync if
+// tiers change.
 const APP_LD = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -12,10 +14,11 @@ const APP_LD = {
   url: 'https://maplegamma.com',
   description:
     'Institutional-grade gamma exposure, options flow, and AI market conviction — GEX, DEX, and VEX in one terminal. Simulated (paper-trading) results for educational purposes only.',
+  // Billing is CAD (worker billing.js: env.CURRENCY || 'CAD') — keep in sync.
   offers: [
-    { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'USD' },
-    { '@type': 'Offer', name: 'Basic', price: '49', priceCurrency: 'USD' },
-    { '@type': 'Offer', name: 'Pro', price: '99', priceCurrency: 'USD' },
+    { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'CAD' },
+    { '@type': 'Offer', name: 'Basic', price: '49', priceCurrency: 'CAD' },
+    { '@type': 'Offer', name: 'Pro', price: '99', priceCurrency: 'CAD' },
   ],
 };
 

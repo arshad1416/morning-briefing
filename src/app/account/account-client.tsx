@@ -15,6 +15,7 @@ import {
   passkeyRegisterVerify,
   passkeyCredentials,
   passkeyCredentialDelete,
+  trialDaysLeft,
   type BillingTier,
   type BillingInterval,
   type Entitlement,
@@ -48,10 +49,6 @@ function passkeyKindLabel(transports: string[]) {
   return 'Passkey';
 }
 
-function daysLeft(ms?: number) {
-  if (!ms) return 0;
-  return Math.max(0, Math.ceil((ms - Date.now()) / 86_400_000));
-}
 
 function SubscriptionSummary({ ent }: { ent: Entitlement }) {
   const chip = (label: string, color: string) => (
@@ -70,7 +67,7 @@ function SubscriptionSummary({ ent }: { ent: Entitlement }) {
   if (ent.tier === 'trial' && ent.status === 'active') {
     return (
       <div className="space-y-1">
-        {chip(`Free trial — ${daysLeft(ent.trialEndsAt)} days left`, 'var(--color-accent)')}
+        {chip(`Free trial — ${trialDaysLeft(ent.trialEndsAt)} days left`, 'var(--color-accent)')}
         <p className="text-sm text-[var(--color-text-secondary)]">
           Full Pro access until {fmtDate(ent.trialEndsAt)}. Pick a plan below to keep it.
         </p>
