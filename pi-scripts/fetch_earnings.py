@@ -62,17 +62,9 @@ def get_tickers_from_screener():
     try:
         with open(path) as f:
             data = json.load(f)
-        # Extract tickers from the data
-        tickers = []
-        for key in data:
-            if key not in ("generated_at", "ticker_count", "failed_count", "market_summary", "_meta"):
-                if isinstance(data[key], dict) and "ticker" in data[key]:
-                    tickers.append(data[key]["ticker"])
-        # Fallback: try to extract from the first level
-        if not tickers:
-            for k, v in data.items():
-                if isinstance(v, dict) and "ticker" in v:
-                    tickers.append(v["ticker"])
+        # screener-data.json is {"generated_at": ..., "tickers": [{"ticker": ...}, ...]}
+        tickers = [t["ticker"] for t in data.get("tickers", [])
+                   if isinstance(t, dict) and t.get("ticker")]
         return tickers[:20]  # Limit to 20 due to API rate limits
     except Exception as e:
         print(f"  Error reading screener-data.json: {e}", file=sys.stderr)

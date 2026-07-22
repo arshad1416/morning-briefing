@@ -18,9 +18,7 @@ public/data/morning_analysis.json
 data/maplegamma_analysis_b.json
 public/data/maplegamma_analysis_b.json
 data/maplegamma_analysis.json
-public/data/maplegamma_analysis_b.json
-public/data/maplegamma_analysis_b.json
-data/maplegamma_analysis.json
+public/data/maplegamma_analysis.json
 data/web-news.json
 public/data/web-news.json
 data/polymarket_sentiment.json
@@ -59,6 +57,8 @@ data/accuracy.json
 public/data/accuracy.json
 data/council_history.json
 public/data/council_history.json
+data/gex-detail.json
+public/data/gex-detail.json
 data/nope-detail.json
 public/data/nope-detail.json
 data/charts/
@@ -74,3 +74,7 @@ cloudflare-worker/dist/
 
 # TypeScript incremental build cache
 tsconfig.tsbuildinfo
+
+# Python bytecode
+__pycache__/
+*.pyc

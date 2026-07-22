@@ -140,7 +140,7 @@ def ticker_currency(ticker, trade_currency=None):
     _CURRENCY_CACHE[ticker] = cur
     return cur
 
-RATE = 1.38  # CAD→USD approximate
+RATE = 1.38  # USDCAD fallback only — overwritten with the live rate at the top of main()
 
 def dual_price(price, currency):
     """Convert a price to both USD and CAD.
@@ -322,9 +322,9 @@ def load_demo_account():
     # Compute cash from sleeves or balance
     cash = sleeves.get("cash", {}).get("allocated", balance - total_allocated)
     
-    # Starting balance: use initial balance (balance - total_sleeve_pnl approximates it,
-    # but for a demo account we use balance as starting since trades are still running)
-    starting_balance = balance
+    # Starting balance: back out sleeve P&L from the current balance so
+    # return_pct reflects actual gains (balance alone would make it ~0).
+    starting_balance = balance - total_sleeve_pnl
     
     transformed = {
         "metadata": {
@@ -345,8 +345,20 @@ def load_demo_account():
 
 
 def main():
+    global RATE
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
+
+    # ── Fetch live USDCAD rate FIRST so every conversion below (dual_price,
+    # to_native, get_entry_price, get_current_price) uses it; the module
+    # default 1.38 is only the fallback when the fetch fails. Also published
+    # as fx_rate_usdcad for the frontend currency toggle.
+    try:
+        fx_hist = yf_ticker(yf, "USDCAD=X").history(period="5d")
+        if not fx_hist.empty:
+            RATE = round(float(fx_hist["Close"].iloc[-1]), 4)
+    except Exception:
+        pass  # keep 1.38 fallback
+
     # ── Try demo account first (if balance > threshold) ──
     demo_data, risk_metrics = load_demo_account()
     if demo_data is not None:
@@ -379,7 +391,7 @@ def main():
     for c in all_closed[-40:]:  # process up to 40 for P&L (yfinance is slow)
         ticker = c.get('ticker','?')
         yf_t = YF_MAP.get(ticker, ticker)
-        cur = ticker_currency(ticker)
+        cur = ticker_currency(ticker, c.get("entry_currency", ""))
         qty = float(c.get('quantity') or 1)
         qty = int(qty) if qty.is_integer() else qty
         
@@ -500,7 +512,10 @@ def main():
                 'type': 'Option',
                 'entry_date': entry_date,
                 'entry_price': premium,
+                # No live option pricing — current_price is just the entry
+                # premium; flag it so the frontend can show a dash, not $0 P&L.
                 'current_price': premium,
+                'premium_stale': True,
                 'currency': 'USD',
                 'quantity': qty,
                 'entry_value': ledger_entry_value,
@@ -598,18 +613,12 @@ def main():
         for k, v in sorted(_mix.items(), key=lambda kv: -kv[1]["value"])
     }
 
-    # Fetch live FX rate for frontend currency toggle
-    try:
-        fx_hist = yf_ticker(yf, "USDCAD=X").history(period="5d")
-        live_fx = round(float(fx_hist["Close"].iloc[-1]), 4) if not fx_hist.empty else RATE
-    except Exception:
-        live_fx = RATE
-
     live_data = {
         'status': 'LIVE',
         'generated_at': now,
         'price_source': 'yfinance historical closes — no CAD/USD math',
-        'fx_rate_usdcad': live_fx,
+        # Live rate fetched once at the top of main(); 1.38 only if the fetch failed.
+        'fx_rate_usdcad': RATE,
         'portfolio': {
             'starting_balance': start, 'cash': cash,
             'invested': invested,
