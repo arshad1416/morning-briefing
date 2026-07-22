@@ -7,13 +7,14 @@
 import type { Entitlement } from '@/lib/auth/api';
 
 export type GateTier = 'basic' | 'pro';
-export type FeatureKey = 'gammaWalls' | 'nope' | 'calibration' | 'walkforward' | 'simulation';
+export type FeatureKey = 'gammaWalls' | 'nope' | 'maxPain' | 'calibration' | 'walkforward' | 'simulation';
 
 export const FEATURES: Record<FeatureKey, { minTier: GateTier; teaser: 'blur' | 'lock' }> = {
   walkforward: { minTier: 'pro', teaser: 'lock' },
   simulation:  { minTier: 'pro', teaser: 'lock' },
   gammaWalls:  { minTier: 'pro', teaser: 'blur' },
   nope:        { minTier: 'pro', teaser: 'blur' },
+  maxPain:     { minTier: 'pro', teaser: 'blur' },
   calibration: { minTier: 'pro', teaser: 'blur' },
 };
 
