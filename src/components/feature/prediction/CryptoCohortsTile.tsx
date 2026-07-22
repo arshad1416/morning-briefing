@@ -8,6 +8,7 @@
 
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { InfoTip } from '@/components/primitives';
 
 interface Cohort {
   id: string;
@@ -36,8 +37,11 @@ function Shell({ children }: { children: React.ReactNode }) {
     <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)] overflow-hidden">
       <div className="px-4 py-3 border-b flex items-center gap-2" style={{ borderColor: 'var(--color-border-subtle)' }}>
         <span aria-hidden className="inline-block h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: '#f7931a' }} />
+        {/* Was "Crypto Strategy Cohorts". Each row is one strategy running its own
+            separate $10K simulated account — not a cohort in the usual sense of a
+            group tracked together, so the word was pointing at the wrong idea. */}
         <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">
-          Crypto Strategy Cohorts
+          Crypto Strategy Accounts
         </h3>
       </div>
       {children}
@@ -65,13 +69,19 @@ export function CryptoCohortsTile() {
   return (
     <Shell>
       <div className="p-4">
+        <p className="mb-3 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
+          {data.cohort_count} strategies, each trading its own separate pot of pretend money on crypto. The names are our
+          internal labels for the method behind each one. A green dot means that strategy is currently holding a trade.
+        </p>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
           <div>
             <span className="text-xs text-[var(--color-text-tertiary)]">Strategies</span>
             <p className="text-xl font-bold mt-0.5" style={{ fontFamily: 'var(--font-mono)' }} data-numeric>{data.cohort_count}</p>
           </div>
           <div>
-            <span className="text-xs text-[var(--color-text-tertiary)]">Combined Equity</span>
+            <span className="text-xs text-[var(--color-text-tertiary)]">
+              <InfoTip term="equity">Combined Equity</InfoTip>
+            </span>
             <p className="text-xl font-bold mt-0.5" style={{ fontFamily: 'var(--font-mono)' }} data-numeric>${data.total_equity.toLocaleString()}</p>
           </div>
           <div>
@@ -81,7 +91,9 @@ export function CryptoCohortsTile() {
             </p>
           </div>
           <div>
-            <span className="text-xs text-[var(--color-text-tertiary)]">Fills</span>
+            {/* Was "Fills" — desk shorthand for executed orders. The field is
+                total_trades, so label it as trades rather than guess. */}
+            <span className="text-xs text-[var(--color-text-tertiary)]">Trades</span>
             <p className="text-xl font-bold mt-0.5" style={{ fontFamily: 'var(--font-mono)' }} data-numeric>{data.total_trades}</p>
           </div>
         </div>
@@ -90,7 +102,7 @@ export function CryptoCohortsTile() {
             <thead>
               <tr className="border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
                 <th className="text-left py-2 pr-3 text-xs text-[var(--color-text-tertiary)] font-medium">Strategy</th>
-                <th className="text-left py-2 px-3 text-xs text-[var(--color-text-tertiary)] font-medium">Instrument</th>
+                <th className="text-left py-2 px-3 text-xs text-[var(--color-text-tertiary)] font-medium">Contract Traded</th>
                 <th className="text-right py-2 px-3 text-xs text-[var(--color-text-tertiary)] font-medium">Equity</th>
                 <th className="text-right py-2 px-3 text-xs text-[var(--color-text-tertiary)] font-medium">Return</th>
                 <th className="text-right py-2 pl-3 text-xs text-[var(--color-text-tertiary)] font-medium">W / L</th>
@@ -101,7 +113,7 @@ export function CryptoCohortsTile() {
                 <tr key={c.id} className="border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
                   <td className="py-2 pr-3 text-[var(--color-text-primary)]">
                     {c.name}
-                    {c.open && <span className="ml-2 inline-block h-1.5 w-1.5 rounded-full align-middle" style={{ backgroundColor: 'var(--color-bull)' }} title="position open" />}
+                    {c.open && <span className="ml-2 inline-block h-1.5 w-1.5 rounded-full align-middle" style={{ backgroundColor: 'var(--color-bull)' }} title="currently holding a trade" />}
                   </td>
                   <td className="py-2 px-3 text-[var(--color-text-secondary)]" data-numeric>{c.instrument}</td>
                   <td className="py-2 px-3 text-right text-[var(--color-text-secondary)]" data-numeric>${c.equity.toLocaleString()}</td>

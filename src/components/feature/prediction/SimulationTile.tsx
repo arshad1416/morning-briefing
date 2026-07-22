@@ -8,6 +8,8 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchGated, GateError } from '@/lib/api/gated';
 import { GateCard } from '@/components/feature/gating/GateCard';
+import { InfoTip } from '@/components/primitives';
+import type { GlossaryTerm } from '@/lib/glossary';
 import { SimulationSchema } from '@/lib/schemas/market';
 
 function Shell({ children }: { children: React.ReactNode }) {
@@ -15,7 +17,7 @@ function Shell({ children }: { children: React.ReactNode }) {
     <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)] overflow-hidden">
       <div className="px-4 py-3 border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
         <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">
-          Live Simulation — $100K Paper Account
+          <InfoTip term="paper_trading">Live Simulation — $100K Paper Account</InfoTip>
         </h3>
       </div>
       {children}
@@ -60,15 +62,15 @@ export function SimulationTile() {
   }
 
   const s = data.summary;
-  const metrics: Array<{ label: string; value: string; tone?: 'bull' | 'bear' }> = [
+  const metrics: Array<{ label: string; value: string; tone?: 'bull' | 'bear'; term?: GlossaryTerm }> = [
     {
       label: 'Total Return',
       value: pct(s.total_return),
       tone: (s.total_return ?? 0) >= 0 ? 'bull' : 'bear',
     },
-    { label: 'Sharpe', value: s.sharpe != null ? s.sharpe.toFixed(2) : '—' },
-    { label: 'Max Drawdown', value: pct(s.max_drawdown), tone: 'bear' },
-    { label: 'Win Rate', value: pct(s.win_rate) },
+    { label: 'Sharpe', value: s.sharpe != null ? s.sharpe.toFixed(2) : '—', term: 'sharpe' },
+    { label: 'Max Drawdown', value: pct(s.max_drawdown), tone: 'bear', term: 'max_drawdown' },
+    { label: 'Win Rate', value: pct(s.win_rate), term: 'win_rate' },
     { label: 'Closed Trades', value: s.total_trades != null ? String(s.total_trades) : '—' },
     { label: 'Avg Trade', value: s.avg_trade != null ? `$${s.avg_trade.toFixed(2)}` : '—' },
   ];
@@ -77,12 +79,14 @@ export function SimulationTile() {
     <Shell>
       <div className="p-4">
         <p className="text-[10px] uppercase tracking-wider font-semibold mb-3" style={{ color: 'var(--color-text-tertiary)' }}>
-          Simulated portfolio — not a recommendation
+          $100,000 of pretend money traded against real prices — not a recommendation
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
           {metrics.map((m) => (
             <div key={m.label}>
-              <span className="text-xs text-[var(--color-text-tertiary)]">{m.label}</span>
+              <span className="text-xs text-[var(--color-text-tertiary)]">
+                {m.term ? <InfoTip term={m.term}>{m.label}</InfoTip> : m.label}
+              </span>
               <p
                 className="text-xl font-bold mt-1"
                 style={{

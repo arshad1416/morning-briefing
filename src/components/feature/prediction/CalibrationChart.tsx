@@ -70,10 +70,11 @@ export function CalibrationChart() {
           <path d="M4 20V4" />
         </svg>
         <p className="text-sm text-[var(--color-text-secondary)]">
-          Calibration tracking is live. {closedTrades.toLocaleString()} closed {closedTrades === 1 ? 'trade has' : 'trades have'} been matched to predicted probabilities.
+          We are checking whether the model&apos;s confidence holds up: when it calls something 70% likely, does it happen
+          about 70% of the time? {closedTrades.toLocaleString()} practice {closedTrades === 1 ? 'trade has' : 'trades have'} closed so far.
         </p>
         <p className="mt-2 text-xs text-[var(--color-text-tertiary)]">
-          The curve publishes at {sampleTarget} closed trades. We won&apos;t show a calibration line built on too little evidence.
+          The chart appears once {sampleTarget} trades have closed. We won&apos;t draw a line from too little evidence.
         </p>
         <div className="mt-4 w-full max-w-xs">
           <div className="h-1.5 rounded-full bg-[var(--color-bg-elevated)] overflow-hidden">

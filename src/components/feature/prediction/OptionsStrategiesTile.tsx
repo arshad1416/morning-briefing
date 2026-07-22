@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { InfoTip } from '@/components/primitives';
 
 interface Strat {
   name: string;
@@ -60,10 +61,18 @@ export function OptionsStrategiesTile() {
     <Shell>
       <div className="p-4">
         <div className="flex items-baseline gap-3 mb-3 text-sm">
-          <span className="text-[var(--color-text-tertiary)]">VIX</span>
+          <span className="text-[var(--color-text-tertiary)]"><InfoTip term="vix">VIX</InfoTip></span>
           <span className="font-bold" style={{ fontFamily: 'var(--font-mono)' }} data-numeric>{data.vix ?? '—'}</span>
-          <span className="ml-auto text-xs text-[var(--color-text-tertiary)]">{data.open_count} open</span>
+          <span className="ml-auto text-xs text-[var(--color-text-tertiary)]">
+            {data.open_count} {data.open_count === 1 ? 'contract' : 'contracts'} held
+          </span>
         </div>
+        <p className="mb-3 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
+          Options are contracts whose payoff depends on where a share price sits by a set date — a more advanced tool
+          than the shares and funds elsewhere on this site. Each strategy below only trades when conditions suit it, and
+          the VIX reading above is the main gate: <span className="font-semibold">armed</span> means those conditions are
+          met and it will act on its next signal, <span className="font-semibold">standby</span> means it is sitting out.
+        </p>
         <div className="space-y-3">
           {data.strategies.map((s) => (
             <div key={s.name} className="flex items-start gap-3">
@@ -87,6 +96,10 @@ export function OptionsStrategiesTile() {
         </div>
         {data.open_option_positions.length > 0 && (
           <div className="mt-3 pt-3 border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>
+            <p className="mb-1 text-[10px] text-[var(--color-text-tertiary)]">
+              Contracts held — stock, <InfoTip term="strike">strike price</InfoTip> and type, then the expiry date and
+              the contract&apos;s price when it was opened.
+            </p>
             {data.open_option_positions.map((p, i) => (
               <div key={i} className="flex items-center justify-between text-xs py-0.5">
                 <span className="text-[var(--color-text-primary)]" data-numeric>{p.ticker} ${p.strike} {p.type}</span>
