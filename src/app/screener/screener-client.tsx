@@ -50,6 +50,9 @@ const DEFAULT_FILTERS: Filters = {
 
 type SortKey = 'ticker' | 'change' | 'score' | 'rsi' | 'mcap' | 'pe' | 'volume_ratio';
 type Sort = { key: SortKey; dir: 'asc' | 'desc' };
+type StoredPreset = { name: string; filters: Filters };
+
+const PRESET_KEY = 'mg-screener-presets';
 
 const inRange = (value: number | null | undefined, filter: string) => {
   if (!filter) return true;
@@ -237,7 +240,7 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
     >
       <td className="px-3 py-2">
         <Link
-          href={`/ticker/?symbol=${encodeURIComponent(t.ticker)}`}
+          href={`/ticker/${encodeURIComponent(t.ticker)}/`}
           className="font-semibold text-[var(--color-accent)] hover:underline"
           data-numeric
         >
@@ -351,7 +354,7 @@ function Treemap({ tickers }: { tickers: ScreenerTicker[] }) {
         return (
           <Link
             key={t.ticker}
-            href={`/ticker/?symbol=${encodeURIComponent(t.ticker)}`}
+            href={`/ticker/${encodeURIComponent(t.ticker)}/`}
             className="flex min-h-11 flex-col items-center justify-center overflow-hidden rounded-sm p-1 text-center transition hover:scale-[1.03] hover:z-10"
             style={{
               gridColumn: `span ${colSpan}`,
@@ -382,10 +385,16 @@ export function ScreenerClient() {
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [sort, setSort] = useState<Sort>({ key: 'score', dir: 'desc' });
   const [view, setView] = useState<'table' | 'treemap'>('table');
+  const [presets, setPresets] = useState<StoredPreset[]>([]);
+  const [presetName, setPresetName] = useState('');
 
   useEffect(() => {
     const saved = localStorage.getItem('mg-screener-view');
     if (saved === 'treemap' || saved === 'table') setView(saved);
+    try {
+      const stored = JSON.parse(localStorage.getItem(PRESET_KEY) || '[]');
+      if (Array.isArray(stored)) setPresets(stored.filter((item) => item?.name && item?.filters));
+    } catch {}
   }, []);
 
   const setViewPersist = (v: 'table' | 'treemap') => {
@@ -395,6 +404,18 @@ export function ScreenerClient() {
 
   const set = <K extends keyof Filters>(k: K, v: Filters[K]) =>
     setFilters((f) => ({ ...f, [k]: v }));
+
+  const persistPresets = (next: StoredPreset[]) => {
+    setPresets(next);
+    localStorage.setItem(PRESET_KEY, JSON.stringify(next));
+  };
+
+  const savePreset = () => {
+    const name = presetName.trim();
+    if (!name) return;
+    persistPresets([...presets.filter((preset) => preset.name !== name), { name, filters }]);
+    setPresetName('');
+  };
 
   const data = result?.data ?? null;
   const allTickers = useMemo(() => data?.tickers ?? [], [data]);
@@ -612,6 +633,36 @@ export function ScreenerClient() {
               Reset
             </button>
           </div>
+        </div>
+        <div className="mt-3 flex flex-wrap items-center gap-2 border-t pt-3" style={{ borderColor: 'var(--color-border-subtle)' }}>
+          <input
+            value={presetName}
+            onChange={(event) => setPresetName(event.target.value)}
+            placeholder="Preset name"
+            className={`${selectCls} max-w-48`}
+            style={selectStyle}
+          />
+          <button type="button" onClick={savePreset} className="rounded-lg border px-3 py-2 text-sm font-medium" style={{ borderColor: 'var(--color-border-default)' }}>
+            Save preset
+          </button>
+          <select
+            defaultValue=""
+            onChange={(event) => {
+              const preset = presets.find((item) => item.name === event.target.value);
+              if (preset) setFilters({ ...DEFAULT_FILTERS, ...preset.filters });
+            }}
+            className={`${selectCls} max-w-56`}
+            style={selectStyle}
+            aria-label="Load screener preset"
+          >
+            <option value="">Load preset…</option>
+            {presets.map((preset) => <option key={preset.name} value={preset.name}>{preset.name}</option>)}
+          </select>
+          {presets.length > 0 && (
+            <button type="button" onClick={() => persistPresets([])} className="text-xs text-[var(--color-text-tertiary)] hover:text-[var(--color-bear)]">
+              Clear saved presets
+            </button>
+          )}
         </div>
       </div>
 

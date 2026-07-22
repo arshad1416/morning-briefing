@@ -327,10 +327,10 @@ export default function MapleGammaLanding() {
     const cleaned = seg.replace(/\/+$/, "");
     let target = LEGACY_ROUTES[cleaned];
     if (!target) {
-      // Prefix routes: #/ticker/NVDA → /ticker/?symbol=NVDA
+      // Prefix routes: #/ticker/NVDA → /ticker/NVDA/
       const [head, ...rest] = cleaned.split("/");
       if (head === "ticker" && rest[0]) {
-        target = `/ticker/?symbol=${encodeURIComponent(rest[0].toUpperCase())}`;
+        target = `/ticker/${encodeURIComponent(rest[0].toUpperCase())}/`;
       }
     }
     if (target) {

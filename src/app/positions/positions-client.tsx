@@ -576,7 +576,7 @@ function JournalTab() {
   // journal.json has no producer in the pipeline — the gated fetch 404'd on
   // every visit. The journal is device-local (localStorage) by design.
   const [localEntries, setLocalEntries] = useState<Any[]>([]);
-  const [form, setForm] = useState({ ticker: '', grade: 'B', emotion: 'Neutral', strategy: '', lesson: '', mistake: '' });
+  const [form, setForm] = useState({ ticker: '', grade: 'B', emotion: 'Neutral', result: 'planned', strategy: '', rationale: '', lesson: '', mistake: '' });
 
   useEffect(() => {
     try {
@@ -593,7 +593,7 @@ function JournalTab() {
     const next = [...localEntries, entry];
     setLocalEntries(next);
     localStorage.setItem(LOCAL_KEY, JSON.stringify(next));
-    setForm({ ticker: '', grade: 'B', emotion: 'Neutral', strategy: '', lesson: '', mistake: '' });
+    setForm({ ticker: '', grade: 'B', emotion: 'Neutral', result: 'planned', strategy: '', rationale: '', lesson: '', mistake: '' });
   };
 
   const avgGrade = entries.length
@@ -608,6 +608,14 @@ function JournalTab() {
         }, {}),
       ).sort((a, b) => b[1] - a[1])[0][0]
     : '—';
+  const decided = entries.filter((entry) => entry.result === 'win' || entry.result === 'loss');
+  const winRate = decided.length ? Math.round((decided.filter((entry) => entry.result === 'win').length / decided.length) * 100) : 0;
+  const latestResult = [...entries].reverse().find((entry) => entry.result === 'win' || entry.result === 'loss')?.result;
+  let streak = 0;
+  for (const entry of [...entries].reverse()) {
+    if (entry.result !== latestResult) break;
+    streak += 1;
+  }
 
   const inputCls =
     'w-full rounded-lg border bg-[var(--color-bg-elevated)] px-3 py-2 text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-tertiary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]';
@@ -617,7 +625,7 @@ function JournalTab() {
     <div className="space-y-4">
       {entries.length > 0 && (
         <Card>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
             <Metric label="Entries" value={entries.length} />
             <Metric
               label="Avg Grade"
@@ -625,7 +633,8 @@ function JournalTab() {
               color={avgGrade >= 3 ? 'var(--color-bull)' : avgGrade >= 2 ? 'var(--color-caution)' : 'var(--color-bear)'}
             />
             <Metric label="Top Emotion" value={topEmotion} />
-            <Metric label="Lessons" value={entries.filter((e) => e.lesson).length} />
+            <Metric label="Win Rate" value={decided.length ? `${winRate}%` : '—'} />
+            <Metric label="Current Streak" value={latestResult ? `${streak} ${latestResult}${streak === 1 ? '' : 's'}` : '—'} />
           </div>
         </Card>
       )}
@@ -643,8 +652,15 @@ function JournalTab() {
               <option key={em} value={em}>{em}</option>
             ))}
           </select>
+          <select value={form.result} onChange={(e) => setForm({ ...form, result: e.target.value })} className={inputCls} style={inputStyle}>
+            <option value="planned">Result: Planned / Open</option>
+            <option value="win">Result: Win</option>
+            <option value="loss">Result: Loss</option>
+            <option value="breakeven">Result: Breakeven</option>
+          </select>
           <input value={form.strategy} onChange={(e) => setForm({ ...form, strategy: e.target.value })} placeholder="Strategy (e.g. mean_reversion)" className={inputCls} style={inputStyle} />
         </div>
+        <textarea value={form.rationale} onChange={(e) => setForm({ ...form, rationale: e.target.value })} placeholder="Trade rationale / original plan…" rows={2} className={`${inputCls} mt-2.5 resize-y`} style={inputStyle} />
         <textarea value={form.lesson} onChange={(e) => setForm({ ...form, lesson: e.target.value })} placeholder="Key lesson learned…" rows={2} className={`${inputCls} mt-2.5 resize-y`} style={inputStyle} />
         <textarea value={form.mistake} onChange={(e) => setForm({ ...form, mistake: e.target.value })} placeholder="Mistake made (if any)…" rows={2} className={`${inputCls} mt-2.5 resize-y`} style={inputStyle} />
         <button
@@ -663,7 +679,7 @@ function JournalTab() {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[720px] text-sm">
               <thead>
-                <tr><TH>Date</TH><TH>Ticker</TH><TH align="center">Grade</TH><TH>Emotion</TH><TH>Strategy</TH><TH>Lesson</TH><TH>Mistake</TH></tr>
+                <tr><TH>Date</TH><TH>Ticker</TH><TH align="center">Grade</TH><TH>Result</TH><TH>Emotion</TH><TH>Strategy</TH><TH>Rationale</TH><TH>Lesson</TH><TH>Mistake</TH></tr>
               </thead>
               <tbody>
                 {sorted.map((e, i) => (
@@ -673,8 +689,10 @@ function JournalTab() {
                     <TD align="center">
                       <Badge tone={(e.grade || 'B')[0] === 'A' ? 'bull' : (e.grade || 'B')[0] === 'B' ? 'caution' : 'bear'}>{e.grade || 'B'}</Badge>
                     </TD>
+                    <TD>{e.result || 'planned'}</TD>
                     <TD>{e.emotion || '—'}</TD>
                     <TD>{e.strategy || '—'}</TD>
+                    <td className="border-t px-3 py-2 text-xs text-[var(--color-text-secondary)]" style={{ borderColor: 'var(--color-border-subtle)' }}>{e.rationale || '—'}</td>
                     <td className="border-t px-3 py-2 text-xs text-[var(--color-text-secondary)]" style={{ borderColor: 'var(--color-border-subtle)' }}>{e.lesson || '—'}</td>
                     <td className="border-t px-3 py-2 text-xs text-[var(--color-text-tertiary)]" style={{ borderColor: 'var(--color-border-subtle)' }}>{e.mistake || '—'}</td>
                   </tr>

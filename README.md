@@ -6,8 +6,8 @@ Static market briefing site on Cloudflare Pages, data piped from Raspberry Pi.
 
 - **Site:** Next.js 15 static export (`output: 'export'`) on Cloudflare Pages
   - Build command: `npm run build` → output dir `out/` (configured in the Pages dashboard)
-  - `_headers`, `robots.txt`, `sitemap.xml`, `llms.txt`, and the legal pages live in
-    `public/` and are copied verbatim into `out/` at build time
+  - `_headers`, `llms.txt`, and legal pages live in `public/`; `robots.txt` and
+    `sitemap.xml` are generated at build time from route/archive/ticker coverage
 - **Data:** Pi cron generates JSON → commits `data/**` + `public/data/**` → each push
   triggers a Pages rebuild so `out/data/` stays fresh (~20–25 builds/weekday; the free
   tier allows 500 builds/month — watch the quota)
@@ -38,6 +38,26 @@ hermes cron create '15 7 * * 1-5' \
   --script generate-site-data.sh \
   --no-agent
 ```
+
+## Pipeline hardening
+
+Install the validation dependency on the Pi before running the publisher:
+
+```bash
+python3 -m pip install -r pi-scripts/requirements-pipeline.txt
+```
+
+The SEC, earnings, and Tiingo collectors share a bounded asyncio worker pool,
+transient HTTP retry/backoff, rate-limit spacing, and atomic JSON writes. Tiingo
+falls back to yfinance when its key or response is unavailable. Before any
+premium JSON is uploaded to R2, `pipeline_schemas.py` rejects malformed council
+envelopes and every NaN/Infinity value. Validation failure is fail-closed: the
+publisher refuses to continue rather than exposing a corrupt artifact.
+
+`council_weighting.py` contains the provider-neutral five-mandate weighting
+engine. The live council executor remains in `arshad1416/hermes-scripts`; map
+its provider IDs to the five stable mandates and call `dynamic_model_weights`
+there before aggregation.
 
 ## Directory Structure
 

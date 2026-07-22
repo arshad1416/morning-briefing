@@ -293,7 +293,7 @@ const RealAccuracyFileSchema = z
     expectancy: z
       .object({
         expectancy_pct: z.number().default(0),
-        profit_factor: z.number().default(0),
+        profit_factor: z.number().nullable().default(null),
         kelly_fraction: z.number().default(0),
         win_rate: z.number().default(0),
         n_trades: z.number().default(0),
