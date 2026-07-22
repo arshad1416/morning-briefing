@@ -103,8 +103,8 @@ const Dashboard = {
       const totalPnl = p.total_pnl || 0;
       const sign = totalPnl >= 0 ? '+' : '-';
       const pnlCls = totalPnl >= 0 ? 'positive' : 'negative';
-      const equity = (p.starting_balance || 0) + totalPnl + (p.unrealized_pnl || 0);
-      const deployed = p.invested || 0;
+      const equity = p.total_balance != null ? p.total_balance : (p.starting_balance || 0) + totalPnl + (p.unrealized_pnl || 0);
+      const deployed = p.market_value != null ? p.market_value : (p.invested || 0);
       html += `<div class="today-pnl ${pnlCls}" style="border-left:none;padding:10px 15px">`;
       html += `<span class="today-pnl-label">DAY P&amp;L${Compliance.simBadge()}</span>`;
       html += `<span class="today-pnl-val">${sign}$${Utils.formatPrice(Math.abs(totalPnl))}</span>`;

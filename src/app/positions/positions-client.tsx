@@ -189,8 +189,10 @@ function PaperTab({ data }: { data: Any }) {
 
   if (!p) return <p className="p-6 text-center text-sm text-[var(--color-text-tertiary)]">No paper-trading data available yet.</p>;
 
-  const equity = (p.starting_balance || 0) + (p.total_pnl || 0) + (p.unrealized_pnl || 0);
-  const deployed = p.invested || 0;
+  // total_balance is cash + open book at market (the true account value).
+  // Fallback formula only covers pre-fix data where total_pnl was realized-only.
+  const equity = p.total_balance ?? (p.starting_balance || 0) + (p.total_pnl || 0) + (p.unrealized_pnl || 0);
+  const deployed = p.market_value ?? p.invested ?? 0;
   const totalPnl = p.total_pnl || 0;
   const fx = data.fx_rate_usdcad || 1.38;
 
@@ -275,10 +277,10 @@ function PaperTab({ data }: { data: Any }) {
         </div>
         {stockPositions.length ? (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[820px] text-sm">
+            <table className="w-full min-w-[980px] text-sm">
               <thead>
                 <tr>
-                  <TH>Ticker</TH><TH>Asset</TH><TH>Type</TH><TH>Entry</TH><TH align="right">Entry Price</TH><TH align="right">Current</TH><TH align="right">P&L</TH><TH>Strategy</TH><TH>Status</TH>
+                  <TH>Ticker</TH><TH>Asset</TH><TH>Type</TH><TH>Entry</TH><TH align="right">Qty</TH><TH align="right">Entry Price</TH><TH align="right">Current</TH><TH align="right">Value</TH><TH align="right">P&L</TH><TH>Strategy</TH><TH>Status</TH>
                 </tr>
               </thead>
               <tbody>
@@ -293,8 +295,10 @@ function PaperTab({ data }: { data: Any }) {
                       <TD><Badge tone={AC_TONE[ac] ?? 'muted'}>{AC_LABEL[ac] ?? ac}</Badge></TD>
                       <TD>{t.type || 'Other'}</TD>
                       <TD>{t.entry_date || '—'}</TD>
+                      <TD align="right">{t.quantity != null ? fmt(t.quantity, 0) : '—'}</TD>
                       <TD align="right">${fmt(entry.val)} {entry.cur}</TD>
                       <TD align="right">${fmt(curr.val)} {curr.cur}</TD>
+                      <TD align="right">{t.market_value != null ? `$${fmt(t.market_value)}` : '—'}</TD>
                       <TD align="right" bold color={pnlColor(pct)}>
                         ${fmt(t.pnl)} ({pct >= 0 ? '+' : ''}{fmt(pct, 1)}%)
                       </TD>
