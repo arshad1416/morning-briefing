@@ -14,7 +14,9 @@ import { SimulationSchema } from '@/lib/schemas/market';
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)] overflow-hidden">
+    // Not clipped: the header's <InfoTip> tooltip opens upward, and a clipped
+    // box would place it outside the tile where it cannot be seen.
+    <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)]">
       <div className="px-4 py-3 border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
         <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">
           <InfoTip term="paper_trading">Live Simulation — $100K Paper Account</InfoTip>

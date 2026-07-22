@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const symbol = decodeURIComponent((await params).symbol).toUpperCase();
   const ticker = getTickerCoverage().find((entry) => entry.symbol === symbol);
   const name = ticker?.name || symbol;
-  const description = `${name} (${symbol}) price, technical indicators, fundamentals, SEC filings and MapleGamma screening analysis.`;
+  const description = `${name} (${symbol}) share price, chart signals such as RSI and moving averages, company fundamentals, recent SEC filings and the MapleGamma screening score.`;
   return {
     title: `${symbol} — ${name}`,
     description,

@@ -7,6 +7,7 @@ import { BacktestSummary } from '@/components/feature/prediction/BacktestSummary
 import { AccuracyStats } from '@/components/feature/prediction/AccuracyStats';
 import { CalibrationChart } from '@/components/feature/prediction/CalibrationChart';
 import { ProGate } from '@/components/feature/gating/ProGate';
+import { InfoTip } from '@/components/primitives';
 import { ScenarioSimulator } from '@/components/feature/MissedOpportunities';
 import { WalkForwardTile } from '@/components/feature/prediction/WalkForwardTile';
 import { SimulationTile } from '@/components/feature/prediction/SimulationTile';
@@ -18,15 +19,23 @@ export function ModelsClient() {
     <div className="space-y-4">
       {/* A1: Trust header */}
       <div
-        className="relative overflow-hidden p-6 rounded-[var(--radius-tile)] border"
+        className="relative p-6 rounded-[var(--radius-tile)] border"
         style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
       >
-        <span aria-hidden="true" className="glow-orb -top-24 -right-8" />
+        {/* The clip lives on the orb's own wrapper rather than on the card. When
+            the card itself was `overflow-hidden` it also clipped the Learning
+            Mode tooltips, which open upward out of the paragraph below. */}
+        <span aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-[var(--radius-tile)]">
+          <span className="glow-orb -top-24 -right-8" />
+        </span>
         <h1 className="relative z-10 font-display text-3xl text-[var(--color-text-primary)]">
           Prediction <em className="italic" style={{ color: 'var(--color-accent)' }}>Engine</em>
         </h1>
         <p className="relative z-10 text-sm text-[var(--color-text-secondary)] mt-2">
-          Full transparency on model performance. Every signal is tracked, backtested, and calibrated.
+          Full transparency on model performance. Every trade idea is recorded,{' '}
+          <InfoTip term="backtest">backtested</InfoTip> against past market data, and{' '}
+          <InfoTip term="calibration">calibrated</InfoTip> — checked to see whether its stated confidence held up.
+          Every result here is <InfoTip term="paper_trading">paper-traded</InfoTip>: no real money is involved.
         </p>
       </div>
 

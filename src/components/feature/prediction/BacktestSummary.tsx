@@ -22,7 +22,7 @@ export function BacktestSummary() {
     if (error instanceof GateError && error.kind !== 'unavailable') {
       return (
         <Surface span="half">
-          <SurfaceHeader title={<InfoTip term="backtest">Backtest Summary</InfoTip>} />
+          <SurfaceHeader title="Backtest Summary" />
           <div className="p-4">
             <GateCard kind={error.kind} need={error.need ?? 'pro'} feature="Backtest summary" />
           </div>
@@ -31,7 +31,7 @@ export function BacktestSummary() {
     }
     return (
       <Surface span="half">
-        <SurfaceHeader title={<InfoTip term="backtest">Backtest Summary</InfoTip>} />
+        <SurfaceHeader title="Backtest Summary" />
         <div className="p-6 flex flex-col items-center justify-center text-center min-h-[120px]">
           <p className="text-sm text-[var(--color-text-tertiary)]">
             Backtest data isn&apos;t available right now.
@@ -44,7 +44,7 @@ export function BacktestSummary() {
   if (isLoading || !data) {
     return (
       <Surface span="half">
-        <SurfaceHeader title={<InfoTip term="backtest">Backtest Summary</InfoTip>} />
+        <SurfaceHeader title="Backtest Summary" />
         <div className="p-4 skeleton h-24" />
       </Surface>
     );
@@ -63,7 +63,7 @@ export function BacktestSummary() {
 
   return (
     <Surface span="half">
-      <SurfaceHeader title={<InfoTip term="backtest">Backtest Summary</InfoTip>} />
+      <SurfaceHeader title="Backtest Summary" />
       <div className="p-4">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {cells.map((c) => (
@@ -81,9 +81,14 @@ export function BacktestSummary() {
             </div>
           ))}
         </div>
-        <p className="mt-3 text-[11px] text-[var(--color-text-tertiary)]">
-          Every version of our model (V1 onward) replayed against past prices. Returns here are percentages per trade,
-          not dollars. Hypothetical results — not indicative of future performance.
+        {/* The `backtest` explanation lives here rather than on the tile title:
+            Surface clips its contents, so a tooltip on the topmost header row
+            would be cut off, while one raised from this footnote is visible. */}
+        <p className="mt-3 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
+          Every version of our model (V1 onward) replayed against past prices — a{' '}
+          <InfoTip term="backtest">backtest</InfoTip>. Each &ldquo;best&rdquo; figure is the highest any single version
+          reached on that metric, so they need not all come from the same version. Returns here are percentages per
+          trade, not dollars. Hypothetical results — not indicative of future performance.
         </p>
       </div>
     </Surface>

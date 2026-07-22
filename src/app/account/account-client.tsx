@@ -25,9 +25,14 @@ import { openHelcimCheckout } from '@/lib/billing/helcim';
 import { loadWebAuthn } from '@/lib/auth/webauthn';
 import { useMe, useRefreshMe } from '@/lib/auth/useMe';
 
+// Blurbs are the last thing read before money changes hands, so they say what
+// each feature does rather than naming it. "Models" in particular is not a
+// modelling tool: /models publishes how the strategies have performed — win
+// rate, profit factor, worst losing stretch. "AI council" stays because it is
+// the product's name for the ensemble site-wide, but it is now explained.
 const PLANS: { tier: BillingTier; name: string; monthly: number; blurb: string }[] = [
-  { tier: 'basic', name: 'Basic', monthly: 49, blurb: 'Screener, research, sentiment.' },
-  { tier: 'pro', name: 'Pro', monthly: 99, blurb: 'Everything in Basic, plus charts, models & the AI council.' },
+  { tier: 'basic', name: 'Basic', monthly: 49, blurb: 'A stock screener to filter by your own rules, company research, and market mood.' },
+  { tier: 'pro', name: 'Pro', monthly: 99, blurb: 'Everything in Basic, plus charts, how the strategies have actually performed, and the AI council — five AI models that read the market each morning.' },
 ];
 
 function fmtDate(ms?: number) {
@@ -119,7 +124,9 @@ function SubscriptionSummary({ ent }: { ent: Entitlement }) {
   return (
     <div className="space-y-1">
       {chip('No active plan', 'var(--color-neutral)')}
-      <p className="text-sm text-[var(--color-text-secondary)]">Pick a plan below to unlock the full desk.</p>
+      {/* "The full desk" is trading-floor atmosphere — there is no page, plan or
+          object called a desk. It meant the Pro tier. */}
+      <p className="text-sm text-[var(--color-text-secondary)]">Pick a plan below to unlock every feature.</p>
     </div>
   );
 }

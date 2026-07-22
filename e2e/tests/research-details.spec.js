@@ -98,9 +98,9 @@ test.describe('research analysis details', () => {
 
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();
-    await expect(dialog.getByRole('heading', { name: 'META · BULLISH CONVERGENCE' })).toBeVisible();
+    await expect(dialog.getByRole('heading', { name: 'META · Several signals agree — upward' })).toBeVisible();
     await expect(dialog.getByRole('heading', { name: 'Why it surfaced' })).toBeVisible();
-    await expect(dialog.getByRole('heading', { name: 'What to validate' })).toBeVisible();
+    await expect(dialog.getByRole('heading', { name: 'What to check before trusting it' })).toBeVisible();
     await expect(page.locator('body')).toHaveCSS('overflow', 'hidden');
 
     await page.keyboard.press('Escape');
@@ -112,9 +112,9 @@ test.describe('research analysis details', () => {
     await page.getByRole('tab', { name: 'MapleGamma Analysis' }).click();
 
     const cases = [
-      { trigger: 'Open Market Pulse analysis details', title: 'Market Pulse', section: 'How to read the pulse' },
-      { trigger: 'Open position review details for MSFT', title: 'MSFT · HOLD', section: 'Action explained' },
-      { trigger: 'Open opportunity details for AAPL', title: 'AAPL · LONG', section: 'Trade map' },
+      { trigger: 'Open Market Pulse analysis details', title: 'Market Pulse', section: 'How to read this' },
+      { trigger: 'Open position review details for MSFT', title: 'MSFT · HOLD', section: 'What the instruction means' },
+      { trigger: 'Open opportunity details for AAPL', title: 'AAPL · LONG', section: 'The plan at a glance' },
       { trigger: 'Open risk alert details: Volatility is rising into a major macro release.', title: 'Volatility is rising into a major macro release.', section: 'Suggested response' },
     ];
 

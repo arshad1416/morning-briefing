@@ -15,8 +15,11 @@ export function ActionQueue() {
 
   return (
     <Surface span="third">
+      {/* Nothing here is queued or executable: it is the premarket scanner's
+          highest-scoring tickers, read-only. "Action Queue" promised a to-do
+          list of trades that does not exist. */}
       <SurfaceHeader
-        title="Action Queue"
+        title="Premarket Scanner"
         right={
           <div className="flex gap-1 bg-[var(--color-bg-elevated)] rounded-[var(--radius-chip)] p-0.5">
             {(['setups', 'watch'] as const).map((t) => (
@@ -50,8 +53,12 @@ export function ActionQueue() {
             </div>
           </div>
         ))}
+        {/* This branch also covers loading, a failed fetch, and a latest.json
+            with no premarket_top_setups key at all (absent in 8 of the 53
+            archived files) — plus weekends, when no scan runs. So it can only
+            state the absence, not claim a scan ran and rejected everything. */}
         {tab === 'setups' && setups.length === 0 && (
-          <p className="text-sm text-[var(--color-text-tertiary)] text-center py-4">No setups today</p>
+          <p className="text-sm text-[var(--color-text-tertiary)] text-center py-4">No setups listed right now</p>
         )}
         {tab === 'watch' && (
           <p className="text-sm text-[var(--color-text-tertiary)] text-center py-4">Watchlist items appear here</p>

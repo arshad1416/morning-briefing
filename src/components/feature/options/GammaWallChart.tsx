@@ -1,5 +1,8 @@
 // components/feature/options/GammaWallChart.tsx — diverging gamma profile by strike
-// Puts extend left (resistance red), calls extend right (support emerald), spot line in accent.
+// Puts extend left (red), calls extend right (emerald), spot line in accent. The
+// side captions deliberately no longer claim support/resistance: in this data
+// put gamma sits at and below spot (the pipeline's floor_zone) and call gamma at
+// and above it (ceiling_zone), which is the opposite of what they used to say.
 'use client';
 
 import React, { useState } from 'react';
@@ -38,9 +41,13 @@ const HALF = (W - GUTTER) / 2 - 16;
 const BAR_H = ROW - 8;
 
 function rowAriaLabel(row: StrikeRow): string {
+  // Spelled out: screen-reader users were previously read raw "GEX"/"OI", i.e.
+  // strictly less context than sighted users get from the legend.
   const side = (s?: GexStrike) =>
-    s ? `GEX ${formatCompact(s.gex)}, OI ${s.oi.toLocaleString('en-US')}` : 'none';
-  return `Strike ${row.strike}: put ${side(row.put)}; call ${side(row.call)}`;
+    s
+      ? `gamma exposure ${formatCompact(s.gex)}, open interest ${s.oi.toLocaleString('en-US')}`
+      : 'none';
+  return `Strike price $${row.strike}: puts ${side(row.put)}; calls ${side(row.call)}`;
 }
 
 function TooltipSide({ label, s, color }: { label: string; s?: GexStrike; color: string }) {
@@ -69,13 +76,13 @@ function TooltipSide({ label, s, color }: { label: string; s?: GexStrike; color:
           </div>
           {s.gamma !== 0 && (
             <div className="flex justify-between gap-3">
-              <dt className="text-[var(--color-text-tertiary)]">Γ</dt>
+              <dt className="text-[var(--color-text-tertiary)]">Gamma</dt>
               <dd className="text-[var(--color-text-primary)]">{formatCompact(s.gamma)}</dd>
             </div>
           )}
           {s.delta !== 0 && (
             <div className="flex justify-between gap-3">
-              <dt className="text-[var(--color-text-tertiary)]">Δ</dt>
+              <dt className="text-[var(--color-text-tertiary)]">Delta</dt>
               <dd className="text-[var(--color-text-primary)]">{formatCompact(s.delta)}</dd>
             </div>
           )}
@@ -95,7 +102,7 @@ export function GammaWallChart() {
   if (isLoading || !data) {
     return (
       <Surface span="hero">
-        <SurfaceHeader title="Gamma Wall" />
+        <SurfaceHeader title={<InfoTip term="gamma_wall">Gamma Wall</InfoTip>} />
         <div className="p-4 skeleton h-64" />
       </Surface>
     );
@@ -144,22 +151,42 @@ export function GammaWallChart() {
         title={<InfoTip term="gamma_wall">Gamma Wall — {data.ticker}</InfoTip>}
         right={
           <span className="text-xs text-[var(--color-text-tertiary)]" style={{ fontFamily: 'var(--font-mono)' }}>
-            {mode.expiry_count} expiries
+            {mode.expiry_count} expiry dates combined
           </span>
         }
       />
       <div className="p-4">
-        {/* Legend / axis captions */}
+        {/* The floor/ceiling reading is conditional and the condition is not
+            decoration: it only holds while dealers are net long gamma, and in
+            the current data dealer gamma is negative — the regime in which the
+            same levels can accelerate a move instead of blocking it. The
+            glossary carries that caveat in `gamma_wall.detail`, but that text
+            only appears with Learning Mode on, so it has to be stated here too. */}
+        <p className="mb-3 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
+          Every bar is how much hedging sits at that price level — puts to the left, calls to the
+          right, the latest price marked by the dashed line. A heavy put level below that price
+          tends to act as a floor, and a heavy call level above it as a ceiling — but only while{' '}
+          <InfoTip term="dealer_gamma">dealer gamma</InfoTip> is positive. When it is negative (see
+          the Dealer Positioning card), those same levels can speed a move through instead of
+          blocking it. The glowing row marks the price level carrying the most hedging.
+        </p>
+
+        {/* Legend / axis captions. The old captions read "Put GEX · resistance"
+            and "Call GEX · support", which inverts the data: put gamma sits at
+            and below spot (the pipeline's own floor_zone) and call gamma at and
+            above it (ceiling_zone). Side labels now state only which leg each
+            side plots; the floor/ceiling reading is in the caption above. */}
         <div className="flex items-center justify-between mb-3 text-[10px] font-semibold uppercase tracking-[0.14em]">
-          <span style={{ color: 'var(--color-bear)' }}>◀ Put GEX · resistance</span>
+          <span style={{ color: 'var(--color-bear)' }}>◀ Put gamma</span>
           <span className="text-[var(--color-text-tertiary)]" data-numeric>
-            Spot <span style={{ color: 'var(--color-accent)' }}>${spot.toFixed(2)}</span>
+            <InfoTip term="spot">Spot</InfoTip>{' '}
+            <span style={{ color: 'var(--color-accent)' }}>${spot.toFixed(2)}</span>
           </span>
-          <span style={{ color: 'var(--color-bull)' }}>Call GEX · support ▶</span>
+          <span style={{ color: 'var(--color-bull)' }}>Call gamma ▶</span>
         </div>
 
         <div className="relative">
-          <svg viewBox={`0 0 ${W} ${H}`} width="100%" role="img" aria-label={`Gamma profile for ${data.ticker}: put and call gamma exposure by strike`}>
+          <svg viewBox={`0 0 ${W} ${H}`} width="100%" role="img" aria-label={`How much dealer hedging sits at each price level for ${data.ticker}: put gamma exposure to the left of each strike price, call gamma exposure to the right`}>
             {/* Zero-axis hairlines */}
             <line x1={CX - GUTTER / 2} y1={PAD - 8} x2={CX - GUTTER / 2} y2={H - PAD + 8} stroke="var(--color-border-default)" strokeWidth="1" />
             <line x1={CX + GUTTER / 2} y1={PAD - 8} x2={CX + GUTTER / 2} y2={H - PAD + 8} stroke="var(--color-border-default)" strokeWidth="1" />

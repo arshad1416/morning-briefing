@@ -9,7 +9,7 @@ import { TickerClient } from './ticker-client';
 export const metadata: Metadata = {
   title: 'Ticker Details',
   description:
-    'Price history, fundamentals and AI screening scores for S&P 500 and TSX tickers.',
+    'Price, chart signals, company fundamentals and MapleGamma screening scores for S&P 500 and TSX-listed stocks and ETFs.',
   alternates: { canonical: '/ticker/' },
 };
 

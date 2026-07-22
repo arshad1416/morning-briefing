@@ -2,7 +2,7 @@
 'use client';
 
 import React from 'react';
-import { Surface, SurfaceHeader } from '@/components/primitives';
+import { Surface, SurfaceHeader, InfoTip } from '@/components/primitives';
 
 const iconDefaults = {
   width: 28,
@@ -48,9 +48,9 @@ const ICONS = {
 } as const;
 
 interface PlaceholderProps {
-  title: string;
+  title: React.ReactNode;
   icon: keyof typeof ICONS;
-  description: string;
+  description: React.ReactNode;
   span?: 'hero' | 'half' | 'third' | 'quarter';
 }
 
@@ -76,12 +76,15 @@ function FeaturePlaceholder({ title, icon, description, span = 'third' }: Placeh
   );
 }
 
+// "whisper numbers" and "post-earnings drift" have no glossary entry, so each
+// term stays visible with a plain-English gloss appended inline rather than
+// being replaced by one.
 export function EarningsIntelligence() {
   return (
     <FeaturePlaceholder
-      title="Earnings Intelligence"
+      title={<InfoTip term="earnings">Earnings Intelligence</InfoTip>}
       icon="earnings"
-      description="AI-powered earnings analysis with whisper numbers, sentiment shifts, and post-earnings drift predictions."
+      description="Automated earnings analysis: whisper numbers (what traders privately expect, not the published forecast), sentiment shifts, and post-earnings drift — prices tend to keep moving for weeks after a surprise."
     />
   );
 }
@@ -91,7 +94,13 @@ export function ScenarioSimulator() {
     <FeaturePlaceholder
       title="Scenario Simulator"
       icon="simulator"
-      description="Drag VIX or spot price to watch GEX regime flip and gamma walls redraw in real-time. Teaches and informs."
+      description={
+        <>
+          Drag the <InfoTip term="vix">VIX</InfoTip> or the <InfoTip term="spot">spot price</InfoTip> and watch the{' '}
+          <InfoTip term="gamma_regime">gamma regime</InfoTip> flip between steadying the market and amplifying it, with{' '}
+          <InfoTip term="gamma_wall">gamma walls</InfoTip> redrawing as you go. Built to teach, not just inform.
+        </>
+      }
       span="half"
     />
   );
@@ -112,7 +121,13 @@ export function CompareMode() {
     <FeaturePlaceholder
       title="Compare Mode"
       icon="compare"
-      description="Side-by-side ticker comparison across all metrics — GEX, momentum, sentiment, and fundamentals."
+      description={
+        <>
+          Tickers side by side across every metric — <InfoTip term="gex">GEX</InfoTip>,{' '}
+          <InfoTip term="momentum">momentum</InfoTip>, sentiment (the mood in the news and in social chatter), and the{' '}
+          <InfoTip term="fundamentals">fundamentals</InfoTip> of the business.
+        </>
+      }
     />
   );
 }
@@ -122,7 +137,13 @@ export function AlertRuleBuilder() {
     <FeaturePlaceholder
       title="Alert Rule Builder"
       icon="alerts"
-      description="Custom alerts: notify when SPX crosses gamma wall, VIX > 25, FOMC in 24h, or any combination."
+      description={
+        <>
+          Your own alerts: when the S&amp;P 500 (SPX) crosses a <InfoTip term="gamma_wall">gamma wall</InfoTip>, when the{' '}
+          <InfoTip term="vix">VIX</InfoTip> goes above 25, when an <InfoTip term="fomc">FOMC</InfoTip> rate decision is 24
+          hours away, or any combination.
+        </>
+      }
       span="half"
     />
   );

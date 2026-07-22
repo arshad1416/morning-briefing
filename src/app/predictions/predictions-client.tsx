@@ -31,8 +31,11 @@ const useGatedFile = (name: string, file: string) =>
 
 function Card({ title, right, children }: { title?: React.ReactNode; right?: React.ReactNode; children: React.ReactNode }) {
   return (
+    // No `overflow-hidden` here: the card titles carry <InfoTip>, whose tooltip
+    // renders above its trigger. Clipping the card would put the tooltip of a
+    // header — the topmost element — outside the box and hide the explanation.
     <div
-      className="overflow-hidden rounded-[var(--radius-tile)] border"
+      className="rounded-[var(--radius-tile)] border"
       style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
     >
       {title && (
@@ -133,8 +136,8 @@ function LiveTrading({ lt }: { lt: Any }) {
         </div>
       )}
       <p className="mt-3 border-t pt-2 text-[10px] text-[var(--color-text-tertiary)]" style={{ borderColor: 'var(--color-border-subtle)' }}>
-        🟢 Beating its backtest · ⚪ On track · 🔴 Behind its backtest. The backtest win rate comes from replaying each
-        strategy over price history it was never tuned on, and it is the benchmark the live results are measured against.
+        🟢 Beating its backtest · ⚪ On track · 🔴 Behind its backtest. The backtest win rate is each strategy&apos;s{' '}
+        <InfoTip term="walk_forward">walk-forward</InfoTip> result — the benchmark the live results are measured against.
       </p>
     </Card>
   );
@@ -182,8 +185,8 @@ function EnhancedAccuracy() {
         <Metric label={<InfoTip term="expectancy">Expectancy</InfoTip>} value={signed(exp.expectancy_pct)} sub="average per closed trade" color={pnlColor(exp.expectancy_pct)} />
         <Metric label={<InfoTip term="profit_factor">Profit Factor</InfoTip>} value={typeof exp.profit_factor === 'number' ? exp.profit_factor.toFixed(2) : '∞'} sub="total gains ÷ total losses" color={exp.profit_factor >= 1.5 ? 'var(--color-bull)' : 'var(--color-caution)'} />
         <Metric label={<InfoTip term="max_drawdown">Max Drawdown</InfoTip>} value={`-${dd.max_drawdown_pct || 0}%`} sub={`${dd.drawdown_duration_trades || 0} trades from peak to low`} color={dd.max_drawdown_pct < 10 ? 'var(--color-bull)' : dd.max_drawdown_pct < 20 ? 'var(--color-caution)' : 'var(--color-bear)'} />
-        <Metric label={<InfoTip term="kelly">Kelly %</InfoTip>} value={`${exp.kelly_fraction || 0}%`} sub="half the formula’s stake" />
-        {slip.n_measured > 0 && <Metric label={<InfoTip term="slippage">Avg Slippage</InfoTip>} value={`${slip.avg_slippage_pct}%`} sub={`signal vs entry price · ${slip.n_measured} trades`} color="var(--color-caution)" />}
+        <Metric label={<InfoTip term="kelly">Kelly %</InfoTip>} value={`${exp.kelly_fraction || 0}%`} sub="half the formula’s stake, capped" />
+        {slip.n_measured > 0 && <Metric label={<InfoTip term="slippage">Avg Slippage</InfoTip>} value={`${slip.avg_slippage_pct}%`} sub={`expected vs actual · ${slip.n_measured} trades`} color="var(--color-caution)" />}
       </div>
       {!!d.per_strategy?.length && (
         <div className="overflow-x-auto">
@@ -260,7 +263,7 @@ function Validation({ data }: { data: Any }) {
     { id: 'pf', label: <InfoTip term="profit_factor">Profit Factor</InfoTip>, pass: bestPF >= 1.5, value: bestPF.toFixed(2), detail: bestPF >= 2 ? 'Strong — won more than twice what it lost' : bestPF >= 1.5 ? 'Meets our 1.5 threshold' : 'Below 1.5' },
     { id: 'cycles', label: 'Market Cycles', pass: dateRange.includes('2000'), value: dateRange, detail: 'The test window should reach back to 2000, so it includes the 2008 and 2020 crashes' },
     { id: 'wr-rr', label: <><InfoTip term="win_rate">Win Rate</InfoTip> / <InfoTip term="risk_reward">Reward-to-Risk</InfoTip></>, pass: winRate >= 0.45 || estRR >= 1.5, value: `${bestWR}% / ${estRR.toFixed(2)}R`, detail: `${winRate >= 0.45 ? 'Strong win rate' : 'Low win rate and low reward per unit of risk'}. Reward-to-risk is inferred from the win rate and profit factor, not measured directly` },
-    { id: 'sharpe', label: 'Sharpe Estimate', pass: degraded >= 1, value: degraded.toFixed(2), detail: `Backtest proxy ${estSharpe.toFixed(2)}, cut by 30% for live conditions. Scaled from the win rate — not a measured Sharpe ratio` },
+    { id: 'sharpe', label: <><InfoTip term="sharpe">Live Sharpe</InfoTip> (est.)</>, pass: degraded >= 1, value: degraded.toFixed(2), detail: `The live figure shown is the backtest proxy of ${estSharpe.toFixed(2)} cut by 30% for live conditions. Scaled from the win rate — not a measured Sharpe ratio` },
     { id: 'diversification', label: 'Diversification', pass: tickers >= 20, value: `${tickers} tickers`, detail: tickers >= 50 ? 'Spread across plenty of different stocks' : 'Adequate spread across stocks' },
     wf
       ? { id: 'wf', label: <InfoTip term="walk_forward">Walk-Forward</InfoTip>, pass: wf.good >= Math.ceil(wf.count * 0.7), value: `${wf.good}/${wf.count} windows pass`, detail: `Scored ${wf.avgOOS.toFixed(2)} on data it had never seen, ${wf.avgDeg.toFixed(1)}% weaker than on the data it was tuned on · ${wf.robust ? 'holds up as market conditions change' : 'fades more than we would like'}` }
@@ -271,7 +274,7 @@ function Validation({ data }: { data: Any }) {
   return (
     <Card
       title={<InfoTip term="backtest">Backtest Validation</InfoTip>}
-      right={<span className="text-[10px] text-[var(--color-text-tertiary)]">Our own checks — not an outside audit</span>}
+      right={<span className="text-[10px] text-[var(--color-text-tertiary)]">Scored in-house — not an outside audit</span>}
     >
       <p className="mb-3 text-sm font-semibold text-[var(--color-text-primary)]">
         Research Score:{' '}
@@ -280,8 +283,9 @@ function Validation({ data }: { data: Any }) {
         </span>
       </p>
       <p className="mb-3 text-xs leading-relaxed text-[var(--color-text-tertiary)]">
-        Seven checks that help tell a strategy with a genuine advantage from one that only looks good in hindsight. We
-        score ourselves against them, and each check counts the same.
+        Seven checks that help tell a strategy with a genuine advantage from one that only looks good in hindsight. The
+        criteria come from published work on backtest validation by López de Prado and Aronson; we score ourselves
+        against them, each check counts the same, and no outside party audits the result.
       </p>
       <div className="space-y-1.5">
         {checks.map((c) => (
@@ -291,7 +295,7 @@ function Validation({ data }: { data: Any }) {
             style={{ backgroundColor: 'var(--color-bg-elevated)' }}
           >
             <span aria-hidden="true">{c.pass ? '✅' : '⚠️'}</span>
-            <span className="min-w-[110px] font-semibold text-[var(--color-text-primary)]">{c.label}</span>
+            <span className="min-w-[180px] font-semibold text-[var(--color-text-primary)]">{c.label}</span>
             <span className="min-w-[90px] text-[var(--color-text-secondary)]" data-numeric>{c.value}</span>
             <span className="flex-1 text-[var(--color-text-tertiary)]">{c.detail}</span>
           </div>
@@ -358,12 +362,18 @@ export function PredictionsClient() {
     <div className="space-y-4">
       {header}
 
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
-        <Metric label={<InfoTip term="backtest">Backtest Trades</InfoTip>} value={s.total_backtest_trades?.toLocaleString?.() ?? '—'} sub="simulated, all versions" />
-        <Metric label="Tickers" value={s.tickers_tested ?? '—'} sub="symbols tested" />
-        <Metric label="Date Range" value={<span className="text-sm">{s.date_range ?? '—'}</span>} />
-        <Metric label={<InfoTip term="win_rate">Best Win Rate</InfoTip>} value={s.best_win_rate ?? '—'} sub="best version, in testing" />
-        <Metric label={<InfoTip term="avg_pnl">Best Avg Return</InfoTip>} value={s.best_avg_pnl ?? '—'} sub="per trade, best version" color="var(--color-bull)" />
+      <div>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+          <Metric label={<InfoTip term="backtest">Backtest Trades</InfoTip>} value={s.total_backtest_trades?.toLocaleString?.() ?? '—'} sub="simulated, all versions" />
+          <Metric label="Tickers" value={s.tickers_tested ?? '—'} sub="symbols tested" />
+          <Metric label="Date Range" value={<span className="text-sm">{s.date_range ?? '—'}</span>} />
+          <Metric label={<InfoTip term="win_rate">Best Win Rate</InfoTip>} value={s.best_win_rate ?? '—'} sub="best version on this metric" />
+          <Metric label={<InfoTip term="avg_pnl">Best Avg Return</InfoTip>} value={s.best_avg_pnl ?? '—'} sub="per trade, best on this metric" color="var(--color-bull)" />
+        </div>
+        <p className="mt-2 text-[10px] leading-relaxed text-[var(--color-text-tertiary)]">
+          Each &ldquo;best&rdquo; figure is the highest any single version reached on that metric — they are not
+          necessarily all the same version.
+        </p>
       </div>
 
       {data.live_trading && <LiveTrading lt={data.live_trading} />}
@@ -428,11 +438,12 @@ export function PredictionsClient() {
         <p className="text-xs leading-relaxed text-[var(--color-text-tertiary)]">
           <strong className="text-[var(--color-text-secondary)]">How this was tested:</strong>{' '}
           Each version was replayed over {s.date_range || 'N/A'} of past prices across {s.tickers_tested || 'N/A'}{' '}
-          symbols. Every simulated trade was closed exactly 21 trading days after it opened, whatever the price had done
-          by then — that single rule sits behind every number on this page.{' '}
+          symbols, on a fixed 21-day hold. That rule governs the version-by-version backtest figures on this page; the
+          live paper-trading and live simulation cards, and the walk-forward check, come from separate runs and are not
+          bound by it.{' '}
           {data.versions ? Object.keys(data.versions).length : 'N/A'} versions tested,{' '}
-          {s.total_backtest_trades?.toLocaleString?.() ?? 'N/A'} simulated trades in total. Council: Gemini, DeepSeek,
-          MiMo, Nemotron.
+          {s.total_backtest_trades?.toLocaleString?.() ?? 'N/A'} simulated trades in total. Council of models: Gemini,
+          DeepSeek, MiMo, Nemotron.
         </p>
       </Card>
     </div>

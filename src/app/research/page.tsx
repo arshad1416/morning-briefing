@@ -6,7 +6,7 @@ import { ResearchClient } from './research-client';
 export const metadata: Metadata = {
   title: 'Research Desk — News, Insider & Congress Trades',
   description:
-    'Daily market narrative, live news wire, Reddit sentiment, SEC Form 4 insider trades and U.S. House congressional trades — one reading room.',
+    'The day’s market write-up, the news, what Reddit is saying, share dealings company insiders reported to the SEC, and stock trades disclosed by U.S. House members — all in one place.',
   alternates: { canonical: '/research/' },
 };
 

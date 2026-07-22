@@ -10,6 +10,7 @@ import React from 'react';
 import Link from 'next/link';
 import { FEATURES, type FeatureKey } from '@/stores/entitlements';
 import { useMe } from '@/lib/auth/useMe';
+import { PlainLabel } from '@/components/primitives';
 
 interface ProGateProps {
   feature: FeatureKey;
@@ -17,14 +18,30 @@ interface ProGateProps {
 }
 
 const FEATURE_LABELS: Record<FeatureKey, string> = {
-  walkforward: 'Walk-forward analysis',
+  // `walkforward` gates three different tiles (BacktestSummary, AccuracyStats
+  // and WalkForwardTile in models-client), so the old "Walk-forward analysis"
+  // was simply the wrong name over two of the three locks.
+  walkforward: 'Model track record & walk-forward tests',
   simulation: 'Live simulation',
   gammaWalls: 'Gamma Walls',
-  nope: 'NOPE Flow Estimate',
+  // Was "NOPE Flow Estimate". The generator's own methodology note says this is
+  // estimated from option-chain volume and Black-Scholes delta and is NOT
+  // real-time order flow — so the word "Flow" claimed the one thing it isn't.
+  nope: 'NOPE options-pressure estimate',
   calibration: 'Model Calibration',
   scenarioSim: 'Scenario Simulator',
-  congressTrades: 'Congress Trades',
+  congressTrades: 'US lawmakers’ stock trades',
   briefingExport: 'Briefing Export',
+};
+
+// Plain-English caption under the lock label, read from the glossary. Only keys
+// whose entry is true of everything behind that lock appear here — `walkforward`
+// covers three unrelated tiles, so no single definition fits it.
+const FEATURE_TERMS: Partial<Record<FeatureKey, string>> = {
+  simulation: 'live_simulation',
+  gammaWalls: 'gamma_wall',
+  nope: 'nope',
+  calibration: 'calibration',
 };
 
 function LockIcon() {
@@ -92,6 +109,7 @@ export function ProGate({ feature, children }: ProGateProps) {
           <p className="text-sm font-semibold text-[var(--color-text-primary)] mt-3">
             {FEATURE_LABELS[feature]}
           </p>
+          {FEATURE_TERMS[feature] && <PlainLabel term={FEATURE_TERMS[feature]!} className="mt-1" />}
           <p className="text-xs text-[var(--color-text-tertiary)] mt-1">
             Unlock with MapleGamma Pro
           </p>

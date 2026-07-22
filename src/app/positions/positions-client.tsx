@@ -10,6 +10,7 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { GateCard } from '@/components/feature/gating/GateCard';
+import { InfoTip } from '@/components/primitives';
 import { fetchGated, GateError } from '@/lib/api/gated';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -33,7 +34,7 @@ const fmt = (v: number | null | undefined, d = 2) =>
 
 const pnlColor = (v: number) => (v >= 0 ? 'var(--color-bull)' : 'var(--color-bear)');
 
-function Card({ title, children, className = '' }: { title?: string; children: React.ReactNode; className?: string }) {
+function Card({ title, children, className = '' }: { title?: React.ReactNode; children: React.ReactNode; className?: string }) {
   return (
     <div
       className={`overflow-hidden rounded-[var(--radius-tile)] border ${className}`}
@@ -49,7 +50,7 @@ function Card({ title, children, className = '' }: { title?: string; children: R
   );
 }
 
-function Metric({ label, value, color }: { label: string; value: React.ReactNode; color?: string }) {
+function Metric({ label, value, color }: { label: React.ReactNode; value: React.ReactNode; color?: string }) {
   return (
     <div className="text-center">
       <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--color-text-tertiary)]">{label}</p>
@@ -93,6 +94,17 @@ const TD = ({ children, align = 'left', color, bold }: { children?: React.ReactN
   </td>
 );
 
+// An InfoTip's tooltip is a child of its wrapper <span>, and `white-space` is
+// inherited — so inside our TH (which carries `whitespace-nowrap`) the tooltip
+// renders its whole definition as one unwrapped line that spills straight out
+// of the fixed-width panel. Reset the wrapper to normal wrapping and pin the
+// header label itself to a single line.
+const TipHead = ({ term, children }: { term: React.ComponentProps<typeof InfoTip>['term']; children: React.ReactNode }) => (
+  <InfoTip term={term} className="whitespace-normal">
+    <span className="whitespace-nowrap">{children}</span>
+  </InfoTip>
+);
+
 function SimLabel() {
   return (
     <p
@@ -104,7 +116,8 @@ function SimLabel() {
       }}
     >
       <strong style={{ color: 'var(--color-caution)' }}>Simulated portfolio — not a recommendation.</strong>{' '}
-      Paper-trading results with no real money.
+      <InfoTip term="paper_trading">Paper-trading</InfoTip> results with no real money. Nothing here is advice to buy or sell
+      anything.
     </p>
   );
 }
@@ -194,8 +207,12 @@ function PaperTab({ data }: { data: Any }) {
   const totalPnl = p.total_pnl || 0;
   const fx = data.fx_rate_usdcad || 1.38;
 
+  // Purely a band of the position's percent move — there is no stop-loss, no
+  // risk model and no monitoring behind these. The old wording ("Stop Zone",
+  // "At Risk", "Watching", "Pending") implied all three; the bands say only
+  // what the number actually is.
   const status = (pct: number) =>
-    pct > 5 ? '✅ In Profit' : pct > 2 ? '✅ Profitable' : pct > 0 ? '⏳ Pending' : pct > -3 ? '⏳ Watching' : pct > -7 ? '⚠️ At Risk' : '🔴 Stop Zone';
+    pct > 5 ? '✅ Up 5%+' : pct > 2 ? '✅ Up 2–5%' : pct > 0 ? '⏳ Up 0–2%' : pct > -3 ? '⏳ Down 0–3%' : pct > -7 ? '⚠️ Down 3–7%' : '🔴 Down 7%+';
 
   return (
     <div className="space-y-4">
@@ -212,17 +229,27 @@ function PaperTab({ data }: { data: Any }) {
             ({(p.return_pct || 0) >= 0 ? '+' : ''}{fmt(p.return_pct)}%)
           </span>
           <span className="ml-auto text-xs text-[var(--color-text-tertiary)]" data-numeric>
-            Equity ${fmt(equity)} · Cash ${fmt(p.cash)} · {deployed > 0 ? `${Math.round((deployed / equity) * 100)}% deployed` : 'all cash'}
+            Equity ${fmt(equity)} · Cash ${fmt(p.cash)} · {deployed > 0 ? `${Math.round((deployed / equity) * 100)}% invested` : 'all cash'}
           </span>
         </div>
         <div className="mt-4 grid grid-cols-2 gap-4 border-t pt-4 sm:grid-cols-5" style={{ borderColor: 'var(--color-border-subtle)' }}>
-          <Metric label="Status" value={data.status || '—'} color="var(--color-bull)" />
+          {/* push_dashboard.py writes 'status' as the unconditional literal
+              'LIVE' — it is a run-mode marker, not a health check, so it must
+              not be labelled or coloured as though it reported feed liveness.
+              "Last Updated" below is the only real staleness signal. */}
+          <Metric label="Feed Status" value={data.status || '—'} />
           <Metric label="Starting" value={`$${fmt(p.starting_balance)}`} />
           <Metric label="Cash" value={`$${fmt(p.cash)}`} />
           <Metric label="Invested" value={`$${fmt(p.invested || 0)}`} />
           <Metric label="Total Value" value={`$${fmt(p.total_balance)}`} />
-          <Metric label="Win Rate" value={`${p.win_rate || 0}%`} color={(p.win_rate || 0) >= 50 ? 'var(--color-bull)' : 'var(--color-bear)'} />
-          <Metric label="Trades" value={p.total_trades} />
+          <Metric
+            label={<InfoTip term="win_rate">Win Rate</InfoTip>}
+            value={`${p.win_rate || 0}%`}
+            color={(p.win_rate || 0) >= 50 ? 'var(--color-bull)' : 'var(--color-bear)'}
+          />
+          {/* total_trades is winning + losing closes, so this counts trades
+              already sold, not the positions still open above. */}
+          <Metric label="Closed Trades" value={p.total_trades} />
           <Metric
             label="Unrealized"
             value={`${(p.unrealized_pnl || 0) >= 0 ? '+' : '−'}$${fmt(Math.abs(p.unrealized_pnl || 0))}`}
@@ -278,7 +305,7 @@ function PaperTab({ data }: { data: Any }) {
             <table className="w-full min-w-[820px] text-sm">
               <thead>
                 <tr>
-                  <TH>Ticker</TH><TH>Asset</TH><TH>Type</TH><TH>Entry</TH><TH align="right">Entry Price</TH><TH align="right">Current</TH><TH align="right">P&L</TH><TH>Strategy</TH><TH>Status</TH>
+                  <TH>Ticker</TH><TH>Asset</TH><TH>Type</TH><TH>Entry Date</TH><TH align="right">Entry Price</TH><TH align="right">Current</TH><TH align="right">P&L</TH><TH>Strategy</TH><TH>Status</TH>
                 </tr>
               </thead>
               <tbody>
@@ -307,7 +334,9 @@ function PaperTab({ data }: { data: Any }) {
             </table>
           </div>
         ) : (
-          <p className="py-6 text-center text-sm text-[var(--color-text-tertiary)]">No open positions. All trades closed.</p>
+          <p className="py-6 text-center text-sm text-[var(--color-text-tertiary)]">
+            No positions in this table right now. Option positions, if there are any, are listed separately below.
+          </p>
         )}
       </Card>
 
@@ -318,7 +347,7 @@ function PaperTab({ data }: { data: Any }) {
             <table className="w-full min-w-[680px] text-sm">
               <thead>
                 <tr>
-                  <TH>Ticker</TH><TH align="right">Strike</TH><TH>Expiry</TH><TH align="right">DTE</TH><TH align="right">Premium Paid</TH><TH align="right">Current Premium</TH><TH align="right">P&L</TH><TH>Status</TH>
+                  <TH>Ticker</TH><TH align="right"><TipHead term="strike">Strike</TipHead></TH><TH>Expiry</TH><TH align="right">DTE</TH><TH align="right">Premium Paid</TH><TH align="right">Current Premium</TH><TH align="right">P&L</TH><TH>Status</TH>
                 </tr>
               </thead>
               <tbody>
@@ -358,11 +387,13 @@ function PaperTab({ data }: { data: Any }) {
         </Card>
       )}
       {!!acc?.top_performers?.length && (
-        <Card title="Best Strategies (Backtest Verified)">
+        <Card title={<>Best Strategies (<InfoTip term="backtest">Backtest</InfoTip> Results)</>}>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[560px] text-sm">
               <thead>
-                <tr><TH>Rank</TH><TH>Version</TH><TH align="right">Trades</TH><TH align="center">Win Rate</TH><TH align="right">Avg P&L</TH><TH align="right">PF</TH><TH align="center">Confidence</TH></tr>
+                {/* "Confidence" was a straight read of the trade count, not a
+                    statistical confidence level — hence "Evidence". */}
+                <tr><TH>Rank</TH><TH>Version</TH><TH align="right">Trades</TH><TH align="center"><TipHead term="win_rate">Win Rate</TipHead></TH><TH align="right"><TipHead term="avg_pnl">Avg P&L</TipHead></TH><TH align="right"><TipHead term="pf">PF</TipHead></TH><TH align="center"><TipHead term="sample_size">Evidence</TipHead></TH></tr>
               </thead>
               <tbody>
                 {acc.top_performers.slice(0, 10).map((v: Any, i: number) => {
@@ -391,7 +422,7 @@ function PaperTab({ data }: { data: Any }) {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[820px] text-sm">
               <thead>
-                <tr><TH>Ticker</TH><TH>Type</TH><TH>Entry</TH><TH>Exit</TH><TH align="right">Entry Price</TH><TH align="right">Exit Price</TH><TH align="right">P&L</TH><TH>Status</TH></tr>
+                <tr><TH>Ticker</TH><TH>Type</TH><TH>Entry Date</TH><TH>Exit Date</TH><TH align="right">Entry Price</TH><TH align="right">Exit Price</TH><TH align="right">P&L</TH><TH>Status</TH></tr>
               </thead>
               <tbody>
                 {trades.slice(0, 30).map((t, i) => {
@@ -446,7 +477,7 @@ function IbkrTab() {
   if (!account.data && !positions.data && !trades.data)
     return (
       <p className="p-6 text-center text-sm text-[var(--color-text-tertiary)]">
-        No account data available yet — the portfolio agent runs daily at 07:12 ET.
+        No account data yet — these figures are refreshed once a day, at 7:12 am Eastern time.
       </p>
     );
 
@@ -608,7 +639,14 @@ function JournalTab() {
             />
             <Metric label="Top Emotion" value={topEmotion} />
             <Metric label="Win Rate" value={decided.length ? `${winRate}%` : '—'} />
-            <Metric label="Current Streak" value={latestResult ? `${streak} ${latestResult}${streak === 1 ? '' : 's'}` : '—'} />
+            <Metric
+              label="Current Streak"
+              value={
+                latestResult
+                  ? `${streak} ${latestResult === 'win' ? (streak === 1 ? 'win' : 'wins') : streak === 1 ? 'loss' : 'losses'}`
+                  : '—'
+              }
+            />
           </div>
         </Card>
       )}
@@ -627,14 +665,14 @@ function JournalTab() {
             ))}
           </select>
           <select value={form.result} onChange={(e) => setForm({ ...form, result: e.target.value })} className={inputCls} style={inputStyle}>
-            <option value="planned">Result: Planned / Open</option>
+            <option value="planned">Result: Planned, or still open</option>
             <option value="win">Result: Win</option>
             <option value="loss">Result: Loss</option>
             <option value="breakeven">Result: Breakeven</option>
           </select>
-          <input value={form.strategy} onChange={(e) => setForm({ ...form, strategy: e.target.value })} placeholder="Strategy (e.g. mean_reversion)" className={inputCls} style={inputStyle} />
+          <input value={form.strategy} onChange={(e) => setForm({ ...form, strategy: e.target.value })} placeholder="Strategy (e.g. mean reversion)" className={inputCls} style={inputStyle} />
         </div>
-        <textarea value={form.rationale} onChange={(e) => setForm({ ...form, rationale: e.target.value })} placeholder="Trade rationale / original plan…" rows={2} className={`${inputCls} mt-2.5 resize-y`} style={inputStyle} />
+        <textarea value={form.rationale} onChange={(e) => setForm({ ...form, rationale: e.target.value })} placeholder="Why you took the trade / what the original plan was…" rows={2} className={`${inputCls} mt-2.5 resize-y`} style={inputStyle} />
         <textarea value={form.lesson} onChange={(e) => setForm({ ...form, lesson: e.target.value })} placeholder="Key lesson learned…" rows={2} className={`${inputCls} mt-2.5 resize-y`} style={inputStyle} />
         <textarea value={form.mistake} onChange={(e) => setForm({ ...form, mistake: e.target.value })} placeholder="Mistake made (if any)…" rows={2} className={`${inputCls} mt-2.5 resize-y`} style={inputStyle} />
         <button
@@ -705,8 +743,13 @@ export function PositionsClient() {
       <h1 className="relative z-10 font-display text-3xl text-[var(--color-text-primary)]">
         Trading <em className="italic" style={{ color: 'var(--color-accent)' }}>Performance</em>
       </h1>
+      {/* No quantity claim: the tables below are truncated (the producer ships
+          only the last 20 closed trades) and the journal is the visitor's own,
+          so "every trade, shown in full, fake money throughout" was false on
+          all three counts. */}
       <p className="relative z-10 mt-2 text-sm text-[var(--color-text-secondary)]">
-        The simulated book, the IBKR paper account, and the trade journal — full transparency.
+        A simulated portfolio, the Interactive Brokers (IBKR) paper account, and a trade journal. Both accounts trade
+        with fake money.
       </p>
     </div>
   );

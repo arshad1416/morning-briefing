@@ -112,7 +112,7 @@ const iconProps = {
 const FEATURES: Feature[] = [
   {
     title: "Where the Big Money Is Pinned",
-    body: "The price levels the banks that sell options have to defend — the invisible floors and ceilings that quietly push a stock around. Shown level by level (GEX / DEX).",
+    body: "The price levels the big firms that sell options have to defend — the invisible floors and ceilings that quietly push a stock around. Shown level by level (GEX / DEX).",
     icon: (
       <svg {...iconProps} aria-hidden="true">
         <path d="M3 21h18" />

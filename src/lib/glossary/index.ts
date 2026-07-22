@@ -43,7 +43,7 @@ export const GLOSSARY = {
   gex: {
     plainLabel: 'How much hedging is in play',
     plain:
-      'How much buying and selling the banks that sold these options have to do just to stay balanced as prices move. It sizes how much hedging activity is riding on this market.',
+      'How much buying and selling the firms that sold these options have to do just to stay balanced as prices move. It sizes how much hedging activity is riding on this market.',
     detail:
       'Gamma exposure. The figure shown here is a GROSS total — calls and puts are added together rather than netted — so it is always positive and cannot by itself tell you whether dealers are damping moves or amplifying them. For that, read Dealer Gamma on the Dealer Positioning card, where puts are counted negative.',
   },
@@ -213,7 +213,9 @@ export const GLOSSARY = {
   },
   spot: {
     plainLabel: 'Current price',
-    plain: 'The price the asset is trading at right now.',
+    plain: 'The price the asset is changing hands at, as opposed to any future or agreed price.',
+    detail:
+      'The figure shown on this site comes from a delayed feed refreshed roughly every 30 minutes during market hours, so it is a recent snapshot rather than a live quote.',
   },
   fomc: {
     plainLabel: 'Fed interest-rate meeting',
@@ -376,10 +378,18 @@ export const GLOSSARY = {
     plain: 'Deciding how much money to put into a single trade — usually the most important risk decision you make.',
   },
   atr: {
-    plainLabel: 'Typical daily swing',
+    // Deliberately timeframe-neutral: the charts page computes this on
+    // whichever bar size the user picked (daily, weekly, monthly), so saying
+    // "a day's move" would be wrong on two of the three settings.
+    plainLabel: 'Typical swing per bar',
     plain:
-      'The size of a normal day’s price movement for this stock. Useful for setting stops that are not so tight that ordinary noise triggers them.',
-    detail: 'Average True Range.',
+      'The size of a normal price move over one bar on the chart — so on a daily chart it is a typical day, on a weekly chart a typical week. Useful for setting exits that ordinary noise will not trigger.',
+    detail: 'Average True Range, measured over the last 14 bars.',
+  },
+  council: {
+    plainLabel: 'A panel of AI models',
+    plain:
+      'Several different AI models each write their own read of the market, and their answers are compared rather than trusting any one of them. They are models, not human analysts.',
   },
   rsi: {
     plainLabel: 'Run too hot or too cold?',
@@ -546,6 +556,169 @@ export const GLOSSARY = {
     plainLabel: 'Options expiry day',
     plain:
       'The day a large batch of options expires. Trading can get unusually choppy as positions are closed or rolled forward.',
+  },
+
+  /* ---------------------------------------------------------------- */
+  /*  Everyday market vocabulary                                      */
+  /* ---------------------------------------------------------------- */
+
+  index: {
+    plainLabel: 'A basket of shares in one number',
+    plain:
+      'A single number tracking a whole group of companies at once, so you can see how "the market" did without checking every stock.',
+  },
+  tsx: {
+    plainLabel: 'Canada’s main stock index',
+    plain: 'The Toronto Stock Exchange’s headline index — the standard measure of how Canadian shares are doing.',
+  },
+  etf: {
+    plainLabel: 'A basket you buy like a share',
+    plain:
+      'A fund holding many investments at once that you can buy and sell as easily as a single share. SPY, which tracks the S&P 500, is one.',
+    detail: 'Exchange-Traded Fund.',
+  },
+  fx: {
+    plainLabel: 'Currencies',
+    plain: 'Foreign exchange — currencies and what one is worth in another, like the US dollar against the Canadian dollar.',
+  },
+  bullish: {
+    plainLabel: 'Expecting a rise',
+    plain: 'Expecting prices to go up. The opposite is bearish.',
+  },
+  bearish: {
+    plainLabel: 'Expecting a fall',
+    plain: 'Expecting prices to go down. The opposite is bullish.',
+  },
+  long: {
+    plainLabel: 'Positioned for a rise',
+    plain: 'Owning something, so you profit if the price goes up.',
+  },
+  short: {
+    plainLabel: 'Positioned for a fall',
+    plain: 'Positioned to profit if the price goes down, by selling something you have borrowed rather than owning it.',
+  },
+  sentiment: {
+    plainLabel: 'The mood around a stock',
+    plain:
+      'Whether the tone of news, posts and commentary is positive, negative or flat. It measures mood, not the underlying business.',
+  },
+  signal: {
+    plainLabel: 'A prompt to consider a trade',
+    plain:
+      'The moment the model’s conditions line up and it flags an opportunity. A signal is a suggestion to look, not an instruction to buy.',
+  },
+  edge: {
+    plainLabel: 'The real advantage, if any',
+    plain:
+      'Whatever makes an approach profitable over many trades rather than by luck. Without a measurable edge, more trading just means more costs.',
+  },
+  thesis: {
+    plainLabel: 'The reason for the trade',
+    plain: 'The argument for why this should work — what has to stay true for the idea to pay off.',
+  },
+  setup: {
+    plainLabel: 'A pattern worth a look',
+    plain: 'A combination of conditions the strategy watches for. It is a starting point for research, not a decision.',
+  },
+  prediction_market: {
+    plainLabel: 'Betting on events, not stocks',
+    plain:
+      'A market where people trade on whether an event will happen. Prices there are often read as the crowd’s odds — for example 60 cents implying about a 60% chance.',
+  },
+  ai_council: {
+    plainLabel: 'A panel of AI models',
+    plain:
+      'Several different AI models each give their own read, and the results are compared rather than trusting any single one. They are models, not people.',
+  },
+  screener: {
+    plainLabel: 'Filter stocks by your own rules',
+    plain: 'A tool for narrowing thousands of stocks down to the handful that match conditions you choose.',
+  },
+  score: {
+    plainLabel: 'Our own 1–10 rating',
+    plain:
+      'A rule-based checklist score from 1 to 10 built from things like momentum, price versus its averages, volume and valuation. It is a sorting aid, not a recommendation.',
+  },
+
+  /* ---------------------------------------------------------------- */
+  /*  Options vocabulary                                              */
+  /* ---------------------------------------------------------------- */
+
+  options: {
+    plainLabel: 'Contracts tied to a future price',
+    plain:
+      'Contracts that let you buy or sell a stock at a set price up to a set date. Traders use them to bet on direction with less money up front, or to insure what they already own.',
+  },
+  expiry: {
+    plainLabel: 'The contract’s deadline',
+    plain: 'The date a contract stops existing. After it, the contract is either settled or simply worthless.',
+  },
+  dte: {
+    plainLabel: 'Days until the deadline',
+    plain: 'How many days are left before the contract expires. Fewer days left means value drains away faster.',
+    detail: 'Days To Expiry.',
+  },
+  premium: {
+    plainLabel: 'What the contract costs',
+    plain: 'The price paid for an option — what the buyer pays and the seller collects up front.',
+  },
+  dealer: {
+    plainLabel: 'The firms on the other side',
+    plain:
+      'The market makers who stand ready to buy and sell options all day. They are not trying to bet on direction, so they constantly trade shares to stay balanced — and that hedging is what moves prices around.',
+  },
+  option_chain: {
+    plainLabel: 'Every contract on one stock',
+    plain: 'The full list of available contracts for a stock, laid out by price level and expiry date.',
+  },
+  perpetual_futures: {
+    plainLabel: 'Crypto contracts with no deadline',
+    plain: 'Crypto contracts that track a price and never expire, so a position can be held indefinitely.',
+  },
+
+  /* ---------------------------------------------------------------- */
+  /*  Account and position vocabulary                                 */
+  /* ---------------------------------------------------------------- */
+
+  pnl: {
+    plainLabel: 'Money made or lost',
+    plain: 'Profit and loss — how much a position or account is up or down.',
+  },
+  unrealized_pnl: {
+    plainLabel: 'Paper gain, not yet banked',
+    plain:
+      'Profit or loss on something you still hold. It moves with the price and only becomes real when you sell.',
+  },
+  realized_pnl: {
+    plainLabel: 'Profit already banked',
+    plain: 'Profit or loss on positions that have been closed. This number no longer changes.',
+  },
+  cost_basis: {
+    plainLabel: 'What you paid in total',
+    plain: 'The total amount put into a position, used as the reference point for working out gain or loss.',
+  },
+  net_liquidation: {
+    plainLabel: 'Total account value',
+    plain: 'What the account would be worth if everything in it were sold right now — cash plus the value of all holdings.',
+  },
+  buying_power: {
+    plainLabel: 'Most you could buy today',
+    plain: 'How much you could still put to work, given the cash available and what is already committed.',
+  },
+  ibkr: {
+    plainLabel: 'Interactive Brokers practice account',
+    plain:
+      'Interactive Brokers, the broker whose simulated account these results come from. It trades with fake money, not real capital.',
+  },
+  ema: {
+    plainLabel: 'Average price, recent days count more',
+    plain:
+      'An average of recent prices that gives the latest days more weight, so it turns faster than a plain average when the trend changes.',
+    detail: 'Exponential Moving Average.',
+  },
+  change_pct: {
+    plainLabel: 'Move since the previous close',
+    plain: 'How far the price has moved compared with where it finished the session before.',
   },
 } satisfies Record<string, GlossaryEntry>;
 

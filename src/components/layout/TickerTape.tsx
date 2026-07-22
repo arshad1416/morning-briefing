@@ -6,6 +6,24 @@ import { useQuery } from '@tanstack/react-query';
 import { latestQuery } from '@/lib/query/options';
 import { POLL } from '@/lib/query/policy';
 import { formatNumber, formatPercent } from '@/lib/format';
+import { lookup } from '@/lib/glossary';
+
+// Two entries in the tape are not prices at all — VIX is a volatility gauge and
+// "10Y Yield" is an interest rate — but they scroll past looking identical to
+// "S&P 500 7,512.25". A native `title` is deliberate here rather than <InfoTip>:
+// the strip is 32px tall with `overflow: hidden`, so a popover tooltip would be
+// clipped, and the duplicated marquee run is aria-hidden, so putting focusable
+// buttons in it would trap the keyboard on invisible copies. The tape pauses on
+// hover (globals.css), so the native tooltip is reachable.
+const TAPE_TERMS: Record<string, string> = {
+  VIX: 'vix',
+  '10Y Yield': 'ten_year_yield',
+};
+
+function tapeHint(label: string): string | undefined {
+  const term = TAPE_TERMS[label];
+  return term ? lookup(term)?.plain : undefined;
+}
 
 interface TickerItem {
   label: string;
@@ -17,9 +35,10 @@ function TickerEntry({ item }: { item: TickerItem }) {
   const hasDelta = item.changePct !== undefined;
   const up = hasDelta && item.changePct! > 0;
   const down = hasDelta && item.changePct! < 0;
+  const hint = tapeHint(item.label);
 
   return (
-    <span className="inline-flex items-baseline gap-2 whitespace-nowrap">
+    <span className="inline-flex items-baseline gap-2 whitespace-nowrap" title={hint}>
       <span className="text-[10px] uppercase tracking-[0.12em] text-[var(--color-text-tertiary)]">
         {item.label}
       </span>
@@ -89,8 +108,12 @@ export function TickerTape() {
     })),
   ];
 
+  // "data", not "prices": the strip mixes several kinds of number — index
+  // levels, a volatility gauge (VIX), an interest rate ("10Y Yield") and an
+  // exchange rate (USD/CAD). This label is the only description a screen reader
+  // gives the whole strip, so it must not call a 4.64% borrowing rate a price.
   return (
-    <div className="ticker-mask h-8 flex items-center" aria-label="Live market indices">
+    <div className="ticker-mask h-8 flex items-center" aria-label="Live market data">
       <div className="ticker-track">
         <TickerRun items={items} />
         <TickerRun items={items} dupe />

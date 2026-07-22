@@ -196,7 +196,10 @@ const MOBILE_PRIMARY_ITEMS = [
 const MOBILE_MORE_CORE_ITEMS = [
   { href: '/research/', label: 'Research', Icon: IconNews },
   { href: '/charts/', label: 'Charts', Icon: IconCandles },
-  { href: '/models/', label: 'Models', Icon: IconPulse },
+  // Labelled to match the destination's own <h1> and page title ("Prediction
+  // Engine"). "Models" appeared nowhere on the page and read like a settings
+  // screen where you pick a model.
+  { href: '/models/', label: 'Prediction Engine', Icon: IconPulse },
 ];
 
 const NAV_ITEMS = [...MOBILE_PRIMARY_ITEMS, ...MOBILE_MORE_CORE_ITEMS];
@@ -221,6 +224,9 @@ function isNavActive(pathname: string, href: string) {
   return path === target || path.startsWith(`${target}/`);
 }
 
+const PILL_CAVEAT =
+  'Rough guide to US market hours. It is worked out from a fixed weekday window on your device’s clock, not a live exchange feed, so it can say “open” up to about an hour and a half before the real 9:30am ET open and for about an hour after the 4pm ET close. It also does not know about market holidays or early closes, so on a holiday it will show open all day.';
+
 function MarketStatusPill() {
   // Market hours derive from the clock; compute only after mount so the
   // static-export HTML and first client render match.
@@ -234,9 +240,9 @@ function MarketStatusPill() {
 
   if (!now) {
     return (
-      <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--color-text-tertiary)] bg-[var(--color-bg-elevated)]">
+      <span className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--color-text-tertiary)] bg-[var(--color-bg-elevated)]">
         <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-text-tertiary)]" aria-hidden="true" />
-        Market —
+        Checking…
       </span>
     );
   }
@@ -247,18 +253,29 @@ function MarketStatusPill() {
 
   return (
     <span
-      className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-[0.12em]"
+      className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-[0.12em]"
       style={{
         backgroundColor: isOpen ? 'var(--color-bull-soft)' : 'var(--color-bg-elevated)',
         color: isOpen ? 'var(--color-bull)' : 'var(--color-text-tertiary)',
       }}
+      // Says WHICH market (the tape below it also carries Toronto and the
+      // Canadian dollar) and states the real size of the error. The window is a
+      // fixed 13:00–21:00 UTC weekday block off your own clock, so it always
+      // spans MORE than the true 09:30–16:00 ET session: in winter it flips to
+      // "open" 90 minutes early, in summer it stays "open" an hour past the
+      // close, and on a holiday it shows open all day.
+      title={PILL_CAVEAT}
     >
       <span
         className={`w-1.5 h-1.5 rounded-full ${isOpen ? 'animate-pulse' : ''}`}
         style={{ backgroundColor: isOpen ? 'var(--color-bull)' : 'var(--color-text-tertiary)' }}
         aria-hidden="true"
       />
-      {isOpen ? 'Market open' : 'Market closed'}
+      {isOpen ? 'US market open' : 'US market closed'}
+      {/* A native `title` only reaches a mouse. The visible words are flatly
+          confident, so the caveat is repeated for screen readers, where it
+          costs no layout. */}
+      <span className="sr-only"> — {PILL_CAVEAT}</span>
     </span>
   );
 }
@@ -283,15 +300,25 @@ function LearningModeToggle() {
   return (
     <button
       onClick={toggleLearningMode}
-      className="min-w-11 min-h-11 flex items-center justify-center rounded-lg transition-colors"
+      className="min-w-11 min-h-11 flex items-center justify-center rounded-lg px-2 transition-colors"
       style={{
         color: learningMode ? 'var(--color-accent)' : 'var(--color-text-secondary)',
         backgroundColor: learningMode ? 'var(--color-accent-dim)' : 'transparent',
       }}
-      aria-label={learningMode ? 'Disable learning mode' : 'Enable learning mode'}
-      title="Learning Mode — shows tooltips for jargon"
+      aria-label={
+        learningMode
+          ? 'Turn off Learning Mode — plain-English explanations'
+          : 'Turn on Learning Mode — plain-English explanations'
+      }
+      title="Learning Mode — explains the finance terms on the page in plain English. Hover, tap or tab to any underlined term."
     >
       <IconBook />
+      {/* The icon alone is undiscoverable for the beginners this exists for,
+          so it carries a visible word wherever there is room. Hidden on the
+          narrowest widths, where the header is already tight. */}
+      <span className="ml-1.5 hidden text-xs font-medium sm:inline">
+        {learningMode ? 'Explain: on' : 'Explain'}
+      </span>
     </button>
   );
 }
@@ -590,7 +617,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {/* Disclaimer */}
           <div className="mt-auto pt-4 border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>
             <p className="text-xs text-[var(--color-text-tertiary)] leading-relaxed">
-              Not financial advice. Data may be delayed. Past performance does not guarantee future results.
+              Not financial advice. All strategy results shown are practice trades made with fake money.
+              Data may be delayed, and past performance does not guarantee future results.
             </p>
           </div>
         </nav>
@@ -602,11 +630,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {/* Compliance footer — general disclaimer, position-disclosure policy, Quebec notice */}
           <footer className="mt-8 border-t pt-4 pb-[calc(5rem+env(safe-area-inset-bottom))] text-[11px] leading-relaxed text-[var(--color-text-tertiary)] md:pb-4" style={{ borderColor: 'var(--color-border-subtle)' }}>
             <p className="mb-2">
-              MapleGamma provides general market information and simulated (paper-trading) results for
-              educational purposes only. Nothing on this site is investment advice or a recommendation,
-              and nothing is tailored to any person&apos;s circumstances. All trading results shown are simulated
-              (paper-trading) — the site operator deploys no real capital in the strategies or
-              securities discussed. Past performance — real or simulated — does not guarantee future results.{' '}
+              MapleGamma provides general market information and practice-trading results — trades placed with
+              fake money, known as paper trading — for educational purposes only. Nothing on this site is
+              investment advice or a recommendation, and nothing is tailored to any person&apos;s circumstances.
+              Every trading result shown here is simulated: the person who runs this site puts no real money
+              into any of the strategies, securities (shares, ETFs, options) or other assets discussed.
+              Past performance — real or simulated — does not guarantee future results.{' '}
               <a href="/terms" className="underline hover:text-[var(--color-text-secondary)]">Terms</a>
               {' · '}
               <a href="/privacy" className="underline hover:text-[var(--color-text-secondary)]">Privacy</a>
