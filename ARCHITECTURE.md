@@ -3,6 +3,15 @@
 > **Status:** Design Document v1.0  
 > **Date:** June 2, 2026  
 > **Scope:** Static site on Cloudflare Pages, data piped from Raspberry Pi, ticker chat via Cloudflare Worker
+>
+> **Update (July 2026):** the frontend has migrated from the vanilla-JS SPA described
+> in v1.0 to a **Next.js 15 static export** (`npm run build` → `out/`, configured in
+> the Pages dashboard), and the Worker now serves all `/api/*` routes on
+> maplegamma.com (chat plus auth, billing, and gated data). The sections below
+> describe the original v1.0 design and are retained as history — where they mention
+> `index.html`/`assets/js` or "no build step", the README's Architecture section is
+> the current source of truth. The legacy `index.html` + `assets/` tree still at the
+> repo root is unused and pending removal.
 
 ---
 
