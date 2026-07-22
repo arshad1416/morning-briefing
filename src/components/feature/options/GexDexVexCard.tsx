@@ -47,7 +47,6 @@ export function GexDexVexCard() {
     { key: 'dex', label: 'DEX', value: mode.total_dex },
     { key: 'vex', label: 'VEX', value: mode.total_vex },
   ];
-  const maxAbs = Math.max(...metrics.map((m) => Math.abs(m.value)));
   const dominant = metrics.reduce((a, b) => (Math.abs(b.value) > Math.abs(a.value) ? b : a));
 
   return (
@@ -89,7 +88,15 @@ export function GexDexVexCard() {
                 {formatCompact(m.value)}
               </p>
               <div className="relative z-10">
-                <SignBar value={m.value} max={maxAbs} />
+                {/* BUG FIX: was <SignBar value={m.value} max={maxAbs} /> with maxAbs
+                    shared across all three metrics. GEX ($), DEX (shares) and VEX
+                    (vega units) are different units at wildly different magnitudes
+                    (e.g. GEX ~2.7M vs VEX ~991M), so plotting GEX against a max set
+                    by VEX drew it as a sliver indistinguishable from zero. Each bar
+                    is now scaled to its own value, so it always shows a full-length
+                    bar in the correct direction — an honest sign indicator, since
+                    there is no valid shared scale across incompatible units. */}
+                <SignBar value={m.value} max={Math.abs(m.value)} />
               </div>
             </div>
           ))}

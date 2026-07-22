@@ -52,7 +52,14 @@ export function VixRegimeCard() {
             <span className="text-3xl font-bold" style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', color: vixColor }} data-numeric>
               {vix.toFixed(2)}
             </span>
-            <span className="ml-2 text-sm" style={{ color: vixChange < 0 ? 'var(--color-bear)' : 'var(--color-bull)' }}>
+            {/* BUG FIX (DATA-BUGS-2026-07-22, MEDIUM, VixRegimeCard.tsx:51): this
+                colour test was inverted — a rising VIX (more fear, bad for
+                stocks) was painted bull-green and a falling VIX (less fear,
+                good for stocks) was painted bear-red, backwards under either
+                convention and contradicting the regime logic just above,
+                which treats a high VIX as bearish. Swapped so a rise is red
+                and a fall is green, matching the regime chip beside it. */}
+            <span className="ml-2 text-sm" style={{ color: vixChange < 0 ? 'var(--color-bull)' : 'var(--color-bear)' }}>
               {vixChange > 0 ? '▲' : '▼'} {Math.abs(vixChange).toFixed(2)}%
             </span>
             {/* Names both numbers on the line. The earlier "Change in the VIX

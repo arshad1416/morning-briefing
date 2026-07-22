@@ -22,7 +22,24 @@ const TAPE_TERMS: Record<string, string> = {
 
 function tapeHint(label: string): string | undefined {
   const term = TAPE_TERMS[label];
-  return term ? lookup(term)?.plain : undefined;
+  const base = term ? lookup(term)?.plain : undefined;
+  if (!base) return undefined;
+  // BUG FIX: change_pct on every entry in market_summary.indices is a
+  // relative percent change of that entry's own value, same as every other
+  // index here (an archived reading of ten_year_yield 4.6 with change_pct
+  // 1.32 would be a ~132pp one-day move read as points — essentially
+  // impossible for a bond yield, but a plausible ~0.06pp move read as a
+  // relative percent). That's the normal meaning for a price ("S&P 500 up
+  // 0.04%"), but "10Y Yield" is already itself a percentage, so the same
+  // math applied to it produces a confusing result: "▲ +0.22%" beside
+  // "4.64%" reads like the rate jumped 0.22 percentage points (to 4.86%),
+  // when it actually means the 4.64 moved by 0.22% of itself (about 0.01
+  // points). Spell that out since the tape strip has no room to show it
+  // inline.
+  if (label === '10Y Yield') {
+    return `${base} The % change shown is a relative move in the yield itself, not a move in percentage points.`;
+  }
+  return base;
 }
 
 interface TickerItem {
@@ -99,7 +116,14 @@ export function TickerTape() {
     // VIX is already an entry in indices — no separate market_summary.vix item.
     ...data.market_summary.indices.map((idx) => ({
       label: idx.ticker,
-      value: formatNumber(idx.price, idx.price >= 1000 ? 0 : 2),
+      // BUG FIX: "10Y Yield" is a pseudo-index — its `price` field IS the
+      // yield itself (already a percentage rate), not a price level. The
+      // generic index-level formatting dropped the %, so it read as a bare
+      // "4.64" next to real index points in the thousands. The archive page
+      // prints this same field as "4.64%" — match that here.
+      value: idx.ticker === '10Y Yield'
+        ? `${formatNumber(idx.price, 2)}%`
+        : formatNumber(idx.price, idx.price >= 1000 ? 0 : 2),
       changePct: idx.change_pct,
     })),
     ...data.market_summary.fx_rates.map((fx) => ({

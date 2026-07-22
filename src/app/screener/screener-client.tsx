@@ -87,7 +87,12 @@ function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
     const score = t.score ?? 0;
     if (score < f.scoreMin || score > f.scoreMax) return false;
     if (f.mcap) {
-      const b = (t.marketCap ?? 0) / 1e9;
+      // Was (t.marketCap ?? 0) / 1e9, which silently coerced a MISSING
+      // market cap to 0 and dropped the row into the smallest bucket
+      // ("Under 2 billion") as if that were a measured value. A row with no
+      // market-cap data now falls out of every explicit bucket instead.
+      if (t.marketCap == null) return false;
+      const b = t.marketCap / 1e9;
       if (f.mcap === '0-2B' && b > 2) return false;
       if (f.mcap === '2B-10B' && (b < 2 || b > 10)) return false;
       if (f.mcap === '10B-200B' && (b < 10 || b > 200)) return false;
@@ -160,6 +165,17 @@ const fmtPct = (v: number | null | undefined) =>
 const changeColor = (v: number | null | undefined) =>
   (v ?? 0) > 0 ? 'var(--color-bull)' : (v ?? 0) < 0 ? 'var(--color-bear)' : 'var(--color-text-secondary)';
 
+// Was always divided by 1e9 and suffixed "B", so a $4T mega-cap (the full
+// 659-ticker universe spans well past that) rendered as "4000.0B" instead of
+// switching to trillions. Note this does NOT fix the separate currency issue:
+// marketCap carries no currency field, so TSX (.TO) rows report CAD figures
+// through the same number as USD rows with no way to tell them apart from
+// this file alone — that needs a currency field from the generator.
+const fmtMarketCap = (v: number | null | undefined) => {
+  if (v == null) return '—';
+  return v >= 1e12 ? `${fmtPrice(v / 1e12, 2)}T` : `${fmtPrice(v / 1e9, 1)}B`;
+};
+
 // Was a loose substring regex (/over|bear|.../) tested against the raw signal
 // key — "over" matched inside "oversold_rsi", so RSI < 35 (+2, the single
 // largest BULLISH contributor to the score) was painted red. Signal keys are
@@ -218,7 +234,21 @@ function Field({ label, children }: { label: React.ReactNode; children: React.Re
   );
 }
 
-function StatCard({ label, value, color }: { label: string; value: React.ReactNode; color?: string }) {
+// `caption` is optional, small print under the value. Added so a stat that is
+// computed on the Pi across the whole scanned universe — and does not move
+// when the user changes the filters below — can say so, instead of sitting
+// next to a filtered, sortable table with no denominator or scope note at all.
+function StatCard({
+  label,
+  value,
+  color,
+  caption,
+}: {
+  label: string;
+  value: React.ReactNode;
+  color?: string;
+  caption?: string;
+}) {
   return (
     <div
       className="rounded-[var(--radius-tile)] border p-4"
@@ -230,6 +260,9 @@ function StatCard({ label, value, color }: { label: string; value: React.ReactNo
       <p className="mt-1 text-2xl font-bold text-[var(--color-text-primary)]" data-numeric style={color ? { color } : undefined}>
         {value}
       </p>
+      {caption && (
+        <p className="mt-1 text-[11px] leading-snug text-[var(--color-text-tertiary)]">{caption}</p>
+      )}
     </div>
   );
 }
@@ -319,7 +352,7 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
         {t.pe != null ? t.pe.toFixed(1) : '—'}
       </td>
       <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
-        {t.marketCap ? `${fmtPrice(t.marketCap / 1e9, 1)}B` : '—'}
+        {fmtMarketCap(t.marketCap)}
       </td>
       <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
         {t.divYield != null && t.divYield > 0 ? `${t.divYield.toFixed(2)}%` : '—'}
@@ -327,8 +360,14 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
       <td
         className="px-3 py-2 text-right font-medium"
         data-numeric
+        // Was rsi < 30 -> bear-red, rsi > 70 -> bull-green — backwards from
+        // compute_score(), which treats RSI under 35 (oversold_rsi) as its
+        // single largest BULLISH input and anything over 65 (extended_rsi /
+        // overbought_rsi) as bearish. Thresholds and colours now match the
+        // score's own bands (see SIGNAL_LABELS above) instead of contradicting
+        // the "Why This Score" chips in the last column of this same row.
         style={{
-          color: rsi == null ? 'var(--color-text-secondary)' : rsi < 30 ? 'var(--color-bear)' : rsi > 70 ? 'var(--color-bull)' : 'var(--color-text-secondary)',
+          color: rsi == null ? 'var(--color-text-secondary)' : rsi < 35 ? 'var(--color-bull)' : rsi > 65 ? 'var(--color-bear)' : 'var(--color-text-secondary)',
         }}
       >
         {rsi != null ? rsi.toFixed(1) : '—'}
@@ -523,10 +562,15 @@ export function ScreenerClient() {
         <p className="relative z-10 mt-2 text-sm text-[var(--color-text-secondary)]">
           Filter and sort the five lists we scan: the S&amp;P 500, the TSX 60, and our tech-and-growth,
           high-dividend and fixed-income-and-commodities watchlists.{isLite ? ' The public preview below shows the eight highest-scoring of them. ' : ' '}
-          Each name carries a 1–10 score built from five checks: its{' '}
+          {/* Six, not five: the analyst-rating check used to compare against
+              uppercase literals while the source ships lowercase, so it never
+              fired and only five checks could contribute. That comparison is
+              fixed in generate-screener-data.py, so the sixth now counts. */}
+          Each name carries a 1–10 score built from six checks: its{' '}
           <InfoTip term="rsi">RSI</InfoTip> reading, its price against the 20- and
-          50-day average prices, how heavily it traded, where it sits in its 52-week range, and its{' '}
-          <InfoTip term="p_e">price-to-earnings ratio</InfoTip>. Rebuilt each trading day from a snapshot
+          50-day average prices, how heavily it traded, where it sits in its 52-week range, its{' '}
+          <InfoTip term="p_e">price-to-earnings ratio</InfoTip>, and what{' '}
+          <InfoTip term="analyst_ratings">analysts</InfoTip> rate it. Rebuilt each trading day from a snapshot
           taken during market hours — so these are neither live prices nor closing prices — and the same
           snapshot stays up until the next run, so check the timestamp under the results for when it was
           taken.
@@ -542,16 +586,36 @@ export function ScreenerClient() {
         />
       )}
 
-      {/* Summary stats */}
+      {/* Summary stats. Avg Score / Up / Down on the Day are precomputed on
+          the Pi across the entire scanned universe (market_summary) — they
+          had no denominator or scope note, so a beginner could easily read
+          them as describing the filtered table beneath, when they neither
+          respond to any filter here nor (in the public preview) describe
+          rows the visitor can even see. Captions below make the scope
+          explicit instead of leaving it to a code comment nobody reads. */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard label="Scanned" value={data?.ticker_count ?? '—'} />
-        <StatCard label="Avg Score" value={ms?.avg_score != null ? ms.avg_score.toFixed(1) : '—'} />
+        <StatCard
+          label="Avg Score"
+          value={ms?.avg_score != null ? ms.avg_score.toFixed(1) : '—'}
+          caption="All scanned tickers — not just what's shown below"
+        />
         {/* Counts of change_pct > 0 / < 0 in a mid-session snapshot: these names
             are up or down against the previous close, not against a close of
-            their own. Both counts cover the whole scan, not just the rows the
-            table happens to show. */}
-        <StatCard label="Up on the Day" value={ms?.green_count ?? '—'} color="var(--color-bull)" />
-        <StatCard label="Down on the Day" value={ms?.red_count ?? '—'} color="var(--color-bear)" />
+            their own. green_count + red_count need not sum to Scanned — a
+            flat (unchanged) ticker counts toward neither. */}
+        <StatCard
+          label="Up on the Day"
+          value={ms?.green_count ?? '—'}
+          color="var(--color-bull)"
+          caption="All scanned tickers; flat names count in neither"
+        />
+        <StatCard
+          label="Down on the Day"
+          value={ms?.red_count ?? '—'}
+          color="var(--color-bear)"
+          caption="All scanned tickers; flat names count in neither"
+        />
       </div>
 
       {/* Filters */}

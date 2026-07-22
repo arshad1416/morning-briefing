@@ -550,6 +550,21 @@ def main():
         })
     
     # Compute portfolio stats from actual positions
+    # NOT FIXED HERE (see DATA-BUGS-2026-07-22.md, MEDIUM, this file:553):
+    # this sums per-share entry_price with no quantity multiplier — a
+    # "1 share per position" shadow portfolio. The deployed Pi copy at
+    # ~/.hermes/scripts/push_dashboard.py was fixed 2026-07-21 to
+    # quantity-scale invested/market_value from ledger `quantity` and
+    # `entry_value` fields (see project memory:
+    # paper-trading-ledger-semantics.md), so production is NOT affected by
+    # this. Left unfixed in THIS repo copy because the ledger schema can't
+    # be verified from here (gated R2 file, no Pi access permitted in this
+    # task) and this script's realized_pnl is independently reconstructed
+    # via yfinance closes rather than the ledger cash-identity the Pi fix
+    # relies on — patching just `invested` here without also verifying
+    # those other paths would risk a mismatched, guessed-at "fix" instead
+    # of just a stale one. Do not scp this file to the Pi; it would
+    # regress the already-fixed production script.
     invested = round(sum(p['entry_price'] for p in positions), 2)
     unrealized_pnl = round(sum(p['current_price'] - p['entry_price'] for p in positions), 2)
     total_pnl_val = round(realized_pnl + unrealized_pnl, 2)

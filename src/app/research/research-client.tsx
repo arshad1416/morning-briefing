@@ -940,6 +940,21 @@ function NewsTab() {
   );
 }
 
+// Bug fix: wsb and stocks are classified with different vocabularies in the source data
+// (wsb: BULLISH/BEARISH/MIXED; stocks: CONSTRUCTIVE/CAUTIOUS/BALANCED — it never contains
+// the literal word BEARISH). The badge used to test only for that one substring, so the
+// stocks card was hard-wired to always render 'Bullish'. Map whichever classification word
+// the data actually bolds to a tone instead.
+const SENTIMENT_TONE: Record<string, 'bull' | 'bear' | 'caution'> = {
+  BULLISH: 'bull',
+  CONSTRUCTIVE: 'bull',
+  BEARISH: 'bear',
+  CRITICAL: 'bear',
+  MIXED: 'caution',
+  BALANCED: 'caution',
+  CAUTIOUS: 'caution',
+};
+
 function SentimentTab() {
   const reddit = usePublic<Any>('reddit', '/data/reddit-sentiment.json');
   const d = reddit.data;
@@ -958,11 +973,14 @@ function SentimentTab() {
         {([['wsb', 'r/wallstreetbets — Reddit forum'], ['stocks', 'r/stocks — Reddit forum']] as const).map(([key, label]) => {
           const src = d[key];
           if (!src) return null;
-          const bearish = String(src.sentiment_summary || '').includes('BEARISH');
+          const summary = String(src.sentiment_summary || '');
+          const sentimentWord = summary.match(/\*\*([A-Z]+)\*\*/)?.[1];
+          const tone: 'bull' | 'bear' | 'caution' = sentimentWord ? SENTIMENT_TONE[sentimentWord] ?? 'caution' : 'caution';
+          const badgeText = sentimentWord ? sentimentWord.charAt(0) + sentimentWord.slice(1).toLowerCase() : 'Unclear';
           return (
             <Card key={key} title={label}>
             <div className="mb-2">
-              <Badge tone={bearish ? 'bear' : 'bull'}>{bearish ? 'Bearish' : 'Bullish'}</Badge>
+              <Badge tone={tone}>{badgeText}</Badge>
             </div>
             {src.sentiment_summary && (
               <p className="mb-3 whitespace-pre-wrap text-sm leading-relaxed text-[var(--color-text-secondary)]">

@@ -8,7 +8,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import fs from 'node:fs';
 import path from 'node:path';
-import { InfoTip } from '@/components/primitives';
+import { InfoTip, PlainLabel } from '@/components/primitives';
 import type { GlossaryTerm } from '@/lib/glossary';
 
 export const dynamicParams = false;
@@ -159,6 +159,23 @@ export default async function BriefingPage({ params }: { params: Promise<{ date:
   const older = i >= 0 && i < dates.length - 1 ? dates[i + 1] : null;
 
   const indices: Any[] = d?.market_summary?.indices ?? [];
+  // BUG FIX: VIX and 10Y Yield ride along in the `indices` array as
+  // pseudo-index rows, so they used to go through the same "index level"
+  // formatting as a real index. That gave the 10-year yield a bare "4.6"
+  // with no percent sign (it is a rate — the /archive index page prints the
+  // identical market_summary.ten_year_yield field as "4.6%"), and its
+  // change_pct is a RELATIVE percent change of the yield, not a move in
+  // percentage points (+1.32% here is about +0.06 percentage points, i.e.
+  // "6bps"), so next to a bare level it reads as a 1.32-point move. Neither
+  // row has a correctly-scaled change figure in this data, so — matching how
+  // /archive's index page already handles the same two fields — the real
+  // indices are rendered from `indices` as before, and VIX / 10Y Yield are
+  // rendered separately from the scalar market_summary.vix /
+  // .ten_year_yield fields with their own unit and a dash for Change rather
+  // than a misleading percent.
+  const coreIndices = indices.filter((x: Any) => !(x.ticker in ROW_TERMS));
+  const vix = d?.market_summary?.vix;
+  const tenYearYield = d?.market_summary?.ten_year_yield;
   const narrative = narrativeText(d);
   const geo: Any[] = (d?.geopolitical ?? []).slice(0, 6);
   const setups: Any[] = (d?.premarket_top_setups ?? []).slice(0, 6);
@@ -202,7 +219,7 @@ export default async function BriefingPage({ params }: { params: Promise<{ date:
         </p>
       </header>
 
-      {indices.length > 0 && (
+      {(coreIndices.length > 0 || vix != null || tenYearYield != null) && (
         <Section title="Market Snapshot">
           <div className="overflow-x-auto rounded-[var(--radius-tile)] border" style={{ borderColor: 'var(--color-border-subtle)' }}>
             <table className="w-full text-sm" style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}>
@@ -217,21 +234,35 @@ export default async function BriefingPage({ params }: { params: Promise<{ date:
                 </tr>
               </thead>
               <tbody>
-                {indices.map((x: Any) => (
+                {coreIndices.map((x: Any) => (
                   <tr key={x.ticker} className="border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
-                    <td className="px-3 py-2 text-[var(--color-text-primary)]">
-                      {ROW_TERMS[x.ticker] ? (
-                        <InfoTip term={ROW_TERMS[x.ticker]}>{x.ticker}</InfoTip>
-                      ) : (
-                        x.ticker
-                      )}
-                    </td>
+                    <td className="px-3 py-2 text-[var(--color-text-primary)]">{x.ticker}</td>
                     <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]">{Number(x.price).toLocaleString('en-US', { maximumFractionDigits: 2 })}</td>
                     <td className="px-3 py-2 text-right" style={{ color: x.change_pct >= 0 ? 'var(--color-bull)' : 'var(--color-bear)' }}>
                       {x.change_pct >= 0 ? '+' : ''}{Number(x.change_pct).toFixed(2)}%
                     </td>
                   </tr>
                 ))}
+                {vix != null && (
+                  <tr className="border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
+                    <td className="px-3 py-2 text-[var(--color-text-primary)]">
+                      <InfoTip term={ROW_TERMS.VIX}>VIX</InfoTip>
+                      <PlainLabel term={ROW_TERMS.VIX} />
+                    </td>
+                    <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]">{Number(vix).toLocaleString('en-US', { maximumFractionDigits: 2 })}</td>
+                    <td className="px-3 py-2 text-right text-[var(--color-text-tertiary)]">—</td>
+                  </tr>
+                )}
+                {tenYearYield != null && (
+                  <tr className="border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
+                    <td className="px-3 py-2 text-[var(--color-text-primary)]">
+                      <InfoTip term={ROW_TERMS['10Y Yield']}>10Y Yield</InfoTip>
+                      <PlainLabel term={ROW_TERMS['10Y Yield']} />
+                    </td>
+                    <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]">{Number(tenYearYield).toFixed(2)}%</td>
+                    <td className="px-3 py-2 text-right text-[var(--color-text-tertiary)]">—</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

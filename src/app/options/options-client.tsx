@@ -20,7 +20,17 @@ function OptionsFlowTable() {
 
   if (!mode) return null;
 
-  const topStrikes = mode.strikes.slice(0, 10);
+  // BUG FIX: was mode.strikes.slice(0, 10) — strikes[] is in ascending-strike
+  // order (see the schema transform in lib/schemas/market.ts), so this always
+  // rendered the ten LOWEST strikes regardless of size. On the current chain
+  // that meant nine of ten rows were puts and the single largest-exposure
+  // strike (750, the biggest |GEX| on the chain) never appeared. Rank by
+  // |gex| to pick the ten rows that actually matter, then restore ascending-
+  // strike order so the table still reads top-to-bottom as a price ladder.
+  const topStrikes = [...mode.strikes]
+    .sort((a, b) => Math.abs(b.gex) - Math.abs(a.gex))
+    .slice(0, 10)
+    .sort((a, b) => a.strike - b.strike);
 
   return (
     <>
@@ -34,9 +44,11 @@ function OptionsFlowTable() {
         <InfoTip term="put">put</InfoTip> leg, which profits if it falls. GEX is the hedging
         exposure for that leg on its own. <InfoTip term="oi">OI</InfoTip>, DEX and VEX — contracts
         still open, the directional lean and the volatility exposure — are combined call + put
-        figures for the whole strike, listed once per strike, so the strike&rsquo;s other leg shows
-        zero. This is a slice of the option chain rather than a ranking, taken from a periodic
-        snapshot of open interest — not live order flow.
+        figures for the whole strike, so when a strike shows both a call row and a put row here,
+        those three columns repeat the same number on both — the source data does not split them
+        by leg. These are the ten rows with the largest individual gamma exposure on the chain (a
+        strike can appear twice if both its call and put make the cut), sorted back into price
+        order below — a periodic snapshot of open interest, not live order flow.
       </p>
       <div className="overflow-x-auto">
         <table className="w-full text-sm" style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}>
@@ -140,9 +152,11 @@ export function OptionsClient() {
 }
 
 // Renamed from "Options Flow — Top Strikes": there is no order-flow or volume
-// data in this table (every column is derived from static open interest), and
-// the rows are not ranked — the component slices the first ten of a strike-
-// ordered array, so "Top" was wrong on both counts.
+// data in this table — every column is derived from static open interest, not
+// live trades. (The rows themselves ARE now ranked by |GEX| — see the BUG FIX
+// comment on topStrikes in OptionsFlowTable above — just displayed back in
+// strike order, so "Top Strikes" was wrong about the data source, not the
+// ranking.)
 const FlowCard = (
   <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)] overflow-hidden">
     <div className="px-4 py-3 border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>

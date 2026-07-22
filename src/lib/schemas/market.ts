@@ -245,6 +245,16 @@ export const GexDataSchema = MapleGammaFileSchema.transform((f) => {
     } as MgBucket);
   return {
     generated_at: f.generated_at,
+    // NOT A BUG (verified against data/maplegamma-data.json): the source file
+    // keys this whole object "tickers.SPX", but every price in it is SPY-scale
+    // (current_price ~748, gamma_flip ~751, strikes 700-800 — an S&P 500 print
+    // is ~7,443, ten times higher). 'SPY' is hardcoded here because it matches
+    // what the values actually are, not what the upstream JSON key claims. Do
+    // NOT "fix" this by reading the key name or changing the literal to 'SPX'
+    // — that would make every consumer (GexDexVexCard, GammaWallChart, the
+    // /options page metadata, which was corrected SPX->SPY to match this) wrong
+    // again. The real defect is the JSON key itself, written by the Pi-side
+    // pipeline outside this repo's src/ — not fixable from this schema.
     ticker: 'SPY',
     price_source: 'yfinance',
     modes: {

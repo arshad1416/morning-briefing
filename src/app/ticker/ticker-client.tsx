@@ -116,7 +116,14 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
 
   const price = t.price ?? scan.price;
   const changePct = t.change_pct ?? scan.change_pct;
-  const score = t.council_analysis?.score ?? scan.score;
+  // BUG FIX: this used to fall back to scan.score (latest.json
+  // premarket_top_setups) whenever a ticker had no detail file / no
+  // council_analysis. That fallback is a different, unclamped scale — live
+  // values have gone as high as 11 — while council_analysis.score is always
+  // clamped to 1-10 by compute_score(). Rendering both under one "Score"
+  // label made the number meaningless, so the card now only shows the
+  // clamped score and simply does not render for tickers that lack one.
+  const score = t.council_analysis?.score;
   const verdict = t.council_analysis?.verdict ?? scan.council_verdict;
   const tech = t.technical;
   const f = t.fundamentals;
@@ -152,7 +159,7 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
                 ) : undefined
               }
             />
-            {score != null && <StatCard label="Score" value={Number(score).toFixed(1)} />}
+            {score != null && <StatCard label={<TermLabel term="score">Score</TermLabel>} value={Number(score).toFixed(1)} />}
             {verdict && (
               <StatCard
                 label="AI Verdict"

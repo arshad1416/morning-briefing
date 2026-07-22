@@ -228,26 +228,35 @@ function Validation({ data }: { data: Any }) {
   const bestWR = parseMetric(s.best_win_rate);
   const bestPF = parseMetric(s.best_profit_factor);
 
-  // Normalize walk-forward v2 → windows + summary aggregates
+  // FIX (MEDIUM data bug): this used to read a top-level `windows` array that
+  // walk_forward_v2.json does not carry — WalkForwardTile.tsx and
+  // research-client.tsx's BacktestTab both parse the very same file via a
+  // `summary` record keyed by strategy name (WalkForwardTile even enforces
+  // that shape with a zod schema), so the `windows` lookup here always found
+  // nothing and this card silently fell back to "Not yet run" even when real
+  // walk-forward data was available elsewhere on the site. Now reads
+  // `summary` like its two siblings and aggregates per strategy instead of
+  // per (nonexistent) window.
   const wf = (() => {
-    const w = wfq.data;
-    if (!w?.windows?.length) return null;
-    const windows = w.windows.map((win: Any) => {
-      const strats = win.results || {};
-      const keys = Object.keys(strats);
-      const avgOOS = keys.reduce((sum, k) => sum + (strats[k].oos_sharpe || 0), 0) / (keys.length || 1);
-      const avgDeg = keys.reduce((sum, k) => sum + (strats[k].oos_degradation_pct || 0), 0) / (keys.length || 1);
-      return { pass: avgDeg < 30 && avgOOS > 0, oos: avgOOS, deg: avgDeg };
+    const summary = wfq.data?.summary;
+    if (!summary || typeof summary !== 'object') return null;
+    const keys = Object.keys(summary);
+    if (!keys.length) return null;
+    const strategies = keys.map((k) => {
+      const st = summary[k] || {};
+      const oos = st.avg_oos_sharpe ?? 0;
+      const deg = st.avg_degradation_pct ?? 0;
+      return { pass: deg < 30 && oos > 0, oos, deg };
     });
-    const good = windows.filter((x: Any) => x.pass).length;
-    const avgOOS = windows.reduce((sum: number, x: Any) => sum + x.oos, 0) / windows.length;
-    const avgDeg = windows.reduce((sum: number, x: Any) => sum + x.deg, 0) / windows.length;
+    const good = strategies.filter((x: Any) => x.pass).length;
+    const avgOOS = strategies.reduce((sum: number, x: Any) => sum + x.oos, 0) / strategies.length;
+    const avgDeg = strategies.reduce((sum: number, x: Any) => sum + x.deg, 0) / strategies.length;
     return {
-      count: w.parameters?.windows ?? windows.length,
+      count: strategies.length,
       good,
       avgOOS,
       avgDeg,
-      robust: good >= Math.ceil(windows.length * 0.6),
+      robust: good >= Math.ceil(strategies.length * 0.6),
     };
   })();
 
@@ -267,13 +276,18 @@ function Validation({ data }: { data: Any }) {
   // Profit Factor (already its own check above) is the other real figure
   // that survives.
   const checks: Array<{ id: string; label: React.ReactNode; pass: boolean; value: string; detail: string }> = [
-    { id: 'sample', label: <InfoTip term="sample_size">Sample Size</InfoTip>, pass: totalTrades >= 100, value: `${(totalTrades / 1000).toFixed(0)}K trades`, detail: totalTrades >= 500 ? 'Far more than the 100 trades we treat as a minimum' : 'Need 100+ trades' },
+    // FIX (MEDIUM data bug): totalTrades/1000 rounded to 0 decimals printed
+    // "0K trades" for any total under 500 — including totals that already
+    // pass the >= 100 threshold, so a green tick could sit next to "0K
+    // trades". Only abbreviate to "K" once there is enough to round to
+    // without losing the number entirely.
+    { id: 'sample', label: <InfoTip term="sample_size">Sample Size</InfoTip>, pass: totalTrades >= 100, value: totalTrades >= 1000 ? `${(totalTrades / 1000).toFixed(1)}K trades` : `${totalTrades.toLocaleString()} trades`, detail: totalTrades >= 500 ? 'Far more than the 100 trades we treat as a minimum' : 'Need 100+ trades' },
     { id: 'pf', label: <InfoTip term="profit_factor">Profit Factor</InfoTip>, pass: bestPF >= 1.5, value: bestPF.toFixed(2), detail: bestPF >= 2 ? 'Strong — won more than twice what it lost' : bestPF >= 1.5 ? 'Meets our 1.5 threshold' : 'Below 1.5' },
     { id: 'cycles', label: 'Market Cycles', pass: dateRange.includes('2000'), value: dateRange, detail: 'The test window should reach back to 2000, so it includes the 2008 and 2020 crashes' },
     { id: 'win-rate', label: <InfoTip term="win_rate">Win Rate</InfoTip>, pass: winRate >= 0.45, value: `${bestWR}%`, detail: winRate >= 0.45 ? 'Strong share of trades closed in profit' : 'Below the 45% we look for' },
     { id: 'diversification', label: 'Diversification', pass: tickers >= 20, value: `${tickers} tickers`, detail: tickers >= 50 ? 'Spread across plenty of different stocks' : 'Adequate spread across stocks' },
     wf
-      ? { id: 'wf', label: <InfoTip term="walk_forward">Walk-Forward</InfoTip>, pass: wf.good >= Math.ceil(wf.count * 0.7), value: `${wf.good}/${wf.count} windows pass`, detail: `Scored ${wf.avgOOS.toFixed(2)} on data it had never seen, ${wf.avgDeg.toFixed(1)}% weaker than on the data it was tuned on · ${wf.robust ? 'holds up as market conditions change' : 'fades more than we would like'}` }
+      ? { id: 'wf', label: <InfoTip term="walk_forward">Walk-Forward</InfoTip>, pass: wf.good >= Math.ceil(wf.count * 0.7), value: `${wf.good}/${wf.count} strategies pass`, detail: `Scored ${wf.avgOOS.toFixed(2)} on data it had never seen, ${wf.avgDeg.toFixed(1)}% weaker than on the data it was tuned on · ${wf.robust ? 'holds up as market conditions change' : 'fades more than we would like'}` }
       : { id: 'wf', label: <InfoTip term="walk_forward">Walk-Forward</InfoTip>, pass: false, value: 'Not yet run', detail: 'Will check the settings still work when market conditions change' },
   ];
   const passed = checks.filter((c) => c.pass).length;

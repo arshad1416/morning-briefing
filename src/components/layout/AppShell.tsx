@@ -225,7 +225,7 @@ function isNavActive(pathname: string, href: string) {
 }
 
 const PILL_CAVEAT =
-  'Rough guide to US market hours. It is worked out from a fixed weekday window on your device’s clock, not a live exchange feed, so it can say “open” up to about an hour and a half before the real 9:30am ET open and for about an hour after the 4pm ET close. It also does not know about market holidays or early closes, so on a holiday it will show open all day.';
+  'Rough guide to US market hours, based on the standard 9:30am-4pm ET session. It does not know about market holidays or early closes, so on a holiday it will show open all day.';
 
 function MarketStatusPill() {
   // Market hours derive from the clock; compute only after mount so the
@@ -247,9 +247,27 @@ function MarketStatusPill() {
     );
   }
 
-  const day = now.getUTCDay();
-  const hour = now.getUTCHours();
-  const isOpen = day >= 1 && day <= 5 && hour >= 13 && hour < 21; // 9:30-4 ET approx
+  // BUG FIX: this used to derive market hours from a fixed 13:00-21:00 UTC
+  // window ("9:30-4 ET approx"), which isn't DST-aware — UTC has no concept
+  // of ET's own EST/EDT offset shift, so the fixed window drifted by up to
+  // 90 minutes around the March/November clock changes (claiming "open" up
+  // to 90 minutes early in EST, or staying "open" an hour late in EDT).
+  // Asking Intl for the wall-clock time in America/New_York instead lets
+  // the IANA tz database handle EST/EDT for us, so the window always lines
+  // up with the real 9:30am-4:00pm ET session. Market holidays and early
+  // closes remain unknown — see PILL_CAVEAT.
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    weekday: 'short',
+    hour: 'numeric',
+    minute: 'numeric',
+    hourCycle: 'h23',
+  }).formatToParts(now);
+  const part = (type: string) => parts.find((p) => p.type === type)?.value ?? '';
+  const weekday = part('weekday');
+  const minutesET = Number(part('hour')) * 60 + Number(part('minute'));
+  const isWeekday = weekday !== 'Sat' && weekday !== 'Sun';
+  const isOpen = isWeekday && minutesET >= 9 * 60 + 30 && minutesET < 16 * 60;
 
   return (
     <span
@@ -259,11 +277,10 @@ function MarketStatusPill() {
         color: isOpen ? 'var(--color-bull)' : 'var(--color-text-tertiary)',
       }}
       // Says WHICH market (the tape below it also carries Toronto and the
-      // Canadian dollar) and states the real size of the error. The window is a
-      // fixed 13:00–21:00 UTC weekday block off your own clock, so it always
-      // spans MORE than the true 09:30–16:00 ET session: in winter it flips to
-      // "open" 90 minutes early, in summer it stays "open" an hour past the
-      // close, and on a holiday it shows open all day.
+      // Canadian dollar). The DST drift this comment used to warn about is
+      // fixed above (real ET wall-clock time via Intl, not a fixed UTC
+      // window) — the one caveat left is that holidays and early closes
+      // aren't known, so on those days it still shows open all day.
       title={PILL_CAVEAT}
     >
       <span

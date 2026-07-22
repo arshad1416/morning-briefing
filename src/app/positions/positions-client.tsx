@@ -346,7 +346,15 @@ function PaperTab({ data }: { data: Any }) {
         )}
       </Card>
 
-      {/* Option positions */}
+      {/* Option positions. "Premium Paid"/"Current Premium" render entry_price/
+          current_price straight — this is the correct convention (options
+          quote per-share/per-contract premium, not the ×100 contract cost),
+          so not a scaling bug. There is also no quantity/contract-multiplier
+          field anywhere in the pipeline to scale by: push_dashboard.py sets
+          option current_price = entry_price and hardcodes pnl: 0.0, so P&L
+          here is currently always zero regardless. A contract-cost column
+          would need a new field from the producer — a product decision, not
+          a copy fix. */}
       {optionPositions.length > 0 && (
         <Card title="My Option Positions">
           <div className="overflow-x-auto">
@@ -381,7 +389,19 @@ function PaperTab({ data }: { data: Any }) {
         </Card>
       )}
 
-      {/* Accuracy summary (Pro data — renders only when the gate lets it through) */}
+      {/* Accuracy summary (Pro data — renders only when the gate lets it through).
+          NOTE: acc?.overall is never truthy. accuracy.json is written by
+          pi-scripts/generate_prediction_accuracy.py, whose output object is
+          {generated_at, summary, expectancy, drawdown, slippage, per_strategy,
+          rolling_20} — there is no `overall` key and never has been, so this
+          card cannot render for anyone. Not repointed at the real keys here:
+          "Top 10 Avg WR", "Best Win Rate" and a ranked backtest table imply a
+          ranked ensemble this live-sim file doesn't contain, so there is no
+          honest 1:1 mapping from expectancy/per_strategy onto this copy —
+          inventing one risks the exact "wrong fix on a finance dashboard"
+          failure mode this task warns against. Needs a product decision
+          (repoint at prediction-engine.json's real backtest summary, or
+          remove the card), not a copy-level patch. */}
       {acc?.overall && (
         <Card title="Prediction Engine Accuracy">
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -392,6 +412,11 @@ function PaperTab({ data }: { data: Any }) {
           </div>
         </Card>
       )}
+      {/* Same defect as above: acc.top_performers does not exist on the real
+          accuracy.json shape (see note above) — per_strategy is the closest
+          real field, but it is live-sim per-strategy expectancy, not a
+          ranked backtest table, so relabelling it "Backtest Results" would
+          be false. Left unreached; see note above. */}
       {!!acc?.top_performers?.length && (
         <Card title={<>Best Strategies (<InfoTip term="backtest">Backtest</InfoTip> Results)</>}>
           <div className="overflow-x-auto">
