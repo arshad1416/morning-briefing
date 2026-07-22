@@ -46,14 +46,27 @@ function OptionsFlowTable() {
           </tr>
         </thead>
         <tbody>
-          {/* Pending rows use the same cell chrome as the loaded top-10 slice,
-              so pending → loaded is row-for-row height-identical (no shift). */}
+          {/* Ghost pending rows: same markup as the loaded top-10 slice with
+              transparent text, so pending → loaded is height-identical. */}
           {!topStrikes &&
             Array.from({ length: 10 }, (_, i) => (
-              <tr key={i} className="border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
-                {[0, 1, 2, 3, 4, 5].map((c) => (
-                  <td key={c} className="py-2 px-3">
-                    <div className="skeleton h-5" />
+              <tr key={i} className="border-b" style={{ borderColor: 'var(--color-border-subtle)' }} aria-hidden="true">
+                <td className="py-2 px-3" data-numeric>
+                  <span className="skeleton rounded text-transparent select-none">$000</span>
+                </td>
+                <td className="py-2 px-3">
+                  <span className="inline-flex px-1.5 py-0.5 rounded text-[10px] font-semibold tracking-wider border border-transparent skeleton text-transparent select-none">
+                    CALL
+                  </span>
+                </td>
+                {/* ghost widths approximate real values so auto table layout
+                    doesn't redistribute columns when data lands */}
+                <td className="py-2 px-3 text-right" data-numeric>
+                  <span className="skeleton rounded text-transparent select-none">00,000</span>
+                </td>
+                {[0, 1, 2].map((c) => (
+                  <td key={c} className="py-2 px-3 text-right" data-numeric>
+                    <span className="skeleton rounded text-transparent select-none">000.0M</span>
                   </td>
                 ))}
               </tr>
@@ -94,7 +107,10 @@ export function OptionsClient() {
 
   return (
     <div className="space-y-4">
-      {/* A1: Regime header */}
+      {/* A1: Regime header. The static build bakes 'neutral' and live data
+          may swap in a shorter sentence — an invisible sizer of the longest
+          sentence reserves the text block's height at every width, and the
+          chip gets a fixed min-width, so the swap never shifts the grid. */}
       <div
         className="relative overflow-hidden flex items-center gap-4 p-4 rounded-[var(--radius-tile)] border"
         style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
@@ -111,13 +127,18 @@ export function OptionsClient() {
                 : 'rgba(139,139,150,0.08)',
           }}
         />
-        <RegimeChip regime={regime} className="relative z-10" />
-        <p className="relative z-10 text-sm text-[var(--color-text-secondary)]">
-          {regime === 'bullish'
-            ? 'Dealer hedging is stabilizing — dips are likely to be bought.'
-            : regime === 'bearish'
-            ? 'Dealer hedging is destabilizing — moves may accelerate to the downside.'
-            : 'Dealer positioning is neutral — no strong directional bias from options flow.'}
+        <RegimeChip regime={regime} className="relative z-10 min-w-[104px] justify-center" />
+        <p className="relative z-10 flex-1 text-sm text-[var(--color-text-secondary)]">
+          <span aria-hidden="true" className="invisible block">
+            Dealer positioning is neutral — no strong directional bias from options flow.
+          </span>
+          <span className="absolute inset-0 flex items-center">
+            {regime === 'bullish'
+              ? 'Dealer hedging is stabilizing — dips are likely to be bought.'
+              : regime === 'bearish'
+                ? 'Dealer hedging is destabilizing — moves may accelerate to the downside.'
+                : 'Dealer positioning is neutral — no strong directional bias from options flow.'}
+          </span>
         </p>
       </div>
 

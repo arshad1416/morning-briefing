@@ -136,7 +136,14 @@ function LegendSpacer() {
 function ChartFrame({ loading }: { loading: boolean }) {
   return (
     <Surface span="hero">
-      <SurfaceHeader title="Gamma Wall" />
+      <SurfaceHeader
+        title="Gamma Wall"
+        right={
+          <span className="text-xs" aria-hidden="true">
+            <span className="skeleton rounded text-transparent select-none">00s ago</span>
+          </span>
+        }
+      />
       <div className="p-4" aria-busy={loading || undefined}>
         <LegendSpacer />
         <div className={FRAME}>
@@ -256,13 +263,16 @@ export function GammaWallChart() {
         right={
           <div className="flex items-center gap-2">
             <DataFreshness timestamp={data.generated_at} staleAfterMs={OPTIONS_STALE_MS} />
-            <span className="text-xs text-[var(--color-text-tertiary)]" style={{ fontFamily: 'var(--font-mono)' }}>
+            {/* hidden on phones so the header never wraps to a second line */}
+            <span className="hidden sm:inline text-xs text-[var(--color-text-tertiary)]" style={{ fontFamily: 'var(--font-mono)' }}>
               {mode.expiry_count} expiries
             </span>
           </div>
         }
       />
-      <div className="p-4">
+      {/* wrapRef spans the chart AND the mobile detail slot so tapping the
+          detail card doesn't count as tap-outside and dismiss the pin */}
+      <div className="p-4" ref={wrapRef}>
         {/* Legend / axis captions */}
         <div className="flex items-center justify-between mb-3 text-[10px] font-semibold uppercase tracking-[0.14em]">
           <span style={{ color: 'var(--color-bear)' }}>◀ Put GEX · resistance</span>
@@ -272,7 +282,7 @@ export function GammaWallChart() {
           <span style={{ color: 'var(--color-bull)' }}>Call GEX · support ▶</span>
         </div>
 
-        <div className={FRAME} ref={wrapRef}>
+        <div className={FRAME}>
           <svg viewBox={`0 0 ${g.W} ${H}`} className="w-full h-full" role="img" aria-label={`Gamma profile for ${data.ticker}: put and call gamma exposure by strike`}>
             {/* Zero-axis hairlines */}
             <line x1={CX - g.GUTTER / 2} y1={g.PAD - 8} x2={CX - g.GUTTER / 2} y2={H - g.PAD + 8} stroke="var(--color-border-default)" strokeWidth="1" />

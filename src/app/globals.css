@@ -33,10 +33,12 @@
   /* ---- Conviction gradient ---- */
   --gradient-conviction: linear-gradient(90deg, #FF4557 0%, #EAB308 50%, #10B981 100%);
 
-  /* ---- Type ---- */
-  --font-sans: "Space Grotesk", system-ui, -apple-system, sans-serif;
-  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
+  /* ---- Type ----
+     Faces come from next/font (layout.tsx) with size-adjusted fallbacks
+     baked into each variable. */
+  --font-sans: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, "Cascadia Mono", monospace;
 
   /* ---- Spacing & radius ---- */
   --radius-tile: 16px;

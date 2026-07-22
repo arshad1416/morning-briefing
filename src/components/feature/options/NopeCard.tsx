@@ -26,21 +26,29 @@ export function NopeCard() {
       </div>
       <div className="p-4">
         {isLoading || !data ? (
-          // Mirrors the loaded DOM (2-symbol grid + footnote) so load causes no shift.
+          // Ghost skeleton: the loaded markup with transparent text so heights
+          // match the loaded state exactly and the load causes no shift.
           <div aria-busy="true">
-            <div className="grid grid-cols-2 gap-4">
-              {[0, 1].map((i) => (
-                <div key={i}>
-                  <div className="skeleton h-4 w-16" />
-                  <div className="skeleton h-7 w-20 mt-0.5" />
-                  <div className="skeleton h-[15px] w-28 mt-1" />
+            <div className="grid grid-cols-2 gap-4" style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }} aria-hidden="true">
+              {['SPY', 'QQQ'].map((symbol) => (
+                <div key={symbol} className="min-w-0">
+                  <p className="text-xs">
+                    <span className="skeleton rounded text-transparent select-none">{symbol} NOPE</span>
+                  </p>
+                  <p className="text-xl font-bold mt-0.5">
+                    <span className="skeleton rounded text-transparent select-none">0.000</span>
+                  </p>
+                  <p className="text-[10px] mt-1">
+                    <span className="skeleton rounded text-transparent select-none">Fill 0.000 · 00.0M shares</span>
+                  </p>
                 </div>
               ))}
             </div>
-            <div className="mt-3 space-y-1">
-              <div className="skeleton h-[13px]" />
-              <div className="skeleton h-[13px] w-3/4" />
-            </div>
+            <p className="mt-3 text-[10px] leading-relaxed skeleton rounded text-transparent select-none" aria-hidden="true">
+              Net options pricing effect estimated from option volume delta against share volume.
+              Last calculation: pending.
+            </p>
+            <span className="sr-only">Loading NOPE data…</span>
           </div>
         ) : (
           <>
