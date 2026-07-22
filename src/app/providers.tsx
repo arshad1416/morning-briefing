@@ -12,9 +12,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
         defaultOptions: {
           queries: {
             staleTime: 30_000,
-            // 401/403 gate responses are deterministic — retrying them just
-            // burns Worker invocations for signed-out/under-tier users.
-            retry: (count, err) => !(err instanceof GateError) && count < 2,
+            // 401/403 gate responses (signin/upgrade) are deterministic —
+            // retrying them just burns Worker invocations for signed-out or
+            // under-tier users. GateError('unavailable') wraps transient
+            // failures (network blip, Worker 5xx) and retries normally.
+            retry: (count, err) =>
+              !(err instanceof GateError && err.kind !== 'unavailable') && count < 2,
             refetchOnWindowFocus: false,
           },
         },

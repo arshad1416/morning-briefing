@@ -30,7 +30,9 @@ function OptionsFlowTable() {
     return <p className="p-4 text-sm text-[var(--color-text-tertiary)]">Flow data isn’t available right now.</p>;
   }
 
-  const topStrikes = mode?.strikes.slice(0, 10);
+  // The feed lists strikes ascending by price, not by exposure — sort before
+  // slicing or "Top Strikes" would show the 10 deepest-OTM rows.
+  const topStrikes = mode ? [...mode.strikes].sort((a, b) => b.gex - a.gex).slice(0, 10) : undefined;
 
   return (
     <div className="overflow-x-auto" aria-busy={isPending || undefined}>

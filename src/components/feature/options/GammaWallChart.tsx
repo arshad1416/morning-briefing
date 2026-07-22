@@ -24,8 +24,8 @@ interface StrikeRow {
   put?: GexStrike;
 }
 
-// strikes[] arrives sorted by GEX magnitude — regroup by strike and build a
-// price ladder (highest strike on top).
+// strikes[] arrives in feed order (ascending by strike per expiry bucket) —
+// regroup by strike and build a price ladder (highest strike on top).
 function buildLadder(strikes: GexStrike[]): StrikeRow[] {
   const byStrike = new Map<number, StrikeRow>();
   for (const s of strikes) {
@@ -158,22 +158,30 @@ function ChartFrame({ loading }: { loading: boolean }) {
 
 export function GammaWallChart() {
   // Call-site polling override (factories stay frozen — see TickerTape). A
-  // 401/403 halts polling entirely: free users behind the gate overlay must
-  // not generate a Worker request every cycle. (Gate retries are already
-  // disabled globally in providers.tsx.)
+  // 401/403 (signin/upgrade) halts polling entirely: free users behind the
+  // gate overlay must not generate a Worker request every cycle. Transient
+  // 'unavailable' errors keep polling so the chart self-heals after a blip.
   const { data, error } = useQuery({
     ...gexDetailQuery(),
-    refetchInterval: (q) => (q.state.error instanceof GateError ? false : POLL.options.live),
+    refetchInterval: (q) => {
+      const err = q.state.error;
+      return err instanceof GateError && err.kind !== 'unavailable' ? false : POLL.options.live;
+    },
   });
   const reduce = useReducedMotion();
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  // 48rem, not 768px: Tailwind v4's md: is rem-based, and the FRAME/DETAIL_SLOT
+  // classes must flip at exactly the same width even with a non-16px root font.
+  const isDesktop = useMediaQuery('(min-width: 48rem)');
   const [active, setActive] = useState<{ strike: number; pinned: boolean } | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
-  // Stagger the bar entrance only on first mount; silent refetches morph in place.
+  // Stagger the bar entrance only on the first render that has data; silent
+  // refetches morph in place. (Keyed on data, not mount — on a cold load the
+  // component mounts in the skeleton state long before bars exist.)
   const firstRender = useRef(true);
+  const hasData = !!data;
   useEffect(() => {
-    firstRender.current = false;
-  }, []);
+    if (hasData) firstRender.current = false;
+  }, [hasData]);
 
   // Tap/click outside dismisses a pinned detail card.
   const pinned = active?.pinned ?? false;
@@ -199,8 +207,10 @@ export function GammaWallChart() {
   }, [hasActive]);
 
   if (!data) {
-    // Gated (non-pulsing frame behind the gate overlay) vs still loading.
-    return <ChartFrame loading={!(error instanceof GateError)} />;
+    // Hard-gated 401/403 gets a non-pulsing frame behind the gate overlay;
+    // loading and transient failures keep the pulse (polling continues).
+    const hardGated = error instanceof GateError && error.kind !== 'unavailable';
+    return <ChartFrame loading={!hardGated} />;
   }
 
   const g = isDesktop ? GEOM.desktop : GEOM.mobile;
@@ -248,6 +258,10 @@ export function GammaWallChart() {
 
   // Active row is keyed by strike so it survives window shifts on refetch.
   const activeRow = active ? (rows.find((r) => r.strike === active.strike) ?? null) : null;
+  // If a refetch (or breakpoint flip) dropped the pinned strike out of the
+  // window, release the pin — otherwise its `pinned` guard silently blocks
+  // hover on every row. Render-phase adjustment per React's sanctioned pattern.
+  if (active && !activeRow) setActive(null);
   const activeIdx = activeRow ? rows.indexOf(activeRow) : -1;
   // Pin the desktop tooltip opposite the dominant bar so it never covers it.
   const tooltipOnRight = activeRow ? (activeRow.put?.gex ?? 0) >= (activeRow.call?.gex ?? 0) : true;

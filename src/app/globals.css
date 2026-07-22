@@ -95,6 +95,9 @@ body {
 }
 .mg-table {
   font-size: var(--table-text);
+  /* match text-sm's ratio (the class these tables replaced) so converted
+     tables keep their exact pre-density row heights at comfortable */
+  line-height: calc(1.25 / 0.875);
 }
 .mg-table th {
   padding: var(--table-th-pad-y) var(--table-pad-x);

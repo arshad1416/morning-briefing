@@ -704,8 +704,11 @@ export function ScreenerClient() {
                   filtered.map((t) => <TickerRow key={t.ticker} t={t} />)
                 ) : (
                   <tr>
-                    <td colSpan={11} className="p-8 text-center text-[var(--color-text-tertiary)]">
-                      No tickers match your filters.
+                    {/* padding on an inner div — .mg-table td would override p-8 */}
+                    <td colSpan={11}>
+                      <div className="p-8 text-center text-[var(--color-text-tertiary)]">
+                        No tickers match your filters.
+                      </div>
                     </td>
                   </tr>
                 )}
