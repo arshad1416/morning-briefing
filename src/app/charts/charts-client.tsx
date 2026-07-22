@@ -1,6 +1,7 @@
 // app/charts/charts-client.tsx — TradingView-style candlestick charts, ported
-// from the legacy SPA. Candles + volume + EMA 20/50 + VWAP overlays, RSI and
-// ATR indicator panes, ticker search, timeframe toggle, theme-aware colors.
+// from the legacy SPA. Candles + volume + EMA 20/50 overlays (plus a session
+// VWAP overlay on the Daily bar size only — see calcVWAP), RSI and ATR
+// indicator panes, ticker search, timeframe toggle, theme-aware colors.
 //
 // Data: /api/data/charts/{TICKER}.json through the Worker gate (Pro tier).
 // lightweight-charts is bundled from npm — the CSP blocks CDN scripts.
@@ -80,10 +81,37 @@ function calcEMA(data: Bar[], period: number): Point[] {
   return out;
 }
 
+// A trading session is one calendar day. Bars carry either a 'YYYY-MM-DD'
+// string or a UTC-seconds timestamp (see `asTime` below) — reduce either to
+// that day's date so calcVWAP knows where one session ends and the next
+// begins.
+function sessionOf(t: Bar['time']): string {
+  return typeof t === 'number' ? new Date(t * 1000).toISOString().slice(0, 10) : t.slice(0, 10);
+}
+
+// BUG FIX: cumV/cumPV used to accumulate for the life of the array and never
+// reset, so this was really an "anchored VWAP" running from the first loaded
+// bar, not the session VWAP the label promises ("the average price paid so
+// far today" per the glossary). Reset the accumulators every time the bar's
+// calendar day changes so the line only ever reflects the current session.
+// Note: this dataset has one bar per calendar day even on the Daily
+// timeframe (no intraday prints), so the reset fires on every bar and the
+// value collapses to that day's own (high+low+close)/3 — which is exactly
+// correct, it's just what a session VWAP looks like when the only tick
+// available for the session is its own OHLCV summary. Callers must not
+// invoke this for Weekly/Monthly/Yearly bars, where a "session" is a whole
+// week/month/year and the result would no longer mean VWAP at all.
 function calcVWAP(data: Bar[]): Point[] {
   let cumV = 0;
   let cumPV = 0;
+  let session = '';
   return data.map((d) => {
+    const key = sessionOf(d.time);
+    if (key !== session) {
+      session = key;
+      cumV = 0;
+      cumPV = 0;
+    }
     const typical = (d.high + d.low + d.close) / 3;
     cumPV += typical * d.volume;
     cumV += d.volume;
@@ -182,10 +210,25 @@ function withAlpha(color: string, alpha: number): string {
 // lightweight-charts accepts 'YYYY-MM-DD' strings or UTC timestamps.
 const asTime = (t: Bar['time']) => (typeof t === 'number' ? (t as UTCTimestamp) : (t as string));
 
-function ChartPanes({ bars, theme, timeframeLabel }: { bars: Bar[]; theme: string; timeframeLabel: string }) {
+function ChartPanes({
+  bars,
+  theme,
+  timeframeLabel,
+  timeframe,
+}: {
+  bars: Bar[];
+  theme: string;
+  timeframeLabel: string;
+  timeframe: Timeframe;
+}) {
   const mainRef = useRef<HTMLDivElement>(null);
   const rsiRef = useRef<HTMLDivElement>(null);
   const atrRef = useRef<HTMLDivElement>(null);
+  // Session VWAP only means something on the finest bar size this app has —
+  // one bar per trading day. On Weekly/Monthly/Yearly a "session" would be a
+  // whole week/month/year, which isn't VWAP, so the line is hidden there
+  // rather than plotting something that pretends to be VWAP.
+  const isDaily = timeframe === '1D';
 
   useEffect(() => {
     if (!mainRef.current || !rsiRef.current || !atrRef.current || !bars.length) return;
@@ -248,7 +291,9 @@ function ChartPanes({ bars, theme, timeframeLabel }: { bars: Bar[]; theme: strin
 
     mkLine('#6AA9FF', 1).setData(asLineData(calcEMA(bars, 20)));
     mkLine('#C08BFF', 1).setData(asLineData(calcEMA(bars, 50)));
-    mkLine(accent, 1, LineStyle.Dashed).setData(asLineData(calcVWAP(bars)));
+    if (isDaily) {
+      mkLine(accent, 1, LineStyle.Dashed).setData(asLineData(calcVWAP(bars)));
+    }
 
     // ── RSI pane ──
     const rsi = createChart(rsiRef.current, {
@@ -293,11 +338,11 @@ function ChartPanes({ bars, theme, timeframeLabel }: { bars: Bar[]; theme: strin
     atr.timeScale().fitContent();
 
     return () => charts.forEach((c) => c.remove());
-  }, [bars, theme]);
+  }, [bars, theme, isDaily]);
 
   return (
     <div className="space-y-4">
-      <Pane label="Price · EMA 20 / EMA 50 / VWAP" legend>
+      <Pane label={pricePaneLabel(isDaily)} legend showVwap={isDaily}>
         <div ref={mainRef} className="h-[420px] w-full" />
       </Pane>
       <Pane label={<InfoTip term="rsi">RSI (14)</InfoTip>} note="Dashed guides at 70 and 30 — usually called overbought and oversold">
@@ -314,12 +359,38 @@ function ChartPanes({ bars, theme, timeframeLabel }: { bars: Bar[]; theme: strin
   );
 }
 
+// The price pane's own label: VWAP only ever names a real session VWAP on
+// Daily bars (see calcVWAP above), so it's dropped from the label — and the
+// glossary tooltip stays unwired — on Weekly/Monthly/Yearly, where the line
+// itself is hidden too.
+function pricePaneLabel(isDaily: boolean): React.ReactNode {
+  return isDaily ? (
+    <>
+      Price · EMA 20 / EMA 50 / <InfoTip term="vwap">VWAP</InfoTip>
+    </>
+  ) : (
+    'Price · EMA 20 / EMA 50'
+  );
+}
+
 // No `overflow-hidden` on the wrapper: a Learning Mode tooltip opens upward
 // (absolute bottom-full) from the label in the header, ~10px below the pane's
 // top edge, so a clipping ancestor would hide the explanation entirely. Nothing
 // inside paints to the corners — the canvas sits in a padded box — so the
 // rounded card still reads correctly without it.
-function Pane({ label, legend = false, note, children }: { label: React.ReactNode; legend?: boolean; note?: React.ReactNode; children: React.ReactNode }) {
+function Pane({
+  label,
+  legend = false,
+  showVwap = true,
+  note,
+  children,
+}: {
+  label: React.ReactNode;
+  legend?: boolean;
+  showVwap?: boolean;
+  note?: React.ReactNode;
+  children: React.ReactNode;
+}) {
   return (
     <div
       className="rounded-[var(--radius-tile)] border"
@@ -334,7 +405,9 @@ function Pane({ label, legend = false, note, children }: { label: React.ReactNod
           <div className="flex items-center gap-3 text-[10px] text-[var(--color-text-tertiary)]">
             <span className="flex items-center gap-1"><i className="inline-block h-0.5 w-3" style={{ backgroundColor: '#6AA9FF' }} /> EMA 20</span>
             <span className="flex items-center gap-1"><i className="inline-block h-0.5 w-3" style={{ backgroundColor: '#C08BFF' }} /> EMA 50</span>
-            <span className="flex items-center gap-1"><i className="inline-block h-0.5 w-3" style={{ backgroundColor: 'var(--color-accent)' }} /> VWAP</span>
+            {showVwap && (
+              <span className="flex items-center gap-1"><i className="inline-block h-0.5 w-3" style={{ backgroundColor: 'var(--color-accent)' }} /> VWAP</span>
+            )}
           </div>
         )}
       </div>
@@ -346,11 +419,12 @@ function Pane({ label, legend = false, note, children }: { label: React.ReactNod
 // Loading placeholder that mirrors the live three-pane layout exactly (same
 // Pane chrome, labels, legend, and heights) so the loading→data transition is
 // zero-reflow — the skeleton blocks simply become live canvases.
-function ChartsSkeleton({ timeframeLabel }: { timeframeLabel: string }) {
+function ChartsSkeleton({ timeframeLabel, timeframe }: { timeframeLabel: string; timeframe: Timeframe }) {
+  const isDaily = timeframe === '1D';
   return (
     <div className="space-y-4" aria-busy="true" aria-live="polite">
       <span className="sr-only">Loading chart data…</span>
-      <Pane label="Price · EMA 20 / EMA 50 / VWAP" legend>
+      <Pane label={pricePaneLabel(isDaily)} legend showVwap={isDaily}>
         <div className="skeleton h-[420px] w-full" />
       </Pane>
       <Pane label={<InfoTip term="rsi">RSI (14)</InfoTip>} note="Dashed guides at 70 and 30 — usually called overbought and oversold">
@@ -477,9 +551,13 @@ export function ChartsClient() {
               Interactive <em className="italic" style={{ color: 'var(--color-accent)' }}>Charts</em>
             </h1>
             <p className="mt-2 text-sm text-[var(--color-text-secondary)]">
+              {/* VWAP only draws on the Daily view — see pricePaneLabel/isDaily
+                  above. A blanket "EMA 20/50 and VWAP" here would overpromise
+                  on Weekly/Monthly/Yearly, where the line is hidden because a
+                  week/month/year isn't a trading session. */}
               <InfoTip term="candles">Candlestick price bars</InfoTip> and trading volume, with average-price lines
-              (EMA 20/50 and VWAP) plus panes for momentum (RSI) and typical swing size (ATR). The Daily–Yearly
-              buttons set how much time each price bar covers.
+              (EMA 20/50, plus VWAP on the Daily view) plus panes for momentum (RSI) and typical swing size (ATR).
+              The Daily–Yearly buttons set how much time each price bar covers.
             </p>
           </div>
           {/* The tablist's aria-label is its accessible NAME, so it stays short
@@ -517,7 +595,7 @@ export function ChartsClient() {
       </div>
 
       {q.isLoading ? (
-        <ChartsSkeleton timeframeLabel={timeframeLabel} />
+        <ChartsSkeleton timeframeLabel={timeframeLabel} timeframe={timeframe} />
       ) : q.error ? (
         <GateCard
           kind={q.error instanceof GateError ? q.error.kind : 'unavailable'}
@@ -537,7 +615,7 @@ export function ChartsClient() {
           </p>
         </div>
       ) : (
-        <ChartPanes bars={bars} theme={theme} timeframeLabel={timeframeLabel} />
+        <ChartPanes bars={bars} theme={theme} timeframeLabel={timeframeLabel} timeframe={timeframe} />
       )}
     </div>
   );

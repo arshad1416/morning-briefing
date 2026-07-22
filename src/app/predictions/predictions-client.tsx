@@ -253,17 +253,24 @@ function Validation({ data }: { data: Any }) {
 
   const dateRange = s.date_range || '2000-2026';
   const winRate = bestWR / 100;
-  const estRR = winRate > 0 && winRate < 1 ? (bestPF * (1 - winRate)) / winRate : 1;
-  const estSharpe = (bestWR - 50) / 15;
-  const degraded = estSharpe * 0.7;
   const tickers = s.tickers_tested || 59;
 
+  // FIX: this scorecard used to carry two more "checks" here — a
+  // "Win Rate / Reward-to-Risk" tile whose R:R was back-solved algebraically
+  // from bestPF and winRate (estRR = bestPF * (1 - winRate) / winRate), and a
+  // "Live Sharpe (est.)" tile computed as (bestWR - 50) / 15, then cut by 30%.
+  // Neither figure is a measured trade statistic: no return series or
+  // volatility ever enters the calculation, and no Sharpe ratio is computed
+  // anywhere in this codebase — both were a linear rescale of the win rate
+  // dressed up as a risk-adjusted metric. Removed rather than relabelled;
+  // the win-rate check below uses only the real, measured win rate, and
+  // Profit Factor (already its own check above) is the other real figure
+  // that survives.
   const checks: Array<{ id: string; label: React.ReactNode; pass: boolean; value: string; detail: string }> = [
     { id: 'sample', label: <InfoTip term="sample_size">Sample Size</InfoTip>, pass: totalTrades >= 100, value: `${(totalTrades / 1000).toFixed(0)}K trades`, detail: totalTrades >= 500 ? 'Far more than the 100 trades we treat as a minimum' : 'Need 100+ trades' },
     { id: 'pf', label: <InfoTip term="profit_factor">Profit Factor</InfoTip>, pass: bestPF >= 1.5, value: bestPF.toFixed(2), detail: bestPF >= 2 ? 'Strong — won more than twice what it lost' : bestPF >= 1.5 ? 'Meets our 1.5 threshold' : 'Below 1.5' },
     { id: 'cycles', label: 'Market Cycles', pass: dateRange.includes('2000'), value: dateRange, detail: 'The test window should reach back to 2000, so it includes the 2008 and 2020 crashes' },
-    { id: 'wr-rr', label: <><InfoTip term="win_rate">Win Rate</InfoTip> / <InfoTip term="risk_reward">Reward-to-Risk</InfoTip></>, pass: winRate >= 0.45 || estRR >= 1.5, value: `${bestWR}% / ${estRR.toFixed(2)}R`, detail: `${winRate >= 0.45 ? 'Strong win rate' : 'Low win rate and low reward per unit of risk'}. Reward-to-risk is inferred from the win rate and profit factor, not measured directly` },
-    { id: 'sharpe', label: <><InfoTip term="sharpe">Live Sharpe</InfoTip> (est.)</>, pass: degraded >= 1, value: degraded.toFixed(2), detail: `The live figure shown is the backtest proxy of ${estSharpe.toFixed(2)} cut by 30% for live conditions. Scaled from the win rate — not a measured Sharpe ratio` },
+    { id: 'win-rate', label: <InfoTip term="win_rate">Win Rate</InfoTip>, pass: winRate >= 0.45, value: `${bestWR}%`, detail: winRate >= 0.45 ? 'Strong share of trades closed in profit' : 'Below the 45% we look for' },
     { id: 'diversification', label: 'Diversification', pass: tickers >= 20, value: `${tickers} tickers`, detail: tickers >= 50 ? 'Spread across plenty of different stocks' : 'Adequate spread across stocks' },
     wf
       ? { id: 'wf', label: <InfoTip term="walk_forward">Walk-Forward</InfoTip>, pass: wf.good >= Math.ceil(wf.count * 0.7), value: `${wf.good}/${wf.count} windows pass`, detail: `Scored ${wf.avgOOS.toFixed(2)} on data it had never seen, ${wf.avgDeg.toFixed(1)}% weaker than on the data it was tuned on · ${wf.robust ? 'holds up as market conditions change' : 'fades more than we would like'}` }
@@ -278,12 +285,14 @@ function Validation({ data }: { data: Any }) {
     >
       <p className="mb-3 text-sm font-semibold text-[var(--color-text-primary)]">
         Research Score:{' '}
-        <span data-numeric style={{ color: passed >= 6 ? 'var(--color-bull)' : passed >= 4 ? 'var(--color-caution)' : 'var(--color-bear)' }}>
-          {passed}/7 Passed
+        {/* FIX: was out of 7 checks; two (Reward-to-Risk and Live Sharpe) were fabricated and have been
+            removed above, so the scorecard is now out of 6 — thresholds rescaled to match (~85% / ~50%). */}
+        <span data-numeric style={{ color: passed >= 5 ? 'var(--color-bull)' : passed >= 3 ? 'var(--color-caution)' : 'var(--color-bear)' }}>
+          {passed}/6 Passed
         </span>
       </p>
       <p className="mb-3 text-xs leading-relaxed text-[var(--color-text-tertiary)]">
-        Seven checks that help tell a strategy with a genuine advantage from one that only looks good in hindsight. The
+        Six checks that help tell a strategy with a genuine advantage from one that only looks good in hindsight. The
         criteria come from published work on backtest validation by López de Prado and Aronson; we score ourselves
         against them, each check counts the same, and no outside party audits the result.
       </p>

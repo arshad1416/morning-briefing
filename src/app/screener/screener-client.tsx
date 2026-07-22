@@ -26,8 +26,12 @@ type Filters = {
   volume: string;
   w52: string;
   sma: string;
-  strategy: string;
-  direction: string;
+  // strategy / direction filters were removed here: they compared against
+  // `t.signal` (singular) and `t.direction`, neither of which
+  // pi-scripts/generate-screener-data.py ever emits (it writes only the
+  // plural `signals` array). Both selects always returned zero rows against
+  // every real data file, so the dead controls were removed rather than kept
+  // as traps. See DATA-BUGS-2026-07-22.md for the trace.
   scoreMin: number;
   scoreMax: number;
 };
@@ -43,8 +47,6 @@ const DEFAULT_FILTERS: Filters = {
   volume: '',
   w52: '',
   sma: '',
-  strategy: '',
-  direction: '',
   scoreMin: 0,
   scoreMax: 10,
 };
@@ -68,7 +70,6 @@ const volRatio = (t: ScreenerTicker) => t.volume_ratio ?? t.vol_ratio ?? null;
 
 function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
   const search = f.search.toLowerCase().trim();
-  const strategy = f.strategy.toLowerCase().trim();
 
   return tickers.filter((t) => {
     if (
@@ -85,7 +86,6 @@ function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
     }
     const score = t.score ?? 0;
     if (score < f.scoreMin || score > f.scoreMax) return false;
-    if (strategy && (t.signal || '').toLowerCase().replace(/[^a-z_]/g, '') !== strategy) return false;
     if (f.mcap) {
       const b = (t.marketCap ?? 0) / 1e9;
       if (f.mcap === '0-2B' && b > 2) return false;
@@ -103,7 +103,6 @@ function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
       if (f.volume === '1.5x' && vr < 1.5) return false;
       if (f.volume === '2x' && vr < 2) return false;
     }
-    if (f.direction && (t.direction || '').toLowerCase() !== f.direction) return false;
     if (f.w52) {
       const hi = t.above_52w_high_pct;
       const lo = t.below_52w_low_pct;
@@ -161,7 +160,19 @@ const fmtPct = (v: number | null | undefined) =>
 const changeColor = (v: number | null | undefined) =>
   (v ?? 0) > 0 ? 'var(--color-bull)' : (v ?? 0) < 0 ? 'var(--color-bear)' : 'var(--color-text-secondary)';
 
-const BEARISH_SIGNAL = /over|bear|below|low|extended|death|premium|sell/;
+// Was a loose substring regex (/over|bear|.../) tested against the raw signal
+// key — "over" matched inside "oversold_rsi", so RSI < 35 (+2, the single
+// largest BULLISH contributor to the score) was painted red. Signal keys are
+// enumerated exactly instead: only the rules that actually subtract from the
+// score in compute_score() count as bearish.
+const BEARISH_SIGNALS = new Set([
+  'overbought_rsi',
+  'extended_rsi',
+  'below_ma',
+  'near_low',
+  'premium_pe',
+  'analyst_sell',
+]);
 
 // The `signals` array is the audit trail from the score calculation: one entry
 // per scoring rule that fired. The raw values are snake_case internals
@@ -335,7 +346,7 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
       <td className="px-3 py-2">
         <div className="flex flex-wrap gap-1 max-w-[220px]">
           {(t.signals || []).map((s) => {
-            const bearish = BEARISH_SIGNAL.test(s);
+            const bearish = BEARISH_SIGNALS.has(s);
             return (
               <span
                 key={s}
@@ -664,22 +675,10 @@ export function ScreenerClient() {
               <option value="death-cross">Above 20-Day, Below 50-Day</option>
             </select>
           </Field>
-          <Field label="Strategy">
-            <select value={filters.strategy} onChange={(e) => set('strategy', e.target.value)} className={selectCls} style={selectStyle}>
-              <option value="">All</option>
-              <option value="momentum">Momentum</option>
-              <option value="breakout">Breakout</option>
-              <option value="mean_reversion">Mean Reversion</option>
-              <option value="support_resistance">Support/Resistance</option>
-            </select>
-          </Field>
-          <Field label="Direction">
-            <select value={filters.direction} onChange={(e) => set('direction', e.target.value)} className={selectCls} style={selectStyle}>
-              <option value="">All</option>
-              <option value="long">Long</option>
-              <option value="short">Short</option>
-            </select>
-          </Field>
+          {/* Strategy / Direction selects removed: they filtered on `signal`
+              and `direction` fields the generator never writes (it emits
+              only the plural `signals` array), so both always returned zero
+              rows against every real data file. See applyFilters() above. */}
           <Field label="Score Min">
             <input
               type="number"

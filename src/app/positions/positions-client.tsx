@@ -202,7 +202,13 @@ function PaperTab({ data }: { data: Any }) {
 
   if (!p) return <p className="p-6 text-center text-sm text-[var(--color-text-tertiary)]">No paper-trading data available yet.</p>;
 
-  const equity = (p.starting_balance || 0) + (p.total_pnl || 0) + (p.unrealized_pnl || 0);
+  // Was starting_balance + total_pnl + unrealized_pnl, which double-counts
+  // unrealized P&L: total_pnl is already realized + unrealized, so adding
+  // unrealized_pnl again overstated equity by exactly that amount (and
+  // disagreed with the "Total Value" tile below). The producer already
+  // publishes the authoritative total_balance = cash + market_value — read
+  // that instead of recomputing it here.
+  const equity = p.total_balance || 0;
   const deployed = p.invested || 0;
   const totalPnl = p.total_pnl || 0;
   const fx = data.fx_rate_usdcad || 1.38;

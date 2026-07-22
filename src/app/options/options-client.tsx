@@ -119,11 +119,18 @@ export function OptionsClient() {
           <PlainLabel term="gamma_regime" />
         </div>
         <p className="relative z-10 text-sm text-[var(--color-text-secondary)]">
+          {/* This sentence must describe SIGNED dealer gamma, not the gross GEX
+              figure shown in the card below. The regime used to be derived from
+              the gross total, in which puts are stored positive — so it was
+              structurally almost always "bullish" and said so. It now comes from
+              signed dealer gamma, which can be negative while gross GEX is
+              positive; wording that referred to "total gamma exposure" would
+              therefore contradict the number displayed alongside it. */}
           {regime === 'bullish'
-            ? 'Total gamma exposure is positive, so dealer hedging is leaning toward damping moves rather than amplifying them. That is a read on how steady the market is, not a forecast that prices will rise — and Dealer Gamma below, which counts puts as negative, can point the other way.'
+            ? 'Dealers are net long gamma, so their hedging leans toward damping moves rather than amplifying them. That is a read on how steady the market is, not a forecast that prices will rise. The gross GEX figure below adds calls and puts together, so it stays positive either way — this reading counts puts as negative.'
             : regime === 'bearish'
-            ? 'Total gamma exposure is negative, so dealer hedging is leaning toward amplifying moves rather than damping them. That means bigger swings in either direction, not a forecast that prices will fall.'
-            : 'Total gamma exposure is flat, so dealer hedging is not pushing the market either way right now.'}
+            ? 'Dealers are net short gamma, so their hedging leans toward amplifying moves rather than damping them. That means bigger swings in either direction — it is not a forecast that prices will fall. The gross GEX figure below adds calls and puts together, so it can look positive even now; this reading counts puts as negative.'
+            : 'Dealer gamma is close to flat, so hedging is not pushing the market either way right now.'}
         </p>
       </div>
 
