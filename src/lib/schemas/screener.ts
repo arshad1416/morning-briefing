@@ -27,8 +27,9 @@ export const ScreenerTickerSchema = z.object({
   volume: num,
   volume_ratio: num.optional(),
   vol_ratio: num.optional(),
-  signal: z.string().nullish(),
-  direction: z.string().nullish(),
+  // The producer emits signals[] tags + an analyst recommendation; the old
+  // singular signal/direction fields were never written by any generator.
+  recommendation: z.string().nullish(),
   signals: z.array(z.string()).nullish(),
   above_52w_high_pct: num.optional(),
   below_52w_low_pct: num.optional(),

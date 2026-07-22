@@ -28,6 +28,7 @@ BUCKET = "maplegamma-private"
 PRIVATE_FILES = [
     # basic tier
     "screener-data.json", "morning_analysis.json", "maplegamma_analysis.json",
+    "maplegamma_analysis_b.json",
     "web-news.json", "polymarket_sentiment.json", "earnings.json",
     "sec_filings.json", "journal.json", "paper_trades.json",
     # pro tier

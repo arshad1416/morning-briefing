@@ -8,6 +8,8 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { gexDetailQuery } from '@/lib/query/options';
 import { Surface, SurfaceHeader, InfoTip } from '@/components/primitives';
 import { formatCompact } from '@/lib/format';
+import { GateError } from '@/lib/api/gated';
+import { GateCard } from '@/components/feature/gating/GateCard';
 import type { GexStrike } from '@/lib/schemas/market';
 
 interface StrikeRow {
@@ -88,9 +90,27 @@ function TooltipSide({ label, s, color }: { label: string; s?: GexStrike; color:
 }
 
 export function GammaWallChart() {
-  const { data, isLoading } = useQuery(gexDetailQuery());
+  const { data, isLoading, isError, error } = useQuery(gexDetailQuery());
   const reduce = useReducedMotion();
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+
+  // Without this branch a failed/missing R2 file left an infinite skeleton.
+  if (isError) {
+    return (
+      <Surface span="hero">
+        <SurfaceHeader title="Gamma Wall" />
+        <div className="p-4">
+          {error instanceof GateError && error.kind !== 'unavailable' ? (
+            <GateCard kind={error.kind} need={error.need ?? 'pro'} feature="Gamma wall" />
+          ) : (
+            <p className="py-10 text-center text-sm text-[var(--color-text-tertiary)]">
+              Gamma wall data isn&apos;t available right now.
+            </p>
+          )}
+        </div>
+      </Surface>
+    );
+  }
 
   if (isLoading || !data) {
     return (

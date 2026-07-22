@@ -300,8 +300,10 @@ const PaperTrades = {
       const genAt = data.generated_at ? new Date(data.generated_at).toLocaleString() : '';
       const sign = (p.total_pnl || 0) >= 0 ? '+' : '-';
       const pnlCls = (p.total_pnl || 0) >= 0 ? 'positive' : 'negative';
-      const equity = (p.starting_balance || 0) + (p.total_pnl || 0) + (p.unrealized_pnl || 0);
-      const deployed = p.invested || 0;
+      // total_balance is cash + open book at market (true account value); the
+      // additive fallback only covers pre-fix data where total_pnl was realized-only.
+      const equity = p.total_balance != null ? p.total_balance : (p.starting_balance || 0) + (p.total_pnl || 0) + (p.unrealized_pnl || 0);
+      const deployed = p.market_value != null ? p.market_value : (p.invested || 0);
       
       // Hero P&L row like Today view
       html += `<div class="today-pnl ${pnlCls}" style="border-left:none;padding:10px 15px;margin-bottom:16px">`;

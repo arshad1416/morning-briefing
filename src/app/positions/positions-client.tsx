@@ -189,8 +189,10 @@ function PaperTab({ data }: { data: Any }) {
 
   if (!p) return <p className="p-6 text-center text-sm text-[var(--color-text-tertiary)]">No paper-trading data available yet.</p>;
 
-  const equity = (p.starting_balance || 0) + (p.total_pnl || 0) + (p.unrealized_pnl || 0);
-  const deployed = p.invested || 0;
+  // total_balance is cash + open book at market (the true account value).
+  // Fallback formula only covers pre-fix data where total_pnl was realized-only.
+  const equity = p.total_balance ?? (p.starting_balance || 0) + (p.total_pnl || 0) + (p.unrealized_pnl || 0);
+  const deployed = p.market_value ?? p.invested ?? 0;
   const totalPnl = p.total_pnl || 0;
   const fx = data.fx_rate_usdcad || 1.38;
 
@@ -233,9 +235,10 @@ function PaperTab({ data }: { data: Any }) {
             label="Last Updated"
             value={
               <span className="text-xs">
-                {data.generated_at
-                  ? `${new Date(data.generated_at).toLocaleString('en-CA', { timeZone: 'America/Toronto', dateStyle: 'medium', timeStyle: 'short' })} ET`
-                  : '—'}
+                {/* generated_at is timezone-naive Pi-local ET ("2026-07-21 17:15:02") —
+                    routing it through Date parses it in the viewer's zone (and is
+                    Invalid Date on Safari), so render the string itself. */}
+                {data.generated_at ? `${String(data.generated_at).slice(0, 16)} ET` : '—'}
               </span>
             }
           />
@@ -275,10 +278,10 @@ function PaperTab({ data }: { data: Any }) {
         </div>
         {stockPositions.length ? (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[820px] text-sm">
+            <table className="w-full min-w-[980px] text-sm">
               <thead>
                 <tr>
-                  <TH>Ticker</TH><TH>Asset</TH><TH>Type</TH><TH>Entry</TH><TH align="right">Entry Price</TH><TH align="right">Current</TH><TH align="right">P&L</TH><TH>Strategy</TH><TH>Status</TH>
+                  <TH>Ticker</TH><TH>Asset</TH><TH>Type</TH><TH>Entry</TH><TH align="right">Qty</TH><TH align="right">Entry Price</TH><TH align="right">Current</TH><TH align="right">Value</TH><TH align="right">P&L</TH><TH>Strategy</TH><TH>Status</TH>
                 </tr>
               </thead>
               <tbody>
@@ -293,8 +296,10 @@ function PaperTab({ data }: { data: Any }) {
                       <TD><Badge tone={AC_TONE[ac] ?? 'muted'}>{AC_LABEL[ac] ?? ac}</Badge></TD>
                       <TD>{t.type || 'Other'}</TD>
                       <TD>{t.entry_date || '—'}</TD>
+                      <TD align="right">{t.quantity != null ? fmt(t.quantity, 0) : '—'}</TD>
                       <TD align="right">${fmt(entry.val)} {entry.cur}</TD>
                       <TD align="right">${fmt(curr.val)} {curr.cur}</TD>
+                      <TD align="right">{t.market_value != null ? `$${fmt(t.market_value)}` : '—'}</TD>
                       <TD align="right" bold color={pnlColor(pct)}>
                         ${fmt(t.pnl)} ({pct >= 0 ? '+' : ''}{fmt(pct, 1)}%)
                       </TD>
@@ -325,6 +330,10 @@ function PaperTab({ data }: { data: Any }) {
                 {optionPositions.map((pos, i) => {
                   const dte = pos.option_days_to_expiry;
                   const pnl = pos.pnl || 0;
+                  // The pipeline has no live option pricing — current_price is
+                  // just the entry premium (premium_stale) — so show a dash
+                  // rather than a fake quote and $0.00 P&L.
+                  const stale = pos.premium_stale === true || pos.current_price === pos.entry_price;
                   return (
                     <tr key={i}>
                       <TD bold color="var(--color-text-primary)">{pos.ticker}</TD>
@@ -334,8 +343,10 @@ function PaperTab({ data }: { data: Any }) {
                         {dte != null ? `${dte}d` : '—'}
                       </TD>
                       <TD align="right">{pos.entry_price != null ? `$${fmt(pos.entry_price)}` : '—'}</TD>
-                      <TD align="right">{pos.current_price != null ? `$${fmt(pos.current_price)}` : '—'}</TD>
-                      <TD align="right" bold color={pnlColor(pnl)}>{pnl >= 0 ? '+' : '−'}${fmt(Math.abs(pnl))}</TD>
+                      <TD align="right">{!stale && pos.current_price != null ? `$${fmt(pos.current_price)}` : '—'}</TD>
+                      <TD align="right" bold color={stale ? undefined : pnlColor(pnl)}>
+                        {stale ? '—' : `${pnl >= 0 ? '+' : '−'}$${fmt(Math.abs(pnl))}`}
+                      </TD>
                       <TD>{dte == null ? '⏳ Open' : dte <= 0 ? '🔴 Expired' : dte <= 3 ? '⚠️ Expiring Soon' : '⏳ Open'}</TD>
                     </tr>
                   );
@@ -346,39 +357,54 @@ function PaperTab({ data }: { data: Any }) {
         </Card>
       )}
 
-      {/* Accuracy summary (Pro data — renders only when the gate lets it through) */}
-      {acc?.overall && (
-        <Card title="Prediction Engine Accuracy">
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <Metric label="Top 10 Avg WR" value={`${acc.overall.top_10_avg_win_rate}%`} color="var(--color-bull)" />
-            <Metric label="Top 10 Avg P&L" value={`+${acc.overall.top_10_avg_pnl}%`} color="var(--color-bull)" />
-            <Metric label="Best Win Rate" value={`${acc.overall.best_win_rate}%`} color="var(--color-bull)" />
-            <Metric label="Total Backtest" value={acc.overall.total_backtest_trades?.toLocaleString?.() ?? '—'} />
+      {/* Live trading accuracy (Pro data — renders only when the gate lets it
+          through). accuracy.json shape: summary/expectancy/drawdown/per_strategy
+          — the old version read acc.overall/top_performers, which the producer
+          never wrote, so these sections were permanently invisible. */}
+      {acc?.summary && (
+        <Card title="Live Trading Accuracy">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
+            <Metric
+              label="Win Rate"
+              value={`${fmt(acc.summary.win_rate, 1)}%`}
+              color={(acc.summary.win_rate ?? 0) >= 50 ? 'var(--color-bull)' : 'var(--color-bear)'}
+            />
+            <Metric
+              label="Expectancy"
+              value={`${(acc.expectancy?.expectancy_pct ?? 0) >= 0 ? '+' : ''}${fmt(acc.expectancy?.expectancy_pct, 2)}%`}
+              color={pnlColor(acc.expectancy?.expectancy_pct ?? 0)}
+            />
+            <Metric label="Profit Factor" value={fmt(acc.expectancy?.profit_factor, 2)} />
+            <Metric label="Max Drawdown" value={`${fmt(acc.drawdown?.max_drawdown_pct, 1)}%`} color="var(--color-bear)" />
+            <Metric
+              label="Avg Win / Loss"
+              value={`+${fmt(acc.expectancy?.avg_win_pct, 2)}% / ${fmt(acc.expectancy?.avg_loss_pct, 2)}%`}
+            />
           </div>
+          {acc.expectancy?.kelly_note && (
+            <p className="mt-3 text-xs text-[var(--color-text-tertiary)]">{acc.expectancy.kelly_note}</p>
+          )}
         </Card>
       )}
-      {!!acc?.top_performers?.length && (
-        <Card title="Best Strategies (Backtest Verified)">
+      {!!acc?.per_strategy?.length && (
+        <Card title="Per-Strategy Results (Live)">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[560px] text-sm">
               <thead>
-                <tr><TH>Rank</TH><TH>Version</TH><TH align="right">Trades</TH><TH align="center">Win Rate</TH><TH align="right">Avg P&L</TH><TH align="right">PF</TH><TH align="center">Confidence</TH></tr>
+                <tr><TH>Strategy</TH><TH align="right">Trades</TH><TH align="right">W / L</TH><TH align="center">Win Rate</TH><TH align="right">Expectancy</TH><TH align="right">PF</TH><TH align="center">Status</TH></tr>
               </thead>
               <tbody>
-                {acc.top_performers.slice(0, 10).map((v: Any, i: number) => {
-                  const conf = v.trades >= 100 ? 'High' : v.trades >= 30 ? 'Medium' : 'Low';
-                  return (
-                    <tr key={i}>
-                      <TD>{['🥇', '🥈', '🥉'][i] ?? i + 1}</TD>
-                      <TD bold color="var(--color-text-primary)">{v.name ?? v.version}</TD>
-                      <TD align="right">{v.trades}</TD>
-                      <TD align="center"><Badge tone={v.win_rate >= 70 ? 'bull' : v.win_rate >= 60 ? 'caution' : 'muted'}>{v.win_rate}%</Badge></TD>
-                      <TD align="right" color={pnlColor(v.avg_pnl ?? 0)}>{(v.avg_pnl ?? 0) >= 0 ? '+' : ''}{v.avg_pnl}%</TD>
-                      <TD align="right">{v.profit_factor}</TD>
-                      <TD align="center"><Badge tone={conf === 'High' ? 'bull' : conf === 'Medium' ? 'caution' : 'bear'}>{conf}</Badge></TD>
-                    </tr>
-                  );
-                })}
+                {acc.per_strategy.map((s: Any, i: number) => (
+                  <tr key={i}>
+                    <TD bold color="var(--color-text-primary)">{s.strategy}</TD>
+                    <TD align="right">{s.n_trades}</TD>
+                    <TD align="right">{s.n_wins} / {s.n_losses}</TD>
+                    <TD align="center"><Badge tone={s.win_rate >= 60 ? 'bull' : s.win_rate >= 45 ? 'caution' : 'bear'}>{fmt(s.win_rate, 1)}%</Badge></TD>
+                    <TD align="right" color={pnlColor(s.expectancy_pct ?? 0)}>{(s.expectancy_pct ?? 0) >= 0 ? '+' : ''}{fmt(s.expectancy_pct, 2)}%</TD>
+                    <TD align="right">{fmt(s.profit_factor, 2)}</TD>
+                    <TD align="center"><Badge tone={s.status === 'winning' ? 'bull' : s.status === 'losing' ? 'bear' : 'muted'}>{s.status || '—'}</Badge></TD>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

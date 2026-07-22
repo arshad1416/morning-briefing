@@ -21,6 +21,7 @@ const PRO_FILES = new Set([
 ]);
 const BASIC_FILES = new Set([
   'screener-data.json', 'morning_analysis.json', 'maplegamma_analysis.json',
+  'maplegamma_analysis_b.json',
   'web-news.json', 'polymarket_sentiment.json', 'earnings.json',
   'sec_filings.json', 'journal.json', 'paper_trades.json',
   'ibkr_account.json', 'ibkr_positions.json', 'ibkr_trades.json',

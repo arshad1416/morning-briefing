@@ -5,6 +5,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 import { Surface, SurfaceHeader, Stat } from '@/components/primitives';
@@ -18,6 +19,7 @@ const PaperPortfolioSchema = z
         starting_balance: z.number().default(100000),
         cash: z.number().default(0),
         invested: z.number().default(0),
+        market_value: z.number().optional(),
         return_pct: z.number().default(0),
         win_rate: z.number().nullable().default(null),
         total_trades: z.number().nullable().default(null),
@@ -46,13 +48,19 @@ export function DayPnLCard() {
   );
 
   if (isError) {
-    const signedOut = error instanceof GateError && error.kind === 'signin';
+    const gate = error instanceof GateError ? error : null;
     return shell(
       <p className="text-sm text-[var(--color-text-tertiary)]">
-        {signedOut ? (
+        {gate?.kind === 'signin' ? (
           <>
             <a href="/login" className="underline text-[var(--color-accent)]">Sign in</a> to view the
             live $100K paper-trading account.
+          </>
+        ) : gate?.kind === 'upgrade' ? (
+          <>
+            The live paper-trading account is a {gate.need === 'pro' ? 'Pro' : 'Basic'} feature —{' '}
+            <Link href="/#pricing" className="underline text-[var(--color-accent)]">upgrade your plan</Link> to
+            see it.
           </>
         ) : (
           'Portfolio data isn’t available right now.'
@@ -66,7 +74,9 @@ export function DayPnLCard() {
   }
 
   const p = data.portfolio;
-  const deployedPct = p.total_balance > 0 ? (p.invested / p.total_balance) * 100 : 0;
+  // Deployed = open book at market over total equity; falling back to cost
+  // basis (invested) only for pre-market_value data.
+  const deployedPct = p.total_balance > 0 ? ((p.market_value ?? p.invested) / p.total_balance) * 100 : 0;
 
   return shell(
     <>

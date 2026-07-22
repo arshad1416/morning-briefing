@@ -59,4 +59,18 @@ mountBriefing(app);
 
 app.get('/api/health', (c) => c.json({ ok: true }));
 
+// ── Passkey Related Origin Requests ──────────────────────────────────────
+// wrangler.toml routes maplegamma.com/.well-known/webauthn here so browsers
+// can authorize maplegamma.com-scoped passkeys from the alternate hosts
+// (they all redirect here, but the ceremony still asks the rpID host). This
+// route previously had no handler and 404'd every ROR lookup.
+const WEBAUTHN_ROR_ORIGINS = [
+  'https://maplegamma.com',
+  'https://maplegamma.ca',
+  'https://www.maplegamma.ca',
+  'https://briefing.arshadkazi.ca',
+  'https://maplegamma.arshadkazi.ca',
+];
+app.get('/.well-known/webauthn', (c) => c.json({ origins: WEBAUTHN_ROR_ORIGINS }));
+
 export default app;

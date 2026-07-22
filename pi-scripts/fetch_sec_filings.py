@@ -3,7 +3,8 @@
 Fetch SEC EDGAR filings (10-K, 10-Q, Form 4) for tracked tickers.
 
 SEC EDGAR is free — no API key needed. Rate limit: 10 requests/sec max.
-Uses a CIK lookup mapping for V3 tickers.
+Resolves ticker → CIK at runtime from the SEC's official mapping files
+(company_tickers.json + company_tickers_mf.json), cached locally.
 
 Saves filings to:
     ~/morning-briefing/data/sec/{TICKER}-filings.json
@@ -22,6 +23,7 @@ import asyncio
 import json
 import os
 import sys
+import time
 from datetime import datetime
 
 from pipeline_runtime import RequestFailed, atomic_write_json, request_json, run_blocking_pool
@@ -29,88 +31,36 @@ from pipeline_runtime import RequestFailed, atomic_write_json, request_json, run
 DATA_DIR = os.path.expanduser("~/morning-briefing/data")
 SEC_DIR = os.path.join(DATA_DIR, "sec")
 
-# TIckER => CIK mapping for tracked tickers
-# SEC requires CIK without leading zeros (though they accept padded)
-CIK_MAPPING = {
-    "AAPL": "320193",
-    "MSFT": "789019",
-    "GOOGL": "1652044",
-    "GOOG": "1652044",
-    "AMZN": "1018724",
-    "NVDA": "1045810",
-    "META": "1326801",
-    "TSLA": "1318605",
-    "JPM": "19617",
-    "BAC": "70858",
-    "WFC": "72971",
-    "C": "831001",
-    "GS": "886982",
-    "V": "1403161",
-    "MA": "1141391",
-    "JNJ": "200406",
-    "PFE": "78003",
-    "UNH": "731766",
-    "ABBV": "1551152",
-    "MRK": "310158",
-    "XOM": "34088",
-    "CVX": "93410",
-    "COP": "1163165",
-    "SPY": "884887",
-    "QQQ": "1067837",
-    "IWM": "1047649",
-    "TLT": "1223074",
-    "XLF": "1094831",
-    "XLK": "1094832",
-    "XLE": "1094830",
-    "XLV": "1094835",
-    "XLI": "1094833",
-    "XLP": "1094834",
-    "XLU": "1094836",
-    "XLB": "1094829",
-    "XLRE": "1545457",
-    "XLC": "1718730",
-    "TD": "1002602",
-    "RY": "1068760",
-    "BNS": "9639",
-    "BMO": "878510",
-    "EFA": "1029091",
-    "SPY": "884887",
-    "DIA": "1067094",
-    "GDX": "1224007",
-    "IWM": "1047649",
-    "IBIT": "1407797",
-    "NKE": "320187",
-    "DIS": "1744489",
-    "NFLX": "1065280",
-    "ADBE": "796343",
-    "CRM": "1108524",
-    "AMD": "2488",
-    "INTC": "50863",
-    "IBM": "51143",
-    "ORCL": "1341439",
-    "QCOM": "804328",
-    "CSCO": "858877",
-    "TXN": "97476",
-    "AVGO": "1730168",
-    "T": "732717",
-    "VZ": "732712",
-    "CMCSA": "1166691",
-    "COST": "909832",
-    "WMT": "104169",
-    "HD": "354950",
-    "LOW": "60667",
-    "MCD": "63908",
-    "SBUX": "829224",
-    "BA": "12927",
-    "CAT": "18230",
-    "GE": "40545",
-    "HON": "773840",
-    "UNP": "1008835",
-    "UPS": "1090727",
-    "AMAT": "6951",
-    "KLAC": "319201",
-    "LRCX": "707549",
-}
+# Tracked tickers for --all-tickers. CIKs are resolved at runtime against the
+# SEC's official mapping files — never hardcoded (hardcoded CIKs drifted and
+# published other companies' filings under these tickers).
+TRACKED_TICKERS = [
+    "AAPL", "MSFT", "GOOGL", "GOOG", "AMZN", "NVDA", "META", "TSLA",
+    "JPM", "BAC", "WFC", "C", "GS", "V", "MA",
+    "JNJ", "PFE", "UNH", "ABBV", "MRK",
+    "XOM", "CVX", "COP",
+    "SPY", "QQQ", "IWM", "TLT",
+    "XLF", "XLK", "XLE", "XLV", "XLI", "XLP", "XLU", "XLB", "XLRE", "XLC",
+    "TD", "RY", "BNS", "BMO",
+    "EFA", "DIA", "GDX", "IBIT",
+    "NKE", "DIS", "NFLX", "ADBE", "CRM",
+    "AMD", "INTC", "IBM", "ORCL", "QCOM", "CSCO", "TXN", "AVGO",
+    "T", "VZ", "CMCSA",
+    "COST", "WMT", "HD", "LOW", "MCD", "SBUX",
+    "BA", "CAT", "GE", "HON", "UNP", "UPS",
+    "AMAT", "KLAC", "LRCX",
+]
+
+# Official SEC ticker → CIK mapping files. company_tickers.json covers
+# operating companies and many ETF trusts; company_tickers_mf.json covers
+# funds/ETF share classes (e.g. the Select Sector SPDRs, iShares).
+CIK_SOURCE_FILES = [
+    ("company_tickers.json", "https://www.sec.gov/files/company_tickers.json"),
+    ("company_tickers_mf.json", "https://www.sec.gov/files/company_tickers_mf.json"),
+]
+CIK_CACHE_MAX_AGE = 7 * 86400  # refresh weekly
+
+_CIK_MAP = None  # lazy-built {TICKER: cik_str}
 
 SEC_USER_AGENT = os.environ.get(
     "SEC_USER_AGENT",
@@ -120,12 +70,70 @@ SEC_USER_AGENT = os.environ.get(
 RATE_LIMIT_DELAY = 0.125  # 10/sec max, we do ~8/sec to be safe
 
 
+def _fetch_cik_source(filename, url):
+    """Download one SEC mapping file to a local cache, reusing a fresh copy.
+
+    Falls back to a stale cache if the download fails; returns parsed JSON
+    or None.
+    """
+    cache_path = os.path.join(SEC_DIR, filename)
+    fresh = (
+        os.path.exists(cache_path)
+        and time.time() - os.path.getmtime(cache_path) < CIK_CACHE_MAX_AGE
+    )
+    if not fresh:
+        headers = {
+            "User-Agent": SEC_USER_AGENT,
+            "Accept": "application/json",
+        }
+        try:
+            data = request_json(url, headers=headers, timeout=30)
+            os.makedirs(SEC_DIR, exist_ok=True)
+            atomic_write_json(cache_path, data)
+        except (RequestFailed, ValueError) as e:
+            print(f"  Failed to download {url}: {e}", file=sys.stderr)
+    try:
+        with open(cache_path) as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
+def _build_cik_map():
+    """Build {TICKER: cik_str} from the SEC's official mapping files."""
+    cik_map = {}
+    # Operating companies + many ETF trusts: {"0": {"cik_str": ..., "ticker": ...}, ...}
+    data = _fetch_cik_source(*CIK_SOURCE_FILES[0])
+    if isinstance(data, dict):
+        for entry in data.values():
+            try:
+                cik_map.setdefault(entry["ticker"].upper(), str(int(entry["cik_str"])))
+            except (KeyError, TypeError, ValueError):
+                continue
+    # Funds/ETFs: {"fields": ["cik","seriesId","classId","symbol"], "data": [[...], ...]}
+    mf = _fetch_cik_source(*CIK_SOURCE_FILES[1])
+    if isinstance(mf, dict) and isinstance(mf.get("data"), list):
+        try:
+            cik_i = mf["fields"].index("cik")
+            sym_i = mf["fields"].index("symbol")
+        except (KeyError, ValueError):
+            cik_i, sym_i = 0, 3
+        for row in mf["data"]:
+            try:
+                cik_map.setdefault(str(row[sym_i]).upper(), str(int(row[cik_i])))
+            except (IndexError, TypeError, ValueError):
+                continue
+    return cik_map
+
+
 def lookup_cik(ticker):
-    """Look up CIK number for a ticker."""
-    ticker = ticker.upper()
-    if ticker in CIK_MAPPING:
-        return CIK_MAPPING[ticker]
-    return None
+    """Look up CIK for a ticker via the SEC's official mapping (cached)."""
+    global _CIK_MAP
+    if _CIK_MAP is None:
+        _CIK_MAP = _build_cik_map()
+        if not _CIK_MAP:
+            print("  Could not load SEC ticker→CIK mapping", file=sys.stderr)
+    return _CIK_MAP.get(ticker.upper())
 
 
 def parse_submission_filings(payload, cik, count=10, forms=("10-K", "10-Q", "4")):
@@ -185,9 +193,9 @@ def fetch_filings(cik, count=10, forms=("10-K", "10-Q", "4")):
         return None
 
 
-def get_tickers_from_cik_mapping():
-    """Get all tickers with CIK mappings."""
-    return list(CIK_MAPPING.keys())
+def get_tracked_tickers():
+    """Get all tracked tickers (CIKs resolved at runtime)."""
+    return list(TRACKED_TICKERS)
 
 
 def main():
@@ -196,7 +204,7 @@ def main():
     )
     parser.add_argument("--ticker", help="Ticker(s) to fetch, comma-separated")
     parser.add_argument("--all-tickers", action="store_true",
-                        help="Fetch for all tickers with CIK mappings")
+                        help="Fetch for all tracked tickers")
     parser.add_argument("--limit", type=int, default=10,
                         help="Max filings per ticker (default: 10)")
     parser.add_argument("--output-dir", default=SEC_DIR,
@@ -222,8 +230,8 @@ def main():
     # Determine tickers
     tickers = []
     if args.all_tickers:
-        tickers = get_tickers_from_cik_mapping()
-        print(f"  Found {len(tickers)} tickers with CIK mappings", file=sys.stderr)
+        tickers = get_tracked_tickers()
+        print(f"  Found {len(tickers)} tracked tickers", file=sys.stderr)
     elif args.ticker:
         tickers = [t.strip().upper() for t in args.ticker.split(",")]
 
@@ -237,7 +245,7 @@ def main():
     def process_ticker(ticker):
         cik = lookup_cik(ticker)
         if not cik:
-            print(f"  No CIK mapping for {ticker}. Skipping.", file=sys.stderr)
+            print(f"  No CIK found for {ticker} in SEC mapping. Skipping.", file=sys.stderr)
             return ticker, {"error": "no_cik_mapping"}
 
         print(f"  Fetching SEC filings for {ticker} (CIK: {cik})...", file=sys.stderr)

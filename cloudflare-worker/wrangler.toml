@@ -28,6 +28,12 @@ zone_name = "maplegamma.com"
 pattern = "maplegamma.ca/*"
 zone_name = "maplegamma.ca"
 
+# Route patterns match the hostname literally — "maplegamma.ca/*" does NOT
+# cover www, so the www entry in REDIRECT_HOSTS never fired without this.
+[[routes]]
+pattern = "www.maplegamma.ca/*"
+zone_name = "maplegamma.ca"
+
 [[routes]]
 pattern = "briefing.arshadkazi.ca/*"
 zone_name = "arshadkazi.ca"
