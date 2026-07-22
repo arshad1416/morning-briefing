@@ -12,10 +12,11 @@ const APP_LD = {
   url: 'https://maplegamma.com',
   description:
     'Institutional-grade gamma exposure, options flow, and AI market conviction — GEX, DEX, and VEX in one terminal. Simulated (paper-trading) results for educational purposes only.',
+  // Billing is CAD (worker billing.js: env.CURRENCY || 'CAD') — keep in sync.
   offers: [
-    { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'USD' },
-    { '@type': 'Offer', name: 'Basic', price: '49', priceCurrency: 'USD' },
-    { '@type': 'Offer', name: 'Pro', price: '99', priceCurrency: 'USD' },
+    { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'CAD' },
+    { '@type': 'Offer', name: 'Basic', price: '49', priceCurrency: 'CAD' },
+    { '@type': 'Offer', name: 'Pro', price: '99', priceCurrency: 'CAD' },
   ],
 };
 

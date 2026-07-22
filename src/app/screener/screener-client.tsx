@@ -25,8 +25,8 @@ type Filters = {
   volume: string;
   w52: string;
   sma: string;
-  strategy: string;
-  direction: string;
+  signal: string;
+  recommendation: string;
   scoreMin: number;
   scoreMax: number;
 };
@@ -42,8 +42,8 @@ const DEFAULT_FILTERS: Filters = {
   volume: '',
   w52: '',
   sma: '',
-  strategy: '',
-  direction: '',
+  signal: '',
+  recommendation: '',
   scoreMin: 0,
   scoreMax: 10,
 };
@@ -64,7 +64,6 @@ const volRatio = (t: ScreenerTicker) => t.volume_ratio ?? t.vol_ratio ?? null;
 
 function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
   const search = f.search.toLowerCase().trim();
-  const strategy = f.strategy.toLowerCase().trim();
 
   return tickers.filter((t) => {
     if (
@@ -81,7 +80,7 @@ function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
     }
     const score = t.score ?? 0;
     if (score < f.scoreMin || score > f.scoreMax) return false;
-    if (strategy && (t.signal || '').toLowerCase().replace(/[^a-z_]/g, '') !== strategy) return false;
+    if (f.signal && !(t.signals || []).includes(f.signal)) return false;
     if (f.mcap) {
       const b = (t.marketCap ?? 0) / 1e9;
       if (f.mcap === '0-2B' && b > 2) return false;
@@ -99,7 +98,7 @@ function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
       if (f.volume === '1.5x' && vr < 1.5) return false;
       if (f.volume === '2x' && vr < 2) return false;
     }
-    if (f.direction && (t.direction || '').toLowerCase() !== f.direction) return false;
+    if (f.recommendation && (t.recommendation || 'none') !== f.recommendation) return false;
     if (f.w52) {
       const hi = t.above_52w_high_pct;
       const lo = t.below_52w_low_pct;
@@ -544,20 +543,33 @@ export function ScreenerClient() {
               <option value="death-cross">Death Cross</option>
             </select>
           </Field>
-          <Field label="Strategy">
-            <select value={filters.strategy} onChange={(e) => set('strategy', e.target.value)} className={selectCls} style={selectStyle}>
+          {/* Options mirror the tag vocabulary generate-screener-data.py emits in
+              signals[] — the old Strategy/Direction filters tested fields no
+              producer ever wrote, so they always returned zero rows. */}
+          <Field label="Signal">
+            <select value={filters.signal} onChange={(e) => set('signal', e.target.value)} className={selectCls} style={selectStyle}>
               <option value="">All</option>
-              <option value="momentum">Momentum</option>
-              <option value="breakout">Breakout</option>
-              <option value="mean_reversion">Mean Reversion</option>
-              <option value="support_resistance">Support/Resistance</option>
+              <option value="oversold_rsi">Oversold RSI</option>
+              <option value="rsi_dip">RSI Dip</option>
+              <option value="overbought_rsi">Overbought RSI</option>
+              <option value="extended_rsi">Extended RSI</option>
+              <option value="above_ma">Above MAs</option>
+              <option value="below_ma">Below MAs</option>
+              <option value="volume_surge">Volume Surge</option>
+              <option value="near_high">Near 52w High</option>
+              <option value="near_low">Near 52w Low</option>
+              <option value="value_pe">Value P/E</option>
+              <option value="premium_pe">Premium P/E</option>
+              <option value="analyst_buy">Analyst Buy</option>
+              <option value="analyst_sell">Analyst Sell</option>
             </select>
           </Field>
-          <Field label="Direction">
-            <select value={filters.direction} onChange={(e) => set('direction', e.target.value)} className={selectCls} style={selectStyle}>
+          <Field label="Analyst Rec">
+            <select value={filters.recommendation} onChange={(e) => set('recommendation', e.target.value)} className={selectCls} style={selectStyle}>
               <option value="">All</option>
-              <option value="long">Long</option>
-              <option value="short">Short</option>
+              <option value="strong_buy">Strong Buy</option>
+              <option value="buy">Buy</option>
+              <option value="none">No Coverage</option>
             </select>
           </Field>
           <Field label="Score Min">

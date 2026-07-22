@@ -43,6 +43,12 @@ const useGated = <T,>(name: string, file: string, enabled = true) =>
 
 const fmtTs = (iso?: string | null) => {
   if (!iso) return '';
+  // Pi artifacts carry timezone-NAIVE ET wall time ("2026-07-21 17:15").
+  // new Date() would parse that in the viewer's zone (Invalid Date on Safari),
+  // so render naive strings as-is; only real ISO strings with Z/offset get
+  // converted to ET.
+  const hasOffset = /[zZ]$|[+-]\d{2}:?\d{2}$/.test(iso.trim());
+  if (!hasOffset) return `${iso.trim().slice(0, 16)} ET`;
   const d = new Date(iso);
   if (isNaN(d.getTime())) return '';
   return `${d.toLocaleString('en-CA', { timeZone: 'America/Toronto', dateStyle: 'long', timeStyle: 'short' })} ET`;
