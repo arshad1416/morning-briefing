@@ -1,23 +1,25 @@
 {
  "ticker": "NTRS",
  "name": "Northern Trust Corporation",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 183.56,
- "change_pct": -0.61,
+ "generated_at": "2026-07-22T11:45:02.024909+00:00",
+ "price": 184.91,
+ "change_pct": 1.17,
  "sector": "Financial Services",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 65.0,
-  "sma_20": 180.2,
-  "sma_50": 172.44
+  "rsi_14": 68.0,
+  "sma_20": 180.63,
+  "sma_50": 172.93
  },
  "fundamentals": {
-  "pe_ratio": 19.220942,
-  "market_cap": "34.0B",
+  "pe_ratio": 19.3826,
+  "market_cap": "34.2B",
   "beta": 1.26,
-  "dividend_yield": 0.0173
+  "dividend_yield": 0.0175
  },
  "council_analysis": {
   "score": 6

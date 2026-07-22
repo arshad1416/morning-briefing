@@ -1,21 +1,23 @@
 {
  "ticker": "WHR",
  "name": "Whirlpool Corporation",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 37.11,
- "change_pct": -2.95,
+ "generated_at": "2026-07-22T11:45:02.024909+00:00",
+ "price": 36.37,
+ "change_pct": -1.46,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
   "below_ma",
+  "near_low",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 47.0,
-  "sma_20": 38.29,
-  "sma_50": 40.34
+  "rsi_14": 39.4,
+  "sma_20": 38.27,
+  "sma_50": 40.1
  },
  "fundamentals": {
-  "pe_ratio": 12.579695,
+  "pe_ratio": 12.328813,
   "market_cap": "2.4B",
   "beta": 1.135,
   "dividend_yield": 0.099

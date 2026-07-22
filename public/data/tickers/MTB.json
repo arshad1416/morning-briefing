@@ -1,29 +1,49 @@
 {
  "ticker": "MTB",
  "name": "M&T Bank Corporation",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 247.64,
- "change_pct": -0.64,
+ "generated_at": "2026-07-22T11:45:02.024909+00:00",
+ "price": 246.84,
+ "change_pct": -1.04,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 60.1,
-  "sma_20": 240.14,
-  "sma_50": 225.39
+  "rsi_14": 60.6,
+  "sma_20": 241.18,
+  "sma_50": 226.13
  },
  "fundamentals": {
-  "pe_ratio": 13.109582,
-  "market_cap": "35.9B",
+  "pe_ratio": 13.074153,
+  "market_cap": "35.8B",
   "beta": 0.569,
   "dividend_yield": 0.0241
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "MTB",
+   "date": "2026-10-16",
+   "epsEstimate": 4.91,
+   "epsActual": null
+  },
+  {
+   "ticker": "MTB",
+   "date": "2026-07-15",
+   "epsEstimate": 4.66,
+   "epsActual": 5.32
+  },
+  {
+   "ticker": "MTB",
+   "date": "2026-04-15",
+   "epsEstimate": 4.02,
+   "epsActual": 4.13
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

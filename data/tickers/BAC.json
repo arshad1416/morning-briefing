@@ -1,48 +1,31 @@
 {
  "ticker": "BAC",
  "name": "Bank of America Corporation",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 60.68,
- "change_pct": -0.96,
+ "generated_at": "2026-07-22T11:45:02.024909+00:00",
+ "price": 60.99,
+ "change_pct": 0.94,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 64.1,
-  "sma_20": 59.16,
-  "sma_50": 55.16
+  "rsi_14": 70.3,
+  "sma_20": 59.33,
+  "sma_50": 55.32
  },
  "fundamentals": {
-  "pe_ratio": 14.013857,
-  "market_cap": "425.9B",
+  "pe_ratio": 14.084296,
+  "market_cap": "428.0B",
   "beta": 1.175,
-  "dividend_yield": 0.0183
+  "dividend_yield": 0.018500000000000003
  },
  "council_analysis": {
   "score": 7
  },
- "upcoming_earnings": [
-  {
-   "ticker": "BAC",
-   "date": "2026-10-14",
-   "epsEstimate": 1.18,
-   "epsActual": null
-  },
-  {
-   "ticker": "BAC",
-   "date": "2026-07-14",
-   "epsEstimate": 1.12,
-   "epsActual": 1.21
-  },
-  {
-   "ticker": "BAC",
-   "date": "2026-04-15",
-   "epsEstimate": 1.02,
-   "epsActual": 1.11
-  }
- ],
+ "upcoming_earnings": [],
  "recent_sec_filings": [
   {
    "ticker": "BAC",

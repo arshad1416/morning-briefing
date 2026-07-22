@@ -1,18 +1,19 @@
 {
  "ticker": "PCY",
  "name": "Invesco Emerging Markets Sovere",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 21.24,
- "change_pct": -0.54,
+ "generated_at": "2026-07-22T11:45:02.024909+00:00",
+ "price": 21.17,
+ "change_pct": -0.12,
  "sector": null,
  "signals": [
   "oversold_rsi",
-  "below_ma"
+  "below_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 21.5,
-  "sma_20": 21.53,
-  "sma_50": 21.43
+  "rsi_14": 25.3,
+  "sma_20": 21.41,
+  "sma_50": 21.32
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -21,7 +22,7 @@
   "dividend_yield": 0.0581
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
