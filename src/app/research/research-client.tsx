@@ -7,7 +7,7 @@
 // and render a GateCard on 401/403 — the server decides, the UI reflects it.
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { GateCard } from '@/components/feature/gating/GateCard';
 import { fetchGated, GateError } from '@/lib/api/gated';
@@ -82,6 +82,166 @@ function Badge({ tone, children }: { tone: 'bull' | 'bear' | 'caution'; children
     >
       {children}
     </span>
+  );
+}
+
+type DetailTone = 'bull' | 'bear' | 'caution';
+
+type DetailView = {
+  eyebrow: string;
+  title: string;
+  summary?: string;
+  badge?: { tone: DetailTone; label: string };
+  body: React.ReactNode;
+};
+
+function DetailSection({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section>
+      <h3 className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--color-text-tertiary)]">
+        {title}
+      </h3>
+      {children}
+    </section>
+  );
+}
+
+function DetailFacts({ items }: { items: { label: string; value: React.ReactNode }[] }) {
+  const visible = items.filter((item) => item.value !== undefined && item.value !== null && item.value !== '');
+  if (!visible.length) return null;
+  return (
+    <dl className="grid grid-cols-1 gap-px overflow-hidden rounded-xl border sm:grid-cols-2" style={{ borderColor: 'var(--color-border-subtle)', backgroundColor: 'var(--color-border-subtle)' }}>
+      {visible.map((item) => (
+        <div key={item.label} className="min-w-0 p-3" style={{ backgroundColor: 'var(--color-bg-elevated)' }}>
+          <dt className="text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--color-text-tertiary)]">{item.label}</dt>
+          <dd className="mt-1 break-words text-sm font-medium text-[var(--color-text-primary)]" data-numeric>{item.value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+function DetailTrigger({
+  label,
+  onClick,
+  children,
+  className = '',
+}: {
+  label: string;
+  onClick: () => void;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      onClick={onClick}
+      className={`group flex w-full items-start gap-3 rounded-lg px-2 text-left transition-colors hover:bg-[var(--color-bg-elevated)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] ${className}`}
+    >
+      <span className="min-w-0 flex-1">{children}</span>
+      <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[var(--color-text-tertiary)] transition-colors group-hover:border-[var(--color-border-strong)] group-hover:text-[var(--color-accent)]" style={{ borderColor: 'var(--color-border-subtle)' }} aria-hidden="true">
+        <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+          <path d="m7 4 6 6-6 6" />
+        </svg>
+      </span>
+    </button>
+  );
+}
+
+function ResearchDetailDialog({ detail, onClose }: { detail: DetailView | null; onClose: () => void }) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const titleId = useId();
+  const summaryId = useId();
+
+  useEffect(() => {
+    if (!detail) return;
+    const dialog = dialogRef.current;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    dialog?.querySelector<HTMLElement>('[data-detail-autofocus]')?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+      if (event.key !== 'Tab' || !dialog) return;
+      const focusable = Array.from(
+        dialog.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'),
+      ).filter((element) => element.getClientRects().length > 0);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
+    };
+  }, [detail, onClose]);
+
+  if (!detail) return null;
+
+  return (
+    <div className="fixed inset-0 z-[90] flex items-end justify-center sm:items-center sm:p-5">
+      <button
+        type="button"
+        tabIndex={-1}
+        aria-label="Close analysis details"
+        className="absolute inset-0 cursor-default bg-black/70 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        aria-describedby={detail.summary ? summaryId : undefined}
+        className="relative max-h-[92dvh] w-full overflow-y-auto rounded-t-2xl border shadow-2xl sm:max-w-2xl sm:rounded-2xl"
+        style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-default)' }}
+      >
+        <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, var(--color-accent), var(--color-caution), transparent 82%)' }} />
+        <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b px-5 py-4 backdrop-blur-xl sm:px-6" style={{ borderColor: 'var(--color-border-subtle)', backgroundColor: 'color-mix(in srgb, var(--color-bg-surface) 92%, transparent)' }}>
+          <div className="min-w-0">
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]">{detail.eyebrow}</p>
+            <h2 id={titleId} className="mt-1 font-display text-2xl leading-tight text-[var(--color-text-primary)] sm:text-3xl">{detail.title}</h2>
+          </div>
+          <button
+            type="button"
+            data-detail-autofocus
+            onClick={onClose}
+            aria-label="Close analysis details"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-2xl leading-none text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+          >
+            ×
+          </button>
+        </div>
+        <div className="space-y-5 px-5 py-5 sm:px-6 sm:py-6">
+          {(detail.badge || detail.summary) && (
+            <div className="border-l-2 pl-4" style={{ borderColor: 'var(--color-accent)' }}>
+              {detail.badge && <Badge tone={detail.badge.tone}>{detail.badge.label}</Badge>}
+              {detail.summary && <p id={summaryId} className={`${detail.badge ? 'mt-2' : ''} text-sm leading-relaxed text-[var(--color-text-primary)]`}>{detail.summary}</p>}
+            </div>
+          )}
+          {detail.body}
+          <p className="border-t pt-4 text-xs leading-relaxed text-[var(--color-text-tertiary)]" style={{ borderColor: 'var(--color-border-subtle)' }}>
+            Analysis is informational and may change as new market data arrives. It is not personalized investment advice.
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -241,6 +401,228 @@ function AudioBriefing() {
 /* ------------------------------------------------------------------ */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
+
+const ideaTone = (type?: string): DetailTone =>
+  type === 'BULLISH_CONVERGENCE' ? 'bull' : type === 'BEARISH_CONVERGENCE' || type === 'SECTOR_AVOID' ? 'bear' : 'caution';
+
+const ideaGuide = (type?: string) => {
+  switch (type) {
+    case 'BULLISH_CONVERGENCE':
+      return {
+        meaning: 'Several independent inputs are leaning bullish at the same time. Agreement across signals can make the setup more useful than any one input on its own.',
+        caution: 'Convergence measures agreement, not certainty. Confirm that price, volume and the broader market are supporting the move before using the signal.',
+      };
+    case 'BEARISH_CONVERGENCE':
+      return {
+        meaning: 'Several independent inputs are leaning bearish at the same time, increasing the chance that weakness is broad rather than isolated noise.',
+        caution: 'Bearish signals can also reflect hedging or a crowded move. Watch for improving breadth or price reclaiming resistance, which would weaken the read.',
+      };
+    case 'MOST_UNUSUAL_FLOW':
+      return {
+        meaning: 'This contract showed the largest options-volume anomaly in the scan. A high volume-to-open-interest ratio often points to fresh positioning rather than routine turnover.',
+        caution: 'Unusual options flow does not reveal intent by itself. The trade may be a hedge or one leg of a spread, so direction should be confirmed with price action and follow-through.',
+      };
+    case 'SECTOR_SENTIMENT':
+      return {
+        meaning: 'This sector ranked strongest in the current sentiment scan. It is a place to look for relative-strength candidates, not a signal that every name in the group is attractive.',
+        caution: 'Sector sentiment can reverse quickly around macro data, earnings or commodity moves. Compare individual names on fundamentals and price structure.',
+      };
+    case 'SECTOR_AVOID':
+      return {
+        meaning: 'This sector ranked weakest in the current sentiment scan, suggesting elevated headline or relative-strength risk for existing and potential exposure.',
+        caution: 'Weak sentiment can become crowded and create sharp rebounds. Treat the label as a risk flag and monitor for improving price breadth before changing exposure.',
+      };
+    default:
+      return {
+        meaning: 'The research pipeline found a market relationship worth investigating using the latest available news, sentiment and positioning inputs.',
+        caution: 'Use the idea as a starting point. Validate it against price action, liquidity, catalysts and your own risk limits before acting.',
+      };
+  }
+};
+
+function AnalysisIdeaDetails({ idea }: { idea: Any }) {
+  const guide = ideaGuide(idea.type);
+  return (
+    <>
+      <DetailSection title="Why it surfaced">
+        <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{guide.meaning}</p>
+      </DetailSection>
+      <DetailSection title="Current read">
+        <DetailFacts
+          items={[
+            { label: 'Assets in focus', value: idea.tickers?.length ? idea.tickers.join(', ') : 'Broad market' },
+            { label: 'Suggested bias', value: idea.action || 'Monitor' },
+            { label: 'Signal family', value: String(idea.type || 'Analysis idea').replace(/_/g, ' ') },
+          ]}
+        />
+      </DetailSection>
+      <DetailSection title="What to validate">
+        <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{guide.caution}</p>
+      </DetailSection>
+    </>
+  );
+}
+
+const sentimentRead = (score: number | undefined) => {
+  if (typeof score !== 'number') return 'The pulse does not include a scored sentiment reading today.';
+  if (score >= 7) return 'The score is firmly constructive. Risk appetite is elevated, though crowded positioning can make pullbacks sharper.';
+  if (score <= 3) return 'The score is firmly defensive. Capital preservation and tighter risk controls deserve more weight than aggressive entries.';
+  return 'The score is mixed to neutral. Selectivity matters because the market is not offering a strong directional tailwind.';
+};
+
+function MarketPulseDetails({ pulse, meta }: { pulse: Any; meta: Any }) {
+  const levels = Object.entries((pulse.key_levels || {}) as Record<string, Any>);
+  return (
+    <>
+      <DetailSection title="How to read the pulse">
+        <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{sentimentRead(pulse.sentiment_score)}</p>
+      </DetailSection>
+      <DetailSection title="Regime snapshot">
+        <DetailFacts
+          items={[
+            { label: 'Sentiment', value: pulse.sentiment_score != null ? `${pulse.sentiment_score}/10` : undefined },
+            { label: 'Market regime', value: meta.market_regime ? String(meta.market_regime).toUpperCase() : undefined },
+            { label: 'Model confidence', value: meta.confidence != null ? `${meta.confidence}/10` : undefined },
+            { label: 'Sector rotation', value: pulse.sector_rotation },
+          ]}
+        />
+      </DetailSection>
+      {!!levels.length && (
+        <DetailSection title="Levels being watched">
+          <DetailFacts
+            items={levels.flatMap(([ticker, level]) => [
+              { label: `${ticker} support`, value: level?.support != null ? `$${level.support}` : undefined },
+              { label: `${ticker} resistance`, value: level?.resistance != null ? `$${level.resistance}` : undefined },
+            ])}
+          />
+          <p className="mt-2 text-xs leading-relaxed text-[var(--color-text-tertiary)]">Support and resistance are decision zones, not guaranteed turning points. A decisive break can change the regime read.</p>
+        </DetailSection>
+      )}
+      {(pulse.drivers?.length || pulse.catalysts?.length) && (
+        <DetailSection title="Key drivers">
+          <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{(pulse.drivers || pulse.catalysts).join(' · ')}</p>
+        </DetailSection>
+      )}
+    </>
+  );
+}
+
+const convictionGuide = (conviction?: string) => {
+  const level = String(conviction || '').toLowerCase();
+  if (level === 'high') return 'High conviction means the inputs align strongly, but position size should still be anchored to the defined downside.';
+  if (level === 'low') return 'Low conviction means the setup is early or has conflicting evidence; stronger confirmation is needed before taking meaningful risk.';
+  return 'The setup has useful supporting evidence, but still needs confirmation from price action and the stated catalyst.';
+};
+
+function OpportunityDetails({ opportunity }: { opportunity: Any }) {
+  const isLong = opportunity.direction === 'LONG';
+  return (
+    <>
+      <DetailSection title="Setup interpretation">
+        <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+          This is a {isLong ? 'long setup looking for upside continuation or a favorable rebound' : 'short setup looking for downside continuation or a failed rally'}. {convictionGuide(opportunity.conviction)}
+        </p>
+      </DetailSection>
+      <DetailSection title="Trade map">
+        <DetailFacts
+          items={[
+            { label: 'Direction', value: opportunity.direction },
+            { label: 'Conviction', value: opportunity.conviction },
+            { label: 'Timeframe', value: opportunity.timeframe },
+            { label: 'Asset class', value: opportunity.asset_class },
+            { label: 'Entry zone', value: opportunity.entry_zone?.length ? `$${opportunity.entry_zone[0]}–$${opportunity.entry_zone[1]}` : opportunity.entry },
+            { label: 'Target', value: opportunity.target != null ? `$${opportunity.target}` : undefined },
+            { label: 'Stop', value: opportunity.stop != null ? `$${opportunity.stop}` : undefined },
+            { label: 'Risk / reward', value: opportunity.risk_reward },
+          ]}
+        />
+      </DetailSection>
+      {opportunity.catalyst && (
+        <DetailSection title="Catalyst">
+          <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{opportunity.catalyst}</p>
+        </DetailSection>
+      )}
+      <DetailSection title="What would weaken it">
+        <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+          {opportunity.invalidation || opportunity.risk || opportunity.risks?.join?.(' · ') || 'A break beyond the planned risk level, a failed catalyst, or broad-market movement against the setup would reduce confidence.'}
+        </p>
+      </DetailSection>
+    </>
+  );
+}
+
+const positionActionGuide = (action?: string) => {
+  switch (action) {
+    case 'ADD': return 'The model sees enough supporting evidence to consider increasing exposure while respecting the stop and total portfolio risk.';
+    case 'TRIM': return 'The position still has merit, but the reward-to-risk balance has weakened enough to justify reducing exposure.';
+    case 'EXIT': return 'The original thesis or risk boundary is no longer holding, so preserving capital takes priority over waiting for a recovery.';
+    case 'HOLD': return 'The original thesis remains intact and no portfolio change is currently required; the listed levels define what to monitor next.';
+    default: return 'This is the model’s current portfolio instruction based on the latest thesis, price levels and risk conditions.';
+  }
+};
+
+function PositionReviewDetails({ position }: { position: Any }) {
+  return (
+    <>
+      <DetailSection title="Action explained">
+        <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{positionActionGuide(position.action)}</p>
+      </DetailSection>
+      <DetailSection title="Position map">
+        <DetailFacts
+          items={[
+            { label: 'Action', value: position.action },
+            { label: 'Asset class', value: position.asset_class },
+            { label: 'Current price', value: position.current_price != null ? `$${position.current_price}` : undefined },
+            { label: 'Average entry', value: position.entry_price != null ? `$${position.entry_price}` : undefined },
+            { label: 'Target', value: position.target != null ? `$${position.target}` : undefined },
+            { label: 'Stop', value: position.stop != null ? `$${position.stop}` : undefined },
+            { label: 'Risk / reward', value: position.risk_reward },
+            { label: 'Timeframe', value: position.timeframe },
+          ]}
+        />
+      </DetailSection>
+      <DetailSection title="Rationale">
+        <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{position.rationale || 'The review did not include an additional rationale today.'}</p>
+      </DetailSection>
+      <DetailSection title="Decision point">
+        <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+          {position.invalidation || 'Reassess if price violates the stop, the stated rationale no longer applies, or the position grows beyond its intended share of portfolio risk.'}
+        </p>
+      </DetailSection>
+    </>
+  );
+}
+
+const riskGuide = (severity?: string) => {
+  if (severity === 'high') return 'High severity calls for prompt review because the condition could materially affect the thesis or portfolio drawdown.';
+  if (severity === 'medium') return 'Medium severity deserves active monitoring and a pre-planned response if the condition worsens.';
+  return 'Low severity is an early warning. No immediate change may be needed, but the trigger should stay on the watchlist.';
+};
+
+function RiskAlertDetails({ alert }: { alert: Any }) {
+  return (
+    <>
+      <DetailSection title="Why it matters">
+        <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{riskGuide(alert.severity)}</p>
+      </DetailSection>
+      <DetailSection title="Exposure map">
+        <DetailFacts
+          items={[
+            { label: 'Severity', value: String(alert.severity || 'Unrated').toUpperCase() },
+            { label: 'Affected positions', value: alert.affected_positions?.length ? alert.affected_positions.join(', ') : 'Portfolio-wide or unassigned' },
+            { label: 'Trigger', value: alert.trigger },
+            { label: 'Time horizon', value: alert.timeframe || alert.time_horizon },
+          ]}
+        />
+      </DetailSection>
+      <DetailSection title="Suggested response">
+        <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+          {alert.mitigation || alert.action || alert.response || 'Review the affected exposure, confirm that stops and position sizes are still appropriate, and avoid adding risk until the alert is resolved or disproven.'}
+        </p>
+      </DetailSection>
+    </>
+  );
+}
 
 /* ------------------------------------------------------------------ */
 /*  Tabs                                                              */
@@ -515,6 +897,7 @@ function SentimentTab() {
 }
 
 function IdeasTab() {
+  const [detail, setDetail] = useState<DetailView | null>(null);
   const analysis = usePublic<Any>('analysis', '/data/analysis.json');
   const d = analysis.data;
   if (analysis.isLoading) return <Empty>Loading…</Empty>;
@@ -529,16 +912,25 @@ function IdeasTab() {
             <Card title="Analysis Ideas">
               <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
                 {d.analysis_ideas.map((idea: Any, i: number) => (
-                  <div key={i} className="py-3 first:pt-0 last:pb-0">
-                    <Badge tone={idea.type === 'BULLISH_CONVERGENCE' ? 'bull' : idea.type === 'BEARISH_CONVERGENCE' ? 'bear' : 'caution'}>
-                      {String(idea.type || '').replace(/_/g, ' ')}
-                    </Badge>
-                    <p className="mt-1.5 text-sm font-semibold text-[var(--color-text-primary)]" data-numeric>
+                  <DetailTrigger
+                    key={i}
+                    label={`Open analysis details for ${(idea.tickers || []).join(', ') || String(idea.type || 'idea')}`}
+                    className="py-3 first:pt-0 last:pb-0"
+                    onClick={() => setDetail({
+                      eyebrow: 'Analysis idea',
+                      title: `${(idea.tickers || []).join(', ') || 'Market'} · ${String(idea.type || 'Signal').replace(/_/g, ' ')}`,
+                      summary: idea.signal,
+                      badge: { tone: ideaTone(idea.type), label: String(idea.type || 'Analysis idea').replace(/_/g, ' ') },
+                      body: <AnalysisIdeaDetails idea={idea} />,
+                    })}
+                  >
+                    <Badge tone={ideaTone(idea.type)}>{String(idea.type || '').replace(/_/g, ' ')}</Badge>
+                    <span className="mt-1.5 block text-sm font-semibold text-[var(--color-text-primary)]" data-numeric>
                       {(idea.tickers || []).join(', ')}
-                    </p>
-                    <p className="text-sm text-[var(--color-text-secondary)]">{idea.signal}</p>
-                    {idea.action && <p className="text-sm" style={{ color: 'var(--color-accent)' }}>{idea.action}</p>}
-                  </div>
+                    </span>
+                    <span className="block text-sm text-[var(--color-text-secondary)]">{idea.signal}</span>
+                    {idea.action && <span className="block text-sm" style={{ color: 'var(--color-accent)' }}>{idea.action}</span>}
+                  </DetailTrigger>
                 ))}
               </div>
             </Card>
@@ -560,11 +952,13 @@ function IdeasTab() {
           )}
         </Grid2>
       )}
+      <ResearchDetailDialog detail={detail} onClose={() => setDetail(null)} />
     </div>
   );
 }
 
 function MgAnalysisTab() {
+  const [detail, setDetail] = useState<DetailView | null>(null);
   const q = useGated<Any>('mg-analysis', 'morning_analysis.json');
 
   return (
@@ -590,26 +984,55 @@ function MgAnalysisTab() {
             <Grid2>
             {d.market_pulse && (
               <Card title="Market Pulse">
-                <p className="text-sm leading-relaxed text-[var(--color-text-primary)]">{d.market_pulse.one_liner}</p>
-                <p className="mt-2 text-xs text-[var(--color-text-tertiary)]" data-numeric>
-                  Sentiment: {d.market_pulse.sentiment_score}/10
-                </p>
-                {d.market_pulse.sector_rotation && (
-                  <p className="mt-1 text-xs text-[var(--color-text-secondary)]">{d.market_pulse.sector_rotation}</p>
-                )}
-                {d.market_pulse.key_levels?.SPY && (
-                  <p className="mt-1 text-xs text-[var(--color-text-secondary)]" data-numeric>
-                    SPY support: ${d.market_pulse.key_levels.SPY.support} / resistance: ${d.market_pulse.key_levels.SPY.resistance}
-                  </p>
-                )}
+                <DetailTrigger
+                  label="Open Market Pulse analysis details"
+                  className="py-1"
+                  onClick={() => setDetail({
+                    eyebrow: 'MapleGamma analysis',
+                    title: 'Market Pulse',
+                    summary: d.market_pulse.one_liner,
+                    badge: {
+                      tone: d.market_pulse.sentiment_score >= 7 ? 'bull' : d.market_pulse.sentiment_score <= 3 ? 'bear' : 'caution',
+                      label: `Sentiment ${d.market_pulse.sentiment_score ?? '—'}/10`,
+                    },
+                    body: <MarketPulseDetails pulse={d.market_pulse} meta={meta} />,
+                  })}
+                >
+                  <span className="block text-sm leading-relaxed text-[var(--color-text-primary)]">{d.market_pulse.one_liner}</span>
+                  <span className="mt-2 block text-xs text-[var(--color-text-tertiary)]" data-numeric>
+                    Sentiment: {d.market_pulse.sentiment_score}/10
+                  </span>
+                  {d.market_pulse.sector_rotation && (
+                    <span className="mt-1 block text-xs text-[var(--color-text-secondary)]">{d.market_pulse.sector_rotation}</span>
+                  )}
+                  {d.market_pulse.key_levels?.SPY && (
+                    <span className="mt-1 block text-xs text-[var(--color-text-secondary)]" data-numeric>
+                      SPY support: ${d.market_pulse.key_levels.SPY.support} / resistance: ${d.market_pulse.key_levels.SPY.resistance}
+                    </span>
+                  )}
+                </DetailTrigger>
               </Card>
             )}
             <Card title="Position Review">
               {positions.length ? (
                 <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
                   {positions.map((p: Any, i: number) => (
-                    <div key={i} className="py-2.5 first:pt-0 last:pb-0">
-                      <div className="flex flex-wrap items-center gap-2 text-sm">
+                    <DetailTrigger
+                      key={i}
+                      label={`Open position review details for ${p.ticker || 'position'}`}
+                      className="py-2.5 first:pt-0 last:pb-0"
+                      onClick={() => setDetail({
+                        eyebrow: 'Position review',
+                        title: `${p.ticker || 'Position'} · ${p.action || 'Review'}`,
+                        summary: p.rationale,
+                        badge: {
+                          tone: p.action === 'ADD' ? 'bull' : p.action === 'TRIM' || p.action === 'EXIT' ? 'bear' : 'caution',
+                          label: p.action || 'Review',
+                        },
+                        body: <PositionReviewDetails position={p} />,
+                      })}
+                    >
+                      <span className="flex flex-wrap items-center gap-2 text-sm">
                         <Badge tone={p.action === 'ADD' ? 'bull' : p.action === 'TRIM' || p.action === 'EXIT' ? 'bear' : 'caution'}>{p.action}</Badge>
                         <span className="font-semibold text-[var(--color-text-primary)]" data-numeric>{p.ticker}</span>
                         {p.asset_class && <Badge tone="caution">{String(p.asset_class).toUpperCase()}</Badge>}
@@ -618,9 +1041,9 @@ function MgAnalysisTab() {
                             .filter(Boolean)
                             .join(' · ')}
                         </span>
-                      </div>
-                      {p.rationale && <p className="mt-1 text-xs text-[var(--color-text-secondary)]">{p.rationale}</p>}
-                    </div>
+                      </span>
+                      {p.rationale && <span className="mt-1 block text-xs text-[var(--color-text-secondary)]">{p.rationale}</span>}
+                    </DetailTrigger>
                   ))}
                 </div>
               ) : (
@@ -633,22 +1056,33 @@ function MgAnalysisTab() {
               <Card title="Opportunities">
                 <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
                   {d.opportunities.map((o: Any, i: number) => (
-                    <div key={i} className="py-2.5 first:pt-0 last:pb-0">
-                      <div className="flex flex-wrap items-center gap-2 text-sm">
+                    <DetailTrigger
+                      key={i}
+                      label={`Open opportunity details for ${o.ticker || 'opportunity'}`}
+                      className="py-2.5 first:pt-0 last:pb-0"
+                      onClick={() => setDetail({
+                        eyebrow: 'Opportunity',
+                        title: `${o.ticker || 'Market'} · ${o.direction || 'Setup'}`,
+                        summary: o.thesis,
+                        badge: { tone: o.direction === 'LONG' ? 'bull' : 'bear', label: o.direction || 'Setup' },
+                        body: <OpportunityDetails opportunity={o} />,
+                      })}
+                    >
+                      <span className="flex flex-wrap items-center gap-2 text-sm">
                         <Badge tone={o.direction === 'LONG' ? 'bull' : 'bear'}>{o.direction}</Badge>
                         <span className="font-semibold text-[var(--color-text-primary)]" data-numeric>{o.ticker}</span>
                         <span className="text-xs text-[var(--color-text-tertiary)]">
                           {[o.conviction && `${o.conviction} conviction`, o.timeframe].filter(Boolean).join(' · ')}
                         </span>
-                      </div>
-                      {o.thesis && <p className="mt-1 text-xs text-[var(--color-text-secondary)]">{o.thesis}</p>}
+                      </span>
+                      {o.thesis && <span className="mt-1 block text-xs text-[var(--color-text-secondary)]">{o.thesis}</span>}
                       {!!o.entry_zone?.length && (
-                        <p className="mt-0.5 text-xs text-[var(--color-text-tertiary)]" data-numeric>
+                        <span className="mt-0.5 block text-xs text-[var(--color-text-tertiary)]" data-numeric>
                           Entry zone: ${o.entry_zone[0]}–${o.entry_zone[1]}
                           {o.catalyst ? ` · ${o.catalyst}` : ''}
-                        </p>
+                        </span>
                       )}
-                    </div>
+                    </DetailTrigger>
                   ))}
                 </div>
               </Card>
@@ -657,15 +1091,28 @@ function MgAnalysisTab() {
               <Card title="Risk Alerts">
                 <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
                   {d.risk_alerts.map((r: Any, i: number) => (
-                    <div key={i} className="py-2.5 first:pt-0 last:pb-0 text-sm">
+                    <DetailTrigger
+                      key={i}
+                      label={`Open risk alert details: ${r.alert || String(r.severity || 'risk')}`}
+                      className="py-2.5 text-sm first:pt-0 last:pb-0"
+                      onClick={() => setDetail({
+                        eyebrow: 'Risk alert',
+                        title: r.alert || 'Portfolio risk',
+                        badge: {
+                          tone: r.severity === 'high' ? 'bear' : r.severity === 'medium' ? 'caution' : 'bull',
+                          label: `${String(r.severity || 'Unrated').toUpperCase()} severity`,
+                        },
+                        body: <RiskAlertDetails alert={r} />,
+                      })}
+                    >
                       <Badge tone={r.severity === 'high' ? 'bear' : r.severity === 'medium' ? 'caution' : 'bull'}>
                         {String(r.severity || '').toUpperCase()}
                       </Badge>{' '}
                       <span className="text-[var(--color-text-secondary)]">{r.alert}</span>
                       {!!r.affected_positions?.length && (
-                        <p className="text-xs text-[var(--color-text-tertiary)]" data-numeric>Affects: {r.affected_positions.join(', ')}</p>
+                        <span className="block text-xs text-[var(--color-text-tertiary)]" data-numeric>Affects: {r.affected_positions.join(', ')}</span>
                       )}
-                    </div>
+                    </DetailTrigger>
                   ))}
                 </div>
               </Card>
@@ -691,6 +1138,7 @@ function MgAnalysisTab() {
                 ⚠ Analysis is stale: {meta.stale_reason || 'No recent data'}
               </p>
             )}
+            <ResearchDetailDialog detail={detail} onClose={() => setDetail(null)} />
           </div>
         );
       }}
