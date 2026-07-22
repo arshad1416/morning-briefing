@@ -166,14 +166,35 @@ function renderNarrative(text: string): string {
 /* ------------------------------------------------------------------ */
 
 function AudioBriefing() {
-  const [today, setToday] = useState<string | null>(null);
-  const [missing, setMissing] = useState(false);
+  const [queue, setQueue] = useState<string[]>([]);
+  const [index, setIndex] = useState(0);
+  const [exhausted, setExhausted] = useState(false);
 
   useEffect(() => {
-    setToday(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto' }).format(new Date()));
+    const dates: string[] = [];
+    const cursor = new Date();
+    while (dates.length < 15) {
+      const weekday = cursor.getDay();
+      if (weekday !== 0 && weekday !== 6)
+        dates.push(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto' }).format(cursor));
+      cursor.setDate(cursor.getDate() - 1);
+    }
+    setQueue(dates);
   }, []);
 
-  if (!today) return null;
+  const selected = queue[index];
+  if (!selected) return null;
+
+  const older = () => {
+    if (index < queue.length - 1) { setIndex((value) => value + 1); setExhausted(false); }
+  };
+  const newer = () => {
+    if (index > 0) { setIndex((value) => value - 1); setExhausted(false); }
+  };
+  const skipMissing = () => {
+    if (index < queue.length - 1) older();
+    else setExhausted(true);
+  };
 
   return (
     <Card>
@@ -191,20 +212,25 @@ function AudioBriefing() {
         </span>
         <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold text-[var(--color-text-primary)]">Audio Briefing</p>
-          <p className="text-xs text-[var(--color-text-tertiary)]" data-numeric>{today}</p>
+          <p className="text-xs text-[var(--color-text-tertiary)]" data-numeric>{selected} · top-headline queue</p>
         </div>
-        {missing ? (
-          <span className="text-sm text-[var(--color-text-tertiary)]">No briefing yet for today</span>
+        {exhausted ? (
+          <span className="text-sm text-[var(--color-text-tertiary)]">No recent briefing available</span>
         ) : (
           <audio
+            key={selected}
             controls
             preload="none"
             className="h-9 max-w-[280px]"
-            onError={() => setMissing(true)}
+            onError={skipMissing}
           >
-            <source src={`/data/audio/briefing-${today}.mp3`} type="audio/mpeg" onError={() => setMissing(true)} />
+            <source src={`/data/audio/briefing-${selected}.mp3`} type="audio/mpeg" />
           </audio>
         )}
+        <div className="flex gap-1">
+          <button type="button" onClick={older} disabled={index >= queue.length - 1} className="rounded border px-2 py-1 text-xs disabled:opacity-40" style={{ borderColor: 'var(--color-border-subtle)' }}>Older</button>
+          <button type="button" onClick={newer} disabled={index === 0} className="rounded border px-2 py-1 text-xs disabled:opacity-40" style={{ borderColor: 'var(--color-border-subtle)' }}>Newer</button>
+        </div>
       </div>
     </Card>
   );
@@ -803,6 +829,7 @@ function MarketsTab() {
 function EarningsTab() {
   const q = useGated<Any>('earnings', 'earnings.json');
   const [today, setToday] = useState('');
+  const [transcriptSearch, setTranscriptSearch] = useState('');
   useEffect(() => {
     setToday(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Toronto' }).format(new Date()));
   }, []);
@@ -814,6 +841,10 @@ function EarningsTab() {
           return <Empty>No earnings data generated yet — the pipeline runs weekday mornings.</Empty>;
         const upcoming = d.calendar.filter((r: Any) => r.date >= today).sort((a: Any, b: Any) => a.date.localeCompare(b.date));
         const recent = d.calendar.filter((r: Any) => r.date < today).slice(0, 20);
+        const search = transcriptSearch.trim().toLowerCase();
+        const transcripts = (d.transcripts || []).filter((tr: Any) =>
+          !search || [tr.ticker, tr.quarter, tr.summary, tr.content].some((value) => String(value || '').toLowerCase().includes(search)),
+        );
 
         const Table = ({ rows, title, showActual }: { rows: Any[]; title: string; showActual: boolean }) =>
           rows.length ? (
@@ -864,15 +895,27 @@ function EarningsTab() {
             <Table rows={upcoming} title="Upcoming Earnings (watchlist)" showActual={false} />
             <Table rows={recent} title="Recent Results" showActual />
             {d.transcripts?.length ? (
-              <Grid2>
-                {d.transcripts.slice(0, 10).map((tr: Any, i: number) => (
-                  <Card key={i} title={`${tr.ticker || ''} — ${tr.quarter || ''}`}>
-                    <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-                      {String(tr.summary || tr.content || '').substring(0, 600)}…
-                    </p>
-                  </Card>
-                ))}
-              </Grid2>
+              <>
+                <input
+                  type="search"
+                  value={transcriptSearch}
+                  onChange={(event) => setTranscriptSearch(event.target.value)}
+                  placeholder="Search transcripts by ticker, quarter, or phrase…"
+                  className="w-full rounded-lg border bg-[var(--color-bg-elevated)] px-3 py-2 text-sm text-[var(--color-text-primary)]"
+                  style={{ borderColor: 'var(--color-border-subtle)' }}
+                />
+                {transcripts.length ? (
+                  <Grid2>
+                    {transcripts.slice(0, 20).map((tr: Any, i: number) => (
+                      <Card key={i} title={`${tr.ticker || ''} — ${tr.quarter || ''}`}>
+                        <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                          {String(tr.summary || tr.content || '').substring(0, 600)}…
+                        </p>
+                      </Card>
+                    ))}
+                  </Grid2>
+                ) : <Empty>No transcripts match “{transcriptSearch}”.</Empty>}
+              </>
             ) : (
               <p className="text-xs text-[var(--color-text-tertiary)]">Full call transcripts require an FMP API key (not configured).</p>
             )}

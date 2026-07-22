@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Fetch SEC EDGAR filings (10-K, 10-Q) for tracked tickers.
+Fetch SEC EDGAR filings (10-K, 10-Q, Form 4) for tracked tickers.
 
 SEC EDGAR is free — no API key needed. Rate limit: 10 requests/sec max.
 Uses a CIK lookup mapping for V3 tickers.
@@ -18,14 +18,13 @@ Set SEC_USER_AGENT env var or pass --user-agent.
 """
 
 import argparse
+import asyncio
 import json
 import os
 import sys
-import time
-import urllib.request
-import urllib.error
-import xml.etree.ElementTree as ET
 from datetime import datetime
+
+from pipeline_runtime import RequestFailed, atomic_write_json, request_json, run_blocking_pool
 
 DATA_DIR = os.path.expanduser("~/morning-briefing/data")
 SEC_DIR = os.path.join(DATA_DIR, "sec")
@@ -129,95 +128,61 @@ def lookup_cik(ticker):
     return None
 
 
-def fetch_filings(cik, count=10):
-    """Fetch SEC filings via EDGAR Atom feed."""
+def parse_submission_filings(payload, cik, count=10, forms=("10-K", "10-Q", "4")):
+    """Parse SEC submissions JSON into stable filing records."""
+    recent = payload.get("filings", {}).get("recent", {})
+    accepted_forms = {form.upper() for form in forms}
+    records = []
+    length = len(recent.get("accessionNumber", []))
+
+    def at(field, index):
+        values = recent.get(field, [])
+        return values[index] if index < len(values) else ""
+
+    for index in range(length):
+        form = str(at("form", index)).upper()
+        if form not in accepted_forms:
+            continue
+        accession = at("accessionNumber", index)
+        document = at("primaryDocument", index)
+        accession_path = str(accession).replace("-", "")
+        url = (
+            f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{accession_path}/{document}"
+            if accession and document
+            else ""
+        )
+        records.append({
+            "title": f"{form} — {payload.get('name', '')}".strip(" —"),
+            "url": url,
+            "date": at("filingDate", index),
+            "accepted_at": at("acceptanceDateTime", index),
+            "accession_number": accession,
+            "type": form,
+            "form": "Annual Report" if form == "10-K" else "Quarterly Report" if form == "10-Q" else "Insider Transaction",
+            "period": at("reportDate", index),
+        })
+        if len(records) >= count:
+            break
+    return records
+
+
+def fetch_filings(cik, count=10, forms=("10-K", "10-Q", "4")):
+    """Fetch SEC filings from the official submissions JSON endpoint."""
     cik_padded = cik.zfill(10)
-    url = (
-        f"https://www.sec.gov/cgi-bin/browse-edgar"
-        f"?action=getcompany&CIK={cik_padded}"
-        f"&type=10-K,10-Q&output=atom&count={count}"
-    )
+    url = f"https://data.sec.gov/submissions/CIK{cik_padded}.json"
 
     headers = {
         "User-Agent": SEC_USER_AGENT,
-        "Accept": "application/xml, text/xml, */*",
-        "Accept-Encoding": "gzip, deflate",
-        "Host": "www.sec.gov",
+        "Accept": "application/json",
+        "Accept-Encoding": "identity",
     }
 
     try:
-        req = urllib.request.Request(url, headers=headers)
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            raw = resp.read().decode("utf-8", errors="replace")
-            return parse_filings_xml(raw)
-    except urllib.error.HTTPError as e:
-        print(f"  HTTP error for CIK {cik}: {e.code} {e.reason}", file=sys.stderr)
-        if e.code == 403:
-            print("  (SEC blocking — check User-Agent header)", file=sys.stderr)
-        return None
-    except Exception as e:
+        payload = request_json(url, headers=headers, timeout=30)
+        return parse_submission_filings(payload, cik, count, forms)
+    except (RequestFailed, ValueError) as e:
         print(f"  Error fetching CIK {cik}: {e}", file=sys.stderr)
         return None
-
-
-def parse_filings_xml(xml_text):
-    """Parse SEC Atom XML feed into structured filing entries."""
-    filings = []
-    try:
-        root = ET.fromstring(xml_text)
-        # Atom namespace
-        ns = {
-            "atom": "http://www.w3.org/2005/Atom",
-            "sec": "http://schemas.xmlsoap.org/ws/2004/09/secext",
-        }
-
-        for entry in root.findall("atom:entry", ns):
-            filing = {}
-            title_el = entry.find("atom:title", ns)
-            if title_el is not None:
-                filing["title"] = title_el.text
-
-            link_el = entry.find("atom:link", ns)
-            if link_el is not None:
-                filing["url"] = link_el.get("href", "")
-
-            updated_el = entry.find("atom:updated", ns)
-            if updated_el is not None:
-                filing["date"] = updated_el.text[:10]
-
-            summary_el = entry.find("atom:summary", ns)
-            if summary_el is not None:
-                filing["summary"] = summary_el.text
-
-            # Extract filing type from title
-            if filing.get("title"):
-                title = filing["title"]
-                if "10-K" in title:
-                    filing["type"] = "10-K"
-                    filing["form"] = "Annual Report"
-                elif "10-Q" in title:
-                    filing["type"] = "10-Q"
-                    filing["form"] = "Quarterly Report"
-                else:
-                    filing["type"] = "Other"
-                    filing["form"] = title
-
-            # Extract period from summary if available
-            if filing.get("summary"):
-                summary = filing["summary"]
-                for line in summary.split("."):
-                    line = line.strip()
-                    if "period" in line.lower() and ":" in line:
-                        filing["period"] = line.split(":", 1)[1].strip()
-
-            if filing.get("title"):
-                filings.append(filing)
-
-    except ET.ParseError as e:
-        print(f"  XML parse error: {e}", file=sys.stderr)
-        return None
-
-    return filings
 
 
 def get_tickers_from_cik_mapping():
@@ -227,7 +192,7 @@ def get_tickers_from_cik_mapping():
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Fetch SEC EDGAR filings (10-K, 10-Q) for tracked tickers"
+        description="Fetch SEC EDGAR filings (10-K, 10-Q, Form 4) for tracked tickers"
     )
     parser.add_argument("--ticker", help="Ticker(s) to fetch, comma-separated")
     parser.add_argument("--all-tickers", action="store_true",
@@ -240,6 +205,10 @@ def main():
                         help="SEC User-Agent (overrides SEC_USER_AGENT env var)")
     parser.add_argument("--delay", type=float, default=0.125,
                         help=f"Delay between API calls in seconds (default: {RATE_LIMIT_DELAY})")
+    parser.add_argument("--workers", type=int, default=4,
+                        help="Maximum concurrent SEC requests (default: 4)")
+    parser.add_argument("--forms", default="10-K,10-Q,4",
+                        help="Comma-separated SEC forms (default: 10-K,10-Q,4)")
     parser.add_argument("--sizer-pct", type=float, default=None,
                         help="Future use - reserved for position sizing context")
 
@@ -263,39 +232,44 @@ def main():
         sys.exit(1)
 
     os.makedirs(args.output_dir, exist_ok=True)
-    results = {}
+    forms = tuple(form.strip().upper() for form in args.forms.split(",") if form.strip())
 
-    for ticker in tickers:
+    def process_ticker(ticker):
         cik = lookup_cik(ticker)
         if not cik:
             print(f"  No CIK mapping for {ticker}. Skipping.", file=sys.stderr)
-            results[ticker] = {"error": "no_cik_mapping"}
-            continue
+            return ticker, {"error": "no_cik_mapping"}
 
         print(f"  Fetching SEC filings for {ticker} (CIK: {cik})...", file=sys.stderr)
-        filings = fetch_filings(cik, args.limit)
+        filings = fetch_filings(cik, args.limit, forms)
 
         if filings is not None:
-            results[ticker] = {
+            result = {
                 "status": "ok",
                 "count": len(filings),
             }
             out_path = os.path.join(args.output_dir, f"{ticker}-filings.json")
-            with open(out_path, "w") as f:
-                json.dump({
-                    "ticker": ticker,
-                    "cik": cik,
-                    "fetched_at": datetime.now().isoformat(),
-                    "filings": filings,
-                    "count": len(filings),
-                }, f, indent=2)
+            atomic_write_json(out_path, {
+                "ticker": ticker,
+                "cik": cik,
+                "fetched_at": datetime.now().isoformat(),
+                "forms": list(forms),
+                "filings": filings,
+                "count": len(filings),
+            })
             print(f"    Saved {len(filings)} filings: {out_path}", file=sys.stderr)
         else:
-            results[ticker] = {"error": "fetch_failed"}
+            result = {"error": "fetch_failed"}
             print(f"    Failed to fetch filings for {ticker}", file=sys.stderr)
+        return ticker, result
 
-        # Rate limiting — be nice to SEC
-        time.sleep(args.delay)
+    pairs = asyncio.run(run_blocking_pool(
+        tickers,
+        process_ticker,
+        max_concurrency=args.workers,
+        min_start_interval=max(args.delay, RATE_LIMIT_DELAY),
+    ))
+    results = dict(pairs)
 
     # Output summary
     success_count = sum(1 for r in results.values() if r.get("status") == "ok")
