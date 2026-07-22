@@ -39,6 +39,14 @@ function Shell({ children }: { children: React.ReactNode }) {
         <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">
           Crypto Strategy Cohorts
         </h3>
+        {/* Advertised under Pro on the landing page; data is public for now. */}
+        <span
+          className="ml-auto rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
+          style={{ backgroundColor: 'var(--color-accent-dim)', color: 'var(--color-accent)' }}
+          title="Free preview — subscriber-only controls arrive with Pro"
+        >
+          Pro preview
+        </span>
       </div>
       {children}
     </div>

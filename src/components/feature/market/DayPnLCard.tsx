@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 import { Surface, SurfaceHeader, Stat } from '@/components/primitives';
 import { fetchGated, GateError } from '@/lib/api/gated';
+import { GateInline } from '@/components/feature/gating/GateInline';
 
 const PaperPortfolioSchema = z
   .object({
@@ -46,18 +47,19 @@ export function DayPnLCard() {
   );
 
   if (isError) {
-    const signedOut = error instanceof GateError && error.kind === 'signin';
+    // Both gate states get a conversion affordance: the signed-out trial pitch
+    // and — previously missing — the signed-in-without-subscription upgrade.
+    if (error instanceof GateError && error.kind !== 'unavailable') {
+      return shell(
+        <GateInline
+          kind={error.kind}
+          need={error.need ?? 'basic'}
+          feature="the live $100K paper-trading portfolio"
+        />,
+      );
+    }
     return shell(
-      <p className="text-sm text-[var(--color-text-tertiary)]">
-        {signedOut ? (
-          <>
-            <a href="/login" className="underline text-[var(--color-accent)]">Sign in</a> to view the
-            live $100K paper-trading account.
-          </>
-        ) : (
-          'Portfolio data isn’t available right now.'
-        )}
-      </p>,
+      <p className="text-sm text-[var(--color-text-tertiary)]">Portfolio data isn’t available right now.</p>,
     );
   }
 

@@ -10,16 +10,25 @@ import { NopeCard } from '@/components/feature/options/NopeCard';
 import { RegimeChip } from '@/components/primitives';
 import { useQuery } from '@tanstack/react-query';
 import { gexDetailQuery, gexQuery } from '@/lib/query/options';
-import { ProGate } from '@/components/feature/gating/ProGate';
+import { FeatureGate } from '@/components/feature/gating/FeatureGate';
+import { GateCard } from '@/components/feature/gating/GateCard';
+import { GateError } from '@/lib/api/gated';
 import { AlertRuleBuilder } from '@/components/feature/MissedOpportunities';
 import { formatCompact } from '@/lib/format';
 
 function OptionsFlowTable() {
-  const { data, isPending } = useQuery(gexDetailQuery());
+  const { data, isPending, error } = useQuery(gexDetailQuery());
   const mode = data?.modes.all;
 
-  // Query settled without data (gated or unavailable) — hide the table.
-  if (!mode && !isPending) return null;
+  // Query settled without data: show the gate instead of silently rendering
+  // an empty flow card (previously free users saw a header and nothing else).
+  if (!mode && !isPending) {
+    if (error instanceof GateError && error.kind !== 'unavailable') {
+      // gex-detail.json is Pro in the Worker's file map — the fallback isn't a guess.
+      return <GateCard kind={error.kind} need={error.need ?? 'pro'} feature="Strike-level options flow" flush />;
+    }
+    return <p className="p-4 text-sm text-[var(--color-text-tertiary)]">Flow data isn’t available right now.</p>;
+  }
 
   const topStrikes = mode?.strikes.slice(0, 10);
 
@@ -133,8 +142,8 @@ const FlowCard = (
 const OPTIONS_ITEMS: GridItem[] = [
   { id: 'gexdexvex', span: 'half', node: <GexDexVexCard /> },
   { id: 'dealer', span: 'half', node: <DealerPositioningCard /> },
-  { id: 'nope', span: 'half', node: <ProGate feature="nope"><NopeCard /></ProGate> },
+  { id: 'nope', span: 'half', node: <FeatureGate feature="nope"><NopeCard /></FeatureGate> },
   { id: 'flow', span: 'hero', node: FlowCard },
-  { id: 'gammawall', span: 'hero', node: <ProGate feature="gammaWalls"><GammaWallChart /></ProGate> },
+  { id: 'gammawall', span: 'hero', node: <FeatureGate feature="gammaWalls"><GammaWallChart /></FeatureGate> },
   { id: 'alertbuilder', span: 'hero', node: <AlertRuleBuilder /> },
 ];

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useUI } from '@/stores/ui';
 import { useMe } from '@/lib/auth/useMe';
+import { trialDaysLeft } from '@/lib/auth/api';
 import { GammaMark } from '@/components/brand/GammaMark';
 import { TickerTape } from './TickerTape';
 import { LayoutEditToggle } from './LayoutEditToggle';
@@ -163,15 +164,30 @@ function SessionButton() {
   if (isLoading) return <span className="h-11 w-11 shrink-0" aria-hidden="true" />;
 
   if (me) {
+    const ent = me.entitlement;
+    const trialing = ent.tier === 'trial' && ent.status === 'active' && !!ent.trialEndsAt;
+    const days = trialing ? trialDaysLeft(ent.trialEndsAt) : 0;
     return (
-      <Link
-        href="/account/"
-        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:w-auto sm:gap-2 sm:px-3"
-        title={me.email}
-      >
-        <IconUser />
-        <span className="hidden sm:inline">Account</span>
-      </Link>
+      <>
+        {trialing && (
+          <Link
+            href="/account/"
+            className="hidden sm:inline-flex shrink-0 items-center whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] font-semibold transition-opacity hover:opacity-80"
+            style={{ backgroundColor: 'var(--color-accent-dim)', color: 'var(--color-accent)' }}
+            title="Your 7-day free trial of the full desk — pick a plan to keep it"
+          >
+            Trial · {days} day{days === 1 ? '' : 's'} left
+          </Link>
+        )}
+        <Link
+          href="/account/"
+          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:w-auto sm:gap-2 sm:px-3"
+          title={me.email}
+        >
+          <IconUser />
+          <span className="hidden sm:inline">Account</span>
+        </Link>
+      </>
     );
   }
 
