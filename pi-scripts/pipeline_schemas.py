@@ -35,6 +35,16 @@ class CouncilAnalysis(_Artifact):
     narrative: str = Field(min_length=1)
 
 
+class CouncilExpertOutputs(_Artifact):
+    """The shape maplegamma_analysis*.json actually has in production: the
+    council's raw per-expert outputs envelope, not the merged analysis. The
+    validator accepts either (see _MODELS) — rejecting this shape blocked the
+    entire publish run the first time validation went live."""
+
+    meta: dict[str, Any]
+    expert_outputs: dict[str, Any]
+
+
 class MorningAnalysis(_Artifact):
     meta: dict[str, Any]
     market_pulse: dict[str, Any]
@@ -58,15 +68,17 @@ class TradeOutcomes(_Artifact):
     entries: list[dict[str, Any]]
 
 
-_MODELS: dict[str, type[BaseModel]] = {
-    "maplegamma_analysis.json": CouncilAnalysis,
-    "maplegamma_analysis_b.json": CouncilAnalysis,
-    "morning_analysis.json": MorningAnalysis,
-    "strategy_improvement.json": StrategyImprovement,
-    "strategy_improvement_b.json": StrategyImprovement,
-    "council_history.json": CouncilHistory,
-    "trade_outcomes.json": TradeOutcomes,
-    "trade_outcomes_b.json": TradeOutcomes,
+# Each file maps to the shapes it may legitimately have; validation passes if
+# ANY of them matches.
+_MODELS: dict[str, tuple[type[BaseModel], ...]] = {
+    "maplegamma_analysis.json": (CouncilExpertOutputs, CouncilAnalysis),
+    "maplegamma_analysis_b.json": (CouncilExpertOutputs, CouncilAnalysis),
+    "morning_analysis.json": (MorningAnalysis,),
+    "strategy_improvement.json": (StrategyImprovement,),
+    "strategy_improvement_b.json": (StrategyImprovement,),
+    "council_history.json": (CouncilHistory,),
+    "trade_outcomes.json": (TradeOutcomes,),
+    "trade_outcomes_b.json": (TradeOutcomes,),
 }
 
 
@@ -86,12 +98,17 @@ def validate_artifact(name: str, payload: Any) -> Any:
     if not isinstance(payload, (dict, list)):
         raise ArtifactValidationError(f"{name} must contain a JSON object or array")
     _assert_finite(payload)
-    model = _MODELS.get(Path(name).name)
-    if model is not None:
-        try:
-            model.model_validate(payload)
-        except ValidationError as exc:
-            raise ArtifactValidationError(f"{name} failed schema validation: {exc}") from exc
+    models = _MODELS.get(Path(name).name)
+    if models:
+        last_exc: ValidationError | None = None
+        for model in models:
+            try:
+                model.model_validate(payload)
+                break
+            except ValidationError as exc:
+                last_exc = exc
+        else:
+            raise ArtifactValidationError(f"{name} failed schema validation: {last_exc}") from last_exc
     return payload
 
 
