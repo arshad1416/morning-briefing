@@ -33,7 +33,7 @@ function TermLabel({ term, children }: { term: GlossaryTerm; children: React.Rea
 // BELOW the number, not under the label: these cards sit in a stretch grid, so
 // a caption between label and value would push that card's number a line lower
 // than its uncaptioned row-mates and break the row's alignment.
-function StatCard({ label, value, sub, caption, color }: { label: React.ReactNode; value: React.ReactNode; sub?: React.ReactNode; caption?: string; color?: string }) {
+function StatCard({ label, value, sub, caption, color }: { label: React.ReactNode; value: React.ReactNode; sub?: React.ReactNode; caption?: GlossaryTerm; color?: string }) {
   return (
     <div
       className="rounded-[var(--radius-tile)] border p-4"

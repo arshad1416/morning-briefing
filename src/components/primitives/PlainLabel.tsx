@@ -8,11 +8,16 @@
 'use client';
 
 import React from 'react';
-import { lookup } from '@/lib/glossary';
+import { lookup, type GlossaryTerm } from '@/lib/glossary';
 
 interface PlainLabelProps {
-  /** One glossary term, or several to be joined with a middot. */
-  term: string | string[];
+  /**
+   * One glossary term, or several to be joined with a middot. Typed against
+   * the glossary for the same reason InfoTip is: an unknown term would filter
+   * down to an empty list and render nothing at all, which is exactly the
+   * silent-blank failure this component exists to prevent.
+   */
+  term: GlossaryTerm | GlossaryTerm[];
   className?: string;
 }
 

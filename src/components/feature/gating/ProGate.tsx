@@ -10,6 +10,7 @@ import React from 'react';
 import Link from 'next/link';
 import { FEATURES, type FeatureKey } from '@/stores/entitlements';
 import { useMe } from '@/lib/auth/useMe';
+import type { GlossaryTerm } from '@/lib/glossary';
 import { PlainLabel } from '@/components/primitives';
 
 interface ProGateProps {
@@ -37,7 +38,7 @@ const FEATURE_LABELS: Record<FeatureKey, string> = {
 // Plain-English caption under the lock label, read from the glossary. Only keys
 // whose entry is true of everything behind that lock appear here — `walkforward`
 // covers three unrelated tiles, so no single definition fits it.
-const FEATURE_TERMS: Partial<Record<FeatureKey, string>> = {
+const FEATURE_TERMS: Partial<Record<FeatureKey, GlossaryTerm>> = {
   simulation: 'live_simulation',
   gammaWalls: 'gamma_wall',
   nope: 'nope',
