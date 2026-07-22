@@ -161,6 +161,30 @@ body {
   }
 }
 
+/* ---- Hero entrance ----
+   CSS keyframes instead of framer-motion for the above-the-fold hero block:
+   the LCP text was shipping at opacity:0 in the static HTML and staying
+   invisible until JS hydrated and framer-motion set it to 1, which held LCP
+   hostage to hydration time (~3s throttled). Same easing/duration/stagger as
+   the JS version (see fadeUp/stagger in LandingPage.tsx), but driven by the
+   browser's paint timeline instead of React — text is visible within its
+   animation-delay regardless of when JS finishes. Already reduced-motion-safe
+   via --landing-reveal-opacity/-y above and the animation-duration override. */
+@keyframes landing-reveal {
+  from {
+    opacity: var(--landing-reveal-opacity);
+    transform: translateY(var(--landing-reveal-y));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.landing-reveal {
+  animation: landing-reveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 /* ---- Light theme override (dark is the flagship) ---- */
 :root[data-theme="light"] {
   --color-bg-base: #FAFAF9;

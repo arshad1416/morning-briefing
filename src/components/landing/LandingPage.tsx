@@ -428,46 +428,45 @@ export default function MapleGammaLanding() {
       <main id="main" className="relative z-10">
         {/* Hero */}
         <section className="mx-auto max-w-4xl px-5 pb-16 pt-16 text-center sm:pt-24">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            animate="show"
-            className="flex flex-col items-center"
-          >
-            <motion.span
-              variants={fadeUp}
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-bg-elevated)] px-4 py-1.5 text-xs font-medium text-[var(--color-text-secondary)]"
+          <div className="flex flex-col items-center">
+            {/* Hero entrance is CSS (.landing-reveal in globals.css), not
+                framer-motion — this content is LCP-critical and must not
+                wait on JS hydration to become visible. Delays below
+                reproduce the stagger/fadeUp timing (0.08s step, 0.05s lead). */}
+            <span
+              className="landing-reveal inline-flex items-center gap-2 rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-bg-elevated)] px-4 py-1.5 text-xs font-medium text-[var(--color-text-secondary)]"
+              style={{ animationDelay: "0.05s" }}
             >
               <span
                 className="h-1.5 w-1.5 rounded-full animate-pulse"
                 style={{ backgroundColor: "var(--color-accent)" }}
               />
               Institutional-grade options intelligence
-            </motion.span>
+            </span>
 
-            <motion.h1
-              variants={fadeUp}
-              className="font-display mt-6 text-balance text-5xl leading-[1.04] tracking-tight text-[var(--color-text-primary)] sm:text-7xl"
+            <h1
+              className="landing-reveal font-display mt-6 text-balance text-5xl leading-[1.04] tracking-tight text-[var(--color-text-primary)] sm:text-7xl"
+              style={{ animationDelay: "0.13s" }}
             >
               Trade with the math the{" "}
               <em className="italic" style={{ color: "var(--color-accent)" }}>
                 desks
               </em>{" "}
               already use.
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              variants={fadeUp}
-              className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-[var(--color-text-tertiary)]"
+            <p
+              className="landing-reveal mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-[var(--color-text-tertiary)]"
+              style={{ animationDelay: "0.21s" }}
             >
               MapleGamma turns dealer gamma, delta exposure, live news and
               sentiment into one clear verdict — so retail investors can read the
               market the way the pros do.
-            </motion.p>
+            </p>
 
-            <motion.div
-              variants={fadeUp}
-              className="mt-9 flex flex-col gap-3 sm:flex-row"
+            <div
+              className="landing-reveal mt-9 flex flex-col gap-3 sm:flex-row"
+              style={{ animationDelay: "0.29s" }}
             >
               <a
                 href="/signup/"
@@ -481,8 +480,8 @@ export default function MapleGammaLanding() {
               >
                 See how it works
               </a>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </section>
 
         {/* Trust bar */}
