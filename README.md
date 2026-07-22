@@ -6,8 +6,9 @@ Static market briefing site on Cloudflare Pages, data piped from Raspberry Pi.
 
 - **Site:** Next.js 15 static export (`output: 'export'`) on Cloudflare Pages
   - Build command: `npm run build` → output dir `out/` (configured in the Pages dashboard)
-  - `_headers`, `robots.txt`, `sitemap.xml`, `llms.txt`, and the legal pages live in
-    `public/` and are copied verbatim into `out/` at build time
+  - `_headers`, `robots.txt`, `llms.txt`, and the legal pages live in `public/` and are
+    copied verbatim into `out/` at build time; `sitemap.xml` is generated at build time
+    by `src/app/sitemap.ts`
 - **Data:** Pi cron generates JSON → commits `data/**` + `public/data/**` → each push
   triggers a Pages rebuild so `out/data/` stays fresh (~20–25 builds/weekday; the free
   tier allows 500 builds/month — watch the quota)

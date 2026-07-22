@@ -8,6 +8,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import fs from 'node:fs';
 import path from 'node:path';
+import { buildMetadata } from '@/lib/seo';
 
 export const dynamicParams = false;
 
@@ -86,17 +87,13 @@ export async function generateMetadata({ params }: { params: Promise<{ date: str
   const description = raw
     ? `${raw.slice(0, 152)}…`
     : `MapleGamma daily market briefing for ${longDate(date)}: S&P 500 regime, key levels, dealer gamma and macro analysis.`;
-  return {
+  return buildMetadata({
     title: `S&P 500 Market Briefing — ${longDate(date)}`,
     description,
-    alternates: { canonical: `/archive/${date}/` },
-    openGraph: {
-      type: 'article',
-      title: `S&P 500 Market Briefing — ${longDate(date)}`,
-      description,
-      url: `/archive/${date}/`,
-    },
-  };
+    path: `/archive/${date}/`,
+    ogType: 'article',
+    publishedTime: d?.generated_at ?? `${date}T07:20:00-04:00`,
+  });
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
