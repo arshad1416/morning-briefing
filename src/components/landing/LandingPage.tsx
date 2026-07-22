@@ -484,21 +484,16 @@ export default function MapleGammaLanding() {
           </div>
         </section>
 
-        {/* Trust bar */}
-        <motion.section
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={viewport}
-          aria-label="Platform coverage"
-          className="mx-auto max-w-4xl px-5"
-        >
+        {/* Trust bar — CSS entrance like the hero: this row sits inside the
+            initial mobile viewport, so whileInView's IntersectionObserver
+            fired on first paint anyway; CSS removes the JS/hydration wait. */}
+        <section aria-label="Platform coverage" className="mx-auto max-w-4xl px-5">
           <div className="grid grid-cols-3 divide-x divide-[var(--color-border-subtle)] rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)] py-6">
-            {stats.map((s) => (
-              <motion.div
+            {stats.map((s, i) => (
+              <div
                 key={s.label}
-                variants={fadeUp}
-                className="px-2 text-center"
+                className="landing-reveal px-2 text-center"
+                style={{ animationDelay: `${(0.05 + i * 0.08).toFixed(2)}s` }}
               >
                 <div
                   className="text-2xl font-semibold text-[var(--color-text-primary)] sm:text-3xl"
@@ -509,10 +504,10 @@ export default function MapleGammaLanding() {
                 <div className="mt-1 text-xs text-[var(--color-text-tertiary)] sm:text-sm">
                   {s.label}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* Features */}
         <section id="features" className="mx-auto max-w-6xl px-5 py-20 sm:py-28">
