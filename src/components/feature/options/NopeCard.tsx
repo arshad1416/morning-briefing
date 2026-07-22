@@ -26,7 +26,22 @@ export function NopeCard() {
       </div>
       <div className="p-4">
         {isLoading || !data ? (
-          <div className="skeleton h-24" />
+          // Mirrors the loaded DOM (2-symbol grid + footnote) so load causes no shift.
+          <div aria-busy="true">
+            <div className="grid grid-cols-2 gap-4">
+              {[0, 1].map((i) => (
+                <div key={i}>
+                  <div className="skeleton h-4 w-16" />
+                  <div className="skeleton h-7 w-20 mt-0.5" />
+                  <div className="skeleton h-[15px] w-28 mt-1" />
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 space-y-1">
+              <div className="skeleton h-[13px]" />
+              <div className="skeleton h-[13px] w-3/4" />
+            </div>
+          </div>
         ) : (
           <>
             <div className="grid grid-cols-2 gap-4" style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}>

@@ -4,8 +4,12 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { gexQuery } from '@/lib/query/options';
+import { POLL } from '@/lib/query/policy';
 import { Surface, SurfaceHeader, RegimeChip, InfoTip, DataFreshness } from '@/components/primitives';
 import { formatCompact } from '@/lib/format';
+
+// The options feed regenerates every ~30 min during market hours.
+const OPTIONS_STALE_MS = 40 * 60_000;
 
 function SignBar({ value, max }: { value: number; max: number }) {
   const pct = max > 0 ? Math.min(1, Math.abs(value) / max) * 50 : 0;
@@ -29,13 +33,27 @@ function SignBar({ value, max }: { value: number; max: number }) {
 }
 
 export function GexDexVexCard() {
-  const { data, isLoading } = useQuery(gexQuery());
+  // Free static asset — cheap to poll; sibling cards share the query key and
+  // ride the refreshed cache.
+  const { data } = useQuery({ ...gexQuery(), refetchInterval: POLL.options.live });
 
-  if (isLoading || !data) {
+  if (!data) {
+    // Mirrors the loaded DOM (3-metric grid + footer) so load causes no shift.
     return (
       <Surface span="third">
         <SurfaceHeader title="GEX/DEX/VEX" />
-        <div className="p-4 skeleton h-24" />
+        <div className="p-4 space-y-4" aria-busy="true">
+          <div className="grid grid-cols-3 gap-4">
+            {[0, 1, 2].map((i) => (
+              <div key={i}>
+                <div className="skeleton h-[15px] w-10" />
+                <div className="skeleton h-7 w-16 mt-1" />
+                <div className="skeleton h-1 mt-2" />
+              </div>
+            ))}
+          </div>
+          <div className="skeleton h-4" />
+        </div>
       </Surface>
     );
   }
@@ -55,7 +73,7 @@ export function GexDexVexCard() {
         title={<InfoTip term="gex">GEX / DEX / VEX</InfoTip>}
         right={
           <div className="flex items-center gap-2">
-            <DataFreshness timestamp={data.generated_at} />
+            <DataFreshness timestamp={data.generated_at} staleAfterMs={OPTIONS_STALE_MS} />
             <RegimeChip regime={mode.gamma_regime} />
           </div>
         }

@@ -15,15 +15,16 @@ import { AlertRuleBuilder } from '@/components/feature/MissedOpportunities';
 import { formatCompact } from '@/lib/format';
 
 function OptionsFlowTable() {
-  const { data } = useQuery(gexDetailQuery());
+  const { data, isPending } = useQuery(gexDetailQuery());
   const mode = data?.modes.all;
 
-  if (!mode) return null;
+  // Query settled without data (gated or unavailable) — hide the table.
+  if (!mode && !isPending) return null;
 
-  const topStrikes = mode.strikes.slice(0, 10);
+  const topStrikes = mode?.strikes.slice(0, 10);
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto" aria-busy={isPending || undefined}>
       <table className="w-full text-sm" style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }}>
         <thead>
           <tr className="border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
@@ -36,7 +37,19 @@ function OptionsFlowTable() {
           </tr>
         </thead>
         <tbody>
-          {topStrikes.map((s) => {
+          {/* Pending rows use the same cell chrome as the loaded top-10 slice,
+              so pending → loaded is row-for-row height-identical (no shift). */}
+          {!topStrikes &&
+            Array.from({ length: 10 }, (_, i) => (
+              <tr key={i} className="border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
+                {[0, 1, 2, 3, 4, 5].map((c) => (
+                  <td key={c} className="py-2 px-3">
+                    <div className="skeleton h-5" />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          {topStrikes?.map((s) => {
             const isCall = s.type === 'C';
             return (
               <tr key={`${s.strike}-${s.type}`} className="border-b hover:bg-[rgba(255,255,255,0.03)] transition-colors" style={{ borderColor: 'var(--color-border-subtle)' }}>

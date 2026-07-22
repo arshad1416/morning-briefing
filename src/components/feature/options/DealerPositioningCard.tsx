@@ -38,7 +38,24 @@ export function DealerPositioningCard() {
       </div>
       <div className="p-4">
         {isLoading || !p ? (
-          <div className="skeleton h-24" />
+          // Mirrors the loaded DOM (6-cell grid + footnote) so load causes no
+          // shift — the old h-24 block was ~100px shorter than the real card.
+          <div aria-busy="true">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <div key={i}>
+                  <div className="skeleton h-4 w-20" />
+                  <div className="skeleton h-7 w-16 mt-0.5" />
+                  <div className="skeleton h-[15px] w-24 mt-px" />
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 space-y-1">
+              <div className="skeleton h-[13px]" />
+              <div className="skeleton h-[13px]" />
+              <div className="skeleton h-[13px] w-2/3" />
+            </div>
+          </div>
         ) : (
           <>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
