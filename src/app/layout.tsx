@@ -78,8 +78,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               (function() {
                 var saved = localStorage.getItem('mg-ui');
                 var theme = 'dark';
-                try { if (saved) theme = JSON.parse(saved).state.theme || 'dark'; } catch(e) {}
+                var density = 'comfortable';
+                try {
+                  if (saved) {
+                    var s = JSON.parse(saved).state;
+                    theme = s.theme || 'dark';
+                    density = s.density || 'comfortable';
+                  }
+                } catch(e) {}
                 document.documentElement.setAttribute('data-theme', theme);
+                document.documentElement.setAttribute('data-density', density);
               })();
             `,
           }}

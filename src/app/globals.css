@@ -73,6 +73,44 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* ---- Data-table density ----
+   Opt-in per table via .mg-table; the user preference is stamped on <html>
+   as data-density by stores/ui.ts (and the pre-hydration script in
+   layout.tsx). Defaults reproduce the existing comfortable look exactly
+   (text-sm, px-3, py-2/py-2.5). These rules are unlayered author CSS, so
+   they win over Tailwind's @layer utilities without !important. */
+:root {
+  --table-text: 0.875rem;
+  --table-pad-x: 0.75rem;
+  --table-td-pad-y: 0.5rem;
+  --table-th-pad-y: 0.625rem;
+}
+:root[data-density='compact'] {
+  --table-text: 0.8125rem;
+  --table-pad-x: 0.5rem;
+  --table-td-pad-y: 0.25rem;
+  --table-th-pad-y: 0.375rem;
+}
+.mg-table {
+  font-size: var(--table-text);
+}
+.mg-table th {
+  padding: var(--table-th-pad-y) var(--table-pad-x);
+}
+.mg-table td {
+  padding: var(--table-td-pad-y) var(--table-pad-x);
+}
+/* Research-idiom tables (no horizontal cell padding, py-1.5 headers): the
+   modifier reproduces that look at comfortable and still compresses at
+   compact. */
+.mg-table-tight {
+  --table-pad-x: 0;
+  --table-th-pad-y: 0.375rem;
+}
+:root[data-density='compact'] .mg-table-tight {
+  --table-th-pad-y: 0.25rem;
+}
+
 /* ---- Display serif is single-weight (Instrument Serif 400) ---- */
 .font-display {
   font-family: var(--font-display);

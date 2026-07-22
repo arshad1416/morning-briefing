@@ -497,6 +497,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         if (parsed.state?.theme) {
           document.documentElement.setAttribute('data-theme', parsed.state.theme);
         }
+        if (parsed.state?.density) {
+          document.documentElement.setAttribute('data-density', parsed.state.density);
+        }
       } catch {}
     }
   }, []);
@@ -518,7 +521,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           backgroundColor: 'color-mix(in srgb, var(--color-bg-base) 65%, transparent)',
         }}
       >
-        <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-1 px-2 min-[360px]:px-3 sm:gap-4 sm:px-4">
+        <div className="mx-auto flex h-14 max-w-[1400px] 2xl:max-w-[1720px] items-center justify-between gap-1 px-2 min-[360px]:px-3 sm:gap-4 sm:px-4">
           <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-4">
             <Link
               href="/"
@@ -541,13 +544,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
         {/* Live index strip */}
         <div className="border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>
-          <div className="max-w-[1400px] mx-auto px-4">
+          <div className="max-w-[1400px] 2xl:max-w-[1720px] mx-auto px-4">
             <TickerTape />
           </div>
         </div>
       </header>
 
-      <div className="flex flex-1 max-w-[1400px] mx-auto w-full">
+      <div className="flex flex-1 max-w-[1400px] 2xl:max-w-[1720px] mx-auto w-full">
         {/* SideNav */}
         <nav className="hidden md:flex flex-col w-56 shrink-0 border-r p-3 gap-1" style={{ borderColor: 'var(--color-border-subtle)' }}>
           {NAV_ITEMS.map((item) => {
