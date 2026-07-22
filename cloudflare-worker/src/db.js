@@ -62,9 +62,15 @@ export async function logAuthEvent(DB, { email = null, ip = null, type }) {
   await DB.prepare('INSERT INTO auth_events (id,email,ip,type,ts) VALUES (?,?,?,?,?)')
     .bind(randomId(), email, ip, type, Date.now()).run();
 }
-export async function recentAuthFailures(DB, email, sinceMs) {
-  const r = await DB.prepare("SELECT COUNT(*) n FROM auth_events WHERE email=? AND type='login_fail' AND ts>?")
-    .bind(email.toLowerCase(), Date.now() - sinceMs).first();
+export async function recentAuthFailures(DB, email, sinceMs, ip = null) {
+  // Optional ip scopes the count to the (email, ip) pair — used for the
+  // pre-verify brute-force block, which must not let one attacker's failures
+  // lock the real owner out from their own address.
+  const sql = ip
+    ? "SELECT COUNT(*) n FROM auth_events WHERE email=? AND ip=? AND type='login_fail' AND ts>?"
+    : "SELECT COUNT(*) n FROM auth_events WHERE email=? AND type='login_fail' AND ts>?";
+  const bind = ip ? [email.toLowerCase(), ip, Date.now() - sinceMs] : [email.toLowerCase(), Date.now() - sinceMs];
+  const r = await DB.prepare(sql).bind(...bind).first();
   return r?.n || 0;
 }
 export async function getOauthIdentity(DB, provider, providerUserId) {

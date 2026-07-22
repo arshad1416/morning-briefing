@@ -156,7 +156,11 @@ export function mountBilling(app) {
     const arr = sub.data?.data || sub.data?.subscriptions || sub.data;
     const s = Array.isArray(arr) ? (arr[0] || {}) : (arr || {});
     const subId = String(s.id || s.subscriptionId || '');
-    const nextBill = s.dateBilling ? Date.parse(s.dateBilling) : startMs;
+    // 0 (not startMs) when dateBilling is absent: startMs made `nextBill ||
+    // fullPeriod` always truthy, so periodEnd became "now" and a just-paid
+    // customer was locked out immediately. NaN from an unparsable date is
+    // falsy too, so both bad cases fall through to fullPeriod below.
+    const nextBill = s.dateBilling ? Date.parse(s.dateBilling) : 0;
 
     // Access is good through Helcim's next-bill date (≈ trial end for a fresh
     // sub); the renewal webhook must extend it on each successful charge. Fall
@@ -178,7 +182,13 @@ export function mountBilling(app) {
     const sub = await getSubscription(c.env.DB, user.id);
     if (!sub || !sub.helcim_subscription_id) return c.json({ error: 'no_subscription' }, 400);
     if (c.env.MOCK_BILLING !== '1') {
-      await helcim(c.env, `/subscriptions/${sub.helcim_subscription_id}`, 'DELETE');
+      // Only mark canceled locally if Helcim actually canceled — otherwise the
+      // user is told "canceled" while Helcim keeps charging the card.
+      const res = await helcim(c.env, `/subscriptions/${sub.helcim_subscription_id}`, 'DELETE');
+      if (!res.ok) {
+        console.log('[billing] subscription cancel failed', res.status, JSON.stringify(res.data).slice(0, 300));
+        return c.json({ error: 'cancel_failed', detail: 'The payment provider did not confirm the cancellation — please retry or contact support.' }, 502);
+      }
     }
     await updateSubscriptionState(c.env.DB, user.id, { status: 'canceled' });
     return c.json({ ok: true });
