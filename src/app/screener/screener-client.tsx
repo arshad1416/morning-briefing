@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { screenerQuery } from '@/lib/query/options';
 import { GateCard } from '@/components/feature/gating/GateCard';
+import { DensityToggle } from '@/components/primitives';
 import type { ScreenerTicker } from '@/lib/schemas/screener';
 
 /* ------------------------------------------------------------------ */
@@ -200,24 +201,44 @@ function StatCard({ label, value, color }: { label: string; value: React.ReactNo
 /*  Table                                                             */
 /* ------------------------------------------------------------------ */
 
+/* Column visibility by breakpoint — one map shared by the header row and
+   TickerRow so the two can never drift. Core columns always render; the rest
+   earn their space as the viewport grows (mobile keeps ticker/price/chg/score
+   instead of forcing an 11-column horizontal scroll). */
+const COL = {
+  ticker: '',
+  price: '',
+  change: '',
+  score: '',
+  pe: 'hidden lg:table-cell',
+  mcap: 'hidden lg:table-cell',
+  div: 'hidden lg:table-cell',
+  rsi: 'hidden sm:table-cell',
+  volRatio: 'hidden sm:table-cell',
+  sector: 'hidden lg:table-cell',
+  signals: 'hidden xl:table-cell',
+} as const;
+
 function HeaderCell({
   label,
   sortKey,
   sort,
   onSort,
   align = 'left',
+  className = '',
 }: {
   label: string;
   sortKey?: SortKey;
   sort: Sort;
   onSort: (k: SortKey) => void;
   align?: 'left' | 'right' | 'center';
+  className?: string;
 }) {
   const active = sortKey && sort.key === sortKey;
   const alignCls = align === 'right' ? 'text-right' : align === 'center' ? 'text-center' : 'text-left';
   return (
     <th
-      className={`px-3 py-2.5 text-[10px] font-medium uppercase tracking-[0.14em] whitespace-nowrap ${alignCls} ${sortKey ? 'cursor-pointer select-none hover:text-[var(--color-text-primary)]' : ''}`}
+      className={`text-[10px] font-medium uppercase tracking-[0.14em] whitespace-nowrap ${alignCls} ${className} ${sortKey ? 'cursor-pointer select-none hover:text-[var(--color-text-primary)]' : ''}`}
       style={{ color: active ? 'var(--color-accent)' : 'var(--color-text-tertiary)' }}
       onClick={sortKey ? () => onSort(sortKey) : undefined}
       aria-sort={active ? (sort.dir === 'asc' ? 'ascending' : 'descending') : undefined}
@@ -238,7 +259,7 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
       className="border-t transition-colors hover:bg-[var(--color-bg-elevated)]"
       style={{ borderColor: 'var(--color-border-subtle)' }}
     >
-      <td className="px-3 py-2">
+      <td className={COL.ticker}>
         <Link
           href={`/ticker/${encodeURIComponent(t.ticker)}/`}
           className="font-semibold text-[var(--color-accent)] hover:underline"
@@ -247,13 +268,13 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
           {t.ticker}
         </Link>
       </td>
-      <td className="px-3 py-2 text-right text-[var(--color-text-primary)]" data-numeric>
+      <td className={`${COL.price} text-right text-[var(--color-text-primary)]`} data-numeric>
         {fmtPrice(t.price)}
       </td>
-      <td className="px-3 py-2 text-right font-medium" data-numeric style={{ color: changeColor(t.change_pct) }}>
+      <td className={`${COL.change} text-right font-medium`} data-numeric style={{ color: changeColor(t.change_pct) }}>
         {fmtPct(t.change_pct)}
       </td>
-      <td className="px-3 py-2 text-center">
+      <td className={`${COL.score} text-center`}>
         <span
           className="inline-block rounded px-1.5 py-0.5 font-bold"
           data-numeric
@@ -265,17 +286,17 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
           {score.toFixed(1)}
         </span>
       </td>
-      <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
+      <td className={`${COL.pe} text-right text-[var(--color-text-secondary)]`} data-numeric>
         {t.pe != null ? t.pe.toFixed(1) : '—'}
       </td>
-      <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
+      <td className={`${COL.mcap} text-right text-[var(--color-text-secondary)]`} data-numeric>
         {t.marketCap ? `${fmtPrice(t.marketCap / 1e9, 1)}B` : '—'}
       </td>
-      <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
+      <td className={`${COL.div} text-right text-[var(--color-text-secondary)]`} data-numeric>
         {t.divYield != null && t.divYield > 0 ? `${t.divYield.toFixed(2)}%` : '—'}
       </td>
       <td
-        className="px-3 py-2 text-right font-medium"
+        className={`${COL.rsi} text-right font-medium`}
         data-numeric
         style={{
           color: rsi == null ? 'var(--color-text-secondary)' : rsi < 30 ? 'var(--color-bear)' : rsi > 70 ? 'var(--color-bull)' : 'var(--color-text-secondary)',
@@ -284,16 +305,16 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
         {rsi != null ? rsi.toFixed(1) : '—'}
       </td>
       <td
-        className="px-3 py-2 text-right"
+        className={`${COL.volRatio} text-right`}
         data-numeric
         style={{ color: vr != null && vr > 2 ? 'var(--color-accent)' : 'var(--color-text-secondary)', fontWeight: vr != null && vr > 2 ? 700 : undefined }}
       >
         {vr != null ? `${vr.toFixed(2)}x` : '—'}
       </td>
-      <td className="px-3 py-2 text-xs text-[var(--color-text-tertiary)] whitespace-nowrap">
+      <td className={`${COL.sector} text-xs text-[var(--color-text-tertiary)] whitespace-nowrap`}>
         {t.sector ? t.sector.substring(0, 14) : '—'}
       </td>
-      <td className="px-3 py-2">
+      <td className={COL.signals}>
         <div className="flex flex-wrap gap-1 max-w-[220px]">
           {(t.signals || []).map((s) => {
             const bearish = BEARISH_SIGNAL.test(s);
@@ -685,6 +706,8 @@ export function ScreenerClient() {
               'Results'
             )}
           </span>
+          <div className="flex items-center gap-2">
+          <DensityToggle />
           <div
             className="flex rounded-lg border p-0.5"
             style={{ borderColor: 'var(--color-border-default)' }}
@@ -709,6 +732,7 @@ export function ScreenerClient() {
               </button>
             ))}
           </div>
+          </div>
         </div>
         {isLoading ? (
           <p className="p-8 text-center text-sm text-[var(--color-text-tertiary)]">Scanning the universe…</p>
@@ -720,20 +744,22 @@ export function ScreenerClient() {
           <Treemap tickers={filtered} />
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[900px] text-sm">
+            {/* Base width fits the always-on 4 columns; min-widths step up as
+                breakpoints reveal more columns (overflow-x stays as safety). */}
+            <table className="mg-table w-full sm:min-w-[560px] lg:min-w-[760px] xl:min-w-[900px]">
               <thead>
                 <tr>
-                  <HeaderCell label="Ticker" sortKey="ticker" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Price" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Chg%" sortKey="change" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Score" sortKey="score" align="center" sort={sort} onSort={onSort} />
-                  <HeaderCell label="PE" sortKey="pe" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Mkt Cap" sortKey="mcap" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Div%" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label="RSI" sortKey="rsi" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Vol Ratio" sortKey="volume_ratio" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Sector" sort={sort} onSort={onSort} />
-                  <HeaderCell label="Signals" sort={sort} onSort={onSort} />
+                  <HeaderCell label="Ticker" sortKey="ticker" sort={sort} onSort={onSort} className={COL.ticker} />
+                  <HeaderCell label="Price" align="right" sort={sort} onSort={onSort} className={COL.price} />
+                  <HeaderCell label="Chg%" sortKey="change" align="right" sort={sort} onSort={onSort} className={COL.change} />
+                  <HeaderCell label="Score" sortKey="score" align="center" sort={sort} onSort={onSort} className={COL.score} />
+                  <HeaderCell label="PE" sortKey="pe" align="right" sort={sort} onSort={onSort} className={COL.pe} />
+                  <HeaderCell label="Mkt Cap" sortKey="mcap" align="right" sort={sort} onSort={onSort} className={COL.mcap} />
+                  <HeaderCell label="Div%" align="right" sort={sort} onSort={onSort} className={COL.div} />
+                  <HeaderCell label="RSI" sortKey="rsi" align="right" sort={sort} onSort={onSort} className={COL.rsi} />
+                  <HeaderCell label="Vol Ratio" sortKey="volume_ratio" align="right" sort={sort} onSort={onSort} className={COL.volRatio} />
+                  <HeaderCell label="Sector" sort={sort} onSort={onSort} className={COL.sector} />
+                  <HeaderCell label="Signals" sort={sort} onSort={onSort} className={COL.signals} />
                 </tr>
               </thead>
               <tbody>
@@ -741,8 +767,11 @@ export function ScreenerClient() {
                   filtered.map((t) => <TickerRow key={t.ticker} t={t} />)
                 ) : (
                   <tr>
-                    <td colSpan={11} className="p-8 text-center text-[var(--color-text-tertiary)]">
-                      No tickers match your filters.
+                    {/* padding on an inner div — .mg-table td would override p-8 */}
+                    <td colSpan={11}>
+                      <div className="p-8 text-center text-[var(--color-text-tertiary)]">
+                        No tickers match your filters.
+                      </div>
                     </td>
                   </tr>
                 )}

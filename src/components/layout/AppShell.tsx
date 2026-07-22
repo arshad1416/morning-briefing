@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useUI } from '@/stores/ui';
 import { useMe } from '@/lib/auth/useMe';
+import { trialDaysLeft } from '@/lib/auth/api';
 import { GammaMark } from '@/components/brand/GammaMark';
 import { TickerTape } from './TickerTape';
 import { LayoutEditToggle } from './LayoutEditToggle';
@@ -163,15 +164,30 @@ function SessionButton() {
   if (isLoading) return <span className="h-11 w-11 shrink-0" aria-hidden="true" />;
 
   if (me) {
+    const ent = me.entitlement;
+    const trialing = ent.tier === 'trial' && ent.status === 'active' && !!ent.trialEndsAt;
+    const days = trialing ? trialDaysLeft(ent.trialEndsAt) : 0;
     return (
-      <Link
-        href="/account/"
-        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:w-auto sm:gap-2 sm:px-3"
-        title={me.email}
-      >
-        <IconUser />
-        <span className="hidden sm:inline">Account</span>
-      </Link>
+      <>
+        {trialing && (
+          <Link
+            href="/account/"
+            className="hidden sm:inline-flex shrink-0 items-center whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] font-semibold transition-opacity hover:opacity-80"
+            style={{ backgroundColor: 'var(--color-accent-dim)', color: 'var(--color-accent)' }}
+            title="Your 7-day free trial of the full desk — pick a plan to keep it"
+          >
+            Trial · {days} day{days === 1 ? '' : 's'} left
+          </Link>
+        )}
+        <Link
+          href="/account/"
+          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-sm font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-bg-elevated)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:w-auto sm:gap-2 sm:px-3"
+          title={me.email}
+        >
+          <IconUser />
+          <span className="hidden sm:inline">Account</span>
+        </Link>
+      </>
     );
   }
 
@@ -481,6 +497,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         if (parsed.state?.theme) {
           document.documentElement.setAttribute('data-theme', parsed.state.theme);
         }
+        if (parsed.state?.density) {
+          document.documentElement.setAttribute('data-density', parsed.state.density);
+        }
       } catch {}
     }
   }, []);
@@ -502,7 +521,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           backgroundColor: 'color-mix(in srgb, var(--color-bg-base) 65%, transparent)',
         }}
       >
-        <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-1 px-2 min-[360px]:px-3 sm:gap-4 sm:px-4">
+        <div className="mx-auto flex h-14 max-w-[1400px] 2xl:max-w-[1720px] items-center justify-between gap-1 px-2 min-[360px]:px-3 sm:gap-4 sm:px-4">
           <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-4">
             <Link
               href="/"
@@ -525,13 +544,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
         {/* Live index strip */}
         <div className="border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>
-          <div className="max-w-[1400px] mx-auto px-4">
+          <div className="max-w-[1400px] 2xl:max-w-[1720px] mx-auto px-4">
             <TickerTape />
           </div>
         </div>
       </header>
 
-      <div className="flex flex-1 max-w-[1400px] mx-auto w-full">
+      <div className="flex flex-1 max-w-[1400px] 2xl:max-w-[1720px] mx-auto w-full">
         {/* SideNav */}
         <nav className="hidden md:flex flex-col w-56 shrink-0 border-r p-3 gap-1" style={{ borderColor: 'var(--color-border-subtle)' }}>
           {NAV_ITEMS.map((item) => {

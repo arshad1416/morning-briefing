@@ -8,6 +8,7 @@ Static market briefing site on Cloudflare Pages, data piped from Raspberry Pi.
   - Build command: `npm run build` → output dir `out/` (configured in the Pages dashboard)
   - `_headers`, `llms.txt`, and legal pages live in `public/`; `robots.txt` and
     `sitemap.xml` are generated at build time from route/archive/ticker coverage
+    (`src/app/robots.ts`, `src/app/sitemap.ts`)
 - **Data:** Pi cron generates JSON → commits `data/**` + `public/data/**` → each push
   triggers a Pages rebuild so `out/data/` stays fresh (~20–25 builds/weekday; the free
   tier allows 500 builds/month — watch the quota)

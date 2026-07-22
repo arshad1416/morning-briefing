@@ -38,7 +38,32 @@ export function DealerPositioningCard() {
       </div>
       <div className="p-4">
         {isLoading || !p ? (
-          <div className="skeleton h-24" />
+          // Ghost skeleton: the loaded Cell markup with transparent text so
+          // heights match the loaded state exactly (the old h-24 block was
+          // ~100px shorter than the real card and shifted everything below).
+          <div aria-busy="true">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4" aria-hidden="true">
+              {['Dealer Gamma', 'Gamma Flip', 'Max Pain', 'Vanna Exp.', 'Charm Exp.', 'Spot'].map((label) => (
+                <div key={label}>
+                  <span className="text-xs">
+                    <span className="skeleton rounded text-transparent select-none">{label}</span>
+                  </span>
+                  <p className="text-lg font-bold mt-0.5" data-numeric>
+                    <span className="skeleton rounded text-transparent select-none">$000.00</span>
+                  </p>
+                  <span className="text-[10px]">
+                    <span className="skeleton rounded text-transparent select-none">placeholder hint</span>
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 text-[10px] leading-relaxed skeleton rounded text-transparent select-none" aria-hidden="true">
+              Signed dealer gamma (puts negative). The flip is the spot where dealer gamma crosses
+              zero — above it dealers dampen moves, below it they amplify them. Analytical estimate
+              from open interest; not advice.
+            </p>
+            <span className="sr-only">Loading dealer positioning…</span>
+          </div>
         ) : (
           <>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">

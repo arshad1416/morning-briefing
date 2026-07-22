@@ -5,11 +5,11 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 import { Surface, SurfaceHeader, Stat } from '@/components/primitives';
 import { fetchGated, GateError } from '@/lib/api/gated';
+import { GateInline } from '@/components/feature/gating/GateInline';
 
 const PaperPortfolioSchema = z
   .object({
@@ -48,24 +48,20 @@ export function DayPnLCard() {
   );
 
   if (isError) {
-    const gate = error instanceof GateError ? error : null;
+    // Both gate states get a conversion affordance: the signed-out trial pitch
+    // and — previously missing — the signed-in-without-subscription upgrade.
+    // (GateInline routes upgrades to /account/, where checkout lives.)
+    if (error instanceof GateError && error.kind !== 'unavailable') {
+      return shell(
+        <GateInline
+          kind={error.kind}
+          need={error.need ?? 'basic'}
+          feature="the live $100K paper-trading portfolio"
+        />,
+      );
+    }
     return shell(
-      <p className="text-sm text-[var(--color-text-tertiary)]">
-        {gate?.kind === 'signin' ? (
-          <>
-            <a href="/login" className="underline text-[var(--color-accent)]">Sign in</a> to view the
-            live $100K paper-trading account.
-          </>
-        ) : gate?.kind === 'upgrade' ? (
-          <>
-            The live paper-trading account is a {gate.need === 'pro' ? 'Pro' : 'Basic'} feature —{' '}
-            <Link href="/#pricing" className="underline text-[var(--color-accent)]">upgrade your plan</Link> to
-            see it.
-          </>
-        ) : (
-          'Portfolio data isn’t available right now.'
-        )}
-      </p>,
+      <p className="text-sm text-[var(--color-text-tertiary)]">Portfolio data isn’t available right now.</p>,
     );
   }
 

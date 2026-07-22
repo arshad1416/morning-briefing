@@ -6,8 +6,7 @@ import { DraggableBentoGrid, type GridItem } from '@/components/layout/Draggable
 import { BacktestSummary } from '@/components/feature/prediction/BacktestSummary';
 import { AccuracyStats } from '@/components/feature/prediction/AccuracyStats';
 import { CalibrationChart } from '@/components/feature/prediction/CalibrationChart';
-import { ProGate } from '@/components/feature/gating/ProGate';
-import { ScenarioSimulator } from '@/components/feature/MissedOpportunities';
+import { FeatureGate } from '@/components/feature/gating/FeatureGate';
 import { WalkForwardTile } from '@/components/feature/prediction/WalkForwardTile';
 import { SimulationTile } from '@/components/feature/prediction/SimulationTile';
 import { CryptoCohortsTile } from '@/components/feature/prediction/CryptoCohortsTile';
@@ -38,11 +37,11 @@ export function ModelsClient() {
 // Paired compact tiles (Backtest+Accuracy, Calibration+Walk-Forward), then the
 // full-width performance sections. Each has a stable id for user reordering.
 const MODELS_ITEMS: GridItem[] = [
-  { id: 'backtest', span: 'half', node: <ProGate feature="walkforward"><BacktestSummary /></ProGate> },
-  { id: 'accuracy', span: 'half', node: <ProGate feature="walkforward"><AccuracyStats /></ProGate> },
-  { id: 'calibration', span: 'half', node: <ProGate feature="calibration"><CalibrationChart /></ProGate> },
-  { id: 'walkforward', span: 'half', node: <ProGate feature="walkforward"><WalkForwardTile /></ProGate> },
-  { id: 'simulation', span: 'hero', node: <ProGate feature="simulation"><SimulationTile /></ProGate> },
+  { id: 'backtest', span: 'half', node: <FeatureGate feature="walkforward"><BacktestSummary /></FeatureGate> },
+  { id: 'accuracy', span: 'half', node: <FeatureGate feature="walkforward"><AccuracyStats /></FeatureGate> },
+  { id: 'calibration', span: 'half', node: <FeatureGate feature="calibration"><CalibrationChart /></FeatureGate> },
+  { id: 'walkforward', span: 'half', node: <FeatureGate feature="walkforward"><WalkForwardTile /></FeatureGate> },
+  { id: 'simulation', span: 'hero', node: <FeatureGate feature="simulation"><SimulationTile /></FeatureGate> },
   { id: 'options', span: 'hero', node: <OptionsStrategiesTile /> },
   { id: 'crypto', span: 'hero', node: <CryptoCohortsTile /> },
 ];

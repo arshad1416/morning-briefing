@@ -4,8 +4,12 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { gexQuery } from '@/lib/query/options';
+import { POLL } from '@/lib/query/policy';
 import { Surface, SurfaceHeader, RegimeChip, InfoTip, DataFreshness } from '@/components/primitives';
 import { formatCompact } from '@/lib/format';
+
+// The options feed regenerates every ~30 min during market hours.
+const OPTIONS_STALE_MS = 40 * 60_000;
 
 function SignBar({ value, max }: { value: number; max: number }) {
   const pct = max > 0 ? Math.min(1, Math.abs(value) / max) * 50 : 0;
@@ -29,13 +33,40 @@ function SignBar({ value, max }: { value: number; max: number }) {
 }
 
 export function GexDexVexCard() {
-  const { data, isLoading } = useQuery(gexQuery());
+  // Free static asset — cheap to poll; sibling cards share the query key and
+  // ride the refreshed cache.
+  const { data } = useQuery({ ...gexQuery(), refetchInterval: POLL.options.live });
 
-  if (isLoading || !data) {
+  if (!data) {
+    // Ghost skeleton: the loaded markup with transparent placeholder text, so
+    // line boxes — and therefore card height — match the loaded state exactly
+    // and the load transition causes no layout shift.
     return (
       <Surface span="third">
-        <SurfaceHeader title="GEX/DEX/VEX" />
-        <div className="p-4 skeleton h-24" />
+        {/* ghost widths track the loaded header right: chip ~96px below lg,
+            freshness + chip ~176px at lg+ */}
+        <SurfaceHeader title="GEX / DEX / VEX" right={<div className="skeleton h-[26px] w-24 lg:w-44 rounded-full" />} />
+        <div className="p-4 space-y-4 relative" aria-busy="true">
+          <div className="grid grid-cols-3 gap-4" aria-hidden="true">
+            {['GEX', 'DEX', 'VEX'].map((label) => (
+              <div key={label} className="relative">
+                <span className="relative z-10 text-[10px] uppercase tracking-[0.14em]">
+                  <span className="skeleton rounded text-transparent select-none">{label}</span>
+                </span>
+                <p className="relative z-10 text-lg font-semibold mt-1" data-numeric>
+                  <span className="skeleton rounded text-transparent select-none">0.0M</span>
+                </p>
+                <div className="relative z-10 h-1 mt-2 skeleton rounded-full" />
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center justify-between text-xs" aria-hidden="true">
+            <span className="skeleton rounded text-transparent select-none">Max GEX Strike: $000</span>
+            <span className="skeleton rounded text-transparent select-none" data-numeric>SPY @ $000.00</span>
+          </div>
+        </div>
+        {/* outside the space-y container: v4 space-y margins every non-last child */}
+        <span className="sr-only">Loading GEX data…</span>
       </Surface>
     );
   }
@@ -55,7 +86,11 @@ export function GexDexVexCard() {
         title={<InfoTip term="gex">GEX / DEX / VEX</InfoTip>}
         right={
           <div className="flex items-center gap-2">
-            <DataFreshness timestamp={data.generated_at} />
+            {/* freshness needs a wide card — below lg the chip alone fits
+                without wrapping the header to a second line */}
+            <span className="hidden lg:inline-flex">
+              <DataFreshness timestamp={data.generated_at} staleAfterMs={OPTIONS_STALE_MS} />
+            </span>
             <RegimeChip regime={mode.gamma_regime} />
           </div>
         }

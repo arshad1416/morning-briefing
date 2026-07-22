@@ -7,9 +7,13 @@ import { formatDuration } from '@/lib/format';
 interface DataFreshnessProps {
   timestamp: string;
   className?: string;
+  /** Age after which the dot turns caution-colored. Feeds that regenerate on a
+   *  slow cron (e.g. options, ~30 min) should pass a matching threshold so the
+   *  dot doesn't read amber while the pipeline is healthy. */
+  staleAfterMs?: number;
 }
 
-export function DataFreshness({ timestamp, className = '' }: DataFreshnessProps) {
+export function DataFreshness({ timestamp, className = '', staleAfterMs = 300_000 }: DataFreshnessProps) {
   // Date.now() differs between the static-export HTML and the client — only
   // compute freshness after mount to avoid a hydration mismatch.
   const [mounted, setMounted] = useState(false);
@@ -27,7 +31,7 @@ export function DataFreshness({ timestamp, className = '' }: DataFreshnessProps)
   }
 
   const ms = Date.now() - date.getTime();
-  const isStale = ms > 300_000; // 5 minutes
+  const isStale = ms > staleAfterMs;
 
   return (
     <span

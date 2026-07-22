@@ -10,6 +10,7 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { GateCard } from '@/components/feature/gating/GateCard';
+import { DensityToggle } from '@/components/primitives';
 import { fetchGated, GateError } from '@/lib/api/gated';
 
 /* ------------------------------------------------------------------ */
@@ -668,7 +669,7 @@ function OverviewTab() {
           {!!d?.insider_trades?.length && (
             <Card title="Insider Trades — SEC Form 4">
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="mg-table mg-table-tight w-full">
                   <tbody>
                     {d.insider_trades.slice(0, 10).map((i: Any, idx: number) => (
                       <tr key={idx} className="border-t first:border-t-0" style={{ borderColor: 'var(--color-border-subtle)' }}>
@@ -692,7 +693,7 @@ function OverviewTab() {
           {!!d?.congress?.recent_trades?.length && (
             <Card title="Congressional Trades — House Disclosures">
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="mg-table mg-table-tight w-full">
                   <tbody>
                     {d.congress.recent_trades.slice(0, 10).map((c: Any, idx: number) => (
                       <tr key={idx} className="border-t first:border-t-0" style={{ borderColor: 'var(--color-border-subtle)' }}>
@@ -817,7 +818,7 @@ function NewsTab() {
       {!!d?.market_news?.analyst_ratings?.length && (
         <Card title="Analyst Ratings">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[480px] text-sm">
+            <table className="mg-table mg-table-tight w-full min-w-[480px]">
               <thead>
                 <tr className="text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
                   <th className="py-1.5 text-left">Ticker</th>
@@ -1177,7 +1178,7 @@ function BacktestTab() {
           {wf?.summary && (
             <Card title="Walk-Forward Results">
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[520px] text-sm">
+                <table className="mg-table mg-table-tight w-full min-w-[520px]">
                   <thead>
                     <tr className="text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
                       <th className="py-1.5 text-left">Strategy</th>
@@ -1304,7 +1305,7 @@ function EarningsTab() {
           rows.length ? (
             <Card title={title}>
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[420px] text-sm">
+                <table className="mg-table mg-table-tight w-full min-w-[420px]">
                   <thead>
                     <tr className="text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
                       <th className="py-1.5 text-left">Date</th>
@@ -1389,7 +1390,7 @@ function SecTab() {
         d?.filings?.length ? (
           <Card title="Recent SEC Filings">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[420px] text-sm">
+              <table className="mg-table mg-table-tight w-full min-w-[420px]">
                 <thead>
                   <tr className="text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
                     <th className="py-1.5 text-left">Date</th>
@@ -1458,6 +1459,7 @@ export function ResearchClient() {
         </p>
       </div>
 
+      <div className="flex items-center gap-2">
       <div className="overflow-x-auto">
         <div className="flex min-w-max gap-1 rounded-full border p-1" style={{ borderColor: 'var(--color-border-subtle)', backgroundColor: 'var(--color-bg-surface)' }} role="tablist" aria-label="Research sections">
           {TABS.map((t) => (
@@ -1478,6 +1480,8 @@ export function ResearchClient() {
             </button>
           ))}
         </div>
+      </div>
+      <DensityToggle className="ml-auto shrink-0" />
       </div>
 
       <Active />

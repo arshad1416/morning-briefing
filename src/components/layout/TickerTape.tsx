@@ -91,8 +91,14 @@ export function TickerTape() {
 
   return (
     <div className="ticker-mask h-8 flex items-center" aria-label="Live market indices">
-      <div className="ticker-track">
+      {/* The -50% marquee is seamless only while one half of the track is at
+          least as wide as the container. One run (~1170px) is narrower than
+          the 2xl shell (1720px), so each half is two runs; duration doubled
+          to keep the original scroll speed. */}
+      <div className="ticker-track" style={{ animationDuration: '90s' }}>
         <TickerRun items={items} />
+        <TickerRun items={items} dupe />
+        <TickerRun items={items} dupe />
         <TickerRun items={items} dupe />
       </div>
     </div>

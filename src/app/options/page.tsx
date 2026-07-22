@@ -1,14 +1,13 @@
-import type { Metadata } from 'next';
 // app/options/page.tsx — Options page
 import { OptionsClient } from './options-client';
+import { buildMetadata } from '@/lib/seo';
 
-
-export const metadata: Metadata = {
+export const metadata = buildMetadata({
   title: 'Gamma Exposure (GEX) & Dealer Positioning',
   description:
     'SPX dealer gamma by strike: GEX, DEX and VEX, zero-gamma flip level, max pain, vanna and charm — institutional options positioning, updated daily.',
-  alternates: { canonical: '/options/' },
-};
+  path: '/options/',
+});
 
 export default function OptionsPage() {
   return <OptionsClient />;

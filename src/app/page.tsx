@@ -1,8 +1,10 @@
 // app/page.tsx — Landing page (default route)
 import MapleGammaLanding from '@/components/landing/LandingPage';
 
-// Product + FAQ structured data (landing only). Pricing mirrors the live
-// pricing section — keep in sync if tiers change.
+// Product + FAQ structured data. Deliberately on the landing page only, NOT in
+// layout.tsx — putting it in the layout would duplicate product/FAQ markup on
+// every route. Pricing mirrors the live pricing section — keep in sync if
+// tiers change.
 const APP_LD = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',

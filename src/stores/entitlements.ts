@@ -1,34 +1,27 @@
-// stores/entitlements.ts — gating brain
-import { create } from 'zustand';
+// stores/entitlements.ts — client gate registry.
+//
+// The Worker's data_gate.js is the source of truth for premium data; this
+// registry only drives the cosmetic FeatureGate overlay for features whose
+// data is public. entitlementRank mirrors the worker's meetsTier
+// (cloudflare-worker/src/session.js): trial ranks as pro.
+import type { Entitlement } from '@/lib/auth/api';
 
-type Tier = 'free' | 'pro';
-export type FeatureKey = 'gammaWalls' | 'nope' | 'calibration' | 'scenarioSim' | 'congressTrades' | 'briefingExport' | 'walkforward' | 'simulation';
+export type GateTier = 'basic' | 'pro';
+export type FeatureKey = 'gammaWalls' | 'nope' | 'calibration' | 'walkforward' | 'simulation';
 
-export const FEATURES: Record<FeatureKey, { minTier: Tier; teaser: 'blur' | 'lock' | 'cta' }> = {
+export const FEATURES: Record<FeatureKey, { minTier: GateTier; teaser: 'blur' | 'lock' }> = {
   walkforward: { minTier: 'pro', teaser: 'lock' },
-  simulation: { minTier: 'pro', teaser: 'lock' },
-  gammaWalls:     { minTier: 'pro', teaser: 'blur' },
-  nope:           { minTier: 'pro', teaser: 'blur' },
-  calibration:    { minTier: 'pro', teaser: 'blur' },
-  scenarioSim:    { minTier: 'pro', teaser: 'lock' },
-  congressTrades: { minTier: 'pro', teaser: 'blur' },
-  briefingExport: { minTier: 'pro', teaser: 'cta' },
+  simulation:  { minTier: 'pro', teaser: 'lock' },
+  gammaWalls:  { minTier: 'pro', teaser: 'blur' },
+  nope:        { minTier: 'pro', teaser: 'blur' },
+  calibration: { minTier: 'pro', teaser: 'blur' },
 };
 
-const tierRank: Record<Tier, number> = { free: 0, pro: 1 };
+export const NEED_RANK: Record<GateTier, 1 | 2> = { basic: 1, pro: 2 };
 
-interface EntState {
-  tier: Tier;
-  gatingEnabled: boolean;
-  can: (feature: FeatureKey) => boolean;
+export function entitlementRank(ent: Entitlement | null | undefined): 0 | 1 | 2 {
+  if (!ent?.entitled) return 0;
+  if (ent.tier === 'trial' || ent.tier === 'pro') return 2;
+  if (ent.tier === 'basic') return 1;
+  return 0;
 }
-
-export const useEntitlements = create<EntState>()((set, get) => ({
-  tier: 'pro',
-  gatingEnabled: false,
-  can(feature: FeatureKey) {
-    const { gatingEnabled, tier } = get();
-    if (!gatingEnabled) return true;
-    return tierRank[tier] >= tierRank[FEATURES[feature].minTier];
-  },
-}));

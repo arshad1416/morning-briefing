@@ -18,6 +18,12 @@ export interface Me {
   entitlement: Entitlement;
 }
 
+/** Whole days until a trial ends (never negative). */
+export function trialDaysLeft(endsAt?: number): number {
+  if (!endsAt) return 0;
+  return Math.max(0, Math.ceil((endsAt - Date.now()) / 86_400_000));
+}
+
 export interface SignupPayload {
   email: string;
   password: string;
