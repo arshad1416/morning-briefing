@@ -17,7 +17,10 @@ export const useUI = create<UIState>()(
   persist(
     (set) => ({
       theme: 'dark',
-      learningMode: false,
+      // On by default: a first-time visitor is the person who most needs the
+      // plain-English tooltips, and they will never find the toggle on their
+      // own. Experienced users switch it off once and `persist` remembers it.
+      learningMode: true,
       sidebarCollapsed: false,
       commandOpen: false,
       setTheme: (theme) => {

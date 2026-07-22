@@ -4,8 +4,9 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { gexQuery } from '@/lib/query/options';
-import { Surface, SurfaceHeader, RegimeChip, InfoTip, DataFreshness } from '@/components/primitives';
+import { Surface, SurfaceHeader, RegimeChip, InfoTip, PlainLabel, DataFreshness } from '@/components/primitives';
 import { formatCompact } from '@/lib/format';
+import type { GlossaryTerm } from '@/lib/glossary';
 
 function SignBar({ value, max }: { value: number; max: number }) {
   const pct = max > 0 ? Math.min(1, Math.abs(value) / max) * 50 : 0;
@@ -41,7 +42,7 @@ export function GexDexVexCard() {
   }
 
   const mode = data.modes.all;
-  const metrics = [
+  const metrics: Array<{ key: GlossaryTerm; label: string; value: number }> = [
     { key: 'gex', label: 'GEX', value: mode.total_gex },
     { key: 'dex', label: 'DEX', value: mode.total_dex },
     { key: 'vex', label: 'VEX', value: mode.total_vex },
@@ -76,8 +77,9 @@ export function GexDexVexCard() {
                   }}
                 />
               )}
-              <span className="relative z-10 text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
+              <span className="relative z-10 block text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
                 <InfoTip term={m.key}>{m.label}</InfoTip>
+                <PlainLabel term={m.key} className="mt-0.5" />
               </span>
               <p
                 className="relative z-10 text-lg font-semibold mt-1"
@@ -95,7 +97,11 @@ export function GexDexVexCard() {
 
         <div className="flex items-center justify-between text-xs text-[var(--color-text-tertiary)] relative z-10">
           <span>
-            <InfoTip term="max_pain">Max GEX Strike</InfoTip>:{' '}
+            {/* Was term="max_pain" — but this value is `max_gex_strike`, the
+                largest-gamma strike, which is a different number from max pain
+                (both are in this dataset and they differ). The tooltip was
+                explaining the wrong metric. */}
+            <InfoTip term="max_gex_strike">Max GEX Strike</InfoTip>:{' '}
             <span className="text-[var(--color-text-primary)]" style={{ fontFamily: 'var(--font-mono)' }} data-numeric>
               ${mode.max_gex_strike.toFixed(0)}
             </span>
