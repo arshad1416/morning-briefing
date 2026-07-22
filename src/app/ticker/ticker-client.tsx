@@ -65,9 +65,9 @@ function Badge({ tone, children }: { tone: 'bull' | 'bear' | 'caution'; children
   );
 }
 
-export function TickerClient() {
+export function TickerClient({ initialTicker }: { initialTicker?: string }) {
   const params = useSearchParams();
-  const ticker = (params.get('symbol') || '').toUpperCase();
+  const ticker = (initialTicker || params.get('symbol') || '').toUpperCase();
 
   const latest = useQuery<Any>({ queryKey: ['latest-raw'], queryFn: () => fetchJson('/data/latest.json'), staleTime: 300_000, retry: false, enabled: !!ticker });
   const detail = useQuery<Any>({

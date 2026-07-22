@@ -16,20 +16,20 @@ Uses the --sizer-pct flag pattern (like backtest.py):
 """
 
 import argparse
+import asyncio
 import json
 import os
 import sys
-import time
-import urllib.request
-import urllib.error
 from datetime import datetime
+
+from pipeline_runtime import RequestFailed, atomic_write_json, request_json, run_blocking_pool
 
 DATA_DIR = os.path.expanduser("~/morning-briefing/data")
 EARNINGS_DIR = os.path.join(DATA_DIR, "earnings")
 FMP_API_KEY = os.environ.get("FMP_API_KEY", "demo")  # Replace with your key
 
 
-def fetch_transcript(ticker, year=None, quarter=None):
+def fetch_transcript(ticker, year=None, quarter=None, api_key=None):
     """Fetch earnings call transcript from FMP API."""
     base_url = "https://financialmodelingprep.com/api/v3/earning_call_transcript"
     params = f"?symbol={ticker.lower()}"
@@ -37,18 +37,12 @@ def fetch_transcript(ticker, year=None, quarter=None):
         params += f"&year={year}"
     if quarter:
         params += f"&quarter={quarter}"
-    params += f"&apikey={FMP_API_KEY}"
+    params += f"&apikey={api_key or FMP_API_KEY}"
 
     url = base_url + params
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "MapleGamma/1.0"})
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            data = json.loads(resp.read().decode())
-            return data
-    except urllib.error.HTTPError as e:
-        print(f"  HTTP error for {ticker}: {e.code} {e.reason}", file=sys.stderr)
-        return None
-    except Exception as e:
+        return request_json(url, headers={"User-Agent": "MapleGamma/1.0"}, timeout=30)
+    except (RequestFailed, ValueError) as e:
         print(f"  Error fetching {ticker}: {e}", file=sys.stderr)
         return None
 
@@ -62,17 +56,16 @@ def get_tickers_from_screener():
     try:
         with open(path) as f:
             data = json.load(f)
-        # Extract tickers from the data
-        tickers = []
-        for key in data:
-            if key not in ("generated_at", "ticker_count", "failed_count", "market_summary", "_meta"):
-                if isinstance(data[key], dict) and "ticker" in data[key]:
-                    tickers.append(data[key]["ticker"])
-        # Fallback: try to extract from the first level
-        if not tickers:
-            for k, v in data.items():
-                if isinstance(v, dict) and "ticker" in v:
-                    tickers.append(v["ticker"])
+        # Current screener schema stores rows in ``tickers``; retain the legacy
+        # object scan as a fallback for older Pi snapshots.
+        rows = data.get("tickers", []) if isinstance(data, dict) else []
+        tickers = [row.get("ticker") for row in rows if isinstance(row, dict) and row.get("ticker")]
+        if not tickers and isinstance(data, dict):
+            tickers = [
+                value["ticker"]
+                for value in data.values()
+                if isinstance(value, dict) and value.get("ticker")
+            ]
         return tickers[:20]  # Limit to 20 due to API rate limits
     except Exception as e:
         print(f"  Error reading screener-data.json: {e}", file=sys.stderr)
@@ -96,6 +89,10 @@ def main():
                         help="Future use - reserved for position sizing context")
     parser.add_argument("--delay", type=float, default=0.5,
                         help="Delay between API calls in seconds (default: 0.5)")
+    parser.add_argument("--workers", type=int, default=3,
+                        help="Maximum concurrent transcript requests (default: 3)")
+    parser.add_argument("--api-key", default=None,
+                        help="FMP API key (overrides FMP_API_KEY)")
 
     args = parser.parse_args()
 
@@ -112,36 +109,40 @@ def main():
         sys.exit(1)
 
     os.makedirs(args.output_dir, exist_ok=True)
-    results = {}
+    api_key = args.api_key or FMP_API_KEY
 
-    for ticker in tickers:
+    def process_ticker(ticker):
         print(f"  Fetching transcript for {ticker}...", file=sys.stderr)
-        data = fetch_transcript(ticker, args.year, args.quarter)
+        data = fetch_transcript(ticker, args.year, args.quarter, api_key)
         if data:
-            results[ticker] = data
             # Save individual file
             out_path = os.path.join(args.output_dir, f"{ticker}-latest.json")
-            with open(out_path, "w") as f:
-                json.dump({
-                    "ticker": ticker,
-                    "fetched_at": datetime.now().isoformat(),
-                    "transcript": data,
-                }, f, indent=2)
+            atomic_write_json(out_path, {
+                "ticker": ticker,
+                "fetched_at": datetime.now().isoformat(),
+                "transcript": data,
+            })
             print(f"    Saved: {out_path}", file=sys.stderr)
+            return ticker, "saved"
         else:
-            results[ticker] = None
             print(f"    No data for {ticker}", file=sys.stderr)
+            return ticker, "no_data"
 
-        if len(tickers) > 1:
-            time.sleep(args.delay)
+    pairs = asyncio.run(run_blocking_pool(
+        tickers,
+        process_ticker,
+        max_concurrency=args.workers,
+        min_start_interval=args.delay if len(tickers) > 1 else 0,
+    ))
+    results = dict(pairs)
 
     # Output summary
     print(json.dumps({
         "status": "ok",
         "fetched_at": datetime.now().isoformat(),
-        "results": {k: "saved" if v else "no_data" for k, v in results.items()},
+        "results": results,
         "total": len(tickers),
-        "saved": sum(1 for v in results.values() if v),
+        "saved": sum(1 for value in results.values() if value == "saved"),
     }, indent=2))
 
 

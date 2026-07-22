@@ -16,6 +16,9 @@ import json
 import os
 import sys
 
+from pipeline_runtime import atomic_write_json
+from pipeline_schemas import ArtifactValidationError, load_and_validate_artifact
+
 DATA_DIR = os.path.expanduser("~/morning-briefing/data")
 # Dedicated creds file (nothing else manages it) preferred over the big .env,
 # which hermes may regenerate and wipe manual edits.
@@ -71,10 +74,7 @@ def make_screener_lite():
         "_note": "Public teaser — full screener is subscriber-only via /api/data/screener-data.json",
     }
     out = os.path.join(DATA_DIR, "screener-lite.json")
-    tmp = out + ".tmp"
-    with open(tmp, "w") as f:
-        json.dump(lite, f, indent=1)
-    os.replace(tmp, out)
+    atomic_write_json(out, lite)
     return True
 
 
@@ -96,8 +96,15 @@ def sync_private_to_r2():
     def put(key, path):
         nonlocal uploaded, skipped
         try:
+            # R2 is the publish/database boundary for premium AI artifacts.
+            # Reject malformed schemas and non-standard NaN/Infinity values
+            # before subscribers or webhook consumers can receive them.
+            load_and_validate_artifact(path)
             s3.upload_file(path, BUCKET, key, ExtraArgs={"ContentType": "application/json"})
             uploaded += 1
+        except ArtifactValidationError as e:
+            skipped += 1
+            print(f"  R2 validation failed {key}: {e}", file=sys.stderr)
         except Exception as e:
             skipped += 1
             print(f"  R2 put failed {key}: {e}", file=sys.stderr)

@@ -21,13 +21,13 @@ Uses the --sizer-pct flag pattern (like backtest.py):
 """
 
 import argparse
+import asyncio
 import json
 import os
 import sys
-import time
-import urllib.request
-import urllib.error
 from datetime import datetime, timedelta
+
+from pipeline_runtime import RequestFailed, atomic_write_json, request_json, run_blocking_pool
 
 DATA_DIR = os.path.expanduser("~/morning-briefing/data")
 TIINGO_DIR = os.path.join(DATA_DIR, "tiingo")
@@ -49,20 +49,52 @@ def fetch_prices(ticker, days=30, resample_freq="daily", api_key=None):
     )
 
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "MapleGamma/1.0"})
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            data = json.loads(resp.read().decode())
-            return data
-    except urllib.error.HTTPError as e:
-        print(f"  HTTP error for {ticker}: {e.code} {e.reason}", file=sys.stderr)
-        if e.code == 401:
-            print("  (Unauthorized — check TIINGO_API_KEY)", file=sys.stderr)
-        if e.code == 404:
-            print(f"  (Ticker {ticker} not found on Tiingo)", file=sys.stderr)
-        return None
-    except Exception as e:
+        return request_json(url, headers={"User-Agent": "MapleGamma/1.0"}, timeout=30)
+    except (RequestFailed, ValueError) as e:
         print(f"  Error fetching {ticker}: {e}", file=sys.stderr)
         return None
+
+
+def fetch_yfinance_prices(ticker, days=30, resample_freq="daily"):
+    """Fallback source normalized to Tiingo's OHLCV record shape."""
+    try:
+        import yfinance as yf
+
+        interval = {"daily": "1d", "weekly": "1wk", "monthly": "1mo"}[resample_freq]
+        start = (datetime.now() - timedelta(days=max(days + 7, 30))).strftime("%Y-%m-%d")
+        history = yf.Ticker(ticker).history(start=start, interval=interval, auto_adjust=False)
+        if history.empty:
+            return None
+        cutoff = datetime.now().date() - timedelta(days=days)
+        records = []
+        for timestamp, row in history.iterrows():
+            day = timestamp.date()
+            if day < cutoff:
+                continue
+            records.append({
+                "date": timestamp.isoformat(),
+                "open": float(row["Open"]),
+                "high": float(row["High"]),
+                "low": float(row["Low"]),
+                "close": float(row["Close"]),
+                "adjClose": float(row.get("Adj Close", row["Close"])),
+                "volume": int(row.get("Volume", 0) or 0),
+            })
+        return records or None
+    except Exception as e:
+        print(f"  yfinance fallback failed for {ticker}: {e}", file=sys.stderr)
+        return None
+
+
+def fetch_price_chain(ticker, days=30, resample_freq="daily", api_key=None):
+    """Prefer Tiingo, then return a normalized yfinance fallback."""
+    key = api_key or _TIINGO_API_KEY
+    if key and not key.startswith("demo_"):
+        prices = fetch_prices(ticker, days, resample_freq, key)
+        if prices:
+            return prices, "tiingo"
+    prices = fetch_yfinance_prices(ticker, days, resample_freq)
+    return (prices, "yfinance") if prices else (None, "unavailable")
 
 
 def fetch_iex_top(api_key=None):
@@ -70,14 +102,8 @@ def fetch_iex_top(api_key=None):
     key = api_key or _TIINGO_API_KEY
     url = f"https://api.tiingo.com/iex/?token={key}"
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "MapleGamma/1.0"})
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            data = json.loads(resp.read().decode())
-            return data
-    except urllib.error.HTTPError as e:
-        print(f"  IEX HTTP error: {e.code} {e.reason}", file=sys.stderr)
-        return None
-    except Exception as e:
+        return request_json(url, headers={"User-Agent": "MapleGamma/1.0"}, timeout=30)
+    except (RequestFailed, ValueError) as e:
         print(f"  Error fetching IEX data: {e}", file=sys.stderr)
         return None
 
@@ -130,17 +156,15 @@ def main():
                         help="Future use - reserved for position sizing context")
     parser.add_argument("--delay", type=float, default=0.3,
                         help="Delay between API calls in seconds (default: 0.3)")
+    parser.add_argument("--workers", type=int, default=4,
+                        help="Maximum concurrent source requests (default: 4)")
 
     args = parser.parse_args()
 
     # Resolve API key
     api_key = args.api_key or _TIINGO_API_KEY
     if api_key.startswith("demo_"):
-        print(json.dumps({
-            "error": "No valid Tiingo API key set. "
-                     "Set TIINGO_API_KEY environment variable or pass --api-key."
-        }))
-        sys.exit(1)
+        print("  Tiingo key unavailable; using yfinance fallback", file=sys.stderr)
 
     # Pass API key to helper functions
     # Update calls to pass api_key
@@ -149,16 +173,18 @@ def main():
     if args.iex:
         # Fetch IEX top-of-book
         print("  Fetching IEX top-of-book data...", file=sys.stderr)
-        iex_data = fetch_iex_top()
+        if api_key.startswith("demo_"):
+            print(json.dumps({"error": "IEX requires a valid Tiingo API key"}))
+            sys.exit(1)
+        iex_data = fetch_iex_top(api_key)
         if iex_data:
             os.makedirs(args.output_dir, exist_ok=True)
             out_path = os.path.join(args.output_dir, "iex_top.json")
-            with open(out_path, "w") as f:
-                json.dump({
-                    "fetched_at": datetime.now().isoformat(),
-                    "data": iex_data,
-                    "count": len(iex_data),
-                }, f, indent=2)
+            atomic_write_json(out_path, {
+                "fetched_at": datetime.now().isoformat(),
+                "data": iex_data,
+                "count": len(iex_data),
+            })
             print(f"  Saved: {out_path}", file=sys.stderr)
             print(json.dumps({
                 "status": "ok",
@@ -184,40 +210,43 @@ def main():
     tickers = [t.strip().upper() for t in args.ticker.split(",")]
     os.makedirs(args.output_dir, exist_ok=True)
 
-    results = {}
-
-    for ticker in tickers:
+    def process_ticker(ticker):
         print(f"  Fetching {ticker} ({args.days}d, {args.resample})...", file=sys.stderr)
-        prices = fetch_prices(ticker, args.days, args.resample)
+        prices, source = fetch_price_chain(ticker, args.days, args.resample, api_key)
         if prices:
             stats = compute_stats(prices)
-            results[ticker] = stats
             # Save individual file
             out_path = os.path.join(args.output_dir, f"{ticker}-prices.json")
-            with open(out_path, "w") as f:
-                json.dump({
-                    "ticker": ticker,
-                    "fetched_at": datetime.now().isoformat(),
-                    "days": args.days,
-                    "resample": args.resample,
-                    "stats": stats,
-                    "prices": prices,
-                }, f, indent=2)
-            print(f"    Saved: {out_path} ({len(prices)} data points)", file=sys.stderr)
+            atomic_write_json(out_path, {
+                "ticker": ticker,
+                "source": source,
+                "fetched_at": datetime.now().isoformat(),
+                "days": args.days,
+                "resample": args.resample,
+                "stats": stats,
+                "prices": prices,
+            })
+            print(f"    Saved: {out_path} ({len(prices)} {source} data points)", file=sys.stderr)
+            return ticker, {"status": "saved", "source": source, "stats": stats}
         else:
-            results[ticker] = None
+            return ticker, {"status": "failed", "source": source}
 
-        if len(tickers) > 1:
-            time.sleep(args.delay)
+    pairs = asyncio.run(run_blocking_pool(
+        tickers,
+        process_ticker,
+        max_concurrency=args.workers,
+        min_start_interval=args.delay if len(tickers) > 1 else 0,
+    ))
+    results = dict(pairs)
 
     # Output summary
     print(json.dumps({
         "status": "ok",
-        "source": "tiingo",
+        "source": "tiingo_with_yfinance_fallback",
         "fetched_at": datetime.now().isoformat(),
-        "results": {k: "saved" if v else "failed" for k, v in results.items()},
+        "results": results,
         "total": len(tickers),
-        "saved": sum(1 for v in results.values() if v),
+        "saved": sum(1 for value in results.values() if value["status"] == "saved"),
     }, indent=2))
 
 
