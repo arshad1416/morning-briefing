@@ -1,7 +1,10 @@
 // components/feature/gating/FeatureGate.tsx — client-side monetization wrapper.
 //
-// Unlike GateCard (which reflects a server 401/403 for R2-gated files), this
-// wraps features whose data is public — the gate is cosmetic. It derives the
+// The overlay is the ONE visible pitch for the tile it wraps. Two pairings:
+// public-data tiles (e.g. MaxPainCard) render real content behind it — the
+// gate is cosmetic; server-gated tiles (Models tiles, NopeCard, GammaWall)
+// must render a QUIET frame on 401/403, never their own GateCard — a second
+// pitch under the overlay reads as overlapping signup modals. It derives the
 // tier from the real session (/api/auth/me) so it agrees with the
 // server-gated pages: trial counts as pro, basic ranks below pro.
 'use client';
@@ -14,6 +17,10 @@ import { LockIcon } from './LockIcon';
 
 interface FeatureGateProps {
   feature: FeatureKey;
+  /** Names the wrapped tile on the pitch card. Required when one gate key
+   *  fronts several tiles (walkforward gates Backtest and Accuracy too) —
+   *  the registry label would name the wrong feature. */
+  label?: string;
   children: React.ReactNode;
 }
 
@@ -28,7 +35,7 @@ const FEATURE_LABELS: Record<FeatureKey, string> = {
 
 const TIER_LABELS = { basic: 'Basic', pro: 'Pro' } as const;
 
-export function FeatureGate({ feature, children }: FeatureGateProps) {
+export function FeatureGate({ feature, label, children }: FeatureGateProps) {
   const { data: me, isLoading } = useMe();
 
   const { minTier, teaser } = FEATURES[feature];
@@ -70,7 +77,7 @@ export function FeatureGate({ feature, children }: FeatureGateProps) {
             <LockIcon />
           </span>
           <p className="text-sm font-semibold text-[var(--color-text-primary)] mt-3">
-            {FEATURE_LABELS[feature]}
+            {label ?? FEATURE_LABELS[feature]}
           </p>
           <p className="text-xs text-[var(--color-text-tertiary)] mt-1">
             Included with MapleGamma {tierLabel}

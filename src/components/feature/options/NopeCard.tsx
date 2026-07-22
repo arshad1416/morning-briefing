@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 import { nopeDetailQuery } from '@/lib/query/options';
 import { formatCompact } from '@/lib/format';
 import { GateError } from '@/lib/api/gated';
-import { GateCard } from '@/components/feature/gating/GateCard';
 
 function metric(value: number | null | undefined, digits = 3) {
   return value == null ? '—' : value.toFixed(digits);
@@ -30,7 +29,9 @@ export function NopeCard() {
         {/* Without this branch a failed/missing R2 file left an infinite skeleton. */}
         {isError ? (
           error instanceof GateError && error.kind !== 'unavailable' ? (
-            <GateCard kind={error.kind} need={error.need ?? 'pro'} feature="NOPE flow" flush />
+            // Quiet frame only — the FeatureGate overlay on /options/ is the
+            // single pitch (a GateCard here doubled it).
+            <div className="h-48 rounded-[var(--radius-chip)] bg-[var(--color-bg-elevated)]" />
           ) : (
             <p className="py-6 text-center text-sm text-[var(--color-text-tertiary)]">
               NOPE data isn&apos;t available right now.
