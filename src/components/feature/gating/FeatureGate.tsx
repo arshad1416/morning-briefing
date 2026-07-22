@@ -22,6 +22,7 @@ const FEATURE_LABELS: Record<FeatureKey, string> = {
   simulation: 'Live simulation',
   gammaWalls: 'Gamma Walls',
   nope: 'NOPE Flow Estimate',
+  maxPain: 'Max Pain',
   calibration: 'Model Calibration',
 };
 
