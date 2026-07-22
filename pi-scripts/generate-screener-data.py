@@ -258,6 +258,16 @@ def fetch_ticker_data(ticker):
             # Computed signals
             "above_sma20": bool(price > sma20),
             "above_sma50": bool(price > sma50),
+            # NOTE (naming, not behavior): despite the "above_52w_high" name,
+            # this is the percent the price sits BELOW the 52-week high (0 at
+            # the high, larger the further under it) — and despite
+            # "below_52w_low", that one is the percent ABOVE the 52-week low.
+            # Every current consumer (compute_score()'s near_high/near_low
+            # checks below, and the screener UI's w52 filter) already reads
+            # them with this meaning, so the values are correct; only the
+            # names invite a sign error in a future consumer. Renaming would
+            # need a matching change in src/lib/schemas/screener.ts and the
+            # UI, out of scope here — left as a documented trap instead.
             "above_52w_high_pct": round((1 - price / high_52w) * 100, 1) if high_52w else None,
             "below_52w_low_pct": round((price / low_52w - 1) * 100, 1) if low_52w else None,
             "volume_ratio": round(volume / avg_vol, 2) if avg_vol else 1.0,

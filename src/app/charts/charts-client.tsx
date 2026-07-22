@@ -67,6 +67,18 @@ const rawSchema = { parse: (d: unknown) => d as ChartFile };
 /*  Indicator math (ported verbatim from the legacy charts.js)        */
 /* ------------------------------------------------------------------ */
 
+// NOT FURTHER FIXED (checked against the glossary): calcEMA/calcRSI/calcATR
+// count periods in bars of whatever timeframe is selected, so "EMA 20",
+// "RSI (14)" and "ATR (14)" mean 20/14 weeks, months or years on non-Daily
+// toggles. The page-level subtitle already discloses this in general
+// ("The Daily–Yearly buttons set how much time each price bar covers"), and
+// per-pane treatment differs deliberately by whether the attached glossary
+// text makes a day-specific claim: ATR's entry says "a normal day's
+// movement" (false off Daily), so its InfoTip was removed and a dynamic
+// timeframe note substituted; RSI's glossary entry (src/lib/glossary/index.ts)
+// says only "risen or fallen unusually fast recently" — timeframe-agnostic,
+// so its InfoTip and static note are already accurate on every toggle and
+// need no equivalent change.
 type Point = { time: Bar['time']; value: number };
 
 function calcEMA(data: Bar[], period: number): Point[] {

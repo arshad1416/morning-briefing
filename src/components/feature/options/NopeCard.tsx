@@ -11,6 +11,14 @@ function metric(value: number | null | undefined, digits = 3) {
 }
 
 export function NopeCard() {
+  // NOT A BUG (checked against the producer): data.symbols is typed as a
+  // z.record, so the schema alone would permit any key, but
+  // pi-scripts/nope_calculator.py only ever writes SPY and QQQ — both
+  // calculate_and_publish_nope() and calculate_and_log_daily_nope() default to
+  // symbols=("SPY", "QQQ"), and every call site in the file (incl. __main__)
+  // passes exactly ["SPY", "QQQ"]. There is no other caller anywhere in
+  // pi-scripts/. The card's fixed two-symbol layout matches the sole real
+  // producer's fixed contract, so nothing is ever silently dropped today.
   const { data, isLoading } = useQuery(nopeDetailQuery());
   const spy = data?.symbols.SPY;
   const qqq = data?.symbols.QQQ;

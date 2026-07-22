@@ -159,7 +159,15 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
                 ) : undefined
               }
             />
-            {score != null && <StatCard label={<TermLabel term="score">Score</TermLabel>} value={Number(score).toFixed(1)} />}
+            {/* BUG FIX: council_analysis.score is a whole number in every current
+                data/tickers/*.json record (observed values 2-8) — no generator
+                for this field lives in this repo, so that is a fact about
+                today's data, not a guaranteed contract. toFixed(1) was padding
+                every value with a fake decimal (e.g. "4.0"), implying a
+                precision the score doesn't have. String(score) drops that fake
+                decimal without rounding, so it stays exact even if a fractional
+                value ever appears. */}
+            {score != null && <StatCard label={<TermLabel term="score">Score</TermLabel>} value={String(score)} />}
             {verdict && (
               <StatCard
                 label="AI Verdict"
@@ -190,7 +198,12 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
           {f && (f.pe_ratio || f.eps || f.beta || f.dividend_yield) && (
             <Section title={<InfoTip term="fundamentals">Fundamentals</InfoTip>}>
               <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-                {f.pe_ratio && <StatCard label={<TermLabel term="p_e">P/E</TermLabel>} caption="p_e" value={f.pe_ratio} />}
+                {/* BUG FIX: pe_ratio arrives as a raw yfinance float (e.g.
+                    39.55327 for AAPL, verified in data/tickers/AAPL.json) and was
+                    rendered unrounded — nine characters of false precision under
+                    a two-character label. Rounded to 2 decimals, matching the
+                    P/C Ratio formatting below. */}
+                {f.pe_ratio && <StatCard label={<TermLabel term="p_e">P/E</TermLabel>} caption="p_e" value={Number(f.pe_ratio).toFixed(2)} />}
                 {f.eps && <StatCard label={<TermLabel term="eps">EPS</TermLabel>} caption="eps" value={`$${f.eps}`} />}
                 {f.beta && <StatCard label={<TermLabel term="beta">Beta</TermLabel>} value={f.beta} />}
                 {f.dividend_yield != null && f.dividend_yield !== 0 && (

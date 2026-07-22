@@ -406,7 +406,9 @@ function PaperTab({ data }: { data: Any }) {
         <Card title="Prediction Engine Accuracy">
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             <Metric label="Top 10 Avg WR" value={`${acc.overall.top_10_avg_win_rate}%`} color="var(--color-bull)" />
-            <Metric label="Top 10 Avg P&L" value={`+${acc.overall.top_10_avg_pnl}%`} color="var(--color-bull)" />
+            {/* Fixed: '+' was hardcoded in the template, so a negative top_10_avg_pnl
+                would have printed as '+-3.1%'. Only prefix '+' for non-negative values. */}
+            <Metric label="Top 10 Avg P&L" value={`${acc.overall.top_10_avg_pnl >= 0 ? '+' : ''}${acc.overall.top_10_avg_pnl}%`} color="var(--color-bull)" />
             <Metric label="Best Win Rate" value={`${acc.overall.best_win_rate}%`} color="var(--color-bull)" />
             <Metric label="Total Backtest" value={acc.overall.total_backtest_trades?.toLocaleString?.() ?? '—'} />
           </div>

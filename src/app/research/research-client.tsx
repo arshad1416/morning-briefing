@@ -1108,8 +1108,12 @@ function MgAnalysisTab() {
               <Badge tone={meta.market_regime === 'risk-on' ? 'bull' : meta.market_regime === 'risk-off' ? 'bear' : 'caution'}>
                 {regimeTerm(meta.market_regime) ? (
                   <InfoTip term={regimeTerm(meta.market_regime)!}>{String(meta.market_regime).toUpperCase()}</InfoTip>
+                ) : meta.market_regime ? (
+                  String(meta.market_regime).toUpperCase()
                 ) : (
-                  (meta.market_regime || '?').toUpperCase()
+                  /* Fixed: a missing market_regime used to fall back to a bare '?', which read as a
+                     punctuation glitch rather than a missing field. */
+                  'Not stated'
                 )}
               </Badge>
               <span className="text-xs text-[var(--color-text-tertiary)]" data-numeric>
@@ -1449,7 +1453,9 @@ function MarketsTab() {
                   <p className="text-sm font-medium text-[var(--color-text-primary)]">{m.question}</p>
                   <span className="flex shrink-0 items-center gap-2 text-xs text-[var(--color-text-tertiary)]" data-numeric>
                     {fmtVol(m.volume || 0)} traded
-                    {m.closed && <Badge tone="bear">Betting closed</Badge>}
+                    {/* Fixed: was tone="bear" (red), which read as a bad outcome — "closed" just means
+                        the question is over, not that any side lost. Neutral tone instead. */}
+                    {m.closed && <Badge tone="caution">Betting closed</Badge>}
                   </span>
                 </div>
                 {!!m.outcomes?.length && (
@@ -1531,7 +1537,17 @@ function EarningsTab() {
                   </thead>
                   <tbody>
                     {rows.slice(0, 25).map((r: Any, i: number) => {
-                      const beat = r.epsActual != null && r.epsEstimate != null ? r.epsActual >= r.epsEstimate : null;
+                      // Fixed: was `epsActual >= epsEstimate`, which badged an exact match to the
+                      // estimate as a green "Beat" — conventionally a match is "in-line", not a beat.
+                      // Now beat/miss require a strict inequality and a tie gets its own neutral badge.
+                      const result =
+                        r.epsActual != null && r.epsEstimate != null
+                          ? r.epsActual > r.epsEstimate
+                            ? 'beat'
+                            : r.epsActual < r.epsEstimate
+                              ? 'miss'
+                              : 'inline'
+                          : null;
                       return (
                         <tr key={i} className="border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>
                           <td className="py-2 text-[var(--color-text-secondary)]" data-numeric>{r.date}</td>
@@ -1541,7 +1557,13 @@ function EarningsTab() {
                             <>
                               <td className="py-2 text-right" data-numeric>{r.epsActual != null ? `$${Number(r.epsActual).toFixed(2)}` : '—'}</td>
                               <td className="py-2 text-right">
-                                {beat == null ? '—' : <Badge tone={beat ? 'bull' : 'bear'}>{beat ? 'Beat' : 'Miss'}</Badge>}
+                                {result == null ? (
+                                  '—'
+                                ) : (
+                                  <Badge tone={result === 'beat' ? 'bull' : result === 'miss' ? 'bear' : 'caution'}>
+                                    {result === 'beat' ? 'Beat' : result === 'miss' ? 'Miss' : 'In-line'}
+                                  </Badge>
+                                )}
                               </td>
                             </>
                           )}
@@ -1553,7 +1575,7 @@ function EarningsTab() {
               </div>
               <p className="mt-2 text-[10px] leading-relaxed text-[var(--color-text-tertiary)]">
                 EPS is profit per share — the company’s profit divided by the number of shares. “Est.” is what Wall Street
-                analysts expect it to be{showActual ? '; “Actual” is what the company reported. “Beat” means the reported figure matched or came in above the estimate, “Miss” that it fell short' : ''}.
+                analysts expect it to be{showActual ? '; “Actual” is what the company reported. “Beat” means the reported figure came in above the estimate, “In-line” that it matched the estimate exactly, “Miss” that it fell short' : ''}.
               </p>
             </Card>
           ) : null;

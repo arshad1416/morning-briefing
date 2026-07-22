@@ -51,7 +51,7 @@ const DEFAULT_FILTERS: Filters = {
   scoreMax: 10,
 };
 
-type SortKey = 'ticker' | 'change' | 'score' | 'rsi' | 'mcap' | 'pe' | 'volume_ratio';
+type SortKey = 'ticker' | 'change' | 'score' | 'rsi' | 'mcap' | 'pe' | 'volume_ratio' | 'div';
 type Sort = { key: SortKey; dir: 'asc' | 'desc' };
 type StoredPreset = { name: string; filters: Filters };
 
@@ -141,6 +141,10 @@ function sortTickers(list: ScreenerTicker[], sort: Sort): ScreenerTicker[] {
       case 'mcap': return t.marketCap ?? 0;
       case 'pe': return t.pe ?? (sort.dir === 'asc' ? Infinity : 0);
       case 'volume_ratio': return volRatio(t) ?? 0;
+      // Div% was the only numeric column with no sortKey wired to its
+      // HeaderCell, so clicking it did nothing while every other header
+      // sorted. Added for consistency with the rest of the table.
+      case 'div': return t.divYield ?? 0;
     }
   };
   return [...list].sort((a, b) => {
@@ -345,7 +349,11 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
             color: 'var(--color-text-primary)',
           }}
         >
-          {score.toFixed(1)}
+          {/* compute_score() in generate-screener-data.py always returns a
+              whole number clamped to 1-10, so toFixed(1) was printing a false
+              "8.0" that reads as a continuous scale. Round-trip through an
+              integer to display it as the whole number it always is. */}
+          {Math.round(score)}
         </span>
       </td>
       <td className="px-3 py-2 text-right text-[var(--color-text-secondary)]" data-numeric>
@@ -464,7 +472,10 @@ function Treemap({ tickers }: { tickers: ScreenerTicker[] }) {
                 gridRow: `span ${rowSpan}`,
                 backgroundColor: `color-mix(in srgb, ${pos ? 'var(--color-bull)' : 'var(--color-bear)'} ${mix}%, var(--color-bg-surface))`,
               }}
-              title={`${t.ticker} · ${fmtPct(chg)} · score ${(t.score ?? 0).toFixed(1)}${t.rsi != null ? ` · RSI ${t.rsi.toFixed(1)}` : ''}`}
+              // Score is always a whole 1-10 (see TickerRow); RSI genuinely
+              // carries a fractional reading, so only score's formatting
+              // changes here.
+              title={`${t.ticker} · ${fmtPct(chg)} · score ${Math.round(t.score ?? 0)}${t.rsi != null ? ` · RSI ${t.rsi.toFixed(1)}` : ''}`}
             >
               <span className="text-[11px] font-bold leading-tight text-[var(--color-text-primary)]" data-numeric>
                 {t.ticker}
@@ -744,11 +755,14 @@ export function ScreenerClient() {
               only the plural `signals` array), so both always returned zero
               rows against every real data file. See applyFilters() above. */}
           <Field label="Score Min">
+            {/* step was 0.1, implying a continuous scale; compute_score()
+                always returns a whole number clamped to 1-10, so whole steps
+                match what the field can ever actually equal. */}
             <input
               type="number"
               min={0}
               max={10}
-              step={0.1}
+              step={1}
               value={filters.scoreMin}
               onChange={(e) => {
                 const v = parseFloat(e.target.value);
@@ -763,7 +777,7 @@ export function ScreenerClient() {
               type="number"
               min={0}
               max={10}
-              step={0.1}
+              step={1}
               value={filters.scoreMax}
               onChange={(e) => {
                 const v = parseFloat(e.target.value);
@@ -879,7 +893,7 @@ export function ScreenerClient() {
                   <HeaderCell label="Score" sortKey="score" align="center" sort={sort} onSort={onSort} />
                   <HeaderCell label={<InfoTip term="p_e">PE</InfoTip>} sortKey="pe" align="right" sort={sort} onSort={onSort} />
                   <HeaderCell label={<InfoTip term="market_cap">Mkt Cap</InfoTip>} sortKey="mcap" align="right" sort={sort} onSort={onSort} />
-                  <HeaderCell label={<InfoTip term="div_yield">Div%</InfoTip>} align="right" sort={sort} onSort={onSort} />
+                  <HeaderCell label={<InfoTip term="div_yield">Div%</InfoTip>} sortKey="div" align="right" sort={sort} onSort={onSort} />
                   <HeaderCell label={<InfoTip term="rsi">RSI</InfoTip>} sortKey="rsi" align="right" sort={sort} onSort={onSort} />
                   <HeaderCell label="Volume vs Avg" sortKey="volume_ratio" align="right" sort={sort} onSort={onSort} />
                   <HeaderCell label="Sector" sort={sort} onSort={onSort} />

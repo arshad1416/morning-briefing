@@ -419,7 +419,11 @@ export function PredictionsClient() {
                   <div
                     className="h-full rounded-full"
                     style={{
-                      width: `${Math.min(v.win_rate * 1.2, 100)}%`,
+                      /* Fixed: the old *1.2 factor saturated the bar to full width for
+                         any win_rate >= 83.3%, so two different rates above that point
+                         (e.g. 85% and 95%) drew identical bars. Width now maps 1:1 to
+                         the win rate percentage printed beside it. */
+                      width: `${Math.min(v.win_rate, 100)}%`,
                       backgroundColor: v.win_rate >= 70 ? 'var(--color-bull)' : 'var(--color-accent)',
                     }}
                   />

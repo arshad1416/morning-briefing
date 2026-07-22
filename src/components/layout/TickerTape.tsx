@@ -128,7 +128,13 @@ export function TickerTape() {
     })),
     ...data.market_summary.fx_rates.map((fx) => ({
       label: fx.pair,
-      value: formatNumber(fx.price, 4),
+      // BUG FIX: was formatNumber(fx.price, 4), padding e.g. 1.41 out to
+      // "1.4100" — two digits of precision the feed doesn't carry. Checked
+      // every archive/*.json fx_rates entry (44 files): USD/CAD never carries
+      // more than 2 decimal places, and the schema stores price as a bare
+      // number with no indication of pip-level precision. 4 decimals is the
+      // FX-market convention, but it isn't honest about what this feed knows.
+      value: formatNumber(fx.price, 2),
     })),
   ];
 
