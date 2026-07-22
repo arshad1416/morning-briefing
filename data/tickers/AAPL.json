@@ -1,28 +1,29 @@
 {
  "ticker": "AAPL",
  "name": "Apple Inc.",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 326.95,
- "change_pct": -2.03,
+ "generated_at": "2026-07-22T11:45:02.024909+00:00",
+ "price": 326.7,
+ "change_pct": 0.04,
  "sector": "Technology",
  "signals": [
   "overbought_rsi",
   "above_ma",
+  "near_high",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 82.5,
-  "sma_20": 306.96,
-  "sma_50": 303.43
+  "rsi_14": 80.0,
+  "sma_20": 308.43,
+  "sma_50": 304.21
  },
  "fundamentals": {
-  "pe_ratio": 39.67846,
+  "pe_ratio": 39.55327,
   "market_cap": "4.80T",
   "beta": 1.097,
-  "dividend_yield": 0.0032
+  "dividend_yield": 0.0033
  },
  "council_analysis": {
-  "score": 3
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [

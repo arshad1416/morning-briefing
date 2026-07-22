@@ -1,23 +1,24 @@
 {
  "ticker": "AEP",
  "name": "American Electric Power Company",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 132.58,
- "change_pct": 0.33,
+ "generated_at": "2026-07-22T11:45:02.024909+00:00",
+ "price": 130.16,
+ "change_pct": -0.68,
  "sector": "Utilities",
  "signals": [
-  "rsi_dip"
+  "oversold_rsi",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 37.2,
-  "sma_20": 135.13,
-  "sma_50": 131.19
+  "rsi_14": 34.5,
+  "sma_20": 135.05,
+  "sma_50": 131.15
  },
  "fundamentals": {
-  "pe_ratio": 19.583456,
-  "market_cap": "72.1B",
+  "pe_ratio": 19.255177,
+  "market_cap": "70.8B",
   "beta": 0.504,
-  "dividend_yield": 0.0288
+  "dividend_yield": 0.028999999999999998
  },
  "council_analysis": {
   "score": 6

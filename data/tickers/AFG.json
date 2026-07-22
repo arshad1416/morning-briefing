@@ -1,29 +1,49 @@
 {
  "ticker": "AFG",
  "name": "American Financial Group, Inc.",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 142.04,
- "change_pct": 0.11,
+ "generated_at": "2026-07-22T11:45:02.024909+00:00",
+ "price": 141.09,
+ "change_pct": -0.82,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 58.1,
-  "sma_20": 139.5,
-  "sma_50": 135.02
+  "rsi_14": 55.1,
+  "sma_20": 139.89,
+  "sma_50": 135.23
  },
  "fundamentals": {
-  "pe_ratio": 13.4890785,
-  "market_cap": "11.8B",
+  "pe_ratio": 13.399146,
+  "market_cap": "11.7B",
   "beta": 0.614,
-  "dividend_yield": 0.0248
+  "dividend_yield": 0.024700000000000003
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "AFG",
+   "date": "2026-08-04",
+   "epsEstimate": 2.37,
+   "epsActual": null
+  },
+  {
+   "ticker": "AFG",
+   "date": "2026-04-29",
+   "epsEstimate": 2.56,
+   "epsActual": 2.47
+  },
+  {
+   "ticker": "AFG",
+   "date": "2026-02-03",
+   "epsEstimate": 3.32,
+   "epsActual": 3.65
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

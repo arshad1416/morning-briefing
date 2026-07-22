@@ -1,24 +1,26 @@
 {
  "ticker": "MMM",
  "name": "3M Company",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 160.95,
- "change_pct": 0.69,
+ "generated_at": "2026-07-22T11:45:02.024909+00:00",
+ "price": 174.4,
+ "change_pct": 9.61,
  "sector": "Industrials",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 46.5,
-  "sma_20": 160.49,
-  "sma_50": 155.39
+  "rsi_14": 67.6,
+  "sma_20": 160.96,
+  "sma_50": 155.98
  },
  "fundamentals": {
-  "pe_ratio": 31.01156,
-  "market_cap": "83.9B",
+  "pe_ratio": 33.733074,
+  "market_cap": "91.0B",
   "beta": 1.081,
-  "dividend_yield": 0.0195
+  "dividend_yield": 0.0196
  },
  "council_analysis": {
   "score": 5

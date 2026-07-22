@@ -1,24 +1,26 @@
 {
  "ticker": "EIX",
  "name": "Edison International",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 77.97,
- "change_pct": 0.44,
+ "generated_at": "2026-07-22T11:45:02.024909+00:00",
+ "price": 77.35,
+ "change_pct": 0.13,
  "sector": "Utilities",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 64.2,
-  "sma_20": 74.91,
-  "sma_50": 71.97
+  "rsi_14": 67.0,
+  "sma_20": 75.17,
+  "sma_50": 72.15
  },
  "fundamentals": {
-  "pe_ratio": 8.475,
-  "market_cap": "30.0B",
+  "pe_ratio": 8.407609,
+  "market_cap": "29.8B",
   "beta": 0.649,
-  "dividend_yield": 0.0452
+  "dividend_yield": 0.0454
  },
  "council_analysis": {
   "score": 7

@@ -1,29 +1,49 @@
 {
  "ticker": "EG",
  "name": "Everest Group, Ltd.",
- "generated_at": "2026-07-21T14:45:01.910213+00:00",
- "price": 379.72,
- "change_pct": -0.74,
+ "generated_at": "2026-07-22T11:45:02.024909+00:00",
+ "price": 375.77,
+ "change_pct": -0.85,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 64.7,
-  "sma_20": 364.24,
-  "sma_50": 349.25
+  "rsi_14": 64.3,
+  "sma_20": 366.03,
+  "sma_50": 349.76
  },
  "fundamentals": {
-  "pe_ratio": 7.7304564,
-  "market_cap": "15.0B",
+  "pe_ratio": 7.6500406,
+  "market_cap": "14.9B",
   "beta": 0.287,
-  "dividend_yield": 0.0209
+  "dividend_yield": 0.021099999999999997
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "EG",
+   "date": "2026-07-29",
+   "epsEstimate": 14.53,
+   "epsActual": null
+  },
+  {
+   "ticker": "EG",
+   "date": "2026-04-29",
+   "epsEstimate": 13.96,
+   "epsActual": 16.08
+  },
+  {
+   "ticker": "EG",
+   "date": "2026-02-04",
+   "epsEstimate": 13.83,
+   "epsActual": 13.26
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }
