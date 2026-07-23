@@ -5,8 +5,9 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { gexQuery } from '@/lib/query/options';
 import { POLL } from '@/lib/query/policy';
-import { Surface, SurfaceHeader, RegimeChip, InfoTip, DataFreshness } from '@/components/primitives';
+import { Surface, SurfaceHeader, RegimeChip, InfoTip, PlainLabel, DataFreshness } from '@/components/primitives';
 import { formatCompact } from '@/lib/format';
+import type { GlossaryTerm } from '@/lib/glossary';
 
 // The options feed regenerates every ~30 min during market hours.
 const OPTIONS_STALE_MS = 40 * 60_000;
@@ -72,12 +73,11 @@ export function GexDexVexCard() {
   }
 
   const mode = data.modes.all;
-  const metrics = [
+  const metrics: Array<{ key: GlossaryTerm; label: string; value: number }> = [
     { key: 'gex', label: 'GEX', value: mode.total_gex },
     { key: 'dex', label: 'DEX', value: mode.total_dex },
     { key: 'vex', label: 'VEX', value: mode.total_vex },
   ];
-  const maxAbs = Math.max(...metrics.map((m) => Math.abs(m.value)));
   const dominant = metrics.reduce((a, b) => (Math.abs(b.value) > Math.abs(a.value) ? b : a));
 
   return (
@@ -111,8 +111,9 @@ export function GexDexVexCard() {
                   }}
                 />
               )}
-              <span className="relative z-10 text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
+              <span className="relative z-10 block text-[10px] uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
                 <InfoTip term={m.key}>{m.label}</InfoTip>
+                <PlainLabel term={m.key} className="mt-0.5" />
               </span>
               <p
                 className="relative z-10 text-lg font-semibold mt-1"
@@ -122,7 +123,15 @@ export function GexDexVexCard() {
                 {formatCompact(m.value)}
               </p>
               <div className="relative z-10">
-                <SignBar value={m.value} max={maxAbs} />
+                {/* BUG FIX: was <SignBar value={m.value} max={maxAbs} /> with maxAbs
+                    shared across all three metrics. GEX ($), DEX (shares) and VEX
+                    (vega units) are different units at wildly different magnitudes
+                    (e.g. GEX ~2.7M vs VEX ~991M), so plotting GEX against a max set
+                    by VEX drew it as a sliver indistinguishable from zero. Each bar
+                    is now scaled to its own value, so it always shows a full-length
+                    bar in the correct direction — an honest sign indicator, since
+                    there is no valid shared scale across incompatible units. */}
+                <SignBar value={m.value} max={Math.abs(m.value)} />
               </div>
             </div>
           ))}
@@ -130,7 +139,15 @@ export function GexDexVexCard() {
 
         <div className="flex items-center justify-between text-xs text-[var(--color-text-tertiary)] relative z-10">
           <span>
-            <InfoTip term="gamma_wall">Max GEX Strike</InfoTip>:{' '}
+            {/* Was term="max_pain" — but this value is `max_gex_strike`, the
+                largest-gamma strike, which is a different number from max pain
+                (both are in this dataset and they differ). The tooltip was
+                explaining the wrong metric. main independently retagged this
+                as term="gamma_wall" (a related but distinct glossary entry);
+                kept max_gex_strike since it matches this label and value
+                exactly, and its own glossary text is the one that explicitly
+                calls out the max-pain mixup this comment describes. */}
+            <InfoTip term="max_gex_strike">Max GEX Strike</InfoTip>:{' '}
             <span className="text-[var(--color-text-primary)]" style={{ fontFamily: 'var(--font-mono)' }} data-numeric>
               ${mode.max_gex_strike.toFixed(0)}
             </span>

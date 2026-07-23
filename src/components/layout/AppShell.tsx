@@ -212,7 +212,10 @@ const MOBILE_PRIMARY_ITEMS = [
 const MOBILE_MORE_CORE_ITEMS = [
   { href: '/research/', label: 'Research', Icon: IconNews },
   { href: '/charts/', label: 'Charts', Icon: IconCandles },
-  { href: '/models/', label: 'Models', Icon: IconPulse },
+  // Labelled to match the destination's own <h1> and page title ("Prediction
+  // Engine"). "Models" appeared nowhere on the page and read like a settings
+  // screen where you pick a model.
+  { href: '/models/', label: 'Prediction Engine', Icon: IconPulse },
 ];
 
 const NAV_ITEMS = [...MOBILE_PRIMARY_ITEMS, ...MOBILE_MORE_CORE_ITEMS];
@@ -237,6 +240,9 @@ function isNavActive(pathname: string, href: string) {
   return path === target || path.startsWith(`${target}/`);
 }
 
+const PILL_CAVEAT =
+  'Rough guide to US market hours, based on the standard 9:30am-4pm ET session. It does not know about market holidays or early closes, so on a holiday it will show open all day.';
+
 function MarketStatusPill() {
   // Market hours derive from the clock; compute only after mount so the
   // static-export HTML and first client render match.
@@ -250,31 +256,59 @@ function MarketStatusPill() {
 
   if (!now) {
     return (
-      <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--color-text-tertiary)] bg-[var(--color-bg-elevated)]">
+      <span className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--color-text-tertiary)] bg-[var(--color-bg-elevated)]">
         <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-text-tertiary)]" aria-hidden="true" />
-        Market —
+        Checking…
       </span>
     );
   }
 
-  const day = now.getUTCDay();
-  const hour = now.getUTCHours();
-  const isOpen = day >= 1 && day <= 5 && hour >= 13 && hour < 21; // 9:30-4 ET approx
+  // BUG FIX: this used to derive market hours from a fixed 13:00-21:00 UTC
+  // window ("9:30-4 ET approx"), which isn't DST-aware — UTC has no concept
+  // of ET's own EST/EDT offset shift, so the fixed window drifted by up to
+  // 90 minutes around the March/November clock changes (claiming "open" up
+  // to 90 minutes early in EST, or staying "open" an hour late in EDT).
+  // Asking Intl for the wall-clock time in America/New_York instead lets
+  // the IANA tz database handle EST/EDT for us, so the window always lines
+  // up with the real 9:30am-4:00pm ET session. Market holidays and early
+  // closes remain unknown — see PILL_CAVEAT.
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    weekday: 'short',
+    hour: 'numeric',
+    minute: 'numeric',
+    hourCycle: 'h23',
+  }).formatToParts(now);
+  const part = (type: string) => parts.find((p) => p.type === type)?.value ?? '';
+  const weekday = part('weekday');
+  const minutesET = Number(part('hour')) * 60 + Number(part('minute'));
+  const isWeekday = weekday !== 'Sat' && weekday !== 'Sun';
+  const isOpen = isWeekday && minutesET >= 9 * 60 + 30 && minutesET < 16 * 60;
 
   return (
     <span
-      className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-[0.12em]"
+      className="hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-[0.12em]"
       style={{
         backgroundColor: isOpen ? 'var(--color-bull-soft)' : 'var(--color-bg-elevated)',
         color: isOpen ? 'var(--color-bull)' : 'var(--color-text-tertiary)',
       }}
+      // Says WHICH market (the tape below it also carries Toronto and the
+      // Canadian dollar). The DST drift this comment used to warn about is
+      // fixed above (real ET wall-clock time via Intl, not a fixed UTC
+      // window) — the one caveat left is that holidays and early closes
+      // aren't known, so on those days it still shows open all day.
+      title={PILL_CAVEAT}
     >
       <span
         className={`w-1.5 h-1.5 rounded-full ${isOpen ? 'animate-pulse' : ''}`}
         style={{ backgroundColor: isOpen ? 'var(--color-bull)' : 'var(--color-text-tertiary)' }}
         aria-hidden="true"
       />
-      {isOpen ? 'Market open' : 'Market closed'}
+      {isOpen ? 'US market open' : 'US market closed'}
+      {/* A native `title` only reaches a mouse. The visible words are flatly
+          confident, so the caveat is repeated for screen readers, where it
+          costs no layout. */}
+      <span className="sr-only"> — {PILL_CAVEAT}</span>
     </span>
   );
 }
@@ -299,15 +333,25 @@ function LearningModeToggle() {
   return (
     <button
       onClick={toggleLearningMode}
-      className="min-w-11 min-h-11 flex items-center justify-center rounded-lg transition-colors"
+      className="min-w-11 min-h-11 flex items-center justify-center rounded-lg px-2 transition-colors"
       style={{
         color: learningMode ? 'var(--color-accent)' : 'var(--color-text-secondary)',
         backgroundColor: learningMode ? 'var(--color-accent-dim)' : 'transparent',
       }}
-      aria-label={learningMode ? 'Disable learning mode' : 'Enable learning mode'}
-      title="Learning Mode — shows tooltips for jargon"
+      aria-label={
+        learningMode
+          ? 'Turn off Learning Mode — plain-English explanations'
+          : 'Turn on Learning Mode — plain-English explanations'
+      }
+      title="Learning Mode — explains the finance terms on the page in plain English. Hover, tap or tab to any underlined term."
     >
       <IconBook />
+      {/* The icon alone is undiscoverable for the beginners this exists for,
+          so it carries a visible word wherever there is room. Hidden on the
+          narrowest widths, where the header is already tight. */}
+      <span className="ml-1.5 hidden text-xs font-medium sm:inline">
+        {learningMode ? 'Explain: on' : 'Explain'}
+      </span>
     </button>
   );
 }
@@ -609,7 +653,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {/* Disclaimer */}
           <div className="mt-auto pt-4 border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>
             <p className="text-xs text-[var(--color-text-tertiary)] leading-relaxed">
-              Not financial advice. Data may be delayed. Past performance does not guarantee future results.
+              Not financial advice. All strategy results shown are practice trades made with fake money.
+              Data may be delayed, and past performance does not guarantee future results.
             </p>
           </div>
         </nav>
@@ -621,11 +666,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {/* Compliance footer — general disclaimer, position-disclosure policy, Quebec notice */}
           <footer className="mt-8 border-t pt-4 pb-[calc(5rem+env(safe-area-inset-bottom))] text-[11px] leading-relaxed text-[var(--color-text-tertiary)] md:pb-4" style={{ borderColor: 'var(--color-border-subtle)' }}>
             <p className="mb-2">
-              MapleGamma provides general market information and simulated (paper-trading) results for
-              educational purposes only. Nothing on this site is investment advice or a recommendation,
-              and nothing is tailored to any person&apos;s circumstances. All trading results shown are simulated
-              (paper-trading) — the site operator deploys no real capital in the strategies or
-              securities discussed. Past performance — real or simulated — does not guarantee future results.{' '}
+              MapleGamma provides general market information and practice-trading results — trades placed with
+              fake money, known as paper trading — for educational purposes only. Nothing on this site is
+              investment advice or a recommendation, and nothing is tailored to any person&apos;s circumstances.
+              Every trading result shown here is simulated: the person who runs this site puts no real money
+              into any of the strategies, securities (shares, ETFs, options) or other assets discussed.
+              Past performance — real or simulated — does not guarantee future results.{' '}
               <a href="/terms" className="underline hover:text-[var(--color-text-secondary)]">Terms</a>
               {' · '}
               <a href="/privacy" className="underline hover:text-[var(--color-text-secondary)]">Privacy</a>

@@ -7,6 +7,8 @@ import React from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
+import { InfoTip, PlainLabel } from '@/components/primitives';
+import type { GlossaryTerm } from '@/lib/glossary';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -20,7 +22,18 @@ const fetchJson = async (url: string) => {
 const fmtPrice = (v: number | null | undefined) =>
   v == null ? '—' : `$${Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-function StatCard({ label, value, sub, color }: { label: string; value: React.ReactNode; sub?: React.ReactNode; color?: string }) {
+// Stat-card label with its plain-English tooltip. The term stays visible as the
+// label; the tooltip only explains it. Wording always comes from @/lib/glossary.
+function TermLabel({ term, children }: { term: GlossaryTerm; children: React.ReactNode }) {
+  return <InfoTip term={term}>{children}</InfoTip>;
+}
+
+// `caption` is the always-on plain-English gloss for the pure acronyms a
+// beginner cannot even guess at (RSI, SMA, ATR, P/E, EPS, IV Rank). It renders
+// BELOW the number, not under the label: these cards sit in a stretch grid, so
+// a caption between label and value would push that card's number a line lower
+// than its uncaptioned row-mates and break the row's alignment.
+function StatCard({ label, value, sub, caption, color }: { label: React.ReactNode; value: React.ReactNode; sub?: React.ReactNode; caption?: GlossaryTerm; color?: string }) {
   return (
     <div
       className="rounded-[var(--radius-tile)] border p-4"
@@ -28,12 +41,13 @@ function StatCard({ label, value, sub, color }: { label: string; value: React.Re
     >
       <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">{label}</p>
       <p className="mt-1 text-xl font-bold" data-numeric style={{ color: color ?? 'var(--color-text-primary)' }}>{value}</p>
+      {caption && <PlainLabel term={caption} className="mt-1" />}
       {sub}
     </div>
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({ title, children }: { title: React.ReactNode; children: React.ReactNode }) {
   return (
     <div>
       <h2 className="mb-2 text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">{title}</h2>
@@ -82,7 +96,7 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
     return (
       <Card>
         <p className="text-sm text-[var(--color-text-secondary)]">
-          No ticker specified — pick one from the <Link href="/screener/" className="font-medium text-[var(--color-accent)] hover:underline">Screener</Link>.
+          No stock selected — pick one from the <Link href="/screener/" className="font-medium text-[var(--color-accent)] hover:underline">Screener</Link>, our list of scanned stocks and funds.
         </p>
       </Card>
     );
@@ -102,7 +116,14 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
 
   const price = t.price ?? scan.price;
   const changePct = t.change_pct ?? scan.change_pct;
-  const score = t.council_analysis?.score ?? scan.score;
+  // BUG FIX: this used to fall back to scan.score (latest.json
+  // premarket_top_setups) whenever a ticker had no detail file / no
+  // council_analysis. That fallback is a different, unclamped scale — live
+  // values have gone as high as 11 — while council_analysis.score is always
+  // clamped to 1-10 by compute_score(). Rendering both under one "Score"
+  // label made the number meaningless, so the card now only shows the
+  // clamped score and simply does not render for tickers that lack one.
+  const score = t.council_analysis?.score;
   const verdict = t.council_analysis?.verdict ?? scan.council_verdict;
   const tech = t.technical;
   const f = t.fundamentals;
@@ -138,54 +159,84 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
                 ) : undefined
               }
             />
-            {score != null && <StatCard label="Score" value={Number(score).toFixed(1)} />}
+            {/* BUG FIX: council_analysis.score is a whole number in every current
+                data/tickers/*.json record (observed values 2-8) — no generator
+                for this field lives in this repo, so that is a fact about
+                today's data, not a guaranteed contract. toFixed(1) was padding
+                every value with a fake decimal (e.g. "4.0"), implying a
+                precision the score doesn't have. String(score) drops that fake
+                decimal without rounding, so it stays exact even if a fractional
+                value ever appears. */}
+            {score != null && <StatCard label={<TermLabel term="score">Score</TermLabel>} value={String(score)} />}
             {verdict && (
               <StatCard
-                label="Council Verdict"
+                label="AI Verdict"
                 value={<Badge tone={verdict === 'bullish' ? 'bull' : verdict === 'bearish' ? 'bear' : 'caution'}>{verdict}</Badge>}
+                sub={
+                  <p className="mt-1.5 text-[10px] leading-snug text-[var(--color-text-tertiary)]">
+                    From the <InfoTip term="ai_council">AI Council</InfoTip> — a panel of AI models.
+                  </p>
+                }
               />
             )}
-            {f?.market_cap && <StatCard label="Market Cap" value={f.market_cap} />}
+            {f?.market_cap && <StatCard label={<TermLabel term="market_cap">Market Cap</TermLabel>} value={f.market_cap} />}
           </div>
 
           {tech && (
-            <Section title="Technicals">
+            <Section title={<InfoTip term="technicals">Technicals</InfoTip>}>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-                {tech.rsi_14 != null && <StatCard label="RSI (14)" value={tech.rsi_14} />}
-                {tech.sma_20 != null && <StatCard label="SMA 20" value={fmtPrice(tech.sma_20)} />}
-                {tech.sma_50 != null && <StatCard label="SMA 50" value={fmtPrice(tech.sma_50)} />}
-                {tech.support_1 != null && <StatCard label="Support" value={fmtPrice(tech.support_1)} color="var(--color-bull)" />}
-                {tech.resistance_1 != null && <StatCard label="Resistance" value={fmtPrice(tech.resistance_1)} color="var(--color-bear)" />}
-                {tech.atr != null && <StatCard label="ATR" value={fmtPrice(tech.atr)} />}
+                {tech.rsi_14 != null && <StatCard label={<TermLabel term="rsi">RSI (14)</TermLabel>} caption="rsi" value={tech.rsi_14} />}
+                {tech.sma_20 != null && <StatCard label={<TermLabel term="sma_20">SMA 20</TermLabel>} caption="sma_20" value={fmtPrice(tech.sma_20)} />}
+                {tech.sma_50 != null && <StatCard label={<TermLabel term="sma_50">SMA 50</TermLabel>} caption="sma_50" value={fmtPrice(tech.sma_50)} />}
+                {tech.support_1 != null && <StatCard label={<TermLabel term="support">Support</TermLabel>} value={fmtPrice(tech.support_1)} color="var(--color-bull)" />}
+                {tech.resistance_1 != null && <StatCard label={<TermLabel term="resistance">Resistance</TermLabel>} value={fmtPrice(tech.resistance_1)} color="var(--color-bear)" />}
+                {tech.atr != null && <StatCard label={<TermLabel term="atr">ATR</TermLabel>} caption="atr" value={fmtPrice(tech.atr)} />}
               </div>
             </Section>
           )}
 
           {f && (f.pe_ratio || f.eps || f.beta || f.dividend_yield) && (
-            <Section title="Fundamentals">
+            <Section title={<InfoTip term="fundamentals">Fundamentals</InfoTip>}>
               <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-                {f.pe_ratio && <StatCard label="P/E" value={f.pe_ratio} />}
-                {f.eps && <StatCard label="EPS" value={`$${f.eps}`} />}
-                {f.beta && <StatCard label="Beta" value={f.beta} />}
+                {/* BUG FIX: pe_ratio arrives as a raw yfinance float (e.g.
+                    39.55327 for AAPL, verified in data/tickers/AAPL.json) and was
+                    rendered unrounded — nine characters of false precision under
+                    a two-character label. Rounded to 2 decimals, matching the
+                    P/C Ratio formatting below. */}
+                {f.pe_ratio && <StatCard label={<TermLabel term="p_e">P/E</TermLabel>} caption="p_e" value={Number(f.pe_ratio).toFixed(2)} />}
+                {f.eps && <StatCard label={<TermLabel term="eps">EPS</TermLabel>} caption="eps" value={`$${f.eps}`} />}
+                {f.beta && <StatCard label={<TermLabel term="beta">Beta</TermLabel>} value={f.beta} />}
                 {f.dividend_yield != null && f.dividend_yield !== 0 && (
-                  <StatCard label="Div Yield" value={`${(f.dividend_yield * 100).toFixed(2)}%`} />
+                  <StatCard label={<TermLabel term="div_yield">Div Yield</TermLabel>} value={`${(f.dividend_yield * 100).toFixed(2)}%`} />
                 )}
               </div>
             </Section>
           )}
 
+          {/* Renamed from "Options Flow" — these three readings are a
+              point-in-time snapshot, which "flow" does not convey. Note we do
+              NOT currently know whether put_call_ratio is volume-based (the
+              glossary says trading volume) or open-interest-based: no generator
+              in this repo produces the `options` block and no file in
+              data/tickers/ ships one, so this section is dead code today.
+              Confirm against the Pi pipeline before describing it either way. */}
           {o && (o.put_call_ratio != null || o.max_pain != null || o.iv_rank != null) && (
-            <Section title="Options Flow">
+            <Section title="Options Snapshot">
               <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
-                {o.put_call_ratio != null && <StatCard label="P/C Ratio" value={Number(o.put_call_ratio).toFixed(2)} />}
-                {o.max_pain != null && <StatCard label="Max Pain" value={`$${o.max_pain}`} />}
-                {o.iv_rank != null && <StatCard label="IV Rank" value={`${o.iv_rank}%`} />}
+                {o.put_call_ratio != null && <StatCard label={<TermLabel term="put_call_ratio">P/C Ratio</TermLabel>} caption="put_call_ratio" value={Number(o.put_call_ratio).toFixed(2)} />}
+                {o.max_pain != null && <StatCard label={<TermLabel term="max_pain">Max Pain</TermLabel>} caption="max_pain" value={`$${o.max_pain}`} />}
+                {o.iv_rank != null && <StatCard label={<TermLabel term="iv_rank">IV Rank</TermLabel>} caption="iv_rank" value={`${o.iv_rank}%`} />}
               </div>
             </Section>
           )}
 
+          {/* "Council" reads like a committee of humans, so the heading says
+              "AI" first — but the name is kept, not dropped: /predictions is
+              titled "AI Council Predictions" and names the models, and this is
+              the same feature. Deleting the word here would leave a reader
+              unable to tell the two surfaces apart. */}
           {(ca?.bull_case || ca?.bear_case || ca?.risk_assessment) && (
-            <Section title="Council Analysis">
+            <Section title={<><InfoTip term="ai_council">AI Council</InfoTip> Analysis</>}>
               <Card>
                 <div className="space-y-4">
                   {ca.bull_case && (
@@ -212,22 +263,41 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
           )}
 
           {scan.council_summary && !ca && (
-            <Section title="Council Verdict">
+            <Section title={<><InfoTip term="ai_council">AI Council</InfoTip> Summary</>}>
               <Card>
                 <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{scan.council_summary}</p>
               </Card>
             </Section>
           )}
 
+          {/* Despite the field name, `upcoming_earnings` is not upcoming-only:
+              every file that ships it also carries the last two REPORTED
+              quarters (and some, e.g. CB, carry no future date at all). So the
+              heading cannot promise "upcoming", and the estimate column cannot
+              be labelled a forecast on its own — the reported figure lives in
+              the same row as `epsActual` and is shown beside it. */}
           {!!t.upcoming_earnings?.length && (
-            <Section title="Upcoming Earnings">
+            <Section title={<InfoTip term="earnings">Earnings Dates</InfoTip>}>
               <Card>
+                <p className="mb-2 text-xs text-[var(--color-text-tertiary)]">
+                  Recent and upcoming report dates. Forecast is what analysts expected the company to earn per share
+                  (<InfoTip term="eps">EPS</InfoTip>); Actual is what it went on to report, and shows a dash for a
+                  quarter that has not been reported yet.
+                </p>
                 <table className="w-full text-sm">
+                  <thead>
+                    <tr className="text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
+                      <th scope="col" className="pb-2 text-left font-medium">Report date</th>
+                      <th scope="col" className="pb-2 text-right font-medium">Forecast</th>
+                      <th scope="col" className="pb-2 text-right font-medium">Actual</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     {t.upcoming_earnings.map((e: Any, i: number) => (
                       <tr key={i} className="border-t first:border-t-0" style={{ borderColor: 'var(--color-border-subtle)' }}>
                         <td className="py-2 text-[var(--color-text-secondary)]" data-numeric>{e.date}</td>
-                        <td className="py-2 text-right" data-numeric>{e.epsEstimate != null ? `$${Number(e.epsEstimate).toFixed(2)} est.` : '—'}</td>
+                        <td className="py-2 text-right" data-numeric>{e.epsEstimate != null ? `$${Number(e.epsEstimate).toFixed(2)}` : '—'}</td>
+                        <td className="py-2 text-right" data-numeric>{e.epsActual != null ? `$${Number(e.epsActual).toFixed(2)}` : '—'}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -239,6 +309,10 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
           {!!t.recent_sec_filings?.length && (
             <Section title="Recent SEC Filings">
               <Card>
+                <p className="mb-2 text-xs text-[var(--color-text-tertiary)]">
+                  Reports {ticker} files with the US Securities and Exchange Commission (SEC), the regulator that oversees
+                  American stock markets.
+                </p>
                 <table className="w-full text-sm">
                   <tbody>
                     {t.recent_sec_filings.map((fl: Any, i: number) => (
@@ -252,7 +326,7 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
                             rel="noopener noreferrer"
                             className="font-medium text-[var(--color-accent)] hover:underline"
                           >
-                            EDGAR ↗
+                            Read on SEC.gov ↗
                           </a>
                         </td>
                       </tr>
@@ -268,7 +342,7 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
               <Card>
                 <div className="flex flex-wrap gap-1.5">
                   {t.reddit_mentions.map((m: Any, i: number) => (
-                    <Badge key={i} tone="bull">r/{m.sub} · {m.count}</Badge>
+                    <Badge key={i} tone="bull">r/{m.sub} · {m.count} {m.count === 1 ? 'mention' : 'mentions'}</Badge>
                   ))}
                 </div>
               </Card>

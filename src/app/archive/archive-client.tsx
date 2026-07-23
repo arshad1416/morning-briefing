@@ -6,6 +6,11 @@
 
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { InfoTip, PlainLabel } from '@/components/primitives';
+import { lookup, type GlossaryTerm } from '@/lib/glossary';
+
+/** Glossary wording for a native `title`, where an InfoTip button cannot go. */
+const chipHint = (term: GlossaryTerm) => lookup(term)?.plain;
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -18,8 +23,12 @@ const fetchJson = async (url: string) => {
 
 const CORE_INDICES = ['S&P 500', 'Dow Jones', 'NASDAQ', 'TSX'];
 
-const fmtPrice = (v: number) =>
-  `$${Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+// These four are stock-market indexes, quoted in points — the S&P 500 is not
+// "$7,443.28". The old formatter prefixed a dollar sign unconditionally, which
+// also contradicted the same field on /archive/[date], where it is printed with
+// no currency at all. Formatting only; the value is untouched.
+const fmtLevel = (v: number) =>
+  Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 function narrativeText(brief: Any): string {
   const narr = brief?.narrative ?? '';
@@ -28,27 +37,73 @@ function narrativeText(brief: Any): string {
   return '';
 }
 
-/** Split the briefing narrative into the email's named sections. */
-function splitSections(text: string): { heading: string; text: string }[] {
+interface Section {
+  heading: string;
+  /** Optional glossary term explained on the heading itself. */
+  term?: GlossaryTerm;
+  /**
+   * The exact words the tooltip attaches to, when the term only explains part
+   * of the heading — otherwise the dotted underline claims to define words it
+   * does not ("Watchlist &" is not position sizing). Defaults to the whole
+   * heading, and must be a suffix of it.
+   */
+  termWords?: string;
+  text: string;
+}
+
+/** Section heading, with the tooltip on just the words the term explains. */
+function SectionHeading({ section }: { section: Section }) {
+  if (!section.term) return <>{section.heading}</>;
+  const tipped = section.termWords ?? section.heading;
+  const lead = section.heading.slice(0, section.heading.length - tipped.length);
+  return (
+    <>
+      {lead}
+      <InfoTip term={section.term}>{tipped}</InfoTip>
+    </>
+  );
+}
+
+/**
+ * Split the briefing narrative into the email's named sections.
+ *
+ * Headings deliberately say "practice portfolio". The balances underneath
+ * ("cash sits at $1,120.36 of a $1,177.72 balance", "a YTD return of −41.1%")
+ * belong to MapleGamma's own simulated ledger, not to the reader — the old
+ * "Portfolio Overview" read as a statement about their money. "Strategy
+ * Recommendations" was worse: the source block is headed "Strategy tilt & macro
+ * signals" — a lean on a simulated book — and the body carries concrete orders,
+ * on a product whose signup checkbox has the user confirm MapleGamma gives no
+ * recommendations. The heading now describes the lean without prescribing it.
+ */
+function splitSections(text: string): Section[] {
   const insightMarker = '**Three quantitative insights**';
   const tiltMarker = '**Strategy tilt';
   const watchlistMarker = '**Watchlist';
-  const sections: { heading: string; text: string }[] = [];
+  const sections: Section[] = [];
   const insightIdx = text.indexOf(insightMarker);
   if (insightIdx >= 0) {
     const intro = text.substring(0, insightIdx).trim();
-    if (intro) sections.push({ heading: 'Portfolio Overview', text: intro });
+    if (intro) sections.push({ heading: 'Practice Portfolio Overview', term: 'paper_trading', text: intro });
     const afterInsight = text.substring(insightIdx + insightMarker.length);
     const tiltIdx = afterInsight.indexOf(tiltMarker);
     sections.push({ heading: 'Key Insights', text: (tiltIdx >= 0 ? afterInsight.substring(0, tiltIdx) : afterInsight).trim() });
     if (tiltIdx >= 0) {
       const afterTilt = afterInsight.substring(tiltIdx);
       const watchIdx = afterTilt.indexOf(watchlistMarker);
-      sections.push({ heading: 'Strategy Recommendations', text: (watchIdx >= 0 ? afterTilt.substring(0, watchIdx) : afterTilt).trim() });
-      if (watchIdx >= 0) sections.push({ heading: 'Watchlist', text: afterTilt.substring(watchIdx).trim() });
+      sections.push({ heading: 'How the Practice Portfolio Is Leaning', text: (watchIdx >= 0 ? afterTilt.substring(0, watchIdx) : afterTilt).trim() });
+      // Source section is "**Watchlist & sizing**" — the old heading dropped
+      // "sizing", so the position-sizing instructions inside arrived unlabelled.
+      if (watchIdx >= 0)
+        sections.push({
+          heading: 'Watchlist & Position Sizing',
+          term: 'position_sizing',
+          termWords: 'Position Sizing',
+          text: afterTilt.substring(watchIdx).trim(),
+        });
     }
   } else {
-    sections.push({ heading: 'Portfolio Analysis', text });
+    sections.push({ heading: 'Practice Portfolio Analysis', term: 'paper_trading', text });
   }
   return sections;
 }
@@ -65,11 +120,12 @@ function sectionHtml(text: string): string {
     .replace(/\n/g, '<br>');
 }
 
-function Chip({ children, color }: { children: React.ReactNode; color?: string }) {
+function Chip({ children, color, hint }: { children: React.ReactNode; color?: string; hint?: string }) {
   return (
     <span
       className="inline-block rounded-full px-2 py-0.5 text-[10px] font-medium"
       data-numeric
+      title={hint}
       style={{
         backgroundColor: color ? `color-mix(in srgb, ${color} 14%, transparent)` : 'var(--color-bg-elevated)',
         color: color ?? 'var(--color-text-secondary)',
@@ -124,11 +180,18 @@ function BriefingCard({ date }: { date: string }) {
             <div className="mt-2 flex flex-wrap gap-1">
               {core.map((i) => (
                 <Chip key={i.ticker} color={(i.change_pct || 0) >= 0 ? 'var(--color-bull)' : 'var(--color-bear)'}>
-                  {i.ticker}: {fmtPrice(i.price)} ({(i.change_pct || 0) >= 0 ? '+' : ''}{(i.change_pct || 0).toFixed(2)}%)
+                  {i.ticker}: {fmtLevel(i.price)} ({(i.change_pct || 0) >= 0 ? '+' : ''}{(i.change_pct || 0).toFixed(2)}%)
                 </Chip>
               ))}
-              {ms.vix != null && <Chip>VIX: {ms.vix}</Chip>}
-              {ms.ten_year_yield != null && <Chip>10Y: {ms.ten_year_yield}%</Chip>}
+              {/* No <InfoTip> in this block: the whole collapsed card is a
+                  <button>, and InfoTip renders a real <button> of its own —
+                  nesting them is invalid HTML. A native `title` carries the same
+                  glossary wording instead, the way the ticker tape does, and the
+                  expanded table below has the full tooltip plus a caption. */}
+              {ms.vix != null && <Chip hint={chipHint('vix')}>VIX: {ms.vix}</Chip>}
+              {ms.ten_year_yield != null && (
+                <Chip hint={chipHint('ten_year_yield')}>10Y: {ms.ten_year_yield}%</Chip>
+              )}
               {fx.map((f) => (
                 <Chip key={f.pair}>{f.pair}: {Number(f.price).toFixed(2)}</Chip>
               ))}
@@ -143,17 +206,21 @@ function BriefingCard({ date }: { date: string }) {
           <div className="mb-4 overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
+              {/* "Index" was wrong for several rows below — an exchange rate, a
+                  volatility gauge and a bond yield are not indexes. "Value"
+                  implied dollars; index levels are points. "Change" gave
+                  neither the unit nor the period. */}
               <tr className="text-[10px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
-                <th className="py-1.5 text-left">Index</th>
-                <th className="py-1.5 text-right">Value</th>
-                <th className="py-1.5 text-right">Change</th>
+                <th className="py-1.5 text-left">Market</th>
+                <th className="py-1.5 text-right">Level</th>
+                <th className="py-1.5 text-right">1-day change</th>
               </tr>
             </thead>
             <tbody>
               {core.map((i) => (
                 <tr key={i.ticker} className="border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>
                   <td className="py-1.5 text-[var(--color-text-secondary)]">{i.ticker}</td>
-                  <td className="py-1.5 text-right font-semibold text-[var(--color-text-primary)]" data-numeric>{fmtPrice(i.price)}</td>
+                  <td className="py-1.5 text-right font-semibold text-[var(--color-text-primary)]" data-numeric>{fmtLevel(i.price)}</td>
                   <td className="py-1.5 text-right" data-numeric style={{ color: (i.change_pct || 0) >= 0 ? 'var(--color-bull)' : 'var(--color-bear)' }}>
                     {(i.change_pct || 0) >= 0 ? '▲' : '▼'} {(i.change_pct || 0).toFixed(2)}%
                   </td>
@@ -168,14 +235,23 @@ function BriefingCard({ date }: { date: string }) {
               ))}
               {ms.vix != null && (
                 <tr className="border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>
-                  <td className="py-1.5 text-[var(--color-text-secondary)]">VIX</td>
+                  {/* Bare three- and four-character labels a beginner cannot
+                      decode, so these two carry an always-on caption as well as
+                      the tooltip. */}
+                  <td className="py-1.5 text-[var(--color-text-secondary)]">
+                    <InfoTip term="vix">VIX</InfoTip>
+                    <PlainLabel term="vix" />
+                  </td>
                   <td className="py-1.5 text-right font-semibold text-[var(--color-text-primary)]" data-numeric>{ms.vix}</td>
                   <td className="py-1.5 text-right text-[var(--color-text-tertiary)]">—</td>
                 </tr>
               )}
               {ms.ten_year_yield != null && (
                 <tr className="border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>
-                  <td className="py-1.5 text-[var(--color-text-secondary)]">10Y Yield</td>
+                  <td className="py-1.5 text-[var(--color-text-secondary)]">
+                    <InfoTip term="ten_year_yield">10Y Yield</InfoTip>
+                    <PlainLabel term="ten_year_yield" />
+                  </td>
                   <td className="py-1.5 text-right font-semibold text-[var(--color-text-primary)]" data-numeric>{ms.ten_year_yield}%</td>
                   <td className="py-1.5 text-right text-[var(--color-text-tertiary)]">—</td>
                 </tr>
@@ -187,7 +263,9 @@ function BriefingCard({ date }: { date: string }) {
           {text &&
             splitSections(text).map((s) => (
               <div key={s.heading} className="mb-4 last:mb-0">
-                <h3 className="mb-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">{s.heading}</h3>
+                <h3 className="mb-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">
+                  <SectionHeading section={s} />
+                </h3>
                 <div
                   className="text-sm leading-relaxed text-[var(--color-text-secondary)]"
                   dangerouslySetInnerHTML={{ __html: sectionHtml(s.text) }}
@@ -222,6 +300,14 @@ export function ArchiveClient() {
         </h1>
         <p className="relative z-10 mt-2 text-sm text-[var(--color-text-secondary)]">
           Every morning briefing, preserved — expand any day for the full report.
+        </p>
+        {/* The per-date pages carry this qualifier; this index page did not, so
+            the balances and returns inside each card read as the reader's own. */}
+        <p className="relative z-10 mt-2 text-xs text-[var(--color-text-tertiary)]">
+          Each briefing follows MapleGamma&apos;s own{' '}
+          <InfoTip term="paper_trading">practice portfolio</InfoTip> — the balances and
+          returns you will read are simulated, no real money is involved, and none of it
+          is financial advice.
         </p>
       </div>
 

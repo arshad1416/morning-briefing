@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { InfoTip } from '@/components/primitives';
 
 interface Strat {
   name: string;
@@ -31,7 +32,9 @@ interface StatusData {
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)] overflow-hidden">
+    // Not clipped: the <InfoTip> tooltips inside open upward, and near the top
+    // of the tile a clipped box would cut them off entirely.
+    <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)]">
       <div className="px-4 py-3 border-b flex items-center gap-2" style={{ borderColor: 'var(--color-border-subtle)' }}>
         <span aria-hidden className="inline-block h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: '#ec4899' }} />
         <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">Options Strategies</h3>
@@ -68,10 +71,22 @@ export function OptionsStrategiesTile() {
     <Shell>
       <div className="p-4">
         <div className="flex items-baseline gap-3 mb-3 text-sm">
-          <span className="text-[var(--color-text-tertiary)]">VIX</span>
+          <span className="text-[var(--color-text-tertiary)]"><InfoTip term="vix">VIX</InfoTip></span>
           <span className="font-bold" style={{ fontFamily: 'var(--font-mono)' }} data-numeric>{data.vix ?? '—'}</span>
-          <span className="ml-auto text-xs text-[var(--color-text-tertiary)]">{data.open_count} open</span>
+          {/* open_count counts entries in open_option_positions, and one entry
+              can be several contracts (a credit spread is at least two), so this
+              must not be phrased as a contract count. */}
+          <span className="ml-auto text-xs text-[var(--color-text-tertiary)]">
+            {data.open_count} {data.open_count === 1 ? 'position' : 'positions'} open
+          </span>
         </div>
+        <p className="mb-3 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
+          Options are contracts whose payoff depends on where a share price sits by a set date — a more advanced tool
+          than the shares and funds elsewhere on this site. Each strategy below only trades when conditions suit it, and
+          the VIX reading above is the main gate: <span className="font-semibold">armed</span> means the VIX gate is
+          clear, so the strategy will act as soon as a qualifying signal appears;{' '}
+          <span className="font-semibold">standby</span> means the gate is shut and it is sitting out.
+        </p>
         <div className="space-y-3">
           {data.strategies.map((s) => (
             <div key={s.name} className="flex items-start gap-3">
@@ -95,6 +110,10 @@ export function OptionsStrategiesTile() {
         </div>
         {data.open_option_positions.length > 0 && (
           <div className="mt-3 pt-3 border-t" style={{ borderColor: 'var(--color-border-subtle)' }}>
+            <p className="mb-1 text-[10px] text-[var(--color-text-tertiary)]">
+              Open positions — stock, <InfoTip term="strike">strike price</InfoTip> and type, then the expiry date and
+              the price paid per contract when it was opened.
+            </p>
             {data.open_option_positions.map((p, i) => (
               <div key={i} className="flex items-center justify-between text-xs py-0.5">
                 <span className="text-[var(--color-text-primary)]" data-numeric>{p.ticker} ${p.strike} {p.type}</span>

@@ -7,7 +7,7 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
-import { Surface, SurfaceHeader, Stat } from '@/components/primitives';
+import { Surface, SurfaceHeader, Stat, InfoTip } from '@/components/primitives';
 import { fetchGated, GateError } from '@/lib/api/gated';
 import { GateInline } from '@/components/feature/gating/GateInline';
 
@@ -40,7 +40,7 @@ export function DayPnLCard() {
       <SurfaceHeader title="Portfolio" />
       <div className="p-4 space-y-4">
         <p className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--color-text-tertiary)' }}>
-          Simulated portfolio — not a recommendation
+          <InfoTip term="paper_trading">Simulated portfolio</InfoTip> — not a recommendation
         </p>
         {body}
       </div>
@@ -76,9 +76,17 @@ export function DayPnLCard() {
 
   return shell(
     <>
-      <Stat label="Equity" value={`$${p.total_balance.toLocaleString(undefined, { maximumFractionDigits: 0 })}`} delta={p.return_pct} suffix="%" prefix="" />
+      {/* No suffix: the value is already a formatted dollar string, so the old
+          suffix="%" rendered "$88,116%" next to the DeltaBadge's own percent.
+          The caption below points at "the percentage beside it", which only
+          reads unambiguously once there is exactly one. */}
+      <Stat label="Account Value" value={`$${p.total_balance.toLocaleString(undefined, { maximumFractionDigits: 0 })}`} delta={p.return_pct} prefix="" />
+      <p className="text-xs text-[var(--color-text-tertiary)] leading-relaxed">
+        Cash plus the value of everything held right now — the account’s equity. The percentage beside it
+        is the total return since the account opened at $100,000, not today’s move.
+      </p>
       <div className="flex items-center justify-between">
-        <span className="text-xs text-[var(--color-text-tertiary)]">Deployed</span>
+        <span className="text-xs text-[var(--color-text-tertiary)]">Invested</span>
         <span className="text-sm font-medium" style={{ fontFamily: 'var(--font-mono)' }} data-numeric>
           {deployedPct.toFixed(1)}%
         </span>
@@ -86,9 +94,13 @@ export function DayPnLCard() {
       <div className="h-2 bg-[var(--color-bg-elevated)] rounded-full overflow-hidden">
         <div className="h-full rounded-full" style={{ width: `${Math.min(100, deployedPct)}%`, backgroundColor: 'var(--color-accent)' }} />
       </div>
+      <p className="text-xs text-[var(--color-text-tertiary)] leading-relaxed">
+        How much of the account is tied up in open positions, measured at what they cost to buy.
+      </p>
       {p.win_rate != null && p.total_trades != null && (
         <p className="text-xs text-[var(--color-text-tertiary)]">
-          {p.total_trades} trades · {p.win_rate.toFixed(0)}% win rate since inception
+          {p.total_trades} closed trades · {p.win_rate.toFixed(0)}%{' '}
+          <InfoTip term="win_rate">win rate</InfoTip> since the account opened
         </p>
       )}
     </>,

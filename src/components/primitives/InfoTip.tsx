@@ -1,46 +1,178 @@
 // components/primitives/InfoTip.tsx — Learning Mode hook
+//
+// Wraps a piece of jargon and, when Learning Mode is on, explains it in plain
+// English. Definitions live in @/lib/glossary — never inline wording here.
+//
+// Two things this component has to get right, both of which it previously got
+// wrong:
+//
+// 1. Reachability. It used to be a hover-only <span> with pointer-events-none,
+//    so it did nothing on touch and was unreachable by keyboard — invisible to
+//    exactly the beginners it exists for. It is now a real <button>: hover,
+//    focus, tap, outside-tap and Escape all work.
+//
+// 2. Visibility. An absolutely-positioned tooltip is clipped by any ancestor
+//    with overflow-hidden or overflow-x-auto — which covers Surface (every card
+//    header) and every scrollable table on the site. So the panel is rendered
+//    through a portal to document.body with fixed positioning, and flips below
+//    the trigger when there is no room above. It is also clamped to the
+//    viewport so it cannot run off-screen on a narrow phone.
 'use client';
 
-import React from 'react';
+import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useUI } from '@/stores/ui';
+import { lookup, type GlossaryTerm } from '@/lib/glossary';
 
 interface InfoTipProps {
-  term: string;
+  /**
+   * Typed against the glossary, so a term that has no definition fails
+   * `npm run typecheck` rather than silently rendering nothing at runtime.
+   */
+  term: GlossaryTerm;
   children: React.ReactNode;
   className?: string;
 }
 
-const GLOSSARY: Record<string, string> = {
-  gex: 'Gamma Exposure — measures how much market makers must hedge as prices move. High GEX = more stable; low GEX = more volatile.',
-  dex: 'Delta Exposure — net directional exposure from options. Positive = dealers buy dips; negative = dealers sell rallies.',
-  vex: 'Vega Exposure — sensitivity to volatility changes. High VEX means the position is very sensitive to VIX moves.',
-  vix: 'The CBOE Volatility Index — often called the "fear gauge." Measures expected 30-day volatility of S&P 500 options.',
-  conviction: 'A model-generated score (0–10) indicating confidence in the current market signal direction.',
-  max_pain: 'The strike price where the most options expire worthless. Theory suggests prices gravitate toward max pain at expiry.',
-  gamma_wall: 'A strike with extremely high gamma exposure. Acts as a magnet or barrier — prices tend to cluster around these levels.',
-  zero_gamma: 'The level where dealer hedging flips from stabilizing to destabilizing. Above = dampened moves; below = amplified moves.',
-  kelly: 'The Kelly Criterion — mathematically optimal bet sizing. We use fractional Kelly (typically 1/4) for conservative position sizing.',
-  fomc: 'Federal Open Market Committee — the Fed\'s rate-setting body. FOMC days are the highest-impact event for markets.',
-  contango: 'When futures prices are higher than spot prices. VIX in contango = normal; VIX in backwardation = stress signal.',
-};
+const PANEL_WIDTH = 272; // px — matches w-68 below
+const GAP = 8;
+const MARGIN = 8;
 
 export function InfoTip({ term, children, className = '' }: InfoTipProps) {
   const learningMode = useUI((s) => s.learningMode);
-  const definition = GLOSSARY[term.toLowerCase()];
+  // Hover/focus and tap are tracked separately. With a single toggled flag, a
+  // mouse user who hovers (opening it) and then clicks would immediately close
+  // it again — the click would toggle off what the hover had just turned on.
+  const [peek, setPeek] = useState(false);
+  const [pinned, setPinned] = useState(false);
+  const open = peek || pinned;
 
-  if (!learningMode || !definition) {
+  const close = useCallback(() => {
+    setPeek(false);
+    setPinned(false);
+  }, []);
+  // `persist` rehydrates from localStorage on the client, so the prerendered
+  // HTML must not commit to a decorated or undecorated state.
+  const [mounted, setMounted] = useState(false);
+  const [pos, setPos] = useState<{ top: number; left: number; below: boolean } | null>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLSpanElement>(null);
+  const tooltipId = useId();
+
+  useEffect(() => setMounted(true), []);
+
+  const place = useCallback(() => {
+    const trigger = triggerRef.current;
+    if (!trigger) return;
+    const r = trigger.getBoundingClientRect();
+    const panelHeight = panelRef.current?.offsetHeight ?? 96;
+
+    // Flip below when there isn't room above.
+    const below = r.top - panelHeight - GAP < MARGIN;
+    const top = below ? r.bottom + GAP : r.top - panelHeight - GAP;
+
+    // Centre on the trigger, then clamp so it can't leave the viewport.
+    const half = PANEL_WIDTH / 2;
+    const maxLeft = window.innerWidth - PANEL_WIDTH - MARGIN;
+    const left = Math.max(MARGIN, Math.min(r.left + r.width / 2 - half, Math.max(MARGIN, maxLeft)));
+
+    setPos({ top, left, below });
+  }, []);
+
+  // Measure before paint so the panel never flashes in the wrong spot.
+  useLayoutEffect(() => {
+    if (open) place();
+  }, [open, place]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') close();
+    }
+    // A tap anywhere else dismisses it — without this, an open tooltip on a
+    // phone could only be closed by tapping the same trigger again.
+    function onPointerDown(e: PointerEvent) {
+      if (!triggerRef.current?.contains(e.target as Node)) close();
+    }
+    // The panel is position:fixed, so it would otherwise detach from its
+    // trigger as soon as the page or a table scrolls underneath it.
+    function onScroll() {
+      close();
+    }
+
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('scroll', onScroll, true);
+    window.addEventListener('resize', onScroll);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('pointerdown', onPointerDown);
+      window.removeEventListener('scroll', onScroll, true);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [open, close]);
+
+  const entry = lookup(term);
+
+  if (!mounted || !learningMode || !entry) {
     return <span className={className}>{children}</span>;
   }
 
   return (
-    <span className={`relative group inline-block ${className}`}>
-      <span className="border-b border-dotted border-[var(--color-accent)] cursor-help">{children}</span>
-      <span
-        role="tooltip"
-        className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 text-xs leading-relaxed text-[var(--color-text-primary)] bg-[color-mix(in_srgb,var(--color-bg-overlay)_88%,transparent)] backdrop-blur-md border border-[var(--color-border-default)] rounded-[var(--radius-chip)] shadow-[var(--shadow-tile)] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50"
+    <span className={`relative inline-block ${className}`}>
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-describedby={tooltipId}
+        aria-expanded={open}
+        onClick={() => setPinned((v) => !v)}
+        onMouseEnter={() => setPeek(true)}
+        onMouseLeave={() => setPeek(false)}
+        onFocus={() => setPeek(true)}
+        onBlur={() => setPeek(false)}
+        className="border-b border-dotted border-[var(--color-accent)] cursor-help text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] rounded-[2px]"
+        style={{ font: 'inherit', letterSpacing: 'inherit', textTransform: 'inherit', color: 'inherit' }}
       >
-        {definition}
+        {children}
+      </button>
+
+      {/* The definition is always in the DOM, visually hidden, and permanently
+          referenced by aria-describedby. A screen reader therefore announces
+          "RSI, button, <definition>" without the sighted-user tooltip having to
+          be open. An earlier version appended a visible-to-AT "what does this
+          mean?" here, which read as an interruption mid-sentence when a term
+          sits inside running prose. */}
+      <span id={tooltipId} className="sr-only">
+        {entry.plain}
+        {entry.detail ? ` ${entry.detail}` : ''}
       </span>
+
+      {open &&
+        createPortal(
+          <span
+            ref={panelRef}
+            // aria-hidden: the same text is already exposed to assistive tech
+            // through the always-present description span above, so announcing
+            // the visual panel too would read it twice.
+            aria-hidden="true"
+            data-infotip-panel=""
+            style={{
+              position: 'fixed',
+              top: pos?.top ?? -9999,
+              left: pos?.left ?? -9999,
+              width: PANEL_WIDTH,
+              visibility: pos ? 'visible' : 'hidden',
+            }}
+            className="p-3 text-xs leading-relaxed normal-case tracking-normal font-normal text-left text-[var(--color-text-primary)] bg-[color-mix(in_srgb,var(--color-bg-overlay)_96%,transparent)] backdrop-blur-md border border-[var(--color-border-default)] rounded-[var(--radius-chip)] shadow-[var(--shadow-tile)] pointer-events-none z-[999]"
+          >
+            {entry.plain}
+            {entry.detail && (
+              <span className="mt-2 block text-[11px] text-[var(--color-text-tertiary)]">{entry.detail}</span>
+            )}
+          </span>,
+          document.body
+        )}
     </span>
   );
 }

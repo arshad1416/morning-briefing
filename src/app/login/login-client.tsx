@@ -84,8 +84,11 @@ export function LoginClient() {
     }
   }
 
+  // "Welcome back to the desk" was trading-floor atmosphere with no referent in
+  // the product — the first line a returning user reads should not be a
+  // metaphor they have to decode.
   return (
-    <AuthShell title="Sign in" subtitle="Welcome back to the desk.">
+    <AuthShell title="Sign in" subtitle="Welcome back to your morning briefing.">
       <form onSubmit={onSubmit} className="space-y-4">
         <FormError>{error}</FormError>
         <Field label="Email" type="email" value={email} onChange={setEmail} autoComplete="email" placeholder="you@example.com" />

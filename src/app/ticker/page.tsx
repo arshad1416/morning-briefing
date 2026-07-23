@@ -8,7 +8,7 @@ import { buildMetadata } from '@/lib/seo';
 export const metadata = buildMetadata({
   title: 'Ticker Details',
   description:
-    'Price history, fundamentals and AI screening scores for S&P 500 and TSX tickers.',
+    'Price, chart signals, company fundamentals and MapleGamma screening scores for S&P 500 and TSX-listed stocks and ETFs.',
   path: '/ticker/',
 });
 

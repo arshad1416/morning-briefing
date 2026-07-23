@@ -170,16 +170,32 @@ def fetch_ticker_data(ticker):
 
         price = hist['Close'].iloc[-1]
 
-        # RSI (14-day)
+        # RSI (14-day), Wilder's smoothing.
+        # BUG FIX: this used to average gains/losses with a plain 14-bar
+        # rolling mean, which is not the RSI Wilder defined and not what
+        # TradingView/yfinance/any charting platform compute, so the number
+        # shown here disagreed with RSI shown anywhere else. Wilder's method
+        # is an exponential average with alpha = 1/period; with a full year
+        # of history the ewm warm-up difference from the textbook recursive
+        # form is negligible.
         delta = hist['Close'].diff()
-        gain = delta.where(delta > 0, 0).rolling(14).mean()
-        loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
+        gain = delta.where(delta > 0, 0).ewm(alpha=1 / 14, min_periods=14, adjust=False).mean()
+        loss = (-delta.where(delta < 0, 0)).ewm(alpha=1 / 14, min_periods=14, adjust=False).mean()
         rs = gain / loss
         last_rs = rs.iloc[-1]
-        if last_rs is not None and last_rs != 0 and not np.isnan(last_rs):
+        # BUG FIX: an RS of exactly 0 (no gains at all in the window — a
+        # real, maximally-oversold RSI of 0) used to be excluded by
+        # `last_rs != 0` and silently replaced by the same neutral fallback
+        # used for missing data, so a displayed "50.0" could mean neutral,
+        # unknown, or maximally oversold with no way to tell which. Now only
+        # genuine missing data (NaN, i.e. not enough price history yet)
+        # falls back, and it falls back to None/unknown rather than a fake
+        # neutral reading; 0 and infinite RS both compute correctly through
+        # the formula below (RSI 0 and RSI 100 respectively).
+        if last_rs is not None and not np.isnan(last_rs):
             rsi = round(100 - (100 / (1 + last_rs)), 1)
         else:
-            rsi = 50.0
+            rsi = None
 
         # SMAs
         sma20 = round(hist['Close'].rolling(20).mean().iloc[-1], 2)
@@ -242,6 +258,16 @@ def fetch_ticker_data(ticker):
             # Computed signals
             "above_sma20": bool(price > sma20),
             "above_sma50": bool(price > sma50),
+            # NOTE (naming, not behavior): despite the "above_52w_high" name,
+            # this is the percent the price sits BELOW the 52-week high (0 at
+            # the high, larger the further under it) — and despite
+            # "below_52w_low", that one is the percent ABOVE the 52-week low.
+            # Every current consumer (compute_score()'s near_high/near_low
+            # checks below, and the screener UI's w52 filter) already reads
+            # them with this meaning, so the values are correct; only the
+            # names invite a sign error in a future consumer. Renaming would
+            # need a matching change in src/lib/schemas/screener.ts and the
+            # UI, out of scope here — left as a documented trap instead.
             "above_52w_high_pct": round((1 - price / high_52w) * 100, 1) if high_52w else None,
             "below_52w_low_pct": round((price / low_52w - 1) * 100, 1) if low_52w else None,
             "volume_ratio": round(volume / avg_vol, 2) if avg_vol else 1.0,
@@ -322,8 +348,9 @@ def compute_score(data):
             pass
 
     # 6. Analyst recommendation (yfinance returns lowercase, e.g. "buy",
-    # "strong_buy" — normalize before comparing)
-    rec = (data.get('recommendation') or '').upper()
+    # "strong_buy" — normalize before comparing). str() guards the case where
+    # the field arrives as a non-string; `or ''` alone would not.
+    rec = str(data.get('recommendation') or '').upper()
     if rec in ('BUY', 'STRONG_BUY'):
         score += 1
         reasons.append("analyst_buy")

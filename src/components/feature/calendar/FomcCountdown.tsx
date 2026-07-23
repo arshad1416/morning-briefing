@@ -7,7 +7,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Surface, SurfaceHeader } from '@/components/primitives';
+import { Surface, SurfaceHeader, InfoTip, PlainLabel } from '@/components/primitives';
 
 // Federal Reserve 2026 meeting calendar — decision announced ~2:00 PM ET on
 // the second day. Extend annually when the Fed publishes the next calendar.
@@ -22,8 +22,26 @@ const FOMC_DECISIONS = [
   '2026-12-09T14:00:00-05:00',
 ];
 
-const NOTE =
-  'Rate decisions move index gamma fast — dealers re-hedge as the expected-path repricing hits the front expiries.';
+// The acronym is never spelled out anywhere on the page, so it keeps its
+// tooltip here and an always-on plain-English caption at the top of the card
+// body — SurfaceHeader is a one-line flex row, where a block caption inside the
+// <h3> wraps the title out of alignment with anything sitting beside it.
+const TITLE = (
+  <>
+    <InfoTip term="fomc">FOMC</InfoTip> Countdown
+  </>
+);
+
+// Was: "Rate decisions move index gamma fast — dealers re-hedge as the
+// expected-path repricing hits the front expiries." Same claim, said in words a
+// first-time investor can follow, with the one technical anchor kept.
+const NOTE = (
+  <>
+    A rate decision resets what traders expect interest rates to do next. That repricing lands first on
+    the options expiring soonest, and the banks that sold them have to rebalance their hedges quickly —
+    which is why <InfoTip term="gex">index gamma</InfoTip> moves fast on decision day.
+  </>
+);
 
 function nextDecision(): Date | null {
   const now = Date.now();
@@ -61,8 +79,9 @@ export function FomcCountdown() {
   if (!remaining) {
     return (
       <Surface span="third">
-        <SurfaceHeader title="FOMC Countdown" />
+        <SurfaceHeader title={TITLE} />
         <div className="p-4 space-y-3">
+          <PlainLabel term="fomc" />
           <div className="skeleton h-12 w-40" />
           <p className="text-xs text-[var(--color-text-tertiary)] leading-relaxed">{NOTE}</p>
         </div>
@@ -72,11 +91,12 @@ export function FomcCountdown() {
 
   return (
     <Surface span="third">
-      <SurfaceHeader title="FOMC Countdown" />
+      <SurfaceHeader title={TITLE} />
       <div className="p-4 space-y-3">
+        <PlainLabel term="fomc" />
         {remaining.passed ? (
           <p className="text-sm text-[var(--color-text-secondary)]">
-            No further scheduled FOMC decisions this year.
+            No more interest-rate decisions are on the 2026 Fed calendar.
           </p>
         ) : (
           <>
@@ -98,7 +118,7 @@ export function FomcCountdown() {
             </div>
             {remaining.target && (
               <p className="text-xs text-[var(--color-text-secondary)]">
-                Decision {remaining.target.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} · 2:00 PM ET
+                Rate decision {remaining.target.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} · 2:00 PM ET
               </p>
             )}
           </>

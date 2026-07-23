@@ -8,6 +8,8 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 import { fetchGated, GateError } from '@/lib/api/gated';
+import { InfoTip, PlainLabel } from '@/components/primitives';
+import type { GlossaryTerm } from '@/lib/glossary';
 
 const StrategyWfSchema = z
   .object({
@@ -24,20 +26,23 @@ const WalkForwardSchema = z
   })
   .passthrough();
 
-const LABELS: Record<string, string> = {
-  mean_reversion: 'Mean Reversion',
-  momentum: 'Momentum',
-  breakout: 'Breakout',
-  sector_rotation: 'Sector Rotation',
+const LABELS: Record<string, { label: string; term: GlossaryTerm }> = {
+  mean_reversion: { label: 'Mean Reversion', term: 'mean_reversion' },
+  momentum: { label: 'Momentum', term: 'momentum' },
+  breakout: { label: 'Breakout', term: 'breakout' },
+  sector_rotation: { label: 'Sector Rotation', term: 'sector_rotation' },
 };
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)] overflow-hidden">
+    // Not clipped: the header's <InfoTip> tooltip opens upward, and a clipped
+    // box would place it outside the tile where it cannot be seen.
+    <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)]">
       <div className="px-4 py-3 border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
         <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">
-          Walk-Forward Analysis
+          <InfoTip term="walk_forward">Walk-Forward Analysis</InfoTip>
         </h3>
+        <PlainLabel term="walk_forward" className="mt-0.5" />
       </div>
       {children}
     </div>
@@ -85,20 +90,35 @@ export function WalkForwardTile() {
   return (
     <Shell>
       <div className="p-4 overflow-x-auto">
-        <table className="w-full text-sm">
+        {/* min-w keeps the two-line plain-English column captions from
+            crushing the five columns on a phone; the wrapper scrolls instead.
+            Matches the sibling table in research-client.tsx. */}
+        <table className="w-full min-w-[520px] text-sm">
           <thead>
             <tr className="border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
-              <th className="text-left py-2 pr-3 text-xs text-[var(--color-text-tertiary)] font-medium">Strategy</th>
-              <th className="text-right py-2 px-3 text-xs text-[var(--color-text-tertiary)] font-medium">IS Sharpe</th>
-              <th className="text-right py-2 px-3 text-xs text-[var(--color-text-tertiary)] font-medium">OOS Sharpe</th>
-              <th className="text-right py-2 px-3 text-xs text-[var(--color-text-tertiary)] font-medium">Degradation</th>
-              <th className="text-right py-2 pl-3 text-xs text-[var(--color-text-tertiary)] font-medium">OOS Trades</th>
+              <th className="text-left py-2 pr-3 text-xs text-[var(--color-text-tertiary)] font-medium align-bottom">Strategy</th>
+              <th className="text-right py-2 px-3 text-xs text-[var(--color-text-tertiary)] font-medium align-bottom">
+                <InfoTip term="is_sharpe">IS Sharpe</InfoTip>
+                <PlainLabel term="is_sharpe" className="mt-0.5 text-right" />
+              </th>
+              <th className="text-right py-2 px-3 text-xs text-[var(--color-text-tertiary)] font-medium align-bottom">
+                <InfoTip term="oos_sharpe">OOS Sharpe</InfoTip>
+                <PlainLabel term="oos_sharpe" className="mt-0.5 text-right" />
+              </th>
+              <th className="text-right py-2 px-3 text-xs text-[var(--color-text-tertiary)] font-medium align-bottom">
+                <InfoTip term="degradation">Degradation</InfoTip>
+              </th>
+              <th className="text-right py-2 pl-3 text-xs text-[var(--color-text-tertiary)] font-medium align-bottom">
+                <InfoTip term="oos_trades">OOS Trades</InfoTip>
+              </th>
             </tr>
           </thead>
           <tbody>
             {rows.map(([key, s]) => (
               <tr key={key} className="border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
-                <td className="py-2 pr-3 text-[var(--color-text-primary)]">{LABELS[key]}</td>
+                <td className="py-2 pr-3 text-[var(--color-text-primary)]">
+                  <InfoTip term={LABELS[key].term}>{LABELS[key].label}</InfoTip>
+                </td>
                 <td className="py-2 px-3 text-right" data-numeric>{s.avg_is_sharpe != null ? s.avg_is_sharpe.toFixed(2) : '—'}</td>
                 <td className="py-2 px-3 text-right" data-numeric>{s.avg_oos_sharpe != null ? s.avg_oos_sharpe.toFixed(2) : '—'}</td>
                 <td
@@ -114,8 +134,9 @@ export function WalkForwardTile() {
           </tbody>
         </table>
         <p className="mt-3 text-[11px] text-[var(--color-text-tertiary)]">
-          Out-of-sample validation across rolling windows. Degradation = how much the in-sample edge
-          decays out of sample; lower is better. Hypothetical results — not indicative of future performance.
+          Each strategy is tuned on an early stretch of history, then judged only on the later stretch it has never
+          seen. The window then rolls forward and it repeats. Degradation is how much worse it does on that unseen
+          data — lower is better. Hypothetical results — not indicative of future performance.
         </p>
       </div>
     </Shell>

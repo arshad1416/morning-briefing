@@ -10,6 +10,7 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { GateCard } from '@/components/feature/gating/GateCard';
+import { InfoTip } from '@/components/primitives';
 import { fetchGated, GateError } from '@/lib/api/gated';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -28,10 +29,13 @@ const useGatedFile = (name: string, file: string) =>
 /*  Atoms                                                             */
 /* ------------------------------------------------------------------ */
 
-function Card({ title, right, children }: { title?: string; right?: React.ReactNode; children: React.ReactNode }) {
+function Card({ title, right, children }: { title?: React.ReactNode; right?: React.ReactNode; children: React.ReactNode }) {
   return (
+    // No `overflow-hidden` here: the card titles carry <InfoTip>, whose tooltip
+    // renders above its trigger. Clipping the card would put the tooltip of a
+    // header — the topmost element — outside the box and hide the explanation.
     <div
-      className="overflow-hidden rounded-[var(--radius-tile)] border"
+      className="rounded-[var(--radius-tile)] border"
       style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
     >
       {title && (
@@ -45,7 +49,7 @@ function Card({ title, right, children }: { title?: string; right?: React.ReactN
   );
 }
 
-function Metric({ label, value, sub, color }: { label: string; value: React.ReactNode; sub?: string; color?: string }) {
+function Metric({ label, value, sub, color }: { label: React.ReactNode; value: React.ReactNode; sub?: string; color?: string }) {
   return (
     <div
       className="rounded-[var(--radius-tile)] border p-3 text-center"
@@ -95,21 +99,21 @@ function LiveTrading({ lt }: { lt: Any }) {
   const s = lt.summary || {};
   return (
     <Card
-      title="Live Paper-Trading Accuracy"
+      title={<InfoTip term="paper_trading">Live Paper-Trading Accuracy</InfoTip>}
       right={<span className="text-[10px] text-[var(--color-text-tertiary)]" data-numeric>Updated {(s.generated_at || lt.generated_at || '').substring(0, 16)}</span>}
     >
       <div className="mb-4 grid grid-cols-3 gap-2 sm:grid-cols-6">
-        <Metric label="Live WR" value={`${s.win_rate}%`} color={s.win_rate >= 60 ? 'var(--color-bull)' : s.win_rate >= 40 ? 'var(--color-caution)' : 'var(--color-bear)'} />
-        <Metric label="Closed" value={s.closed_trades} />
-        <Metric label="W / L" value={<><span style={{ color: 'var(--color-bull)' }}>{s.winning_trades}W</span> / <span style={{ color: 'var(--color-bear)' }}>{s.losing_trades}L</span></>} />
+        <Metric label={<InfoTip term="win_rate">Live Win Rate</InfoTip>} value={`${s.win_rate}%`} sub="of closed trades" color={s.win_rate >= 60 ? 'var(--color-bull)' : s.win_rate >= 40 ? 'var(--color-caution)' : 'var(--color-bear)'} />
+        <Metric label="Closed Trades" value={s.closed_trades} sub="bought and sold" />
+        <Metric label={<InfoTip term="w_l">W / L</InfoTip>} value={<><span style={{ color: 'var(--color-bull)' }}>{s.winning_trades}W</span> / <span style={{ color: 'var(--color-bear)' }}>{s.losing_trades}L</span></>} />
         <Metric label="Return" value={`${s.return_pct}%`} color={pnlColor(s.return_pct)} />
         <Metric label="Days Active" value={s.trading_days_active} />
-        <Metric label="Open" value={s.open_positions} />
+        <Metric label="Open Positions" value={s.open_positions} sub="still running" />
       </div>
       {!!lt.per_strategy?.length && (
         <div className="overflow-x-auto">
           <table className="w-full min-w-[640px] text-sm">
-            <thead><tr><TH>Strategy</TH><TH align="center">Trades</TH><TH align="center">W/L</TH><TH align="center">Live WR</TH><TH align="center">Predicted</TH><TH align="center">Status</TH><TH align="right">Avg P&L</TH></tr></thead>
+            <thead><tr><TH>Strategy</TH><TH align="center">Trades</TH><TH align="center">W/L</TH><TH align="center">Live Win Rate</TH><TH align="center"><InfoTip term="backtest">Backtest Win Rate</InfoTip></TH><TH align="center">Status</TH><TH align="right"><InfoTip term="avg_pnl">Avg Return</InfoTip></TH></tr></thead>
             <tbody>
               {lt.per_strategy.map((p: Any, i: number) => {
                 const predVal = parseFloat(p.backtest_predicted_wr);
@@ -132,7 +136,8 @@ function LiveTrading({ lt }: { lt: Any }) {
         </div>
       )}
       <p className="mt-3 border-t pt-2 text-[10px] text-[var(--color-text-tertiary)]" style={{ borderColor: 'var(--color-border-subtle)' }}>
-        🟢 Outperforming prediction · ⚪ On track · 🔴 Underperforming · Backtest predictions from walk-forward analysis
+        🟢 Beating its backtest · ⚪ On track · 🔴 Behind its backtest. The backtest win rate is each strategy&apos;s{' '}
+        <InfoTip term="walk_forward">walk-forward</InfoTip> result — the benchmark the live results are measured against.
       </p>
     </Card>
   );
@@ -143,7 +148,7 @@ function VersionTable({ title, rows }: { title: string; rows: [string, Any][] })
     <Card title={title}>
       <div className="overflow-x-auto">
         <table className="w-full min-w-[640px] text-sm">
-          <thead><tr><TH>Version</TH><TH align="right">Trades</TH><TH align="right">Avg P&L</TH><TH align="center">Win Rate</TH><TH align="right">PF</TH><TH>Innovation</TH></tr></thead>
+          <thead><tr><TH>Version</TH><TH align="right">Trades</TH><TH align="right"><InfoTip term="avg_pnl">Avg Return</InfoTip></TH><TH align="center"><InfoTip term="win_rate">Win Rate</InfoTip></TH><TH align="right"><InfoTip term="pf">Profit Factor</InfoTip></TH><TH>Innovation</TH></tr></thead>
           <tbody>
             {rows.map(([name, d]) => {
               const p = d.performance?.overall || {};
@@ -175,18 +180,18 @@ function EnhancedAccuracy() {
   const dd = d.drawdown || {};
   const slip = d.slippage || {};
   return (
-    <Card title="Live Simulation Metrics">
+    <Card title={<InfoTip term="live_simulation">Live Simulation Metrics</InfoTip>}>
       <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
-        <Metric label="Expectancy" value={signed(exp.expectancy_pct)} sub="per trade" color={pnlColor(exp.expectancy_pct)} />
-        <Metric label="Profit Factor" value={typeof exp.profit_factor === 'number' ? exp.profit_factor.toFixed(2) : '∞'} sub="wins/losses" color={exp.profit_factor >= 1.5 ? 'var(--color-bull)' : 'var(--color-caution)'} />
-        <Metric label="Max Drawdown" value={`-${dd.max_drawdown_pct || 0}%`} sub={`${dd.drawdown_duration_trades || 0} trades`} color={dd.max_drawdown_pct < 10 ? 'var(--color-bull)' : dd.max_drawdown_pct < 20 ? 'var(--color-caution)' : 'var(--color-bear)'} />
-        <Metric label="Kelly %" value={`${exp.kelly_fraction || 0}%`} sub="optimal sizing" />
-        {slip.n_measured > 0 && <Metric label="Avg Slippage" value={`${slip.avg_slippage_pct}%`} sub={`${slip.n_measured} measured`} color="var(--color-caution)" />}
+        <Metric label={<InfoTip term="expectancy">Expectancy</InfoTip>} value={signed(exp.expectancy_pct)} sub="average per closed trade" color={pnlColor(exp.expectancy_pct)} />
+        <Metric label={<InfoTip term="profit_factor">Profit Factor</InfoTip>} value={typeof exp.profit_factor === 'number' ? exp.profit_factor.toFixed(2) : '∞'} sub="total gains ÷ total losses" color={exp.profit_factor >= 1.5 ? 'var(--color-bull)' : 'var(--color-caution)'} />
+        <Metric label={<InfoTip term="max_drawdown">Max Drawdown</InfoTip>} value={`-${dd.max_drawdown_pct || 0}%`} sub={`${dd.drawdown_duration_trades || 0} trades from peak to low`} color={dd.max_drawdown_pct < 10 ? 'var(--color-bull)' : dd.max_drawdown_pct < 20 ? 'var(--color-caution)' : 'var(--color-bear)'} />
+        <Metric label={<InfoTip term="kelly">Kelly %</InfoTip>} value={`${exp.kelly_fraction || 0}%`} sub="half the formula’s stake, capped" />
+        {slip.n_measured > 0 && <Metric label={<InfoTip term="slippage">Avg Slippage</InfoTip>} value={`${slip.avg_slippage_pct}%`} sub={`expected vs actual · ${slip.n_measured} trades`} color="var(--color-caution)" />}
       </div>
       {!!d.per_strategy?.length && (
         <div className="overflow-x-auto">
           <table className="w-full min-w-[640px] text-sm">
-            <thead><tr><TH>Strategy</TH><TH align="center">Trades</TH><TH align="center">WR</TH><TH align="center">Expectancy</TH><TH align="center">PF</TH><TH align="center">Max DD</TH><TH align="center">Status</TH></tr></thead>
+            <thead><tr><TH>Strategy</TH><TH align="center">Trades</TH><TH align="center">Win Rate</TH><TH align="center">Expectancy</TH><TH align="center">Profit Factor</TH><TH align="center">Max Drawdown</TH><TH align="center">Status</TH></tr></thead>
             <tbody>
               {d.per_strategy.map((s: Any, i: number) => (
                 <tr key={i}>
@@ -203,6 +208,11 @@ function EnhancedAccuracy() {
           </table>
         </div>
       )}
+      <p className="mt-3 border-t pt-2 text-[10px] leading-relaxed text-[var(--color-text-tertiary)]" style={{ borderColor: 'var(--color-border-subtle)' }}>
+        Returns here are percentages of the money put into each trade, not dollar amounts. Max drawdown is the worst run
+        of losses when the closed practice trades are chained together one after another, so it does not account for how
+        much of the account each trade actually used.
+      </p>
     </Card>
   );
 }
@@ -218,69 +228,97 @@ function Validation({ data }: { data: Any }) {
   const bestWR = parseMetric(s.best_win_rate);
   const bestPF = parseMetric(s.best_profit_factor);
 
-  // Normalize walk-forward v2 → windows + summary aggregates
+  // FIX (MEDIUM data bug): this used to read a top-level `windows` array that
+  // walk_forward_v2.json does not carry — WalkForwardTile.tsx and
+  // research-client.tsx's BacktestTab both parse the very same file via a
+  // `summary` record keyed by strategy name (WalkForwardTile even enforces
+  // that shape with a zod schema), so the `windows` lookup here always found
+  // nothing and this card silently fell back to "Not yet run" even when real
+  // walk-forward data was available elsewhere on the site. Now reads
+  // `summary` like its two siblings and aggregates per strategy instead of
+  // per (nonexistent) window.
   const wf = (() => {
-    const w = wfq.data;
-    if (!w?.windows?.length) return null;
-    const windows = w.windows.map((win: Any) => {
-      const strats = win.results || {};
-      const keys = Object.keys(strats);
-      const avgOOS = keys.reduce((sum, k) => sum + (strats[k].oos_sharpe || 0), 0) / (keys.length || 1);
-      const avgDeg = keys.reduce((sum, k) => sum + (strats[k].oos_degradation_pct || 0), 0) / (keys.length || 1);
-      return { pass: avgDeg < 30 && avgOOS > 0, oos: avgOOS, deg: avgDeg };
+    const summary = wfq.data?.summary;
+    if (!summary || typeof summary !== 'object') return null;
+    const keys = Object.keys(summary);
+    if (!keys.length) return null;
+    const strategies = keys.map((k) => {
+      const st = summary[k] || {};
+      const oos = st.avg_oos_sharpe ?? 0;
+      const deg = st.avg_degradation_pct ?? 0;
+      return { pass: deg < 30 && oos > 0, oos, deg };
     });
-    const good = windows.filter((x: Any) => x.pass).length;
-    const avgOOS = windows.reduce((sum: number, x: Any) => sum + x.oos, 0) / windows.length;
-    const avgDeg = windows.reduce((sum: number, x: Any) => sum + x.deg, 0) / windows.length;
+    const good = strategies.filter((x: Any) => x.pass).length;
+    const avgOOS = strategies.reduce((sum: number, x: Any) => sum + x.oos, 0) / strategies.length;
+    const avgDeg = strategies.reduce((sum: number, x: Any) => sum + x.deg, 0) / strategies.length;
     return {
-      count: w.parameters?.windows ?? windows.length,
+      count: strategies.length,
       good,
       avgOOS,
       avgDeg,
-      robust: good >= Math.ceil(windows.length * 0.6),
+      robust: good >= Math.ceil(strategies.length * 0.6),
     };
   })();
 
   const dateRange = s.date_range || '2000-2026';
   const winRate = bestWR / 100;
-  const estRR = winRate > 0 && winRate < 1 ? (bestPF * (1 - winRate)) / winRate : 1;
-  const estSharpe = (bestWR - 50) / 15;
-  const degraded = estSharpe * 0.7;
   const tickers = s.tickers_tested || 59;
 
-  const checks = [
-    { label: 'Sample Size', pass: totalTrades >= 100, value: `${(totalTrades / 1000).toFixed(0)}K trades`, detail: totalTrades >= 500 ? 'Far exceeds 100-trade minimum' : 'Need 100+ trades' },
-    { label: 'Profit Factor', pass: bestPF >= 1.5, value: bestPF.toFixed(2), detail: bestPF >= 2 ? 'Strong — exceeds 1.5 threshold' : bestPF >= 1.5 ? 'Meets threshold' : 'Below 1.5' },
-    { label: 'Market Cycles', pass: dateRange.includes('2000'), value: dateRange, detail: 'Covers 2008, 2020, 2022 drawdowns' },
-    { label: 'Win Rate / R:R', pass: winRate >= 0.45 || estRR >= 1.5, value: `${bestWR}% / ${estRR.toFixed(2)}R`, detail: winRate >= 0.45 ? 'Strong win rate' : 'Low win rate + low R:R' },
-    { label: 'Live Sharpe (est)', pass: degraded >= 1, value: degraded.toFixed(2), detail: `Backtest: ${estSharpe.toFixed(2)}. ~50% degradation expected` },
-    { label: 'Diversification', pass: tickers >= 20, value: `${tickers} tickers`, detail: tickers >= 50 ? 'Highly diversified' : 'Adequate' },
+  // FIX: this scorecard used to carry two more "checks" here — a
+  // "Win Rate / Reward-to-Risk" tile whose R:R was back-solved algebraically
+  // from bestPF and winRate (estRR = bestPF * (1 - winRate) / winRate), and a
+  // "Live Sharpe (est.)" tile computed as (bestWR - 50) / 15, then cut by 30%.
+  // Neither figure is a measured trade statistic: no return series or
+  // volatility ever enters the calculation, and no Sharpe ratio is computed
+  // anywhere in this codebase — both were a linear rescale of the win rate
+  // dressed up as a risk-adjusted metric. Removed rather than relabelled;
+  // the win-rate check below uses only the real, measured win rate, and
+  // Profit Factor (already its own check above) is the other real figure
+  // that survives.
+  const checks: Array<{ id: string; label: React.ReactNode; pass: boolean; value: string; detail: string }> = [
+    // FIX (MEDIUM data bug): totalTrades/1000 rounded to 0 decimals printed
+    // "0K trades" for any total under 500 — including totals that already
+    // pass the >= 100 threshold, so a green tick could sit next to "0K
+    // trades". Only abbreviate to "K" once there is enough to round to
+    // without losing the number entirely.
+    { id: 'sample', label: <InfoTip term="sample_size">Sample Size</InfoTip>, pass: totalTrades >= 100, value: totalTrades >= 1000 ? `${(totalTrades / 1000).toFixed(1)}K trades` : `${totalTrades.toLocaleString()} trades`, detail: totalTrades >= 500 ? 'Far more than the 100 trades we treat as a minimum' : 'Need 100+ trades' },
+    { id: 'pf', label: <InfoTip term="profit_factor">Profit Factor</InfoTip>, pass: bestPF >= 1.5, value: bestPF.toFixed(2), detail: bestPF >= 2 ? 'Strong — won more than twice what it lost' : bestPF >= 1.5 ? 'Meets our 1.5 threshold' : 'Below 1.5' },
+    { id: 'cycles', label: 'Market Cycles', pass: dateRange.includes('2000'), value: dateRange, detail: 'The test window should reach back to 2000, so it includes the 2008 and 2020 crashes' },
+    { id: 'win-rate', label: <InfoTip term="win_rate">Win Rate</InfoTip>, pass: winRate >= 0.45, value: `${bestWR}%`, detail: winRate >= 0.45 ? 'Strong share of trades closed in profit' : 'Below the 45% we look for' },
+    { id: 'diversification', label: 'Diversification', pass: tickers >= 20, value: `${tickers} tickers`, detail: tickers >= 50 ? 'Spread across plenty of different stocks' : 'Adequate spread across stocks' },
     wf
-      ? { label: 'Walk-Forward', pass: wf.good >= Math.ceil(wf.count * 0.7), value: `${wf.good}/${wf.count} windows pass`, detail: `OOS Sharpe ${wf.avgOOS.toFixed(2)} · Degradation ${wf.avgDeg.toFixed(1)}% · ${wf.robust ? 'Robust across regimes' : 'Higher degradation than ideal'}` }
-      : { label: 'Walk-Forward', pass: false, value: 'Not yet run', detail: 'Will validate parameter robustness across regimes' },
+      ? { id: 'wf', label: <InfoTip term="walk_forward">Walk-Forward</InfoTip>, pass: wf.good >= Math.ceil(wf.count * 0.7), value: `${wf.good}/${wf.count} strategies pass`, detail: `Scored ${wf.avgOOS.toFixed(2)} on data it had never seen, ${wf.avgDeg.toFixed(1)}% weaker than on the data it was tuned on · ${wf.robust ? 'holds up as market conditions change' : 'fades more than we would like'}` }
+      : { id: 'wf', label: <InfoTip term="walk_forward">Walk-Forward</InfoTip>, pass: false, value: 'Not yet run', detail: 'Will check the settings still work when market conditions change' },
   ];
   const passed = checks.filter((c) => c.pass).length;
 
   return (
     <Card
-      title="Backtest Validation"
-      right={<span className="text-[10px] text-[var(--color-text-tertiary)]">Per López de Prado / Aronson</span>}
+      title={<InfoTip term="backtest">Backtest Validation</InfoTip>}
+      right={<span className="text-[10px] text-[var(--color-text-tertiary)]">Scored in-house — not an outside audit</span>}
     >
       <p className="mb-3 text-sm font-semibold text-[var(--color-text-primary)]">
         Research Score:{' '}
-        <span data-numeric style={{ color: passed >= 6 ? 'var(--color-bull)' : passed >= 4 ? 'var(--color-caution)' : 'var(--color-bear)' }}>
-          {passed}/7 Passed
+        {/* FIX: was out of 7 checks; two (Reward-to-Risk and Live Sharpe) were fabricated and have been
+            removed above, so the scorecard is now out of 6 — thresholds rescaled to match (~85% / ~50%). */}
+        <span data-numeric style={{ color: passed >= 5 ? 'var(--color-bull)' : passed >= 3 ? 'var(--color-caution)' : 'var(--color-bear)' }}>
+          {passed}/6 Passed
         </span>
+      </p>
+      <p className="mb-3 text-xs leading-relaxed text-[var(--color-text-tertiary)]">
+        Six checks that help tell a strategy with a genuine advantage from one that only looks good in hindsight. The
+        criteria come from published work on backtest validation by López de Prado and Aronson; we score ourselves
+        against them, each check counts the same, and no outside party audits the result.
       </p>
       <div className="space-y-1.5">
         {checks.map((c) => (
           <div
-            key={c.label}
+            key={c.id}
             className="flex flex-wrap items-center gap-2 rounded-lg px-3 py-2 text-xs"
             style={{ backgroundColor: 'var(--color-bg-elevated)' }}
           >
             <span aria-hidden="true">{c.pass ? '✅' : '⚠️'}</span>
-            <span className="min-w-[110px] font-semibold text-[var(--color-text-primary)]">{c.label}</span>
+            <span className="min-w-[180px] font-semibold text-[var(--color-text-primary)]">{c.label}</span>
             <span className="min-w-[90px] text-[var(--color-text-secondary)]" data-numeric>{c.value}</span>
             <span className="flex-1 text-[var(--color-text-tertiary)]">{c.detail}</span>
           </div>
@@ -307,7 +345,8 @@ export function PredictionsClient() {
         Engine <em className="italic" style={{ color: 'var(--color-accent)' }}>Tuning</em>
       </h1>
       <p className="relative z-10 mt-2 text-sm text-[var(--color-text-secondary)]">
-        Every model version, backtested and compared — and how the live engine tracks its own predictions.
+        Every version of the model, replayed against years of past prices and compared side by side — plus how the
+        version running today is doing against what those tests said to expect. All trades are simulated.
       </p>
     </div>
   );
@@ -328,7 +367,7 @@ export function PredictionsClient() {
         <GateCard
           kind={q.error instanceof GateError ? q.error.kind : 'unavailable'}
           need={q.error instanceof GateError ? (q.error.need ?? 'pro') : 'pro'}
-          feature="Engine tuning"
+          feature="Model tuning results"
         />
       </div>
     );
@@ -346,12 +385,18 @@ export function PredictionsClient() {
     <div className="space-y-4">
       {header}
 
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
-        <Metric label="Total Trades" value={s.total_backtest_trades?.toLocaleString?.() ?? '—'} />
-        <Metric label="Tickers" value={s.tickers_tested ?? '—'} />
-        <Metric label="Date Range" value={<span className="text-sm">{s.date_range ?? '—'}</span>} />
-        <Metric label="Best WR" value={s.best_win_rate ?? '—'} />
-        <Metric label="Best P&L" value={s.best_avg_pnl ?? '—'} color="var(--color-bull)" />
+      <div>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+          <Metric label={<InfoTip term="backtest">Backtest Trades</InfoTip>} value={s.total_backtest_trades?.toLocaleString?.() ?? '—'} sub="simulated, all versions" />
+          <Metric label="Tickers" value={s.tickers_tested ?? '—'} sub="symbols tested" />
+          <Metric label="Date Range" value={<span className="text-sm">{s.date_range ?? '—'}</span>} />
+          <Metric label={<InfoTip term="win_rate">Best Win Rate</InfoTip>} value={s.best_win_rate ?? '—'} sub="best version on this metric" />
+          <Metric label={<InfoTip term="avg_pnl">Best Avg Return</InfoTip>} value={s.best_avg_pnl ?? '—'} sub="per trade, best on this metric" color="var(--color-bull)" />
+        </div>
+        <p className="mt-2 text-[10px] leading-relaxed text-[var(--color-text-tertiary)]">
+          Each &ldquo;best&rdquo; figure is the highest any single version reached on that metric — they are not
+          necessarily all the same version.
+        </p>
       </div>
 
       {data.live_trading && <LiveTrading lt={data.live_trading} />}
@@ -359,10 +404,10 @@ export function PredictionsClient() {
       <EnhancedAccuracy />
 
       <VersionTable title="Version Comparison" rows={latest10} />
-      {milestones.length > 0 && <VersionTable title="Methodology Milestones" rows={milestones} />}
+      {milestones.length > 0 && <VersionTable title="Milestone Versions" rows={milestones} />}
 
       {ev?.mr_progression?.length > 0 && (
-        <Card title="Mean-Reversion Evolution">
+        <Card title={<InfoTip term="mean_reversion">Mean-Reversion Evolution</InfoTip>}>
           <div className="space-y-2">
             {ev.mr_progression.slice(-6).map((v: Any) => (
               <div key={v.version} className="flex items-center gap-3 text-sm">
@@ -374,7 +419,11 @@ export function PredictionsClient() {
                   <div
                     className="h-full rounded-full"
                     style={{
-                      width: `${Math.min(v.win_rate * 1.2, 100)}%`,
+                      /* Fixed: the old *1.2 factor saturated the bar to full width for
+                         any win_rate >= 83.3%, so two different rates above that point
+                         (e.g. 85% and 95%) drew identical bars. Width now maps 1:1 to
+                         the win rate percentage printed beside it. */
+                      width: `${Math.min(v.win_rate, 100)}%`,
                       backgroundColor: v.win_rate >= 70 ? 'var(--color-bull)' : 'var(--color-accent)',
                     }}
                   />
@@ -382,6 +431,10 @@ export function PredictionsClient() {
               </div>
             ))}
           </div>
+          <p className="mt-3 border-t pt-2 text-[10px] leading-relaxed text-[var(--color-text-tertiary)]" style={{ borderColor: 'var(--color-border-subtle)' }}>
+            Each row, left to right: the version, the share of its trades that made money, its average return per trade,
+            and its profit factor — total gains divided by total losses.
+          </p>
         </Card>
       )}
 
@@ -410,10 +463,14 @@ export function PredictionsClient() {
 
       <Card>
         <p className="text-xs leading-relaxed text-[var(--color-text-tertiary)]">
-          <strong className="text-[var(--color-text-secondary)]">Methodology:</strong>{' '}
-          {s.date_range || 'N/A'} backtest across {s.tickers_tested || 'N/A'} tickers. 21-day hold.{' '}
-          {data.versions ? Object.keys(data.versions).length : 'N/A'} versions tested.{' '}
-          {s.total_backtest_trades?.toLocaleString?.() ?? 'N/A'} total trades. Council: Gemini, DeepSeek, MiMo, Nemotron.
+          <strong className="text-[var(--color-text-secondary)]">How this was tested:</strong>{' '}
+          Each version was replayed over {s.date_range || 'N/A'} of past prices across {s.tickers_tested || 'N/A'}{' '}
+          symbols, on a fixed 21-day hold. That rule governs the version-by-version backtest figures on this page; the
+          live paper-trading and live simulation cards, and the walk-forward check, come from separate runs and are not
+          bound by it.{' '}
+          {data.versions ? Object.keys(data.versions).length : 'N/A'} versions tested,{' '}
+          {s.total_backtest_trades?.toLocaleString?.() ?? 'N/A'} simulated trades in total. Council of models: Gemini,
+          DeepSeek, MiMo, Nemotron.
         </p>
       </Card>
     </div>

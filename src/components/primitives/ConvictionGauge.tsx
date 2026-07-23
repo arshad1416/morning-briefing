@@ -1,4 +1,19 @@
 // components/primitives/ConvictionGauge.tsx — 0–10 arc gauge
+//
+// The gauge deliberately draws no noun of its own: it is handed a bare 0–10
+// number and the caller decides what that number is. The visible "Conviction"
+// label and its plain-English caption therefore live in VerdictBar, next to the
+// signal chip they belong with — duplicating them inside the 140px arc would
+// print the same word twice on the dashboard's largest element.
+//
+// The accessible name below still has to stand alone, because a screen-reader
+// user meets the arc before the caller's caption. "Conviction" reads as "how
+// sure the model is", which is the one thing this number is NOT — it is a
+// direction score — so the default aria-label says what it measures instead.
+// That default is written for the one caller that exists today (VerdictBar,
+// which scores the whole market). Any other caller — a per-ticker score, a
+// backtest score — must pass `ariaLabel`, because "today's market" and
+// "bullish/bearish" would be assertions this gauge cannot vouch for.
 'use client';
 
 import React from 'react';
@@ -7,9 +22,11 @@ interface ConvictionGaugeProps {
   value: number; // 0–10
   size?: number;
   className?: string;
+  /** Accessible name for the arc. Override whenever the number is not the market-wide conviction score. */
+  ariaLabel?: string;
 }
 
-export function ConvictionGauge({ value, size = 140, className = '' }: ConvictionGaugeProps) {
+export function ConvictionGauge({ value, size = 140, className = '', ariaLabel }: ConvictionGaugeProps) {
   const clamped = Math.max(0, Math.min(10, value));
   const normalized = clamped / 10;
   const strokeWidth = 10;
@@ -44,7 +61,16 @@ export function ConvictionGauge({ value, size = 140, className = '' }: Convictio
 
   return (
     <div className={`relative inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label={`Conviction: ${clamped.toFixed(1)} out of 10`}>
+      <svg
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        role="img"
+        aria-label={
+          ariaLabel ??
+          `Today’s market score: ${clamped.toFixed(1)} out of 10. Higher leans bullish, lower leans bearish.`
+        }
+      >
         {/* Background arc */}
         <path
           d={describeArc(startAngle, endAngle)}

@@ -4,7 +4,8 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { accuracyQuery } from '@/lib/query/options';
-import { Surface, SurfaceHeader } from '@/components/primitives';
+import { Surface, SurfaceHeader, InfoTip } from '@/components/primitives';
+import type { GlossaryTerm } from '@/lib/glossary';
 import { GateError } from '@/lib/api/gated';
 
 export function AccuracyStats() {
@@ -45,14 +46,14 @@ export function AccuracyStats() {
     );
   }
 
-  const stats = [
+  const stats: Array<{ label: string; value: string; term?: GlossaryTerm }> = [
     // expectancy is percent-per-trade (expectancy_pct) — not dollars.
-    { label: 'Expectancy / Trade', value: `${data.expectancy >= 0 ? '+' : ''}${data.expectancy.toFixed(2)}%` },
-    { label: 'Win Rate', value: `${(data.hit_rate * 100).toFixed(1)}%` },
-    { label: 'Profit Factor', value: data.profit_factor == null ? '—' : data.profit_factor.toFixed(2) },
-    { label: 'Max Drawdown', value: `${(data.max_drawdown * 100).toFixed(1)}%` },
-    { label: 'Kelly Fraction', value: `${(data.kelly_fraction * 100).toFixed(1)}%` },
-    { label: 'Total Trades', value: data.total_signals.toLocaleString() },
+    { label: 'Expectancy / Trade', value: `${data.expectancy >= 0 ? '+' : ''}${data.expectancy.toFixed(2)}%`, term: 'expectancy' },
+    { label: 'Win Rate', value: `${(data.hit_rate * 100).toFixed(1)}%`, term: 'win_rate' },
+    { label: 'Profit Factor', value: data.profit_factor == null ? '—' : data.profit_factor.toFixed(2), term: 'profit_factor' },
+    { label: 'Max Drawdown', value: `${(data.max_drawdown * 100).toFixed(1)}%`, term: 'max_drawdown' },
+    { label: 'Kelly Fraction', value: `${(data.kelly_fraction * 100).toFixed(1)}%`, term: 'kelly' },
+    { label: 'Closed Trades', value: data.total_signals.toLocaleString() },
   ];
 
   return (
@@ -62,13 +63,19 @@ export function AccuracyStats() {
         <div className="grid grid-cols-3 gap-4">
           {stats.map((s) => (
             <div key={s.label} className="text-center p-3 rounded-lg bg-[var(--color-bg-elevated)]">
-              <span className="text-xs text-[var(--color-text-tertiary)] block mb-1">{s.label}</span>
+              <span className="text-xs text-[var(--color-text-tertiary)] block mb-1">
+                {s.term ? <InfoTip term={s.term}>{s.label}</InfoTip> : s.label}
+              </span>
               <span className="text-lg font-bold" style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums' }} data-numeric>
                 {s.value}
               </span>
             </div>
           ))}
         </div>
+        <p className="mt-3 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
+          From the practice account — simulated trades, no real money. Expectancy is a percentage of the amount put into
+          each trade, not a dollar figure.
+        </p>
       </div>
     </Surface>
   );

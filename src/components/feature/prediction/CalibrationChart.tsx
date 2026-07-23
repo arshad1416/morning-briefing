@@ -4,6 +4,16 @@
 // and asserted "Our 80% calls hit ~79%" behind the Pro gate. Real calibration
 // requires a meaningful forward-test sample, so this tile reports the current
 // state instead of inventing a curve.
+//
+// FIX (MEDIUM data bug): that "early-sample" framing still promised "the
+// chart appears once 30 trades have closed." accuracy.json (AccuracySchema,
+// src/lib/schemas/market.ts) never carries a per-trade predicted probability
+// — the only value this tile consumes is total_signals, a raw closed-trade
+// count. No number of closed trades would ever make a real curve appear
+// with that data, so the 30-trade countdown was a promise this component
+// could never keep. It now says plainly that a curve needs per-trade
+// probability data that is not collected yet, instead of implying one is
+// coming once a counter reaches 30.
 'use client';
 
 import React from 'react';
@@ -48,8 +58,6 @@ export function CalibrationChart() {
   }
 
   const closedTrades = data.total_signals;
-  const sampleTarget = 30;
-  const progress = Math.min(100, (closedTrades / sampleTarget) * 100);
   return (
     <Surface span="half">
       <SurfaceHeader title={<InfoTip term="calibration">Calibration Chart</InfoTip>} />
@@ -71,19 +79,14 @@ export function CalibrationChart() {
           <path d="M4 20V4" />
         </svg>
         <p className="text-sm text-[var(--color-text-secondary)]">
-          Calibration tracking is live. {closedTrades.toLocaleString()} closed {closedTrades === 1 ? 'trade has' : 'trades have'} been matched to predicted probabilities.
+          We want to check whether the model&apos;s confidence holds up: when it calls something 70% likely, does it
+          happen about 70% of the time? Answering that needs each trade&apos;s predicted probability, which is not
+          recorded yet — only a running count of closed practice trades is available today.
         </p>
         <p className="mt-2 text-xs text-[var(--color-text-tertiary)]">
-          The curve publishes at {sampleTarget} closed trades. We won&apos;t show a calibration line built on too little evidence.
+          {closedTrades.toLocaleString()} practice {closedTrades === 1 ? 'trade has' : 'trades have'} closed so far.
+          We&apos;ll add the curve once trades are matched to their predicted probabilities.
         </p>
-        <div className="mt-4 w-full max-w-xs">
-          <div className="h-1.5 rounded-full bg-[var(--color-bg-elevated)] overflow-hidden">
-            <div className="h-full rounded-full bg-[var(--color-accent)]" style={{ width: `${progress}%` }} />
-          </div>
-          <p className="mt-1 text-[11px] text-[var(--color-text-tertiary)]">
-            {closedTrades.toLocaleString()} / {sampleTarget} closed trades
-          </p>
-        </div>
       </div>
     </Surface>
   );

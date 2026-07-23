@@ -6,6 +6,41 @@ import { useQuery } from '@tanstack/react-query';
 import { latestQuery } from '@/lib/query/options';
 import { POLL } from '@/lib/query/policy';
 import { formatNumber, formatPercent } from '@/lib/format';
+import { lookup } from '@/lib/glossary';
+
+// Two entries in the tape are not prices at all — VIX is a volatility gauge and
+// "10Y Yield" is an interest rate — but they scroll past looking identical to
+// "S&P 500 7,512.25". A native `title` is deliberate here rather than <InfoTip>:
+// the strip is 32px tall with `overflow: hidden`, so a popover tooltip would be
+// clipped, and the duplicated marquee run is aria-hidden, so putting focusable
+// buttons in it would trap the keyboard on invisible copies. The tape pauses on
+// hover (globals.css), so the native tooltip is reachable.
+const TAPE_TERMS: Record<string, string> = {
+  VIX: 'vix',
+  '10Y Yield': 'ten_year_yield',
+};
+
+function tapeHint(label: string): string | undefined {
+  const term = TAPE_TERMS[label];
+  const base = term ? lookup(term)?.plain : undefined;
+  if (!base) return undefined;
+  // BUG FIX: change_pct on every entry in market_summary.indices is a
+  // relative percent change of that entry's own value, same as every other
+  // index here (an archived reading of ten_year_yield 4.6 with change_pct
+  // 1.32 would be a ~132pp one-day move read as points — essentially
+  // impossible for a bond yield, but a plausible ~0.06pp move read as a
+  // relative percent). That's the normal meaning for a price ("S&P 500 up
+  // 0.04%"), but "10Y Yield" is already itself a percentage, so the same
+  // math applied to it produces a confusing result: "▲ +0.22%" beside
+  // "4.64%" reads like the rate jumped 0.22 percentage points (to 4.86%),
+  // when it actually means the 4.64 moved by 0.22% of itself (about 0.01
+  // points). Spell that out since the tape strip has no room to show it
+  // inline.
+  if (label === '10Y Yield') {
+    return `${base} The % change shown is a relative move in the yield itself, not a move in percentage points.`;
+  }
+  return base;
+}
 
 interface TickerItem {
   label: string;
@@ -17,9 +52,10 @@ function TickerEntry({ item }: { item: TickerItem }) {
   const hasDelta = item.changePct !== undefined;
   const up = hasDelta && item.changePct! > 0;
   const down = hasDelta && item.changePct! < 0;
+  const hint = tapeHint(item.label);
 
   return (
-    <span className="inline-flex items-baseline gap-2 whitespace-nowrap">
+    <span className="inline-flex items-baseline gap-2 whitespace-nowrap" title={hint}>
       <span className="text-[10px] uppercase tracking-[0.12em] text-[var(--color-text-tertiary)]">
         {item.label}
       </span>
@@ -80,17 +116,34 @@ export function TickerTape() {
     // VIX is already an entry in indices — no separate market_summary.vix item.
     ...data.market_summary.indices.map((idx) => ({
       label: idx.ticker,
-      value: formatNumber(idx.price, idx.price >= 1000 ? 0 : 2),
+      // BUG FIX: "10Y Yield" is a pseudo-index — its `price` field IS the
+      // yield itself (already a percentage rate), not a price level. The
+      // generic index-level formatting dropped the %, so it read as a bare
+      // "4.64" next to real index points in the thousands. The archive page
+      // prints this same field as "4.64%" — match that here.
+      value: idx.ticker === '10Y Yield'
+        ? `${formatNumber(idx.price, 2)}%`
+        : formatNumber(idx.price, idx.price >= 1000 ? 0 : 2),
       changePct: idx.change_pct,
     })),
     ...data.market_summary.fx_rates.map((fx) => ({
       label: fx.pair,
-      value: formatNumber(fx.price, 4),
+      // BUG FIX: was formatNumber(fx.price, 4), padding e.g. 1.41 out to
+      // "1.4100" — two digits of precision the feed doesn't carry. Checked
+      // every archive/*.json fx_rates entry (44 files): USD/CAD never carries
+      // more than 2 decimal places, and the schema stores price as a bare
+      // number with no indication of pip-level precision. 4 decimals is the
+      // FX-market convention, but it isn't honest about what this feed knows.
+      value: formatNumber(fx.price, 2),
     })),
   ];
 
+  // "data", not "prices": the strip mixes several kinds of number — index
+  // levels, a volatility gauge (VIX), an interest rate ("10Y Yield") and an
+  // exchange rate (USD/CAD). This label is the only description a screen reader
+  // gives the whole strip, so it must not call a 4.64% borrowing rate a price.
   return (
-    <div className="ticker-mask h-8 flex items-center" aria-label="Live market indices">
+    <div className="ticker-mask h-8 flex items-center" aria-label="Live market data">
       {/* The -50% marquee is seamless only while one half of the track is at
           least as wide as the container. One run (~1170px) is narrower than
           the 2xl shell (1720px), so each half is two runs; duration doubled

@@ -98,7 +98,10 @@ export function SignupClient() {
       subtitle={
         plan
           ? `Start your 7-day free trial of ${plan === 'pro' ? 'Pro' : 'Basic'} — no card required to sign up.`
-          : 'Every account starts with a 7-day free trial of the full desk.'
+          : // "The full desk" named nothing the reader would later be shown; the
+            // trial concretely grants Pro-tier access, which is one of the two
+            // plans on the next screen.
+            'Every account starts with a 7-day free trial of Pro — every feature, no card required to sign up.'
       }
     >
       <form onSubmit={onSubmit} className="space-y-4">

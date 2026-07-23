@@ -1,6 +1,7 @@
 // app/charts/charts-client.tsx — TradingView-style candlestick charts, ported
-// from the legacy SPA. Candles + volume + EMA 20/50 + VWAP overlays, RSI and
-// ATR indicator panes, ticker search, timeframe toggle, theme-aware colors.
+// from the legacy SPA. Candles + volume + EMA 20/50 overlays (plus a session
+// VWAP overlay on the Daily bar size only — see calcVWAP), RSI and ATR
+// indicator panes, ticker search, timeframe toggle, theme-aware colors.
 //
 // Data: /api/data/charts/{TICKER}.json through the Worker gate (Pro tier).
 // lightweight-charts is bundled from npm — the CSP blocks CDN scripts.
@@ -17,6 +18,7 @@ import {
 } from 'lightweight-charts';
 import { GateCard } from '@/components/feature/gating/GateCard';
 import { fetchGated, GateError } from '@/lib/api/gated';
+import { InfoTip } from '@/components/primitives';
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                              */
@@ -65,6 +67,18 @@ const rawSchema = { parse: (d: unknown) => d as ChartFile };
 /*  Indicator math (ported verbatim from the legacy charts.js)        */
 /* ------------------------------------------------------------------ */
 
+// NOT FURTHER FIXED (checked against the glossary): calcEMA/calcRSI/calcATR
+// count periods in bars of whatever timeframe is selected, so "EMA 20",
+// "RSI (14)" and "ATR (14)" mean 20/14 weeks, months or years on non-Daily
+// toggles. The page-level subtitle already discloses this in general
+// ("The Daily–Yearly buttons set how much time each price bar covers"), and
+// per-pane treatment differs deliberately by whether the attached glossary
+// text makes a day-specific claim: ATR's entry says "a normal day's
+// movement" (false off Daily), so its InfoTip was removed and a dynamic
+// timeframe note substituted; RSI's glossary entry (src/lib/glossary/index.ts)
+// says only "risen or fallen unusually fast recently" — timeframe-agnostic,
+// so its InfoTip and static note are already accurate on every toggle and
+// need no equivalent change.
 type Point = { time: Bar['time']; value: number };
 
 function calcEMA(data: Bar[], period: number): Point[] {
@@ -79,10 +93,37 @@ function calcEMA(data: Bar[], period: number): Point[] {
   return out;
 }
 
+// A trading session is one calendar day. Bars carry either a 'YYYY-MM-DD'
+// string or a UTC-seconds timestamp (see `asTime` below) — reduce either to
+// that day's date so calcVWAP knows where one session ends and the next
+// begins.
+function sessionOf(t: Bar['time']): string {
+  return typeof t === 'number' ? new Date(t * 1000).toISOString().slice(0, 10) : t.slice(0, 10);
+}
+
+// BUG FIX: cumV/cumPV used to accumulate for the life of the array and never
+// reset, so this was really an "anchored VWAP" running from the first loaded
+// bar, not the session VWAP the label promises ("the average price paid so
+// far today" per the glossary). Reset the accumulators every time the bar's
+// calendar day changes so the line only ever reflects the current session.
+// Note: this dataset has one bar per calendar day even on the Daily
+// timeframe (no intraday prints), so the reset fires on every bar and the
+// value collapses to that day's own (high+low+close)/3 — which is exactly
+// correct, it's just what a session VWAP looks like when the only tick
+// available for the session is its own OHLCV summary. Callers must not
+// invoke this for Weekly/Monthly/Yearly bars, where a "session" is a whole
+// week/month/year and the result would no longer mean VWAP at all.
 function calcVWAP(data: Bar[]): Point[] {
   let cumV = 0;
   let cumPV = 0;
+  let session = '';
   return data.map((d) => {
+    const key = sessionOf(d.time);
+    if (key !== session) {
+      session = key;
+      cumV = 0;
+      cumPV = 0;
+    }
     const typical = (d.high + d.low + d.close) / 3;
     cumPV += typical * d.volume;
     cumV += d.volume;
@@ -181,10 +222,25 @@ function withAlpha(color: string, alpha: number): string {
 // lightweight-charts accepts 'YYYY-MM-DD' strings or UTC timestamps.
 const asTime = (t: Bar['time']) => (typeof t === 'number' ? (t as UTCTimestamp) : (t as string));
 
-function ChartPanes({ bars, theme }: { bars: Bar[]; theme: string }) {
+function ChartPanes({
+  bars,
+  theme,
+  timeframeLabel,
+  timeframe,
+}: {
+  bars: Bar[];
+  theme: string;
+  timeframeLabel: string;
+  timeframe: Timeframe;
+}) {
   const mainRef = useRef<HTMLDivElement>(null);
   const rsiRef = useRef<HTMLDivElement>(null);
   const atrRef = useRef<HTMLDivElement>(null);
+  // Session VWAP only means something on the finest bar size this app has —
+  // one bar per trading day. On Weekly/Monthly/Yearly a "session" would be a
+  // whole week/month/year, which isn't VWAP, so the line is hidden there
+  // rather than plotting something that pretends to be VWAP.
+  const isDaily = timeframe === '1D';
 
   useEffect(() => {
     if (!mainRef.current || !rsiRef.current || !atrRef.current || !bars.length) return;
@@ -247,7 +303,9 @@ function ChartPanes({ bars, theme }: { bars: Bar[]; theme: string }) {
 
     mkLine('#6AA9FF', 1).setData(asLineData(calcEMA(bars, 20)));
     mkLine('#C08BFF', 1).setData(asLineData(calcEMA(bars, 50)));
-    mkLine(accent, 1, LineStyle.Dashed).setData(asLineData(calcVWAP(bars)));
+    if (isDaily) {
+      mkLine(accent, 1, LineStyle.Dashed).setData(asLineData(calcVWAP(bars)));
+    }
 
     // ── RSI pane ──
     const rsi = createChart(rsiRef.current, {
@@ -258,6 +316,11 @@ function ChartPanes({ bars, theme }: { bars: Bar[]; theme: string }) {
     charts.push(rsi);
     const rsiSeries = rsi.addLineSeries({ color: accent, lineWidth: 1, priceLineVisible: false, lastValueVisible: true });
     rsiSeries.setData(asLineData(calcRSI(bars, 14)));
+    // The two dashed guides are labelled in the pane header, not on the canvas:
+    // in lightweight-charts a non-empty `title` also paints a filled pane label
+    // at the line's height, right-aligned — which lands on top of the most
+    // recent RSI values in a 140px pane and collides with the series' own
+    // last-value badge. Keep `title: ''` and explain the levels in the header.
     rsiSeries.createPriceLine({ price: 70, color: down, lineWidth: 1, lineStyle: LineStyle.Dashed, axisLabelVisible: true, title: '' });
     rsiSeries.createPriceLine({ price: 30, color: up, lineWidth: 1, lineStyle: LineStyle.Dashed, axisLabelVisible: true, title: '' });
 
@@ -287,36 +350,76 @@ function ChartPanes({ bars, theme }: { bars: Bar[]; theme: string }) {
     atr.timeScale().fitContent();
 
     return () => charts.forEach((c) => c.remove());
-  }, [bars, theme]);
+  }, [bars, theme, isDaily]);
 
   return (
     <div className="space-y-4">
-      <Pane label="Price · EMA 20 / EMA 50 / VWAP" legend>
+      <Pane label={pricePaneLabel(isDaily)} legend showVwap={isDaily}>
         <div ref={mainRef} className="h-[420px] w-full" />
       </Pane>
-      <Pane label="RSI (14)">
+      <Pane label={<InfoTip term="rsi">RSI (14)</InfoTip>} note="Dashed guides at 70 and 30 — usually called overbought and oversold">
         <div ref={rsiRef} className="h-[140px] w-full" />
       </Pane>
-      <Pane label="ATR (14)">
+      {/* No <InfoTip term="atr"> here: the glossary entry describes ATR as a
+          normal DAY'S move, but calcATR runs on whichever bar size is selected,
+          so on Weekly/Monthly/Yearly that wording would be wrong. The note
+          below states the timeframe actually on screen. */}
+      <Pane label="ATR (14)" note={`Typical swing size on ${timeframeLabel.toLowerCase()} bars`}>
         <div ref={atrRef} className="h-[140px] w-full" />
       </Pane>
     </div>
   );
 }
 
-function Pane({ label, legend = false, children }: { label: string; legend?: boolean; children: React.ReactNode }) {
+// The price pane's own label: VWAP only ever names a real session VWAP on
+// Daily bars (see calcVWAP above), so it's dropped from the label — and the
+// glossary tooltip stays unwired — on Weekly/Monthly/Yearly, where the line
+// itself is hidden too.
+function pricePaneLabel(isDaily: boolean): React.ReactNode {
+  return isDaily ? (
+    <>
+      Price · EMA 20 / EMA 50 / <InfoTip term="vwap">VWAP</InfoTip>
+    </>
+  ) : (
+    'Price · EMA 20 / EMA 50'
+  );
+}
+
+// No `overflow-hidden` on the wrapper: a Learning Mode tooltip opens upward
+// (absolute bottom-full) from the label in the header, ~10px below the pane's
+// top edge, so a clipping ancestor would hide the explanation entirely. Nothing
+// inside paints to the corners — the canvas sits in a padded box — so the
+// rounded card still reads correctly without it.
+function Pane({
+  label,
+  legend = false,
+  showVwap = true,
+  note,
+  children,
+}: {
+  label: React.ReactNode;
+  legend?: boolean;
+  showVwap?: boolean;
+  note?: React.ReactNode;
+  children: React.ReactNode;
+}) {
   return (
     <div
-      className="overflow-hidden rounded-[var(--radius-tile)] border"
+      className="rounded-[var(--radius-tile)] border"
       style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
     >
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b px-4 py-2.5" style={{ borderColor: 'var(--color-border-subtle)' }}>
         <h3 className="text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--color-text-tertiary)]">{label}</h3>
+        {note && (
+          <span className="text-[10px] normal-case tracking-normal text-[var(--color-text-tertiary)]">{note}</span>
+        )}
         {legend && (
           <div className="flex items-center gap-3 text-[10px] text-[var(--color-text-tertiary)]">
             <span className="flex items-center gap-1"><i className="inline-block h-0.5 w-3" style={{ backgroundColor: '#6AA9FF' }} /> EMA 20</span>
             <span className="flex items-center gap-1"><i className="inline-block h-0.5 w-3" style={{ backgroundColor: '#C08BFF' }} /> EMA 50</span>
-            <span className="flex items-center gap-1"><i className="inline-block h-0.5 w-3" style={{ backgroundColor: 'var(--color-accent)' }} /> VWAP</span>
+            {showVwap && (
+              <span className="flex items-center gap-1"><i className="inline-block h-0.5 w-3" style={{ backgroundColor: 'var(--color-accent)' }} /> VWAP</span>
+            )}
           </div>
         )}
       </div>
@@ -328,17 +431,18 @@ function Pane({ label, legend = false, children }: { label: string; legend?: boo
 // Loading placeholder that mirrors the live three-pane layout exactly (same
 // Pane chrome, labels, legend, and heights) so the loading→data transition is
 // zero-reflow — the skeleton blocks simply become live canvases.
-function ChartsSkeleton() {
+function ChartsSkeleton({ timeframeLabel, timeframe }: { timeframeLabel: string; timeframe: Timeframe }) {
+  const isDaily = timeframe === '1D';
   return (
     <div className="space-y-4" aria-busy="true" aria-live="polite">
       <span className="sr-only">Loading chart data…</span>
-      <Pane label="Price · EMA 20 / EMA 50 / VWAP" legend>
+      <Pane label={pricePaneLabel(isDaily)} legend showVwap={isDaily}>
         <div className="skeleton h-[420px] w-full" />
       </Pane>
-      <Pane label="RSI (14)">
+      <Pane label={<InfoTip term="rsi">RSI (14)</InfoTip>} note="Dashed guides at 70 and 30 — usually called overbought and oversold">
         <div className="skeleton h-[140px] w-full" />
       </Pane>
-      <Pane label="ATR (14)">
+      <Pane label="ATR (14)" note={`Typical swing size on ${timeframeLabel.toLowerCase()} bars`}>
         <div className="skeleton h-[140px] w-full" />
       </Pane>
     </div>
@@ -357,6 +461,9 @@ function TickerSearch({ value, onSelect }: { value: string; onSelect: (t: string
     return q ? TICKERS.filter((t) => t.includes(q)).slice(0, 12) : TICKERS.slice(0, 12);
   }, [text]);
 
+  // 25 of the 60 symbols in TICKERS are ETFs (SPY, GLD, TLT, IBIT, WEAT…), so
+  // the field's accessible name must not tell a screen-reader user that it
+  // takes stock symbols only.
   return (
     <div className="relative w-40">
       <input
@@ -372,7 +479,8 @@ function TickerSearch({ value, onSelect }: { value: string; onSelect: (t: string
             setOpen(false);
           }
         }}
-        placeholder="Search ticker…"
+        placeholder="Search symbol…"
+        aria-label="Search stock or ETF symbol, for example AAPL or SPY"
         spellCheck={false}
         autoComplete="off"
         className="w-full rounded-lg border bg-[var(--color-bg-elevated)] px-3 py-2 text-sm font-semibold text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
@@ -433,30 +541,48 @@ export function ChartsClient() {
   });
 
   const bars = q.data?.timeframes?.[timeframe] ?? [];
+  // The empty state used to print the internal key ('1D'), naming a control the
+  // user never sees — echo the button they actually pressed instead.
+  const timeframeLabel = TIMEFRAMES.find((x) => x.tf === timeframe)?.label ?? timeframe;
 
   return (
     <div className="space-y-4">
       <div
-        className="relative overflow-hidden rounded-[var(--radius-tile)] border p-6"
+        className="relative rounded-[var(--radius-tile)] border p-6"
         style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
       >
-        <span aria-hidden="true" className="glow-orb -top-24 -right-8" />
+        {/* The clip is on the orb's own wrapper, not on the card: the card used
+            to be `overflow-hidden`, which also clipped the Learning Mode tooltip
+            that opens upward from the paragraph below and made it unreadable. */}
+        <span aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-[var(--radius-tile)]">
+          <span className="glow-orb -top-24 -right-8" />
+        </span>
         <div className="relative z-10 flex flex-wrap items-end justify-between gap-4">
           <div>
             <h1 className="font-display text-3xl text-[var(--color-text-primary)]">
               Interactive <em className="italic" style={{ color: 'var(--color-accent)' }}>Charts</em>
             </h1>
             <p className="mt-2 text-sm text-[var(--color-text-secondary)]">
-              Candles, volume, EMA 20/50, VWAP — with RSI and ATR panes.
+              {/* VWAP only draws on the Daily view — see pricePaneLabel/isDaily
+                  above. A blanket "EMA 20/50 and VWAP" here would overpromise
+                  on Weekly/Monthly/Yearly, where the line is hidden because a
+                  week/month/year isn't a trading session. */}
+              <InfoTip term="candles">Candlestick price bars</InfoTip> and trading volume, with average-price lines
+              (EMA 20/50, plus VWAP on the Daily view) plus panes for momentum (RSI) and typical swing size (ATR).
+              The Daily–Yearly buttons set how much time each price bar covers.
             </p>
           </div>
+          {/* The tablist's aria-label is its accessible NAME, so it stays short
+              ("Price bar size"). What a bar size means is explained in the
+              paragraph above, where a screen reader reads it as prose rather
+              than announcing a sentence in place of the control's name. */}
           <div className="flex flex-wrap items-center gap-3">
             <TickerSearch value={ticker} onSelect={pick} />
             <div
               className="flex rounded-lg border p-0.5"
               style={{ borderColor: 'var(--color-border-default)' }}
               role="tablist"
-              aria-label="Timeframe"
+              aria-label="Price bar size"
             >
               {TIMEFRAMES.map(({ tf, label }) => (
                 <button
@@ -481,7 +607,7 @@ export function ChartsClient() {
       </div>
 
       {q.isLoading ? (
-        <ChartsSkeleton />
+        <ChartsSkeleton timeframeLabel={timeframeLabel} timeframe={timeframe} />
       ) : q.error ? (
         <GateCard
           kind={q.error instanceof GateError ? q.error.kind : 'unavailable'}
@@ -494,14 +620,14 @@ export function ChartsClient() {
           style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
         >
           <p className="text-sm font-medium text-[var(--color-text-primary)]">
-            No {timeframe} data for {ticker}.
+            No {timeframeLabel.toLowerCase()} price bars for {ticker} yet.
           </p>
           <p className="mt-1 text-xs text-[var(--color-text-tertiary)]">
-            Try a different timeframe, or check back after the next data run.
+            Try one of the other bar sizes above, or check back after the next data update.
           </p>
         </div>
       ) : (
-        <ChartPanes bars={bars} theme={theme} />
+        <ChartPanes bars={bars} theme={theme} timeframeLabel={timeframeLabel} timeframe={timeframe} />
       )}
     </div>
   );

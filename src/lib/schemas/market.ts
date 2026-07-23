@@ -173,8 +173,16 @@ const MapleGammaFileSchema = z
 type MgBucket = z.infer<typeof MgBucketSchema>;
 type MgTicker = z.infer<typeof MapleGammaFileSchema>['tickers']['SPX'];
 
-function regimeOf(totalGex: number): 'bullish' | 'bearish' | 'neutral' {
-  return totalGex > 0 ? 'bullish' : totalGex < 0 ? 'bearish' : 'neutral';
+// BUG FIX: this used to be called with the GROSS total_gex, in which puts
+// are stored positive (see the dealer_gamma comment below) — a gross sum of
+// magnitudes is structurally almost always positive, so the 'bearish' branch
+// was effectively unreachable and the regime chip carried no information.
+// Callers must now pass a genuinely SIGNED figure (e.g. total_dealer_gex,
+// where puts are negative). null/undefined (signed figure unavailable) falls
+// back to 'neutral' rather than silently reading as bullish.
+function regimeOf(signedGex: number | null | undefined): 'bullish' | 'bearish' | 'neutral' {
+  if (signedGex == null) return 'neutral';
+  return signedGex > 0 ? 'bullish' : signedGex < 0 ? 'bearish' : 'neutral';
 }
 
 function toMode(bucket: MgBucket, spx: MgTicker): z.infer<typeof GexModeSchema> {
@@ -192,10 +200,24 @@ function toMode(bucket: MgBucket, spx: MgTicker): z.infer<typeof GexModeSchema> 
     max_gex_value: top?.net_gex ?? spx.max_gex_value ?? 0,
     expiry: '',
     expiry_count: bucket.expiry_count,
-    gamma_regime: regimeOf(bucket.total_gex),
+    // BUG FIX: was regimeOf(bucket.total_gex) — the GROSS total, which is
+    // effectively always positive (see regimeOf's own comment), so the chip
+    // was structurally stuck on 'bullish' and disagreed with the genuinely
+    // signed positioning.signed_regime below on the same payload. There is no
+    // per-bucket signed figure (total_dealer_gex is ticker-level only), so
+    // all modes share the ticker-level signed reading — still far better
+    // than a value that can't move.
+    gamma_regime: regimeOf(spx.total_dealer_gex),
     // Rows arrive call/put-merged per strike; split back into C and P rows
     // because the flow table and GammaWallChart branch on type === 'C'.
     // (A previous 'NET' emission put every strike in the put bucket.)
+    // BUG FIX: oi/dex/vex are NOT split by leg in the source data — only
+    // call_gex/put_gex are genuinely per-leg (see MgGammaRowSchema). This
+    // used to hand the strike's combined oi/dex/vex to the CALL row and
+    // hardcode 0 into the PUT row whenever both legs existed, so e.g. strike
+    // 745's put row rendered "OI 0" next to a real put_gex of 241,442 — a
+    // fabricated zero indistinguishable from real data. Both rows now carry
+    // the same strike-level combined value instead of a fake per-leg zero.
     strikes: rows.flatMap((r) => {
       const out: Array<z.infer<typeof GexStrikeSchema>> = [];
       // oi/dex/vex are strike-level (the producer doesn't split them by side),
@@ -227,6 +249,16 @@ export const GexDataSchema = MapleGammaFileSchema.transform((f) => {
     } as MgBucket);
   return {
     generated_at: f.generated_at,
+    // NOT A BUG (verified against data/maplegamma-data.json): the source file
+    // keys this whole object "tickers.SPX", but every price in it is SPY-scale
+    // (current_price ~748, gamma_flip ~751, strikes 700-800 — an S&P 500 print
+    // is ~7,443, ten times higher). 'SPY' is hardcoded here because it matches
+    // what the values actually are, not what the upstream JSON key claims. Do
+    // NOT "fix" this by reading the key name or changing the literal to 'SPX'
+    // — that would make every consumer (GexDexVexCard, GammaWallChart, the
+    // /options page metadata, which was corrected SPX->SPY to match this) wrong
+    // again. The real defect is the JSON key itself, written by the Pi-side
+    // pipeline outside this repo's src/ — not fixable from this schema.
     ticker: 'SPY',
     price_source: 'yfinance',
     modes: {

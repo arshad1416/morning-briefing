@@ -13,6 +13,8 @@ import React from 'react';
 import Link from 'next/link';
 import { FEATURES, NEED_RANK, entitlementRank, type FeatureKey } from '@/stores/entitlements';
 import { useMe } from '@/lib/auth/useMe';
+import type { GlossaryTerm } from '@/lib/glossary';
+import { PlainLabel } from '@/components/primitives';
 import { LockIcon } from './LockIcon';
 
 interface FeatureGateProps {
@@ -25,12 +27,29 @@ interface FeatureGateProps {
 }
 
 const FEATURE_LABELS: Record<FeatureKey, string> = {
-  walkforward: 'Walk-forward analysis',
+  // `walkforward` gates three different tiles (BacktestSummary, AccuracyStats
+  // and WalkForwardTile in models-client), so the old "Walk-forward analysis"
+  // was simply the wrong name over two of the three locks.
+  walkforward: 'Model track record & walk-forward tests',
   simulation: 'Live simulation',
   gammaWalls: 'Gamma Walls',
-  nope: 'NOPE Flow Estimate',
+  // Was "NOPE Flow Estimate". The generator's own methodology note says this is
+  // estimated from option-chain volume and Black-Scholes delta and is NOT
+  // real-time order flow — so the word "Flow" claimed the one thing it isn't.
+  nope: 'NOPE options-pressure estimate',
   maxPain: 'Max Pain',
   calibration: 'Model Calibration',
+};
+
+// Plain-English caption under the lock label, read from the glossary. Only keys
+// whose entry is true of everything behind that lock appear here — `walkforward`
+// covers three unrelated tiles, so no single definition fits it.
+const FEATURE_TERMS: Partial<Record<FeatureKey, GlossaryTerm>> = {
+  simulation: 'live_simulation',
+  gammaWalls: 'gamma_wall',
+  nope: 'nope',
+  maxPain: 'max_pain',
+  calibration: 'calibration',
 };
 
 const TIER_LABELS = { basic: 'Basic', pro: 'Pro' } as const;
@@ -79,6 +98,7 @@ export function FeatureGate({ feature, label, children }: FeatureGateProps) {
           <p className="text-sm font-semibold text-[var(--color-text-primary)] mt-3">
             {label ?? FEATURE_LABELS[feature]}
           </p>
+          {FEATURE_TERMS[feature] && <PlainLabel term={FEATURE_TERMS[feature]!} className="mt-1" />}
           <p className="text-xs text-[var(--color-text-tertiary)] mt-1">
             Included with MapleGamma {tierLabel}
           </p>

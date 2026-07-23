@@ -1,4 +1,11 @@
 // components/primitives/Sparkline.tsx — inline SVG sparkline
+//
+// The fallback accessible name avoids "Sparkline chart" (data-viz jargon that
+// names the chart type, not what it shows) and equally avoids "trend line",
+// which on a markets site means a specific technical-analysis object — a line
+// fitted through successive highs or lows. This component plots the raw series
+// as-is, so it says that plainly instead. Callers should still pass a real
+// `title` describing the series and the period it covers.
 'use client';
 
 import React from 'react';
@@ -36,7 +43,7 @@ export function Sparkline({ data, width = 120, height = 32, color = 'var(--color
       viewBox={`0 0 ${width} ${height}`}
       className={className}
       role="img"
-      aria-label={title || 'Sparkline chart'}
+      aria-label={title || 'Line chart of recent values'}
     >
       {title && <title>{title}</title>}
       {fill && <polygon points={areaPoints} fill={color} opacity={0.08} />}

@@ -5,6 +5,7 @@ export { RegimeChip } from './RegimeChip';
 export { DataFreshness } from './DataFreshness';
 export { DensityToggle } from './DensityToggle';
 export { InfoTip } from './InfoTip';
+export { PlainLabel } from './PlainLabel';
 export { Sparkline } from './Sparkline';
 export { ConvictionGauge } from './ConvictionGauge';
 export { PositionSlider } from './PositionSlider';

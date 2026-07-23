@@ -347,7 +347,7 @@ test.describe('320px regression contracts', () => {
     await expect(mobileNav).toHaveAttribute('aria-hidden', 'true');
     await expect(close).toBeFocused();
 
-    for (const label of ['Research', 'Charts', 'Models', 'Engine Tuning', 'Archive']) {
+    for (const label of ['Research', 'Charts', 'Prediction Engine', 'Engine Tuning', 'Archive']) {
       await expect(sheet.getByRole('link', { name: label, exact: true })).toBeVisible();
     }
 
