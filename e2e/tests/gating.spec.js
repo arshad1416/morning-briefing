@@ -127,7 +127,8 @@ test.describe('trial-active user', () => {
     await page.goto('/options/');
     // Chart unlocked — no cosmetic overlays.
     await expect(page.getByText('Included with MapleGamma')).toHaveCount(0);
-    await expect(page.getByRole('img', { name: /Gamma profile for/ })).toBeVisible();
+    // Accessible name comes from the chart SVG's plain-English aria-label.
+    await expect(page.getByRole('img', { name: /How much dealer hedging sits at each price level/ })).toBeVisible();
 
     const vw = page.viewportSize()?.width ?? 1280;
     test.skip(vw < 640, 'trial chip is hidden below the sm breakpoint');
@@ -190,7 +191,8 @@ test.describe('pro user', () => {
     await mockAuth(page, ME.pro);
     await mockGated(page, { grant: true });
     await page.goto('/options/');
-    await expect(page.getByRole('img', { name: /Gamma profile for/ })).toBeVisible();
+    // Accessible name comes from the chart SVG's plain-English aria-label.
+    await expect(page.getByRole('img', { name: /How much dealer hedging sits at each price level/ })).toBeVisible();
     await expect(page.getByText('Included with MapleGamma')).toHaveCount(0);
     await expect(page.getByRole('link', { name: /Upgrade to/ })).toHaveCount(0);
     // Flow table rendered real strike rows (not the gate, not skeletons).
