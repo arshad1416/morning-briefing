@@ -1,23 +1,24 @@
 {
  "ticker": "CDNS",
  "name": "Cadence Design Systems, Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 342.5,
- "change_pct": -0.62,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 337.01,
+ "change_pct": -2.21,
  "sector": "Technology",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 32.3,
-  "sma_20": 367.29,
-  "sma_50": 373.74
+  "rsi_14": 35.6,
+  "sma_20": 367.02,
+  "sma_50": 373.63
  },
  "fundamentals": {
-  "pe_ratio": 80.21077,
-  "market_cap": "94.5B",
+  "pe_ratio": 78.925064,
+  "market_cap": "93.0B",
   "beta": 1.148,
   "dividend_yield": null
  },

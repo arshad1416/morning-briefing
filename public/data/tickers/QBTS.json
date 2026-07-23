@@ -1,22 +1,23 @@
 {
  "ticker": "QBTS",
  "name": "D-Wave Quantum Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 17.43,
- "change_pct": -2.08,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 17.35,
+ "change_pct": -2.53,
  "sector": "Technology",
  "signals": [
-  "oversold_rsi",
-  "below_ma"
+  "rsi_dip",
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 19.4,
+  "rsi_14": 35.8,
   "sma_20": 20.42,
   "sma_50": 23.01
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "6.5B",
+  "market_cap": "6.4B",
   "beta": 2.1,
   "dividend_yield": null
  },

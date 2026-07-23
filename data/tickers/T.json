@@ -1,30 +1,81 @@
 {
  "ticker": "T",
  "name": "AT&T Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 22.92,
- "change_pct": 2.94,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 23.04,
+ "change_pct": 3.5,
  "sector": "Communication Services",
  "signals": [
-  "overbought_rsi",
   "above_ma",
-  "value_pe"
+  "volume_surge",
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 86.1,
+  "rsi_14": 62.0,
   "sma_20": 21.41,
   "sma_50": 22.72
  },
  "fundamentals": {
-  "pe_ratio": 7.7154884,
-  "market_cap": "159.2B",
+  "pe_ratio": 7.5048866,
+  "market_cap": "160.1B",
   "beta": 0.422,
   "dividend_yield": 0.0499
  },
  "council_analysis": {
-  "score": 5
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "T",
+   "date": "2026-10-21",
+   "epsEstimate": 0.61,
+   "epsActual": null
+  },
+  {
+   "ticker": "T",
+   "date": "2026-07-22",
+   "epsEstimate": 0.59,
+   "epsActual": 0.65
+  },
+  {
+   "ticker": "T",
+   "date": "2026-04-22",
+   "epsEstimate": 0.55,
+   "epsActual": 0.57
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "T",
+   "date": "2026-07-22",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/732717/000073271726000297/0000732717-26-000297-index.htm"
+  },
+  {
+   "ticker": "T",
+   "date": "2026-04-27",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/732717/000073271726000206/0000732717-26-000206-index.htm"
+  },
+  {
+   "ticker": "T",
+   "date": "2026-02-09",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/732717/000073271726000120/0000732717-26-000120-index.htm"
+  },
+  {
+   "ticker": "T",
+   "date": "2025-10-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/732717/000073271725000171/0000732717-25-000171-index.htm"
+  },
+  {
+   "ticker": "T",
+   "date": "2025-07-24",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/732717/000073271725000080/0000732717-25-000080-index.htm"
+  }
+ ],
  "reddit_mentions": []
 }

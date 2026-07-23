@@ -1,19 +1,22 @@
 {
  "ticker": "CRM",
  "name": "Salesforce, Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 165.0,
- "change_pct": -2.98,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 163.0,
+ "change_pct": -4.15,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "below_ma",
+  "analyst_buy"
+ ],
  "technical": {
-  "rsi_14": 51.9,
-  "sma_20": 164.54,
-  "sma_50": 170.58
+  "rsi_14": 45.5,
+  "sma_20": 164.44,
+  "sma_50": 170.54
  },
  "fundamentals": {
-  "pe_ratio": 19.141531,
-  "market_cap": "135.1B",
+  "pe_ratio": 19.733656,
+  "market_cap": "133.5B",
   "beta": 1.178,
   "dividend_yield": 0.0103
  },

@@ -1,28 +1,30 @@
 {
  "ticker": "ALK",
  "name": "Alaska Air Group, Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 43.13,
- "change_pct": -5.11,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 44.36,
+ "change_pct": -2.42,
  "sector": "Industrials",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "volume_surge",
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 25.5,
-  "sma_20": 49.05,
-  "sma_50": 45.67
+  "rsi_14": 39.9,
+  "sma_20": 49.12,
+  "sma_50": 45.69
  },
  "fundamentals": {
-  "pe_ratio": 88.03061,
-  "market_cap": "4.8B",
+  "pe_ratio": 90.53061,
+  "market_cap": "4.9B",
   "beta": 1.279,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

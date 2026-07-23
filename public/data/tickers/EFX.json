@@ -1,21 +1,23 @@
 {
  "ticker": "EFX",
  "name": "Equifax, Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 168.46,
- "change_pct": -2.62,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 170.45,
+ "change_pct": -1.47,
  "sector": "Industrials",
  "signals": [
-  "above_ma"
+  "above_ma",
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 55.0,
-  "sma_20": 167.78,
-  "sma_50": 165.4
+  "rsi_14": 51.5,
+  "sma_20": 167.88,
+  "sma_50": 165.44
  },
  "fundamentals": {
-  "pe_ratio": 29.710758,
-  "market_cap": "19.8B",
+  "pe_ratio": 30.49195,
+  "market_cap": "20.0B",
   "beta": 1.316,
   "dividend_yield": 0.0124
  },

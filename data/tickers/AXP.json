@@ -1,24 +1,27 @@
 {
  "ticker": "AXP",
  "name": "American Express Company",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 347.53,
- "change_pct": -0.93,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 348.74,
+ "change_pct": -0.58,
  "sector": "Financial Services",
- "signals": [],
+ "signals": [
+  "above_ma",
+  "analyst_buy"
+ ],
  "technical": {
-  "rsi_14": 50.4,
-  "sma_20": 348.66,
-  "sma_50": 329.68
+  "rsi_14": 54.5,
+  "sma_20": 348.72,
+  "sma_50": 329.71
  },
  "fundamentals": {
-  "pe_ratio": 21.679974,
-  "market_cap": "237.1B",
+  "pe_ratio": 21.878294,
+  "market_cap": "238.0B",
   "beta": 1.045,
   "dividend_yield": 0.0108
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

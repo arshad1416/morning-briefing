@@ -1,23 +1,24 @@
 {
  "ticker": "GLW",
  "name": "Corning Incorporated",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 159.46,
- "change_pct": -1.82,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 154.06,
+ "change_pct": -5.14,
  "sector": "Technology",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 21.0,
-  "sma_20": 193.2,
-  "sma_50": 190.45
+  "rsi_14": 38.4,
+  "sma_20": 192.93,
+  "sma_50": 190.35
  },
  "fundamentals": {
-  "pe_ratio": 76.66347,
-  "market_cap": "137.2B",
+  "pe_ratio": 78.20304,
+  "market_cap": "132.6B",
   "beta": 1.086,
   "dividend_yield": 0.0069
  },

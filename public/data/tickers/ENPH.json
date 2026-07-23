@@ -1,23 +1,24 @@
 {
  "ticker": "ENPH",
  "name": "Enphase Energy, Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 40.16,
- "change_pct": 0.55,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 39.58,
+ "change_pct": -0.9,
  "sector": "Technology",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 33.0,
-  "sma_20": 44.23,
-  "sma_50": 51.12
+  "rsi_14": 36.7,
+  "sma_20": 44.21,
+  "sma_50": 51.11
  },
  "fundamentals": {
-  "pe_ratio": 39.762375,
-  "market_cap": "5.3B",
+  "pe_ratio": 39.58,
+  "market_cap": "5.2B",
   "beta": 1.615,
   "dividend_yield": null
  },

@@ -1,19 +1,22 @@
 {
  "ticker": "BIIB",
  "name": "Biogen Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 202.05,
- "change_pct": -0.55,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 197.74,
+ "change_pct": -2.67,
  "sector": "Healthcare",
- "signals": [],
+ "signals": [
+  "below_ma",
+  "analyst_buy"
+ ],
  "technical": {
-  "rsi_14": 45.3,
-  "sma_20": 205.35,
-  "sma_50": 199.41
+  "rsi_14": 47.0,
+  "sma_20": 205.13,
+  "sma_50": 199.32
  },
  "fundamentals": {
-  "pe_ratio": 21.725807,
-  "market_cap": "29.8B",
+  "pe_ratio": 21.825607,
+  "market_cap": "29.2B",
   "beta": 0.158,
   "dividend_yield": null
  },

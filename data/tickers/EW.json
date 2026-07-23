@@ -1,23 +1,24 @@
 {
  "ticker": "EW",
  "name": "Edwards Lifesciences Corporatio",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 84.84,
- "change_pct": 0.34,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 84.37,
+ "change_pct": -0.21,
  "sector": "Healthcare",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 29.0,
-  "sma_20": 90.12,
-  "sma_50": 87.07
+  "rsi_14": 36.8,
+  "sma_20": 90.1,
+  "sma_50": 87.06
  },
  "fundamentals": {
-  "pe_ratio": 45.859455,
-  "market_cap": "48.9B",
+  "pe_ratio": 45.605408,
+  "market_cap": "48.6B",
   "beta": 0.855,
   "dividend_yield": null
  },

@@ -1,27 +1,29 @@
 {
  "ticker": "ON",
  "name": "ON Semiconductor Corporation",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 92.37,
- "change_pct": 1.44,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 92.33,
+ "change_pct": 1.39,
  "sector": "Technology",
  "signals": [
+  "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.2,
+  "rsi_14": 44.4,
   "sma_20": 94.49,
   "sma_50": 108.73
  },
  "fundamentals": {
-  "pe_ratio": 67.91728,
+  "pe_ratio": 66.9058,
   "market_cap": "35.9B",
   "beta": 2.012,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 3
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,22 +1,23 @@
 {
  "ticker": "BLDR",
  "name": "Builders FirstSource, Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 71.28,
- "change_pct": 2.2,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 71.03,
+ "change_pct": 1.85,
  "sector": "Industrials",
  "signals": [
-  "oversold_rsi",
-  "below_ma"
+  "rsi_dip",
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 26.7,
-  "sma_20": 79.44,
-  "sma_50": 76.73
+  "rsi_14": 39.4,
+  "sma_20": 79.43,
+  "sma_50": 76.72
  },
  "fundamentals": {
-  "pe_ratio": 27.2042,
-  "market_cap": "7.7B",
+  "pe_ratio": 26.602995,
+  "market_cap": "7.6B",
   "beta": 1.418,
   "dividend_yield": null
  },

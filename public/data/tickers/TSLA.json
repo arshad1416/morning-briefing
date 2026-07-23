@@ -1,23 +1,24 @@
 {
  "ticker": "TSLA",
  "name": "Tesla, Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 377.56,
- "change_pct": -0.36,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 374.01,
+ "change_pct": -1.3,
  "sector": "Consumer Cyclical",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 34.0,
-  "sma_20": 394.8,
-  "sma_50": 407.54
+  "rsi_14": 41.7,
+  "sma_20": 394.62,
+  "sma_50": 407.47
  },
  "fundamentals": {
-  "pe_ratio": 343.23962,
-  "market_cap": "1.42T",
+  "pe_ratio": 346.30554,
+  "market_cap": "1.40T",
   "beta": 1.802,
   "dividend_yield": null
  },

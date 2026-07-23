@@ -1,27 +1,29 @@
 {
  "ticker": "COST",
  "name": "Costco Wholesale Corporation",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 926.08,
- "change_pct": -0.34,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 927.31,
+ "change_pct": -0.21,
  "sector": "Consumer Defensive",
  "signals": [
+  "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.5,
-  "sma_20": 936.84,
-  "sma_50": 972.93
+  "rsi_14": 43.0,
+  "sma_20": 936.9,
+  "sma_50": 972.95
  },
  "fundamentals": {
-  "pe_ratio": 46.55999,
-  "market_cap": "410.7B",
+  "pe_ratio": 46.739414,
+  "market_cap": "411.2B",
   "beta": 0.872,
   "dividend_yield": 0.0063
  },
  "council_analysis": {
-  "score": 3
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

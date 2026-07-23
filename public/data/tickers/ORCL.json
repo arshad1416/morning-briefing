@@ -1,27 +1,28 @@
 {
  "ticker": "ORCL",
  "name": "Oracle Corporation",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 127.84,
- "change_pct": 0.62,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 125.84,
+ "change_pct": -0.95,
  "sector": "Technology",
  "signals": [
-  "rsi_dip",
-  "below_ma"
+  "oversold_rsi",
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 37.1,
-  "sma_20": 137.98,
-  "sma_50": 173.97
+  "rsi_14": 32.6,
+  "sma_20": 137.88,
+  "sma_50": 173.93
  },
  "fundamentals": {
-  "pe_ratio": 21.92796,
-  "market_cap": "368.2B",
+  "pe_ratio": 21.771626,
+  "market_cap": "362.5B",
   "beta": 1.712,
   "dividend_yield": 0.015700000000000002
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

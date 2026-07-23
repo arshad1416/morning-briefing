@@ -1,21 +1,22 @@
 {
  "ticker": "UAL",
  "name": "United Airlines Holdings, Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
  "price": 117.26,
  "change_pct": -0.37,
  "sector": "Industrials",
  "signals": [
-  "oversold_rsi",
-  "value_pe"
+  "rsi_dip",
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 19.6,
+  "rsi_14": 44.3,
   "sma_20": 126.61,
   "sma_50": 114.64
  },
  "fundamentals": {
-  "pe_ratio": 10.979869,
+  "pe_ratio": 11.020677,
   "market_cap": "38.1B",
   "beta": 1.258,
   "dividend_yield": null
@@ -27,7 +28,7 @@
   {
    "ticker": "UAL",
    "date": "2026-10-21",
-   "epsEstimate": 3.28,
+   "epsEstimate": 3.21,
    "epsActual": null
   },
   {

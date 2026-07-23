@@ -1,26 +1,28 @@
 {
  "ticker": "DGX",
  "name": "Quest Diagnostics Incorporated",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 206.4,
- "change_pct": -0.22,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 209.83,
+ "change_pct": 1.45,
  "sector": "Healthcare",
  "signals": [
-  "oversold_rsi"
+  "above_ma",
+  "volume_surge",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 33.5,
-  "sma_20": 208.67,
-  "sma_50": 200.21
+  "rsi_14": 56.7,
+  "sma_20": 208.85,
+  "sma_50": 200.28
  },
  "fundamentals": {
-  "pe_ratio": 22.780905,
-  "market_cap": "22.8B",
+  "pe_ratio": 23.160044,
+  "market_cap": "23.2B",
   "beta": 0.571,
   "dividend_yield": 0.0166
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,49 +1,30 @@
 {
  "ticker": "ALL",
  "name": "Allstate Corporation (The)",
- "generated_at": "2026-07-22T11:45:02.024909+00:00",
- "price": 251.07,
- "change_pct": -1.05,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 251.83,
+ "change_pct": 0.04,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
-  "near_high",
-  "value_pe"
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 60.6,
-  "sma_20": 245.16,
-  "sma_50": 227.56
+  "rsi_14": 61.1,
+  "sma_20": 246.21,
+  "sma_50": 228.36
  },
  "fundamentals": {
-  "pe_ratio": 5.555986,
-  "market_cap": "64.6B",
+  "pe_ratio": 5.5677648,
+  "market_cap": "64.8B",
   "beta": 0.166,
-  "dividend_yield": 0.017
+  "dividend_yield": 0.0172
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [
-  {
-   "ticker": "ALL",
-   "date": "2026-08-05",
-   "epsEstimate": 5.95,
-   "epsActual": null
-  },
-  {
-   "ticker": "ALL",
-   "date": "2026-04-29",
-   "epsEstimate": 7.24,
-   "epsActual": 10.65
-  },
-  {
-   "ticker": "ALL",
-   "date": "2026-02-04",
-   "epsEstimate": 10.21,
-   "epsActual": 14.37
-  }
- ],
+ "upcoming_earnings": [],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

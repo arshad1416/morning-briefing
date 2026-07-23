@@ -1,28 +1,29 @@
 {
  "ticker": "CNQ.TO",
  "name": "CDN NATURAL RES",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 64.36,
- "change_pct": 1.66,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 64.45,
+ "change_pct": 1.8,
  "sector": "Energy",
  "signals": [
-  "overbought_rsi",
+  "extended_rsi",
   "above_ma",
-  "value_pe"
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 80.2,
-  "sma_20": 58.88,
-  "sma_50": 61.31
+  "rsi_14": 67.9,
+  "sma_20": 58.89,
+  "sma_50": 61.32
  },
  "fundamentals": {
-  "pe_ratio": 12.282443,
-  "market_cap": "134.2B",
+  "pe_ratio": 12.024253,
+  "market_cap": "134.4B",
   "beta": 0.881,
   "dividend_yield": 0.0395
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

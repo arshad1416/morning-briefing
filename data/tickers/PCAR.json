@@ -1,22 +1,24 @@
 {
  "ticker": "PCAR",
  "name": "PACCAR Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 128.82,
- "change_pct": 2.04,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 131.11,
+ "change_pct": 3.85,
  "sector": "Industrials",
  "signals": [
+  "extended_rsi",
   "above_ma",
-  "near_high"
+  "volume_surge",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 64.9,
-  "sma_20": 123.21,
-  "sma_50": 117.94
+  "rsi_14": 66.8,
+  "sma_20": 123.32,
+  "sma_50": 117.99
  },
  "fundamentals": {
-  "pe_ratio": 27.408514,
-  "market_cap": "67.8B",
+  "pe_ratio": 26.866802,
+  "market_cap": "69.0B",
   "beta": 0.976,
   "dividend_yield": 0.0111
  },

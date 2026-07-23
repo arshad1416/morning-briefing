@@ -1,30 +1,35 @@
 {
  "ticker": "IBM",
  "name": "International Business Machines",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 210.32,
- "change_pct": -0.09,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 205.77,
+ "change_pct": -2.25,
  "sector": "Technology",
  "signals": [
   "oversold_rsi",
   "below_ma",
-  "near_low"
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 22.4,
-  "sma_20": 260.12,
-  "sma_50": 260.6
+  "rsi_14": 29.8,
+  "sma_20": 259.89,
+  "sma_50": 260.51
  },
  "fundamentals": {
-  "pe_ratio": 18.612398,
-  "market_cap": "197.7B",
+  "pe_ratio": 18.209734,
+  "market_cap": "193.4B",
   "beta": 0.675,
   "dividend_yield": 0.0321
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
- "reddit_mentions": []
+ "reddit_mentions": [
+  {
+   "sub": "wsb",
+   "count": 1
+  }
+ ]
 }

@@ -1,23 +1,24 @@
 {
  "ticker": "CCL",
  "name": "Carnival Corporation Ltd.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 26.12,
- "change_pct": -0.13,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 26.1,
+ "change_pct": -0.23,
  "sector": "Consumer Cyclical",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "value_pe"
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 29.1,
-  "sma_20": 27.27,
+  "rsi_14": 41.2,
+  "sma_20": 27.26,
   "sma_50": 27.27
  },
  "fundamentals": {
-  "pe_ratio": 11.768018,
-  "market_cap": "35.8B",
+  "pe_ratio": 11.756757,
+  "market_cap": "35.7B",
   "beta": 2.322,
   "dividend_yield": 0.0172
  },

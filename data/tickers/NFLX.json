@@ -1,34 +1,30 @@
 {
  "ticker": "NFLX",
  "name": "Netflix, Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 70.23,
- "change_pct": 2.27,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 68.53,
+ "change_pct": -0.2,
  "sector": "Communication Services",
  "signals": [
-  "rsi_dip",
-  "below_ma"
+  "oversold_rsi",
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 39.6,
-  "sma_20": 73.05,
-  "sma_50": 79.41
+  "rsi_14": 32.3,
+  "sma_20": 72.97,
+  "sma_50": 79.38
  },
  "fundamentals": {
-  "pe_ratio": 22.084906,
-  "market_cap": "292.4B",
+  "pe_ratio": 21.618296,
+  "market_cap": "285.4B",
   "beta": 1.517,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
- "reddit_mentions": [
-  {
-   "sub": "stocks",
-   "count": 1
-  }
- ]
+ "reddit_mentions": []
 }

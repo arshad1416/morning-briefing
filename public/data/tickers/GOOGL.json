@@ -1,29 +1,39 @@
 {
  "ticker": "GOOGL",
  "name": "Alphabet Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 347.8,
- "change_pct": 0.19,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 342.09,
+ "change_pct": -1.46,
  "sector": "Communication Services",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 41.2,
-  "sma_20": 355.06,
-  "sma_50": 367.5
+  "rsi_14": 40.6,
+  "sma_20": 354.77,
+  "sma_50": 367.39
  },
  "fundamentals": {
-  "pe_ratio": 26.510672,
-  "market_cap": "4.24T",
+  "pe_ratio": 26.457075,
+  "market_cap": "4.17T",
   "beta": 1.247,
   "dividend_yield": 0.0025
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
- "reddit_mentions": []
+ "reddit_mentions": [
+  {
+   "sub": "wsb",
+   "count": 1
+  },
+  {
+   "sub": "stocks",
+   "count": 1
+  }
+ ]
 }

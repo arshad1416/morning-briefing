@@ -1,26 +1,28 @@
 {
  "ticker": "DIS",
  "name": "Walt Disney Company (The)",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 96.64,
- "change_pct": 0.52,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 95.87,
+ "change_pct": -0.28,
  "sector": "Communication Services",
  "signals": [
-  "below_ma"
+  "rsi_dip",
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 52.9,
-  "sma_20": 97.2,
-  "sma_50": 99.76
+  "rsi_14": 43.0,
+  "sma_20": 97.16,
+  "sma_50": 99.75
  },
  "fundamentals": {
-  "pe_ratio": 15.4623995,
-  "market_cap": "167.8B",
+  "pe_ratio": 15.388443,
+  "market_cap": "166.5B",
   "beta": 1.398,
   "dividend_yield": 0.015600000000000001
  },
  "council_analysis": {
-  "score": 4
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

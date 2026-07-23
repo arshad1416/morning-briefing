@@ -1,26 +1,28 @@
 {
  "ticker": "HII",
  "name": "Huntington Ingalls Industries, ",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 276.26,
- "change_pct": 2.79,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 277.28,
+ "change_pct": 3.17,
  "sector": "Industrials",
  "signals": [
-  "below_ma"
+  "rsi_dip",
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.3,
-  "sma_20": 280.58,
-  "sma_50": 296.17
+  "rsi_14": 42.3,
+  "sma_20": 280.63,
+  "sma_50": 296.19
  },
  "fundamentals": {
-  "pe_ratio": 17.938963,
+  "pe_ratio": 17.449968,
   "market_cap": "10.9B",
   "beta": 0.248,
   "dividend_yield": 0.020499999999999997
  },
  "council_analysis": {
-  "score": 4
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

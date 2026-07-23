@@ -1,28 +1,29 @@
 {
  "ticker": "GL",
  "name": "Globe Life Inc.",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 183.66,
- "change_pct": -0.37,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 184.0,
+ "change_pct": -0.18,
  "sector": "Financial Services",
  "signals": [
+  "overbought_rsi",
   "above_ma",
-  "near_high",
-  "value_pe"
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 63.7,
-  "sma_20": 179.85,
-  "sma_50": 167.14
+  "rsi_14": 75.2,
+  "sma_20": 179.86,
+  "sma_50": 167.15
  },
  "fundamentals": {
-  "pe_ratio": 12.710035,
+  "pe_ratio": 12.733564,
   "market_cap": "14.3B",
   "beta": 0.47,
   "dividend_yield": 0.0072
  },
  "council_analysis": {
-  "score": 8
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

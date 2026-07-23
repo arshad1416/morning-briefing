@@ -1,27 +1,28 @@
 {
  "ticker": "DE",
  "name": "Deere & Company",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 601.51,
- "change_pct": 2.49,
+ "generated_at": "2026-07-23T11:45:01.650163+00:00",
+ "price": 607.33,
+ "change_pct": 3.48,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip",
-  "premium_pe"
+  "above_ma",
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 38.6,
-  "sma_20": 604.68,
-  "sma_50": 581.98
+  "rsi_14": 55.6,
+  "sma_20": 604.98,
+  "sma_50": 582.1
  },
  "fundamentals": {
-  "pe_ratio": 34.041313,
-  "market_cap": "162.4B",
+  "pe_ratio": 33.22374,
+  "market_cap": "163.9B",
   "beta": 0.897,
   "dividend_yield": 0.011000000000000001
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
