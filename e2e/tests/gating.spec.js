@@ -96,6 +96,27 @@ test.describe('signed-out visitor', () => {
     // FeatureGate overlays (nope + gamma walls) signin variant
     await expect(page.getByRole('link', { name: 'Start 7-day free trial' }).first()).toBeVisible();
     await expect(page.getByText('No card required').first()).toBeVisible();
+    // NOPE sits under a FeatureGate overlay — its own GateCard must not render
+    // behind it (that doubled pitch was the overlapping-modals bug).
+    await expect(page.getByText(/Unlock NOPE flow/)).toHaveCount(0);
+  });
+
+  test('models page shows one pitch per gated tile — overlay only, no GateCard behind it', async ({ page }) => {
+    await mockAuth(page, null);
+    await mockGated(page, { status: 401 });
+    await page.goto('/models/');
+    // One FeatureGate overlay per gated tile: backtest, accuracy, calibration,
+    // walk-forward, simulation.
+    await expect(page.getByRole('link', { name: 'Start 7-day free trial' })).toHaveCount(5);
+    // The tiles' server-gate GateCards must NOT also render behind the
+    // overlays — five stacked double-pitches read as overlapping signup modals.
+    await expect(page.getByText(/Unlock .* free trial/)).toHaveCount(0);
+    // The single pitch names each tile (walkforward gates three different
+    // tiles, so the label must come from the tile, not the gate key).
+    // exact: sentence-case labels, distinct from the Title Case tile headings.
+    await expect(page.getByText('Backtest summary', { exact: true })).toBeVisible();
+    await expect(page.getByText('Accuracy stats', { exact: true })).toBeVisible();
+    await expect(page.getByText('Walk-forward analysis', { exact: true })).toBeVisible();
   });
 });
 
@@ -125,6 +146,15 @@ test.describe('basic (under-tier) user', () => {
     await expect(upgrade).toBeVisible();
     await expect(upgrade).toHaveAttribute('href', '/account/');
     await expect(page.getByRole('link', { name: 'Start 7-day free trial' })).toHaveCount(0);
+  });
+
+  test('models page upsells once per tile — overlay only, no GateCard behind it', async ({ page }) => {
+    await mockAuth(page, ME.basic);
+    await mockGated(page, { status: 403, need: 'pro' });
+    await page.goto('/models/');
+    await expect(page.getByRole('link', { name: 'Upgrade to Pro' })).toHaveCount(5);
+    // GateCard's upgrade headline must not double the overlay's pitch.
+    await expect(page.getByText(/is a Pro feature/)).toHaveCount(0);
   });
 
   test('a 403 halts gated polling and retries entirely', async ({ page }) => {

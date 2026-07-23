@@ -7,19 +7,20 @@ import { accuracyQuery } from '@/lib/query/options';
 import { Surface, SurfaceHeader, InfoTip } from '@/components/primitives';
 import type { GlossaryTerm } from '@/lib/glossary';
 import { GateError } from '@/lib/api/gated';
-import { GateCard } from '@/components/feature/gating/GateCard';
 
 export function AccuracyStats() {
   const { data, isLoading, isError, error } = useQuery(accuracyQuery());
 
-  // accuracy.json is Pro-gated — surface the server's sign-in/upgrade state.
+  // accuracy.json is Pro-gated.
   if (isError) {
     if (error instanceof GateError && error.kind !== 'unavailable') {
+      // Quiet frame only — the FeatureGate overlay on /models/ is the single
+      // pitch (see BacktestSummary).
       return (
         <Surface span="half">
           <SurfaceHeader title="Accuracy Stats" />
           <div className="p-4">
-            <GateCard kind={error.kind} need={error.need ?? 'pro'} feature="Accuracy stats" />
+            <div className="h-56 rounded-[var(--radius-chip)] bg-[var(--color-bg-elevated)]" />
           </div>
         </Surface>
       );

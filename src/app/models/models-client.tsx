@@ -46,10 +46,10 @@ export function ModelsClient() {
 // Paired compact tiles (Backtest+Accuracy, Calibration+Walk-Forward), then the
 // full-width performance sections. Each has a stable id for user reordering.
 const MODELS_ITEMS: GridItem[] = [
-  { id: 'backtest', span: 'half', node: <FeatureGate feature="walkforward"><BacktestSummary /></FeatureGate> },
-  { id: 'accuracy', span: 'half', node: <FeatureGate feature="walkforward"><AccuracyStats /></FeatureGate> },
+  { id: 'backtest', span: 'half', node: <FeatureGate feature="walkforward" label="Backtest summary"><BacktestSummary /></FeatureGate> },
+  { id: 'accuracy', span: 'half', node: <FeatureGate feature="walkforward" label="Accuracy stats"><AccuracyStats /></FeatureGate> },
   { id: 'calibration', span: 'half', node: <FeatureGate feature="calibration"><CalibrationChart /></FeatureGate> },
-  { id: 'walkforward', span: 'half', node: <FeatureGate feature="walkforward"><WalkForwardTile /></FeatureGate> },
+  { id: 'walkforward', span: 'half', node: <FeatureGate feature="walkforward" label="Walk-forward analysis"><WalkForwardTile /></FeatureGate> },
   { id: 'simulation', span: 'hero', node: <FeatureGate feature="simulation"><SimulationTile /></FeatureGate> },
   { id: 'options', span: 'hero', node: <OptionsStrategiesTile /> },
   { id: 'crypto', span: 'hero', node: <CryptoCohortsTile /> },

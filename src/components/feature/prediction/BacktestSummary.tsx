@@ -7,7 +7,6 @@ import { predictionEngineQuery } from '@/lib/query/options';
 import { Surface, SurfaceHeader, InfoTip } from '@/components/primitives';
 import type { GlossaryTerm } from '@/lib/glossary';
 import { GateError } from '@/lib/api/gated';
-import { GateCard } from '@/components/feature/gating/GateCard';
 
 /**
  * Backtest corpus summary from prediction-engine.json (Pro-gated) — the
@@ -20,11 +19,14 @@ export function BacktestSummary() {
 
   if (isError) {
     if (error instanceof GateError && error.kind !== 'unavailable') {
+      // Hard-gated 401/403: quiet frame only — the FeatureGate overlay on
+      // /models/ is the single pitch (a GateCard here doubled it). Tall enough
+      // that the overlay card stays inside the tile.
       return (
         <Surface span="half">
           <SurfaceHeader title="Backtest Summary" />
           <div className="p-4">
-            <GateCard kind={error.kind} need={error.need ?? 'pro'} feature="Backtest summary" />
+            <div className="h-56 rounded-[var(--radius-chip)] bg-[var(--color-bg-elevated)]" />
           </div>
         </Surface>
       );

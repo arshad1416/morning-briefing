@@ -8,7 +8,6 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 import { fetchGated, GateError } from '@/lib/api/gated';
-import { GateCard } from '@/components/feature/gating/GateCard';
 import { InfoTip, PlainLabel } from '@/components/primitives';
 import type { GlossaryTerm } from '@/lib/glossary';
 
@@ -59,10 +58,12 @@ export function WalkForwardTile() {
 
   if (isError) {
     if (error instanceof GateError && error.kind !== 'unavailable') {
+      // Quiet frame only — the FeatureGate overlay on /models/ is the single
+      // pitch (see BacktestSummary).
       return (
         <Shell>
           <div className="p-4">
-            <GateCard kind={error.kind} need={error.need ?? 'pro'} feature="Walk-forward analysis" />
+            <div className="h-56 rounded-[var(--radius-chip)] bg-[var(--color-bg-elevated)]" />
           </div>
         </Shell>
       );

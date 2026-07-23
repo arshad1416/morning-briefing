@@ -7,7 +7,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchGated, GateError } from '@/lib/api/gated';
-import { GateCard } from '@/components/feature/gating/GateCard';
 import { InfoTip } from '@/components/primitives';
 import type { GlossaryTerm } from '@/lib/glossary';
 import { SimulationSchema } from '@/lib/schemas/market';
@@ -38,10 +37,12 @@ export function SimulationTile() {
 
   if (isError) {
     if (error instanceof GateError && error.kind !== 'unavailable') {
+      // Quiet frame only — the FeatureGate overlay on /models/ is the single
+      // pitch (see BacktestSummary).
       return (
         <Shell>
           <div className="p-4">
-            <GateCard kind={error.kind} need={error.need ?? 'pro'} feature="Live simulation" />
+            <div className="h-56 rounded-[var(--radius-chip)] bg-[var(--color-bg-elevated)]" />
           </div>
         </Shell>
       );

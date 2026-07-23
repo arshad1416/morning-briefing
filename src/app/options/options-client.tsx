@@ -7,6 +7,7 @@ import { GexDexVexCard } from '@/components/feature/options/GexDexVexCard';
 import { GammaWallChart } from '@/components/feature/options/GammaWallChart';
 import { DealerPositioningCard } from '@/components/feature/options/DealerPositioningCard';
 import { NopeCard } from '@/components/feature/options/NopeCard';
+import { MaxPainCard } from '@/components/feature/options/MaxPainCard';
 import { RegimeChip, InfoTip, PlainLabel } from '@/components/primitives';
 import { useQuery } from '@tanstack/react-query';
 import { gexDetailQuery, gexQuery } from '@/lib/query/options';
@@ -253,6 +254,7 @@ const OPTIONS_ITEMS: GridItem[] = [
   { id: 'gexdexvex', span: 'half', node: <GexDexVexCard /> },
   { id: 'dealer', span: 'half', node: <DealerPositioningCard /> },
   { id: 'nope', span: 'half', node: <FeatureGate feature="nope"><NopeCard /></FeatureGate> },
+  { id: 'maxpain', span: 'half', node: <FeatureGate feature="maxPain"><MaxPainCard /></FeatureGate> },
   { id: 'flow', span: 'hero', node: FlowCard },
   { id: 'gammawall', span: 'hero', node: <FeatureGate feature="gammaWalls"><GammaWallChart /></FeatureGate> },
   { id: 'alertbuilder', span: 'hero', node: <AlertRuleBuilder /> },
