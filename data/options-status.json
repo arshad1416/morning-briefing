@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-23T09:30:01.873463",
-  "vix": 18.85,
+  "generated_at": "2026-07-23T10:00:01.592583",
+  "vix": 19.28,
   "vix_gate": 22.0,
   "open_option_positions": [],
   "open_count": 0,
@@ -10,14 +10,14 @@
       "kind": "Sells premium (put-credit spreads)",
       "gate": "VIX \u2265 22",
       "status": "standby",
-      "detail": "On standby \u2014 activates when VIX reaches 22 (now 18.9)."
+      "detail": "On standby \u2014 activates when VIX reaches 22 (now 19.3)."
     },
     {
       "name": "Directional",
       "kind": "Buys premium (long ATM calls)",
       "gate": "VIX < 22 + high-conviction bounce",
       "status": "armed",
-      "detail": "Armed \u2014 waiting for a high-conviction oversold signal (VIX 18.9 < 22, premium is cheap)."
+      "detail": "Armed \u2014 waiting for a high-conviction oversold signal (VIX 19.3 < 22, premium is cheap)."
     }
   ],
   "note": "Options trade only when their edge exists: sell premium when it's expensive, buy it when it's cheap. Idle is a position. Simulated \u2014 not a recommendation."
