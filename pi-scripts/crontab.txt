@@ -1,0 +1,172 @@
+# Raspberry Pi (pi-lan, user arshad14) crontab snapshot
+# Source of truth is `crontab -l` on the Pi; this is a version-controlled copy
+# for reference/rebuild. Not auto-applied. Snapshot taken 2026-07-23.
+#
+# Morning geopolitical -> analysis ordering (fixed 2026-07-23):
+#   06:38 fetch_global_news.py   -> global_news.json
+#   07:17 generate_analysis.py   -> analysis.json
+#   07:19 generate_latest.py     -> latest.json (fresh geopolitical, reads the above)
+#   07:20 run_morning_analysis.py-> morning_analysis.json (reads fresh latest.json)
+#
+# ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
+15 7 * * * cd /home/arshad14/.hermes/scripts && python3 morning_briefing_data.py >> /home/arshad14/.hermes/logs/briefing_data.log 2>&1
+14 7 * * * cd /home/arshad14/.hermes/scripts && python3 consolidate_briefing_data.py >> /home/arshad14/.hermes/logs/consolidate.log 2>&1
+18 7 * * * cd /home/arshad14/.hermes/scripts && python3 fetch_polymarket.py >> /home/arshad14/.hermes/logs/polymarket.log 2>&1
+17 7 * * * cd /home/arshad14/.hermes/scripts && python3 generate_analysis.py >> /home/arshad14/.hermes/logs/generate_analysis.log 2>&1
+20 7 * * * cd /home/arshad14/.hermes/scripts && python3 run_morning_analysis.py >> /home/arshad14/.hermes/logs/morning_analysis.log 2>&1
+22 7 * * 0,6 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
+25 7 * * * cd /home/arshad14/.hermes/scripts && python3 send_comprehensive_briefing.py >> /home/arshad14/.hermes/logs/briefing_delivery.log 2>&1
+
+# ── Agent-Reach data collection (6:30-6:36 AM, before pipeline) ──
+30 6 * * * cd /home/arshad14/.hermes/skills/TRADING/scripts && python3 fetch_wsb.py >> /home/arshad14/.hermes/logs/wsb.log 2>&1
+32 6 * * * cd /home/arshad14/.hermes/skills/TRADING/scripts && python3 fetch_stocks.py >> /home/arshad14/.hermes/logs/stocks.log 2>&1
+34 6 * * * cd /home/arshad14/.hermes/skills/TRADING/scripts && python3 fetch_web_news.py >> /home/arshad14/.hermes/logs/web_news.log 2>&1
+36 6 * * * cd /home/arshad14/.hermes/skills/TRADING/scripts && timeout 30 python3 fetch_twitter_sentiment.py >> /home/arshad14/.hermes/logs/twitter_sentiment.log 2>&1
+
+# ── Existing jobs ──
+0 5 * * 4 cd /home/arshad14/.hermes/scripts && python3 weekly_flipp_scrape.py
+
+# ── Trading — Market hours (Mon-Fri) ──
+0 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 ibkr_gex.py SPY >> /home/arshad14/.hermes/logs/gex.log 2>&1
+5 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 sleeve_c_alert.py >> /home/arshad14/.hermes/logs/sleeve.log 2>&1
+10 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 three_sleeve_scorer.py >> /home/arshad14/.hermes/logs/scorer.log 2>&1
+15 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 slippage_tracker.py >> /home/arshad14/.hermes/logs/slippage.log 2>&1
+
+# ── Solar data — hourly ──
+0 * * * * cd /home/arshad14 && python3 fetch_solar.py >> /home/arshad14/.hermes/logs/solar.log 2>&1
+
+# ── Weekly — Thursdays ──
+0 5 * * 4 cd /home/arshad14/.hermes/scripts && python3 weekly_report.py >> /home/arshad14/.hermes/logs/weekly_report.log 2>&1
+
+
+# ── MapleGamma Council (legacy) ──
+
+# ── Intra-day push — market hours (Mon-Fri, 9:30-16:00 ET, every 30 min) ──
+*/30 9-15 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
+
+# ── Verdict generation ──
+20 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 generate_verdict.py >> /home/arshad14/.hermes/logs/verdict.log 2>&1
+
+# ── Job Hunt Dashboard ──
+0 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 job_hunt_daily.py --no-telegram >> /home/arshad14/.hermes/logs/job_hunt.log 2>&1
+
+# ── Screener data ──
+30 10 * * 1-5 cd /home/arshad14/morning-briefing && python3 pi-scripts/generate-screener-data.py >> /home/arshad14/.hermes/logs/screener.log 2>&1
+
+# ── Walk-Forward V2 — Sundays ──
+0 6 * * 0 cd /home/arshad14/.hermes/scripts && python3 run_walk_forward_v2.py >> /home/arshad14/.hermes/logs/walk_forward_v2.log 2>&1
+
+# ── HA Config Git Sync — every 15 min ──
+*/15 * * * * /opt/homeassistant/git-sync.sh
+
+# ── IBKR Portfolio Agent ──
+12 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 ibkr_portfolio_agent.py >> /home/arshad14/.hermes/logs/ibkr_portfolio.log 2>&1
+*/15 9-16 * * 1-5 cd /home/arshad14/.hermes/scripts && flock -n /tmp/exit_check.lock python3 run_exit_check.py >> /home/arshad14/.hermes/logs/exit_check.log 2>&1
+
+# ── Upwork Daily ──
+15 9 * * 1-5 cd /home/arshad14 && export PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin && python3 ~/.hermes/scripts/upwork_daily.py >> ~/.hermes/logs/upwork_daily.log 2>&1
+
+# ── Autoresearch experiment loop ──
+*/30 * * * * nice -n 19 ~/autoresearch-controller.sh run "auto-poll" >> ~/autoresearch-poll.log 2>&1
+
+# ── Automated paper trader ──
+5 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 automated_paper_trader.py >> /home/arshad14/.hermes/logs/paper_trader.log 2>&1
+
+# ── Archive closed trades to Turso ──
+0 8 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 archive_trades_to_turso.py --prune >> /home/arshad14/.hermes/logs/turso_archive.log 2>&1
+
+# ── OHLCV fetch (before morning briefing pipeline) ──
+10 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 fetch_ohlcv.py >> /home/arshad14/.hermes/logs/ohlcv.log 2>&1
+
+# ── Audio News Squawk ──
+8 7 * * 1-5 export PATH=$HOME/.local/bin:$PATH && cd ~/morning-briefing && python3 pi-scripts/generate_audio_briefing.py >> ~/.hermes/logs/audio_briefing.log 2>&1
+
+# =============================================================================
+# DECOUPLED AGENT ARCHITECTURE (Immediate Wins)
+# =============================================================================
+# Agent 1: data-collector — runs every 15 min during market hours
+15,30,45,00 9-16 * * 1-5 cd /home/arshad14/.hermes/scripts/agents && bash agent_data_collector.sh >> /home/arshad14/.hermes/logs/agent_data_collector.log 2>&1
+
+# Agent 2: council — runs after data collection
+20 7 * * 1-5 cd /home/arshad14/.hermes/scripts/agents && bash agent_council.sh >> /home/arshad14/.hermes/logs/agent_council.log 2>&1
+20 10,12,14 * * 1-5 cd /home/arshad14/.hermes/scripts/agents && bash agent_council.sh >> /home/arshad14/.hermes/logs/agent_council.log 2>&1
+
+# Agent 3: dashboard-writer — runs after council
+22 7 * * 1-5 cd /home/arshad14/.hermes/scripts/agents && bash agent_dashboard.sh >> /home/arshad14/.hermes/logs/agent_dashboard_writer.log 2>&1
+22 10,12,14 * * 1-5 cd /home/arshad14/.hermes/scripts/agents && bash agent_dashboard.sh >> /home/arshad14/.hermes/logs/agent_dashboard_writer.log 2>&1
+
+# Agent 4: outcome-logger — after market close
+30 16 * * 1-5 cd /home/arshad14/.hermes/scripts/agents && bash agent_outcome.sh >> /home/arshad14/.hermes/logs/agent_outcome_logger.log 2>&1
+
+# Agent 5: strategy-improvement — after outcome logger
+0 17 * * 1-5 cd /home/arshad14/.hermes/scripts/agents && bash agent_strategy.sh >> /home/arshad14/.hermes/logs/agent_strategy_improvement.log 2>&1
+# ── Trader Dev Automated Backtester — every 2h during market hours ──
+0 10,12,14 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 td_cron_backtester.py >> /home/arshad14/.hermes/logs/td_backtester.log 2>&1
+# ── Inventory scrapers — 103 dealers → Turso (daily) ──
+30 2 * * * cd /home/arshad14/shiftlogic-scraper && python3 -u scripts/sold_tracker.py >> /home/arshad14/shiftlogic-scraper/data/dealers/sold_tracker_$(date +\%Y\%m\%d).log 2>&1
+# CARFii scraper pipeline
+30 0 * * * cd /home/arshad14/shiftlogic-scraper && python3 -u scripts/pi_nightly_scrape.py >> /home/arshad14/shiftlogic-scraper/data/nightly_scrape_log_$(date +\%Y\%m\%d).log 2>&1
+0 1 * * * cd /home/arshad14/shiftlogic-scraper && python3 -u scripts/aggregator_scraper.py >> /home/arshad14/shiftlogic-scraper/data/aggregator_log_$(date +\%Y\%m\%d).log 2>&1
+
+# Nightly HA+Hermes backup to Google Drive (migrated from Mac 2026-07-03)
+0 3 * * * /home/arshad14/.hermes/scripts/pi_backup_to_drive.sh >> /home/arshad14/.hermes/logs/backup.log 2>&1
+
+# Hermes fleet meta-watchdog (added 2026-07-03)
+*/30 * * * * python3 /home/arshad14/.hermes/scripts/cron_watchdog.py >> /home/arshad14/.hermes/logs/cron_watchdog.log 2>&1
+
+# ── Council trade executor — turns high-conviction council trades into paper trades ──
+35 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 council_trade_executor.py >> /home/arshad14/.hermes/logs/council_executor.log 2>&1
+
+# ── Cost tripwire — weekly spend monitor (OpenRouter/DeepSeek/Gemini-council/OpenCode/Claude usage) → Telegram ──
+0 9 * * 0 cd /home/arshad14/.hermes/scripts && python3 cost_tripwire.py >> /home/arshad14/.hermes/logs/cost_tripwire.log 2>&1
+5 2 * * * cd /home/arshad14/shiftlogic-scraper && python3 -u scripts/enrich_app_tables.py --cap 1500 >> /home/arshad14/shiftlogic-scraper/data/enrich_log_$(date +\%Y\%m\%d).log 2>&1
+# Rebuild the CompCeiling search-options dropdown payload (added 2026-07-22).
+# Runs after the full scrape pipeline so it reflects the overnight data.
+# Pays the 36-65s cold aggregation once so visitors never do (~0.2s served).
+0 3 * * * /home/arshad14/shiftlogic-scraper/scripts/refresh_search_options.sh >> /home/arshad14/shiftlogic-scraper/data/search_options_refresh.log 2>&1
+*/15 * * * * flock -n /tmp/compceiling_health.lock python3 -u /home/arshad14/shiftlogic-scraper/scripts/compceiling_healthcheck.py >> /home/arshad14/shiftlogic-scraper/data/compceiling_health.log 2>&1
+
+# ── Council context A/B experiment (variant B) — RESTORED 2026-07-07 after crontab wipe ──
+22 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 maplegamma_council.py --variant b >> /home/arshad14/.hermes/logs/agent_council_b.log 2>&1
+37 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 council_trade_executor.py --variant b >> /home/arshad14/.hermes/logs/council_executor_b.log 2>&1
+32 16 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 trade_outcome_logger.py --variant b >> /home/arshad14/.hermes/logs/trade_outcome_logger_b.log 2>&1
+2 17 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 strategy_improvement.py --variant b >> /home/arshad14/.hermes/logs/strategy_improvement_b.log 2>&1
+8 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 publish_research_tabs.py >> /home/arshad14/.hermes/logs/publish_research_tabs.log 2>&1
+45 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 publish_ticker_details.py >> /home/arshad14/.hermes/logs/publish_ticker_details.log 2>&1
+0 5 1 * * cd /home/arshad14/shiftlogic-scraper && flock -n /tmp/omvic_monthly.lock bash scripts/omvic_monthly.sh >> /home/arshad14/shiftlogic-scraper/data/dealers/omvic_monthly_$(date +\%Y\%m\%d).log 2>&1
+# ── AgenticOS Dashboard Aggregator — runs every 10 min ──
+*/10 * * * * cd /home/arshad14/usage-dashboard && flock -n /tmp/agentic_aggregator.lock python3 agentic-os-aggregator.py >> /home/arshad14/.hermes/logs/agentic_os_aggregator.log 2>&1
+*/15 * * * * cd /home/arshad14/usage-dashboard && flock -n /tmp/feedback_kanban.lock python3 feedback_to_kanban.py >> /home/arshad14/.hermes/logs/feedback_kanban.log 2>&1
+*/15 * * * * /usr/bin/flock -n /tmp/mg_feedback_kanban.lock python3 /home/arshad14/usage-dashboard/scripts/maplegamma_feedback_to_kanban.py >> /home/arshad14/.hermes/logs/maplegamma_feedback_kanban.log 2>&1
+*/20 * * * * bash /home/arshad14/.hermes/scripts/sync-skills.sh >> /home/arshad14/.hermes/logs/skills_sync.log 2>&1
+30 2 * * * cd /home/arshad14/.hermes/scripts && python3 eval_harness.py >> /home/arshad14/.hermes/logs/eval_harness.log 2>&1
+# ── Three-sleeve signal executor — turns scorer signals into tracked paper trades (ML recalibration data) ──
+20 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 sleeve_signal_executor.py >> /home/arshad14/.hermes/logs/sleeve_executor.log 2>&1
+# trader.dev signal bridge -> paper cohort A/B (crypto, 24/7)
+*/10 * * * * cd /home/arshad14/.hermes/scripts && flock -n /tmp/traderdev_bridge.lock python3 traderdev_bridge.py >> /home/arshad14/.hermes/logs/traderdev_bridge.log 2>&1
+# ── Subscriber briefing delivery — DISABLED until: user go-ahead + CASL operator name/addr filled + maplegamma.com SPF/DKIM/DMARC ──
+# 35 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 send_subscriber_briefing.py --send >> /home/arshad14/.hermes/logs/subscriber_briefing.log 2>&1
+35 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 generate_prediction_engine.py >> /home/arshad14/.hermes/logs/prediction_engine.log 2>&1
+35 16 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 generate_prediction_engine.py >> /home/arshad14/.hermes/logs/prediction_engine.log 2>&1
+45 10 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 publish_ticker_details.py >> /home/arshad14/.hermes/logs/publish_ticker_details.log 2>&1
+10 4 * * * /usr/sbin/logrotate --state /home/arshad14/.hermes/.logrotate.state /home/arshad14/.hermes/logrotate.conf >> /home/arshad14/.hermes/logs/logrotate.log 2>&1
+15 17 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
+40 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 generate_prediction_accuracy.py >> /home/arshad14/.hermes/logs/prediction_engine.log 2>&1
+40 16 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 generate_prediction_accuracy.py >> /home/arshad14/.hermes/logs/prediction_engine.log 2>&1
+45 4 * * 0 cd /home/arshad14/shiftlogic-scraper && python3 scripts/build_model_catalog.py >> /home/arshad14/shiftlogic-scraper/data/model_catalog.log 2>&1
+45 6 * * 1-5 cd /home/arshad14/.hermes/skills/finance/scripts && python3 fetch_insider_edgar.py >> /home/arshad14/.hermes/logs/insider_edgar.log 2>&1
+40 6 * * 1-5 cd /home/arshad14/.hermes/skills/finance/scripts && python3 fetch_congress_house.py >> /home/arshad14/.hermes/logs/congress_house.log 2>&1
+*/15 * * * * cd /home/arshad14/.hermes/scripts && python3 publish_crypto_cohorts.py >> /home/arshad14/.hermes/logs/crypto_cohorts.log 2>&1
+*/30 * * * * cd /home/arshad14/.hermes/scripts && python3 publish_options_status.py >> /home/arshad14/.hermes/logs/options_status.log 2>&1
+0 8 * * 6 python3 /home/arshad14/.hermes/scripts/calibrate_gex_engine.py >> /home/arshad14/.hermes/logs/calibrate_gex.log 2>&1
+15 16 * * 1-5 cd /home/arshad14/morning-briefing && python3 /home/arshad14/.hermes/scripts/nope_calculator.py --publish --output /home/arshad14/morning-briefing/data/nope-detail.json >> /home/arshad14/.hermes/logs/nope_calculator.log 2>&1
+30 16 * * 1-5 python3 /home/arshad14/.hermes/scripts/bootstrap_volatility_data.py >> /home/arshad14/.hermes/logs/bootstrap_volatility.log 2>&1
+*/30 * * * * cd /home/arshad14/.hermes/scripts && flock -n /tmp/ibkr_sentinel.lock python3 ibkr_gateway_sentinel.py >> /home/arshad14/.hermes/logs/ibkr_sentinel.log 2>&1
+
+# Hermes self-heal layer (added 2026-07-17)
+# Runs at :15 and :45, offset from watchdog at :00 and :30
+15,45 * * * * python3 /home/arshad14/.hermes/scripts/cron_self_heal.py >> /home/arshad14/.hermes/logs/cron_self_heal.log 2>&1
+# Hourly: sync Claude Code memory -> Honcho (Pi-side; added 2026-07-21)
+7 * * * * HONCHO_MEM_DIR=/home/arshad14/.claude/projects/-home-arshad14/memory /home/arshad14/shiftlogic_venv/bin/python3 /home/arshad14/.hermes/scripts/honcho_memory_sync.py >/dev/null 2>>/home/arshad14/.hermes/logs/honcho_memory_sync.log
+38 6 * * * cd /home/arshad14/.hermes/skills/finance/scripts && python3 fetch_global_news.py >> /home/arshad14/.hermes/logs/global_news.log 2>&1
+19 7 * * * cd /home/arshad14/.hermes/scripts && python3 generate_latest.py >> /home/arshad14/.hermes/logs/generate_latest.log 2>&1

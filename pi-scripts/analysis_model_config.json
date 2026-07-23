@@ -1,0 +1,68 @@
+{
+  "morning_analysis": {
+    "primary": {
+      "model": "deepseek/deepseek-v4-pro",
+      "label": "DS Pro",
+      "max_tokens": 8000,
+      "temperature": 0.3,
+      "reasoning": {
+        "effort": "high"
+      },
+      "timeout_seconds": 240
+    },
+    "fallback": {
+      "model": "qwen/qwen3.7-max",
+      "label": "Qwen 3.7 Max",
+      "max_tokens": 4000,
+      "temperature": 0.3,
+      "timeout_seconds": 120
+    },
+    "max_retries": 2,
+    "retry_delay_seconds": 10,
+    "cost_ceiling_usd": 0.5
+  },
+  "midday_analysis": {
+    "primary": {
+      "model": "deepseek/deepseek-v4-pro",
+      "label": "DS Pro",
+      "max_tokens": 1000,
+      "temperature": 0.3,
+      "reasoning": {
+        "effort": "high"
+      },
+      "timeout_seconds": 120
+    },
+    "fallback": {
+      "model": "qwen/qwen3.7-max",
+      "label": "Qwen 3.7 Max",
+      "max_tokens": 1000,
+      "temperature": 0.3,
+      "timeout_seconds": 90
+    },
+    "max_retries": 1,
+    "retry_delay_seconds": 5,
+    "cost_ceiling_usd": 0.25
+  },
+  "eod_analysis": {
+    "primary": {
+      "model": "deepseek/deepseek-v4-pro",
+      "label": "DS Pro",
+      "max_tokens": 1500,
+      "temperature": 0.3,
+      "reasoning": {
+        "effort": "high"
+      },
+      "timeout_seconds": 180
+    },
+    "fallback": {
+      "model": "qwen/qwen3.7-max",
+      "label": "Qwen 3.7 Max",
+      "max_tokens": 1500,
+      "temperature": 0.3,
+      "timeout_seconds": 120
+    },
+    "max_retries": 2,
+    "retry_delay_seconds": 10,
+    "cost_ceiling_usd": 0.5
+  }
+}
