@@ -1,46 +1,38 @@
 {
-  "generated_at": "2026-07-23T09:00:55-04:00",
+  "generated_at": "2026-07-23T09:31:37-04:00",
   "market_overview": {
-    "total_net_gex": 29677525,
-    "total_oi": 2518700,
-    "current_price": 747.41,
-    "change_pct": -0.12
+    "total_net_gex": 1359389,
+    "total_oi": 2061957,
+    "current_price": 739.47,
+    "change_pct": -1.06
   },
   "tickers": {
     "SPX": {
-      "current_price": 747.41,
-      "change_pct": -0.12,
+      "current_price": 739.47,
+      "change_pct": -1.06,
       "gamma_regime": "bullish",
-      "total_gex": 29677525,
-      "total_dex": 51487418,
-      "total_vex": 29766284,
-      "total_vanna": 4016167,
-      "total_charm": 64941,
-      "total_dealer_gex": -3582571,
-      "gamma_flip": 742.72,
+      "total_gex": 1359389,
+      "total_dex": 40610510,
+      "total_vex": 32129958,
+      "total_vanna": -823681,
+      "total_charm": -168516,
+      "total_dealer_gex": 1657273,
+      "gamma_flip": 740.03,
       "max_pain": 740.0,
-      "max_gex_strike": 740.0,
-      "max_gex_value": 2515469,
+      "max_gex_strike": 745.0,
+      "max_gex_value": 568689,
       "neutral_range": [],
-      "floor_zone": {
-        "strike": 740.0,
-        "net_gex": 2515469,
-        "total_gex": 2515469,
-        "range_start": 735.0,
-        "range_end": 745.0,
-        "strength": "strong",
-        "narrative": "Gamma floor at $740"
-      },
+      "floor_zone": null,
       "ceiling_zone": {
-        "strike": 755.0,
-        "net_gex": 201863,
-        "total_gex": 201863,
-        "range_start": 750.0,
-        "range_end": 760.0,
+        "strike": 745.0,
+        "net_gex": 568689,
+        "total_gex": 568689,
+        "range_start": 740.0,
+        "range_end": 750.0,
         "strength": "strong",
-        "narrative": "Gamma ceiling at $755"
+        "narrative": "Gamma ceiling at $745"
       },
-      "narrative": "Net GEX: $+29,677,525 \u2014 dealers are long gamma (range-bound)"
+      "narrative": "Net GEX: $+1,359,389 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
