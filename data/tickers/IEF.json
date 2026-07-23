@@ -1,18 +1,19 @@
 {
  "ticker": "IEF",
  "name": "iShares 7-10 Year Treasury Bond",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 93.1,
- "change_pct": -0.23,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 92.81,
+ "change_pct": -0.31,
  "sector": null,
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 39.1,
-  "sma_20": 93.88,
-  "sma_50": 93.72
+  "rsi_14": 35.6,
+  "sma_20": 93.8,
+  "sma_50": 93.69
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -21,7 +22,7 @@
   "dividend_yield": 0.0388
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

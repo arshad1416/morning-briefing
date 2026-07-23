@@ -1,24 +1,26 @@
 {
  "ticker": "AGI.TO",
  "name": "ALAMOS GOLD INC CLS A",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 42.98,
- "change_pct": 3.12,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 41.73,
+ "change_pct": -2.91,
  "sector": "Basic Materials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.7,
-  "sma_20": 42.45,
-  "sma_50": 48.44
+  "rsi_14": 43.4,
+  "sma_20": 42.4,
+  "sma_50": 48.06
  },
  "fundamentals": {
-  "pe_ratio": 12.073033,
-  "market_cap": "18.1B",
+  "pe_ratio": 11.821529,
+  "market_cap": "17.5B",
   "beta": 1.326,
-  "dividend_yield": 0.0055000000000000005
+  "dividend_yield": 0.0053
  },
  "council_analysis": {
   "score": 7

@@ -1,27 +1,28 @@
 {
  "ticker": "PEP",
  "name": "Pepsico, Inc.",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 135.65,
- "change_pct": 0.48,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 133.99,
+ "change_pct": -1.22,
  "sector": "Consumer Defensive",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 41.7,
-  "sma_20": 139.03,
-  "sma_50": 142.36
+  "rsi_14": 39.0,
+  "sma_20": 138.62,
+  "sma_50": 142.08
  },
  "fundamentals": {
-  "pe_ratio": 17.708878,
-  "market_cap": "185.3B",
+  "pe_ratio": 17.58399,
+  "market_cap": "183.0B",
   "beta": 0.368,
-  "dividend_yield": 0.043899999999999995
+  "dividend_yield": 0.0436
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

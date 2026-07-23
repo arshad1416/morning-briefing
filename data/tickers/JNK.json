@@ -1,24 +1,28 @@
 {
  "ticker": "JNK",
  "name": "State Street SPDR Bloomberg Hig",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 95.75,
- "change_pct": -0.16,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 95.43,
+ "change_pct": -0.34,
  "sector": null,
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma",
+  "near_high"
+ ],
  "technical": {
-  "rsi_14": 47.7,
-  "sma_20": 95.9,
+  "rsi_14": 39.3,
+  "sma_20": 95.89,
   "sma_50": 95.6
  },
  "fundamentals": {
-  "pe_ratio": 20.060759,
+  "pe_ratio": 19.992668,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.066
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

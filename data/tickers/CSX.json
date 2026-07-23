@@ -1,24 +1,26 @@
 {
  "ticker": "CSX",
  "name": "CSX Corporation",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 49.93,
- "change_pct": 0.08,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 52.42,
+ "change_pct": 5.0,
  "sector": "Industrials",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 61.7,
-  "sma_20": 48.96,
-  "sma_50": 47.25
+  "rsi_14": 73.6,
+  "sma_20": 49.28,
+  "sma_50": 47.4
  },
  "fundamentals": {
-  "pe_ratio": 30.631903,
-  "market_cap": "92.8B",
-  "beta": 1.211,
+  "pe_ratio": 32.162575,
+  "market_cap": "97.4B",
+  "beta": null,
   "dividend_yield": 0.011200000000000002
  },
  "council_analysis": {

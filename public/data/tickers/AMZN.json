@@ -1,21 +1,23 @@
 {
  "ticker": "AMZN",
  "name": "Amazon.com, Inc.",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 244.85,
- "change_pct": -1.09,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 234.56,
+ "change_pct": -4.2,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.4,
-  "sma_20": 243.61,
-  "sma_50": 250.6
+  "rsi_14": 39.3,
+  "sma_20": 243.63,
+  "sma_50": 249.92
  },
  "fundamentals": {
-  "pe_ratio": 29.571259,
-  "market_cap": "2.63T",
+  "pe_ratio": 28.100584,
+  "market_cap": "2.52T",
   "beta": 1.461,
   "dividend_yield": null
  },

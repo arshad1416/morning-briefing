@@ -1,23 +1,25 @@
 {
  "ticker": "RL",
  "name": "Ralph Lauren Corporation",
- "generated_at": "2026-07-22T14:45:01.766958+00:00",
- "price": 384.08,
- "change_pct": 0.3,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 375.2,
+ "change_pct": -3.08,
  "sector": "Consumer Cyclical",
  "signals": [
-  "rsi_dip"
+  "rsi_dip",
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 42.8,
-  "sma_20": 390.64,
-  "sma_50": 377.88
+  "rsi_14": 44.9,
+  "sma_20": 388.89,
+  "sma_50": 378.6
  },
  "fundamentals": {
-  "pe_ratio": 25.385656,
-  "market_cap": "22.9B",
+  "pe_ratio": 24.847683,
+  "market_cap": "22.3B",
   "beta": 1.352,
-  "dividend_yield": 0.0098
+  "dividend_yield": 0.0097
  },
  "council_analysis": {
   "score": 6

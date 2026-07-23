@@ -1,22 +1,24 @@
 {
  "ticker": "DASH",
  "name": "DoorDash, Inc.",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 177.73,
- "change_pct": -5.48,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 170.2,
+ "change_pct": -4.24,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.3,
-  "sma_20": 186.93,
-  "sma_50": 170.33
+  "rsi_14": 40.3,
+  "sma_20": 186.55,
+  "sma_50": 170.59
  },
  "fundamentals": {
-  "pe_ratio": 89.311554,
-  "market_cap": "77.4B",
+  "pe_ratio": 80.66351,
+  "market_cap": "74.2B",
   "beta": 1.779,
   "dividend_yield": null
  },

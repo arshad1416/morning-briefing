@@ -1,28 +1,29 @@
 {
  "ticker": "IBM",
  "name": "International Business Machines",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 205.77,
- "change_pct": -2.25,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 206.09,
+ "change_pct": 0.16,
  "sector": "Technology",
  "signals": [
   "oversold_rsi",
   "below_ma",
+  "near_low",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 29.8,
-  "sma_20": 259.89,
-  "sma_50": 260.51
+  "rsi_14": 30.0,
+  "sma_20": 257.05,
+  "sma_50": 260.16
  },
  "fundamentals": {
-  "pe_ratio": 18.209734,
-  "market_cap": "193.4B",
-  "beta": 0.675,
-  "dividend_yield": 0.0321
+  "pe_ratio": 18.306395,
+  "market_cap": "193.7B",
+  "beta": null,
+  "dividend_yield": 0.0329
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

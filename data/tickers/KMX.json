@@ -1,27 +1,28 @@
 {
  "ticker": "KMX",
  "name": "CarMax Inc",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 57.45,
- "change_pct": -0.28,
- "sector": null,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 58.4,
+ "change_pct": 1.65,
+ "sector": "Consumer Cyclical",
  "signals": [
+  "extended_rsi",
   "above_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 64.0,
-  "sma_20": 53.88,
-  "sma_50": 48.28
+  "rsi_14": 66.0,
+  "sma_20": 54.26,
+  "sma_50": 48.67
  },
  "fundamentals": {
-  "pe_ratio": 35.68323,
-  "market_cap": "8.2B",
-  "beta": null,
+  "pe_ratio": 36.273293,
+  "market_cap": "8.3B",
+  "beta": 1.163,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

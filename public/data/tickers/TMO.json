@@ -1,26 +1,29 @@
 {
  "ticker": "TMO",
  "name": "Thermo Fisher Scientific Inc",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 526.46,
- "change_pct": 0.57,
- "sector": null,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 573.43,
+ "change_pct": 8.92,
+ "sector": "Healthcare",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 58.6,
-  "sma_20": 520.07,
-  "sma_50": 487.19
+  "rsi_14": 73.4,
+  "sma_20": 524.13,
+  "sma_50": 489.62
  },
  "fundamentals": {
-  "pe_ratio": 28.815546,
-  "market_cap": "195.6B",
-  "beta": null,
+  "pe_ratio": 31.447859,
+  "market_cap": "212.9B",
+  "beta": 0.868,
   "dividend_yield": 0.0036
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

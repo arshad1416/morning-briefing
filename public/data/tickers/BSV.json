@@ -1,18 +1,19 @@
 {
  "ticker": "BSV",
  "name": "Vanguard Short-Term Bond ETF",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 77.47,
- "change_pct": -0.09,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 77.38,
+ "change_pct": -0.12,
  "sector": null,
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 43.7,
-  "sma_20": 77.64,
-  "sma_50": 77.53
+  "rsi_14": 39.9,
+  "sma_20": 77.63,
+  "sma_50": 77.52
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -21,7 +22,7 @@
   "dividend_yield": 0.039900000000000005
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

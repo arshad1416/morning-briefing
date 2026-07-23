@@ -1,22 +1,24 @@
 {
  "ticker": "WDAY",
  "name": "Workday, Inc.",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 132.42,
- "change_pct": -6.2,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 129.49,
+ "change_pct": -2.21,
  "sector": "Technology",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.7,
-  "sma_20": 135.1,
-  "sma_50": 132.26
+  "rsi_14": 44.3,
+  "sma_20": 135.67,
+  "sma_50": 132.43
  },
  "fundamentals": {
-  "pe_ratio": 43.993355,
-  "market_cap": "32.7B",
+  "pe_ratio": 43.021595,
+  "market_cap": "32.0B",
   "beta": 1.104,
   "dividend_yield": null
  },

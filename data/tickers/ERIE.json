@@ -1,27 +1,28 @@
 {
  "ticker": "ERIE",
  "name": "Erie Indemnity Company",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 210.86,
- "change_pct": -2.3,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 210.53,
+ "change_pct": -0.16,
  "sector": "Financial Services",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 38.2,
-  "sma_20": 236.91,
-  "sma_50": 226.03
+  "rsi_14": 38.1,
+  "sma_20": 236.02,
+  "sma_50": 225.92
  },
  "fundamentals": {
-  "pe_ratio": 19.780489,
+  "pe_ratio": 19.296976,
   "market_cap": "11.0B",
   "beta": 0.286,
-  "dividend_yield": 0.0271
+  "dividend_yield": 0.0278
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

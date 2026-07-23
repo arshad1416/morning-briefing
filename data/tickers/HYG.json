@@ -1,26 +1,29 @@
 {
  "ticker": "HYG",
  "name": "iShares iBoxx $ High Yield Corp",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 79.52,
- "change_pct": -0.16,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 79.26,
+ "change_pct": -0.33,
  "sector": null,
  "signals": [
+  "rsi_dip",
+  "below_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 47.4,
-  "sma_20": 79.65,
+  "rsi_14": 39.9,
+  "sma_20": 79.64,
   "sma_50": 79.43
  },
  "fundamentals": {
-  "pe_ratio": 10.93409,
+  "pe_ratio": 10.89834,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.059000000000000004
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

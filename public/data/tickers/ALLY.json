@@ -1,26 +1,29 @@
 {
  "ticker": "ALLY",
  "name": "Ally Financial Inc.",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 44.67,
- "change_pct": 0.54,
- "sector": null,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 43.49,
+ "change_pct": -2.63,
+ "sector": "Financial Services",
  "signals": [
-  "value_pe"
+  "rsi_dip",
+  "below_ma",
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.1,
-  "sma_20": 45.72,
-  "sma_50": 44.13
+  "rsi_14": 41.1,
+  "sma_20": 45.61,
+  "sma_50": 44.15
  },
  "fundamentals": {
-  "pe_ratio": 10.842233,
-  "market_cap": "13.6B",
-  "beta": null,
-  "dividend_yield": 0.027000000000000003
+  "pe_ratio": 10.557039,
+  "market_cap": "13.2B",
+  "beta": 1.078,
+  "dividend_yield": 0.0269
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,27 +1,29 @@
 {
  "ticker": "EG",
  "name": "Everest Group, Ltd.",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 373.07,
- "change_pct": -1.07,
- "sector": null,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 372.63,
+ "change_pct": -0.12,
+ "sector": "Financial Services",
  "signals": [
   "above_ma",
-  "value_pe"
+  "near_high",
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 58.6,
-  "sma_20": 367.57,
-  "sma_50": 350.26
+  "rsi_14": 58.2,
+  "sma_20": 368.92,
+  "sma_50": 350.74
  },
  "fundamentals": {
-  "pe_ratio": 7.681079,
-  "market_cap": "14.8B",
-  "beta": null,
-  "dividend_yield": 0.0212
+  "pe_ratio": 7.589206,
+  "market_cap": "14.7B",
+  "beta": 0.287,
+  "dividend_yield": 0.021400000000000002
  },
  "council_analysis": {
-  "score": 7
+  "score": 9
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,15 +1,18 @@
 {
  "ticker": "SLV",
  "name": "iShares Silver Trust",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 53.92,
- "change_pct": 1.58,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 52.17,
+ "change_pct": -3.24,
  "sector": null,
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.7,
-  "sma_20": 53.02,
-  "sma_50": 61.01
+  "rsi_14": 41.3,
+  "sma_20": 53.04,
+  "sma_50": 60.49
  },
  "fundamentals": {
   "pe_ratio": null,

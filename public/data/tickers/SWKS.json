@@ -1,21 +1,24 @@
 {
  "ticker": "SWKS",
  "name": "Skyworks Solutions, Inc.",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 63.16,
- "change_pct": 0.33,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 61.64,
+ "change_pct": -2.41,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.1,
-  "sma_20": 62.45,
-  "sma_50": 69.39
+  "rsi_14": 44.9,
+  "sma_20": 61.96,
+  "sma_50": 69.23
  },
  "fundamentals": {
-  "pe_ratio": 26.316666,
-  "market_cap": "9.5B",
+  "pe_ratio": 25.576763,
+  "market_cap": "9.3B",
   "beta": 1.497,
-  "dividend_yield": 0.0451
+  "dividend_yield": 0.045
  },
  "council_analysis": {
   "score": 5

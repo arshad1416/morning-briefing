@@ -1,15 +1,18 @@
 {
  "ticker": "STIP",
  "name": "iShares 0-5 Year TIPS Bond ETF",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 101.31,
- "change_pct": -0.04,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 101.25,
+ "change_pct": -0.05,
  "sector": null,
- "signals": [],
+ "signals": [
+  "below_ma",
+  "near_high"
+ ],
  "technical": {
-  "rsi_14": 50.7,
-  "sma_20": 101.27,
-  "sma_50": 101.33
+  "rsi_14": 47.6,
+  "sma_20": 101.29,
+  "sma_50": 101.32
  },
  "fundamentals": {
   "pe_ratio": null,

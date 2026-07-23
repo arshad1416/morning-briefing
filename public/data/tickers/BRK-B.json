@@ -1,21 +1,23 @@
 {
  "ticker": "BRK-B",
  "name": "Berkshire Hathaway Inc. New",
- "generated_at": "2026-07-23T11:45:01.650163+00:00",
- "price": 489.39,
- "change_pct": -0.05,
+ "generated_at": "2026-07-23T14:45:01.158132+00:00",
+ "price": 487.83,
+ "change_pct": -0.32,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 46.6,
-  "sma_20": 495.52,
-  "sma_50": 488.58
+  "rsi_14": 44.8,
+  "sma_20": 495.17,
+  "sma_50": 488.74
  },
  "fundamentals": {
-  "pe_ratio": 14.569515,
-  "market_cap": "1.06T",
+  "pe_ratio": 14.531874,
+  "market_cap": "1.05T",
   "beta": 0.607,
   "dividend_yield": null
  },
