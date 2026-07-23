@@ -10,7 +10,7 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { GateCard } from '@/components/feature/gating/GateCard';
-import { InfoTip, PlainLabel, DensityToggle } from '@/components/primitives';
+import { InfoTip, PlainLabel } from '@/components/primitives';
 import type { GlossaryTerm } from '@/lib/glossary';
 import { fetchGated, GateError } from '@/lib/api/gated';
 
@@ -804,9 +804,44 @@ function OverviewTab() {
   );
 }
 
+/* Market News renders on both the News and the Ideas tab. Both read
+   latest.json so the two cards can never drift apart and show different
+   stories under the same heading — analysis.json carries a copy of the same
+   feed under market_overview.top_headlines, and using one on each tab is what
+   made the Ideas tab look like a second, unrelated news card. */
+function MarketNewsCard({ headlines }: { headlines: Any[] }) {
+  return (
+    <Card title="Market News">
+      <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
+        {headlines.map((n: Any, i: number) => (
+          <div key={i} className="py-2.5 first:pt-0 last:pb-0">
+            <ExtLink href={n.url || '#'}>{n.title}</ExtLink>
+            <p className="text-xs text-[var(--color-text-tertiary)]">
+              {[n.source, n.category].filter(Boolean).join(' · ')}
+            </p>
+          </div>
+        ))}
+      </div>
+    </Card>
+  );
+}
+
+/* The geopolitical feed carries its own article dates, which is the only
+   honest measure of how current it is. Silent when the upstream feed omits
+   them rather than guessing a date. */
+function GeopoliticalFreshness({ items }: { items: Any[] }) {
+  const newest = items
+    .map((g: Any) => g?.date)
+    .filter((d: unknown): d is string => typeof d === 'string' && d.trim() !== '')
+    .map((d: string) => ({ raw: d, ms: Date.parse(d) }))
+    .filter((d) => Number.isFinite(d.ms))
+    .sort((a, b) => b.ms - a.ms)[0];
+  if (!newest) return null;
+  return <p className="mb-3 text-xs text-[var(--color-text-tertiary)]">Newest headline: {fmtTs(newest.raw)}</p>;
+}
+
 function NewsTab() {
   const latest = usePublic<Any>('latest', '/data/latest.json');
-  const analysis = usePublic<Any>('analysis', '/data/analysis.json');
   const webNews = useGated<Any>('web-news', 'web-news.json');
 
   const d = latest.data;
@@ -851,6 +886,11 @@ function NewsTab() {
       <Grid2>
         {!!d?.geopolitical?.length && (
           <Card title="Geopolitical Risks">
+            {/* Dated from the newest headline in the feed, not from the
+                pipeline run: latest.json is rewritten every 30 minutes even
+                when this block is a cached copy, so the run time would have
+                claimed freshness the headlines do not have. */}
+            <GeopoliticalFreshness items={d.geopolitical} />
             <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
               {d.geopolitical.slice(0, 12).map((g: Any, i: number) => {
                 const url = g.url || `https://news.google.com/search?q=${encodeURIComponent(g.title || '')}`;
@@ -858,7 +898,7 @@ function NewsTab() {
                   <div key={i} className="py-2.5 first:pt-0 last:pb-0">
                     <ExtLink href={url}>{g.title}</ExtLink>
                     <p className="text-xs text-[var(--color-text-tertiary)]">
-                      {g.source}
+                      {[g.source, fmtTs(g.date)].filter(Boolean).join(' · ')}
                       {!g.url && ' · via news search'}
                     </p>
                   </div>
@@ -868,36 +908,7 @@ function NewsTab() {
           </Card>
         )}
 
-        {!!d?.market_news?.headlines?.length && (
-          <Card title="Market News">
-            <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
-              {d.market_news.headlines.map((n: Any, i: number) => (
-                <div key={i} className="py-2.5 first:pt-0 last:pb-0">
-                  <ExtLink href={n.url || '#'}>{n.title}</ExtLink>
-                  <p className="text-xs text-[var(--color-text-tertiary)]">
-                    {[n.source, n.category].filter(Boolean).join(' · ')}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </Card>
-        )}
-
-        {!!analysis.data?.market_overview?.top_headlines?.length && (
-          <Card title="Seeking Alpha Top Stories">
-            <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
-              {analysis.data.market_overview.top_headlines.slice(0, 10).map((h: Any, i: number) => {
-                const title = typeof h === 'string' ? h : h?.title || '';
-                const url = typeof h === 'object' ? h?.url || '' : '';
-                return (
-                  <div key={i} className="py-2 first:pt-0 last:pb-0 text-sm">
-                    {url ? <ExtLink href={url}>{title}</ExtLink> : <span className="text-[var(--color-text-secondary)]">{title}</span>}
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
-        )}
+        {!!d?.market_news?.headlines?.length && <MarketNewsCard headlines={d.market_news.headlines} />}
       </Grid2>
 
       {!!d?.market_news?.analyst_ratings?.length && (
@@ -1031,14 +1042,18 @@ function SentimentTab() {
 function IdeasTab() {
   const [detail, setDetail] = useState<DetailView | null>(null);
   const analysis = usePublic<Any>('analysis', '/data/analysis.json');
+  // Market News comes from latest.json here, the same file the News tab reads,
+  // so both tabs show the identical feed under the identical heading.
+  const latest = usePublic<Any>('latest', '/data/latest.json');
   const d = analysis.data;
+  const marketNews: Any[] = latest.data?.market_news?.headlines || [];
   if (analysis.isLoading) return <Empty>Loading…</Empty>;
   if (!d) return <Empty>Analysis data not available.</Empty>;
 
   return (
     <div className="space-y-4">
       <Updated iso={d.generated_at} />
-      {(!!d.analysis_ideas?.length || !!d.market_overview?.top_headlines?.length) && (
+      {(!!d.analysis_ideas?.length || !!marketNews.length) && (
         <Grid2>
           {!!d.analysis_ideas?.length && (
             <Card title="Analysis Ideas">
@@ -1071,21 +1086,7 @@ function IdeasTab() {
               </div>
             </Card>
           )}
-          {!!d.market_overview?.top_headlines?.length && (
-            <Card title="Seeking Alpha Top Stories">
-              <div className="divide-y" style={{ borderColor: 'var(--color-border-subtle)' }}>
-                {d.market_overview.top_headlines.slice(0, 10).map((h: Any, i: number) => {
-                  const title = typeof h === 'string' ? h : h?.title || '';
-                  const url = typeof h === 'object' ? h?.url || '' : '';
-                  return (
-                    <div key={i} className="py-2 first:pt-0 last:pb-0 text-sm">
-                      {url ? <ExtLink href={url}>{title}</ExtLink> : <span className="text-[var(--color-text-secondary)]">{title}</span>}
-                    </div>
-                  );
-                })}
-              </div>
-            </Card>
-          )}
+          {!!marketNews.length && <MarketNewsCard headlines={marketNews} />}
         </Grid2>
       )}
       <ResearchDetailDialog detail={detail} onClose={() => setDetail(null)} />
@@ -1703,7 +1704,10 @@ export function ResearchClient() {
   const Active = TABS.find((t) => t.key === tab)!.pane;
 
   return (
-    <div className="space-y-4">
+    // Research always renders at comfortable density — there is no toggle on
+    // this page, and the preference is shared with the Screener, so the lock
+    // keeps a Compact choice made there from following the reader here.
+    <div className="space-y-4" data-density-lock="comfortable">
       <div
         className="relative overflow-hidden rounded-[var(--radius-tile)] border p-6"
         style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
@@ -1717,7 +1721,6 @@ export function ResearchClient() {
         </p>
       </div>
 
-      <div className="flex items-center gap-2">
       <div className="overflow-x-auto">
         <div className="flex min-w-max gap-1 rounded-full border p-1" style={{ borderColor: 'var(--color-border-subtle)', backgroundColor: 'var(--color-bg-surface)' }} role="tablist" aria-label="Research sections">
           {TABS.map((t) => (
@@ -1738,8 +1741,6 @@ export function ResearchClient() {
             </button>
           ))}
         </div>
-      </div>
-      <DensityToggle className="ml-auto shrink-0" />
       </div>
 
       <Active />
