@@ -1,8 +1,10 @@
 // stores/entitlements.ts — client gate registry.
 //
 // The Worker's data_gate.js is the source of truth for premium data; this
-// registry only drives the cosmetic FeatureGate overlay for features whose
-// data is public. entitlementRank mirrors the worker's meetsTier
+// registry only drives the FeatureGate overlay — the single visible pitch for
+// a wrapped tile, whether its data is public (cosmetic gate) or server-gated
+// (tile renders a quiet frame on 401/403). entitlementRank mirrors the
+// worker's meetsTier
 // (cloudflare-worker/src/session.js): trial ranks as pro.
 import type { Entitlement } from '@/lib/auth/api';
 
