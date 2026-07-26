@@ -94,9 +94,12 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
 
   if (!ticker) {
     return (
+      // Reachable only if this component is mounted without a symbol from
+      // somewhere other than /ticker/, which now shows the lookup instead.
       <Card>
         <p className="text-sm text-[var(--color-text-secondary)]">
-          No stock selected — pick one from the <Link href="/screener/" className="font-medium text-[var(--color-accent)] hover:underline">Screener</Link>, our list of scanned stocks and funds.
+          No stock selected — <Link href="/ticker/" className="font-medium text-[var(--color-accent)] hover:underline">look one up by name or symbol</Link>,
+          or browse the <Link href="/screener/" className="font-medium text-[var(--color-accent)] hover:underline">Screener</Link>.
         </p>
       </Card>
     );

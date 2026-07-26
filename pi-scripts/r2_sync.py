@@ -70,6 +70,12 @@ def make_screener_lite():
     lite = {
         "generated_at": d.get("generated_at"),
         "ticker_count": d.get("ticker_count"),
+        # Carried through so the public preview can describe the scan honestly.
+        # The teaser is 8 rows out of hundreds, so the universe filter cannot
+        # be answered from the rows themselves — without these the site would
+        # have to report "no S&P 400 names" when it simply cannot see them.
+        "universes_scanned": d.get("universes_scanned", []),
+        "universe_sources": d.get("universe_sources", {}),
         "market_summary": d.get("market_summary", {}),  # sector_breakdown lives here
         "tickers": tickers[:8],
         "_note": "Public teaser — full screener is subscriber-only via /api/data/screener-data.json",

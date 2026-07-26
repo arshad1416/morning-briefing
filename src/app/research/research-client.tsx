@@ -13,6 +13,8 @@ import { GateCard } from '@/components/feature/gating/GateCard';
 import { InfoTip, PlainLabel } from '@/components/primitives';
 import type { GlossaryTerm } from '@/lib/glossary';
 import { fetchGated, GateError } from '@/lib/api/gated';
+import { BacktestRuns } from '@/components/feature/prediction/BacktestRuns';
+import type { BacktestCoverage } from '@/lib/backtests/coverage';
 
 /* ------------------------------------------------------------------ */
 /*  Loose fetch layer — these secondary feeds have drifting schemas,  */
@@ -1320,11 +1322,91 @@ const STRATEGY_LABELS: Record<string, string> = {
   sector_rotation: 'Sector Rotation',
 };
 
-function BacktestTab() {
+/** First present value among several candidate keys on a loose artifact. */
+function pick(source: Any, ...keys: string[]): Any {
+  for (const key of keys) {
+    const value = source?.[key];
+    if (value != null && value !== '') return value;
+  }
+  return undefined;
+}
+
+const asText = (value: Any): string | undefined => {
+  if (value == null || value === '') return undefined;
+  if (Array.isArray(value)) return value.length ? `${value.length} — ${value.slice(0, 8).join(', ')}${value.length > 8 ? '…' : ''}` : undefined;
+  if (typeof value === 'object') {
+    const entries = Object.entries(value as Record<string, Any>);
+    return entries.length ? entries.map(([k, v]) => `${k.replace(/_/g, ' ')}: ${v}`).join(' · ') : undefined;
+  }
+  return String(value);
+};
+
+/**
+ * Methodology for the Pro walk-forward artifact.
+ *
+ * walk_forward_v2.json lives in private R2 and is not in this repository, so
+ * its exact shape is unknown here. Every row therefore probes a few plausible
+ * key names and renders only what is present — and the closing note says
+ * explicitly which parts the file does not record, rather than filling the gap
+ * with numbers nobody can check.
+ */
+function WalkForwardMethod({ wf }: { wf: Any }) {
+  const config = wf?.config ?? wf?.methodology ?? wf?.params ?? wf ?? {};
+  const strategies = Object.keys(wf?.summary ?? {});
+  const oosTrades = Object.values(wf?.summary ?? {}).reduce(
+    (sum: number, s: Any) => sum + (Number(s?.total_oos_trades) || 0),
+    0,
+  );
+
+  const rows: { label: string; value?: string }[] = [
+    { label: 'Date range', value: asText(pick(config, 'date_range', 'period', 'start_date') ) ?? asText(pick(wf, 'date_range', 'period')) },
+    { label: 'Universe', value: asText(pick(config, 'universe', 'tickers', 'symbols')) ?? asText(pick(wf, 'universe', 'tickers', 'symbols')) },
+    { label: 'Rules tested', value: strategies.length ? strategies.map((s) => STRATEGY_LABELS[s] || s.replace(/_/g, ' ')).join(', ') : undefined },
+    { label: 'Windows', value: asText(pick(config, 'windows', 'n_windows', 'num_windows', 'train_years', 'test_years')) ?? asText(pick(wf, 'windows', 'n_windows')) },
+    { label: 'Parameter search', value: asText(pick(config, 'param_grid', 'grid', 'search_space')) },
+    { label: 'Trading costs', value: asText(pick(config, 'transaction_costs', 'costs_bps', 'commission')) },
+    { label: 'Rebalance frequency', value: asText(pick(config, 'rebalance', 'rebalance_frequency', 'hold_days')) },
+    { label: 'Out-of-sample trades', value: oosTrades ? oosTrades.toLocaleString('en-US') : undefined },
+    { label: 'Generated', value: fmtTs(wf?.generated_at) || undefined },
+  ];
+
+  const present = rows.filter((row) => row.value);
+  const missing = rows.filter((row) => !row.value).map((row) => row.label.toLowerCase());
+
+  return (
+    <div className="space-y-3">
+      <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+        A walk-forward test tunes a rule on one stretch of history, then measures it on the stretch that comes next —
+        data it has never seen — and repeats, sliding forward. The out-of-sample column in the table below is the one
+        that matters; the in-sample column is the rule scoring itself on its own homework.
+      </p>
+      {present.length > 0 && (
+        <DetailFacts items={present.map((row) => ({ label: row.label, value: row.value as string }))} />
+      )}
+      {missing.length > 0 && (
+        <p className="text-xs leading-relaxed text-[var(--color-text-tertiary)]">
+          The results file does not record the {missing.join(', ')} for this test, so we can&apos;t state{' '}
+          {missing.length === 1 ? 'it' : 'them'} here. Take the scores below as the summary they are, not a
+          reproducible method.
+        </p>
+      )}
+      <p className="text-xs leading-relaxed text-[var(--color-text-tertiary)]">
+        Simulated throughout — no money was at risk in any of it.
+      </p>
+    </div>
+  );
+}
+
+function BacktestTab({ backtests }: TabProps) {
   const q = useGated<Any>('walk-forward', 'walk_forward_v2.json');
 
   return (
-    <GatedPane q={q} feature="Strategy testing results" need="pro">
+    <div className="space-y-4">
+      {/* The saved runs are public data that was sitting unused; they render
+          above the gate so a visitor sees a backtest with its method stated
+          even when the Pro walk-forward summary below is locked. */}
+      <BacktestRuns coverage={backtests} />
+      <GatedPane q={q} feature="Strategy testing results" need="pro">
       {(wf) => (
         <div className="space-y-4">
           <Card
@@ -1355,6 +1437,18 @@ function BacktestTab() {
               )}
             </p>
           </Card>
+          {wf?.summary && (
+            <Card title="Walk-Forward Method">
+              {/* Every field is read from the artifact and rendered only when
+                  it is actually there. The legacy page stated a method in
+                  detail — "8 non-overlapping windows, 3yr train / 1yr test,
+                  10bps costs" — as hardcoded strings in
+                  assets/js/backtest-research.js with nothing behind them in
+                  this repo. Rather than repeat unverifiable specifics, this
+                  says what the file records and admits what it does not. */}
+              <WalkForwardMethod wf={wf} />
+            </Card>
+          )}
           {wf?.summary && (
             <Card
               title={
@@ -1418,7 +1512,8 @@ function BacktestTab() {
           )}
         </div>
       )}
-    </GatedPane>
+      </GatedPane>
+    </div>
   );
 }
 
@@ -1683,7 +1778,11 @@ function SecTab() {
 /*  Page                                                              */
 /* ------------------------------------------------------------------ */
 
-const TABS = [
+/* Props every pane receives. Panes that need none simply declare none —
+   React.ComponentType<TabProps> accepts a component that ignores them. */
+type TabProps = { backtests: BacktestCoverage };
+
+const TABS: readonly { key: string; label: string; pane: React.ComponentType<TabProps> }[] = [
   { key: 'overview', label: 'Overview', pane: OverviewTab },
   { key: 'news', label: 'News', pane: NewsTab },
   // "Sentiment" showed only Reddit, and "Markets" showed only prediction
@@ -1695,13 +1794,11 @@ const TABS = [
   { key: 'markets', label: 'Prediction Markets', pane: MarketsTab },
   { key: 'earnings', label: 'Earnings', pane: EarningsTab },
   { key: 'sec', label: 'SEC Filings', pane: SecTab },
-] as const;
+];
 
-type TabKey = (typeof TABS)[number]['key'];
-
-export function ResearchClient() {
-  const [tab, setTab] = useState<TabKey>('overview');
-  const Active = TABS.find((t) => t.key === tab)!.pane;
+export function ResearchClient({ backtests = { runs: [], unreadable: [] } }: { backtests?: BacktestCoverage }) {
+  const [tab, setTab] = useState<string>('overview');
+  const Active = (TABS.find((t) => t.key === tab) ?? TABS[0]).pane;
 
   return (
     // Research always renders at comfortable density — there is no toggle on
@@ -1743,7 +1840,7 @@ export function ResearchClient() {
         </div>
       </div>
 
-      <Active />
+      <Active backtests={backtests} />
     </div>
   );
 }

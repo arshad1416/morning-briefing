@@ -15,7 +15,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const routes: MetadataRoute.Sitemap = [
     { url: `${SITE}/`, lastModified: now, changeFrequency: 'daily', priority: 1 },
-    ...['dashboard', 'options', 'screener', 'models', 'research', 'charts', 'positions', 'predictions', 'archive'].map((r) => ({
+    // 'ticker' is the lookup landing page; the per-symbol pages are appended
+    // below from the same coverage list that generates their static routes.
+    ...['dashboard', 'options', 'screener', 'ticker', 'models', 'research', 'charts', 'positions', 'predictions', 'archive'].map((r) => ({
       url: `${SITE}/${r}/`,
       lastModified: now,
       changeFrequency: 'daily' as const,

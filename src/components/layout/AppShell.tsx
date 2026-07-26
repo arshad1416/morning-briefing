@@ -106,6 +106,15 @@ function IconFunnel({ className }: IconProps) {
   );
 }
 
+function IconSearch({ className }: IconProps) {
+  return (
+    <svg {...iconDefaults} className={className} aria-hidden="true">
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <path d="m15.5 15.5 4.5 4.5" />
+    </svg>
+  );
+}
+
 function IconNews({ className }: IconProps) {
   return (
     <svg {...iconDefaults} className={className} aria-hidden="true">
@@ -210,6 +219,10 @@ const MOBILE_PRIMARY_ITEMS = [
 ];
 
 const MOBILE_MORE_CORE_ITEMS = [
+  // Looking one company up is a different job from screening for candidates,
+  // and it had no entry point of its own — /ticker/ was only ever reached by
+  // clicking a Screener row.
+  { href: '/ticker/', label: 'Ticker Lookup', Icon: IconSearch },
   { href: '/research/', label: 'Research', Icon: IconNews },
   { href: '/charts/', label: 'Charts', Icon: IconCandles },
   // Labelled to match the destination's own <h1> and page title ("Prediction

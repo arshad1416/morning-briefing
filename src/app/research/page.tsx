@@ -1,5 +1,6 @@
 // app/research/page.tsx — Research reading room (Basic tier)
 import { ResearchClient } from './research-client';
+import { getBacktestCoverage } from '@/lib/backtests/coverage';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata = buildMetadata({
@@ -10,5 +11,8 @@ export const metadata = buildMetadata({
 });
 
 export default function ResearchPage() {
-  return <ResearchClient />;
+  // Read at build time (server-only fs) and passed down, so the Backtest tab
+  // can state each run's methodology without a client fetch. The heavy
+  // equity_curve arrays are dropped in getBacktestCoverage().
+  return <ResearchClient backtests={getBacktestCoverage()} />;
 }

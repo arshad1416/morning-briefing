@@ -23,7 +23,13 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pipeline_runtime import atomic_write_json
 
 # ── Ticker Universe (500+ tickers) ──────────────────────────────
-UNIVERSES = {
+# CURATED_UNIVERSES are the hand-maintained watchlists this scan has always
+# covered. They are NOT index membership — the "S&P 500" entries below are a
+# partial, manually-typed sample, which is exactly why the broad indices are
+# loaded from universe_constituents.json instead (fetched from a named source
+# and dated). Leaving these in place keeps the default scan byte-identical to
+# what the Pi cron produced before multi-index support was added.
+CURATED_UNIVERSES = {
     "S&P 500": [
         "AAPL","MSFT","NVDA","AMZN","GOOGL","META","TSLA","BRK-B","JPM","V",
         "JNJ","WMT","MA","PG","UNH","HD","DIS","NFLX","ADBE","CRM",
@@ -130,15 +136,156 @@ UNIVERSES = {
         "IBIT","FBTC","BITB","GBTC","ARKB","BITO","BTF","MAXI","SATO","WGMI",
     ],
 }
-TICKERS = []
+
+# ── Index membership ───────────────────────────────────────────
+# Broad-index constituents come from pi-scripts/universe_constituents.json,
+# refreshed by fetch_universe_constituents.py from Wikipedia / Nasdaq /
+# Vanguard. They are deliberately NOT typed into this file: membership changes
+# several times a year, and a stale hand-written list turns into delisted
+# symbols (counted as failed_count) or symbols reassigned to another company.
+#
+# Absence of the cache is not an error — the scan falls back to the curated
+# lists alone, which is what it did before this existed.
+
+CONSTITUENTS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                 "universe_constituents.json")
+
+
+def load_index_constituents(path=CONSTITUENTS_PATH):
+    """Return ({index label: [symbol, ...]}, {index label: source metadata})."""
+    try:
+        with open(path, encoding="utf-8") as handle:
+            cache = json.load(handle)
+    except (OSError, ValueError) as exc:
+        print(f"No index constituent cache ({type(exc).__name__}) — curated lists only.",
+              file=sys.stderr)
+        return {}, {}
+
+    members, sources = {}, {}
+    for label, entry in (cache.get("indices") or {}).items():
+        symbols = []
+        for member in entry.get("members") or []:
+            symbol = str(member.get("symbol") or "").strip().upper()
+            if symbol:
+                symbols.append(symbol)
+        if not symbols:
+            continue
+        members[label] = symbols
+        sources[label] = {
+            "source_url": entry.get("source_url"),
+            "source_note": entry.get("source_note"),
+            "as_of": entry.get("as_of"),
+            "fetched_at": entry.get("fetched_at"),
+            "member_count": len(symbols),
+        }
+    return members, sources
+
+
+def canonical_universe(label):
+    """Collapse the "(continued)" splits — they are one index, not three.
+
+    CURATED_UNIVERSES chunks the S&P 500 sample across three keys purely
+    because of how the lists were pasted in. The site's universe filter has
+    always had to paper over that with a startsWith("S&P 500") special case;
+    the multi-membership array below carries the collapsed name so a future
+    consumer does not have to.
+    """
+    return "S&P 500" if str(label).startswith("S&P 500") else label
+
+
+INDEX_UNIVERSES, INDEX_SOURCES = load_index_constituents()
+
+# Multi-membership. A ticker is routinely in more than one universe — every
+# Nasdaq-100 name is also in the S&P 500, and the S&P 600 overlaps the Russell
+# 2000 heavily — so a single-valued field cannot express membership without
+# making one of the two filters return near-zero rows.
+#
+# Where a fetched index list exists it is AUTHORITATIVE for that index, and the
+# curated sample of the same name contributes nothing to it. The curated "S&P
+# 500" lists were typed by hand and have rotted: 74 of their 490 symbols are no
+# longer in the index (ZION was removed in 2024, CAG in 2026, others renamed or
+# delisted). Letting them keep tagging themselves "S&P 500" would put 74 wrong
+# answers behind a filter whose whole purpose is to say what is in the index.
+# They stay in the scan and remain visible under "All Universes"; they just no
+# longer claim a membership they do not have.
+_AUTHORITATIVE = set(INDEX_UNIVERSES)
+
+# The source is tracked explicitly rather than inferred from the label: the
+# curated dict's first chunk is keyed "S&P 500", the same string the fetched
+# index uses, so `label in INDEX_UNIVERSES` cannot tell the two apart and the
+# curated chunk would sail through the guard below.
+TICKER_UNIVERSES = {}
+for _from_index, _source in ((False, CURATED_UNIVERSES), (True, INDEX_UNIVERSES)):
+    for _label, _tickers in _source.items():
+        _canonical = canonical_universe(_label)
+        if not _from_index and _canonical in _AUTHORITATIVE:
+            continue  # curated sample of an index we have a real list for
+        for _t in _tickers:
+            TICKER_UNIVERSES.setdefault(_t, set()).add(_canonical)
+
+# Singular `universe` is kept for backward compatibility with consumers written
+# against the old shape (the site falls back to it when `universes` is absent).
+# First-wins over the curated lists, exactly as before.
 TICKER_UNIVERSE = {}
-seen = set()
-for universe, tickers in UNIVERSES.items():
-    for t in tickers:
-        if t not in seen:
-            TICKERS.append(t)
-            TICKER_UNIVERSE[t] = universe
-            seen.add(t)
+for _universe, _tickers in CURATED_UNIVERSES.items():
+    for _t in _tickers:
+        TICKER_UNIVERSE.setdefault(_t, _universe)
+
+
+def resolve_scan_set(selected=None, added=None):
+    """Return (ordered tickers, canonical universe labels) for this run.
+
+    `selected` is None for the default scan — the curated watchlists only,
+    which is what the unattended Pi cron has always run. Naming universes
+    explicitly (--universes) is opt-in because the broad indices are large:
+    Russell 2000 alone adds ~2,000 symbols to a serial, rate-limited fetch
+    loop that already takes 5-10 minutes for ~660.
+
+    `added` (--add-universes) unions the named universes onto the default set
+    instead of replacing it. That distinction matters operationally: the output
+    file is the WHOLE screener, not a per-universe shard, so a --universes run
+    naming only the new indices would drop every name it did not name — 563 of
+    the 716 currently scanned. Adding an index to the site is a union, not a
+    substitution, and this is the flag that says so.
+    """
+    if added:
+        base, base_labels = resolve_scan_set(None)
+        extra, extra_labels = resolve_scan_set(added)
+        tickers = list(dict.fromkeys(base + extra))
+        labels = list(dict.fromkeys(base_labels + extra_labels))
+        return tickers, labels
+
+    if selected is None:
+        chosen = list(CURATED_UNIVERSES.items())
+    else:
+        chosen = []
+        for name in selected:
+            canonical = canonical_universe(name)
+            # A fetched index list wins outright — asking to scan "the S&P 500"
+            # must mean the index, not the 490-name hand-typed sample of it
+            # (which is 74 names out of date). Only when no fetched list exists
+            # do the curated chunks answer, and then ALL chunks sharing the
+            # canonical name do, since the sample is split across three keys.
+            if canonical in INDEX_UNIVERSES:
+                matched = [(canonical, INDEX_UNIVERSES[canonical])]
+            else:
+                matched = [(key, members) for key, members in CURATED_UNIVERSES.items()
+                           if canonical_universe(key) == canonical]
+            if not matched:
+                known = sorted(set(map(canonical_universe, CURATED_UNIVERSES)) | set(INDEX_UNIVERSES))
+                raise SystemExit(f"Unknown universe {name!r}. Known: {known}")
+            chosen.extend(matched)
+
+    tickers, labels, seen = [], [], set()
+    for label, members in chosen:
+        canonical = canonical_universe(label)
+        if canonical not in labels:
+            labels.append(canonical)
+        for ticker in members:
+            if ticker not in seen:
+                tickers.append(ticker)
+                seen.add(ticker)
+    return tickers, labels
 
 
 # ── Metrics Computation ────────────────────────────────────────
@@ -240,7 +387,11 @@ def fetch_ticker_data(ticker):
         result = {
             "ticker": ticker,
             "name": ticker_name,
-            "universe": TICKER_UNIVERSE.get(ticker, "Other"),
+            # `universe` (singular) is the legacy single-valued field; the
+            # site prefers `universes` and only falls back to this one.
+            "universe": TICKER_UNIVERSE.get(ticker)
+                        or (sorted(TICKER_UNIVERSES.get(ticker, ())) or ["Other"])[0],
+            "universes": sorted(TICKER_UNIVERSES.get(ticker, ())),
             "price": round(price, 2),
             "change_pct": change_pct,
             "pe": _finite(info.get("trailingPE")),
@@ -417,7 +568,34 @@ def main():
                         help='Output JSON file path')
     parser.add_argument('--test-run', action='store_true',
                         help='Fetch only 5 tickers for quick testing')
+    parser.add_argument('--universes', default=None,
+                        help='Comma-separated universes to scan. Default: the curated '
+                             'watchlists only (what the Pi cron has always run). The broad '
+                             'indices are opt-in because they are large — Russell 2000 alone '
+                             'adds ~2,000 symbols to a serial, rate-limited fetch loop. '
+                             'Use --list-universes to see what is available.')
+    parser.add_argument('--add-universes', default=None,
+                        help='Comma-separated universes to scan IN ADDITION to the default set. '
+                             'Use this to add an index to the site: the output file is the whole '
+                             'screener, so --universes would drop everything it does not name.')
+    parser.add_argument('--list-universes', action='store_true',
+                        help='Print the available universes with their sizes and exit.')
     args = parser.parse_args()
+
+    if args.universes and args.add_universes:
+        raise SystemExit('Use --universes (replace) or --add-universes (extend), not both.')
+
+    if args.list_universes:
+        print("Curated watchlists (scanned by default):")
+        for name, members in CURATED_UNIVERSES.items():
+            print(f"  {name:28s} {len(members):5d}")
+        print("\nIndex constituents (opt in with --universes):")
+        if not INDEX_UNIVERSES:
+            print("  none — run fetch_universe_constituents.py to populate the cache")
+        for name, members in INDEX_UNIVERSES.items():
+            source = INDEX_SOURCES.get(name, {})
+            print(f"  {name:28s} {len(members):5d}  as of {source.get('as_of', '?')}")
+        return
 
     # ── Concurrency guard ──────────────────────────────────────────────
     # The screener scans 500+ tickers (~5-10 min). If cron fires again before
@@ -437,7 +615,15 @@ def main():
 
 def _run_scan(args):
     """Actual scan logic, wrapped by the flock guard in main()."""
-    tickers = TICKERS[:5] if args.test_run else TICKERS
+    def _names(value):
+        return [name.strip() for name in value.split(',') if name.strip()] if value else None
+
+    scan_tickers, scanned_labels = resolve_scan_set(
+        _names(args.universes), added=_names(args.add_universes),
+    )
+    print(f"Scan set: {len(scan_tickers)} tickers across {scanned_labels}", file=sys.stderr)
+
+    tickers = scan_tickers[:5] if args.test_run else scan_tickers
     results = []
     failed = 0
     total = len(tickers)
@@ -460,6 +646,15 @@ def _run_scan(args):
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "ticker_count": len(results),
         "failed_count": failed,
+        # Which universes this run actually covered. The site needs this to
+        # tell "no rows match your filters" apart from "this snapshot never
+        # scanned that index" — without it, offering an index in the filter
+        # that was not scanned reads to the visitor as "nothing qualifies".
+        "universes_scanned": scanned_labels,
+        # Provenance for the index universes in this run, so the site can say
+        # how current the membership is rather than implying it is live.
+        "universe_sources": {name: INDEX_SOURCES[name]
+                             for name in scanned_labels if name in INDEX_SOURCES},
         "market_summary": compute_market_summary(results),
         "tickers": results,
     }

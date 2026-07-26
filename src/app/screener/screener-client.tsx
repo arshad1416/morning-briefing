@@ -9,7 +9,16 @@ import { useQuery } from '@tanstack/react-query';
 import { screenerQuery } from '@/lib/query/options';
 import { GateCard } from '@/components/feature/gating/GateCard';
 import { InfoTip, PlainLabel, DensityToggle } from '@/components/primitives';
-import type { ScreenerTicker } from '@/lib/schemas/screener';
+import {
+  INDEX_UNIVERSES,
+  WATCHLIST_UNIVERSES,
+  tickerInUniverse,
+  tickerUniverses,
+  universesInData,
+  type ScreenerTicker,
+} from '@/lib/schemas/screener';
+import { ScoreBreakdown } from '@/components/feature/screener/ScoreBreakdown';
+import { isBearishSignal, signalLabel } from '@/lib/screener/score';
 
 /* ------------------------------------------------------------------ */
 /*  Filter model                                                      */
@@ -85,10 +94,12 @@ function applyFilters(tickers: ScreenerTicker[], f: Filters): ScreenerTicker[] {
       return false;
     if (!inRange(t.pe, f.pe)) return false;
     if (f.sector && t.sector !== f.sector) return false;
-    if (!f.sector && f.universe) {
-      const u = t.universe || '';
-      if (f.universe === 'S&P 500' ? !u.startsWith('S&P 500') : u !== f.universe) return false;
-    }
+    // Universe and sector are independent filters — the old code skipped the
+    // universe test entirely whenever a sector was chosen, so "Technology in
+    // the Nasdaq-100" silently returned every Technology name in the scan.
+    // Membership is now multi-valued (tickerInUniverse), because a ticker
+    // genuinely belongs to more than one index at a time.
+    if (f.universe && !tickerInUniverse(t, f.universe)) return false;
     const score = t.score ?? 0;
     if (score < f.scoreMin || score > f.scoreMax) return false;
     if (f.signal && !(t.signals || []).includes(f.signal)) return false;
@@ -187,42 +198,15 @@ const fmtMarketCap = (v: number | null | undefined) => {
   return v >= 1e12 ? `${fmtPrice(v / 1e12, 2)}T` : `${fmtPrice(v / 1e9, 1)}B`;
 };
 
-// Was a loose substring regex (/over|bear|.../) tested against the raw signal
-// key — "over" matched inside "oversold_rsi", so RSI < 35 (+2, the single
-// largest BULLISH contributor to the score) was painted red. Signal keys are
-// enumerated exactly instead: only the rules that actually subtract from the
-// score in compute_score() count as bearish.
-const BEARISH_SIGNALS = new Set([
-  'overbought_rsi',
-  'extended_rsi',
-  'below_ma',
-  'near_low',
-  'premium_pe',
-  'analyst_sell',
-]);
-
-// The `signals` array is the audit trail from the score calculation: one entry
-// per scoring rule that fired. The raw values are snake_case internals
-// ("value_pe", "above_ma"), so spell out what each rule actually tested. Text
-// only — the thresholds below are the ones the generator uses, so keep them in
-// step with compute_score() in pi-scripts/generate-screener-data.py.
-const SIGNAL_LABELS: Record<string, string> = {
-  oversold_rsi: 'RSI under 35',
-  rsi_dip: 'RSI 35–45',
-  extended_rsi: 'RSI 65–75',
-  overbought_rsi: 'RSI over 75',
-  above_ma: 'Above 20 & 50-day avg',
-  below_ma: 'Below 20 & 50-day avg',
-  volume_surge: 'Volume over 1.5x avg',
-  near_high: 'Within 5% of 52w high',
-  near_low: 'Within 5% of 52w low',
-  value_pe: 'P/E under 15',
-  premium_pe: 'P/E over 30',
-  analyst_buy: 'Analysts rate it buy',
-  analyst_sell: 'Analysts rate it sell',
-};
-
-const signalLabel = (s: string) => SIGNAL_LABELS[s] ?? s.replace(/_/g, ' ');
+// The signal vocabulary, its plain-English labels and which rules subtract
+// from the score all live in @/lib/screener/score — one table shared with the
+// expandable "Why this score" panel, so the chips in this row and the
+// breakdown under it can never describe the same rule differently.
+//
+// `isBearishSignal` derives its answer from each rule's point value rather
+// than pattern-matching the tag name: an earlier substring test (/over|.../)
+// matched inside "oversold_rsi" and painted RSI < 35 — the single largest
+// BULLISH contributor — red.
 
 /* ------------------------------------------------------------------ */
 /*  UI atoms                                                          */
@@ -341,24 +325,205 @@ function HeaderCell({
   );
 }
 
-function TickerRow({ t }: { t: ScreenerTicker }) {
+/* ------------------------------------------------------------------ */
+/*  Expanded per-ticker detail                                        */
+/* ------------------------------------------------------------------ */
+
+/** One labelled reading in the detail panel. Renders nothing when absent. */
+function Fact({ label, value, note }: { label: React.ReactNode; value: React.ReactNode; note?: string }) {
+  if (value == null || value === '' || value === '—') return null;
+  return (
+    <div className="min-w-0 p-3" style={{ backgroundColor: 'var(--color-bg-elevated)' }}>
+      <dt className="text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--color-text-tertiary)]">{label}</dt>
+      <dd className="mt-1 break-words text-sm font-medium text-[var(--color-text-primary)]" data-numeric>{value}</dd>
+      {note && <p className="mt-0.5 text-[10px] leading-snug text-[var(--color-text-tertiary)]">{note}</p>}
+    </div>
+  );
+}
+
+function DetailPanel({ t }: { t: ScreenerTicker }) {
+  const vr = volRatio(t);
+  const universes = tickerUniverses(t);
+  // The trap documented in generate-screener-data.py: above_52w_high_pct is
+  // the distance BELOW the high, below_52w_low_pct the distance ABOVE the low.
+  const belowHigh = t.above_52w_high_pct;
+  const aboveLow = t.below_52w_low_pct;
+
+  return (
+    <div className="space-y-4 p-4" style={{ backgroundColor: 'var(--color-bg-base)' }}>
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <div className="min-w-0">
+          <h3 className="text-sm font-semibold text-[var(--color-text-primary)]" data-numeric>
+            {t.ticker}
+            {t.name && <span className="ml-2 font-normal text-[var(--color-text-secondary)]">{t.name}</span>}
+          </h3>
+          {(t.sector || t.industry) && (
+            <p className="text-[11px] text-[var(--color-text-tertiary)]">
+              {[t.sector, t.industry].filter(Boolean).join(' · ')}
+            </p>
+          )}
+        </div>
+        <Link
+          href={`/ticker/${encodeURIComponent(t.ticker)}/`}
+          className="text-xs font-semibold text-[var(--color-accent)] hover:underline"
+        >
+          Full company page →
+        </Link>
+      </div>
+
+      <section>
+        <h4 className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--color-text-tertiary)]">
+          Why this score
+        </h4>
+        <ScoreBreakdown ticker={t} />
+      </section>
+
+      <section>
+        <h4 className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--color-text-tertiary)]">
+          Every reading in this snapshot
+        </h4>
+        <dl
+          className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border sm:grid-cols-3 lg:grid-cols-4"
+          style={{ borderColor: 'var(--color-border-subtle)', backgroundColor: 'var(--color-border-subtle)' }}
+        >
+          <Fact label="Price" value={t.price != null ? `$${fmtPrice(t.price)}` : null} />
+          <Fact
+            label="Change"
+            value={fmtPct(t.change_pct)}
+            note="Against the previous close, not the open"
+          />
+          <Fact label={<InfoTip term="rsi">RSI (14)</InfoTip>} value={t.rsi != null ? t.rsi.toFixed(1) : null} />
+          <Fact
+            label={<InfoTip term="sma_20">20-day average</InfoTip>}
+            value={t.sma20 != null ? `$${fmtPrice(t.sma20)}` : null}
+            note={t.above_sma20 == null ? undefined : t.above_sma20 ? 'Price is above it' : 'Price is below it'}
+          />
+          <Fact
+            label={<InfoTip term="sma_50">50-day average</InfoTip>}
+            value={t.sma50 != null ? `$${fmtPrice(t.sma50)}` : null}
+            note={t.above_sma50 == null ? undefined : t.above_sma50 ? 'Price is above it' : 'Price is below it'}
+          />
+          <Fact
+            label="52-week high"
+            value={t.high52w != null ? `$${fmtPrice(t.high52w)}` : null}
+            note={belowHigh != null ? `Price is ${belowHigh.toFixed(1)}% below it` : undefined}
+          />
+          <Fact
+            label="52-week low"
+            value={t.low52w != null ? `$${fmtPrice(t.low52w)}` : null}
+            note={aboveLow != null ? `Price is ${aboveLow.toFixed(1)}% above it` : undefined}
+          />
+          <Fact
+            label="Volume vs average"
+            value={vr != null ? `${vr.toFixed(2)}×` : null}
+            note={
+              t.volume != null && t.avgVolume != null
+                ? `${Math.round(t.volume).toLocaleString('en-US')} traded vs ${Math.round(t.avgVolume).toLocaleString('en-US')} on a typical day`
+                : undefined
+            }
+          />
+          <Fact label={<InfoTip term="market_cap">Market cap</InfoTip>} value={fmtMarketCap(t.marketCap)} />
+          <Fact
+            label={<InfoTip term="p_e">P/E</InfoTip>}
+            value={t.pe != null ? t.pe.toFixed(1) : null}
+            note={t.forwardPe != null ? `${t.forwardPe.toFixed(1)} using next year's forecast earnings` : undefined}
+          />
+          <Fact
+            label={<InfoTip term="div_yield">Dividend yield</InfoTip>}
+            value={t.divYield != null && t.divYield > 0 ? `${t.divYield.toFixed(2)}%` : null}
+          />
+          <Fact
+            label={<InfoTip term="beta">Beta</InfoTip>}
+            value={t.beta != null ? t.beta.toFixed(2) : null}
+            note="How much it tends to move when the market moves 1%"
+          />
+          <Fact
+            label={<InfoTip term="analyst_ratings">Analyst rating</InfoTip>}
+            value={t.recommendation ? String(t.recommendation).replace(/_/g, ' ') : null}
+          />
+          <Fact
+            label="Analyst price target"
+            value={t.targetPrice != null ? `$${fmtPrice(t.targetPrice)}` : null}
+            note="Average of the analysts' 12-month forecasts — an opinion, not a projection we make"
+          />
+          <Fact
+            label="Held by institutions"
+            value={t.institutionPct != null ? `${t.institutionPct.toFixed(1)}%` : null}
+            note="Share of the company owned by funds and other large investors"
+          />
+          <Fact
+            label="Index membership"
+            value={universes.length ? universes.join(', ') : null}
+            note="Not part of the score"
+          />
+        </dl>
+        {/* marketCap carries no currency field, so a .TO row reports CAD
+            through the same number as a USD row. Say so rather than let the
+            two be compared as if they were the same unit. */}
+        {t.ticker.endsWith('.TO') && (
+          <p className="mt-2 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
+            This is a Toronto listing, so its price and market cap are in Canadian dollars while the US rows are in US
+            dollars. The scan does not record which currency a figure is in, so the two are not directly comparable.
+          </p>
+        )}
+      </section>
+    </div>
+  );
+}
+
+function TickerRow({
+  t,
+  expanded,
+  onToggle,
+  detailId,
+}: {
+  t: ScreenerTicker;
+  expanded: boolean;
+  onToggle: () => void;
+  detailId: string;
+}) {
   const score = t.score ?? 0;
   const vr = volRatio(t);
   const rsi = t.rsi;
 
   return (
+    <>
     <tr
       className="border-t transition-colors hover:bg-[var(--color-bg-elevated)]"
-      style={{ borderColor: 'var(--color-border-subtle)' }}
+      style={{
+        borderColor: 'var(--color-border-subtle)',
+        backgroundColor: expanded ? 'var(--color-bg-elevated)' : undefined,
+      }}
     >
       <td className={COL.ticker}>
-        <Link
-          href={`/ticker/${encodeURIComponent(t.ticker)}/`}
-          className="font-semibold text-[var(--color-accent)] hover:underline"
-          data-numeric
-        >
-          {t.ticker}
-        </Link>
+        <span className="flex items-center gap-1">
+          {/* The toggle lives inside the ticker cell rather than in a 12th
+              column: the table already drops to four columns on mobile, and a
+              dedicated control column would eat one of them. */}
+          <button
+            type="button"
+            onClick={onToggle}
+            aria-expanded={expanded}
+            aria-controls={detailId}
+            aria-label={`${expanded ? 'Hide' : 'Show'} details for ${t.ticker}`}
+            className="flex h-7 w-5 shrink-0 items-center justify-center rounded text-[var(--color-text-tertiary)] transition-colors hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+          >
+            <svg
+              viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor"
+              strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
+              style={{ transform: expanded ? 'rotate(90deg)' : undefined, transition: 'transform 120ms' }}
+            >
+              <path d="m7 4 6 6-6 6" />
+            </svg>
+          </button>
+          <Link
+            href={`/ticker/${encodeURIComponent(t.ticker)}/`}
+            className="font-semibold text-[var(--color-accent)] hover:underline"
+            data-numeric
+          >
+            {t.ticker}
+          </Link>
+        </span>
       </td>
       <td className={`${COL.price} text-right text-[var(--color-text-primary)]`} data-numeric>
         {fmtPrice(t.price)}
@@ -419,7 +584,7 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
       <td className={COL.signals}>
         <div className="flex flex-wrap gap-1 max-w-[220px]">
           {(t.signals || []).map((s) => {
-            const bearish = BEARISH_SIGNALS.has(s);
+            const bearish = isBearishSignal(s);
             return (
               <span
                 key={s}
@@ -437,6 +602,17 @@ function TickerRow({ t }: { t: ScreenerTicker }) {
         </div>
       </td>
     </tr>
+    {expanded && (
+      <tr id={detailId} style={{ borderColor: 'var(--color-border-subtle)' }}>
+        {/* colSpan covers every column at every breakpoint — the hidden ones
+            still count, so a fixed 11 is correct here. Padding sits on the
+            inner div because .mg-table td has its own padding rule. */}
+        <td colSpan={11} className="p-0">
+          <DetailPanel t={t} />
+        </td>
+      </tr>
+    )}
+    </>
   );
 }
 
@@ -528,6 +704,14 @@ export function ScreenerClient() {
   const [view, setView] = useState<'table' | 'treemap'>('table');
   const [presets, setPresets] = useState<StoredPreset[]>([]);
   const [presetName, setPresetName] = useState('');
+  const [expanded, setExpanded] = useState<ReadonlySet<string>>(() => new Set());
+
+  const toggleExpanded = (ticker: string) =>
+    setExpanded((current) => {
+      const next = new Set(current);
+      if (!next.delete(ticker)) next.add(ticker);
+      return next;
+    });
 
   useEffect(() => {
     const saved = localStorage.getItem('mg-screener-view');
@@ -575,6 +759,25 @@ export function ScreenerClient() {
   const ms = data?.market_summary;
   const isLite = result?.mode === 'lite';
 
+  // Which universes this snapshot can answer for. Offering an index the scan
+  // never covered and letting it return an empty table would read as "no
+  // stocks in that index qualify", which is a different — and false — claim.
+  // `null` means the snapshot cannot say (see universesInData) — then no
+  // coverage claim is made either way.
+  const scanned = useMemo(() => universesInData(data), [data]);
+  const coverageNote = (name: string) => (scanned && !scanned.has(name) ? ' — not in this scan' : '');
+  const universeUnscanned = !!filters.universe && !!scanned && !scanned.has(filters.universe);
+  // Are the loaded rows a SAMPLE of the scan rather than all of it? Derived
+  // from the row count, deliberately NOT from `scanned` being unknown: once the
+  // generator starts writing `universes_scanned`, the public teaser will carry
+  // an authoritative coverage list alongside its 8 rows. Picking a universe
+  // that WAS scanned but happens to have no row among those 8 would then show
+  // an unexplained empty table — no "not in this scan" banner, because it was
+  // scanned, and no sample note either. This keeps the sample caveat tied to
+  // the thing that actually causes it.
+  const isSample = allTickers.length < (data?.ticker_count ?? allTickers.length);
+  const universeSource = filters.universe ? data?.universe_sources?.[filters.universe] : undefined;
+
   return (
     <div className="space-y-4">
       {/* Header */}
@@ -597,8 +800,12 @@ export function ScreenerClient() {
           Stock <em className="italic" style={{ color: 'var(--color-accent)' }}>Screener</em>
         </h1>
         <p className="relative z-10 mt-2 text-sm text-[var(--color-text-secondary)]">
-          Filter and sort the five lists we scan: the S&amp;P 500, the TSX 60, and our tech-and-growth,
-          high-dividend and fixed-income-and-commodities watchlists.{isLite ? ' The public preview below shows the eight highest-scoring of them. ' : ' '}
+          Filter and sort the stocks and funds we scan. The Universe filter covers five stock market indexes — the
+          S&amp;P 500, 400 and 600, the Nasdaq-100 and the Russell 2000 — plus the TSX 60 and our tech-and-growth,
+          high-dividend and fixed-income-and-commodities watchlists; any the latest run didn&apos;t cover is marked in
+          the list. Looking up one company you already have in mind is a{' '}
+          <Link href="/ticker/" className="font-medium text-[var(--color-accent)] hover:underline">separate page</Link>.
+          {isLite ? ' The public preview below shows the eight highest-scoring names. ' : ' '}
           {/* Six, not five: the analyst-rating check used to compare against
               uppercase literals while the source ships lowercase, so it never
               fired and only five checks could contribute. That comparison is
@@ -610,7 +817,8 @@ export function ScreenerClient() {
           <InfoTip term="analyst_ratings">analysts</InfoTip> rate it. Rebuilt each trading day from a snapshot
           taken during market hours — so these are neither live prices nor closing prices — and the same
           snapshot stays up until the next run, so check the timestamp under the results for when it was
-          taken.
+          taken. Open any row with the arrow beside its symbol to see how its score was arrived at, check
+          by check.
         </p>
       </div>
 
@@ -661,7 +869,20 @@ export function ScreenerClient() {
         style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
       >
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          <Field label="Search">
+          {/* Named "Narrow this list", not "Search": looking a single company
+              up is its own page now (/ticker/), and calling both things
+              "search" sent people here to type a symbol and then read an
+              11-row table as the answer. This box only hides rows. */}
+          <Field
+            label={
+              <>
+                Narrow this list
+                <span className="mt-0.5 block text-[10px] font-normal normal-case tracking-normal text-[var(--color-text-tertiary)]">
+                  Hides rows below
+                </span>
+              </>
+            }
+          >
             <input
               type="text"
               value={filters.search}
@@ -674,11 +895,23 @@ export function ScreenerClient() {
           <Field label="Universe">
             <select value={filters.universe} onChange={(e) => set('universe', e.target.value)} className={selectCls} style={selectStyle}>
               <option value="">All Universes</option>
-              <option value="S&P 500">S&amp;P 500</option>
-              <option value="TSX 60">TSX 60</option>
-              <option value="Tech & Growth">Tech &amp; Growth</option>
-              <option value="High Dividend">High Dividend</option>
-              <option value="Fixed Income & Commodities">Fixed Income &amp; Commodities</option>
+              {/* Membership is multi-valued, so these overlap heavily on
+                  purpose — nearly every Nasdaq-100 name is also an S&P 500
+                  name, and the S&P 600 and Russell 2000 share most of their
+                  constituents. A name marked "not in this scan" is one the
+                  latest run did not cover; the note under the table explains
+                  how to change that rather than leaving an empty result to be
+                  misread as "nothing qualifies". */}
+              <optgroup label="Stock market indexes">
+                {INDEX_UNIVERSES.map((name) => (
+                  <option key={name} value={name}>{name}{coverageNote(name)}</option>
+                ))}
+              </optgroup>
+              <optgroup label="Our watchlists">
+                {WATCHLIST_UNIVERSES.map((name) => (
+                  <option key={name} value={name}>{name}{coverageNote(name)}</option>
+                ))}
+              </optgroup>
             </select>
           </Field>
           <Field label="Sector">
@@ -881,6 +1114,53 @@ export function ScreenerClient() {
         </div>
       </div>
 
+      {/* The other half of the same problem: on a sample this small, an empty
+          table proves nothing about the index either way, so the page must not
+          imply it does — in either direction. */}
+      {isSample && !!filters.universe && !isLoading && allTickers.length > 0 && (
+        <div
+          className="rounded-[var(--radius-tile)] border p-4"
+          style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
+        >
+          <p className="text-xs leading-relaxed text-[var(--color-text-secondary)]">
+            You&apos;re filtering a sample of {allTickers.length} rows out of {data?.ticker_count ?? '—'} scanned, picked
+            by score rather than by index. Whatever this shows for the {filters.universe} — including nothing at all —
+            isn&apos;t a reading of that index.
+          </p>
+        </div>
+      )}
+
+      {/* An index the latest run did not cover produces an empty table, which
+          without this reads as "no stock in that index qualifies" — a claim
+          the data cannot support. Say which it is instead. */}
+      {universeUnscanned && !isLoading && (
+        <div
+          className="rounded-[var(--radius-tile)] border p-4"
+          style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-caution)' }}
+        >
+          <p className="text-sm font-semibold text-[var(--color-text-primary)]">
+            The latest scan didn&apos;t {filtered.length ? 'target' : 'cover'} the {filters.universe}
+          </p>
+          {/* Membership is a property of the company, not of the scan, so an
+              unscanned index can still match rows: every S&P 600 name we DID
+              scan is also a Russell 2000 name. Claiming "nothing to show" over
+              a table with rows in it would be visibly false, so the two cases
+              say different things. */}
+          <p className="mt-1 text-xs leading-relaxed text-[var(--color-text-secondary)]">
+            {filtered.length ? (
+              <>
+                The {filtered.length} {filtered.length === 1 ? 'name' : 'names'} below appear only because they also
+                belong to an index the scan did cover — they are a fragment of the {filters.universe}, not a reading of
+                it, and they were not selected for being in it.
+              </>
+            ) : (
+              <>So there is nothing to show — this is a gap in the data, not a finding about those companies.</>
+            )}{' '}
+            The scan covers {scanned && scanned.size ? [...scanned].join(', ') : 'no universes it recorded'}.
+          </p>
+        </div>
+      )}
+
       {/* Results */}
       <div
         className="overflow-hidden rounded-[var(--radius-tile)] border"
@@ -958,7 +1238,15 @@ export function ScreenerClient() {
               </thead>
               <tbody>
                 {filtered.length ? (
-                  filtered.map((t) => <TickerRow key={t.ticker} t={t} />)
+                  filtered.map((t) => (
+                    <TickerRow
+                      key={t.ticker}
+                      t={t}
+                      expanded={expanded.has(t.ticker)}
+                      onToggle={() => toggleExpanded(t.ticker)}
+                      detailId={`screener-detail-${t.ticker.replace(/[^A-Za-z0-9]/g, '-')}`}
+                    />
+                  ))
                 ) : (
                   <tr>
                     {/* padding on an inner div — .mg-table td would override p-8 */}
@@ -971,6 +1259,20 @@ export function ScreenerClient() {
                 )}
               </tbody>
             </table>
+          </div>
+        )}
+        {/* Index membership is itself dated — the lists are refreshed from an
+            upstream, and one of them (Russell 2000) is read from a tracker
+            fund's month-end holdings. Saying so beats implying the filter
+            knows today's membership. */}
+        {universeSource?.as_of && (
+          <div
+            className="border-t px-4 py-2.5 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]"
+            style={{ borderColor: 'var(--color-border-subtle)' }}
+          >
+            {filters.universe} membership as of {universeSource.as_of}
+            {universeSource.member_count ? ` — ${universeSource.member_count} companies` : ''}.
+            {universeSource.source_note ? ` ${universeSource.source_note}` : ''}
           </div>
         )}
         {!isLoading && allTickers.length > 0 && data?.generated_at && (
