@@ -3,11 +3,15 @@
 Definitive dashboard data generator — uses yfinance historical closes for entry prices.
 Bypasses ALL Pi CAD/USD confusion by getting prices directly from the market.
 """
-import json, os, datetime, subprocess, sys, math, yfinance as yf, pandas as pd
+import json, os, datetime, subprocess, sys, math, fcntl, yfinance as yf, pandas as pd
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from yfinance_session import download as yf_download, ticker as yf_ticker
 from publish_policy import enforce_private_pages_exclusion, pages_excludes
+
+# pipeline_runtime lives alongside this script on the Pi.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from pipeline_runtime import atomic_write_json
 
 LEDGER = os.path.expanduser("~/.hermes/market-intel/paper_trading.json")
 DEMO_ACCOUNT = os.path.expanduser("~/.hermes/market-intel/demo_account.json")
@@ -346,6 +350,28 @@ def load_demo_account():
 
 def main():
     global RATE
+
+    # ── Concurrency guard ──────────────────────────────────────────────
+    # push_dashboard runs at 7:22 AM + every 30 min intraday. Without a lock,
+    # a slow run (yfinance timeouts, sub-scripts) can overlap the next cron
+    # fire, causing concurrent git operations that abort both runs. A
+    # non-blocking flock lets the second invocation exit cleanly.
+    _lock_fd = open("/tmp/push_dashboard.lock", "w")
+    try:
+        fcntl.flock(_lock_fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        print("Another push_dashboard instance is running — exiting.", file=sys.stderr)
+        return
+    try:
+        _main_inner()
+    finally:
+        fcntl.flock(_lock_fd, fcntl.LOCK_UN)
+        _lock_fd.close()
+
+
+def _main_inner():
+    """Actual pipeline logic, wrapped by the flock guard in main()."""
+    global RATE
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # ── Fetch live USDCAD rate FIRST so every conversion below (dual_price,
@@ -642,10 +668,9 @@ def main():
     if risk_metrics is not None:
         live_data['risk_metrics'] = risk_metrics
     
-    # Write to dashboard repo
+    # Write to dashboard repo (atomic — prevents corrupt JSON on crash)
     os.makedirs(os.path.dirname(DASHBOARD_DATA), exist_ok=True)
-    with open(DASHBOARD_DATA, "w") as f:
-        json.dump(json_safe(live_data), f, indent=2, allow_nan=False)
+    atomic_write_json(DASHBOARD_DATA, json_safe(live_data))
     
     # Update prediction engine accuracy (runs before git push)
     accuracy_script = os.path.expanduser("~/.hermes/scripts/update_prediction_accuracy.py")

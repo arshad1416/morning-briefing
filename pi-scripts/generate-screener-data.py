@@ -15,7 +15,12 @@ import yfinance as yf
 import time
 import os
 import sys
+import fcntl
 from datetime import datetime, timezone
+
+# pipeline_runtime lives alongside this script on the Pi.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from pipeline_runtime import atomic_write_json
 
 # ── Ticker Universe (500+ tickers) ──────────────────────────────
 UNIVERSES = {
@@ -414,6 +419,24 @@ def main():
                         help='Fetch only 5 tickers for quick testing')
     args = parser.parse_args()
 
+    # ── Concurrency guard ──────────────────────────────────────────────
+    # The screener scans 500+ tickers (~5-10 min). If cron fires again before
+    # the previous run finishes, concurrent writes corrupt the output JSON.
+    _lock_fd = open("/tmp/generate_screener.lock", "w")
+    try:
+        fcntl.flock(_lock_fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        print("Another screener instance is running — exiting.", file=sys.stderr)
+        return
+    try:
+        _run_scan(args)
+    finally:
+        fcntl.flock(_lock_fd, fcntl.LOCK_UN)
+        _lock_fd.close()
+
+
+def _run_scan(args):
+    """Actual scan logic, wrapped by the flock guard in main()."""
     tickers = TICKERS[:5] if args.test_run else TICKERS
     results = []
     failed = 0
@@ -447,10 +470,10 @@ def main():
     if not os.path.isabs(out_path) and os.path.basename(os.getcwd()) == 'pi-scripts':
         out_path = os.path.join('..', out_path)
 
-    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    os.makedirs(os.path.dirname(out_path) or '.', exist_ok=True)
 
-    with open(out_path, 'w') as f:
-        json.dump(output, f, indent=2)
+    # Atomic write — a crash mid-scan can never expose a partial JSON file
+    atomic_write_json(out_path, output)
 
     print(f"\nDone. {len(results)} tickers written to {out_path}", file=sys.stderr)
     if failed:
