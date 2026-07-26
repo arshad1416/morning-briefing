@@ -23,7 +23,13 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from pipeline_runtime import atomic_write_json
 
 # ── Ticker Universe (500+ tickers) ──────────────────────────────
-UNIVERSES = {
+# CURATED_UNIVERSES are the hand-maintained watchlists this scan has always
+# covered. They are NOT index membership — the "S&P 500" entries below are a
+# partial, manually-typed sample, which is exactly why the broad indices are
+# loaded from universe_constituents.json instead (fetched from a named source
+# and dated). Leaving these in place keeps the default scan byte-identical to
+# what the Pi cron produced before multi-index support was added.
+CURATED_UNIVERSES = {
     "S&P 500": [
         "AAPL","MSFT","NVDA","AMZN","GOOGL","META","TSLA","BRK-B","JPM","V",
         "JNJ","WMT","MA","PG","UNH","HD","DIS","NFLX","ADBE","CRM",
@@ -130,18 +136,191 @@ UNIVERSES = {
         "IBIT","FBTC","BITB","GBTC","ARKB","BITO","BTF","MAXI","SATO","WGMI",
     ],
 }
-TICKERS = []
+
+# ── Index membership ───────────────────────────────────────────
+# Broad-index constituents come from pi-scripts/universe_constituents.json,
+# refreshed by fetch_universe_constituents.py from Wikipedia / Nasdaq /
+# Vanguard. They are deliberately NOT typed into this file: membership changes
+# several times a year, and a stale hand-written list turns into delisted
+# symbols (counted as failed_count) or symbols reassigned to another company.
+#
+# Absence of the cache is not an error — the scan falls back to the curated
+# lists alone, which is what it did before this existed.
+
+CONSTITUENTS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                 "universe_constituents.json")
+
+
+def load_index_constituents(path=CONSTITUENTS_PATH):
+    """Return ({index label: [symbol, ...]}, {index label: source metadata})."""
+    try:
+        with open(path, encoding="utf-8") as handle:
+            cache = json.load(handle)
+    except (OSError, ValueError) as exc:
+        print(f"No index constituent cache ({type(exc).__name__}) — curated lists only.",
+              file=sys.stderr)
+        return {}, {}
+
+    members, sources = {}, {}
+    for label, entry in (cache.get("indices") or {}).items():
+        symbols = []
+        for member in entry.get("members") or []:
+            symbol = str(member.get("symbol") or "").strip().upper()
+            if symbol:
+                symbols.append(symbol)
+        if not symbols:
+            continue
+        members[label] = symbols
+        sources[label] = {
+            "source_url": entry.get("source_url"),
+            "source_note": entry.get("source_note"),
+            "as_of": entry.get("as_of"),
+            "fetched_at": entry.get("fetched_at"),
+            "member_count": len(symbols),
+        }
+    return members, sources
+
+
+def canonical_universe(label):
+    """Collapse the "(continued)" splits — they are one index, not three.
+
+    CURATED_UNIVERSES chunks the S&P 500 sample across three keys purely
+    because of how the lists were pasted in. The site's universe filter has
+    always had to paper over that with a startsWith("S&P 500") special case;
+    the multi-membership array below carries the collapsed name so a future
+    consumer does not have to.
+    """
+    return "S&P 500" if str(label).startswith("S&P 500") else label
+
+
+INDEX_UNIVERSES, INDEX_SOURCES = load_index_constituents()
+
+# Multi-membership. A ticker is routinely in more than one universe — every
+# Nasdaq-100 name is also in the S&P 500, and the S&P 600 overlaps the Russell
+# 2000 heavily — so a single-valued field cannot express membership without
+# making one of the two filters return near-zero rows.
+#
+# Where a fetched index list exists it is AUTHORITATIVE for that index, and the
+# curated sample of the same name contributes nothing to it. The curated "S&P
+# 500" lists were typed by hand and have rotted: 74 of their 490 symbols are no
+# longer in the index (ZION was removed in 2024, CAG in 2026, others renamed or
+# delisted). Letting them keep tagging themselves "S&P 500" would put 74 wrong
+# answers behind a filter whose whole purpose is to say what is in the index.
+# They stay in the scan and remain visible under "All Universes"; they just no
+# longer claim a membership they do not have.
+_AUTHORITATIVE = set(INDEX_UNIVERSES)
+
+# The source is tracked explicitly rather than inferred from the label: the
+# curated dict's first chunk is keyed "S&P 500", the same string the fetched
+# index uses, so `label in INDEX_UNIVERSES` cannot tell the two apart and the
+# curated chunk would sail through the guard below.
+TICKER_UNIVERSES = {}
+for _from_index, _source in ((False, CURATED_UNIVERSES), (True, INDEX_UNIVERSES)):
+    for _label, _tickers in _source.items():
+        _canonical = canonical_universe(_label)
+        if not _from_index and _canonical in _AUTHORITATIVE:
+            continue  # curated sample of an index we have a real list for
+        for _t in _tickers:
+            TICKER_UNIVERSES.setdefault(_t, set()).add(_canonical)
+
+# Singular `universe` is kept for backward compatibility with consumers written
+# against the old shape (the site falls back to it when `universes` is absent).
+# First-wins over the curated lists, exactly as before.
 TICKER_UNIVERSE = {}
-seen = set()
-for universe, tickers in UNIVERSES.items():
-    for t in tickers:
-        if t not in seen:
-            TICKERS.append(t)
-            TICKER_UNIVERSE[t] = universe
-            seen.add(t)
+for _universe, _tickers in CURATED_UNIVERSES.items():
+    for _t in _tickers:
+        TICKER_UNIVERSE.setdefault(_t, _universe)
+
+
+def resolve_scan_set(selected=None, added=None):
+    """Return (ordered tickers, canonical universe labels) for this run.
+
+    `selected` is None for the default scan — the curated watchlists only,
+    which is what the unattended Pi cron has always run. Naming universes
+    explicitly (--universes) is opt-in because the broad indices are large:
+    Russell 2000 alone adds ~2,000 symbols to a serial, rate-limited fetch
+    loop that already takes 5-10 minutes for ~660.
+
+    `added` (--add-universes) unions the named universes onto the default set
+    instead of replacing it. That distinction matters operationally: the output
+    file is the WHOLE screener, not a per-universe shard, so a --universes run
+    naming only the new indices would drop every name it did not name — 563 of
+    the 716 currently scanned. Adding an index to the site is a union, not a
+    substitution, and this is the flag that says so.
+    """
+    if added:
+        base, base_labels = resolve_scan_set(None)
+        extra, extra_labels = resolve_scan_set(added)
+        tickers = list(dict.fromkeys(base + extra))
+        labels = list(dict.fromkeys(base_labels + extra_labels))
+        return tickers, labels
+
+    if selected is None:
+        chosen = list(CURATED_UNIVERSES.items())
+    else:
+        chosen = []
+        for name in selected:
+            canonical = canonical_universe(name)
+            # A fetched index list wins outright — asking to scan "the S&P 500"
+            # must mean the index, not the 490-name hand-typed sample of it
+            # (which is 74 names out of date). Only when no fetched list exists
+            # do the curated chunks answer, and then ALL chunks sharing the
+            # canonical name do, since the sample is split across three keys.
+            if canonical in INDEX_UNIVERSES:
+                matched = [(canonical, INDEX_UNIVERSES[canonical])]
+            else:
+                matched = [(key, members) for key, members in CURATED_UNIVERSES.items()
+                           if canonical_universe(key) == canonical]
+            if not matched:
+                known = sorted(set(map(canonical_universe, CURATED_UNIVERSES)) | set(INDEX_UNIVERSES))
+                raise SystemExit(f"Unknown universe {name!r}. Known: {known}")
+            chosen.extend(matched)
+
+    tickers, labels, seen = [], [], set()
+    for label, members in chosen:
+        canonical = canonical_universe(label)
+        if canonical not in labels:
+            labels.append(canonical)
+        for ticker in members:
+            if ticker not in seen:
+                tickers.append(ticker)
+                seen.add(ticker)
+    return tickers, labels
 
 
 # ── Metrics Computation ────────────────────────────────────────
+
+
+# ── Rate limiting ──────────────────────────────────────────────
+# yfinance publishes no quota, and the practical limit is well inside what a
+# multi-index scan needs. Measured 2026-07-26 on a 1,727-ticker run: the first
+# 1,272 tickers succeeded at 0.1s spacing (~2,500 HTTP calls), then Yahoo began
+# refusing with YFRateLimitError and refused EVERY ONE of the remaining 455. A
+# probe 20 minutes later was still refused.
+#
+# The old loop treated a refusal like any other error — print, count as failed,
+# move on — so one trip silently turned into 455 "failures" and an output file
+# that claimed to have scanned indices it had barely touched. Sleeping longer
+# alone does not fix that; the scan has to NOTICE it is being throttled, wait,
+# and stop rather than burn through the rest.
+
+class RateLimited(RuntimeError):
+    """Yahoo refused the request because we are over its quota."""
+
+
+# The exception type lives in yfinance's internals and has moved between
+# releases, so match on the name and message rather than importing it.
+def _is_rate_limited(exc):
+    return (
+        'ratelimit' in type(exc).__name__.lower()
+        or 'too many requests' in str(exc).lower()
+        or 'rate limited' in str(exc).lower()
+    )
+
+
+# Yahoo's cool-off is minutes, not seconds. Escalating waits give it room to
+# clear without the scan giving up on the first refusal.
+RATE_LIMIT_BACKOFF = (60, 180, 420)
 
 
 def _finite(v):
@@ -159,6 +338,8 @@ def fetch_ticker_data(ticker):
         t = yf.Ticker(ticker)
         info = t.info
     except Exception as e:
+        if _is_rate_limited(e):
+            raise RateLimited(str(e)) from e
         print(f"Error getting info for {ticker}: {type(e).__name__}: {e}", file=sys.stderr)
         return None
 
@@ -240,7 +421,11 @@ def fetch_ticker_data(ticker):
         result = {
             "ticker": ticker,
             "name": ticker_name,
-            "universe": TICKER_UNIVERSE.get(ticker, "Other"),
+            # `universe` (singular) is the legacy single-valued field; the
+            # site prefers `universes` and only falls back to this one.
+            "universe": TICKER_UNIVERSE.get(ticker)
+                        or (sorted(TICKER_UNIVERSES.get(ticker, ())) or ["Other"])[0],
+            "universes": sorted(TICKER_UNIVERSES.get(ticker, ())),
             "price": round(price, 2),
             "change_pct": change_pct,
             "pe": _finite(info.get("trailingPE")),
@@ -286,7 +471,11 @@ def fetch_ticker_data(ticker):
             elif isinstance(v, float) and v == float('-inf'):
                 result[k] = None
         return result
+    except RateLimited:
+        raise
     except Exception as e:
+        if _is_rate_limited(e):
+            raise RateLimited(str(e)) from e
         print(f"Error fetching {ticker}: {type(e).__name__}: {e}", file=sys.stderr)
         return None
 
@@ -369,6 +558,34 @@ def compute_score(data):
     return score, reasons
 
 
+def compute_universe_coverage(scan_tickers, results):
+    """How much of each universe this run actually holds.
+
+    `expected` counts members of that universe in the resolved scan set — what
+    the run set out to fetch — and `scanned` counts how many of them came back.
+    Both are derived from the same membership map the rows carry, so the site
+    can state coverage as a fraction rather than inferring completeness from
+    the mere presence of a label.
+    """
+    expected, scanned = {}, {}
+    have = {t['ticker'] for t in results if t.get('ticker')}
+    for ticker in scan_tickers:
+        for universe in TICKER_UNIVERSES.get(ticker, ()):
+            expected[universe] = expected.get(universe, 0) + 1
+            if ticker in have:
+                scanned[universe] = scanned.get(universe, 0) + 1
+    return {
+        universe: {
+            "expected": count,
+            "scanned": scanned.get(universe, 0),
+            # Members the cache knows about, which can exceed `expected` when
+            # the run did not ask for the whole index.
+            "known_members": len(INDEX_UNIVERSES.get(universe, ())) or None,
+        }
+        for universe, count in sorted(expected.items())
+    }
+
+
 # ── Market Summary ─────────────────────────────────────────────
 
 def compute_market_summary(tickers):
@@ -417,7 +634,43 @@ def main():
                         help='Output JSON file path')
     parser.add_argument('--test-run', action='store_true',
                         help='Fetch only 5 tickers for quick testing')
+    parser.add_argument('--universes', default=None,
+                        help='Comma-separated universes to scan. Default: the curated '
+                             'watchlists only (what the Pi cron has always run). The broad '
+                             'indices are opt-in because they are large — Russell 2000 alone '
+                             'adds ~2,000 symbols to a serial, rate-limited fetch loop. '
+                             'Use --list-universes to see what is available.')
+    parser.add_argument('--add-universes', default=None,
+                        help='Comma-separated universes to scan IN ADDITION to the default set. '
+                             'Use this to add an index to the site: the output file is the whole '
+                             'screener, so --universes would drop everything it does not name.')
+    parser.add_argument('--resume', default=None, metavar='FILE',
+                        help='Carry forward the tickers already in FILE and scan only what is '
+                             'missing. Use after a run stops on a rate limit.')
+    parser.add_argument('--sleep', type=float, default=0.1, metavar='SECONDS',
+                        help='Delay between tickers (default 0.1). Raise it for large scans: '
+                             '~1,270 tickers at 0.1s was enough to trip Yahoo on 2026-07-26.')
+    parser.add_argument('--force', action='store_true',
+                        help='Write the output even when a rate-limited run holds fewer tickers '
+                             'than the file it would replace.')
+    parser.add_argument('--list-universes', action='store_true',
+                        help='Print the available universes with their sizes and exit.')
     args = parser.parse_args()
+
+    if args.universes and args.add_universes:
+        raise SystemExit('Use --universes (replace) or --add-universes (extend), not both.')
+
+    if args.list_universes:
+        print("Curated watchlists (scanned by default):")
+        for name, members in CURATED_UNIVERSES.items():
+            print(f"  {name:28s} {len(members):5d}")
+        print("\nIndex constituents (opt in with --universes):")
+        if not INDEX_UNIVERSES:
+            print("  none — run fetch_universe_constituents.py to populate the cache")
+        for name, members in INDEX_UNIVERSES.items():
+            source = INDEX_SOURCES.get(name, {})
+            print(f"  {name:28s} {len(members):5d}  as of {source.get('as_of', '?')}")
+        return
 
     # ── Concurrency guard ──────────────────────────────────────────────
     # The screener scans 500+ tickers (~5-10 min). If cron fires again before
@@ -437,16 +690,67 @@ def main():
 
 def _run_scan(args):
     """Actual scan logic, wrapped by the flock guard in main()."""
-    tickers = TICKERS[:5] if args.test_run else TICKERS
+    def _names(value):
+        return [name.strip() for name in value.split(',') if name.strip()] if value else None
+
+    scan_tickers, scanned_labels = resolve_scan_set(
+        _names(args.universes), added=_names(args.add_universes),
+    )
+    print(f"Scan set: {len(scan_tickers)} tickers across {scanned_labels}", file=sys.stderr)
+
+    # --resume carries forward an earlier run's rows and scans only what is
+    # missing. A throttled scan is the normal way a big run ends, and without
+    # this the only recovery is to refetch everything — which trips the limit
+    # again before reaching the tickers that were actually missed.
     results = []
+    if args.resume:
+        try:
+            with open(args.resume, encoding='utf-8') as handle:
+                previous = json.load(handle)
+            results = [t for t in previous.get('tickers', []) if t.get('ticker')]
+            print(f"Resuming from {args.resume}: {len(results)} tickers already scanned",
+                  file=sys.stderr)
+        except (OSError, ValueError) as exc:
+            raise SystemExit(f"--resume could not read {args.resume}: {exc}")
+
+    have = {t['ticker'] for t in results}
+    pending = [t for t in scan_tickers if t not in have]
+    tickers = pending[:5] if args.test_run else pending
+
     failed = 0
+    throttled = False
     total = len(tickers)
 
-    print(f"Scanning {total} tickers...", file=sys.stderr)
+    print(f"Scanning {total} tickers ({len(have)} already held)...", file=sys.stderr)
 
     for i, ticker in enumerate(tickers, 1):
         print(f"  [{i}/{total}] {ticker}...", file=sys.stderr)
-        data = fetch_ticker_data(ticker)
+
+        data = None
+        for attempt in range(len(RATE_LIMIT_BACKOFF) + 1):
+            try:
+                data = fetch_ticker_data(ticker)
+                break
+            except RateLimited as exc:
+                if attempt == len(RATE_LIMIT_BACKOFF):
+                    # Out of patience. STOP — do not keep calling. Once Yahoo
+                    # starts refusing it refuses everything, so continuing would
+                    # mark every remaining ticker "failed" and produce a file
+                    # that looks like a completed scan of a universe it barely
+                    # touched. That is what the 2026-07-26 run did: 455
+                    # consecutive refusals recorded as ordinary failures.
+                    print(f"  still rate limited after {sum(RATE_LIMIT_BACKOFF)}s — stopping at "
+                          f"{ticker} with {len(tickers) - i + 1} unscanned. Re-run with "
+                          f"--resume to pick up the rest. ({exc})", file=sys.stderr)
+                    throttled = True
+                    break
+                wait = RATE_LIMIT_BACKOFF[attempt]
+                print(f"  rate limited on {ticker} — waiting {wait}s "
+                      f"(attempt {attempt + 1}/{len(RATE_LIMIT_BACKOFF)})", file=sys.stderr)
+                time.sleep(wait)
+        if throttled:
+            break
+
         if data:
             score, signals = compute_score(data)
             data['score'] = score
@@ -454,12 +758,28 @@ def _run_scan(args):
             results.append(data)
         else:
             failed += 1
-        time.sleep(0.1)  # Rate limit: 10 req/sec
+        time.sleep(args.sleep)
 
     output = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "ticker_count": len(results),
         "failed_count": failed,
+        # Which universes this run actually covered. The site needs this to
+        # tell "no rows match your filters" apart from "this snapshot never
+        # scanned that index" — without it, offering an index in the filter
+        # that was not scanned reads to the visitor as "nothing qualifies".
+        "universes_scanned": scanned_labels,
+        # ...and how completely, because "scanned" is not the same as
+        # "complete". A throttled or partial run must not let the site imply
+        # full coverage: the 2026-07-26 run held 159 of the 602 S&P 600 names
+        # and universes_scanned alone would have claimed the whole index.
+        "universe_coverage": compute_universe_coverage(scan_tickers, results),
+        # True when the run stopped early because Yahoo was still refusing.
+        "rate_limited": throttled,
+        # Provenance for the index universes in this run, so the site can say
+        # how current the membership is rather than implying it is live.
+        "universe_sources": {name: INDEX_SOURCES[name]
+                             for name in scanned_labels if name in INDEX_SOURCES},
         "market_summary": compute_market_summary(results),
         "tickers": results,
     }
@@ -471,6 +791,25 @@ def _run_scan(args):
         out_path = os.path.join('..', out_path)
 
     os.makedirs(os.path.dirname(out_path) or '.', exist_ok=True)
+
+    # Regression guard. Once the scheduled scan covers several indices it takes
+    # long enough to meet Yahoo's rate limit, and a throttled run stops early
+    # with only part of the universe in hand. Writing that would replace a
+    # COMPLETE file with a partial one — yesterday's full scan is worth more
+    # than today's truncated one, and the site would silently lose whole
+    # indices with nothing to say why. Refuse, and leave the good file alone.
+    if throttled and not args.force:
+        try:
+            with open(out_path, encoding='utf-8') as handle:
+                existing = len(json.load(handle).get('tickers', []))
+        except (OSError, ValueError):
+            existing = 0
+        if existing > len(results):
+            print(f"\nRefusing to overwrite {out_path}: this run was rate limited and holds "
+                  f"{len(results)} tickers, the existing file has {existing}. The old file is "
+                  f"kept. Re-run with --resume {out_path} to top it up, or --force to overwrite.",
+                  file=sys.stderr)
+            raise SystemExit(2)
 
     # Atomic write — a crash mid-scan can never expose a partial JSON file
     atomic_write_json(out_path, output)

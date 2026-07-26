@@ -1,5 +1,6 @@
 // app/screener/page.tsx — Stock Screener (Basic tier)
 import { ScreenerClient } from './screener-client';
+import { getTickerCoverage } from '@/lib/seo/ticker-coverage';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata = buildMetadata({
@@ -10,5 +11,9 @@ export const metadata = buildMetadata({
 });
 
 export default function ScreenerPage() {
-  return <ScreenerClient />;
+  // Which symbols actually have a prerendered detail page. /ticker/[symbol]/ is
+  // dynamicParams:false, so a row linking outside this set is a hard 404 — and
+  // the screener now carries far more rows than there are detail files.
+  const coverage = getTickerCoverage().map((entry) => entry.symbol);
+  return <ScreenerClient tickerCoverage={coverage} />;
 }
