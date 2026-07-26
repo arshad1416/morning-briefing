@@ -1,24 +1,46 @@
 #!/usr/bin/env python3
 """Generate latest.json for the briefing dashboard from available Pi data."""
-import json, os, datetime
+import json, os, sys, datetime
 from pathlib import Path
 
 import yfinance as yf
+
+# pipeline_runtime lives alongside this script on the Pi.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from pipeline_runtime import atomic_write_json
 
 CACHE = Path(os.path.expanduser("~/.hermes/briefing-cache"))
 MARKET_INTEL = Path(os.path.expanduser("~/.hermes/market-intel"))
 DASHBOARD_REPO = Path(os.path.expanduser("~/morning-briefing"))
 OUTPUT = DASHBOARD_REPO / "data" / "latest.json"
 
+# Maximum age (hours) for upstream cache files before they are ignored.
+# Prevents the dashboard from silently serving yesterday's data with a fresh
+# generated_at timestamp.
+UPSTREAM_MAX_AGE_H = 26
+
+
 def load_json(path):
     try:
         with open(path) as f:
             return json.load(f)
-    except: return None
+    except (json.JSONDecodeError, OSError, ValueError) as e:
+        print(f"  WARN: could not load {path}: {e}", file=sys.stderr)
+        return None
+
+
+def _file_age_hours(path):
+    """Return the age of a file in hours, or inf if it doesn't exist."""
+    try:
+        mtime = os.path.getmtime(path)
+        return (datetime.datetime.now().timestamp() - mtime) / 3600
+    except OSError:
+        return float("inf")
+
 
 def safe_float(v, default=0):
     try: return round(float(v), 2)
-    except: return default
+    except (TypeError, ValueError): return default
 
 def to_iso(v):
     """Normalise a news date to ISO 8601 with a UTC offset.
@@ -43,7 +65,12 @@ def to_iso(v):
         return ""
 
 now = datetime.datetime.now()
-ts = now.strftime("%Y-%m-%dT%H:%M:%S-04:00")
+# Use the system's local timezone offset instead of hardcoding -04:00 (EDT).
+# The Pi is in America/Toronto; this correctly emits -05:00 in winter (EST)
+# and -04:00 in summer (EDT) without manual intervention.
+_local_offset = now.astimezone().strftime("%z")  # e.g. "-0400"
+_offset_fmt = f"{_local_offset[:3]}:{_local_offset[3:]}"  # e.g. "-04:00"
+ts = now.strftime(f"%Y-%m-%dT%H:%M:%S{_offset_fmt}")
 
 data = {
     "generated_at": ts,
@@ -76,7 +103,8 @@ for symbol, name in indices_config:
                 data["market_summary"]["vix"] = price
             if name == "10Y Yield":
                 data["market_summary"]["ten_year_yield"] = round(price, 3)
-    except: pass
+    except Exception as e:
+        print(f"  WARN: yfinance index fetch failed for {symbol}: {e}", file=sys.stderr)
 
 data["market_summary"]["indices"] = indices
 
@@ -86,7 +114,8 @@ try:
     if not fx.empty:
         cad = safe_float(fx["Close"].iloc[-1])
         data["market_summary"]["fx_rates"] = [{"pair": "USD/CAD", "price": cad}]
-except: pass
+except Exception as e:
+    print(f"  WARN: yfinance FX fetch failed: {e}", file=sys.stderr)
 
 # Briefing narrative from pipeline cache
 pipeline = load_json(CACHE / "pipeline_output.json")
@@ -112,8 +141,9 @@ elif indices:
     text = "\n".join(lines)
     data["narrative"]["summary_paragraph"] = text
 
-# Premarket scan
-scan = load_json(MARKET_INTEL / "premarket_scan.json")
+# Premarket scan (with staleness guard)
+_premarket_path = MARKET_INTEL / "premarket_scan.json"
+scan = load_json(_premarket_path) if _file_age_hours(_premarket_path) <= UPSTREAM_MAX_AGE_H else None
 if scan:
     data["premarket_top_setups"] = scan.get("top_setups", [])[:7]
     data["watchlist_summary"] = {
@@ -204,13 +234,15 @@ if not data["geopolitical"]:
     except Exception as e:
         print(f"  WARN: Geopolitical RSS fallback failed: {e}")
 
-# Insider trades
-insider = load_json(MARKET_INTEL / "insider_trades.json")
+# Insider trades (with staleness guard)
+_insider_path = MARKET_INTEL / "insider_trades.json"
+insider = load_json(_insider_path) if _file_age_hours(_insider_path) <= UPSTREAM_MAX_AGE_H else None
 if insider:
     data["insider_trades"] = insider.get("recent_trades", [])[:10]
 
-# Congress trades
-congress = load_json(MARKET_INTEL / "congress_trades.json")
+# Congress trades (with staleness guard)
+_congress_path = MARKET_INTEL / "congress_trades.json"
+congress = load_json(_congress_path) if _file_age_hours(_congress_path) <= UPSTREAM_MAX_AGE_H else None
 if congress:
     data["congress"] = {"recent_trades": congress.get("trades", [])[:10], "summary": congress.get("summary", "")}
 
@@ -254,9 +286,7 @@ if analysis:
     if geo and not data["geopolitical"]:
         data["geopolitical"] = geo
 
-# Write
-OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-with open(OUTPUT, "w") as f:
-    json.dump(data, f, indent=2)
+# Write (atomic — a crash mid-write can never expose a partial JSON file)
+atomic_write_json(OUTPUT, data)
 
 print(f"✅ latest.json generated: {len(indices)} indices, {data['narrative'].get('summary_paragraph','')[:50]}...")
