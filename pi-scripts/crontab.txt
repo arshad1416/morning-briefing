@@ -51,7 +51,11 @@
 0 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 job_hunt_daily.py --no-telegram >> /home/arshad14/.hermes/logs/job_hunt.log 2>&1
 
 # ── Screener data ──
-30 10 * * 1-5 cd /home/arshad14/morning-briefing && python3 pi-scripts/generate-screener-data.py >> /home/arshad14/.hermes/logs/screener.log 2>&1
+# Multi-index since 2026-07-26: without --add-universes this rebuilds the 716-ticker
+# curated scan and erases the S&P 400/600 and Nasdaq-100. --sleep 0.4 keeps ~1,730
+# tickers under Yahoo's rate limit; the script backs off and refuses to overwrite a
+# complete file with a throttled partial one. Takes ~25-30 min, not ~10.
+30 10 * * 1-5 cd /home/arshad14/morning-briefing && python3 pi-scripts/generate-screener-data.py --add-universes "S&P 500,S&P 400,S&P 600,Nasdaq-100" --sleep 0.4 >> /home/arshad14/.hermes/logs/screener.log 2>&1
 
 # ── Walk-Forward V2 — Sundays ──
 0 6 * * 0 cd /home/arshad14/.hermes/scripts && python3 run_walk_forward_v2.py >> /home/arshad14/.hermes/logs/walk_forward_v2.log 2>&1
