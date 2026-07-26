@@ -650,6 +650,9 @@ def main():
     parser.add_argument('--sleep', type=float, default=0.1, metavar='SECONDS',
                         help='Delay between tickers (default 0.1). Raise it for large scans: '
                              '~1,270 tickers at 0.1s was enough to trip Yahoo on 2026-07-26.')
+    parser.add_argument('--force', action='store_true',
+                        help='Write the output even when a rate-limited run holds fewer tickers '
+                             'than the file it would replace.')
     parser.add_argument('--list-universes', action='store_true',
                         help='Print the available universes with their sizes and exit.')
     args = parser.parse_args()
@@ -788,6 +791,25 @@ def _run_scan(args):
         out_path = os.path.join('..', out_path)
 
     os.makedirs(os.path.dirname(out_path) or '.', exist_ok=True)
+
+    # Regression guard. Once the scheduled scan covers several indices it takes
+    # long enough to meet Yahoo's rate limit, and a throttled run stops early
+    # with only part of the universe in hand. Writing that would replace a
+    # COMPLETE file with a partial one — yesterday's full scan is worth more
+    # than today's truncated one, and the site would silently lose whole
+    # indices with nothing to say why. Refuse, and leave the good file alone.
+    if throttled and not args.force:
+        try:
+            with open(out_path, encoding='utf-8') as handle:
+                existing = len(json.load(handle).get('tickers', []))
+        except (OSError, ValueError):
+            existing = 0
+        if existing > len(results):
+            print(f"\nRefusing to overwrite {out_path}: this run was rate limited and holds "
+                  f"{len(results)} tickers, the existing file has {existing}. The old file is "
+                  f"kept. Re-run with --resume {out_path} to top it up, or --force to overwrite.",
+                  file=sys.stderr)
+            raise SystemExit(2)
 
     # Atomic write — a crash mid-scan can never expose a partial JSON file
     atomic_write_json(out_path, output)
