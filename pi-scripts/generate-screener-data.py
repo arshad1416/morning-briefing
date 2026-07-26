@@ -291,6 +291,38 @@ def resolve_scan_set(selected=None, added=None):
 # ── Metrics Computation ────────────────────────────────────────
 
 
+# ── Rate limiting ──────────────────────────────────────────────
+# yfinance publishes no quota, and the practical limit is well inside what a
+# multi-index scan needs. Measured 2026-07-26 on a 1,727-ticker run: the first
+# 1,272 tickers succeeded at 0.1s spacing (~2,500 HTTP calls), then Yahoo began
+# refusing with YFRateLimitError and refused EVERY ONE of the remaining 455. A
+# probe 20 minutes later was still refused.
+#
+# The old loop treated a refusal like any other error — print, count as failed,
+# move on — so one trip silently turned into 455 "failures" and an output file
+# that claimed to have scanned indices it had barely touched. Sleeping longer
+# alone does not fix that; the scan has to NOTICE it is being throttled, wait,
+# and stop rather than burn through the rest.
+
+class RateLimited(RuntimeError):
+    """Yahoo refused the request because we are over its quota."""
+
+
+# The exception type lives in yfinance's internals and has moved between
+# releases, so match on the name and message rather than importing it.
+def _is_rate_limited(exc):
+    return (
+        'ratelimit' in type(exc).__name__.lower()
+        or 'too many requests' in str(exc).lower()
+        or 'rate limited' in str(exc).lower()
+    )
+
+
+# Yahoo's cool-off is minutes, not seconds. Escalating waits give it room to
+# clear without the scan giving up on the first refusal.
+RATE_LIMIT_BACKOFF = (60, 180, 420)
+
+
 def _finite(v):
     """yfinance sometimes returns Infinity/NaN — JSON-encode those as null."""
     try:
@@ -306,6 +338,8 @@ def fetch_ticker_data(ticker):
         t = yf.Ticker(ticker)
         info = t.info
     except Exception as e:
+        if _is_rate_limited(e):
+            raise RateLimited(str(e)) from e
         print(f"Error getting info for {ticker}: {type(e).__name__}: {e}", file=sys.stderr)
         return None
 
@@ -437,7 +471,11 @@ def fetch_ticker_data(ticker):
             elif isinstance(v, float) and v == float('-inf'):
                 result[k] = None
         return result
+    except RateLimited:
+        raise
     except Exception as e:
+        if _is_rate_limited(e):
+            raise RateLimited(str(e)) from e
         print(f"Error fetching {ticker}: {type(e).__name__}: {e}", file=sys.stderr)
         return None
 
@@ -520,6 +558,34 @@ def compute_score(data):
     return score, reasons
 
 
+def compute_universe_coverage(scan_tickers, results):
+    """How much of each universe this run actually holds.
+
+    `expected` counts members of that universe in the resolved scan set — what
+    the run set out to fetch — and `scanned` counts how many of them came back.
+    Both are derived from the same membership map the rows carry, so the site
+    can state coverage as a fraction rather than inferring completeness from
+    the mere presence of a label.
+    """
+    expected, scanned = {}, {}
+    have = {t['ticker'] for t in results if t.get('ticker')}
+    for ticker in scan_tickers:
+        for universe in TICKER_UNIVERSES.get(ticker, ()):
+            expected[universe] = expected.get(universe, 0) + 1
+            if ticker in have:
+                scanned[universe] = scanned.get(universe, 0) + 1
+    return {
+        universe: {
+            "expected": count,
+            "scanned": scanned.get(universe, 0),
+            # Members the cache knows about, which can exceed `expected` when
+            # the run did not ask for the whole index.
+            "known_members": len(INDEX_UNIVERSES.get(universe, ())) or None,
+        }
+        for universe, count in sorted(expected.items())
+    }
+
+
 # ── Market Summary ─────────────────────────────────────────────
 
 def compute_market_summary(tickers):
@@ -578,6 +644,12 @@ def main():
                         help='Comma-separated universes to scan IN ADDITION to the default set. '
                              'Use this to add an index to the site: the output file is the whole '
                              'screener, so --universes would drop everything it does not name.')
+    parser.add_argument('--resume', default=None, metavar='FILE',
+                        help='Carry forward the tickers already in FILE and scan only what is '
+                             'missing. Use after a run stops on a rate limit.')
+    parser.add_argument('--sleep', type=float, default=0.1, metavar='SECONDS',
+                        help='Delay between tickers (default 0.1). Raise it for large scans: '
+                             '~1,270 tickers at 0.1s was enough to trip Yahoo on 2026-07-26.')
     parser.add_argument('--list-universes', action='store_true',
                         help='Print the available universes with their sizes and exit.')
     args = parser.parse_args()
@@ -623,16 +695,59 @@ def _run_scan(args):
     )
     print(f"Scan set: {len(scan_tickers)} tickers across {scanned_labels}", file=sys.stderr)
 
-    tickers = scan_tickers[:5] if args.test_run else scan_tickers
+    # --resume carries forward an earlier run's rows and scans only what is
+    # missing. A throttled scan is the normal way a big run ends, and without
+    # this the only recovery is to refetch everything — which trips the limit
+    # again before reaching the tickers that were actually missed.
     results = []
+    if args.resume:
+        try:
+            with open(args.resume, encoding='utf-8') as handle:
+                previous = json.load(handle)
+            results = [t for t in previous.get('tickers', []) if t.get('ticker')]
+            print(f"Resuming from {args.resume}: {len(results)} tickers already scanned",
+                  file=sys.stderr)
+        except (OSError, ValueError) as exc:
+            raise SystemExit(f"--resume could not read {args.resume}: {exc}")
+
+    have = {t['ticker'] for t in results}
+    pending = [t for t in scan_tickers if t not in have]
+    tickers = pending[:5] if args.test_run else pending
+
     failed = 0
+    throttled = False
     total = len(tickers)
 
-    print(f"Scanning {total} tickers...", file=sys.stderr)
+    print(f"Scanning {total} tickers ({len(have)} already held)...", file=sys.stderr)
 
     for i, ticker in enumerate(tickers, 1):
         print(f"  [{i}/{total}] {ticker}...", file=sys.stderr)
-        data = fetch_ticker_data(ticker)
+
+        data = None
+        for attempt in range(len(RATE_LIMIT_BACKOFF) + 1):
+            try:
+                data = fetch_ticker_data(ticker)
+                break
+            except RateLimited as exc:
+                if attempt == len(RATE_LIMIT_BACKOFF):
+                    # Out of patience. STOP — do not keep calling. Once Yahoo
+                    # starts refusing it refuses everything, so continuing would
+                    # mark every remaining ticker "failed" and produce a file
+                    # that looks like a completed scan of a universe it barely
+                    # touched. That is what the 2026-07-26 run did: 455
+                    # consecutive refusals recorded as ordinary failures.
+                    print(f"  still rate limited after {sum(RATE_LIMIT_BACKOFF)}s — stopping at "
+                          f"{ticker} with {len(tickers) - i + 1} unscanned. Re-run with "
+                          f"--resume to pick up the rest. ({exc})", file=sys.stderr)
+                    throttled = True
+                    break
+                wait = RATE_LIMIT_BACKOFF[attempt]
+                print(f"  rate limited on {ticker} — waiting {wait}s "
+                      f"(attempt {attempt + 1}/{len(RATE_LIMIT_BACKOFF)})", file=sys.stderr)
+                time.sleep(wait)
+        if throttled:
+            break
+
         if data:
             score, signals = compute_score(data)
             data['score'] = score
@@ -640,7 +755,7 @@ def _run_scan(args):
             results.append(data)
         else:
             failed += 1
-        time.sleep(0.1)  # Rate limit: 10 req/sec
+        time.sleep(args.sleep)
 
     output = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -651,6 +766,13 @@ def _run_scan(args):
         # scanned that index" — without it, offering an index in the filter
         # that was not scanned reads to the visitor as "nothing qualifies".
         "universes_scanned": scanned_labels,
+        # ...and how completely, because "scanned" is not the same as
+        # "complete". A throttled or partial run must not let the site imply
+        # full coverage: the 2026-07-26 run held 159 of the 602 S&P 600 names
+        # and universes_scanned alone would have claimed the whole index.
+        "universe_coverage": compute_universe_coverage(scan_tickers, results),
+        # True when the run stopped early because Yahoo was still refusing.
+        "rate_limited": throttled,
         # Provenance for the index universes in this run, so the site can say
         # how current the membership is rather than implying it is live.
         "universe_sources": {name: INDEX_SOURCES[name]
