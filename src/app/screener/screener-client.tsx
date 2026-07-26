@@ -19,6 +19,18 @@ import {
 } from '@/lib/schemas/screener';
 import { ScoreBreakdown } from '@/components/feature/screener/ScoreBreakdown';
 import { isBearishSignal, signalLabel } from '@/lib/screener/score';
+import { hrefForSymbol } from '@/lib/ticker/href';
+
+/* Build-time set of symbols that have a prerendered /ticker/[symbol]/ page.
+   Supplied by the server component; a Set in context rather than a prop so the
+   table, the treemap and the expanded detail panel all resolve links the same
+   way. Empty set = nothing is prerendered, so every link takes the ?symbol=
+   route, which still works. */
+const CoverageContext = React.createContext<ReadonlySet<string>>(new Set());
+const useTickerHref = () => {
+  const covered = React.useContext(CoverageContext);
+  return (symbol: string) => hrefForSymbol(symbol, covered);
+};
 
 /* ------------------------------------------------------------------ */
 /*  Filter model                                                      */
@@ -342,6 +354,7 @@ function Fact({ label, value, note }: { label: React.ReactNode; value: React.Rea
 }
 
 function DetailPanel({ t }: { t: ScreenerTicker }) {
+  const tickerHref = useTickerHref();
   const vr = volRatio(t);
   const universes = tickerUniverses(t);
   // The trap documented in generate-screener-data.py: above_52w_high_pct is
@@ -364,7 +377,7 @@ function DetailPanel({ t }: { t: ScreenerTicker }) {
           )}
         </div>
         <Link
-          href={`/ticker/${encodeURIComponent(t.ticker)}/`}
+          href={tickerHref(t.ticker)}
           className="text-xs font-semibold text-[var(--color-accent)] hover:underline"
         >
           Full company page →
@@ -482,6 +495,7 @@ function TickerRow({
   onToggle: () => void;
   detailId: string;
 }) {
+  const tickerHref = useTickerHref();
   const score = t.score ?? 0;
   const vr = volRatio(t);
   const rsi = t.rsi;
@@ -517,7 +531,7 @@ function TickerRow({
             </svg>
           </button>
           <Link
-            href={`/ticker/${encodeURIComponent(t.ticker)}/`}
+            href={tickerHref(t.ticker)}
             className="font-semibold text-[var(--color-accent)] hover:underline"
             data-numeric
           >
@@ -621,6 +635,7 @@ function TickerRow({
 /* ------------------------------------------------------------------ */
 
 function Treemap({ tickers }: { tickers: ScreenerTicker[] }) {
+  const tickerHref = useTickerHref();
   if (!tickers.length) {
     return (
       <p className="p-8 text-center text-sm text-[var(--color-text-tertiary)]">
@@ -667,7 +682,7 @@ function Treemap({ tickers }: { tickers: ScreenerTicker[] }) {
           return (
             <Link
               key={t.ticker}
-              href={`/ticker/${encodeURIComponent(t.ticker)}/`}
+              href={tickerHref(t.ticker)}
               className="flex min-h-11 flex-col items-center justify-center overflow-hidden rounded-sm p-1 text-center transition hover:scale-[1.03] hover:z-10"
               style={{
                 gridColumn: `span ${colSpan}`,
@@ -697,7 +712,19 @@ function Treemap({ tickers }: { tickers: ScreenerTicker[] }) {
 /*  Page                                                              */
 /* ------------------------------------------------------------------ */
 
-export function ScreenerClient() {
+export function ScreenerClient({ tickerCoverage = [] }: { tickerCoverage?: string[] }) {
+  // Symbols with a prerendered /ticker/[symbol]/ page, from the build. The
+  // screener can list far more rows than there are detail pages — the two are
+  // produced by different Pi jobs — so links are resolved per symbol.
+  const covered = useMemo(() => new Set(tickerCoverage), [tickerCoverage]);
+  return (
+    <CoverageContext.Provider value={covered}>
+      <ScreenerBody />
+    </CoverageContext.Provider>
+  );
+}
+
+function ScreenerBody() {
   const { data: result, isLoading } = useQuery(screenerQuery());
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [sort, setSort] = useState<Sort>({ key: 'score', dir: 'desc' });

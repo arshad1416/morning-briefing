@@ -19,6 +19,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { screenerQuery } from '@/lib/query/options';
+import { hrefForSymbol } from '@/lib/ticker/href';
 
 export type TickerIndexEntry = {
   symbol: string;
@@ -29,13 +30,6 @@ export type TickerIndexEntry = {
 /** Static-route coverage, so a result can pick the right href. */
 function coverageSet(entries: TickerIndexEntry[]) {
   return new Set(entries.map((entry) => entry.symbol));
-}
-
-export function hrefForSymbol(symbol: string, covered: ReadonlySet<string>) {
-  const upper = symbol.toUpperCase();
-  return covered.has(upper)
-    ? `/ticker/${encodeURIComponent(upper)}/`
-    : `/ticker/?symbol=${encodeURIComponent(upper)}`;
 }
 
 const MAX_RESULTS = 40;
