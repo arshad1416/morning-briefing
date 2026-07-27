@@ -244,7 +244,11 @@ const MapleGamma = {
     this._data = data;
 
     const tickers = Object.keys(data.tickers);
-    const defaultTicker = 'SPX';
+    // Key migration 2026-07-27: prefer "SPY" (the honest key push_gex.py is
+    // moving to), fall back to legacy "SPX", then whatever key exists.
+    const defaultTicker = tickers.includes('SPY') ? 'SPY'
+      : tickers.includes('SPX') ? 'SPX'
+      : tickers[0];
     this._selectedTicker = defaultTicker;
     this._defaultTicker = defaultTicker;
     this._selectedOverlay = 'gex';
