@@ -1,9 +1,362 @@
 {
-  "_fetched_at": "2026-07-27T13:22:01.183934",
-  "tickers": [],
-  "bullish": [],
-  "bearish": [],
-  "summary": "🔴 No Twitter data available — twitter-cli backend failing (see twitter_sentiment.log)",
+  "_fetched_at": "2026-07-27T14:26:28.227394",
+  "tickers": [
+    {
+      "ticker": "NVDA",
+      "sentiment": "NEUTRAL",
+      "score": -0.1,
+      "tweet_count": 10,
+      "sample_texts": [
+        "The 1 and 4 hour time frames getting pretty oversold on $AMD and $NVDA I’ve added calls on NVDA with 200 day as line in the sand.",
+        "AAPL (+1.82%) has now surpassed NVDA (-4.81%) has the world’s largest company. I’ll look to buy more $NVDA later this week, anyone else?",
+        "Ugly price actions in chips….. crash not done yet….. more to come for a technical bottom maybe around mid August…. $MU $NVDA $AMD"
+      ],
+      "sample_users": [
+        "GhostInvesting",
+        "networthlog",
+        "D3gen_Trader"
+      ]
+    },
+    {
+      "ticker": "TSLA",
+      "sentiment": "BEARISH",
+      "score": -0.4,
+      "tweet_count": 10,
+      "sample_texts": [
+        "Musk acknowledged that billions of previous miles had not yet been sufficient to solve unsupervised self-driving… 10 years of bullshit. How is $TSLA still trading above $25 ?",
+        "Is $TSLA cooked? Asking for a friend (he literally put all his net worth in this shit last year)",
+        "$TSLA just lit a fresh $310 put line: 602 trades, $31.1M vs 11,387 OI. That’s new downside positioning"
+      ],
+      "sample_users": [
+        "guitarboyled",
+        "baucharts",
+        "InsiderFinancex"
+      ]
+    },
+    {
+      "ticker": "AAPL",
+      "sentiment": "BULLISH",
+      "score": 0.75,
+      "tweet_count": 10,
+      "sample_texts": [
+        "Apple overtakes Nvidia as most valuable company as iPhone maker avoids 'capex pitfalls'. Shares rose over 1%",
+        "$AAPL 👀🍏 Big money was active today... Flow Sentiment: Bullish Call Flow: $34.3M",
+        "Tim Cook $AAPL CEO is hands down the best big tech operator... turned it into a methodical cash cow."
+      ],
+      "sample_users": [
+        "Renepdata",
+        "RockyTSTH",
+        "OrbitWinder"
+      ]
+    },
+    {
+      "ticker": "MSFT",
+      "sentiment": "NEUTRAL",
+      "score": 0.15,
+      "tweet_count": 8,
+      "sample_texts": [
+        "Imagine if $MSFT cuts CapEx",
+        "$PLTR and $MSFT really saving my portfolio today",
+        "$MSFT looks more and more like a bottom."
+      ],
+      "sample_users": [
+        "CreationaIIy",
+        "FrostyFinances",
+        "trackdalf"
+      ]
+    },
+    {
+      "ticker": "META",
+      "sentiment": "NEUTRAL",
+      "score": 0.1,
+      "tweet_count": 10,
+      "sample_texts": [
+        "Big Earnings this Week! We got names like $META $MSFT $AMZN reporting Wed/Thurs. I'm predicting a double beat... but... we may see these stocks sell off more",
+        "$META still waiting on 590 for now to buy if not I will just stay out. In hindsight we got a good exit",
+        "Hyperscalers are about to dump $1.4 TRILLION into infrastructure by 2028... $GOOGL. $AMZN. $MSFT. $META."
+      ],
+      "sample_users": [
+        "0dteLink",
+        "traders_kings",
+        "LEAPTRADER_"
+      ]
+    },
+    {
+      "ticker": "GOOGL",
+      "sentiment": "BULLISH",
+      "score": 0.7,
+      "tweet_count": 10,
+      "sample_texts": [
+        "Another reason to be bullish on $GOOGL: Adding Peacock to YouTube Premium...",
+        "$GOOGL after pulling back to MA and GAP, looking constructive with bullish flow across months.",
+        "Position disclosed: the author holds a long position in GOOGL."
+      ],
+      "sample_users": [
+        "alexanderbittan",
+        "tradingchartftw",
+        "FaureGCTPL"
+      ]
+    },
+    {
+      "ticker": "AMZN",
+      "sentiment": "NEUTRAL",
+      "score": 0.15,
+      "tweet_count": 9,
+      "sample_texts": [
+        "quiet accumulation on $AMZN at this level entry 232.02 target 225.44",
+        "I am praying for a $AMZN drop. I need to double down.",
+        "Stacking $META $AMZN 📈📈📈"
+      ],
+      "sample_users": [
+        "aamon1428",
+        "NotVMunn",
+        "LazaroInvestor"
+      ]
+    },
+    {
+      "ticker": "SPY",
+      "sentiment": "BEARISH",
+      "score": -0.35,
+      "tweet_count": 9,
+      "sample_texts": [
+        "It’s getting close- do we get one more bounce from here or we go down till Wednesday & then get a relief bounce on Thursday & Friday before the waterfall next week?",
+        "SPY 2PM UPDATE... The structure deteriorated... We're in the danger zone... puts opening 6.1:1... Every tick lower amplifies the next.",
+        "Market Thoughts: Put on a small $SPY short here today, starting to live below the 50-day... nothing good happens below the 50-day... ingredients for a more volatile cocktail."
+      ],
+      "sample_users": [
+        "William10874873",
+        "alphaticaio",
+        "MarkRitchie_II"
+      ]
+    },
+    {
+      "ticker": "QQQ",
+      "sentiment": "BEARISH",
+      "score": -0.65,
+      "tweet_count": 10,
+      "sample_texts": [
+        "Meanwhile, $QQQ is already breaking down",
+        "$QQQ already has a diamond top reversal pattern. ... A full market correction has begun.",
+        "$QQQ is just shy of my expectation for a 10% to 15% correction."
+      ],
+      "sample_users": [
+        "JasonLeavitt",
+        "DanielMCharter",
+        "jablamsky"
+      ]
+    },
+    {
+      "ticker": "IWM",
+      "sentiment": "NEUTRAL",
+      "score": -0.1,
+      "tweet_count": 8,
+      "sample_texts": [
+        "$IWM 295 CALL JULY 28TH ... Overall Bias: 🟢 Bullish while above $292.59.",
+        "$IWM options show a surge in bearish positioning with $16.9M in premium concentrated in the 286 strike puts for 2026.",
+        "$IWM - This would have been a PERFECT entry to ride the PUTS trade."
+      ],
+      "sample_users": [
+        "mikalche",
+        "ImpliedOptions",
+        "TwitsByAloba"
+      ]
+    },
+    {
+      "ticker": "XLF",
+      "sentiment": "BULLISH",
+      "score": 0.45,
+      "tweet_count": 10,
+      "sample_texts": [
+        "Financials could end up the top performing S&P 500 sector the rest of the year. ... Setup looks too bullish for $XLF to keep lagging.",
+        "$XLF monthly chart suggests the financial sector still has room to move higher. ... could continue grinding higher over the next few months.",
+        "Clean breakout on $XLF"
+      ],
+      "sample_users": [
+        "philrosenn",
+        "trade_catalyst",
+        "PowellLovesMMT"
+      ]
+    },
+    {
+      "ticker": "XLK",
+      "sentiment": "BEARISH",
+      "score": -0.65,
+      "tweet_count": 10,
+      "sample_texts": [
+        "Technology, $XLK, is on pace for its worst month since Sept 2022",
+        "This is a tech meltdown. $QQQ $SMH $SPY $XLK",
+        "$XLK puts flagged today: $1.9M Jan 15 $142.5 puts (bearish opening flow)"
+      ],
+      "sample_users": [
+        "Hedgeye",
+        "Edward13917987",
+        "predictionflo"
+      ]
+    },
+    {
+      "ticker": "TLT",
+      "sentiment": "BULLISH",
+      "score": 0.6,
+      "tweet_count": 9,
+      "sample_texts": [
+        "I’m still bearish on Treasury yields… that’s why I’m long $TLT $TMF",
+        "$TLT Long bonds can go up now? I think yes. Stars are aligning.",
+        "All of which create a tailwind for my $TLT bonds and $MDY $IWR mid-cap long ideas"
+      ],
+      "sample_users": [
+        "iamsergiocoelho",
+        "TomEk51628489",
+        "InvestiBrew"
+      ]
+    },
+    {
+      "ticker": "MSTR",
+      "sentiment": "NEUTRAL",
+      "score": 0.1,
+      "tweet_count": 8,
+      "sample_texts": [
+        "I buy $MSTR every single day, just like I buy bitcoin every day",
+        "$MSTR 을 사야하는 명확한 이유 엄청나게 많은 비트코인을 보유 그리고 현금 보유 비중이 높음",
+        "Serious $MSTR shareholders aren't complaining about it. The ones who are complaining bought at x4 mNAV."
+      ],
+      "sample_users": [
+        "RonSwanonson",
+        "nice_investment",
+        "StrategyMaxi"
+      ]
+    },
+    {
+      "ticker": "PLTR",
+      "sentiment": "BULLISH",
+      "score": 0.65,
+      "tweet_count": 10,
+      "sample_texts": [
+        "$PLTR UP +7.1% Trading $131.15",
+        "$PLTR and $MSFT really saving my portfolio today",
+        "$PLTR is up over 7% on the session, with August 3 Q2 earnings in focus"
+      ],
+      "sample_users": [
+        "baalhadid",
+        "FrostyFinances",
+        "VestExchange"
+      ]
+    },
+    {
+      "ticker": "RIVN",
+      "sentiment": "BULLISH",
+      "score": 0.45,
+      "tweet_count": 8,
+      "sample_texts": [
+        "Rivian is up more than 5% after Piper Sandler gave the stock an upgrade to Overweight from Neutral with a $20 price target",
+        "Piper Sandler upgraded $RIVN from neutral to overweight with a $20 PT.",
+        "This Thursday's earnings call will tell us if $RIVN is a banger or a dumpster."
+      ],
+      "sample_users": [
+        "amktparticipant",
+        "PositionJournal",
+        "kent_simi"
+      ]
+    },
+    {
+      "ticker": "COIN",
+      "sentiment": "BULLISH",
+      "score": 0.75,
+      "tweet_count": 10,
+      "sample_texts": [
+        "I have bought $1.1M worth of CoinBase Stock. Expecting a massive increase in value in the coming months!",
+        "This stock WILL go parabolic once the Clarity Act passes. I'm talking about $COIN.",
+        "I am incredibly bullish on Coinbase $COIN for the next few quarters."
+      ],
+      "sample_users": [
+        "DrProfitCrypt37",
+        "cryptorover",
+        "BrettKessler__"
+      ]
+    },
+    {
+      "ticker": "HOOD",
+      "sentiment": "BULLISH",
+      "score": 0.75,
+      "tweet_count": 8,
+      "sample_texts": [
+        "Started a dca into $HOOD again. Their prediction market revenues should be a good tailwind... Longer term position",
+        "$HOOD is a multi-bagger in the making. Robinhood is dominating with premium credit cards... Q2 earnings drop 29 July.",
+        "$HOOD is sitting right at critical technical support... While I am incredibly bullish on Robinhood long-term..."
+      ],
+      "sample_users": [
+        "fbgThanos",
+        "MsVeilMoney",
+        "varuntakkar01"
+      ]
+    },
+    {
+      "ticker": "SOFI",
+      "sentiment": "NEUTRAL",
+      "score": 0.1,
+      "tweet_count": 10,
+      "sample_texts": [
+        "Prediction: $SOFI will crash after earning and then rebound within a weeks time.",
+        "$SOFI is on today's market radar. Price: $16.97 · Change: +3.07%",
+        "$SOFI (SoFi) — Buy"
+      ],
+      "sample_users": [
+        "MichaelMatcha",
+        "RubenRoy88",
+        "nic11_olesmit"
+      ]
+    },
+    {
+      "ticker": "GME",
+      "sentiment": "BULLISH",
+      "score": 0.75,
+      "tweet_count": 8,
+      "sample_texts": [
+        "ITS TIME TO GET RETARDED IN HERE EVERY ONE BUY $GME BUY BUY BUY GOD CANDLE TO THE FUCKING MOON",
+        "$GME Net Buy going vertical",
+        "Another $2B Treasury Buy Back scheduled. $GME et al. settlement stress hits hard"
+      ],
+      "sample_users": [
+        "ineedacig555",
+        "Venturinglist",
+        "WhatCanIMT"
+      ]
+    },
+    {
+      "ticker": "AMC",
+      "sentiment": "BULLISH",
+      "score": 0.55,
+      "tweet_count": 8,
+      "sample_texts": [
+        "Nasdaq red $AMC green- anytime amc green over just 3% now-Nasdaq aka GROWTH trading at 2.5 multiple GDP AMC trading at not counting naked shorts 5x’s below-shorts you’re so fukked",
+        "$AMC the only question left is HOW high do we MOON too imo",
+        "No complaints from todays price action - coiling up while holding the earnings gap still looks bullish leaning to me."
+      ],
+      "sample_users": [
+        "wolf_of_ape_st",
+        "stuckonstocks",
+        "masked_investor"
+      ]
+    }
+  ],
+  "bullish": [
+    "AAPL",
+    "GOOGL",
+    "XLF",
+    "TLT",
+    "PLTR",
+    "RIVN",
+    "COIN",
+    "HOOD",
+    "GME",
+    "AMC"
+  ],
+  "bearish": [
+    "TSLA",
+    "SPY",
+    "QQQ",
+    "XLK"
+  ],
+  "summary": "🟢 Bullish skew on Twitter (10/21 tickers bullish)",
   "_stale": false,
-  "_consolidated_at": "2026-07-27 13:27"
+  "_consolidated_at": "2026-07-27 14:28"
 }
