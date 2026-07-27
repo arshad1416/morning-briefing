@@ -43,9 +43,18 @@ These are public and free to fetch:
   narrative and the underlying model features
 - /data/reddit-sentiment.json : WSB / r-stocks sentiment summaries
 - /data/maplegamma-data.json : gamma-exposure overview per ticker (net GEX/DEX/VEX,
-  gamma regime, gamma profile by strike, key levels)
+  gamma regime, gamma profile by strike, key levels). Note: the payload is
+  SPY-scale; the ticker key is migrating from the misnomer "SPX" to "SPY"
 - /data/analysis.json : curated market headlines with sentiment tags
   (Seeking Alpha + BNN Bloomberg)
+- /data/screener-lite.json : public teaser of the screener — market summary and
+  a handful of top tickers (the full 1,600+-ticker screener is subscriber-only)
+- /data/options-status.json : options module heartbeat — VIX vs the entry gate,
+  open option positions, active strategies
+- /data/crypto-cohorts.json : crypto paper-trading cohort A/B status
+- /data/briefing-intel.json : cross-source intel summary feeding the briefing
+- /data/twitter-intel.json : Twitter/X market sentiment digest
+- /data/archive-index.json : machine-readable index of the briefing archive
 
 
 ## Subscription-gated (not open endpoints)

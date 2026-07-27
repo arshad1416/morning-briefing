@@ -117,10 +117,14 @@ try:
 except Exception as e:
     print(f"  WARN: yfinance FX fetch failed: {e}", file=sys.stderr)
 
-# Briefing narrative from pipeline cache
+# Briefing narrative from pipeline cache (age-guarded: the synthesis pipeline
+# stopped writing this file on 2026-05-30 and the bare exists() check kept
+# republishing that snapshot — portfolio balance included — under a fresh
+# generated_at for 8 weeks. A stale synthesis is worse than the auto-generated
+# market snapshot below, so age it out like every other upstream cache.)
 pipeline = load_json(CACHE / "pipeline_output.json")
 synthesis_path = CACHE / "pipeline_synthesis.txt"
-if synthesis_path.exists():
+if synthesis_path.exists() and _file_age_hours(synthesis_path) <= UPSTREAM_MAX_AGE_H:
     text = synthesis_path.read_text()[:2000]
     data["narrative"]["summary_paragraph"] = text
 elif indices:
@@ -246,28 +250,21 @@ congress = load_json(_congress_path) if _file_age_hours(_congress_path) <= UPSTR
 if congress:
     data["congress"] = {"recent_trades": congress.get("trades", [])[:10], "summary": congress.get("summary", "")}
 
-# Central banks
-cb_text = CACHE / "central_banks.json"
-cb = load_json(cb_text)
-DEFAULT_FED = (
-    "The Federal Reserve held rates steady at 4.25-4.50% at its June meeting. "
-    "Chair Powell noted inflation remains elevated but the labor market is cooling. "
-    "Markets are pricing in one rate cut by September."
-)
-DEFAULT_BOC = (
-    "The Bank of Canada held its overnight rate at 3.25% in June. "
-    "Governor Macklem highlighted that while core inflation is trending toward "
-    "the 2% target, shelter costs remain sticky."
-)
+# Central banks (age-guarded, no hardcoded fallback: the old DEFAULT_FED /
+# DEFAULT_BOC constants described the June 2026 meetings and published verbatim
+# whenever the cache was missing — which it permanently was, so the site served
+# frozen June central-bank text indefinitely. Empty strings hide the card in
+# every consumer (research-client.tsx, research.js, archive page); absent is
+# honest, stale prose is not.)
+_cb_path = CACHE / "central_banks.json"
+cb = load_json(_cb_path) if _file_age_hours(_cb_path) <= 7 * 24 else None
 if cb:
-    fed_text = cb.get("fed", "").strip()
-    boc_text = cb.get("boc", "").strip()
     data["central_banks"] = {
-        "fed": fed_text if fed_text else DEFAULT_FED,
-        "boc": boc_text if boc_text else DEFAULT_BOC,
+        "fed": cb.get("fed", "").strip(),
+        "boc": cb.get("boc", "").strip(),
     }
 else:
-    data["central_banks"] = {"fed": DEFAULT_FED, "boc": DEFAULT_BOC}
+    data["central_banks"] = {"fed": "", "boc": ""}
 
 # Fallback: populate news from analysis.json (generated earlier in pipeline)
 ANALYSIS = DASHBOARD_REPO / "data" / "analysis.json"

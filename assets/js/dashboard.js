@@ -260,8 +260,10 @@ const Dashboard = {
     }
 
     // ── 6.5 GEX/DEX/VEX SNAPSHOT ──
-    if (gexData?.tickers?.SPX) {
-      const a = gexData.tickers.SPX;
+    // Key migration 2026-07-27: push_gex.py is renaming "SPX" (misnomer — the
+    // data is SPY-scale) to "SPY". Accept both during the transition.
+    if (gexData?.tickers?.SPY || gexData?.tickers?.SPX) {
+      const a = gexData.tickers.SPY || gexData.tickers.SPX;
       const fmt = (v) => Math.abs(v) >= 1e6 ? '$'+(v/1e6).toFixed(1)+'M' : Math.abs(v) >= 1e3 ? '$'+(v/1e3).toFixed(0)+'K' : '$'+(v||0).toFixed(0);
       const rg = (a.gamma_regime||'').toUpperCase();
       const rc = rg.includes('LONG')||rg.includes('BULL') ? 'var(--green)' : rg.includes('SHORT')||rg.includes('BEAR') ? 'var(--red)' : 'var(--text-primary)';

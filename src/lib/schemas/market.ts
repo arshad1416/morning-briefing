@@ -136,42 +136,51 @@ const MgBucketSchema = z
   })
   .passthrough();
 
+const MgTickerSchema = z
+  .object({
+    current_price: z.number().default(0),
+    gamma_regime: z.string().default('neutral'),
+    max_gex_strike: z.number().nullish(),
+    max_gex_value: z.number().nullish(),
+    total_gex: z.number().default(0),
+    total_dex: z.number().default(0),
+    total_vex: z.number().default(0),
+    // Reconstructed greeks (push_gex.py, from IBKR/yfinance chains)
+    total_vanna: z.number().nullish(),
+    total_charm: z.number().nullish(),
+    total_dealer_gex: z.number().nullish(),
+    gamma_flip: z.number().nullish(),
+    max_pain: z.number().nullish(),
+    gamma_profile: z.array(MgGammaRowSchema).default([]),
+    expiry_data: z
+      .object({
+        all: MgBucketSchema.optional(),
+        weekly: MgBucketSchema.optional(),
+        monthly: MgBucketSchema.optional(),
+      })
+      .passthrough()
+      .optional(),
+  })
+  .passthrough();
+
 const MapleGammaFileSchema = z
   .object({
     generated_at: z.string(),
-    tickers: z.object({
-      SPX: z
-        .object({
-          current_price: z.number().default(0),
-          gamma_regime: z.string().default('neutral'),
-          max_gex_strike: z.number().nullish(),
-          max_gex_value: z.number().nullish(),
-          total_gex: z.number().default(0),
-          total_dex: z.number().default(0),
-          total_vex: z.number().default(0),
-          // Reconstructed greeks (push_gex.py, from IBKR/yfinance chains)
-          total_vanna: z.number().nullish(),
-          total_charm: z.number().nullish(),
-          total_dealer_gex: z.number().nullish(),
-          gamma_flip: z.number().nullish(),
-          max_pain: z.number().nullish(),
-          gamma_profile: z.array(MgGammaRowSchema).default([]),
-          expiry_data: z
-            .object({
-              all: MgBucketSchema.optional(),
-              weekly: MgBucketSchema.optional(),
-              monthly: MgBucketSchema.optional(),
-            })
-            .passthrough()
-            .optional(),
-        })
-        .passthrough(),
-    }),
+    // KEY MIGRATION (2026-07-27): push_gex.py historically keyed this SPY-scale
+    // payload "SPX" (a misnomer — see the ticker comment in GexDataSchema). The
+    // writer is being renamed to "SPY"; both keys are accepted so the site
+    // parses on either side of the flip, whichever deploys first.
+    tickers: z
+      .object({
+        SPX: MgTickerSchema.optional(),
+        SPY: MgTickerSchema.optional(),
+      })
+      .passthrough(),
   })
   .passthrough();
 
 type MgBucket = z.infer<typeof MgBucketSchema>;
-type MgTicker = z.infer<typeof MapleGammaFileSchema>['tickers']['SPX'];
+type MgTicker = z.infer<typeof MgTickerSchema>;
 
 // BUG FIX: this used to be called with the GROSS total_gex, in which puts
 // are stored positive (see the dealer_gamma comment below) — a gross sum of
@@ -235,8 +244,17 @@ function toMode(bucket: MgBucket, spx: MgTicker): z.infer<typeof GexModeSchema> 
   };
 }
 
-export const GexDataSchema = MapleGammaFileSchema.transform((f) => {
-  const spx = f.tickers.SPX;
+export const GexDataSchema = MapleGammaFileSchema.transform((f, ctx) => {
+  // Prefer the new honest key, fall back to the legacy misnomer (see KEY
+  // MIGRATION comment on MapleGammaFileSchema).
+  const spx = f.tickers.SPY ?? f.tickers.SPX;
+  if (!spx) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'tickers must contain SPY (or legacy SPX)',
+    });
+    return z.NEVER;
+  }
   const ed = spx.expiry_data ?? {};
   const allBucket: MgBucket =
     ed.all ??
@@ -249,16 +267,14 @@ export const GexDataSchema = MapleGammaFileSchema.transform((f) => {
     } as MgBucket);
   return {
     generated_at: f.generated_at,
-    // NOT A BUG (verified against data/maplegamma-data.json): the source file
-    // keys this whole object "tickers.SPX", but every price in it is SPY-scale
-    // (current_price ~748, gamma_flip ~751, strikes 700-800 — an S&P 500 print
-    // is ~7,443, ten times higher). 'SPY' is hardcoded here because it matches
-    // what the values actually are, not what the upstream JSON key claims. Do
-    // NOT "fix" this by reading the key name or changing the literal to 'SPX'
-    // — that would make every consumer (GexDexVexCard, GammaWallChart, the
-    // /options page metadata, which was corrected SPX->SPY to match this) wrong
-    // again. The real defect is the JSON key itself, written by the Pi-side
-    // pipeline outside this repo's src/ — not fixable from this schema.
+    // 'SPY' is hardcoded because it is what the values actually are, whichever
+    // key the payload arrived under: every price is SPY-scale (current_price
+    // ~748, gamma_flip ~751, strikes 700-800 — an S&P 500 print is ~7,443, ten
+    // times higher). The upstream key was historically the misnomer "SPX";
+    // push_gex.py is being fixed to write "SPY" (see KEY MIGRATION above). Do
+    // NOT change this to read the key name — legacy payloads would relabel
+    // SPY-scale data as SPX in every consumer (GexDexVexCard, GammaWallChart,
+    // the /options page metadata).
     ticker: 'SPY',
     price_source: 'yfinance',
     modes: {
