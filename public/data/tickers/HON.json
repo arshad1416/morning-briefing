@@ -1,9 +1,9 @@
 {
  "ticker": "HON",
  "name": "Honeywell International Inc.",
- "generated_at": "2026-07-24T14:45:01.659512+00:00",
- "price": 243.71,
- "change_pct": -1.04,
+ "generated_at": "2026-07-27T11:45:01.823975+00:00",
+ "price": 243.15,
+ "change_pct": -1.27,
  "sector": "Industrials",
  "signals": [
   "above_ma",
@@ -11,20 +11,70 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 62.2,
-  "sma_20": 228.57,
-  "sma_50": 232.12
+  "rsi_14": 61.6,
+  "sma_20": 228.54,
+  "sma_50": 232.1
  },
  "fundamentals": {
-  "pe_ratio": 9.369858,
-  "market_cap": "77.2B",
+  "pe_ratio": 9.344734,
+  "market_cap": "77.1B",
   "beta": 0.93,
-  "dividend_yield": 0.0409
+  "dividend_yield": 0.0392
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "HON",
+   "date": "2026-10-22",
+   "epsEstimate": 2.15,
+   "epsActual": null
+  },
+  {
+   "ticker": "HON",
+   "date": "2026-07-23",
+   "epsEstimate": 1.82,
+   "epsActual": 1.95
+  },
+  {
+   "ticker": "HON",
+   "date": "2026-04-23",
+   "epsEstimate": 4.64,
+   "epsActual": 4.9
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "HON",
+   "date": "2026-07-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000127/0000773840-26-000127-index.htm"
+  },
+  {
+   "ticker": "HON",
+   "date": "2026-07-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000124/0000773840-26-000124-index.htm"
+  },
+  {
+   "ticker": "HON",
+   "date": "2026-04-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000057/0000773840-26-000057-index.htm"
+  },
+  {
+   "ticker": "HON",
+   "date": "2026-02-17",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000013/0000773840-26-000013-index.htm"
+  },
+  {
+   "ticker": "HON",
+   "date": "2025-10-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384025000105/0000773840-25-000105-index.htm"
+  }
+ ],
  "reddit_mentions": []
 }

@@ -1,9 +1,9 @@
 {
  "ticker": "AIG",
  "name": "American International Group, I",
- "generated_at": "2026-07-24T14:45:01.659512+00:00",
- "price": 78.58,
- "change_pct": 0.54,
+ "generated_at": "2026-07-27T11:45:01.823975+00:00",
+ "price": 79.06,
+ "change_pct": 1.15,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
@@ -11,20 +11,39 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 52.6,
-  "sma_20": 78.51,
-  "sma_50": 76.46
+  "rsi_14": 54.1,
+  "sma_20": 78.53,
+  "sma_50": 76.47
  },
  "fundamentals": {
-  "pe_ratio": 13.835387,
-  "market_cap": "41.7B",
+  "pe_ratio": 13.919014,
+  "market_cap": "41.9B",
   "beta": 0.541,
-  "dividend_yield": 0.0256
+  "dividend_yield": 0.0253
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "AIG",
+   "date": "2026-08-06",
+   "epsEstimate": 1.93,
+   "epsActual": null
+  },
+  {
+   "ticker": "AIG",
+   "date": "2026-04-30",
+   "epsEstimate": 1.88,
+   "epsActual": 2.11
+  },
+  {
+   "ticker": "AIG",
+   "date": "2026-02-10",
+   "epsEstimate": 1.9,
+   "epsActual": 1.96
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

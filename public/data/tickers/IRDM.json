@@ -1,27 +1,29 @@
 {
  "ticker": "IRDM",
  "name": "Iridium Communications Inc",
- "generated_at": "2026-07-24T14:45:01.659512+00:00",
- "price": 46.44,
- "change_pct": -2.52,
+ "generated_at": "2026-07-27T11:45:01.823975+00:00",
+ "price": 45.78,
+ "change_pct": -3.9,
  "sector": "Communication Services",
  "signals": [
+  "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 45.5,
-  "sma_20": 49.56,
-  "sma_50": 47.58
+  "rsi_14": 43.7,
+  "sma_20": 49.53,
+  "sma_50": 47.56
  },
  "fundamentals": {
-  "pe_ratio": 53.379307,
+  "pe_ratio": 52.62069,
   "market_cap": "4.9B",
   "beta": 0.879,
-  "dividend_yield": 0.0126
+  "dividend_yield": 0.0131
  },
  "council_analysis": {
-  "score": 3
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

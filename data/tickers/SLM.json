@@ -1,30 +1,49 @@
 {
  "ticker": "SLM",
  "name": "SLM Corporation",
- "generated_at": "2026-07-24T14:45:01.659512+00:00",
- "price": 23.54,
- "change_pct": -2.65,
+ "generated_at": "2026-07-27T11:45:01.823975+00:00",
+ "price": 24.29,
+ "change_pct": 0.45,
  "sector": "Financial Services",
  "signals": [
-  "rsi_dip",
+  "volume_surge",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 41.3,
-  "sma_20": 25.16,
-  "sma_50": 23.38
+  "rsi_14": 47.7,
+  "sma_20": 25.19,
+  "sma_50": 23.4
  },
  "fundamentals": {
-  "pe_ratio": 6.5388894,
-  "market_cap": "4.4B",
+  "pe_ratio": 6.766017,
+  "market_cap": "4.6B",
   "beta": 0.955,
-  "dividend_yield": 0.0206
+  "dividend_yield": 0.021400000000000002
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "SLM",
+   "date": "2026-10-22",
+   "epsEstimate": 0.4,
+   "epsActual": null
+  },
+  {
+   "ticker": "SLM",
+   "date": "2026-07-23",
+   "epsEstimate": 0.44,
+   "epsActual": 0.29
+  },
+  {
+   "ticker": "SLM",
+   "date": "2026-04-23",
+   "epsEstimate": 1.2,
+   "epsActual": 1.54
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }
