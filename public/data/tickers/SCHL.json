@@ -1,23 +1,22 @@
 {
  "ticker": "SCHL",
  "name": "Scholastic Corporation",
- "generated_at": "2026-07-27T14:45:01.445516+00:00",
- "price": 43.15,
- "change_pct": -7.08,
+ "generated_at": "2026-07-28T11:45:01.574227+00:00",
+ "price": 41.8,
+ "change_pct": -3.13,
  "sector": "Communication Services",
  "signals": [
-  "rsi_dip",
-  "below_ma",
-  "volume_surge"
+  "oversold_rsi",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 38.3,
-  "sma_20": 46.09,
-  "sma_50": 43.54
+  "rsi_14": 33.1,
+  "sma_20": 45.88,
+  "sma_50": 43.6
  },
  "fundamentals": {
-  "pe_ratio": 18.440172,
-  "market_cap": "796M",
+  "pe_ratio": 17.863249,
+  "market_cap": "771M",
   "beta": 0.988,
   "dividend_yield": 0.0232
  },

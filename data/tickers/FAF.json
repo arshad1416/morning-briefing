@@ -1,50 +1,31 @@
 {
  "ticker": "FAF",
  "name": "First American Corporation (New",
- "generated_at": "2026-07-27T14:45:01.445516+00:00",
- "price": 75.13,
- "change_pct": 8.95,
+ "generated_at": "2026-07-28T11:45:01.574227+00:00",
+ "price": 76.07,
+ "change_pct": 1.26,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
   "above_ma",
-  "volume_surge",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 64.7,
-  "sma_20": 70.38,
-  "sma_50": 68.09
+  "rsi_14": 66.5,
+  "sma_20": 70.83,
+  "sma_50": 68.29
  },
  "fundamentals": {
-  "pe_ratio": 10.420249,
-  "market_cap": "7.7B",
+  "pe_ratio": 10.551317,
+  "market_cap": "7.8B",
   "beta": 1.254,
   "dividend_yield": 0.029300000000000003
  },
  "council_analysis": {
-  "score": 9
+  "score": 7
  },
- "upcoming_earnings": [
-  {
-   "ticker": "FAF",
-   "date": "2026-10-21",
-   "epsEstimate": 1.88,
-   "epsActual": null
-  },
-  {
-   "ticker": "FAF",
-   "date": "2026-07-22",
-   "epsEstimate": 1.84,
-   "epsActual": 2.08
-  },
-  {
-   "ticker": "FAF",
-   "date": "2026-04-22",
-   "epsEstimate": 1.05,
-   "epsActual": 1.33
-  }
- ],
+ "upcoming_earnings": [],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

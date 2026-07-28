@@ -1,9 +1,9 @@
 {
  "ticker": "PNC",
  "name": "PNC Financial Services Group, I",
- "generated_at": "2026-07-27T14:45:01.445516+00:00",
- "price": 250.99,
- "change_pct": 0.69,
+ "generated_at": "2026-07-28T11:45:01.574227+00:00",
+ "price": 251.6,
+ "change_pct": 0.24,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
@@ -11,20 +11,39 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 60.5,
-  "sma_20": 249.3,
-  "sma_50": 233.92
+  "rsi_14": 61.3,
+  "sma_20": 249.73,
+  "sma_50": 234.79
  },
  "fundamentals": {
-  "pe_ratio": 13.813429,
-  "market_cap": "100.1B",
+  "pe_ratio": 13.847001,
+  "market_cap": "100.4B",
   "beta": 0.897,
   "dividend_yield": 0.0319
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "PNC",
+   "date": "2026-10-15",
+   "epsEstimate": 4.88,
+   "epsActual": null
+  },
+  {
+   "ticker": "PNC",
+   "date": "2026-07-15",
+   "epsEstimate": 4.45,
+   "epsActual": 4.81
+  },
+  {
+   "ticker": "PNC",
+   "date": "2026-04-15",
+   "epsEstimate": 3.95,
+   "epsActual": 4.13
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

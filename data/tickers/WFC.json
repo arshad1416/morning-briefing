@@ -1,9 +1,9 @@
 {
  "ticker": "WFC",
  "name": "Wells Fargo & Company",
- "generated_at": "2026-07-27T14:45:01.445516+00:00",
- "price": 86.31,
- "change_pct": 0.14,
+ "generated_at": "2026-07-28T11:45:01.574227+00:00",
+ "price": 87.4,
+ "change_pct": 1.26,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
@@ -11,20 +11,39 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 53.6,
-  "sma_20": 86.24,
-  "sma_50": 82.23
+  "rsi_14": 57.2,
+  "sma_20": 86.42,
+  "sma_50": 82.51
  },
  "fundamentals": {
-  "pe_ratio": 12.545057,
-  "market_cap": "264.1B",
+  "pe_ratio": 12.703488,
+  "market_cap": "267.5B",
   "beta": 0.917,
   "dividend_yield": 0.0209
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "WFC",
+   "date": "2026-10-13",
+   "epsEstimate": 1.83,
+   "epsActual": null
+  },
+  {
+   "ticker": "WFC",
+   "date": "2026-07-14",
+   "epsEstimate": 1.72,
+   "epsActual": 2.0
+  },
+  {
+   "ticker": "WFC",
+   "date": "2026-04-14",
+   "epsEstimate": 1.6,
+   "epsActual": 1.56
+  }
+ ],
  "recent_sec_filings": [
   {
    "ticker": "WFC",

@@ -1,21 +1,23 @@
 {
  "ticker": "CENX",
  "name": "Century Aluminum Company",
- "generated_at": "2026-07-27T14:45:01.445516+00:00",
- "price": 46.21,
- "change_pct": -0.32,
+ "generated_at": "2026-07-28T11:45:01.574227+00:00",
+ "price": 44.36,
+ "change_pct": -4.0,
  "sector": "Basic Materials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 46.3,
-  "sma_20": 44.86,
-  "sma_50": 53.53
+  "rsi_14": 41.8,
+  "sma_20": 44.76,
+  "sma_50": 53.13
  },
  "fundamentals": {
-  "pe_ratio": 13.752976,
-  "market_cap": "4.6B",
+  "pe_ratio": 13.202381,
+  "market_cap": "4.4B",
   "beta": 1.969,
   "dividend_yield": null
  },

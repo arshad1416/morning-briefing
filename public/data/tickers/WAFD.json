@@ -1,27 +1,28 @@
 {
  "ticker": "WAFD",
  "name": "WaFd, Inc.",
- "generated_at": "2026-07-27T14:45:01.445516+00:00",
- "price": 36.73,
- "change_pct": 0.03,
+ "generated_at": "2026-07-28T11:45:01.574227+00:00",
+ "price": 36.64,
+ "change_pct": -0.25,
  "sector": "Financial Services",
  "signals": [
   "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 44.9,
-  "sma_20": 37.82,
-  "sma_50": 36.62
+  "rsi_14": 44.2,
+  "sma_20": 37.75,
+  "sma_50": 36.67
  },
  "fundamentals": {
-  "pe_ratio": 11.58675,
+  "pe_ratio": 11.558359,
   "market_cap": "2.7B",
   "beta": 0.827,
   "dividend_yield": 0.0294
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
