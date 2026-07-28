@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-07-27T11:23:01.588234+00:00",
+  "generated_at": "2026-07-28T11:23:01.487945+00:00",
   "signal": "neutral",
-  "conviction": 0.54,
+  "conviction": 0.5,
   "conviction_source": "model",
-  "narrative": "Defensive rotation intensifies as tech-heavy Nasdaq underperforms while utilities and Dow industrials hold gains; heavy put flow in mega-cap tech signals caution.",
+  "narrative": "Market flat after mixed earnings; defensives gaining amid tech weakness, with VIX edging higher and options flow signaling caution on mega-cap tech.",
   "narrative_source": "llm",
   "model_features": {
-    "vix": 17.64,
+    "vix": 19.0,
     "vix_score": 0.5,
     "sleeve_a_signals": 0,
     "avg_signal_score": 0,
     "max_signal_score": 0,
-    "recent_hit_rate": 0.5,
-    "recent_trades": 4,
+    "recent_hit_rate": 0.33,
+    "recent_trades": 6,
     "breadth": 1.0,
-    "vix_contango": 3.69,
+    "vix_contango": 2.89,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.29,
-      0.79
+      0.25,
+      0.75
     ]
   },
   "confidence_interval": [
-    0.29,
-    0.79
+    0.25,
+    0.75
   ]
 }
