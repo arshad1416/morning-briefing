@@ -1,22 +1,24 @@
 {
  "ticker": "CARR",
  "name": "Carrier Global Corporation",
- "generated_at": "2026-07-28T14:45:01.731937+00:00",
- "price": 69.02,
- "change_pct": 0.2,
+ "generated_at": "2026-07-29T11:45:01.977214+00:00",
+ "price": 66.06,
+ "change_pct": -4.72,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.9,
-  "sma_20": 69.09,
-  "sma_50": 68.17
+  "rsi_14": 42.0,
+  "sma_20": 68.96,
+  "sma_50": 68.12
  },
  "fundamentals": {
-  "pe_ratio": 46.013332,
-  "market_cap": "57.3B",
+  "pe_ratio": 44.036667,
+  "market_cap": "54.9B",
   "beta": 1.309,
   "dividend_yield": 0.0139
  },

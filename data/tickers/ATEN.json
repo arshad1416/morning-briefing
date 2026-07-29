@@ -1,25 +1,26 @@
 {
  "ticker": "ATEN",
  "name": "A10 Networks, Inc.",
- "generated_at": "2026-07-28T14:45:01.731937+00:00",
- "price": 33.47,
- "change_pct": -2.32,
+ "generated_at": "2026-07-29T11:45:01.977214+00:00",
+ "price": 31.44,
+ "change_pct": -6.07,
  "sector": "Technology",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 40.9,
-  "sma_20": 36.31,
-  "sma_50": 33.23
+  "rsi_14": 33.4,
+  "sma_20": 36.17,
+  "sma_50": 33.18
  },
  "fundamentals": {
-  "pe_ratio": 54.877045,
-  "market_cap": "2.4B",
+  "pe_ratio": 51.540985,
+  "market_cap": "2.3B",
   "beta": 1.14,
-  "dividend_yield": 0.006999999999999999
+  "dividend_yield": 0.0072
  },
  "council_analysis": {
   "score": 6

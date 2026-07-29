@@ -1,18 +1,19 @@
 {
  "ticker": "UNG",
  "name": "United States Natural Gas Fund ",
- "generated_at": "2026-07-28T14:45:01.731937+00:00",
- "price": 10.2,
- "change_pct": -3.32,
+ "generated_at": "2026-07-29T11:45:01.977214+00:00",
+ "price": 9.85,
+ "change_pct": -2.62,
  "sector": null,
  "signals": [
-  "rsi_dip",
-  "below_ma"
+  "oversold_rsi",
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 35.6,
-  "sma_20": 10.89,
-  "sma_50": 11.28
+  "rsi_14": 31.1,
+  "sma_20": 10.8,
+  "sma_50": 11.25
  },
  "fundamentals": {
   "pe_ratio": null,

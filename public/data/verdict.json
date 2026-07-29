@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-07-28T11:23:01.487945+00:00",
+  "generated_at": "2026-07-29T11:23:01.150761+00:00",
   "signal": "neutral",
-  "conviction": 0.5,
+  "conviction": 0.54,
   "conviction_source": "model",
   "narrative": "Market flat after mixed earnings; defensives gaining amid tech weakness, with VIX edging higher and options flow signaling caution on mega-cap tech.",
   "narrative_source": "llm",
   "model_features": {
-    "vix": 19.0,
+    "vix": 18.21,
     "vix_score": 0.5,
     "sleeve_a_signals": 0,
     "avg_signal_score": 0,
     "max_signal_score": 0,
-    "recent_hit_rate": 0.33,
-    "recent_trades": 6,
+    "recent_hit_rate": 0.5,
+    "recent_trades": 4,
     "breadth": 1.0,
-    "vix_contango": 2.89,
+    "vix_contango": 2.07,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.25,
-      0.75
+      0.29,
+      0.79
     ]
   },
   "confidence_interval": [
-    0.25,
-    0.75
+    0.29,
+    0.79
   ]
 }

@@ -1,18 +1,21 @@
 {
  "ticker": "PICK",
  "name": "iShares MSCI Global Select Meta",
- "generated_at": "2026-07-28T14:45:01.731937+00:00",
- "price": 57.59,
- "change_pct": -0.76,
+ "generated_at": "2026-07-29T11:45:01.977214+00:00",
+ "price": 57.19,
+ "change_pct": -1.77,
  "sector": null,
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.8,
-  "sma_20": 57.4,
-  "sma_50": 60.86
+  "rsi_14": 44.4,
+  "sma_20": 57.39,
+  "sma_50": 60.85
  },
  "fundamentals": {
-  "pe_ratio": 19.815321,
+  "pe_ratio": 19.67769,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.0226

@@ -1,46 +1,38 @@
 {
-  "generated_at": "2026-07-28T17:15:40-04:00",
+  "generated_at": "2026-07-29T09:37:42-04:00",
   "market_overview": {
-    "total_net_gex": 3071975,
-    "total_oi": 3929656,
-    "current_price": 740.86,
-    "change_pct": 0.24
+    "total_net_gex": 1525271,
+    "total_oi": 2201531,
+    "current_price": 739.64,
+    "change_pct": 0.07
   },
   "tickers": {
     "SPY": {
-      "current_price": 740.86,
-      "change_pct": 0.24,
+      "current_price": 739.64,
+      "change_pct": 0.07,
       "gamma_regime": "bullish",
-      "total_gex": 3071975,
-      "total_dex": 22068954,
-      "total_vex": 969499677,
-      "total_vanna": 8133615,
-      "total_charm": -3348204,
-      "total_dealer_gex": -1919592,
-      "gamma_flip": 750.83,
+      "total_gex": 1525271,
+      "total_dex": 54440454,
+      "total_vex": 34355068,
+      "total_vanna": 1214217,
+      "total_charm": -271194,
+      "total_dealer_gex": 2759956,
+      "gamma_flip": 737.03,
       "max_pain": 737.0,
-      "max_gex_strike": 740.0,
-      "max_gex_value": 463505,
+      "max_gex_strike": 745.0,
+      "max_gex_value": 682613,
       "neutral_range": [],
-      "floor_zone": {
-        "strike": 740.0,
-        "net_gex": 581356,
-        "total_gex": 581356,
-        "range_start": 735.0,
-        "range_end": 745.0,
-        "strength": "strong",
-        "narrative": "Gamma floor at $740"
-      },
+      "floor_zone": null,
       "ceiling_zone": {
-        "strike": 750.0,
-        "net_gex": 522791,
-        "total_gex": 522791,
-        "range_start": 745.0,
-        "range_end": 755.0,
+        "strike": 745.0,
+        "net_gex": 682613,
+        "total_gex": 682613,
+        "range_start": 740.0,
+        "range_end": 750.0,
         "strength": "strong",
-        "narrative": "Gamma ceiling at $750"
+        "narrative": "Gamma ceiling at $745"
       },
-      "narrative": "Net GEX: $+3,071,975 \u2014 dealers are long gamma (range-bound)"
+      "narrative": "Net GEX: $+1,525,271 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }

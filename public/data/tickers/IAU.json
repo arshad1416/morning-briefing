@@ -1,15 +1,18 @@
 {
  "ticker": "IAU",
  "name": "iShares Gold Trust Shares",
- "generated_at": "2026-07-28T14:45:01.731937+00:00",
- "price": 76.5,
- "change_pct": 0.35,
+ "generated_at": "2026-07-29T11:45:01.977214+00:00",
+ "price": 75.61,
+ "change_pct": -1.53,
  "sector": null,
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 46.0,
-  "sma_20": 76.43,
-  "sma_50": 79.71
+  "rsi_14": 42.8,
+  "sma_20": 76.44,
+  "sma_50": 79.48
  },
  "fundamentals": {
   "pe_ratio": null,

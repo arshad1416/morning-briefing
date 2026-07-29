@@ -1,30 +1,49 @@
 {
  "ticker": "BTI",
  "name": "British American Tobacco  Indus",
- "generated_at": "2026-07-28T14:45:01.731937+00:00",
- "price": 60.67,
- "change_pct": -0.48,
+ "generated_at": "2026-07-29T11:45:01.977214+00:00",
+ "price": 62.65,
+ "change_pct": 3.01,
  "sector": "Consumer Defensive",
  "signals": [
-  "below_ma",
+  "above_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.8,
-  "sma_20": 60.75,
-  "sma_50": 61.06
+  "rsi_14": 56.7,
+  "sma_20": 60.84,
+  "sma_50": 61.09
  },
  "fundamentals": {
-  "pe_ratio": 12.990364,
-  "market_cap": "130.9B",
+  "pe_ratio": 13.473119,
+  "market_cap": "135.2B",
   "beta": 0.128,
-  "dividend_yield": 0.0548
+  "dividend_yield": 0.054900000000000004
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "BTI",
+   "date": "2026-07-30",
+   "epsEstimate": null,
+   "epsActual": null
+  },
+  {
+   "ticker": "BTI",
+   "date": "2006-10-26",
+   "epsEstimate": 0.32,
+   "epsActual": 0.51
+  },
+  {
+   "ticker": "BTI",
+   "date": "2006-07-27",
+   "epsEstimate": 0.46,
+   "epsActual": 0.5
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }
