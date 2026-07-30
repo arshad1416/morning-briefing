@@ -1,27 +1,28 @@
 {
  "ticker": "HUBB",
  "name": "Hubbell Inc",
- "generated_at": "2026-07-29T14:45:02.037637+00:00",
- "price": 492.71,
- "change_pct": -1.05,
+ "generated_at": "2026-07-30T11:45:01.775683+00:00",
+ "price": 464.26,
+ "change_pct": -4.01,
  "sector": "Industrials",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 51.3,
-  "sma_20": 487.51,
-  "sma_50": 487.9
+  "rsi_14": 40.3,
+  "sma_20": 484.11,
+  "sma_50": 487.43
  },
  "fundamentals": {
-  "pe_ratio": 29.102776,
-  "market_cap": "26.0B",
+  "pe_ratio": 27.422327,
+  "market_cap": "24.5B",
   "beta": 0.892,
-  "dividend_yield": 0.011399999999999999
+  "dividend_yield": 0.011699999999999999
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

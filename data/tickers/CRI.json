@@ -1,18 +1,21 @@
 {
  "ticker": "CRI",
  "name": "Carter's, Inc.",
- "generated_at": "2026-07-29T14:45:02.037637+00:00",
- "price": 39.25,
- "change_pct": 1.29,
+ "generated_at": "2026-07-30T11:45:01.775683+00:00",
+ "price": 37.78,
+ "change_pct": -2.52,
  "sector": "Consumer Cyclical",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 50.3,
-  "sma_20": 39.18,
-  "sma_50": 39.31
+  "rsi_14": 44.7,
+  "sma_20": 39.11,
+  "sma_50": 39.29
  },
  "fundamentals": {
-  "pe_ratio": 15.763052,
+  "pe_ratio": 15.170683,
   "market_cap": "1.4B",
   "beta": 0.85,
   "dividend_yield": 0.0258

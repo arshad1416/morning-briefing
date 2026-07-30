@@ -1,29 +1,49 @@
 {
  "ticker": "DAL",
  "name": "Delta Air Lines, Inc.",
- "generated_at": "2026-07-29T14:45:02.037637+00:00",
- "price": 86.89,
- "change_pct": 0.25,
+ "generated_at": "2026-07-30T11:45:01.775683+00:00",
+ "price": 87.65,
+ "change_pct": 1.13,
  "sector": "Industrials",
  "signals": [
+  "above_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 54.2,
-  "sma_20": 87.2,
-  "sma_50": 83.46
+  "rsi_14": 56.0,
+  "sma_20": 87.23,
+  "sma_50": 83.47
  },
  "fundamentals": {
-  "pe_ratio": 14.40879,
-  "market_cap": "57.1B",
+  "pe_ratio": 14.09164,
+  "market_cap": "57.6B",
   "beta": 1.288,
-  "dividend_yield": 0.009000000000000001
+  "dividend_yield": 0.0087
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "DAL",
+   "date": "2026-10-08",
+   "epsEstimate": 2.23,
+   "epsActual": null
+  },
+  {
+   "ticker": "DAL",
+   "date": "2026-07-10",
+   "epsEstimate": 1.49,
+   "epsActual": 1.56
+  },
+  {
+   "ticker": "DAL",
+   "date": "2026-04-08",
+   "epsEstimate": 0.57,
+   "epsActual": 0.64
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

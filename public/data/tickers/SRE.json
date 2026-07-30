@@ -1,24 +1,26 @@
 {
  "ticker": "SRE",
  "name": "DBA Sempra",
- "generated_at": "2026-07-29T14:45:02.037637+00:00",
- "price": 92.39,
- "change_pct": 1.25,
+ "generated_at": "2026-07-30T11:45:01.775683+00:00",
+ "price": 90.64,
+ "change_pct": -0.67,
  "sector": "Utilities",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.9,
-  "sma_20": 93.01,
-  "sma_50": 91.53
+  "rsi_14": 43.3,
+  "sma_20": 92.92,
+  "sma_50": 91.49
  },
  "fundamentals": {
-  "pe_ratio": 31.426868,
-  "market_cap": "60.4B",
+  "pe_ratio": 30.829931,
+  "market_cap": "59.3B",
   "beta": 0.568,
-  "dividend_yield": 0.0288
+  "dividend_yield": 0.028999999999999998
  },
  "council_analysis": {
   "score": 5

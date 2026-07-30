@@ -1,21 +1,24 @@
 {
  "ticker": "LAZ",
  "name": "Lazard, Inc.",
- "generated_at": "2026-07-29T14:45:02.037637+00:00",
- "price": 43.0,
- "change_pct": 0.02,
+ "generated_at": "2026-07-30T11:45:01.775683+00:00",
+ "price": 41.05,
+ "change_pct": -4.51,
  "sector": "Financial Services",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 49.7,
-  "sma_20": 42.43,
-  "sma_50": 44.23
+  "rsi_14": 42.8,
+  "sma_20": 42.33,
+  "sma_50": 44.19
  },
  "fundamentals": {
-  "pe_ratio": 21.182266,
-  "market_cap": "4.2B",
+  "pe_ratio": 20.221674,
+  "market_cap": "4.0B",
   "beta": 1.42,
-  "dividend_yield": 0.04650000000000001
+  "dividend_yield": 0.046799999999999994
  },
  "council_analysis": {
   "score": 5

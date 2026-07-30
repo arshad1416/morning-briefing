@@ -1,22 +1,24 @@
 {
  "ticker": "HUM",
  "name": "Humana Inc.",
- "generated_at": "2026-07-29T14:45:02.037637+00:00",
- "price": 374.54,
- "change_pct": -1.73,
+ "generated_at": "2026-07-30T11:45:01.775683+00:00",
+ "price": 359.0,
+ "change_pct": -5.81,
  "sector": "Healthcare",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 45.6,
-  "sma_20": 396.17,
-  "sma_50": 361.66
+  "rsi_14": 39.3,
+  "sma_20": 395.39,
+  "sma_50": 361.35
  },
  "fundamentals": {
-  "pe_ratio": 39.929638,
-  "market_cap": "45.0B",
+  "pe_ratio": 38.313766,
+  "market_cap": "43.1B",
   "beta": 0.717,
   "dividend_yield": 0.009300000000000001
  },
