@@ -58,6 +58,12 @@
 # and refuses to overwrite a complete file with a throttled partial one.
 30 10 * * 1-5 cd /home/arshad14/morning-briefing && python3 pi-scripts/generate-screener-data.py --add-universes "S&P 500,S&P 400,S&P 600,Nasdaq-100,Russell 2000" --sleep 0.4 >> /home/arshad14/.hermes/logs/screener.log 2>&1
 
+# ── Index membership refresh — monthly on the 15th ──
+# Vanguard publishes month-end holdings ~10-15 days after month-end, so the 15th
+# picks up the new month. push_dashboard's `git add -A` commits the refreshed
+# cache; the daily 10:30 scan then publishes new memberships + as-of labels.
+0 6 15 * * cd /home/arshad14/morning-briefing && python3 pi-scripts/fetch_universe_constituents.py >> /home/arshad14/.hermes/logs/universe_constituents.log 2>&1
+
 # ── Walk-Forward V2 — Sundays ──
 0 6 * * 0 cd /home/arshad14/.hermes/scripts && python3 run_walk_forward_v2.py >> /home/arshad14/.hermes/logs/walk_forward_v2.log 2>&1
 
