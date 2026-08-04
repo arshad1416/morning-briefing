@@ -86,7 +86,7 @@ data = {
 # Indices from yfinance
 indices_config = [
     ("^GSPC", "S&P 500"), ("^DJI", "Dow Jones"), ("^IXIC", "NASDAQ"),
-    ("^GSPTSE", "TSX"), ("^VIX", "VIX"), ("^TNX", "10Y Yield"),
+    ("^RUT", "Russell 2000"), ("^GSPTSE", "TSX"), ("^VIX", "VIX"), ("^TNX", "10Y Yield"),
 ]
 indices = []
 for symbol, name in indices_config:
@@ -132,6 +132,7 @@ elif indices:
     sp = next((i for i in indices if i["ticker"] == "S&P 500"), None)
     dj = next((i for i in indices if i["ticker"] == "Dow Jones"), None)
     ns = next((i for i in indices if i["ticker"] == "NASDAQ"), None)
+    rt = next((i for i in indices if i["ticker"] == "Russell 2000"), None)
     tsx = next((i for i in indices if i["ticker"] == "TSX"), None)
     v = data["market_summary"].get("vix")
     y = data["market_summary"].get("ten_year_yield")
@@ -139,6 +140,7 @@ elif indices:
     if sp: lines.append(f"  • S&P 500: {sp['price']:,.2f} ({sp['change_pct']:+.2f}%)")
     if dj: lines.append(f"  • Dow Jones: {dj['price']:,.2f} ({dj['change_pct']:+.2f}%)")
     if ns: lines.append(f"  • NASDAQ: {ns['price']:,.2f} ({ns['change_pct']:+.2f}%)")
+    if rt: lines.append(f"  • Russell 2000: {rt['price']:,.2f} ({rt['change_pct']:+.2f}%)")
     if tsx: lines.append(f"  • TSX: {tsx['price']:,.2f} ({tsx['change_pct']:+.2f}%)")
     if v: lines.append(f"  • VIX: {v}")
     if y: lines.append(f"  • 10Y Yield: {y}%")

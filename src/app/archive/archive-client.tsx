@@ -21,7 +21,7 @@ const fetchJson = async (url: string) => {
   return res.json();
 };
 
-const CORE_INDICES = ['S&P 500', 'Dow Jones', 'NASDAQ', 'TSX'];
+const CORE_INDICES = ['S&P 500', 'Dow Jones', 'NASDAQ', 'TSX', 'Russell 2000'];
 
 // These four are stock-market indexes, quoted in points — the S&P 500 is not
 // "$7,443.28". The old formatter prefixed a dollar sign unconditionally, which

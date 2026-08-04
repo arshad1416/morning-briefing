@@ -16,6 +16,7 @@ const INDEX_DESCRIPTIONS: Record<string, string> = {
   // companies only, so the description has to stop at the exchange.
   NASDAQ: 'Companies listed on the Nasdaq exchange — heavily tech',
   'Dow Jones': '30 large, established US companies',
+  'Russell 2000': '2000 small US companies',
   TSX: 'Canada’s main index, in Toronto',
 };
 
@@ -36,7 +37,7 @@ export function IndicesCard() {
   }
 
   const indices = data.market_summary.indices.filter((idx) =>
-    ['S&P 500', 'NASDAQ', 'Dow Jones', 'TSX'].includes(idx.ticker)
+    ['S&P 500', 'NASDAQ', 'Dow Jones', 'TSX', 'Russell 2000'].includes(idx.ticker)
   );
 
   return (
