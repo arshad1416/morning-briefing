@@ -1,6 +1,46 @@
 {
   "generated_at": "2026-08-04T14:50:48.788342+00:00",
   "ticker_count": 1678,
+  "universes_scanned": [
+    "S&P 500",
+    "TSX 60",
+    "Tech & Growth",
+    "High Dividend",
+    "Fixed Income & Commodities",
+    "S&P 400",
+    "S&P 600",
+    "Nasdaq-100"
+  ],
+  "universe_sources": {
+    "S&P 500": {
+      "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
+      "source_note": "Wikipedia 'List of S&P 500 companies', table#constituents.",
+      "as_of": "2026-07-26",
+      "fetched_at": "2026-07-26",
+      "member_count": 503
+    },
+    "S&P 400": {
+      "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies",
+      "source_note": "S&P MidCap 400. Wikipedia 'List of S&P 400 companies', table#constituents.",
+      "as_of": "2026-07-26",
+      "fetched_at": "2026-07-26",
+      "member_count": 400
+    },
+    "S&P 600": {
+      "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_600_companies",
+      "source_note": "S&P SmallCap 600. Wikipedia 'List of S&P 600 companies', table#constituents.",
+      "as_of": "2026-07-26",
+      "fetched_at": "2026-07-26",
+      "member_count": 602
+    },
+    "Nasdaq-100": {
+      "source_url": "https://api.nasdaq.com/api/quote/list-type/nasdaq100",
+      "source_note": "Nasdaq's own index-membership endpoint (the Wikipedia article no longer carries a components table).",
+      "as_of": "2026-07-26",
+      "fetched_at": "2026-07-26",
+      "member_count": 103
+    }
+  },
   "market_summary": {
     "avg_price": 139.71,
     "avg_change": 0.6,
