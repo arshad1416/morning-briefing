@@ -28,7 +28,16 @@ async function screener(): Promise<ScreenerResult> {
 }
 
 export const api = {
-  latest: () => fetchJson<LatestData>('/data/latest.json', LatestDataSchema),
+  latest: async () => {
+    // Live-first: the Worker route re-serves the static snapshot with fresh
+    // Yahoo index quotes. Any failure (dev server, e2e static export, Worker
+    // outage) degrades to the plain static file — same schema, same page.
+    try {
+      return await fetchJson<LatestData>('/api/latest', LatestDataSchema);
+    } catch {
+      return await fetchJson<LatestData>('/data/latest.json', LatestDataSchema);
+    }
+  },
   verdict: () => fetchJson<Verdict>('/data/verdict.json', VerdictSchema),
   // Free users receive the aggregate GEX summary. Strike-level gamma walls,
   // OI and positioning live in the Pro-gated R2 detail file.

@@ -58,6 +58,10 @@ export const PremarketSetupSchema = z.object({
 
 export const LatestDataSchema = z.object({
   generated_at: z.string(),
+  // Present only when served through the Worker's /api/latest live overlay:
+  // the instant the index quotes were refreshed from Yahoo. Falls back to
+  // generated_at (the static snapshot time) everywhere else.
+  live_refreshed_at: z.string().optional(),
   market_summary: MarketSummarySchema,
   narrative: z.object({
     summary_paragraph: z.string(),

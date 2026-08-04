@@ -42,7 +42,7 @@ export function IndicesCard() {
 
   return (
     <Surface span="half">
-      <SurfaceHeader title="Indices" right={<DataFreshness timestamp={data.generated_at} />} />
+      <SurfaceHeader title="Indices" right={<DataFreshness timestamp={data.live_refreshed_at ?? data.generated_at} />} />
       <div className="p-4 space-y-3">
         <p className="text-xs text-[var(--color-text-tertiary)] leading-relaxed">
           An index tracks a whole basket of shares as one number. The percentage is its move for the day.

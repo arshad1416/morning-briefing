@@ -44,7 +44,7 @@ export function VixRegimeCard() {
 
   return (
     <Surface span="third">
-      <SurfaceHeader title={TITLE} right={<DataFreshness timestamp={data.generated_at} />} />
+      <SurfaceHeader title={TITLE} right={<DataFreshness timestamp={data.live_refreshed_at ?? data.generated_at} />} />
       <div className="p-4 flex flex-col gap-4">
         <PlainLabel term={['vix', 'regime']} />
         <div className="flex items-start justify-between gap-3">
