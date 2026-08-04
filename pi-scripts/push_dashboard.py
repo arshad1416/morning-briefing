@@ -376,16 +376,24 @@ def main():
     global RATE
 
     # ── Concurrency guard ──────────────────────────────────────────────
-    # push_dashboard runs at 7:22 AM + every 30 min intraday. Without a lock,
-    # a slow run (yfinance timeouts, sub-scripts) can overlap the next cron
-    # fire, causing concurrent git operations that abort both runs. A
-    # non-blocking flock lets the second invocation exit cleanly.
+    # push_dashboard runs at :07/:37 intraday, and agents/agent_dashboard.sh
+    # ALSO invokes it 4x/weekday at :26. Without a lock, a slow run (yfinance
+    # timeouts, sub-scripts) overlaps the next fire and the two race on git
+    # operations in the same repo, aborting both. A non-blocking flock lets the
+    # second invocation bow out.
+    #
+    # Exit 75 (EX_TEMPFAIL), not 0: skipping is not publishing. agent_dashboard.sh
+    # wraps this in `if python3 push_dashboard.py; then log "OK: completed"`, so
+    # returning 0 would record a run that published nothing as a success — the
+    # exact silent-failure shape this repo has been bitten by. 75 says "temporary,
+    # retry later", which is accurate: the next scheduled run publishes.
     _lock_fd = open("/tmp/push_dashboard.lock", "w")
     try:
         fcntl.flock(_lock_fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
     except OSError:
-        print("Another push_dashboard instance is running — exiting.", file=sys.stderr)
-        return
+        print("Another push_dashboard instance holds the lock — skipping this run "
+              "(the next scheduled run will publish).", file=sys.stderr)
+        sys.exit(75)
     try:
         _main_inner()
     finally:
