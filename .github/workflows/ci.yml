@@ -40,6 +40,11 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
+      # AGENTS.md rule 5: a gated file must be registered in r2_sync PRIVATE_FILES,
+      # .gitignore (both data/ and public/data/), and the Worker's data_gate.js.
+      # Missing one silently leaks the file, or 404s it for paying subscribers.
+      - name: Premium file registration (AGENTS.md rule 5)
+        run: python3 scripts/check_premium_registration.py
       - run: npm run build
 
   worker-tests:
