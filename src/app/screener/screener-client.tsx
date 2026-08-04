@@ -251,7 +251,7 @@ function StatCard({
   color,
   caption,
 }: {
-  label: string;
+  label: React.ReactNode;
   value: React.ReactNode;
   color?: string;
   caption?: string;
@@ -868,9 +868,9 @@ function ScreenerBody() {
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard label="Scanned" value={data?.ticker_count ?? '—'} />
         <StatCard
-          label="Avg Score"
+          label={<InfoTip term="score">Avg Score</InfoTip>}
           value={ms?.avg_score != null ? ms.avg_score.toFixed(1) : '—'}
-          caption="All scanned tickers — not just what's shown below"
+          caption="The average of every scanned stock's 1–10 score — not just the rows below. 5 means neutral, higher is stronger."
         />
         {/* Counts of change_pct > 0 / < 0 in a mid-session snapshot: these names
             are up or down against the previous close, not against a close of
