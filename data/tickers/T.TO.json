@@ -1,24 +1,29 @@
 {
  "ticker": "T.TO",
  "name": "TELUS CORPORATION",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 15.29,
- "change_pct": 4.08,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 13.38,
+ "change_pct": -11.27,
  "sector": "Communication Services",
- "signals": [],
+ "signals": [
+  "oversold_rsi",
+  "below_ma",
+  "volume_surge",
+  "near_low"
+ ],
  "technical": {
-  "rsi_14": 54.3,
-  "sma_20": 14.71,
-  "sma_50": 15.81
+  "rsi_14": 31.5,
+  "sma_20": 14.66,
+  "sma_50": 15.65
  },
  "fundamentals": {
-  "pe_ratio": 25.483332,
-  "market_cap": "23.9B",
+  "pe_ratio": null,
+  "market_cap": "20.9B",
   "beta": 0.737,
-  "dividend_yield": 0.11109999999999999
+  "dividend_yield": 0.10779999999999999
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

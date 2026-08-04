@@ -1,29 +1,48 @@
 {
  "ticker": "JPM",
  "name": "JP Morgan Chase & Co.",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 350.33,
- "change_pct": -1.65,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 354.7,
+ "change_pct": 0.83,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 62.6,
-  "sma_20": 341.07,
-  "sma_50": 323.55
+  "rsi_14": 62.8,
+  "sma_20": 345.07,
+  "sma_50": 327.92
  },
  "fundamentals": {
-  "pe_ratio": 15.016502,
-  "market_cap": "931.3B",
+  "pe_ratio": 15.210121,
+  "market_cap": null,
   "beta": 0.982,
-  "dividend_yield": 0.0168
+  "dividend_yield": 0.0171
  },
  "council_analysis": {
   "score": 7
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "JPM",
+   "date": "2026-10-13",
+   "epsEstimate": 5.9,
+   "epsActual": null
+  },
+  {
+   "ticker": "JPM",
+   "date": "2026-07-14",
+   "epsEstimate": 5.8,
+   "epsActual": 6.14
+  },
+  {
+   "ticker": "JPM",
+   "date": "2026-04-14",
+   "epsEstimate": 5.51,
+   "epsActual": 5.94
+  }
+ ],
  "recent_sec_filings": [
   {
    "ticker": "JPM",

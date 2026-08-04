@@ -1,23 +1,25 @@
 {
  "ticker": "NPK",
  "name": "National Presto Industries, Inc",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 123.25,
- "change_pct": -1.4,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 135.08,
+ "change_pct": 11.25,
  "sector": "Industrials",
  "signals": [
-  "below_ma"
+  "extended_rsi",
+  "above_ma",
+  "premium_pe"
  ],
  "technical": {
-  "rsi_14": 45.7,
-  "sma_20": 123.29,
-  "sma_50": 128.04
+  "rsi_14": 69.7,
+  "sma_20": 123.48,
+  "sma_50": 126.38
  },
  "fundamentals": {
-  "pe_ratio": 27.44989,
-  "market_cap": "883M",
-  "beta": 0.428,
-  "dividend_yield": 0.008100000000000001
+  "pe_ratio": 30.084635,
+  "market_cap": "968M",
+  "beta": 0.461,
+  "dividend_yield": 0.008199999999999999
  },
  "council_analysis": {
   "score": 4

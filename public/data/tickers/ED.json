@@ -1,26 +1,27 @@
 {
  "ticker": "ED",
  "name": "Consolidated Edison, Inc.",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 112.73,
- "change_pct": 1.1,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 108.59,
+ "change_pct": -0.24,
  "sector": "Utilities",
  "signals": [
-  "above_ma"
+  "rsi_dip",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 56.1,
-  "sma_20": 111.75,
-  "sma_50": 108.9
+  "rsi_14": 42.5,
+  "sma_20": 111.34,
+  "sma_50": 109.26
  },
  "fundamentals": {
-  "pe_ratio": 19.010118,
-  "market_cap": "41.5B",
-  "beta": 0.264,
-  "dividend_yield": 0.0315
+  "pe_ratio": 18.311974,
+  "market_cap": null,
+  "beta": 0.263,
+  "dividend_yield": 0.0323
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

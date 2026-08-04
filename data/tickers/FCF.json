@@ -1,28 +1,29 @@
 {
  "ticker": "FCF",
  "name": "First",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 22.31,
- "change_pct": 6.9,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 21.6,
+ "change_pct": 0.33,
  "sector": "Financial Services",
  "signals": [
-  "overbought_rsi",
+  "extended_rsi",
   "above_ma",
-  "value_pe"
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 75.1,
-  "sma_20": 20.69,
-  "sma_50": 19.79
+  "rsi_14": 66.6,
+  "sma_20": 20.89,
+  "sma_50": 20.08
  },
  "fundamentals": {
-  "pe_ratio": 14.677631,
-  "market_cap": "2.3B",
+  "pe_ratio": 13.1707325,
+  "market_cap": "2.2B",
   "beta": 0.734,
-  "dividend_yield": 0.0268
+  "dividend_yield": 0.026000000000000002
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

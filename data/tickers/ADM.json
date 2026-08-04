@@ -1,27 +1,28 @@
 {
  "ticker": "ADM",
  "name": "Archer-Daniels-Midland Company",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 82.13,
- "change_pct": -1.27,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 78.42,
+ "change_pct": -1.08,
  "sector": "Consumer Defensive",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 51.9,
-  "sma_20": 81.44,
-  "sma_50": 80.04
+  "rsi_14": 39.4,
+  "sma_20": 82.5,
+  "sma_50": 80.2
  },
  "fundamentals": {
-  "pe_ratio": 36.665176,
-  "market_cap": "39.6B",
+  "pe_ratio": 35.006695,
+  "market_cap": null,
   "beta": 0.609,
-  "dividend_yield": 0.025
+  "dividend_yield": 0.0262
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

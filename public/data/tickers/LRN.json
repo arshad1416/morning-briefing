@@ -1,22 +1,24 @@
 {
  "ticker": "LRN",
  "name": "Stride, Inc.",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 96.47,
- "change_pct": 7.09,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 81.74,
+ "change_pct": 1.81,
  "sector": "Consumer Defensive",
  "signals": [
-  "above_ma"
+  "rsi_dip",
+  "below_ma",
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 63.7,
-  "sma_20": 88.47,
-  "sma_50": 90.01
+  "rsi_14": 41.7,
+  "sma_20": 87.83,
+  "sma_50": 89.67
  },
  "fundamentals": {
-  "pe_ratio": 15.097027,
-  "market_cap": "4.1B",
-  "beta": 0.099,
+  "pe_ratio": 12.7918625,
+  "market_cap": null,
+  "beta": 0.101,
   "dividend_yield": null
  },
  "council_analysis": {

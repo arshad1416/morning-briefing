@@ -1,28 +1,29 @@
 {
  "ticker": "MFC.TO",
  "name": "MANULIFE FIN",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 62.2,
- "change_pct": 0.02,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 62.26,
+ "change_pct": -0.22,
  "sector": "Financial Services",
  "signals": [
-  "overbought_rsi",
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 75.6,
-  "sma_20": 59.54,
-  "sma_50": 56.57
+  "rsi_14": 67.7,
+  "sma_20": 60.35,
+  "sma_50": 57.37
  },
  "fundamentals": {
-  "pe_ratio": 17.925072,
-  "market_cap": "103.6B",
+  "pe_ratio": 17.942362,
+  "market_cap": "103.7B",
   "beta": 0.782,
-  "dividend_yield": 0.0294
+  "dividend_yield": 0.0297
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

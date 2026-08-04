@@ -1,24 +1,26 @@
 {
  "ticker": "H",
  "name": "Hyatt Hotels Corporation",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 186.03,
- "change_pct": -2.69,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 175.68,
+ "change_pct": 0.93,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
   "below_ma",
+  "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 45.6,
-  "sma_20": 190.0,
-  "sma_50": 188.45
+  "rsi_14": 35.9,
+  "sma_20": 186.81,
+  "sma_50": 189.6
  },
  "fundamentals": {
-  "pe_ratio": null,
-  "market_cap": "17.5B",
-  "beta": 1.322,
-  "dividend_yield": 0.0031
+  "pe_ratio": 214.25,
+  "market_cap": "16.6B",
+  "beta": 1.351,
+  "dividend_yield": 0.0034000000000000002
  },
  "council_analysis": {
   "score": 5

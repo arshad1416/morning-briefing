@@ -1,24 +1,26 @@
 {
  "ticker": "CI",
  "name": "The Cigna Group",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 297.11,
- "change_pct": 2.09,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 278.6,
+ "change_pct": -0.16,
  "sector": "Healthcare",
  "signals": [
-  "above_ma",
-  "value_pe"
+  "rsi_dip",
+  "below_ma",
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 57.4,
-  "sma_20": 288.37,
-  "sma_50": 286.06
+  "rsi_14": 42.8,
+  "sma_20": 290.08,
+  "sma_50": 286.11
  },
  "fundamentals": {
-  "pe_ratio": 12.589406,
-  "market_cap": "78.6B",
+  "pe_ratio": 11.517156,
+  "market_cap": "73.6B",
   "beta": 0.303,
-  "dividend_yield": 0.0207
+  "dividend_yield": 0.022400000000000003
  },
  "council_analysis": {
   "score": 7

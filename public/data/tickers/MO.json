@@ -1,23 +1,25 @@
 {
  "ticker": "MO",
  "name": "Altria Group, Inc.",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 75.39,
- "change_pct": 3.44,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 68.05,
+ "change_pct": -0.41,
  "sector": "Consumer Defensive",
  "signals": [
-  "above_ma"
+  "rsi_dip",
+  "below_ma",
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 62.2,
-  "sma_20": 72.51,
-  "sma_50": 71.58
+  "rsi_14": 38.3,
+  "sma_20": 72.04,
+  "sma_50": 71.36
  },
  "fundamentals": {
-  "pe_ratio": 15.740083,
-  "market_cap": "125.9B",
+  "pe_ratio": 14.326317,
+  "market_cap": "113.6B",
   "beta": 0.494,
-  "dividend_yield": 0.0567
+  "dividend_yield": 0.0621
  },
  "council_analysis": {
   "score": 6

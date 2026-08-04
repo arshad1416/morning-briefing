@@ -1,24 +1,28 @@
 {
  "ticker": "CVCO",
  "name": "Cavco Industries, Inc.",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 571.99,
- "change_pct": -1.22,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 552.17,
+ "change_pct": 0.94,
  "sector": "Consumer Cyclical",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma",
+  "analyst_buy"
+ ],
  "technical": {
-  "rsi_14": 49.8,
-  "sma_20": 577.39,
-  "sma_50": 561.34
+  "rsi_14": 43.4,
+  "sma_20": 567.31,
+  "sma_50": 570.61
  },
  "fundamentals": {
-  "pe_ratio": 23.882671,
-  "market_cap": "4.4B",
-  "beta": 1.28,
+  "pe_ratio": 24.02825,
+  "market_cap": "4.3B",
+  "beta": 1.283,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

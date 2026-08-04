@@ -1,31 +1,62 @@
 {
  "ticker": "TSLA",
  "name": "Tesla, Inc.",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 303.26,
- "change_pct": -1.93,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 318.78,
+ "change_pct": 2.43,
  "sector": "Consumer Cyclical",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 26.3,
-  "sma_20": 379.77,
-  "sma_50": 397.04
+  "rsi_14": 35.4,
+  "sma_20": 358.88,
+  "sma_50": 388.79
  },
  "fundamentals": {
-  "pe_ratio": 280.7639,
-  "market_cap": "1.20T",
-  "beta": 1.802,
+  "pe_ratio": 292.40826,
+  "market_cap": "1.26T",
+  "beta": 1.827,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "recent_sec_filings": [
+  {
+   "ticker": "TSLA",
+   "date": "2026-07-22",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049270/0001628280-26-049270-index.htm"
+  },
+  {
+   "ticker": "TSLA",
+   "date": "2026-04-30",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1318605/000110465926053166/0001104659-26-053166-index.htm"
+  },
+  {
+   "ticker": "TSLA",
+   "date": "2026-04-22",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026673/0001628280-26-026673-index.htm"
+  },
+  {
+   "ticker": "TSLA",
+   "date": "2026-01-28",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/0001628280-26-003952-index.htm"
+  },
+  {
+   "ticker": "TSLA",
+   "date": "2025-10-22",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025045968/0001628280-25-045968-index.htm"
+  }
+ ],
  "reddit_mentions": []
 }

@@ -1,30 +1,56 @@
 {
  "ticker": "WFC",
  "name": "Wells Fargo & Company",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 85.15,
- "change_pct": -2.43,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 87.19,
+ "change_pct": 0.86,
  "sector": "Financial Services",
  "signals": [
+  "above_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.8,
-  "sma_20": 86.49,
-  "sma_50": 82.73
+  "rsi_14": 55.4,
+  "sma_20": 86.65,
+  "sma_50": 83.66
  },
  "fundamentals": {
-  "pe_ratio": 12.376453,
-  "market_cap": "257.9B",
-  "beta": 0.917,
-  "dividend_yield": 0.0206
+  "pe_ratio": 12.672965,
+  "market_cap": "263.7B",
+  "beta": 0.92,
+  "dividend_yield": 0.0231
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "WFC",
+   "date": "2026-10-13",
+   "epsEstimate": 1.84,
+   "epsActual": null
+  },
+  {
+   "ticker": "WFC",
+   "date": "2026-07-14",
+   "epsEstimate": 1.72,
+   "epsActual": 2.0
+  },
+  {
+   "ticker": "WFC",
+   "date": "2026-04-14",
+   "epsEstimate": 1.6,
+   "epsActual": 1.56
+  }
+ ],
  "recent_sec_filings": [
+  {
+   "ticker": "WFC",
+   "date": "2026-07-28",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297126000302/0000072971-26-000302-index.htm"
+  },
   {
    "ticker": "WFC",
    "date": "2026-04-29",
@@ -48,12 +74,6 @@
    "date": "2025-08-05",
    "form": "Quarterly Report",
    "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297125000201/0000072971-25-000201-index.htm"
-  },
-  {
-   "ticker": "WFC",
-   "date": "2025-04-29",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297125000129/0000072971-25-000129-index.htm"
   }
  ],
  "reddit_mentions": []

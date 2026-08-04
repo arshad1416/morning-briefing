@@ -1,31 +1,79 @@
 {
  "ticker": "ABBV",
  "name": "AbbVie Inc.",
- "generated_at": "2026-07-30T14:45:02.010633+00:00",
- "price": 266.65,
- "change_pct": 3.79,
+ "generated_at": "2026-08-04T14:45:01.664261+00:00",
+ "price": 245.73,
+ "change_pct": -2.08,
  "sector": "Healthcare",
  "signals": [
-  "extended_rsi",
-  "above_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 72.3,
-  "sma_20": 252.38,
-  "sma_50": 233.08
+  "rsi_14": 46.5,
+  "sma_20": 252.86,
+  "sma_50": 237.56
  },
  "fundamentals": {
-  "pe_ratio": 130.07317,
-  "market_cap": "471.1B",
-  "beta": 0.283,
-  "dividend_yield": 0.0269
+  "pe_ratio": 69.41525,
+  "market_cap": "434.2B",
+  "beta": 0.28,
+  "dividend_yield": 0.0276
  },
  "council_analysis": {
   "score": 5
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "ABBV",
+   "date": "2026-10-29",
+   "epsEstimate": 3.87,
+   "epsActual": null
+  },
+  {
+   "ticker": "ABBV",
+   "date": "2026-07-31",
+   "epsEstimate": 3.61,
+   "epsActual": 3.65
+  },
+  {
+   "ticker": "ABBV",
+   "date": "2026-04-29",
+   "epsEstimate": 2.67,
+   "epsActual": 2.65
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "ABBV",
+   "date": "2026-08-03",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000026/0001551152-26-000026-index.htm"
+  },
+  {
+   "ticker": "ABBV",
+   "date": "2026-05-08",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000017/0001551152-26-000017-index.htm"
+  },
+  {
+   "ticker": "ABBV",
+   "date": "2026-02-20",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115226000008/0001551152-26-000008-index.htm"
+  },
+  {
+   "ticker": "ABBV",
+   "date": "2025-11-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115225000049/0001551152-25-000049-index.htm"
+  },
+  {
+   "ticker": "ABBV",
+   "date": "2025-08-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1551152/000155115225000040/0001551152-25-000040-index.htm"
+  }
+ ],
  "reddit_mentions": []
 }
