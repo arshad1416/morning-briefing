@@ -637,7 +637,7 @@ export const GLOSSARY = {
   score: {
     plainLabel: 'Our own 1–10 rating',
     plain:
-      'A rule-based checklist score from 1 to 10 built from things like momentum, price versus its averages, volume and valuation. It is a sorting aid, not a recommendation.',
+      'A 1–10 rating we work out from a fixed checklist — how the price has been moving, how it compares with its recent average, how busy trading was, and how pricey the stock looks. It is only a way to sort the list, not advice to buy.',
   },
 
   /* ---------------------------------------------------------------- */
