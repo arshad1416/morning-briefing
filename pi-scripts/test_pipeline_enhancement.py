@@ -247,11 +247,30 @@ class TestLoadJsonErrorHandling(unittest.TestCase):
 class TestPublishPolicyIntegration(unittest.TestCase):
     """Verify publish_policy still works with the enhanced pipeline."""
 
-    def test_pages_excludes_returns_sorted(self):
-        from publish_policy import pages_excludes
+    def test_pages_excludes_returns_sorted_private_then_unpublished(self):
+        from publish_policy import pages_excludes, UNPUBLISHED_PATHS
         private = ["z-file.json", "a-file.json", "nope-detail.json"]
         result = pages_excludes(private)
-        self.assertEqual(result, sorted(private))
+        self.assertEqual(result, sorted(private) + list(UNPUBLISHED_PATHS))
+
+    def test_pages_excludes_covers_the_sec_intermediate(self):
+        """data/sec/ is published-by-default otherwise, and its per-ticker files
+        let anyone reconstruct the Basic-gated sec_filings.json aggregate."""
+        from publish_policy import pages_excludes
+        self.assertIn("sec/", pages_excludes(["nope-detail.json"]))
+
+    def test_unpublished_paths_are_not_r2_artifacts(self):
+        """UNPUBLISHED_PATHS must never leak into PRIVATE_FILES: r2_sync uploads
+        every entry there, and a directory would fail the upload and fail-close
+        the whole publish."""
+        from publish_policy import UNPUBLISHED_PATHS
+        try:
+            from r2_sync import PRIVATE_FILES
+        except Exception:
+            self.skipTest("r2_sync needs Pi-only deps")
+        for path in UNPUBLISHED_PATHS:
+            self.assertNotIn(path, PRIVATE_FILES)
+            self.assertNotIn(path.rstrip("/"), PRIVATE_FILES)
 
     def test_pages_excludes_rejects_missing_nope(self):
         from publish_policy import pages_excludes
@@ -269,6 +288,20 @@ class TestPublishPolicyIntegration(unittest.TestCase):
                 f.write("{}")
             enforce_private_pages_exclusion(td, ["nope-detail.json"])
             self.assertFalse(os.path.exists(private_file))
+
+    def test_enforce_removes_an_already_published_sec_dir(self):
+        """rsync runs without --delete, so a directory published before it joined
+        UNPUBLISHED_PATHS would linger in public/data forever."""
+        from publish_policy import enforce_private_pages_exclusion
+        with tempfile.TemporaryDirectory() as td:
+            sec = os.path.join(td, "public", "data", "sec")
+            os.makedirs(sec)
+            leaked = os.path.join(sec, "AAPL-filings.json")
+            with open(leaked, "w") as f:
+                f.write('{"ticker": "AAPL"}')
+            enforce_private_pages_exclusion(td, ["nope-detail.json"])
+            self.assertFalse(os.path.exists(leaked))
+            self.assertFalse(os.path.exists(sec))
 
 
 class TestPipelineSchemasValidation(unittest.TestCase):
