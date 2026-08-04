@@ -86,22 +86,33 @@ def make_screener_lite():
 
 
 def sync_private_to_r2():
-    """Upload the premium set + charts to R2. Returns (uploaded, skipped)."""
+    """Upload the premium set + charts to R2.
+
+    Returns (uploaded, invalid, failed): ``invalid`` holds artifacts rejected for
+    bad data — the caller skips those and still publishes; ``failed`` holds
+    transport/credential problems, which mean R2 is unhealthy and the caller must
+    abort. Both are lists of "<key>: <reason>" strings for alerting.
+    """
     env = _load_r2_env()
     ak, sk, ep = env.get("R2_ACCESS_KEY_ID"), env.get("R2_SECRET_ACCESS_KEY"), env.get("R2_S3_ENDPOINT")
     if not (ak and sk and ep):
-        print("  R2 sync: creds not set in ~/.hermes/.env — skipping", file=sys.stderr)
-        return (0, 0)
+        # Missing creds is infrastructure, not data: report it as a hard failure so
+        # the caller aborts. Previously this returned (0, 0), which let the publish
+        # proceed with premium files silently never uploaded.
+        print("  R2 sync: creds not set in ~/.hermes/.env", file=sys.stderr)
+        return (0, [], ["R2 credentials not set in ~/.hermes/.env"])
     import boto3
     from botocore.config import Config
     s3 = boto3.client(
         "s3", endpoint_url=ep, aws_access_key_id=ak, aws_secret_access_key=sk,
         config=Config(signature_version="s3v4", region_name="auto"),
     )
-    uploaded = skipped = 0
+    uploaded = 0
+    invalid = []  # bad DATA in one artifact — caller skips it and publishes the rest
+    failed = []   # transport/credentials — R2 itself is unhealthy, caller must abort
 
     def put(key, path):
-        nonlocal uploaded, skipped
+        nonlocal uploaded
         try:
             # R2 is the publish/database boundary for premium AI artifacts.
             # Reject malformed schemas and non-standard NaN/Infinity values
@@ -110,10 +121,15 @@ def sync_private_to_r2():
             s3.upload_file(path, BUCKET, key, ExtraArgs={"ContentType": "application/json"})
             uploaded += 1
         except ArtifactValidationError as e:
-            skipped += 1
+            # Split from transport failures deliberately. A bad value in ONE
+            # premium file must not freeze all public publishing — on 2026-07-30
+            # an Infinity in accuracy.json (Pro tier) froze the free dashboard
+            # for 5 days. The no-leak guarantee is the rsync --exclude in
+            # push_dashboard.py, which does not depend on this succeeding.
+            invalid.append(f"{key}: {e}")
             print(f"  R2 validation failed {key}: {e}", file=sys.stderr)
         except Exception as e:
-            skipped += 1
+            failed.append(f"{key}: {e}")
             print(f"  R2 put failed {key}: {e}", file=sys.stderr)
 
     for f in PRIVATE_FILES:
@@ -125,8 +141,8 @@ def sync_private_to_r2():
         for fn in os.listdir(charts_dir):
             if fn.endswith(".json"):
                 put(f"charts/{fn}", os.path.join(charts_dir, fn))
-    print(f"  R2 sync: {uploaded} uploaded, {skipped} skipped")
-    return (uploaded, skipped)
+    print(f"  R2 sync: {uploaded} uploaded, {len(invalid)} invalid, {len(failed)} failed")
+    return (uploaded, invalid, failed)
 
 
 def run():
