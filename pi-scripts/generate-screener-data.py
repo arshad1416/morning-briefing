@@ -332,6 +332,21 @@ def _finite(v):
     except (TypeError, ValueError):
         return None
 
+
+def _finite_int(v):
+    """Same, for the volume fields, which are whole numbers.
+
+    int(NaN) raises rather than returning NaN, so it did not reach the
+    NaN-scrubbing loop at the end of fetch_ticker_data — it escaped to the
+    except handler and dropped the WHOLE ticker. Two ways a volume bar is NaN:
+    a thin name with no trades in the last session, and rolling(50) on a
+    listing with under 50 bars of history. Both are ordinary small caps, so
+    the 2026-08-04 scan lost 27 of them, 23 from the Russell 2000.
+    """
+    f = _finite(v)
+    return int(f) if f is not None else None
+
+
 def fetch_ticker_data(ticker):
     """Fetch data for one ticker, compute metrics."""
     try:
@@ -388,8 +403,8 @@ def fetch_ticker_data(ticker):
         sma50 = round(hist['Close'].rolling(50).mean().iloc[-1], 2)
 
         # Volume
-        volume = int(hist['Volume'].iloc[-1])
-        avg_vol = int(hist['Volume'].rolling(50).mean().iloc[-1])
+        volume = _finite_int(hist['Volume'].iloc[-1])
+        avg_vol = _finite_int(hist['Volume'].rolling(50).mean().iloc[-1])
 
         # 52-week high/low
         high_52w = round(hist['High'].rolling(252).max().iloc[-1], 2)
@@ -460,7 +475,12 @@ def fetch_ticker_data(ticker):
             # UI, out of scope here — left as a documented trap instead.
             "above_52w_high_pct": round((1 - price / high_52w) * 100, 1) if high_52w else None,
             "below_52w_low_pct": round((price / low_52w - 1) * 100, 1) if low_52w else None,
-            "volume_ratio": round(volume / avg_vol, 2) if avg_vol else 1.0,
+            # None, not the old 1.0, when either side is unknown. 1.0 asserts
+            # "traded exactly its average", which is a claim about a stock we
+            # have no volume for at all — and it reads as a real value in the
+            # "Volume vs Avg" column. compute_score() and the UI both already
+            # branch on None. avg_vol == 0 lands here too, for the same reason.
+            "volume_ratio": round(volume / avg_vol, 2) if volume is not None and avg_vol else None,
         }
         # Replace NaN with None for valid JSON
         for k, v in result.items():
