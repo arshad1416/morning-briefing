@@ -31,6 +31,13 @@ data/earnings.json
 public/data/earnings.json
 data/sec_filings.json
 public/data/sec_filings.json
+# Per-ticker SEC filings: the intermediate sec_filings.json is aggregated from.
+# This repo is PUBLIC, so committing them let anyone reconstruct the Basic-gated
+# aggregate one ticker at a time via raw.githubusercontent. Excluded from Pages
+# by publish_policy.UNPUBLISHED_PATHS; ignored here so the same data cannot leak
+# through the repo instead. The Pi keeps them on disk as build input.
+data/sec/
+public/data/sec/
 data/journal.json
 public/data/journal.json
 data/ibkr_account.json
