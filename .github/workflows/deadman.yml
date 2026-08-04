@@ -1,14 +1,23 @@
 name: deadman-monitor
-# External dead-man's switch: if the Pi pipeline stops updating the site's
-# public data files, this scheduled job FAILS and GitHub emails the owner.
-# The Pi pushing data does not affect this — it runs on GitHub runners.
+# External dead-man's switch for the live site. Runs on GitHub runners, so the
+# Pi pushing data cannot affect it.
+#
+# Two INDEPENDENT failure modes, because watching only the first is what let
+# both 2026-07-30 incidents run for days:
+#   1. FRESHNESS — is the published data recent?      (Pi pipeline alive)
+#   2. CONTRACT  — can the frontend still PARSE it?   (fresh but unusable)
+# A payload can be perfectly fresh and completely unparseable: one missing
+# required field throws the whole zod parse in src/lib/api/index.ts and blanks
+# every component fed by that file. `premarket_top_setups` was absent from all
+# 25 published versions of latest.json and no monitor ever noticed.
 
 on:
   schedule:
     - cron: '*/30 * * * *'
   workflow_dispatch:
 
-permissions: {}
+permissions:
+  contents: read
 
 jobs:
   check-freshness:
@@ -63,4 +72,47 @@ jobs:
               print("\n".join(failures))
               sys.exit(1)
           print("All fresh — pipeline alive.")
+          PY
+
+      # The contract check needs the repo's real zod schemas, so it cannot drift
+      # from what the site actually enforces. `if: always()` because staleness and
+      # a broken contract are independent problems with independent fixes — a
+      # freshness failure must not hide an unparseable payload.
+      - uses: actions/checkout@v4
+        if: always()
+      - uses: actions/setup-node@v4
+        if: always()
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+        if: always()
+      - name: Check published payloads still match the frontend's contracts
+        if: always()
+        run: npm run check:contracts
+
+      - name: Notify Telegram
+        # Detection was never the problem. This job correctly reported
+        # "114.2h old — Pi pipeline may be DOWN" every 30 minutes for 4.5 days
+        # during the 2026-07-30 outage. Nobody saw it: a failing scheduled
+        # workflow only produces GitHub's implicit email, while every other
+        # alert in this fleet arrives on Telegram.
+        # Inert until TELEGRAM_BOT_TOKEN + TELEGRAM_HOME_CHANNEL exist as repo
+        # secrets. The checks above still fail the run either way.
+        if: failure() && env.TG_TOKEN != ''
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_HOME_CHANNEL }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+          msg = ("🔴 MapleGamma deadman FAILED — the live site is stale, "
+                 "unparseable, or both.\n" + os.environ["RUN_URL"])
+          data = json.dumps({"chat_id": os.environ["TG_CHAT"], "text": msg}).encode()
+          req = urllib.request.Request(
+              f"https://api.telegram.org/bot{os.environ['TG_TOKEN']}/sendMessage",
+              data=data, headers={"Content-Type": "application/json"})
+          with urllib.request.urlopen(req, timeout=15) as r:
+              print("telegram:", r.status)
           PY
