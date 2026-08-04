@@ -75,7 +75,14 @@ export const LatestDataSchema = z.object({
     date: z.string(),
     summary: z.string(),
   })),
-  premarket_top_setups: z.array(PremarketSetupSchema),
+  // generate_latest.py only sets this when premarket_scan.json is fresher than
+  // UPSTREAM_MAX_AGE_H, so the key is legitimately ABSENT most of the day (and in
+  // 8 of the 53 archive files). Requiring it made LatestDataSchema.parse() throw
+  // on nearly every real payload, which killed the whole latestQuery — taking
+  // TickerTape, IndicesCard, VixRegimeCard, NewsFeed and ActionQueue down with it.
+  // Every consumer already treats it as optional (`?? []`); the schema was the
+  // only thing that disagreed.
+  premarket_top_setups: z.array(PremarketSetupSchema).default([]),
   congress: z.object({
     recent_trades: z.array(z.any()),
     summary: z.string(),
