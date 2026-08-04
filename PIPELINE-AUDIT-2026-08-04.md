@@ -1,5 +1,10 @@
 # Morning-briefing pipeline audit — 2026-08-04
 
+> **STATUS: RESOLVED — verified end to end.** Data flowing, tiles rendering, gate closed,
+> and four new guards in place. Full verification and the guard inventory are in
+> "Closing the loop" at the end of this document.
+>
+> *(Historical status during the work, kept for the record:)*
 > **STATUS: half shipped.**
 > **Data is flowing again (deployed).** The publish pipeline was restored at 12:49 ET on
 > 2026-08-04 (commit `bd212af9`, the first `Live portfolio` commit since 2026-07-30 15:37);
@@ -452,3 +457,77 @@ currently has none); the checks fail the run either way.
    `research-client.tsx:1046` uses `usePublic<Any>('analysis', '/data/analysis.json')` with no
    zod schema — so there is no validation risk when publish resumes. The next successful rsync
    reconciles the two. No action needed; noted so it is not mistaken for a second bug.
+
+
+---
+
+# Closing the loop (end of session)
+
+## Everything verified working
+
+| what | evidence |
+|---|---|
+| Publishing | back on its ~30-min cadence; `Live portfolio 2026-08-04 15:37` |
+| Public data | all 7 files dated 2026-08-04, newest 15:32 |
+| Dashboard tiles | ticker tape, `INDICES` (S&P 7,750 +1.97%), `VIX / REGIME` (16.47) all rendering, "8m ago" |
+| Contracts | all 4 live payloads parse against the site's real zod schemas |
+| Gate | `/data/sec/*` 404 on Pages **and** raw.githubusercontent; `/api/data/sec_filings.json` still 401 |
+| Watchdog | publish freshness, script drift, published surface — all CLEAN |
+| Deadman | green |
+| Deploy gap | **7 stale scripts → 0** |
+| CI | green on `main` |
+
+## The nine defects found
+
+1. `profit_factor: Infinity` froze all publishing for five days — the fix had been merged for
+   eight days but never ported to the Pi.
+2. A Pro-tier artifact failing validation fail-closed **all public** publishing.
+3. `r2_sync`'s no-credentials path returned `(0, 0)` — missing R2 creds would have published
+   public data while silently uploading no premium file at all.
+4. `LatestDataSchema` required a field the generator never emits, killing five components
+   continuously — invisible, and unrelated to the outage.
+5. `predictions-client` rendered a null profit factor as `∞` — "infinitely profitable" off one trade.
+6. Five `subprocess.run(timeout=)` calls with no handler; `push_gex` had already frozen the
+   publish twice this way.
+7. **SPY/QQQ/XLF resolved to the wrong companies** — subscribers clicking "SPY Quarterly Report"
+   got Royal Caribbean's 10-Q. 60 of 420 filings were another company's.
+8. `data/sec/` published unauthenticated, letting anyone rebuild the Basic-gated aggregate one
+   ticker at a time — via Pages *and* the public repo.
+9. A 3.3 MB CIK cache about to be committed and published, and re-committed weekly.
+
+## The four guards, and what each would have caught
+
+The through-line was never "bad code" — it was that **nothing asserted the outcome**. Each guard
+answers a question nobody was asking:
+
+| guard | where | question | would have caught |
+|---|---|---|---|
+| `check_publish_freshness` | Pi, 30 min | did the site actually publish? | #1 — in 90 min instead of 5 days |
+| `check_script_drift` | Pi, 30 min | is the merged code the running code? | #1 — eight days before it fired |
+| `check_published_surface` | Pi, 30 min | is anything published nobody declared? | #8, #9 |
+| `check_premium_registration` | CI, per PR | is rule 5 actually satisfied? | the #8 class, at review time |
+| `check-published-contracts` | deadman, 30 min | can the frontend parse what shipped? | #4 |
+
+**Why two homes.** `ci.yml` path-ignores `data/**` and `public/data/**`, so CI can never see the
+Pi data commit that introduces a newly-published path — that half must live on the Pi.
+Conversely the Pi cannot review a PR. Neither alone is sufficient.
+
+**Every guard was negative-tested.** A check that cannot fail is not a check: the surface guard was
+proven to report an undeclared `sec/` *and* to stay quiet for gitignored `charts/`/`*.bak` (its
+first cut produced exactly those false positives, and noise is how a check gets muted); the
+registration check was proven to catch both a missing `.gitignore` entry and a missing
+`data_gate.js` entry.
+
+## Still open — deliberately
+
+- **`deadman` has no Telegram secrets.** Detection is perfect and always was: it reported
+  `114.2h old — Pi pipeline may be DOWN` every 30 minutes for 4.5 days and nobody saw it. Add
+  `TELEGRAM_BOT_TOKEN` + `TELEGRAM_HOME_CHANNEL` as repo secrets and the notify step activates.
+  **This is the single highest-value thing left.**
+- **`strategy_override.json` / `strategy_stability.json`** — published, frozen since 2026-06-30,
+  no consumer in `src/`, the Worker, or `llms.txt`. Marked `ORPHAN` in `PUBLISHED_SURFACE` rather
+  than silently blessed. Candidates for deletion.
+- **ETFs now show an empty SEC section** — correct (they file 497/NPORT-P, not 10-K/10-Q), but
+  fetching fund forms would be better than nothing. Product call.
+- **`data/sec/*-filings.json` in git history.** Untracked going forward, but past commits still
+  contain them. Only matters if that data is considered sensitive rather than merely gated.
