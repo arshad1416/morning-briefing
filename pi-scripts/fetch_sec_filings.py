@@ -59,6 +59,13 @@ CIK_SOURCE_FILES = [
     ("company_tickers_mf.json", "https://www.sec.gov/files/company_tickers_mf.json"),
 ]
 CIK_CACHE_MAX_AGE = 7 * 86400  # refresh weekly
+# The CIK maps are a 3.3 MB build artifact, not site data. Cached OUTSIDE the
+# data tree: SEC_DIR is committed to the repo and rsynced to public/data/, so
+# caching there published the SEC's whole ticker map to the site and re-committed
+# it on every weekly refresh.
+CIK_CACHE_DIR = os.path.expanduser(
+    os.environ.get("SEC_CIK_CACHE_DIR", "~/.cache/maplegamma-sec")
+)
 
 _CIK_MAP = None  # lazy-built {TICKER: cik_str}
 
@@ -76,7 +83,7 @@ def _fetch_cik_source(filename, url):
     Falls back to a stale cache if the download fails; returns parsed JSON
     or None.
     """
-    cache_path = os.path.join(SEC_DIR, filename)
+    cache_path = os.path.join(CIK_CACHE_DIR, filename)
     fresh = (
         os.path.exists(cache_path)
         and time.time() - os.path.getmtime(cache_path) < CIK_CACHE_MAX_AGE
@@ -88,7 +95,7 @@ def _fetch_cik_source(filename, url):
         }
         try:
             data = request_json(url, headers=headers, timeout=30)
-            os.makedirs(SEC_DIR, exist_ok=True)
+            os.makedirs(CIK_CACHE_DIR, exist_ok=True)
             atomic_write_json(cache_path, data)
         except (RequestFailed, ValueError) as e:
             print(f"  Failed to download {url}: {e}", file=sys.stderr)
