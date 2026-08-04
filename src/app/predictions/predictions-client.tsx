@@ -183,7 +183,11 @@ function EnhancedAccuracy() {
     <Card title={<InfoTip term="live_simulation">Live Simulation Metrics</InfoTip>}>
       <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
         <Metric label={<InfoTip term="expectancy">Expectancy</InfoTip>} value={signed(exp.expectancy_pct)} sub="average per closed trade" color={pnlColor(exp.expectancy_pct)} />
-        <Metric label={<InfoTip term="profit_factor">Profit Factor</InfoTip>} value={typeof exp.profit_factor === 'number' ? exp.profit_factor.toFixed(2) : '∞'} sub="total gains ÷ total losses" color={exp.profit_factor >= 1.5 ? 'var(--color-bull)' : 'var(--color-caution)'} />
+        {/* profit_factor is null when a strategy has no losing trades yet — gains
+            divided by zero is undefined, not infinite. Rendering "∞" claimed the
+            system was infinitely profitable off a single winning trade. "—" matches
+            AccuracyStats.tsx, which already handles the same null this way. */}
+        <Metric label={<InfoTip term="profit_factor">Profit Factor</InfoTip>} value={typeof exp.profit_factor === 'number' ? exp.profit_factor.toFixed(2) : '—'} sub="total gains ÷ total losses" color={exp.profit_factor >= 1.5 ? 'var(--color-bull)' : 'var(--color-caution)'} />
         <Metric label={<InfoTip term="max_drawdown">Max Drawdown</InfoTip>} value={`-${dd.max_drawdown_pct || 0}%`} sub={`${dd.drawdown_duration_trades || 0} trades from peak to low`} color={dd.max_drawdown_pct < 10 ? 'var(--color-bull)' : dd.max_drawdown_pct < 20 ? 'var(--color-caution)' : 'var(--color-bear)'} />
         <Metric label={<InfoTip term="kelly">Kelly %</InfoTip>} value={`${exp.kelly_fraction || 0}%`} sub="half the formula’s stake, capped" />
         {slip.n_measured > 0 && <Metric label={<InfoTip term="slippage">Avg Slippage</InfoTip>} value={`${slip.avg_slippage_pct}%`} sub={`expected vs actual · ${slip.n_measured} trades`} color="var(--color-caution)" />}
@@ -199,7 +203,7 @@ function EnhancedAccuracy() {
                   <TD align="center">{s.n_trades}</TD>
                   <TD align="center">{s.win_rate}%</TD>
                   <TD align="center" color={pnlColor(s.expectancy_pct)} bold>{signed(s.expectancy_pct)}</TD>
-                  <TD align="center">{typeof s.profit_factor === 'number' ? s.profit_factor.toFixed(2) : '∞'}</TD>
+                  <TD align="center">{typeof s.profit_factor === 'number' ? s.profit_factor.toFixed(2) : '—'}</TD>
                   <TD align="center" color={s.max_drawdown_pct < 10 ? 'var(--color-bull)' : s.max_drawdown_pct < 20 ? 'var(--color-caution)' : 'var(--color-bear)'}>-{s.max_drawdown_pct}%</TD>
                   <TD align="center" color={s.status === 'profitable' ? 'var(--color-bull)' : 'var(--color-bear)'}>{s.status === 'profitable' ? 'Profitable' : 'Losing'}</TD>
                 </tr>

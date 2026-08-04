@@ -284,7 +284,10 @@ def main():
     }
 
     with open(OUTPUT, "w") as f:
-        json.dump(output, f, indent=2)
+        # allow_nan=False: a non-finite value here is invalid strict JSON and
+        # r2_sync's validator is fail-closed, which freezes the ENTIRE public
+        # publish. Fail loudly in this job's own log instead. (2026-07-30 outage)
+        json.dump(output, f, indent=2, allow_nan=False)
 
     print(f"\n✅ Saved to {OUTPUT}")
 

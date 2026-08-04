@@ -82,3 +82,6 @@ tsconfig.tsbuildinfo
 # Python bytecode
 __pycache__/
 *.pyc
+
+# Local tooling caches (impeccable design hook)
+.impeccable/

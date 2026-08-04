@@ -348,6 +348,30 @@ def load_demo_account():
     return transformed, risk_metrics
 
 
+def _run_step(label, script, timeout):
+    """Run an optional sub-script best-effort. Never propagates.
+
+    Every one of these steps already tolerated a non-zero exit code, but a bare
+    subprocess.TimeoutExpired escaped and killed main() before the git commit at
+    the end — a silent publish freeze. push_gex.py has done exactly that in
+    production (2x in push_dashboard.log). A timeout is just another failure of
+    an optional step, so it is warned about and skipped like the rest.
+    """
+    if not os.path.exists(script):
+        return
+    try:
+        r = subprocess.run([sys.executable, script], capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        print(f"WARNING: {label} timed out after {timeout}s — continuing publish", file=sys.stderr)
+        return
+    if r.returncode == 0:
+        for line in r.stdout.strip().split('\n'):
+            if line.strip():
+                print(f"  {line}")
+    else:
+        print(f"WARNING: {label} failed: {(r.stderr or '')[:200]}")
+
+
 def main():
     global RATE
 
@@ -674,52 +698,25 @@ def _main_inner():
     
     # Update prediction engine accuracy (runs before git push)
     accuracy_script = os.path.expanduser("~/.hermes/scripts/update_prediction_accuracy.py")
-    if os.path.exists(accuracy_script):
-        r = subprocess.run([sys.executable, accuracy_script], capture_output=True, text=True, timeout=30)
-        if r.returncode == 0:
-            for line in r.stdout.strip().split('\n'):
-                if line.strip():
-                    print(f"  {line}")
-        else:
-            print(f"WARNING: Accuracy update failed: {r.stderr[:200]}")
+    _run_step("Accuracy update", accuracy_script, 30)
     
     # Push Reddit sentiment data
     reddit_script = os.path.expanduser("~/.hermes/scripts/push_reddit.py")
-    if os.path.exists(reddit_script):
-        r = subprocess.run([sys.executable, reddit_script], capture_output=True, text=True, timeout=30)
-        if r.returncode == 0:
-            for line in r.stdout.strip().split('\n'):
-                if line.strip():
-                    print(f"  {line}")
+    _run_step("Reddit sentiment", reddit_script, 30)
     
     
     # Generate latest.json for dashboard
     gen_latest = os.path.expanduser("~/.hermes/scripts/generate_latest.py")
-    if os.path.exists(gen_latest):
-        r = subprocess.run([sys.executable, gen_latest], capture_output=True, text=True, timeout=60)
-        if r.returncode == 0:
-            for line in r.stdout.strip().split('\n'):
-                if line.strip():
-                    print(f"  {line}")
+    _run_step("latest.json generation", gen_latest, 60)
     
     
     # Snapshot into archive (once daily)
     archive_script = os.path.expanduser("~/.hermes/scripts/archive_snapshot.py")
-    if os.path.exists(archive_script):
-        r = subprocess.run([sys.executable, archive_script], capture_output=True, text=True, timeout=30)
-        if r.returncode == 0:
-            for line in r.stdout.strip().split('\n'):
-                if line.strip():
-                    print(f"  {line}")
+    _run_step("Archive snapshot", archive_script, 30)
     
     # Generate GEX/DEX/VEX data for dashboard
     gex_script = os.path.expanduser("~/.hermes/scripts/push_gex.py")
-    if os.path.exists(gex_script):
-        r = subprocess.run([sys.executable, gex_script], capture_output=True, text=True, timeout=120)
-        if r.returncode == 0:
-            for line in r.stdout.strip().split('\n'):
-                if line.strip():
-                    print(f"  {line}")
+    _run_step("GEX generation", gex_script, 120)
     
     # Push to GitHub
     if os.path.exists(DASHBOARD_REPO):
@@ -732,13 +729,33 @@ def _main_inner():
         try:
             sys.path.insert(0, os.path.expanduser("~/.hermes/scripts"))
             import r2_sync
-            _uploaded, _skipped = r2_sync.run()
-            if _skipped:
-                raise RuntimeError(f"R2 sync skipped {_skipped} private artifact(s)")
+            _uploaded, _invalid, _failed = r2_sync.run()
+            # Transport/credential failure means R2 itself is unhealthy — still fatal.
+            if _failed:
+                raise RuntimeError(f"R2 upload failed for {len(_failed)} artifact(s): {'; '.join(_failed)}")
             if os.path.exists(os.path.join(DASHBOARD_REPO, 'data', 'nope-detail.json')) and not _uploaded:
                 raise RuntimeError("NOPE artifact exists but private R2 upload did not run")
         except Exception as _e:
             raise RuntimeError(f"Private R2 sync failed; refusing to publish Pages data: {_e}") from _e
+        # A premium artifact failing VALIDATION is bad data, not a broken publish.
+        # Skip it (its previous R2 copy keeps serving) and publish everything else —
+        # a Pro-tier file must never freeze the free dashboard again. Premium data
+        # still cannot leak: that is the rsync --exclude below, which is unaffected.
+        if _invalid:
+            _msg = (
+                f"⚠️ MapleGamma publish: {len(_invalid)} premium artifact(s) failed validation "
+                f"and were NOT uploaded. Public data published anyway; these serve STALE data "
+                f"until fixed:\n" + "\n".join(_invalid)
+            )
+            print(_msg, file=sys.stderr)
+            # ponytail: alerts every run (~13/day in market hours) while a file stays
+            # invalid. Noisy on purpose — silence is what cost 5 days. Add dedupe/state
+            # if the noise ever becomes the reason someone mutes the channel.
+            try:
+                from tg_notify import send_telegram
+                send_telegram(_msg)
+            except Exception:
+                pass
         # Sync data/ → public/data/ for Cloudflare Pages static export
         # (next.config.ts output:'export'), EXCLUDING premium files — those are
         # R2-only and must never land in the deployed static dir.
