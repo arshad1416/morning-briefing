@@ -53,7 +53,7 @@ jobs:
       # three stub their market-data deps and need no venv.
       - name: Pipeline tests (pi-scripts)
         working-directory: pi-scripts
-        run: python3 -m unittest test_fetch_universe_constituents test_universe_membership test_volume_nan
+        run: python3 -m unittest test_fetch_universe_constituents test_universe_membership test_volume_nan test_push_autostash_conflict
       - run: npm run build
 
   worker-tests:

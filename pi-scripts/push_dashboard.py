@@ -733,6 +733,25 @@ def _main_inner():
         if r.returncode != 0:
             print(f"GIT PULL FAILED: {r.stderr or r.stdout}")
             sys.exit(1)
+        # `--autostash` restores the stash AFTER the rebase reports success, and a
+        # failed pop does NOT change the exit code — git prints the conflict and
+        # returns 0. The next `git add -A` then stages files containing <<<<<<<
+        # markers and publishes them under a "Live portfolio" message, which is
+        # the label nobody reads closely (AGENTS.md rule 1). Catch it here, while
+        # the tree still says so, instead of shipping a broken JSON payload.
+        _unmerged = subprocess.run(
+            "git ls-files --unmerged", shell=True, capture_output=True, text=True,
+        )
+        if _unmerged.stdout.strip():
+            _paths = sorted({line.split("\t")[-1] for line in _unmerged.stdout.strip().splitlines()})
+            print(
+                "GIT PULL left unmerged paths (autostash pop conflicted) — refusing to "
+                f"publish: {', '.join(_paths)}\n"
+                "Resolve on the Pi: `git checkout --theirs <path>` or `git checkout -- <path>` "
+                "to take origin/main, then `git stash drop` if the stash is no longer needed.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
         # Paywall: regenerate public screener-lite + sync premium files to R2
         try:
             sys.path.insert(0, os.path.expanduser("~/.hermes/scripts"))

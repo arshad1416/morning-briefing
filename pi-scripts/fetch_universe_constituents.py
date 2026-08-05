@@ -403,15 +403,15 @@ SOURCES = {
         ),
         "kind": "ishares",
         "note": (
-            # This string is rendered to visitors on the screener page, so it
-            # states OUR refresh cadence, not BlackRock's publication cadence.
-            # The two differ: IWM publishes daily, the cron reads it monthly
-            # (crontab.txt, 15th at 06:00), so an as-of date here can be four
-            # weeks old and "each business day" would read as a promise the
-            # page does not keep.
+            # Rendered to visitors on the screener page, so it states OUR
+            # refresh cadence rather than BlackRock's publication cadence. The
+            # two now agree — the cron runs Tue-Sat at 06:00 against a feed
+            # dated to the prior business day — but they are separate facts and
+            # this string follows the cron, not the feed. If the schedule ever
+            # goes back to monthly, this sentence changes with it.
             "Proxy: holdings of the iShares Russell 2000 ETF (IWM), not the index itself. "
-            "Non-equity balances are excluded. Refreshed monthly, so this list can lag "
-            "index changes by several weeks, and membership can differ slightly from the index."
+            "Non-equity balances, contingent value rights and escrow stubs are excluded. "
+            "Refreshed each business day, and membership can differ slightly from the index."
         ),
         "fallback_url": "https://investor.vanguard.com/investment-products/etfs/profile/api/vtwo/portfolio-holding/stock",
         "fallback_note": (
