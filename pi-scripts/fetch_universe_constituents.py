@@ -188,7 +188,10 @@ def fetch_nasdaq100(url: str) -> list[dict[str, str]]:
 # Russell 2000 index tracker as a proxy. Primary source: BlackRock's iShares
 # IWM holdings, which are published DAILY (as-of = prior business day) through
 # an undocumented product-data API reverse-engineered from ishares.com's
-# holdings tab (2026-08-04). Fallback: Vanguard's VTWO month-end file, so a
+# holdings tab (2026-08-04). Note the cron reads it MONTHLY (crontab.txt, 15th
+# at 06:00), so the cached as-of can be four weeks behind what BlackRock has —
+# the user-facing source_note below states our cadence, not BlackRock's.
+# Fallback: Vanguard's VTWO month-end file, so a
 # BlackRock outage doesn't stall the refresh. Consequences worth knowing: an
 # index fund's holdings can differ slightly from the index itself (sampling,
 # pending-trade timing), and ETF holdings include small non-equity balances
@@ -196,6 +199,31 @@ def fetch_nasdaq100(url: str) -> list[dict[str, str]]:
 # whichever source actually answered is recorded in the cache.
 
 IWM_PRODUCT_ID = "239710"  # iShares Russell 2000 ETF
+
+# BlackRock writes share classes with no separator at all — "MOGA", not the
+# "MOG.A" Wikipedia and Vanguard use — so normalize_symbol's punctuation swap
+# never fires on this source (verified: 0 of 1971 live tickers contain "." or
+# "/"). Squashed symbols reach yfinance as-is and silently fail, and one is
+# actively wrong: CRDA resolves to BlackRock Credit Strategies Fund, a
+# different issuer than Crawford & Company Class A.
+#
+# Spelled out rather than derived. The obvious rule — issueName says "CLASS A"
+# and the ticker ends in "A" — rewrites 24 of the live tickers, 20 of them
+# wrongly (ZETA -> ZET-A, VERA -> VER-A, ACVA -> ACV-A). These four are the
+# entire real blast radius; a fifth appearing is a one-line addition here.
+IWM_SHARE_CLASS_ALIASES = {
+    "BHA": "BH-A",      # Biglari Holdings Class A
+    "CRDA": "CRD-A",    # Crawford & Company Class A
+    "GEFB": "GEF-B",    # Greif Class B
+    "MOGA": "MOG-A",    # Moog Class A
+}
+
+# A truncated or misaligned holdings list must not become a smaller index.
+# Both failure shapes below produce a NON-EMPTY result, so the `if not out`
+# check cannot catch them and the Vanguard fallback is never reached — the
+# scan would just quietly cover fewer names under an unchanged label.
+IWM_MIN_HOLDINGS = 1500  # live count is ~1,961; the index itself is ~2,000
+
 
 def fetch_ishares_holdings(url: str) -> tuple[list[dict[str, str]], str]:
     """Holdings of an iShares ETF from BlackRock's product-data API.
@@ -212,20 +240,38 @@ def fetch_ishares_holdings(url: str) -> tuple[list[dict[str, str]], str]:
     classes = datapoints.get("assetClass", {}).get("value") or []
     as_of_int = datapoints.get("asOfDate", {}).get("value")
 
+    # The three arrays are joined by position and nothing upstream promises
+    # they stay in step. Checked once here so the row loop can fail CLOSED:
+    # the old per-row `i < len(classes)` guard admitted every row past a short
+    # assetClass array, which is precisely the cash/futures rows it exists to
+    # drop — and a short issueName array silently shifts every name.
+    if not (isinstance(tickers, list) and isinstance(classes, list) and isinstance(names, list)):
+        raise RequestFailed(f"holdings arrays are not lists at {url}")
+    if not len(tickers) == len(classes) == len(names):
+        raise RequestFailed(
+            f"misaligned holdings arrays at {url}: "
+            f"{len(tickers)} tickers, {len(classes)} classes, {len(names)} names"
+        )
+
     out: list[dict[str, str]] = []
     seen: set[str] = set()
     for i, raw in enumerate(tickers):
         # Keep equities only: the fund also holds cash, money-market and
         # futures balances that are not Russell 2000 membership.
-        if i < len(classes) and classes[i] != "Equity":
+        if classes[i] != "Equity":
             continue
         symbol = normalize_symbol(str(raw or ""))
+        symbol = IWM_SHARE_CLASS_ALIASES.get(symbol, symbol)
         if symbol and symbol not in seen:
             seen.add(symbol)
-            name = names[i] if i < len(names) else ""
-            out.append({"symbol": symbol, "name": str(name or "")})
+            out.append({"symbol": symbol, "name": str(names[i] or "")})
     if not out:
         raise RequestFailed(f"no equity holdings in iShares payload at {url}")
+    if len(out) < IWM_MIN_HOLDINGS:
+        raise RequestFailed(
+            f"only {len(out)} equity holdings at {url} (expected >= {IWM_MIN_HOLDINGS}) — "
+            "refusing to shrink the index on a partial response"
+        )
 
     as_of = ""
     if as_of_int:  # integer yyyymmdd, e.g. 20260803
@@ -307,9 +353,15 @@ SOURCES = {
         ),
         "kind": "ishares",
         "note": (
-            "Proxy: daily holdings of iShares Russell 2000 ETF (IWM), not the index itself. "
-            "BlackRock publishes IWM holdings each business day; non-equity balances are "
-            "excluded. Membership can differ slightly from the index."
+            # This string is rendered to visitors on the screener page, so it
+            # states OUR refresh cadence, not BlackRock's publication cadence.
+            # The two differ: IWM publishes daily, the cron reads it monthly
+            # (crontab.txt, 15th at 06:00), so an as-of date here can be four
+            # weeks old and "each business day" would read as a promise the
+            # page does not keep.
+            "Proxy: holdings of the iShares Russell 2000 ETF (IWM), not the index itself. "
+            "Non-equity balances are excluded. Refreshed monthly, so this list can lag "
+            "index changes by several weeks, and membership can differ slightly from the index."
         ),
         "fallback_url": "https://investor.vanguard.com/investment-products/etfs/profile/api/vtwo/portfolio-holding/stock",
         "fallback_note": (

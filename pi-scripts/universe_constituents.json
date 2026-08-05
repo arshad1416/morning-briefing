@@ -6051,7 +6051,7 @@
     },
     "Russell 2000": {
       "source_url": "https://www.blackrock.com/varnish-api/blk-one01-product-data/product-data/api/v2/get-product-data?appSubType=ISHARES&appType=PRODUCT_PAGE&component=holdings&locale=en_US&portfolioId=239710&targetSite=us-ishares&userType=individual&excludeContent=true&includeConfig=true",
-      "source_note": "Proxy: daily holdings of iShares Russell 2000 ETF (IWM), not the index itself. BlackRock publishes IWM holdings each business day; non-equity balances are excluded. Membership can differ slightly from the index.",
+      "source_note": "Proxy: holdings of the iShares Russell 2000 ETF (IWM), not the index itself. Non-equity balances are excluded. Refreshed monthly, so this list can lag index changes by several weeks, and membership can differ slightly from the index.",
       "fetched_at": "2026-08-04",
       "as_of": "2026-08-03",
       "member_count": 1961,
@@ -7037,7 +7037,7 @@
           "name": "BIGLARI HOLDINGS INCINARY CLASS B"
         },
         {
-          "symbol": "BHA",
+          "symbol": "BH-A",
           "name": "BIGLARI HOLDINGS INC CLASS A"
         },
         {
@@ -7849,7 +7849,7 @@
           "name": "CRICUT INC CLASS A"
         },
         {
-          "symbol": "CRDA",
+          "symbol": "CRD-A",
           "name": "CRAWFORD CLASS A"
         },
         {
@@ -9013,7 +9013,7 @@
           "name": "GREIF INC CLASS A"
         },
         {
-          "symbol": "GEFB",
+          "symbol": "GEF-B",
           "name": "GREIF INC CLASS B"
         },
         {
@@ -10621,7 +10621,7 @@
           "name": "MNTN INC CLASS A"
         },
         {
-          "symbol": "MOGA",
+          "symbol": "MOG-A",
           "name": "MOOG INC CLASS A"
         },
         {

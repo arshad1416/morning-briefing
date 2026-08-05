@@ -38,6 +38,15 @@ def make_payload(tickers, classes, as_of=20260803, names=None):
 
 
 class IWMHoldingsParsingTests(unittest.TestCase):
+    def setUp(self):
+        # These fixtures are a handful of rows; the real floor is 1500. Lower it
+        # for the parsing cases so they exercise parsing, and leave the floor
+        # itself to MinimumHoldingsTests below, which must run against the real
+        # value or it would be asserting a constant it set itself.
+        patcher = patch.object(f, "IWM_MIN_HOLDINGS", 1)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
     def test_keeps_equities_and_dedupes(self):
         payload = make_payload(
             ["AAA", "BBB", "USD", "AAA"],
@@ -58,11 +67,46 @@ class IWMHoldingsParsingTests(unittest.TestCase):
             members, _ = f.fetch_ishares_holdings("https://example.test/api")
         self.assertEqual([m["symbol"] for m in members], ["AAA"])
 
-    def test_normalises_share_class_punctuation(self):
-        payload = make_payload(["BRK.B", "MOG.A"], ["Equity", "Equity"])
+    def test_squashed_share_classes_get_their_separator_back(self):
+        # BlackRock writes share classes with NO separator. The previous version
+        # of this test fed dotted symbols ("MOG.A") that this source never
+        # emits, so it passed green while all four real ones shipped squashed —
+        # CRDA among them, which is a live ticker belonging to another issuer.
+        payload = make_payload(
+            ["AAA", "BHA", "CRDA", "GEFB", "MOGA"],
+            ["Equity"] * 5,
+        )
         with patch.object(f, "request_json", return_value=payload):
             members, _ = f.fetch_ishares_holdings("https://example.test/api")
-        self.assertEqual([m["symbol"] for m in members], ["BRK-B", "MOG-A"])
+        self.assertEqual(
+            [m["symbol"] for m in members],
+            ["AAA", "BH-A", "CRD-A", "GEF-B", "MOG-A"],
+        )
+
+    def test_dotted_symbols_still_normalise(self):
+        # The Vanguard fallback and the Wikipedia tables DO use dots, and both
+        # route through normalize_symbol — so that path has to keep working.
+        self.assertEqual(f.normalize_symbol("BRK.B"), "BRK-B")
+        self.assertEqual(f.normalize_symbol("MOG.A"), "MOG-A")
+
+    def test_misaligned_arrays_raise_rather_than_admitting_unclassified_rows(self):
+        # A short assetClass array used to skip the equity filter entirely for
+        # every row past its end, admitting exactly the cash and futures rows
+        # the filter exists to drop.
+        payload = make_payload(["AAA", "XTSLA", "RTYU6"], ["Equity"])
+        with patch.object(f, "request_json", return_value=payload):
+            with self.assertRaises(f.RequestFailed):
+                f.fetch_ishares_holdings("https://example.test/api")
+
+    def test_non_list_arrays_raise(self):
+        # A bare string would otherwise be iterated CHARACTER by character,
+        # each one a valid single-letter symbol.
+        payload = make_payload(["AAA"], ["Equity"])
+        dp = payload["componentsByNameMap"]["holdings"]["containersByNameMap"]["all"]["dataPointsByNameMap"]
+        dp["ticker"]["value"] = "AAA"
+        with patch.object(f, "request_json", return_value=payload):
+            with self.assertRaises(f.RequestFailed):
+                f.fetch_ishares_holdings("https://example.test/api")
 
     def test_as_of_integer_converts_to_iso(self):
         payload = make_payload(["AAA"], ["Equity"], as_of=20260803)
@@ -80,6 +124,30 @@ class IWMHoldingsParsingTests(unittest.TestCase):
         with patch.object(f, "request_json", return_value={"unexpected": True}):
             with self.assertRaises(f.RequestFailed):
                 f.fetch_ishares_holdings("https://example.test/api")
+
+
+class MinimumHoldingsTests(unittest.TestCase):
+    """Runs against the REAL floor — a partial response must not shrink the index.
+
+    Both shapes here return a non-empty list, so `if not out` never fires and
+    the Vanguard fallback is never reached. Without the floor the run writes a
+    smaller universe, exits 0, and the site relabels the index with a straight
+    face.
+    """
+
+    def test_a_well_formed_but_tiny_payload_is_rejected(self):
+        payload = make_payload(["AAA", "BBB", "CCC"], ["Equity"] * 3)
+        with patch.object(f, "request_json", return_value=payload):
+            with self.assertRaises(f.RequestFailed):
+                f.fetch_ishares_holdings("https://example.test/api")
+
+    def test_a_full_sized_payload_passes(self):
+        n = f.IWM_MIN_HOLDINGS + 1
+        tickers = [f"T{i:05d}" for i in range(n)]
+        payload = make_payload(tickers, ["Equity"] * n)
+        with patch.object(f, "request_json", return_value=payload):
+            members, _ = f.fetch_ishares_holdings("https://example.test/api")
+        self.assertEqual(len(members), n)
 
 
 class RussellFallbackTests(unittest.TestCase):
