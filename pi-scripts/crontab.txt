@@ -32,6 +32,14 @@
 10 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 three_sleeve_scorer.py >> /home/arshad14/.hermes/logs/scorer.log 2>&1
 15 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 slippage_tracker.py >> /home/arshad14/.hermes/logs/slippage.log 2>&1
 
+# ── Day-trader loop (paper trading) — added 2026-08-04 ──
+# 09:25 council blessing -> day_trader_ruleset.json; */10 intraday scan/enter/
+# exit (market gate + 15:45-16:10 forced-flat inside the script); 15:50 EOD
+# forced-flat backstop. Shared flock so ticks never overlap. Log: day_trader.log
+25 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 morning_blessing.py >> /home/arshad14/.hermes/logs/day_trader.log 2>&1
+*/10 9-15 * * 1-5 cd /home/arshad14/.hermes/scripts && flock -n /tmp/day_trader.lock python3 intraday_day_trader.py >> /home/arshad14/.hermes/logs/day_trader.log 2>&1
+50 15 * * 1-5 cd /home/arshad14/.hermes/scripts && flock -n /tmp/day_trader.lock python3 intraday_day_trader.py --force-close >> /home/arshad14/.hermes/logs/day_trader.log 2>&1
+
 # ── Solar data — hourly ──
 0 * * * * cd /home/arshad14 && python3 fetch_solar.py >> /home/arshad14/.hermes/logs/solar.log 2>&1
 
