@@ -1,46 +1,46 @@
 {
-  "generated_at": "2026-08-05T10:37:35-04:00",
+  "generated_at": "2026-08-05T11:07:31-04:00",
   "market_overview": {
-    "total_net_gex": 2846497,
-    "total_oi": 3907007,
-    "current_price": 774.05,
-    "change_pct": 0.35
+    "total_net_gex": 2926182,
+    "total_oi": 3922151,
+    "current_price": 773.65,
+    "change_pct": 0.3
   },
   "tickers": {
     "SPY": {
-      "current_price": 774.05,
-      "change_pct": 0.35,
+      "current_price": 773.65,
+      "change_pct": 0.3,
       "gamma_regime": "bullish",
-      "total_gex": 2846497,
-      "total_dex": 199506239,
-      "total_vex": 1018553246,
-      "total_vanna": 7072583,
-      "total_charm": -891038,
-      "total_dealer_gex": 1537314,
-      "gamma_flip": 762.19,
+      "total_gex": 2926182,
+      "total_dex": 199079034,
+      "total_vex": 1006779620,
+      "total_vanna": 7135529,
+      "total_charm": -1369248,
+      "total_dealer_gex": 1667702,
+      "gamma_flip": 761.15,
       "max_pain": 745.0,
       "max_gex_strike": 775.0,
-      "max_gex_value": 413019,
+      "max_gex_value": 475337,
       "neutral_range": [],
       "floor_zone": {
-        "strike": 750.0,
-        "net_gex": 246023,
-        "total_gex": 246023,
-        "range_start": 745.0,
-        "range_end": 755.0,
+        "strike": 770.0,
+        "net_gex": 253032,
+        "total_gex": 253032,
+        "range_start": 765.0,
+        "range_end": 775.0,
         "strength": "strong",
-        "narrative": "Gamma floor at $750"
+        "narrative": "Gamma floor at $770"
       },
       "ceiling_zone": {
         "strike": 775.0,
-        "net_gex": 413019,
-        "total_gex": 413019,
+        "net_gex": 475337,
+        "total_gex": 475337,
         "range_start": 770.0,
         "range_end": 780.0,
         "strength": "strong",
         "narrative": "Gamma ceiling at $775"
       },
-      "narrative": "Net GEX: $+2,846,497 \u2014 dealers are long gamma (range-bound)"
+      "narrative": "Net GEX: $+2,926,182 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
