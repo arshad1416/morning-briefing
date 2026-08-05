@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-04T17:15:10-04:00",
+  "generated_at": "2026-08-05T07:26:21-04:00",
   "market_summary": {
-    "vix": 16.5,
+    "vix": 16.59,
     "ten_year_yield": 4.63,
     "indices": [
       {
@@ -26,13 +26,13 @@
       },
       {
         "ticker": "TSX",
-        "price": 35801.59,
+        "price": 35801.6,
         "change_pct": 1.63
       },
       {
         "ticker": "VIX",
-        "price": 16.5,
-        "change_pct": 4.04
+        "price": 16.59,
+        "change_pct": 0.55
       },
       {
         "ticker": "10Y Yield",
@@ -48,7 +48,7 @@
     ]
   },
   "narrative": {
-    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,736.52 (+1.79%)\n  \u2022 Dow Jones: 54,085.88 (+1.71%)\n  \u2022 NASDAQ: 26,584.99 (+2.59%)\n  \u2022 Russell 2000: 3,036.98 (+1.85%)\n  \u2022 TSX: 35,801.59 (+1.63%)\n  \u2022 VIX: 16.5\n  \u2022 10Y Yield: 4.63%"
+    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,736.52 (+1.79%)\n  \u2022 Dow Jones: 54,085.88 (+1.71%)\n  \u2022 NASDAQ: 26,584.99 (+2.59%)\n  \u2022 Russell 2000: 3,036.98 (+1.85%)\n  \u2022 TSX: 35,801.60 (+1.63%)\n  \u2022 VIX: 16.59\n  \u2022 10Y Yield: 4.63%"
   },
   "watchlist_summary": {},
   "central_banks": {
@@ -56,6 +56,20 @@
     "boc": ""
   },
   "insider_trades": [
+    {
+      "ticker": "META",
+      "insider": "Alford Peggy",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 464,
+      "price": 543.56,
+      "value": 252212,
+      "date": "2026-07-31",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326011909/xslF345X06/ownership.xml"
+    },
     {
       "ticker": "META",
       "insider": "Olivan Javier",
@@ -181,90 +195,76 @@
       "date": "2026-07-20",
       "source": "SEC EDGAR Form 4",
       "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326011028/xslF345X06/ownership.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 408,
-      "price": 645.85,
-      "value": 263507,
-      "date": "2026-07-20",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326011028/xslF345X06/ownership.xml"
     }
   ],
   "market_news": {
     "headlines": [
       {
-        "title": "US banning Chinese data center devices may have 'unintended consequences,' BNP says",
-        "url": "https://seekingalpha.com/news/4625096-us-banning-chinese-data-center-devices-may-have-unintended-consequences-bnp-says?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Diamondback outlines Bryant Ranch power project with first gas in the back half of 2027 while leaning toward low single-digit growth",
-        "url": "https://seekingalpha.com/news/4625109-diamondback-outlines-bryant-ranch-power-project-with-first-gas-in-the-back-half-of-2027-while?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Vishay Intertechnology Non-GAAP EPS of $0.19 beats by $0.05, revenue of $888.58M misses by $6.46M",
+        "url": "https://seekingalpha.com/news/4625872-vishay-intertechnology-non-gaap-eps-of-0_19-beats-by-0_05-revenue-of-888_58m-misses-by-6_46m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "McDonald's targets 50,000 restaurants in 2028 as it launches McDonald's > NEXT and addresses U.S. execution gaps",
-        "url": "https://seekingalpha.com/news/4625108-mcdonalds-targets-50000-restaurants-in-2028-as-it-launches-mcdonalds-next-and-addresses-u-s?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Sprott GAAP EPS of $1.33, revenue of $71.78M misses by $6.38M",
+        "url": "https://seekingalpha.com/news/4625863-sprott-gaap-eps-of-1_33-revenue-of-71_78m-misses-by-6_38m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
-        "sentiment": "bearish",
+        "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Henry Schein outlines 2026 EPS of $5.29-$5.39 as it lifts sales growth outlook to 4.5%-5.5%",
-        "url": "https://seekingalpha.com/news/4625107-henry-schein-outlines-2026-eps-of-5_29-5_39-as-it-lifts-sales-growth-outlook-to-4_5?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Less Fed guidance could lift market volatility, Perkins says",
+        "url": "https://seekingalpha.com/news/4625865-less-fed-guidance-could-lift-market-volatility-perkins-says?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Extreme Networks Non-GAAP EPS of $1.06 beats by $0.03, revenue of $1.28B in-line",
+        "url": "https://seekingalpha.com/news/4625868-extreme-networks-non-gaap-eps-of-1_06-beats-by-0_03-revenue-of-1_28b-in-line?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Lockheed is said to seek U.S. sources for critical minerals as China restrictions tighten",
-        "url": "https://seekingalpha.com/news/4625105-lockheed-is-said-to-seek-u-s-sources-for-critical-minerals-as-china-restrictions-tighten?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Capital Southwest outlines $250M-$300M origination pace over next 60 days while targeting 13%-15% CapTrin returns",
-        "url": "https://seekingalpha.com/news/4625101-capital-southwest-outlines-250m-300m-origination-pace-over-next-60-days-while-targeting-13?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Chatham lodging trust expects 2026 adjusted FFO per share of $1.28-$1.34 while projecting 1.5%-3% RevPAR growth",
-        "url": "https://seekingalpha.com/news/4625100-chatham-lodging-trust-expects-2026-adjusted-ffo-per-share-of-1_28-1_34-while-projecting-1_5?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "GlobalFoundries dips despite Q2 beat",
+        "url": "https://seekingalpha.com/news/4625840-globalfoundries-dips-despite-q2-beat?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Sandisk Just Announced Its Next Game Changer",
-        "url": "https://seekingalpha.com/article/4929874-sandisk-just-announced-its-next-game-changer?source=feed",
+        "title": "Kymera Therapeutics GAAP EPS of -$0.62 beats by $0.12, revenue of $65M beats by $32.22M",
+        "url": "https://seekingalpha.com/news/4625869-kymera-therapeutics-gaap-eps-of-0_62-beats-by-0_12-revenue-of-65m-beats-by-32_22m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
-        "sentiment": "neutral",
+        "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "If I Could Only Own 3 Dividend Investments For The Next 10 Years",
-        "url": "https://seekingalpha.com/article/4929833-if-i-could-only-own-3-dividend-investments-for-the-next-10-years?source=feed",
+        "title": "New York Times in Charts: Subscriber growth powers another strong digital Q2",
+        "url": "https://seekingalpha.com/news/4625870-new-york-times-in-charts-subscriber-growth-powers-another-strong-digital-q2?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
-        "sentiment": "neutral",
+        "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "This Could Be The Most Important Market Rotation In Years",
-        "url": "https://seekingalpha.com/article/4928837-this-could-be-the-most-important-market-rotation-in-years?source=feed",
+        "title": "Micron's Pullback May Be The Market's Biggest Mistake (Rating Upgrade)",
+        "url": "https://seekingalpha.com/article/4930571-microns-pullback-may-be-the-markets-biggest-mistake-rating-upgrade?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Palantir Is Winning: Rapid AIP Adoption, Margin Expansion, Soaring FCF",
+        "url": "https://seekingalpha.com/article/4930494-palantir-stock-winning-rapid-aip-adoption-margin-expansion-soaring-fcf?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Uber: A Potential Waymo Exit Warrants Caution",
+        "url": "https://seekingalpha.com/article/4930460-uber-a-potential-waymo-exit-warrants-caution?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
@@ -275,185 +275,185 @@
   },
   "geopolitical": [
     {
-      "title": "More than 150 migrants rescued after boat catches fire in Channel",
+      "title": "Russian strike kills at least 17 as Zelensky says interceptors could have saved lives",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c4gkpeppjyqo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-04T10:23:51+00:00",
-      "summary": "The boat was attempting to cross to the UK when its engine caught fire, according to French authorities."
+      "url": "https://www.bbc.co.uk/news/articles/c330pxyvzzyo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-05T09:54:20+00:00",
+      "summary": "The Russia defence ministry said it had struck logistics hubs and supply centres in Kyiv and the surrounding region."
     },
     {
-      "title": "Five dead in Moscow region as Ukraine continues warehouse strikes",
+      "title": "Trump says Iran will be 'hit very hard' if Hormuz Strait not open soon as oil prices fall",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c151pkww79zo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-04T09:35:06+00:00",
-      "summary": "Facilities in St Petersburg and Tver were also hit, while at least one was killed in Russian strikes on Ukraine."
+      "url": "https://www.bbc.co.uk/news/articles/cpw9v0gnzxwo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-05T03:44:30+00:00",
+      "summary": "US Secretary of State Marco Rubio and Treasury Secretary Scott Bessent both announced talks had progressed to allow shipments to resume."
     },
     {
-      "title": "Analysis: Trump challenged by cold reality from top allies",
+      "title": "Perez Hilton recovering in hospital after reports he self-harmed during livestream",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cgjed2q2l0xo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-04T09:11:39+00:00",
-      "summary": "A president used to bending US politics to his will faces two stinging losses in a matter of days, writes the BBC's Anthony Zurcher."
+      "url": "https://www.bbc.co.uk/news/articles/cly5kvdkyjro?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-05T08:29:30+00:00",
+      "summary": "Miami police told US media outlets the celebrity blogger had been \"safely recovered\" from his home."
     },
     {
-      "title": "What will happen when a SpaceX rocket collides with the Moon?",
+      "title": "Police raid Starbucks Korea headquarters over 'Tank Day' fiasco",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cx25yn22l97o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-04T09:13:37+00:00",
-      "summary": "Our satellite has endured countless blows over millions of years - and astronomers think this one could be a useful accident."
+      "url": "https://www.bbc.co.uk/news/articles/c0kmd4xpr46o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-05T07:04:45+00:00",
+      "summary": "People have filed complaints against Starbucks for allegedly making light of the deadly Gwangju Uprising."
     },
     {
-      "title": "Why Trump Media's sale of fast access to market-moving social posts is controversial",
+      "title": "Armed man arrested near Trump's golf course ahead of president's visit",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c4gdkl9zn8wo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-04T10:34:45+00:00",
-      "summary": "Trump Media & Technology Group (TMTG) has set up a paid service to give Wall Street firms access to Truth Social's most influential accounts."
+      "url": "https://www.bbc.co.uk/news/articles/c20jp3mp7lyo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-05T00:19:04+00:00",
+      "summary": "The arrest happened shortly before President Trump was due to host a fundraising dinner at the coastal golf course in California."
     },
     {
-      "title": "Palestinian patients return to Gaza as thousands still await evacuation",
+      "title": "India\u2019s severe monsoon season causes more than 100 deaths since July",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/video/newsfeed/2026/8/4/palestinian-patients-return-to-gaza-as-thousands-still-await-evacuation?traffic_source=rss",
-      "date": "2026-08-04T10:04:49+00:00",
-      "summary": "Palestinian patients returned to Gaza after receiving medical treatment abroad, reuniting after years of separation."
+      "url": "https://www.aljazeera.com/news/2026/8/5/indias-severe-monsoon-season-causes-more-than-100-deaths-since-july?traffic_source=rss",
+      "date": "2026-08-05T10:10:07+00:00",
+      "summary": "Monsoon downpours cause floods and landslides as climate change and El Nino disrupt rainfall patterns."
     },
     {
-      "title": "US primaries: What to watch in Kansas, Missouri, Virginia, Washington",
+      "title": "How Israeli restrictions on Palestinians\u2019 movement break up the West Bank",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/4/us-primaries-what-to-watch-in-kansas-missouri-virginia-washington?traffic_source=rss",
-      "date": "2026-08-04T09:47:40+00:00",
-      "summary": "From House battlegrounds to party fights and Trump's influence, here are the races to follow during Tuesday's primaries."
+      "url": "https://www.aljazeera.com/opinions/2026/8/5/how-israeli-restrictions-on-palestinians-movement-break-up-the-west-bank?traffic_source=rss",
+      "date": "2026-08-05T10:09:22+00:00",
+      "summary": "While barriers to free movement make the lives of Palestinians extremely difficult, they do not make Israel more secure."
     },
     {
-      "title": "Cars burn in reported settler attack in occupied West Bank",
+      "title": "Reform UK plan to return asylum seekers using navy \u2018dangerous in practice\u2019",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/video/newsfeed/2026/8/4/cars-burn-in-reported-settler-attack-in-occupied-west-bank?traffic_source=rss",
-      "date": "2026-08-04T08:51:47+00:00",
-      "summary": "Cars burn in reported settler attack in occupied West Bank"
+      "url": "https://www.aljazeera.com/news/2026/8/5/reform-uk-plan-to-return-asylum-seekers-using-navy-dangerous-in-practice?traffic_source=rss",
+      "date": "2026-08-05T10:07:20+00:00",
+      "summary": "Nigel Farage's party says 'Operation Fortress' would stop migrants 'invading', but experts slam proposal as unrealistic."
     }
   ],
   "congress": {
     "recent_trades": [
       {
-        "politician": "Cleo Fields",
+        "politician": "April McClain Delaney",
         "chamber": "House",
-        "state": "LA06",
-        "ticker": "TSM",
+        "state": "MD06",
+        "ticker": "BWXT",
+        "action": "Buy",
+        "amount_range": "$15,001 - $50,000",
+        "amount_low": 15001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
+      },
+      {
+        "politician": "April McClain Delaney",
+        "chamber": "House",
+        "state": "MD06",
+        "ticker": "BWXT",
         "action": "Buy",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/10/2026",
+        "transaction_date": "07/27/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035023.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
       },
       {
-        "politician": "Kelly Louise Morrison",
+        "politician": "April McClain Delaney",
         "chamber": "House",
-        "state": "MN03",
-        "ticker": "HONAV",
-        "action": "Exchange",
+        "state": "MD06",
+        "ticker": "BWXT",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/30/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
+      },
+      {
+        "politician": "April McClain Delaney",
+        "chamber": "House",
+        "state": "MD06",
+        "ticker": "CHRW",
+        "action": "Buy",
         "amount_range": "$15,001 - $50,000",
         "amount_low": 15001,
-        "transaction_date": "06/29/2026",
+        "transaction_date": "07/31/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034972.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
       },
       {
-        "politician": "Sam T. Liccardo",
+        "politician": "April McClain Delaney",
         "chamber": "House",
-        "state": "CA16",
-        "ticker": "NVDA",
+        "state": "MD06",
+        "ticker": "CHRW",
+        "action": "Buy",
+        "amount_range": "$15,001 - $50,000",
+        "amount_low": 15001,
+        "transaction_date": "07/27/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
+      },
+      {
+        "politician": "April McClain Delaney",
+        "chamber": "House",
+        "state": "MD06",
+        "ticker": "CHRW",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/28/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
+      },
+      {
+        "politician": "April McClain Delaney",
+        "chamber": "House",
+        "state": "MD06",
+        "ticker": "CHRW",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
+      },
+      {
+        "politician": "April McClain Delaney",
+        "chamber": "House",
+        "state": "MD06",
+        "ticker": "CHRW",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/20/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
+      },
+      {
+        "politician": "April McClain Delaney",
+        "chamber": "House",
+        "state": "MD06",
+        "ticker": "CLH",
         "action": "Sell",
-        "amount_range": "$15,001 - $50,000",
-        "amount_low": 15001,
-        "transaction_date": "07/21/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034736.pdf"
-      },
-      {
-        "politician": "Jared Moskowitz",
-        "chamber": "House",
-        "state": "FL23",
-        "ticker": "AMAT",
-        "action": "Buy",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "06/18/2026",
+        "transaction_date": "07/24/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034963.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
       },
       {
-        "politician": "Jared Moskowitz",
+        "politician": "April McClain Delaney",
         "chamber": "House",
-        "state": "FL23",
-        "ticker": "AMAT",
-        "action": "Buy",
+        "state": "MD06",
+        "ticker": "CLH",
+        "action": "Sell",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "06/18/2026",
+        "transaction_date": "07/27/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034963.pdf"
-      },
-      {
-        "politician": "Jared Moskowitz",
-        "chamber": "House",
-        "state": "FL23",
-        "ticker": "AMAT",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "06/18/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034963.pdf"
-      },
-      {
-        "politician": "Jared Moskowitz",
-        "chamber": "House",
-        "state": "FL23",
-        "ticker": "HCA",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "06/17/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034963.pdf"
-      },
-      {
-        "politician": "Jared Moskowitz",
-        "chamber": "House",
-        "state": "FL23",
-        "ticker": "HCA",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "06/17/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034963.pdf"
-      },
-      {
-        "politician": "Jared Moskowitz",
-        "chamber": "House",
-        "state": "FL23",
-        "ticker": "HD",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "06/17/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034963.pdf"
-      },
-      {
-        "politician": "Jared Moskowitz",
-        "chamber": "House",
-        "state": "FL23",
-        "ticker": "META",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "06/17/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034963.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
       }
     ],
-    "summary": "60 recent congressional trades from 11 House periodic transaction reports (28 buys, 31 sells)."
+    "summary": "60 recent congressional trades from 1 House periodic transaction reports (31 buys, 28 sells)."
   }
 }
