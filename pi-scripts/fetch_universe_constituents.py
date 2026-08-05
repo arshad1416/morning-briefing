@@ -37,6 +37,7 @@ from datetime import date
 from html.parser import HTMLParser
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import urllib.parse
 from pipeline_runtime import RequestFailed, atomic_write_json, request_json, request_text
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -184,10 +185,53 @@ def fetch_nasdaq100(url: str) -> list[dict[str, str]]:
 
 # ── Russell 2000 ───────────────────────────────────────────────
 # Russell publishes no free constituent file, so this reads the holdings of a
-# Russell 2000 index tracker (Vanguard VTWO) as a proxy. Consequences worth
-# knowing: holdings are dated to a month-end reporting date, not today, and an
+# Russell 2000 index tracker as a proxy. Primary source: BlackRock's iShares
+# IWM holdings, which are published DAILY (as-of = prior business day) through
+# an undocumented product-data API reverse-engineered from ishares.com's
+# holdings tab (2026-08-04). Fallback: Vanguard's VTWO month-end file, so a
+# BlackRock outage doesn't stall the refresh. Consequences worth knowing: an
 # index fund's holdings can differ slightly from the index itself (sampling,
-# pending-trade timing, cash). The as-of date is recorded in the cache.
+# pending-trade timing), and ETF holdings include small non-equity balances
+# (cash, futures, collateral) which are filtered out below. The as-of date of
+# whichever source actually answered is recorded in the cache.
+
+IWM_PRODUCT_ID = "239710"  # iShares Russell 2000 ETF
+
+def fetch_ishares_holdings(url: str) -> tuple[list[dict[str, str]], str]:
+    """Holdings of an iShares ETF from BlackRock's product-data API.
+
+    Returns (members, as_of_iso). ``url`` carries the full request query —
+    the fixed param set is documented in SOURCES and the cache's source_url.
+    """
+    payload = request_json(url, headers=API_HEADERS, timeout=60)
+    component = ((payload or {}).get("componentsByNameMap") or {}).get("holdings") or {}
+    container = (component.get("containersByNameMap") or {}).get("all") or {}
+    datapoints = container.get("dataPointsByNameMap") or {}
+    tickers = datapoints.get("ticker", {}).get("value") or []
+    names = datapoints.get("issueName", {}).get("value") or []
+    classes = datapoints.get("assetClass", {}).get("value") or []
+    as_of_int = datapoints.get("asOfDate", {}).get("value")
+
+    out: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for i, raw in enumerate(tickers):
+        # Keep equities only: the fund also holds cash, money-market and
+        # futures balances that are not Russell 2000 membership.
+        if i < len(classes) and classes[i] != "Equity":
+            continue
+        symbol = normalize_symbol(str(raw or ""))
+        if symbol and symbol not in seen:
+            seen.add(symbol)
+            name = names[i] if i < len(names) else ""
+            out.append({"symbol": symbol, "name": str(name or "")})
+    if not out:
+        raise RequestFailed(f"no equity holdings in iShares payload at {url}")
+
+    as_of = ""
+    if as_of_int:  # integer yyyymmdd, e.g. 20260803
+        as_of = f"{as_of_int // 10000:04d}-{as_of_int % 10000 // 100:02d}-{as_of_int % 100:02d}"
+    return out, as_of
+
 
 def fetch_vanguard_holdings(url: str) -> tuple[list[dict[str, str]], str]:
     out: list[dict[str, str]] = []
@@ -215,6 +259,19 @@ def fetch_vanguard_holdings(url: str) -> tuple[list[dict[str, str]], str]:
     return out, as_of
 
 
+def fetch_russell2000(source: dict) -> tuple[list[dict[str, str]], str, bool]:
+    """Daily iShares IWM holdings, falling back to Vanguard's VTWO month-end
+    file when BlackRock is unreachable. Returns (members, as_of, used_fallback)."""
+    try:
+        members, as_of = fetch_ishares_holdings(source["url"])
+        return members, as_of, False
+    except Exception as exc:  # noqa: BLE001 — the fallback is the point
+        print(f"  Russell 2000: iShares failed ({type(exc).__name__}: {exc}) — "
+              "falling back to Vanguard VTWO", file=sys.stderr)
+        members, as_of = fetch_vanguard_holdings(source["fallback_url"])
+        return members, as_of, True
+
+
 # ── Source registry ────────────────────────────────────────────
 # Keys are the universe labels the screener and the site UI display verbatim.
 
@@ -240,12 +297,24 @@ SOURCES = {
         "note": "Nasdaq's own index-membership endpoint (the Wikipedia article no longer carries a components table).",
     },
     "Russell 2000": {
-        "url": "https://investor.vanguard.com/investment-products/etfs/profile/api/vtwo/portfolio-holding/stock",
-        "kind": "vanguard",
+        "url": (
+            "https://www.blackrock.com/varnish-api/blk-one01-product-data/product-data/api/v2/get-product-data?"
+            + urllib.parse.urlencode({
+                "appSubType": "ISHARES", "appType": "PRODUCT_PAGE", "component": "holdings",
+                "locale": "en_US", "portfolioId": IWM_PRODUCT_ID, "targetSite": "us-ishares",
+                "userType": "individual", "excludeContent": "true", "includeConfig": "true",
+            })
+        ),
+        "kind": "ishares",
         "note": (
+            "Proxy: daily holdings of iShares Russell 2000 ETF (IWM), not the index itself. "
+            "BlackRock publishes IWM holdings each business day; non-equity balances are "
+            "excluded. Membership can differ slightly from the index."
+        ),
+        "fallback_url": "https://investor.vanguard.com/investment-products/etfs/profile/api/vtwo/portfolio-holding/stock",
+        "fallback_note": (
             "Proxy: holdings of Vanguard's Russell 2000 ETF (VTWO), not the index itself. "
-            "Holdings are reported to a month-end date and can differ slightly from index "
-            "membership."
+            "Holdings are reported to a month-end date. Used when the daily iShares feed fails."
         ),
     },
 }
@@ -280,6 +349,7 @@ def main() -> int:
 
     for name in wanted:
         source = SOURCES[name]
+        used_fallback = False
         try:
             as_of = ""
             if source["kind"] == "wikipedia":
@@ -288,6 +358,8 @@ def main() -> int:
                 members = fetch_nasdaq100(source["url"])
             elif source["kind"] == "vanguard":
                 members, as_of = fetch_vanguard_holdings(source["url"])
+            elif source["kind"] == "ishares":
+                members, as_of, used_fallback = fetch_russell2000(source)
             else:
                 raise RequestFailed(f"unknown source kind {source['kind']!r}")
         except Exception as exc:  # noqa: BLE001 — one bad upstream must not abort the rest
@@ -298,8 +370,8 @@ def main() -> int:
             continue
 
         indices[name] = {
-            "source_url": source["url"],
-            "source_note": source["note"],
+            "source_url": source["fallback_url"] if used_fallback else source["url"],
+            "source_note": source["fallback_note"] if used_fallback else source["note"],
             "fetched_at": today,
             "as_of": as_of or today,
             "member_count": len(members),
