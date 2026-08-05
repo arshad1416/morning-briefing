@@ -58,12 +58,23 @@
 # and refuses to overwrite a complete file with a throttled partial one.
 30 10 * * 1-5 cd /home/arshad14/morning-briefing && python3 pi-scripts/generate-screener-data.py --add-universes "S&P 500,S&P 400,S&P 600,Nasdaq-100,Russell 2000" --sleep 0.4 >> /home/arshad14/.hermes/logs/screener.log 2>&1
 
-# ── Index membership refresh — monthly on the 15th ──
-# Primary Russell 2000 source (iShares IWM daily holdings) publishes each
-# business day; the monthly fetch keeps the cache fresh without hammering
-# upstreams. push_dashboard's `git add -A` commits the refreshed cache; the
-# daily 10:30 scan then publishes new memberships + as-of labels.
-0 6 15 * * cd /home/arshad14/morning-briefing && python3 pi-scripts/fetch_universe_constituents.py >> /home/arshad14/.hermes/logs/universe_constituents.log 2>&1
+# ── Index membership refresh — each business day, 06:00 ──
+# Was monthly on the 15th, which left the screener on the PRE-reconstitution
+# Russell 2000 for ~3 weeks every June and made the rendered "membership as of"
+# date up to four weeks old. IWM publishes with as-of = prior business day, so
+# Tue-Sat picks up Mon-Fri and the label is never more than one session behind.
+#
+# Daily is affordable because the writer sorts members by symbol: run to run the
+# committed diff is the two date fields plus any genuine membership change, not
+# a reshuffle of 1,957 lines. Runs at 06:00, well before the 10:30 scan that
+# consumes it. push_dashboard's `git add -A` commits the refreshed cache.
+#
+# The `||` alert is the point of the whole line: this job is otherwise silent,
+# so a broken upstream would have gone unnoticed until someone read the log.
+# The script exits non-zero if any index failed and leaves the previous list in
+# place, so a failure is stale data, not missing data — worth knowing, not
+# worth paging about.
+0 6 * * 2-6 cd /home/arshad14/morning-briefing && python3 pi-scripts/fetch_universe_constituents.py >> /home/arshad14/.hermes/logs/universe_constituents.log 2>&1 || python3 -c "import sys; sys.path.insert(0, '/home/arshad14/.hermes/scripts'); from tg_notify import send_telegram; send_telegram('MapleGamma: index membership refresh FAILED - screener is using the previous lists. See ~/.hermes/logs/universe_constituents.log')"
 
 # ── Walk-Forward V2 — Sundays ──
 0 6 * * 0 cd /home/arshad14/.hermes/scripts && python3 run_walk_forward_v2.py >> /home/arshad14/.hermes/logs/walk_forward_v2.log 2>&1

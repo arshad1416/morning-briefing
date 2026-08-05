@@ -58,7 +58,7 @@ Fresh checkouts and worktrees need three installs: `npm install` at the root, in
 | `cloudflare-worker/` | `npm test` | vitest via `@cloudflare/vitest-pool-workers` — runs fully local (miniflare), fast |
 | `cloudflare-worker/` | `npm run dev` / `npm run deploy` | wrangler dev / deploy |
 | `cloudflare-worker/` | `npm run db:migrate:local` / `npm run db:migrate:remote` | D1 migrations |
-| `pi-scripts/` | `python3 -m unittest test_universe_membership` | runs locally without the Pi venv (stubs yfinance/pandas) |
+| `pi-scripts/` | `python3 -m unittest test_fetch_universe_constituents test_universe_membership test_volume_nan test_push_autostash_conflict` | runs locally without the Pi venv (stubs yfinance/pandas; the autostash suite drives real `git` in a tmpdir); CI runs exactly this set. Other `test_*.py` here need the Pi venv — don't use `unittest discover` |
 
 **Deploys:** frontend ships by merging to `main` (Pages auto-builds). The Worker is manual —
 run `npm run deploy` in `cloudflare-worker/` after merging Worker changes. Worker secrets go
