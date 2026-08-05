@@ -45,6 +45,15 @@ jobs:
       # Missing one silently leaks the file, or 404s it for paying subscribers.
       - name: Premium file registration (AGENTS.md rule 5)
         run: python3 scripts/check_premium_registration.py
+      # generate-screener-data.py and fetch_universe_constituents.py run from
+      # the Pi's repo checkout, so they DEPLOY BY MERGING (AGENTS.md rule 4) —
+      # with nothing here they shipped to production untested. Named explicitly
+      # rather than `unittest discover`: discovery imports every test_*.py in
+      # the directory, and several pull in the Pi's pandas/yfinance venv. These
+      # three stub their market-data deps and need no venv.
+      - name: Pipeline tests (pi-scripts)
+        working-directory: pi-scripts
+        run: python3 -m unittest test_fetch_universe_constituents test_universe_membership test_volume_nan
       - run: npm run build
 
   worker-tests:

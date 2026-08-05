@@ -33,7 +33,7 @@ import html
 import json
 import os
 import sys
-from datetime import date
+from datetime import date, datetime
 from html.parser import HTMLParser
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -73,9 +73,14 @@ def normalize_symbol(raw: str) -> str | None:
     if not symbol:
         return None
     symbol = symbol.replace(".", "-").replace("/", "-")
-    # Cash, futures and FX rows in ETF holdings files carry placeholder
-    # "tickers" that are not tradable equities.
-    if symbol in {"-", "--", "CASH", "USD", "N-A", "NA"}:
+    # Cash and FX rows in ETF holdings files carry placeholder "tickers" that
+    # are not tradable equities. "CASH" is deliberately NOT among them: it is
+    # Pathward Financial (Nasdaq: CASH), a real constituent of both the IWM
+    # book and the S&P 600, and blacklisting the string deleted the company
+    # from two universes. Cash BALANCES are excluded by assetClass on the
+    # iShares path; Vanguard does not label a holding "CASH" (checked against
+    # the live VTWO book), so nothing regresses by letting the symbol through.
+    if symbol in {"-", "--", "USD", "N-A", "NA"}:
         return None
     if not all(c.isalnum() or c == "-" for c in symbol):
         return None
@@ -224,6 +229,34 @@ IWM_SHARE_CLASS_ALIASES = {
 # scan would just quietly cover fewer names under an unchanged label.
 IWM_MIN_HOLDINGS = 1500  # live count is ~1,961; the index itself is ~2,000
 
+# An ETF's book carries entitlements that are not index membership: contingent
+# value rights left over from an acquisition, and escrow stubs from a wind-up.
+# BlackRock types all of them "Equity", so the assetClass filter passes them
+# through and the screener spends a fetch a day on tickers Yahoo cannot price.
+#
+# Matched as the LAST word of the issue name, never anywhere in it — "CVR
+# ENERGY INC" (NYSE: CVI) is a real Russell 2000 constituent, and a substring
+# test would delete it. Verified against the live book: this drops exactly the
+# six non-securities and nothing else.
+NON_SECURITY_NAME_SUFFIXES = {"CVR", "ESCROW", "RIGHT", "RIGHTS", "WARRANT", "WARRANTS", "WTS"}
+
+
+def is_non_security(name: str) -> bool:
+    words = str(name or "").upper().replace("-", " ").split()
+    return bool(words) and words[-1] in NON_SECURITY_NAME_SUFFIXES
+
+
+# The other half of the same problem, for stubs whose NAME carries no marker.
+# Chinook Therapeutics appears twice in the live book — once as "… INC CVR",
+# caught above, and once as a bare "CHINOOK THERAPEUTICS INC" left over from
+# the Novartis acquisition. The bare row is separable only by venue: BlackRock
+# reports it on "NO MARKET (E.G. UNLISTED)".
+#
+# Deliberately NOT extended to the OTC venue ("Non-Nms Quotation Service"),
+# which carries genuinely quoted names — Trinseo trades there through its
+# bankruptcy, and dropping it would be deleting a real constituent.
+UNLISTED_EXCHANGE_MARKER = "NO MARKET"
+
 
 def fetch_ishares_holdings(url: str) -> tuple[list[dict[str, str]], str]:
     """Holdings of an iShares ETF from BlackRock's product-data API.
@@ -238,6 +271,7 @@ def fetch_ishares_holdings(url: str) -> tuple[list[dict[str, str]], str]:
     tickers = datapoints.get("ticker", {}).get("value") or []
     names = datapoints.get("issueName", {}).get("value") or []
     classes = datapoints.get("assetClass", {}).get("value") or []
+    exchanges = datapoints.get("exchange", {}).get("value") or []
     as_of_int = datapoints.get("asOfDate", {}).get("value")
 
     # The three arrays are joined by position and nothing upstream promises
@@ -245,12 +279,13 @@ def fetch_ishares_holdings(url: str) -> tuple[list[dict[str, str]], str]:
     # the old per-row `i < len(classes)` guard admitted every row past a short
     # assetClass array, which is precisely the cash/futures rows it exists to
     # drop — and a short issueName array silently shifts every name.
-    if not (isinstance(tickers, list) and isinstance(classes, list) and isinstance(names, list)):
+    arrays = {"ticker": tickers, "assetClass": classes, "issueName": names, "exchange": exchanges}
+    if not all(isinstance(v, list) for v in arrays.values()):
         raise RequestFailed(f"holdings arrays are not lists at {url}")
-    if not len(tickers) == len(classes) == len(names):
+    if len({len(v) for v in arrays.values()}) != 1:
         raise RequestFailed(
             f"misaligned holdings arrays at {url}: "
-            f"{len(tickers)} tickers, {len(classes)} classes, {len(names)} names"
+            + ", ".join(f"{len(v)} {k}" for k, v in arrays.items())
         )
 
     out: list[dict[str, str]] = []
@@ -259,6 +294,10 @@ def fetch_ishares_holdings(url: str) -> tuple[list[dict[str, str]], str]:
         # Keep equities only: the fund also holds cash, money-market and
         # futures balances that are not Russell 2000 membership.
         if classes[i] != "Equity":
+            continue
+        if is_non_security(names[i]):
+            continue
+        if UNLISTED_EXCHANGE_MARKER in str(exchanges[i] or "").upper():
             continue
         symbol = normalize_symbol(str(raw or ""))
         symbol = IWM_SHARE_CLASS_ALIASES.get(symbol, symbol)
@@ -273,9 +312,15 @@ def fetch_ishares_holdings(url: str) -> tuple[list[dict[str, str]], str]:
             "refusing to shrink the index on a partial response"
         )
 
+    # Parsed defensively and LAST, so a date-format change costs the date and
+    # not the 1,961 members standing behind it. The arithmetic form raised
+    # TypeError on a string asOfDate, which the caller could only read as
+    # "BlackRock is down" — throwing away a good book for a month-old fallback.
     as_of = ""
-    if as_of_int:  # integer yyyymmdd, e.g. 20260803
-        as_of = f"{as_of_int // 10000:04d}-{as_of_int % 10000 // 100:02d}-{as_of_int % 100:02d}"
+    try:  # integer yyyymmdd, e.g. 20260803
+        as_of = datetime.strptime(str(as_of_int), "%Y%m%d").date().isoformat()
+    except (TypeError, ValueError):
+        print(f"  iShares: unreadable asOfDate {as_of_int!r} — leaving as-of blank", file=sys.stderr)
     return out, as_of
 
 
@@ -311,7 +356,12 @@ def fetch_russell2000(source: dict) -> tuple[list[dict[str, str]], str, bool]:
     try:
         members, as_of = fetch_ishares_holdings(source["url"])
         return members, as_of, False
-    except Exception as exc:  # noqa: BLE001 — the fallback is the point
+    # RequestFailed only. Network errors, HTTP failures, empty payloads,
+    # misaligned arrays and short books all arrive as RequestFailed, so real
+    # outages still fall back. A broader catch would also swallow OUR bugs and
+    # silently serve month-old data with a clean exit code — the fallback is
+    # for BlackRock being down, not for us being wrong.
+    except RequestFailed as exc:
         print(f"  Russell 2000: iShares failed ({type(exc).__name__}: {exc}) — "
               "falling back to Vanguard VTWO", file=sys.stderr)
         members, as_of = fetch_vanguard_holdings(source["fallback_url"])
@@ -380,13 +430,15 @@ def load_cache() -> dict:
         return {}
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    # argv is a parameter so the fallback-labelling path can be driven from a
+    # test. None keeps the CLI behaviour identical (argparse reads sys.argv).
     parser = argparse.ArgumentParser(description="Refresh the index constituent cache.")
     parser.add_argument("--only", action="append", default=None,
                         help="Refresh just this index (repeatable). Default: all.")
     parser.add_argument("--dry-run", action="store_true",
                         help="Fetch and report counts without writing the cache.")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     wanted = args.only or list(SOURCES)
     unknown = [name for name in wanted if name not in SOURCES]
@@ -408,8 +460,8 @@ def main() -> int:
                 members = fetch_wikipedia(source["url"])
             elif source["kind"] == "nasdaq":
                 members = fetch_nasdaq100(source["url"])
-            elif source["kind"] == "vanguard":
-                members, as_of = fetch_vanguard_holdings(source["url"])
+            # No "vanguard" kind: VTWO is reachable only as the Russell 2000
+            # fallback inside fetch_russell2000, never as a source of its own.
             elif source["kind"] == "ishares":
                 members, as_of, used_fallback = fetch_russell2000(source)
             else:
