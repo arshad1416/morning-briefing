@@ -1,29 +1,30 @@
 {
  "ticker": "MAR",
  "name": "Marriott International",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 352.16,
- "change_pct": -5.54,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 345.2,
+ "change_pct": -0.47,
  "sector": "Consumer Cyclical",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
+  "volume_surge",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 35.1,
-  "sma_20": 371.23,
-  "sma_50": 378.57
+  "rsi_14": 32.1,
+  "sma_20": 369.19,
+  "sma_50": 377.97
  },
  "fundamentals": {
-  "pe_ratio": 36.914047,
-  "market_cap": null,
+  "pe_ratio": 36.184486,
+  "market_cap": "90.0B",
   "beta": 1.12,
-  "dividend_yield": 0.0078000000000000005
+  "dividend_yield": 0.0084
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

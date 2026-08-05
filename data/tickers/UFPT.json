@@ -1,27 +1,29 @@
 {
  "ticker": "UFPT",
  "name": "UFP Technologies, Inc.",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 263.18,
- "change_pct": 3.3,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 334.84,
+ "change_pct": 25.16,
  "sector": "Healthcare",
  "signals": [
+  "overbought_rsi",
   "above_ma",
-  "analyst_buy"
+  "volume_surge",
+  "premium_pe"
  ],
  "technical": {
-  "rsi_14": 61.0,
-  "sma_20": 247.5,
-  "sma_50": 241.43
+  "rsi_14": 80.6,
+  "sma_20": 251.26,
+  "sma_50": 243.69
  },
  "fundamentals": {
-  "pe_ratio": 29.94141,
-  "market_cap": "2.0B",
-  "beta": 1.057,
+  "pe_ratio": 36.0043,
+  "market_cap": "2.6B",
+  "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 7
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

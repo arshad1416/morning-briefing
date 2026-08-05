@@ -1,23 +1,25 @@
 {
  "ticker": "AME",
  "name": "AMETEK, Inc.",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 244.43,
- "change_pct": 1.13,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 254.05,
+ "change_pct": 4.22,
  "sector": "Industrials",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "volume_surge",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 60.5,
-  "sma_20": 237.15,
-  "sma_50": 233.34
+  "rsi_14": 69.3,
+  "sma_20": 238.24,
+  "sma_50": 233.95
  },
  "fundamentals": {
-  "pe_ratio": 36.92296,
-  "market_cap": "56.0B",
+  "pe_ratio": 38.31825,
+  "market_cap": "58.2B",
   "beta": 0.997,
   "dividend_yield": 0.005600000000000001
  },

@@ -1,28 +1,29 @@
 {
  "ticker": "MSCI",
  "name": "MSCI Inc.",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 573.98,
- "change_pct": 0.3,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 571.47,
+ "change_pct": -0.52,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
   "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 45.4,
-  "sma_20": 592.81,
-  "sma_50": 595.3
+  "rsi_14": 44.5,
+  "sma_20": 591.0,
+  "sma_50": 595.09
  },
  "fundamentals": {
-  "pe_ratio": 31.347897,
-  "market_cap": "41.7B",
-  "beta": 1.241,
+  "pe_ratio": 31.279144,
+  "market_cap": "41.5B",
+  "beta": 1.222,
   "dividend_yield": 0.0143
  },
  "council_analysis": {
-  "score": 4
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

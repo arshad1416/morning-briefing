@@ -1,25 +1,26 @@
 {
  "ticker": "OMCL",
  "name": "Omnicell, Inc.",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 35.39,
- "change_pct": 0.06,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 37.15,
+ "change_pct": -1.33,
  "sector": "Healthcare",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
+  "volume_surge",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 31.5,
-  "sma_20": 42.74,
-  "sma_50": 41.91
+  "rsi_14": 38.3,
+  "sma_20": 42.5,
+  "sma_50": 41.82
  },
  "fundamentals": {
-  "pe_ratio": 42.130955,
-  "market_cap": "1.6B",
-  "beta": 0.966,
+  "pe_ratio": 41.741577,
+  "market_cap": "1.7B",
+  "beta": 0.973,
   "dividend_yield": null
  },
  "council_analysis": {

@@ -1,27 +1,28 @@
 {
  "ticker": "ICHR",
  "name": "Ichor Holdings",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 79.24,
- "change_pct": 5.27,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 71.27,
+ "change_pct": -11.17,
  "sector": "Technology",
  "signals": [
+  "rsi_dip",
   "below_ma",
-  "analyst_buy"
+  "volume_surge"
  ],
  "technical": {
-  "rsi_14": 46.7,
-  "sma_20": 85.46,
-  "sma_50": 84.42
+  "rsi_14": 42.2,
+  "sma_20": 84.82,
+  "sma_50": 84.56
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "2.8B",
-  "beta": 1.855,
+  "market_cap": "2.5B",
+  "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

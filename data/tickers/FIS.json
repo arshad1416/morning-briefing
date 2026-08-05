@@ -1,30 +1,81 @@
 {
  "ticker": "FIS",
  "name": "Fidelity National Information S",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 45.44,
- "change_pct": 1.49,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 44.26,
+ "change_pct": -1.15,
  "sector": "Technology",
  "signals": [
   "above_ma",
+  "volume_surge",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 61.4,
-  "sma_20": 42.61,
-  "sma_50": 41.1
+  "rsi_14": 57.1,
+  "sma_20": 42.66,
+  "sma_50": 41.11
  },
  "fundamentals": {
-  "pe_ratio": 8.805233,
-  "market_cap": "23.5B",
+  "pe_ratio": 8.578488,
+  "market_cap": "22.9B",
   "beta": 0.813,
   "dividend_yield": 0.0393
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "FIS",
+   "date": "2026-11-04",
+   "epsEstimate": 1.65,
+   "epsActual": null
+  },
+  {
+   "ticker": "FIS",
+   "date": "2026-05-08",
+   "epsEstimate": 1.29,
+   "epsActual": 1.36
+  },
+  {
+   "ticker": "FIS",
+   "date": "2026-02-24",
+   "epsEstimate": 1.69,
+   "epsActual": 1.68
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "FIS",
+   "date": "2026-08-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1136893/000113689326000050/fis-20260630.htm"
+  },
+  {
+   "ticker": "FIS",
+   "date": "2026-05-08",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1136893/000113689326000040/fis-20260331.htm"
+  },
+  {
+   "ticker": "FIS",
+   "date": "2026-02-24",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1136893/000113689326000013/fis-20251231.htm"
+  },
+  {
+   "ticker": "FIS",
+   "date": "2025-11-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1136893/000113689325000128/fis-20250930.htm"
+  },
+  {
+   "ticker": "FIS",
+   "date": "2025-08-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1136893/000113689325000117/fis-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

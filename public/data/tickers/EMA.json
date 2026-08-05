@@ -1,19 +1,22 @@
 {
  "ticker": "EMA",
  "name": "Emera Incorporated",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 53.07,
- "change_pct": -1.52,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 52.37,
+ "change_pct": -0.57,
  "sector": "Utilities",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.3,
-  "sma_20": 53.58,
-  "sma_50": 52.55
+  "rsi_14": 43.5,
+  "sma_20": 53.55,
+  "sma_50": 52.54
  },
  "fundamentals": {
-  "pe_ratio": 22.776825,
-  "market_cap": "16.2B",
+  "pe_ratio": 22.476395,
+  "market_cap": "16.0B",
   "beta": 0.452,
   "dividend_yield": 0.0383
  },

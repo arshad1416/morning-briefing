@@ -1,80 +1,31 @@
 {
  "ticker": "BAC",
  "name": "Bank of America Corporation",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 62.28,
- "change_pct": 0.53,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 62.9,
+ "change_pct": 0.67,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
   "above_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 64.0,
-  "sma_20": 61.0,
-  "sma_50": 57.41
+  "rsi_14": 66.7,
+  "sma_20": 61.16,
+  "sma_50": 57.65
  },
  "fundamentals": {
-  "pe_ratio": 14.383371,
-  "market_cap": null,
+  "pe_ratio": 14.52656,
+  "market_cap": "439.8B",
   "beta": 1.168,
-  "dividend_yield": 0.0207
+  "dividend_yield": 0.020499999999999997
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
- "upcoming_earnings": [
-  {
-   "ticker": "BAC",
-   "date": "2026-10-14",
-   "epsEstimate": 1.19,
-   "epsActual": null
-  },
-  {
-   "ticker": "BAC",
-   "date": "2026-07-14",
-   "epsEstimate": 1.12,
-   "epsActual": 1.21
-  },
-  {
-   "ticker": "BAC",
-   "date": "2026-04-15",
-   "epsEstimate": 1.02,
-   "epsActual": 1.11
-  }
- ],
- "recent_sec_filings": [
-  {
-   "ticker": "BAC",
-   "date": "2026-07-31",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000394/0000070858-26-000394-index.htm"
-  },
-  {
-   "ticker": "BAC",
-   "date": "2026-05-01",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000249/0000070858-26-000249-index.htm"
-  },
-  {
-   "ticker": "BAC",
-   "date": "2026-02-25",
-   "form": "Annual Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/0000070858-26-000157-index.htm"
-  },
-  {
-   "ticker": "BAC",
-   "date": "2025-10-31",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085825000405/0000070858-25-000405-index.htm"
-  },
-  {
-   "ticker": "BAC",
-   "date": "2025-07-31",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085825000268/0000070858-25-000268-index.htm"
-  }
- ],
+ "upcoming_earnings": [],
+ "recent_sec_filings": [],
  "reddit_mentions": []
 }

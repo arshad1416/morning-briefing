@@ -1,60 +1,31 @@
 {
  "ticker": "UNH",
  "name": "UnitedHealth Group Incorporated",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 415.31,
- "change_pct": 0.22,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 407.55,
+ "change_pct": -1.88,
  "sector": "Healthcare",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.7,
-  "sma_20": 424.2,
-  "sma_50": 410.09
+  "rsi_14": 43.1,
+  "sma_20": 423.17,
+  "sma_50": 410.64
  },
  "fundamentals": {
-  "pe_ratio": 31.320513,
-  "market_cap": "377.2B",
-  "beta": 0.633,
+  "pe_ratio": 30.665913,
+  "market_cap": "370.1B",
+  "beta": 0.632,
   "dividend_yield": 0.022400000000000003
  },
  "council_analysis": {
   "score": 5
  },
  "upcoming_earnings": [],
- "recent_sec_filings": [
-  {
-   "ticker": "UNH",
-   "date": "2026-05-05",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000127/0000731766-26-000127-index.htm"
-  },
-  {
-   "ticker": "UNH",
-   "date": "2026-03-02",
-   "form": "Annual Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000062/0000731766-26-000062-index.htm"
-  },
-  {
-   "ticker": "UNH",
-   "date": "2025-10-28",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000305/0000731766-25-000305-index.htm"
-  },
-  {
-   "ticker": "UNH",
-   "date": "2025-08-11",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000236/0000731766-25-000236-index.htm"
-  },
-  {
-   "ticker": "UNH",
-   "date": "2025-05-06",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000131/0000731766-25-000131-index.htm"
-  }
- ],
+ "recent_sec_filings": [],
  "reddit_mentions": []
 }

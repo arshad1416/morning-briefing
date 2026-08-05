@@ -1,49 +1,31 @@
 {
  "ticker": "COF",
  "name": "Capital One Financial Corporati",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 216.61,
- "change_pct": 3.64,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 221.91,
+ "change_pct": 1.94,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
   "above_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 63.9,
-  "sma_20": 205.74,
-  "sma_50": 197.64
+  "rsi_14": 67.8,
+  "sma_20": 206.74,
+  "sma_50": 198.37
  },
  "fundamentals": {
-  "pe_ratio": 11.941015,
-  "market_cap": "132.9B",
+  "pe_ratio": 12.226447,
+  "market_cap": "136.1B",
   "beta": 1.016,
-  "dividend_yield": 0.015300000000000001
+  "dividend_yield": 0.0147
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
- "upcoming_earnings": [
-  {
-   "ticker": "COF",
-   "date": "2026-10-20",
-   "epsEstimate": 5.34,
-   "epsActual": null
-  },
-  {
-   "ticker": "COF",
-   "date": "2026-07-21",
-   "epsEstimate": 4.69,
-   "epsActual": 5.81
-  },
-  {
-   "ticker": "COF",
-   "date": "2026-04-21",
-   "epsEstimate": 4.57,
-   "epsActual": 4.42
-  }
- ],
+ "upcoming_earnings": [],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

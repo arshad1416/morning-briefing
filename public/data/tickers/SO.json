@@ -1,24 +1,28 @@
 {
  "ticker": "SO",
  "name": "Southern Company (The)",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 94.7,
- "change_pct": 0.17,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 93.25,
+ "change_pct": 0.33,
  "sector": "Utilities",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma",
+  "volume_surge"
+ ],
  "technical": {
-  "rsi_14": 47.1,
-  "sma_20": 95.69,
-  "sma_50": 94.54
+  "rsi_14": 42.4,
+  "sma_20": 95.4,
+  "sma_50": 94.49
  },
  "fundamentals": {
-  "pe_ratio": 22.819302,
-  "market_cap": "108.9B",
+  "pe_ratio": 22.46988,
+  "market_cap": "107.3B",
   "beta": 0.327,
-  "dividend_yield": 0.0322
+  "dividend_yield": 0.0327
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,26 +1,29 @@
 {
  "ticker": "KIM",
  "name": "Kimco Realty Corporation (HC)",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 25.58,
- "change_pct": 0.37,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 25.01,
+ "change_pct": -1.57,
  "sector": "Real Estate",
  "signals": [
+  "rsi_dip",
+  "below_ma",
+  "volume_surge",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.6,
-  "sma_20": 25.65,
-  "sma_50": 25.08
+  "rsi_14": 42.5,
+  "sma_20": 25.63,
+  "sma_50": 25.11
  },
  "fundamentals": {
-  "pe_ratio": 29.396553,
+  "pe_ratio": 28.747126,
   "market_cap": null,
-  "beta": 0.969,
-  "dividend_yield": 0.0408
+  "beta": 0.968,
+  "dividend_yield": 0.0409
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

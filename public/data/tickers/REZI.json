@@ -1,26 +1,28 @@
 {
  "ticker": "REZI",
  "name": "Resideo Technologies, Inc.",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 35.89,
- "change_pct": 4.64,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 26.17,
+ "change_pct": -27.77,
  "sector": "Industrials",
  "signals": [
-  "above_ma"
+  "oversold_rsi",
+  "below_ma",
+  "volume_surge"
  ],
  "technical": {
-  "rsi_14": 56.9,
-  "sma_20": 34.75,
-  "sma_50": 32.42
+  "rsi_14": 32.1,
+  "sma_20": 34.46,
+  "sma_50": 32.37
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "5.4B",
-  "beta": 1.641,
+  "market_cap": "4.0B",
+  "beta": 1.629,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,25 +1,26 @@
 {
  "ticker": "PSKY",
  "name": "Paramount Skydance Corporation",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 8.02,
- "change_pct": 0.69,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 8.38,
+ "change_pct": 1.95,
  "sector": "Communication Services",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
+  "volume_surge",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 31.7,
-  "sma_20": 8.73,
-  "sma_50": 9.63
+  "rsi_14": 40.8,
+  "sma_20": 8.66,
+  "sma_50": 9.6
  },
  "fundamentals": {
-  "pe_ratio": 400.75003,
-  "market_cap": "9.0B",
+  "pe_ratio": 419.0,
+  "market_cap": "9.4B",
   "beta": 1.471,
-  "dividend_yield": 0.0252
+  "dividend_yield": 0.024300000000000002
  },
  "council_analysis": {
   "score": 5

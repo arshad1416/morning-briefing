@@ -1,23 +1,25 @@
 {
  "ticker": "ROK",
  "name": "Rockwell Automation, Inc.",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 485.27,
- "change_pct": 1.08,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 445.23,
+ "change_pct": -7.43,
  "sector": "Industrials",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
+  "volume_surge",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 59.5,
-  "sma_20": 466.61,
-  "sma_50": 464.62
+  "rsi_14": 41.5,
+  "sma_20": 465.21,
+  "sma_50": 464.64
  },
  "fundamentals": {
-  "pe_ratio": 50.28705,
-  "market_cap": "54.0B",
+  "pe_ratio": 46.137825,
+  "market_cap": "49.5B",
   "beta": 1.535,
   "dividend_yield": 0.0115
  },

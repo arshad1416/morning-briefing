@@ -1,24 +1,26 @@
 {
  "ticker": "CURB",
  "name": "Curbline Properties Corp.",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 30.64,
- "change_pct": -0.02,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 30.05,
+ "change_pct": -0.66,
  "sector": "Real Estate",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.0,
-  "sma_20": 30.9,
-  "sma_50": 30.22
+  "rsi_14": 43.0,
+  "sma_20": 30.85,
+  "sma_50": 30.24
  },
  "fundamentals": {
-  "pe_ratio": 113.46296,
+  "pe_ratio": 111.29629,
   "market_cap": "3.5B",
   "beta": null,
-  "dividend_yield": 0.0222
+  "dividend_yield": 0.0225
  },
  "council_analysis": {
   "score": 5

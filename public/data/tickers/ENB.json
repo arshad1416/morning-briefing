@@ -1,27 +1,28 @@
 {
  "ticker": "ENB",
  "name": "Enbridge Inc",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 54.08,
- "change_pct": -0.69,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 53.41,
+ "change_pct": -1.28,
  "sector": "Energy",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "volume_surge"
  ],
  "technical": {
-  "rsi_14": 40.9,
-  "sma_20": 55.5,
-  "sma_50": 55.58
+  "rsi_14": 37.3,
+  "sma_20": 55.42,
+  "sma_50": 55.49
  },
  "fundamentals": {
-  "pe_ratio": 29.235134,
-  "market_cap": null,
-  "beta": 0.795,
+  "pe_ratio": 29.185791,
+  "market_cap": "116.7B",
+  "beta": 0.794,
   "dividend_yield": 0.0506
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,28 +1,30 @@
 {
  "ticker": "PLTR",
  "name": "Palantir Technologies Inc.",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 125.04,
- "change_pct": 1.61,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 162.66,
+ "change_pct": 29.45,
  "sector": "Technology",
  "signals": [
-  "below_ma",
+  "extended_rsi",
+  "above_ma",
+  "volume_surge",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.9,
-  "sma_20": 128.68,
-  "sma_50": 130.48
+  "rsi_14": 72.8,
+  "sma_20": 130.12,
+  "sma_50": 130.99
  },
  "fundamentals": {
-  "pe_ratio": 140.49438,
-  "market_cap": "299.8B",
-  "beta": 1.563,
+  "pe_ratio": 182.76405,
+  "market_cap": "389.9B",
+  "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 4
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

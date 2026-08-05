@@ -1,24 +1,25 @@
 {
  "ticker": "SAIA",
  "name": "Saia, Inc.",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 349.79,
- "change_pct": 0.62,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 374.33,
+ "change_pct": 3.95,
  "sector": "Industrials",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
+  "volume_surge",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 22.9,
-  "sma_20": 412.0,
-  "sma_50": 436.77
+  "rsi_14": 36.2,
+  "sma_20": 410.43,
+  "sma_50": 435.3
  },
  "fundamentals": {
-  "pe_ratio": 33.763515,
-  "market_cap": "9.3B",
+  "pe_ratio": 36.097397,
+  "market_cap": "10.0B",
   "beta": 2.143,
   "dividend_yield": null
  },

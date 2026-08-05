@@ -1,19 +1,22 @@
 {
  "ticker": "WBD",
  "name": "Warner Bros. Discovery, Inc. - ",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 26.28,
- "change_pct": -0.06,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 25.79,
+ "change_pct": -1.15,
  "sector": "Communication Services",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 50.2,
-  "sma_20": 26.27,
-  "sma_50": 26.58
+  "rsi_14": 44.2,
+  "sma_20": 26.24,
+  "sma_50": 26.55
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "65.9B",
+  "market_cap": "64.7B",
   "beta": 1.565,
   "dividend_yield": null
  },

@@ -1,29 +1,51 @@
 {
  "ticker": "VGNT",
  "name": "Versigent PLC",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 42.56,
- "change_pct": 2.93,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 45.8,
+ "change_pct": 8.94,
  "sector": "Consumer Cyclical",
  "signals": [
+  "above_ma",
+  "volume_surge",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 52.8,
-  "sma_20": 41.16,
-  "sma_50": 43.22
+  "rsi_14": 62.9,
+  "sma_20": 41.44,
+  "sma_50": 43.31
  },
  "fundamentals": {
-  "pe_ratio": 6.361734,
-  "market_cap": "3.0B",
+  "pe_ratio": 6.8562875,
+  "market_cap": "3.2B",
   "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 7
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "VGNT",
+   "date": "2026-11-03",
+   "epsEstimate": 1.84,
+   "epsActual": null
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "VGNT",
+   "date": "2026-08-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/2078008/000207800826000018/vgnt-20260630.htm"
+  },
+  {
+   "ticker": "VGNT",
+   "date": "2026-05-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/2078008/000207800826000008/vgnt-20260331.htm"
+  }
+ ],
  "reddit_mentions": []
 }

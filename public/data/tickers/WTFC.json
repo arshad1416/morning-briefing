@@ -1,29 +1,81 @@
 {
  "ticker": "WTFC",
  "name": "Wintrust Financial Corporation",
- "generated_at": "2026-08-04T14:45:01.664261+00:00",
- "price": 160.87,
- "change_pct": 0.83,
+ "generated_at": "2026-08-05T11:45:01.522126+00:00",
+ "price": 162.97,
+ "change_pct": 0.75,
  "sector": "Financial Services",
  "signals": [
+  "above_ma",
+  "volume_surge",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 53.4,
-  "sma_20": 160.88,
-  "sma_50": 157.47
+  "rsi_14": 58.1,
+  "sma_20": 161.0,
+  "sma_50": 157.75
  },
  "fundamentals": {
-  "pe_ratio": 12.931672,
-  "market_cap": "10.9B",
-  "beta": 0.838,
+  "pe_ratio": 13.08996,
+  "market_cap": "11.0B",
+  "beta": 0.845,
   "dividend_yield": 0.0138
  },
  "council_analysis": {
-  "score": 7
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "WTFC",
+   "date": "2026-10-19",
+   "epsEstimate": 3.28,
+   "epsActual": null
+  },
+  {
+   "ticker": "WTFC",
+   "date": "2026-07-20",
+   "epsEstimate": 3.15,
+   "epsActual": 3.28
+  },
+  {
+   "ticker": "WTFC",
+   "date": "2026-04-20",
+   "epsEstimate": 2.95,
+   "epsActual": 3.22
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "WTFC",
+   "date": "2026-05-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1015328/000101532826000014/wtfc-20260331.htm"
+  },
+  {
+   "ticker": "WTFC",
+   "date": "2026-02-26",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1015328/000101532826000007/wtfc-20251231.htm"
+  },
+  {
+   "ticker": "WTFC",
+   "date": "2025-11-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1015328/000101532825000207/wtfc-20250930.htm"
+  },
+  {
+   "ticker": "WTFC",
+   "date": "2025-08-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1015328/000101532825000188/wtfc-20250630.htm"
+  },
+  {
+   "ticker": "WTFC",
+   "date": "2025-05-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1015328/000101532825000130/wtfc-20250331.htm"
+  }
+ ],
  "reddit_mentions": []
 }
