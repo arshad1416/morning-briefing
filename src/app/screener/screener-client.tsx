@@ -1289,9 +1289,9 @@ function ScreenerBody() {
           </div>
         )}
         {/* Index membership is itself dated — the lists are refreshed from an
-            upstream, and one of them (Russell 2000) is read from a tracker
-            fund's month-end holdings. Saying so beats implying the filter
-            knows today's membership. */}
+            upstream on a monthly cron, and one of them (Russell 2000) is read
+            from a tracker fund's holdings rather than the index. Saying so
+            beats implying the filter knows today's membership. */}
         {universeSource?.as_of && (
           <div
             className="border-t px-4 py-2.5 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]"
