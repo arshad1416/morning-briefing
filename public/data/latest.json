@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-05T17:15:09-04:00",
+  "generated_at": "2026-08-06T07:26:25-04:00",
   "market_summary": {
-    "vix": 15.81,
+    "vix": 15.96,
     "ten_year_yield": 4.62,
     "indices": [
       {
@@ -26,13 +26,13 @@
       },
       {
         "ticker": "TSX",
-        "price": 36146.42,
+        "price": 36146.4,
         "change_pct": 0.96
       },
       {
         "ticker": "VIX",
-        "price": 15.81,
-        "change_pct": -4.18
+        "price": 15.96,
+        "change_pct": 0.95
       },
       {
         "ticker": "10Y Yield",
@@ -48,7 +48,7 @@
     ]
   },
   "narrative": {
-    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,723.55 (-0.17%)\n  \u2022 Dow Jones: 54,349.12 (+0.49%)\n  \u2022 NASDAQ: 26,363.44 (-0.83%)\n  \u2022 Russell 2000: 3,019.19 (-0.59%)\n  \u2022 TSX: 36,146.42 (+0.96%)\n  \u2022 VIX: 15.81\n  \u2022 10Y Yield: 4.62%"
+    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,723.55 (-0.17%)\n  \u2022 Dow Jones: 54,349.12 (+0.49%)\n  \u2022 NASDAQ: 26,363.44 (-0.83%)\n  \u2022 Russell 2000: 3,019.19 (-0.59%)\n  \u2022 TSX: 36,146.40 (+0.96%)\n  \u2022 VIX: 15.96\n  \u2022 10Y Yield: 4.62%"
   },
   "watchlist_summary": {},
   "central_banks": {
@@ -56,6 +56,34 @@
     "boc": ""
   },
   "insider_trades": [
+    {
+      "ticker": "MSFT",
+      "insider": "Numoto Takeshi",
+      "title": "EVP, Chief Marketing Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 4810,
+      "price": 496.48,
+      "value": 2388244,
+      "date": "2026-08-04",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/789019/000078901926000141/xslF345X06/form4.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Kimmitt Robert M",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 500,
+      "price": 561.56,
+      "value": 280780,
+      "date": "2026-08-03",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326011964/xslF345X06/ownership.xml"
+    },
     {
       "ticker": "META",
       "insider": "Alford Peggy",
@@ -167,106 +195,78 @@
       "date": "2026-07-20",
       "source": "SEC EDGAR Form 4",
       "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326011028/xslF345X06/ownership.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 57,
-      "price": 645.85,
-      "value": 36813,
-      "date": "2026-07-20",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326011028/xslF345X06/ownership.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 82,
-      "price": 645.85,
-      "value": 52960,
-      "date": "2026-07-20",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326011028/xslF345X06/ownership.xml"
     }
   ],
   "market_news": {
     "headlines": [
       {
-        "title": "Rapport Therapeutics reports Q2 results",
-        "url": "https://seekingalpha.com/news/4626553-rapport-therapeutics-reports-q2-results?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Arbe Robotics GAAP EPS of -$0.07, revenue of $0.7M",
+        "url": "https://seekingalpha.com/news/4627559-arbe-robotics-gaap-eps-of-0_07-revenue-of-0_7m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "ICL outlines Elevate cost program targeting $350M annual EBITDA improvement by end of 2028",
-        "url": "https://seekingalpha.com/news/4626552-icl-outlines-elevate-cost-program-targeting-350m-annual-ebitda-improvement-by-end-of-2028?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Insulet forecasts 2026 revenue growth of 20%-22% as it adjusts U.S. assumptions on type 2 retention",
-        "url": "https://seekingalpha.com/news/4626551-insulet-forecasts-2026-revenue-growth-of-20-percentminus-22-percent-as-it-adjusts-u-s?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Nuveen Churchill Direct Lending NII of $0.41 beats by $0.02",
+        "url": "https://seekingalpha.com/news/4627555-nuveen-churchill-direct-lending-nii-of-041-beats-by-002?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Entrada Therapeutics reports Q2 results",
-        "url": "https://seekingalpha.com/news/4626549-entrada-therapeutics-reports-q2-results?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Opus Genetics GAAP EPS of -$0.14 beats by $0.02, revenue of $0.75M misses by $1.82M",
+        "url": "https://seekingalpha.com/news/4627558-opus-genetics-gaap-eps-of-0_14-beats-by-0_02-revenue-of-0_75m-misses-by-1_82m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
-        "sentiment": "neutral",
+        "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Vale cut to Neutral at BofA, seeing less room for optimism as costs bite",
-        "url": "https://seekingalpha.com/news/4626540-vale-cut-to-neutral-at-bofa-seeing-less-room-for-optimism-as-costs-bite?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Tecnoglass beats top-line and bottom-line estimates; narrows FY26 outlook",
+        "url": "https://seekingalpha.com/news/4627556-tecnoglass-beats-top-line-and-bottom-line-estimates-narrows-fy26-outlook?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Rheinmetall cuts 2026 outlook after Germany scraps frigate program",
+        "url": "https://seekingalpha.com/news/4627547-rheinmetall-cuts-2026-outlook-after-germany-scraps-frigate-program?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bearish",
         "summary": ""
       },
       {
-        "title": "Vonovia SE reports 1H results",
-        "url": "https://seekingalpha.com/news/4626548-vonovia-se-reports-1h-results?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Versant Media Group, Inc. GAAP EPS of $1.49 beats by $0.14, revenue of $1.64B beats by $20M",
+        "url": "https://seekingalpha.com/news/4627552-versant-media-group-inc-gaap-eps-of-1_49-beats-by-0_14-revenue-of-1_64b-beats-by-20m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Biodesix maintains $108M-$114M 2026 revenue outlook while planning ~120 sales reps",
+        "url": "https://seekingalpha.com/news/4627554-biodesix-maintains-108m-114m-2026-revenue-outlook-while-planning-120-sales-reps?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "NiSource reaffirms 2026 adjusted EPS $2.02-$2.07 while targeting 9%-10% EPS CAGR through 2033",
-        "url": "https://seekingalpha.com/news/4626547-nisource-reaffirms-2026-adjusted-eps-2_02-2_07-while-targeting-9-percentminus-10-percent-eps?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Manufacturing PMI Hits 4-Year High: 3 Top Industrial Stocks",
+        "url": "https://seekingalpha.com/article/4931055-manufacturing-pmi-hits-4-year-high-3-top-industrial-stocks?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "The SpaceX Selloff Makes No Sense",
-        "url": "https://seekingalpha.com/article/4930673-spacex-selloff-makes-no-sense?source=feed",
+        "title": "Token Growth Is Surging - Here Are The Beneficiaries",
+        "url": "https://seekingalpha.com/article/4931484-token-growth-is-surging-here-are-the-beneficiaries?source=feed",
         "source": "Seeking Alpha",
-        "sentiment": "bearish",
+        "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "The 2 Most Misunderstood 10%+ Yielding Income Investments In The Market Today",
-        "url": "https://seekingalpha.com/article/4930672-the-2-most-misunderstood-10-percent-plus-yielding-income-investments-in-the-market-today?source=feed",
+        "title": "Rocket Lab: Strong Wins, Strong Buy",
+        "url": "https://seekingalpha.com/article/4931458-rocket-lab-strong-wins-strong-buy?source=feed",
         "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Nvidia Earnings: AMD's Results Point To Massive AI Demand (Preview)",
-        "url": "https://seekingalpha.com/article/4930651-nvidia-earnings-amds-results-point-to-massive-ai-demand-preview?source=feed",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
+        "sentiment": "bullish",
         "summary": ""
       }
     ],
@@ -275,60 +275,60 @@
   },
   "geopolitical": [
     {
-      "title": "Russian strike kills at least 17 as Zelensky says interceptors could have saved lives",
+      "title": "In Odesa, no-one is safe from Russia's new Black Sea strikes",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c330pxyvzzyo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-05T09:54:20+00:00",
-      "summary": "The Russia defence ministry said it had struck logistics hubs and supply centres in Kyiv and the surrounding region."
+      "url": "https://www.bbc.co.uk/news/articles/cy8ev4y172yo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-06T05:00:54+00:00",
+      "summary": "Blackened ships and smashed docks mark Russia's recent surge of attacks on Ukraine's coastline."
     },
     {
-      "title": "Trump says Iran will be 'hit very hard' if Hormuz Strait not open soon as oil prices fall",
+      "title": "Iran says deal with Oman on Strait of Hormuz is in final stages",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cpw9v0gnzxwo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-05T03:44:30+00:00",
-      "summary": "US Secretary of State Marco Rubio and Treasury Secretary Scott Bessent both announced talks had progressed to allow shipments to resume."
+      "url": "https://www.bbc.co.uk/news/articles/ckg9d3eyeggo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-06T01:19:59+00:00",
+      "summary": "Neither the US or Oman have commented on the proposed agreement on the vital waterway."
     },
     {
-      "title": "Perez Hilton recovering in hospital after reports he self-harmed during livestream",
+      "title": "Indian journalist Tarun Tejpal sentenced to 10 years in jail for rape",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cly5kvdkyjro?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-05T08:29:30+00:00",
-      "summary": "Miami police told US media outlets the celebrity blogger had been \"safely recovered\" from his home."
+      "url": "https://www.bbc.co.uk/news/articles/cx2v551w9v8o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-06T09:49:24+00:00",
+      "summary": "Tejpal, who has denied the accusations, can appeal against the verdict in India's Supreme Court."
     },
     {
-      "title": "Police raid Starbucks Korea headquarters over 'Tank Day' fiasco",
+      "title": "Iranian footballers who defied Tehran become Australian citizens",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c0kmd4xpr46o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-05T07:04:45+00:00",
-      "summary": "People have filed complaints against Starbucks for allegedly making light of the deadly Gwangju Uprising."
+      "url": "https://www.bbc.co.uk/news/articles/cn5nlgxv6vdo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-06T09:04:17+00:00",
+      "summary": "There were among seven to be granted humanitarian visas while playing in Australia - but the other five changed their minds and returned to Iran."
     },
     {
-      "title": "Armed man arrested near Trump's golf course ahead of president's visit",
+      "title": "Rihanna is 'in the studio', says partner A$AP Rocky",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c20jp3mp7lyo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-05T00:19:04+00:00",
-      "summary": "The arrest happened shortly before President Trump was due to host a fundraising dinner at the coastal golf course in California."
+      "url": "https://www.bbc.co.uk/news/articles/c4gwvvw9k1xo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-06T04:44:22+00:00",
+      "summary": "The singer, who last released a full album in 2016, is in the studio and \"cooking\", her partner said."
     },
     {
-      "title": "India\u2019s severe monsoon season causes more than 100 deaths since July",
+      "title": "Cambridge professor Jason Arday quits amid plagiarism allegations",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/5/indias-severe-monsoon-season-causes-more-than-100-deaths-since-july?traffic_source=rss",
-      "date": "2026-08-05T10:10:07+00:00",
-      "summary": "Monsoon downpours cause floods and landslides as climate change and El Nino disrupt rainfall patterns."
+      "url": "https://www.aljazeera.com/news/2026/8/6/cambridge-professor-jason-arday-quits-amid-plagiarism-allegations?traffic_source=rss",
+      "date": "2026-08-06T10:24:59+00:00",
+      "summary": "The scholar announced his resignation amid a new investigation into his qualifications."
     },
     {
-      "title": "How Israeli restrictions on Palestinians\u2019 movement break up the West Bank",
+      "title": "Hormuz deal \u2018close\u2019: What\u2019s the latest on each side\u2019s positions?",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/opinions/2026/8/5/how-israeli-restrictions-on-palestinians-movement-break-up-the-west-bank?traffic_source=rss",
-      "date": "2026-08-05T10:09:22+00:00",
-      "summary": "While barriers to free movement make the lives of Palestinians extremely difficult, they do not make Israel more secure."
+      "url": "https://www.aljazeera.com/news/2026/8/6/hormuz-deal-close-whats-the-latest-on-each-sides-positions?traffic_source=rss",
+      "date": "2026-08-06T10:20:57+00:00",
+      "summary": "US officials say they would not accept any arrangement on the waterway that would leave Iran in control."
     },
     {
-      "title": "Reform UK plan to return asylum seekers using navy \u2018dangerous in practice\u2019",
+      "title": "Uganda football star Owori killed, weeks after death of rugby\u2019s Gongodyo",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/5/reform-uk-plan-to-return-asylum-seekers-using-navy-dangerous-in-practice?traffic_source=rss",
-      "date": "2026-08-05T10:07:20+00:00",
-      "summary": "Nigel Farage's party says 'Operation Fortress' would stop migrants 'invading', but experts slam proposal as unrealistic."
+      "url": "https://www.aljazeera.com/sports/2026/8/6/uganda-football-star-owori-killed-weeks-after-death-of-rugbys-gongodyo?traffic_source=rss",
+      "date": "2026-08-06T10:13:26+00:00",
+      "summary": "SC Villa captain and Ugandan international David Owori was found unconscious by passers-by, but later pronounced dead."
     }
   ],
   "congress": {

@@ -1,12 +1,12 @@
 {
   "_note": "Index membership cache for generate-screener-data.py. Regenerate with fetch_universe_constituents.py \u2014 do not hand-edit; membership changes several times a year and a stale hand-edit becomes wrong silently.",
-  "generated_at": "2026-08-05",
+  "generated_at": "2026-08-06",
   "indices": {
     "S&P 500": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
       "source_note": "Wikipedia 'List of S&P 500 companies', table#constituents.",
-      "fetched_at": "2026-08-05",
-      "as_of": "2026-08-05",
+      "fetched_at": "2026-08-06",
+      "as_of": "2026-08-06",
       "member_count": 503,
       "members": [
         {
@@ -614,10 +614,6 @@
           "name": "Dexcom"
         },
         {
-          "symbol": "EA",
-          "name": "Electronic Arts"
-        },
-        {
           "symbol": "EBAY",
           "name": "eBay Inc."
         },
@@ -756,6 +752,10 @@
         {
           "symbol": "FE",
           "name": "FirstEnergy"
+        },
+        {
+          "symbol": "FERG",
+          "name": "Ferguson Enterprises"
         },
         {
           "symbol": "FFIV",
@@ -2026,8 +2026,8 @@
     "S&P 400": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies",
       "source_note": "S&P MidCap 400. Wikipedia 'List of S&P 400 companies', table#constituents.",
-      "fetched_at": "2026-08-05",
-      "as_of": "2026-08-05",
+      "fetched_at": "2026-08-06",
+      "as_of": "2026-08-06",
       "member_count": 400,
       "members": [
         {
@@ -3635,8 +3635,8 @@
     "S&P 600": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_600_companies",
       "source_note": "S&P SmallCap 600. Wikipedia 'List of S&P 600 companies', table#constituents.",
-      "fetched_at": "2026-08-05",
-      "as_of": "2026-08-05",
+      "fetched_at": "2026-08-06",
+      "as_of": "2026-08-06",
       "member_count": 603,
       "members": [
         {
@@ -4458,6 +4458,10 @@
         {
           "symbol": "FIBK",
           "name": "First Interstate BancSystem, Inc."
+        },
+        {
+          "symbol": "FIVN",
+          "name": "Five9, Inc."
         },
         {
           "symbol": "FIZZ",
@@ -5784,10 +5788,6 @@
           "name": "Trupanion"
         },
         {
-          "symbol": "TWO",
-          "name": "Two Harbors Investment Corp."
-        },
-        {
           "symbol": "UA",
           "name": "Under Armour (Class C)"
         },
@@ -6056,8 +6056,8 @@
     "Russell 2000": {
       "source_url": "https://www.blackrock.com/varnish-api/blk-one01-product-data/product-data/api/v2/get-product-data?appSubType=ISHARES&appType=PRODUCT_PAGE&component=holdings&locale=en_US&portfolioId=239710&targetSite=us-ishares&userType=individual&excludeContent=true&includeConfig=true",
       "source_note": "Proxy: holdings of the iShares Russell 2000 ETF (IWM), not the index itself. Non-equity balances, contingent value rights and escrow stubs are excluded. Refreshed each business day, and membership can differ slightly from the index.",
-      "fetched_at": "2026-08-05",
-      "as_of": "2026-08-03",
+      "fetched_at": "2026-08-06",
+      "as_of": "2026-08-05",
       "member_count": 1957,
       "members": [
         {
@@ -6070,7 +6070,7 @@
         },
         {
           "symbol": "AAT",
-          "name": "AMERICAN ASSETS TRUST REIT INC"
+          "name": "AMERICAN ASSETS TRUST REIT"
         },
         {
           "symbol": "ABAT",
@@ -6098,7 +6098,7 @@
         },
         {
           "symbol": "ABR",
-          "name": "ARBOR REALTY TRUST REIT INC"
+          "name": "ARBOR REALTY TRUST REIT"
         },
         {
           "symbol": "ABSI",
@@ -6114,11 +6114,11 @@
         },
         {
           "symbol": "ACA",
-          "name": "ARCOSA INC"
+          "name": "ARCOSA"
         },
         {
           "symbol": "ACAD",
-          "name": "ACADIA PHARMACEUTICALS INC"
+          "name": "ACADIA PHARMACEUTICALS"
         },
         {
           "symbol": "ACCO",
@@ -6138,11 +6138,11 @@
         },
         {
           "symbol": "ACHC",
-          "name": "ACADIA HEALTHCARE COMPANY INC"
+          "name": "ACADIA HEALTHCARE COMPANY"
         },
         {
           "symbol": "ACHR",
-          "name": "ARCHER AVIATION INC CLASS A"
+          "name": "ARCHER AVIATION CLASS A"
         },
         {
           "symbol": "ACHV",
@@ -6154,15 +6154,15 @@
         },
         {
           "symbol": "ACIW",
-          "name": "ACI WORLDWIDE INC"
+          "name": "ACI WORLDWIDE"
         },
         {
           "symbol": "ACLS",
-          "name": "AXCELIS TECHNOLOGIES INC"
+          "name": "AXCELIS TECHNOLOGIES"
         },
         {
           "symbol": "ACMR",
-          "name": "ACM RESEARCH CLASS A INC"
+          "name": "ACM RESEARCH CLASS A"
         },
         {
           "symbol": "ACNB",
@@ -6194,7 +6194,7 @@
         },
         {
           "symbol": "ACVA",
-          "name": "ACV AUCTIONS INC CLASS A"
+          "name": "ACV AUCTIONS CLASS A"
         },
         {
           "symbol": "ADAM",
@@ -6206,11 +6206,15 @@
         },
         {
           "symbol": "ADEA",
-          "name": "ADEIA INC"
+          "name": "ADEIA"
+        },
+        {
+          "symbol": "ADIG",
+          "name": "ADI GLOBAL DISTRIBUTION"
         },
         {
           "symbol": "ADMA",
-          "name": "ADMA BIOLOGICS INC"
+          "name": "ADMA BIOLOGICS"
         },
         {
           "symbol": "ADNT",
@@ -6218,7 +6222,7 @@
         },
         {
           "symbol": "ADPT",
-          "name": "ADAPTIVE BIOTECHNOLOGIES CORP"
+          "name": "ADAPTIVE BIOTECHNOLOGIES"
         },
         {
           "symbol": "ADTN",
@@ -6242,11 +6246,11 @@
         },
         {
           "symbol": "AEO",
-          "name": "AMERICAN EAGLE OUTFITTERS INC"
+          "name": "AMERICAN EAGLE OUTFITTERS"
         },
         {
           "symbol": "AESI",
-          "name": "ATLAS ENERGY SOLUTIONS INC"
+          "name": "ATLAS ENERGY SOLUTIONS"
         },
         {
           "symbol": "AEVA",
@@ -6262,7 +6266,7 @@
         },
         {
           "symbol": "AGIO",
-          "name": "AGIOS PHARMACEUTICALS INC"
+          "name": "AGIOS PHARMACEUTICALS"
         },
         {
           "symbol": "AGL",
@@ -6278,7 +6282,7 @@
         },
         {
           "symbol": "AGX",
-          "name": "ARGAN INC"
+          "name": "ARGAN"
         },
         {
           "symbol": "AGYS",
@@ -6286,7 +6290,7 @@
         },
         {
           "symbol": "AHCO",
-          "name": "ADAPTHEALTH CORP"
+          "name": "ADAPTHEALTH"
         },
         {
           "symbol": "AHRT",
@@ -6306,7 +6310,7 @@
         },
         {
           "symbol": "AIOT",
-          "name": "POWERFLEET INC"
+          "name": "POWERFLEET"
         },
         {
           "symbol": "AIP",
@@ -6314,7 +6318,7 @@
         },
         {
           "symbol": "AIR",
-          "name": "AAR CORP"
+          "name": "AAR"
         },
         {
           "symbol": "AIRJ",
@@ -6350,7 +6354,7 @@
         },
         {
           "symbol": "ALG",
-          "name": "ALAMO GROUP INC"
+          "name": "ALAMO GROUP"
         },
         {
           "symbol": "ALGT",
@@ -6362,7 +6366,7 @@
         },
         {
           "symbol": "ALHC",
-          "name": "ALIGNMENT HEALTHCARE INC"
+          "name": "ALIGNMENT HEALTHCARE"
         },
         {
           "symbol": "ALKS",
@@ -6370,7 +6374,7 @@
         },
         {
           "symbol": "ALKT",
-          "name": "ALKAMI TECHNOLOGY INC"
+          "name": "ALKAMI TECHNOLOGY"
         },
         {
           "symbol": "ALLO",
@@ -6382,7 +6386,7 @@
         },
         {
           "symbol": "ALMS",
-          "name": "ALUMIS INC"
+          "name": "ALUMIS"
         },
         {
           "symbol": "ALMU",
@@ -6398,7 +6402,7 @@
         },
         {
           "symbol": "ALRM",
-          "name": "ALARM.COM HOLDINGS INC"
+          "name": "ALARM.COM HOLDINGS"
         },
         {
           "symbol": "ALRS",
@@ -6434,7 +6438,7 @@
         },
         {
           "symbol": "AMBA",
-          "name": "AMBARELLA INC"
+          "name": "AMBARELLA"
         },
         {
           "symbol": "AMBP",
@@ -6442,7 +6446,7 @@
         },
         {
           "symbol": "AMBQ",
-          "name": "AMBIQ MICRO INC"
+          "name": "AMBIQ MICRO"
         },
         {
           "symbol": "AMC",
@@ -6454,19 +6458,19 @@
         },
         {
           "symbol": "AMLX",
-          "name": "AMYLYX PHARMACEUTICALS INC"
+          "name": "AMYLYX PHARMACEUTICALS"
         },
         {
           "symbol": "AMN",
-          "name": "AMN HEALTHCARE INC"
+          "name": "AMN HEALTHCARE"
         },
         {
           "symbol": "AMPH",
-          "name": "AMPHASTAR PHARMACEUTICALS INC"
+          "name": "AMPHASTAR PHARMACEUTICALS"
         },
         {
           "symbol": "AMPL",
-          "name": "AMPLITUDE INC CLASS A"
+          "name": "AMPLITUDE CLASS A"
         },
         {
           "symbol": "AMPX",
@@ -6478,7 +6482,7 @@
         },
         {
           "symbol": "AMR",
-          "name": "ALPHA METALLURGICAL RESOURCE INC"
+          "name": "ALPHA METALLURGICAL RESOURCE"
         },
         {
           "symbol": "AMRC",
@@ -6486,7 +6490,7 @@
         },
         {
           "symbol": "AMRX",
-          "name": "AMNEAL PHARMACEUTICALS INC CLASS A"
+          "name": "AMNEAL PHARMACEUTICALS CLASS A"
         },
         {
           "symbol": "AMSC",
@@ -6506,7 +6510,7 @@
         },
         {
           "symbol": "ANAB",
-          "name": "ANAPTYSBIO INC"
+          "name": "ANAPTYSBIO"
         },
         {
           "symbol": "ANDE",
@@ -6530,11 +6534,11 @@
         },
         {
           "symbol": "ANIP",
-          "name": "ANI PHARMACEUTICALS INC"
+          "name": "ANI PHARMACEUTICALS"
         },
         {
           "symbol": "ANNX",
-          "name": "ANNEXON INC"
+          "name": "ANNEXON"
         },
         {
           "symbol": "ANRO",
@@ -6554,7 +6558,7 @@
         },
         {
           "symbol": "AOSL",
-          "name": "ALPHA AND OMEGA SEMICONDUCTOR LTD"
+          "name": "ALPHA AND OMEGA SEMICONDUCTOR"
         },
         {
           "symbol": "AP",
@@ -6570,11 +6574,11 @@
         },
         {
           "symbol": "APEI",
-          "name": "AMERICAN PUBLIC EDUCATION INC"
+          "name": "AMERICAN PUBLIC EDUCATION"
         },
         {
           "symbol": "APGE",
-          "name": "APOGEE THERAPEUTICS INC"
+          "name": "APOGEE THERAPEUTICS"
         },
         {
           "symbol": "APLE",
@@ -6598,7 +6602,7 @@
         },
         {
           "symbol": "ARCB",
-          "name": "ARCBEST CORP"
+          "name": "ARCBEST"
         },
         {
           "symbol": "ARCT",
@@ -6610,7 +6614,7 @@
         },
         {
           "symbol": "ARDX",
-          "name": "ARDELYX INC"
+          "name": "ARDELYX"
         },
         {
           "symbol": "AREC",
@@ -6630,7 +6634,7 @@
         },
         {
           "symbol": "ARLO",
-          "name": "ARLO TECHNOLOGIES INC"
+          "name": "ARLO TECHNOLOGIES"
         },
         {
           "symbol": "ARMP",
@@ -6646,11 +6650,11 @@
         },
         {
           "symbol": "ARQT",
-          "name": "ARCUTIS BIOTHERAPEUTICS INC"
+          "name": "ARCUTIS BIOTHERAPEUTICS"
         },
         {
           "symbol": "ARR",
-          "name": "ARMOUR RESIDENTIAL REIT INC"
+          "name": "ARMOUR RESIDENTIAL REIT"
         },
         {
           "symbol": "ARRY",
@@ -6670,7 +6674,7 @@
         },
         {
           "symbol": "ASAN",
-          "name": "ASANA INC CLASS A"
+          "name": "ASANA CLASS A"
         },
         {
           "symbol": "ASB",
@@ -6682,7 +6686,7 @@
         },
         {
           "symbol": "ASH",
-          "name": "ASHLAND INC"
+          "name": "ASHLAND"
         },
         {
           "symbol": "ASIC",
@@ -6690,7 +6694,7 @@
         },
         {
           "symbol": "ASIX",
-          "name": "ADVANSIX INC"
+          "name": "ADVANSIX"
         },
         {
           "symbol": "ASLE",
@@ -6702,7 +6706,7 @@
         },
         {
           "symbol": "ASO",
-          "name": "ACADEMY SPORTS AND OUTDOORS INC"
+          "name": "ACADEMY SPORTS AND OUTDOORS"
         },
         {
           "symbol": "ASPI",
@@ -6718,11 +6722,11 @@
         },
         {
           "symbol": "ASTE",
-          "name": "ASTEC INDUSTRIES INC"
+          "name": "ASTEC INDUSTRIES"
         },
         {
           "symbol": "ASTH",
-          "name": "ASTRANA HEALTH INC"
+          "name": "ASTRANA HEALTH"
         },
         {
           "symbol": "ASUR",
@@ -6762,7 +6766,7 @@
         },
         {
           "symbol": "ATMU",
-          "name": "ATMUS FILTRATION TECHNOLOGIES INC"
+          "name": "ATMUS FILTRATION TECHNOLOGIES"
         },
         {
           "symbol": "ATNI",
@@ -6774,15 +6778,15 @@
         },
         {
           "symbol": "ATRC",
-          "name": "ATRICURE INC"
+          "name": "ATRICURE"
         },
         {
           "symbol": "ATRO",
-          "name": "ASTRONICS CORP"
+          "name": "ASTRONICS"
         },
         {
           "symbol": "AUB",
-          "name": "ATLANTIC UNION BANKSHARES CORP"
+          "name": "ATLANTIC UNION BANKSHARES"
         },
         {
           "symbol": "AUPH",
@@ -6794,7 +6798,7 @@
         },
         {
           "symbol": "AVA",
-          "name": "AVISTA CORP"
+          "name": "AVISTA"
         },
         {
           "symbol": "AVAH",
@@ -6810,7 +6814,7 @@
         },
         {
           "symbol": "AVBP",
-          "name": "ARRIVENT BIOPHARMA INC"
+          "name": "ARRIVENT BIOPHARMA"
         },
         {
           "symbol": "AVEX",
@@ -6858,19 +6862,19 @@
         },
         {
           "symbol": "AX",
-          "name": "AXOS FINANCIAL INC"
+          "name": "AXOS FINANCIAL"
         },
         {
           "symbol": "AXGN",
-          "name": "AXOGEN INC"
+          "name": "AXOGEN"
         },
         {
           "symbol": "AXTI",
-          "name": "AXT INC"
+          "name": "AXT"
         },
         {
           "symbol": "AZTA",
-          "name": "AZENTA INC"
+          "name": "AZENTA"
         },
         {
           "symbol": "AZZ",
@@ -6882,7 +6886,7 @@
         },
         {
           "symbol": "BANC",
-          "name": "BANC OF CALIFORNIA INC"
+          "name": "BANC OF CALIFORNIA"
         },
         {
           "symbol": "BAND",
@@ -6898,15 +6902,15 @@
         },
         {
           "symbol": "BATRA",
-          "name": "ATLANTA BRAVES HOLDINGS INC SERIES"
+          "name": "ATLANTA BRAVES HOLDINGS SERIES A"
         },
         {
           "symbol": "BATRK",
-          "name": "ATLANTA BRAVES HOLDINGS INC SERIES"
+          "name": "ATLANTA BRAVES HOLDINGS SERIES C"
         },
         {
           "symbol": "BBAI",
-          "name": "BIGBEAR.AI HOLDINGS INC"
+          "name": "BIGBEAR.AI HOLDINGS"
         },
         {
           "symbol": "BBBY",
@@ -6926,7 +6930,7 @@
         },
         {
           "symbol": "BBT",
-          "name": "BEACON FINANCIAL CORP"
+          "name": "BEACON FINANCIAL"
         },
         {
           "symbol": "BBUC",
@@ -6934,7 +6938,7 @@
         },
         {
           "symbol": "BBW",
-          "name": "BUILD A BEAR WORKSHOP INC"
+          "name": "BUILD A BEAR WORKSHOP"
         },
         {
           "symbol": "BCAL",
@@ -6962,15 +6966,15 @@
         },
         {
           "symbol": "BCPC",
-          "name": "BALCHEM CORP"
+          "name": "BALCHEM"
         },
         {
           "symbol": "BCRX",
-          "name": "BIOCRYST PHARMACEUTICALS INC"
+          "name": "BIOCRYST PHARMACEUTICALS"
         },
         {
           "symbol": "BDC",
-          "name": "BELDEN INC"
+          "name": "BELDEN"
         },
         {
           "symbol": "BDN",
@@ -6982,19 +6986,19 @@
         },
         {
           "symbol": "BEAM",
-          "name": "BEAM THERAPEUTICS INC"
+          "name": "BEAM THERAPEUTICS"
         },
         {
           "symbol": "BELFA",
-          "name": "BEL FUSE INC CLASS A"
+          "name": "BEL FUSE CLASS A"
         },
         {
           "symbol": "BELFB",
-          "name": "BEL FUSE INC CLASS B"
+          "name": "BEL FUSE CLASS B"
         },
         {
           "symbol": "BETA",
-          "name": "BETA TECHNOLOGIES INC CLASS A"
+          "name": "BETA TECHNOLOGIES CLASS A"
         },
         {
           "symbol": "BETR",
@@ -7006,11 +7010,11 @@
         },
         {
           "symbol": "BFH",
-          "name": "BREAD FINANCIAL HOLDINGS INC"
+          "name": "BREAD FINANCIAL HOLDINGS"
         },
         {
           "symbol": "BFLY",
-          "name": "BUTTERFLY NETWORK INC CLASS A"
+          "name": "BUTTERFLY NETWORK CLASS A"
         },
         {
           "symbol": "BFS",
@@ -7054,11 +7058,11 @@
         },
         {
           "symbol": "BHVN",
-          "name": "BIOHAVEN LTD"
+          "name": "BIOHAVEN"
         },
         {
           "symbol": "BIOA",
-          "name": "BIOAGE LABS INC"
+          "name": "BIOAGE LABS"
         },
         {
           "symbol": "BIPC",
@@ -7074,7 +7078,7 @@
         },
         {
           "symbol": "BKE",
-          "name": "BUCKLE INC"
+          "name": "BUCKLE"
         },
         {
           "symbol": "BKH",
@@ -7094,11 +7098,11 @@
         },
         {
           "symbol": "BKU",
-          "name": "BANKUNITED INC"
+          "name": "BANKUNITED"
         },
         {
           "symbol": "BKV",
-          "name": "BKV CORP"
+          "name": "BKV"
         },
         {
           "symbol": "BL",
@@ -7106,15 +7110,15 @@
         },
         {
           "symbol": "BLBD",
-          "name": "BLUE BIRD CORP"
+          "name": "BLUE BIRD"
         },
         {
           "symbol": "BLFS",
-          "name": "BIOLIFE SOLUTIONS INC"
+          "name": "BIOLIFE SOLUTIONS"
         },
         {
           "symbol": "BLKB",
-          "name": "BLACKBAUD INC"
+          "name": "BLACKBAUD"
         },
         {
           "symbol": "BLMN",
@@ -7138,7 +7142,7 @@
         },
         {
           "symbol": "BMI",
-          "name": "BADGER METER INC"
+          "name": "BADGER METER"
         },
         {
           "symbol": "BMRC",
@@ -7154,7 +7158,7 @@
         },
         {
           "symbol": "BNL",
-          "name": "BROADSTONE NET LEASE INC"
+          "name": "BROADSTONE NET LEASE"
         },
         {
           "symbol": "BNTC",
@@ -7170,15 +7174,15 @@
         },
         {
           "symbol": "BOH",
-          "name": "BANK OF HAWAII CORP"
+          "name": "BANK OF HAWAII"
         },
         {
           "symbol": "BOOT",
-          "name": "BOOT BARN HOLDINGS INC"
+          "name": "BOOT BARN HOLDINGS"
         },
         {
           "symbol": "BORR",
-          "name": "BORR DRILLING LTD"
+          "name": "BORR DRILLING"
         },
         {
           "symbol": "BOW",
@@ -7194,7 +7198,7 @@
         },
         {
           "symbol": "BRBR",
-          "name": "BELLRING BRANDS INC"
+          "name": "BELLRING BRANDS"
         },
         {
           "symbol": "BRBS",
@@ -7234,7 +7238,7 @@
         },
         {
           "symbol": "BTBT",
-          "name": "BIT DIGITAL INC"
+          "name": "BIT DIGITAL"
         },
         {
           "symbol": "BTDR",
@@ -7258,11 +7262,11 @@
         },
         {
           "symbol": "BUSE",
-          "name": "FIRST BUSEY CORP"
+          "name": "FIRST BUSEY"
         },
         {
           "symbol": "BV",
-          "name": "BRIGHTVIEW HOLDINGS INC"
+          "name": "BRIGHTVIEW HOLDINGS"
         },
         {
           "symbol": "BVFL",
@@ -7286,7 +7290,7 @@
         },
         {
           "symbol": "BWIN",
-          "name": "BALDWIN INSURANCE GROUP INC CLASS"
+          "name": "BALDWIN INSURANCE GROUP CLASS A"
         },
         {
           "symbol": "BWMN",
@@ -7294,7 +7298,7 @@
         },
         {
           "symbol": "BXC",
-          "name": "BLUELINX HOLDINGS INC"
+          "name": "BLUELINX HOLDINGS"
         },
         {
           "symbol": "BXMT",
@@ -7310,7 +7314,7 @@
         },
         {
           "symbol": "BZH",
-          "name": "BEAZER HOMES INC"
+          "name": "BEAZER HOMES"
         },
         {
           "symbol": "CABA",
@@ -7338,11 +7342,11 @@
         },
         {
           "symbol": "CALM",
-          "name": "CAL MAINE FOODS INC"
+          "name": "CAL MAINE FOODS"
         },
         {
           "symbol": "CALX",
-          "name": "CALIX NETWORKS INC"
+          "name": "CALIX NETWORKS"
         },
         {
           "symbol": "CALY",
@@ -7354,7 +7358,7 @@
         },
         {
           "symbol": "CAPR",
-          "name": "CAPRICOR THERAPEUTICS INC"
+          "name": "CAPRICOR THERAPEUTICS"
         },
         {
           "symbol": "CARE",
@@ -7362,7 +7366,7 @@
         },
         {
           "symbol": "CARG",
-          "name": "CARGURUS INC CLASS A"
+          "name": "CARGURUS CLASS A"
         },
         {
           "symbol": "CARL",
@@ -7406,11 +7410,11 @@
         },
         {
           "symbol": "CBL",
-          "name": "CBL ASSOCIATES PROPERTIES INC"
+          "name": "CBL ASSOCIATES PROPERTIES"
         },
         {
           "symbol": "CBLL",
-          "name": "CERIBELL INC"
+          "name": "CERIBELL"
         },
         {
           "symbol": "CBNA",
@@ -7434,7 +7438,7 @@
         },
         {
           "symbol": "CBZ",
-          "name": "CBIZ INC"
+          "name": "CBIZ"
         },
         {
           "symbol": "CC",
@@ -7478,7 +7482,7 @@
         },
         {
           "symbol": "CDNA",
-          "name": "CAREDX INC"
+          "name": "CAREDX"
         },
         {
           "symbol": "CDNL",
@@ -7502,11 +7506,11 @@
         },
         {
           "symbol": "CECO",
-          "name": "CECO ENVIRONMENTAL CORP"
+          "name": "CECO ENVIRONMENTAL"
         },
         {
           "symbol": "CELC",
-          "name": "CELCUITY INC"
+          "name": "CELCUITY"
         },
         {
           "symbol": "CENT",
@@ -7526,7 +7530,7 @@
         },
         {
           "symbol": "CERT",
-          "name": "CERTARA INC"
+          "name": "CERTARA"
         },
         {
           "symbol": "CEVA",
@@ -7546,11 +7550,11 @@
         },
         {
           "symbol": "CGEM",
-          "name": "CULLINAN THERAPEUTICS INC"
+          "name": "CULLINAN THERAPEUTICS"
         },
         {
           "symbol": "CGON",
-          "name": "CG ONCOLOGY INC"
+          "name": "CG ONCOLOGY"
         },
         {
           "symbol": "CHCI",
@@ -7590,7 +7594,7 @@
         },
         {
           "symbol": "CIM",
-          "name": "CHIMERA INVESTMENT CORP"
+          "name": "CHIMERA INVESTMENT"
         },
         {
           "symbol": "CIVB",
@@ -7614,7 +7618,7 @@
         },
         {
           "symbol": "CLDX",
-          "name": "CELLDEX THERAPEUTICS INC"
+          "name": "CELLDEX THERAPEUTICS"
         },
         {
           "symbol": "CLFD",
@@ -7626,7 +7630,7 @@
         },
         {
           "symbol": "CLMT",
-          "name": "CALUMET INC"
+          "name": "CALUMET"
         },
         {
           "symbol": "CLNE",
@@ -7634,7 +7638,7 @@
         },
         {
           "symbol": "CLOV",
-          "name": "CLOVER HEALTH INVESTMENTS CORP CLA"
+          "name": "CLOVER HEALTH INVESTMENTS CLASS A"
         },
         {
           "symbol": "CLPT",
@@ -7642,7 +7646,7 @@
         },
         {
           "symbol": "CLSK",
-          "name": "CLEANSPARK INC"
+          "name": "CLEANSPARK"
         },
         {
           "symbol": "CLVT",
@@ -7674,7 +7678,7 @@
         },
         {
           "symbol": "CMP",
-          "name": "COMPASS MINERALS INTERNATIONAL INC"
+          "name": "COMPASS MINERALS INTERNATIONAL"
         },
         {
           "symbol": "CMPR",
@@ -7690,7 +7694,7 @@
         },
         {
           "symbol": "CMRE",
-          "name": "COSTAMARE INC"
+          "name": "COSTAMARE"
         },
         {
           "symbol": "CMT",
@@ -7722,15 +7726,15 @@
         },
         {
           "symbol": "CNO",
-          "name": "CNO FINANCIAL GROUP INC"
+          "name": "CNO FINANCIAL GROUP"
         },
         {
           "symbol": "CNOB",
-          "name": "CONNECTONE BANCORP INC"
+          "name": "CONNECTONE BANCORP"
         },
         {
           "symbol": "CNR",
-          "name": "CORE NATURAL RESOURCES INC"
+          "name": "CORE NATURAL RESOURCES"
         },
         {
           "symbol": "CNS",
@@ -7750,11 +7754,11 @@
         },
         {
           "symbol": "CNX",
-          "name": "CNX RESOURCES CORP"
+          "name": "CNX RESOURCES"
         },
         {
           "symbol": "CNXC",
-          "name": "CONCENTRIX CORP"
+          "name": "CONCENTRIX"
         },
         {
           "symbol": "CNXN",
@@ -7762,7 +7766,7 @@
         },
         {
           "symbol": "COCO",
-          "name": "THE VITA COCO COMPANY INC"
+          "name": "THE VITA COCO COMPANY"
         },
         {
           "symbol": "CODI",
@@ -7774,11 +7778,11 @@
         },
         {
           "symbol": "COGT",
-          "name": "COGENT BIOSCIENCES INC"
+          "name": "COGENT BIOSCIENCES"
         },
         {
           "symbol": "COHU",
-          "name": "COHU INC"
+          "name": "COHU"
         },
         {
           "symbol": "COLL",
@@ -7806,7 +7810,7 @@
         },
         {
           "symbol": "COUR",
-          "name": "COURSERA INC"
+          "name": "COURSERA"
         },
         {
           "symbol": "CPF",
@@ -7814,7 +7818,7 @@
         },
         {
           "symbol": "CPK",
-          "name": "CHESAPEAKE UTILITIES CORP"
+          "name": "CHESAPEAKE UTILITIES"
         },
         {
           "symbol": "CPRI",
@@ -7822,7 +7826,7 @@
         },
         {
           "symbol": "CPS",
-          "name": "COOPER STANDARD HOLDINGS INC"
+          "name": "COOPER STANDARD HOLDINGS"
         },
         {
           "symbol": "CPSS",
@@ -7842,7 +7846,7 @@
         },
         {
           "symbol": "CRC",
-          "name": "CALIFORNIA RESOURCES CORP"
+          "name": "CALIFORNIA RESOURCES"
         },
         {
           "symbol": "CRCT",
@@ -7858,15 +7862,15 @@
         },
         {
           "symbol": "CRI",
-          "name": "CARTERS INC"
+          "name": "CARTERS"
         },
         {
           "symbol": "CRK",
-          "name": "COMSTOCK RESOURCES INC"
+          "name": "COMSTOCK RESOURCES"
         },
         {
           "symbol": "CRMD",
-          "name": "CORMEDIX INC"
+          "name": "CORMEDIX"
         },
         {
           "symbol": "CRML",
@@ -7878,7 +7882,7 @@
         },
         {
           "symbol": "CRNX",
-          "name": "CRINETICS PHARMACEUTICALS INC"
+          "name": "CRINETICS PHARMACEUTICALS"
         },
         {
           "symbol": "CRSP",
@@ -7890,15 +7894,15 @@
         },
         {
           "symbol": "CRVL",
-          "name": "CORVEL CORP"
+          "name": "CORVEL"
         },
         {
           "symbol": "CRVS",
-          "name": "CORVUS PHARMACEUTICALS INC"
+          "name": "CORVUS PHARMACEUTICALS"
         },
         {
           "symbol": "CSIQ",
-          "name": "CANADIAN SOLAR INC"
+          "name": "CANADIAN SOLAR"
         },
         {
           "symbol": "CSR",
@@ -7906,7 +7910,7 @@
         },
         {
           "symbol": "CSTL",
-          "name": "CASTLE BIOSCIENCES INC"
+          "name": "CASTLE BIOSCIENCES"
         },
         {
           "symbol": "CSTM",
@@ -7918,7 +7922,7 @@
         },
         {
           "symbol": "CSW",
-          "name": "CSW INDUSTRIALS INC"
+          "name": "CSW INDUSTRIALS"
         },
         {
           "symbol": "CTBI",
@@ -7938,7 +7942,7 @@
         },
         {
           "symbol": "CTMX",
-          "name": "CYTOMX THERAPEUTICS INC"
+          "name": "CYTOMX THERAPEUTICS"
         },
         {
           "symbol": "CTNM",
@@ -7954,7 +7958,7 @@
         },
         {
           "symbol": "CTRE",
-          "name": "CARETRUST REIT INC"
+          "name": "CARETRUST REIT"
         },
         {
           "symbol": "CTRI",
@@ -7970,7 +7974,7 @@
         },
         {
           "symbol": "CUBI",
-          "name": "CUSTOMERS BANCORP INC"
+          "name": "CUSTOMERS BANCORP"
         },
         {
           "symbol": "CURB",
@@ -7994,7 +7998,7 @@
         },
         {
           "symbol": "CVCO",
-          "name": "CAVCO INDUSTRIES INC"
+          "name": "CAVCO INDUSTRIES"
         },
         {
           "symbol": "CVEO",
@@ -8014,7 +8018,7 @@
         },
         {
           "symbol": "CVLT",
-          "name": "COMMVAULT SYSTEMS INC"
+          "name": "COMMVAULT SYSTEMS"
         },
         {
           "symbol": "CVRX",
@@ -8022,7 +8026,7 @@
         },
         {
           "symbol": "CVSA",
-          "name": "COVISTA INC"
+          "name": "COVISTA"
         },
         {
           "symbol": "CWBC",
@@ -8042,7 +8046,7 @@
         },
         {
           "symbol": "CWST",
-          "name": "CASELLA WASTE SYSTEMS INC CLASS A"
+          "name": "CASELLA WASTE SYSTEMS CLASS A"
         },
         {
           "symbol": "CWT",
@@ -8054,7 +8058,7 @@
         },
         {
           "symbol": "CXM",
-          "name": "SPRINKLR INC CLASS A"
+          "name": "SPRINKLR CLASS A"
         },
         {
           "symbol": "CXT",
@@ -8062,7 +8066,7 @@
         },
         {
           "symbol": "CXW",
-          "name": "CORECIVIC REIT INC"
+          "name": "CORECIVIC REIT"
         },
         {
           "symbol": "CYH",
@@ -8074,7 +8078,7 @@
         },
         {
           "symbol": "CYTK",
-          "name": "CYTOKINETICS INC"
+          "name": "CYTOKINETICS"
         },
         {
           "symbol": "CZFS",
@@ -8098,7 +8102,7 @@
         },
         {
           "symbol": "DAVE",
-          "name": "DAVE INC CLASS A"
+          "name": "DAVE CLASS A"
         },
         {
           "symbol": "DBD",
@@ -8122,11 +8126,11 @@
         },
         {
           "symbol": "DCO",
-          "name": "DUCOMMUN INC"
+          "name": "DUCOMMUN"
         },
         {
           "symbol": "DCOM",
-          "name": "DIME COMMERCIAL BANCSHARES INC"
+          "name": "DIME COMMERCIAL BANCSHARES"
         },
         {
           "symbol": "DCTH",
@@ -8146,7 +8150,7 @@
         },
         {
           "symbol": "DEI",
-          "name": "DOUGLAS EMMETT REIT INC"
+          "name": "DOUGLAS EMMETT REIT"
         },
         {
           "symbol": "DFH",
@@ -8154,7 +8158,7 @@
         },
         {
           "symbol": "DFIN",
-          "name": "DONNELLEY FINANCIAL SOLUTIONS INC"
+          "name": "DONNELLEY FINANCIAL SOLUTIONS"
         },
         {
           "symbol": "DFTX",
@@ -8166,7 +8170,7 @@
         },
         {
           "symbol": "DGII",
-          "name": "DIGI INTERNATIONAL INC"
+          "name": "DIGI INTERNATIONAL"
         },
         {
           "symbol": "DHC",
@@ -8174,7 +8178,7 @@
         },
         {
           "symbol": "DHT",
-          "name": "DHT HOLDINGS INC"
+          "name": "DHT HOLDINGS"
         },
         {
           "symbol": "DIBS",
@@ -8186,7 +8190,7 @@
         },
         {
           "symbol": "DIOD",
-          "name": "DIODES INC"
+          "name": "DIODES"
         },
         {
           "symbol": "DJCO",
@@ -8206,7 +8210,7 @@
         },
         {
           "symbol": "DLX",
-          "name": "DELUXE CORP"
+          "name": "DELUXE"
         },
         {
           "symbol": "DMAC",
@@ -8230,11 +8234,11 @@
         },
         {
           "symbol": "DNLI",
-          "name": "DENALI THERAPEUTICS INC"
+          "name": "DENALI THERAPEUTICS"
         },
         {
           "symbol": "DNOW",
-          "name": "DNOW INC"
+          "name": "DNOW"
         },
         {
           "symbol": "DNTH",
@@ -8254,7 +8258,7 @@
         },
         {
           "symbol": "DORM",
-          "name": "DORMAN PRODUCTS INC"
+          "name": "DORMAN PRODUCTS"
         },
         {
           "symbol": "DOUG",
@@ -8270,7 +8274,7 @@
         },
         {
           "symbol": "DRVN",
-          "name": "DRIVEN BRANDS HOLDINGS INC"
+          "name": "DRIVEN BRANDS HOLDINGS"
         },
         {
           "symbol": "DSGN",
@@ -8294,7 +8298,7 @@
         },
         {
           "symbol": "DV",
-          "name": "DOUBLEVERIFY HOLDINGS INC"
+          "name": "DOUBLEVERIFY HOLDINGS"
         },
         {
           "symbol": "DX",
@@ -8306,11 +8310,11 @@
         },
         {
           "symbol": "DXPE",
-          "name": "DXP ENTERPRISES INC"
+          "name": "DXP ENTERPRISES"
         },
         {
           "symbol": "DYN",
-          "name": "DYNE THERAPEUTICS INC"
+          "name": "DYNE THERAPEUTICS"
         },
         {
           "symbol": "EAF",
@@ -8334,7 +8338,7 @@
         },
         {
           "symbol": "EBS",
-          "name": "EMERGENT BIOSOLUTIONS INC"
+          "name": "EMERGENT BIOSOLUTIONS"
         },
         {
           "symbol": "ECBK",
@@ -8342,11 +8346,11 @@
         },
         {
           "symbol": "ECPG",
-          "name": "ENCORE CAPITAL GROUP INC"
+          "name": "ENCORE CAPITAL GROUP"
         },
         {
           "symbol": "ECVT",
-          "name": "ECOVYST INC"
+          "name": "ECOVYST"
         },
         {
           "symbol": "EDIT",
@@ -8358,7 +8362,7 @@
         },
         {
           "symbol": "EFC",
-          "name": "ELLINGTON FINANCIAL INC"
+          "name": "ELLINGTON FINANCIAL"
         },
         {
           "symbol": "EFOR",
@@ -8378,7 +8382,7 @@
         },
         {
           "symbol": "EGBN",
-          "name": "EAGLE BANCORP INC"
+          "name": "EAGLE BANCORP"
         },
         {
           "symbol": "EGHT",
@@ -8390,7 +8394,7 @@
         },
         {
           "symbol": "EIG",
-          "name": "EMPLOYERS HOLDINGS INC"
+          "name": "EMPLOYERS HOLDINGS"
         },
         {
           "symbol": "EIKN",
@@ -8422,11 +8426,11 @@
         },
         {
           "symbol": "ELVN",
-          "name": "ENLIVEN THERAPEUTICS INC"
+          "name": "ENLIVEN THERAPEUTICS"
         },
         {
           "symbol": "EMBC",
-          "name": "EMBECTA CORP"
+          "name": "EMBECTA"
         },
         {
           "symbol": "ENOV",
@@ -8446,11 +8450,11 @@
         },
         {
           "symbol": "ENVA",
-          "name": "ENOVA INTERNATIONAL INC"
+          "name": "ENOVA INTERNATIONAL"
         },
         {
           "symbol": "ENVX",
-          "name": "ENOVIX CORP"
+          "name": "ENOVIX"
         },
         {
           "symbol": "EOLS",
@@ -8458,11 +8462,11 @@
         },
         {
           "symbol": "EOSE",
-          "name": "EOS ENERGY ENTERPRISES INC CLASS A"
+          "name": "EOS ENERGY ENTERPRISES CLASS A"
         },
         {
           "symbol": "EPAC",
-          "name": "ENERPAC TOOL GROUP CORP CLASS A"
+          "name": "ENERPAC TOOL GROUP CLASS A"
         },
         {
           "symbol": "EPC",
@@ -8486,7 +8490,7 @@
         },
         {
           "symbol": "ERAS",
-          "name": "ERASCA INC"
+          "name": "ERASCA"
         },
         {
           "symbol": "ERII",
@@ -8498,7 +8502,7 @@
         },
         {
           "symbol": "ESE",
-          "name": "ESCO TECHNOLOGIES INC"
+          "name": "ESCO TECHNOLOGIES"
         },
         {
           "symbol": "ESNT",
@@ -8518,7 +8522,7 @@
         },
         {
           "symbol": "ESRT",
-          "name": "EMPIRE STATE REALTY REIT INC TRUST"
+          "name": "EMPIRE STATE REALTY REIT CLASS A"
         },
         {
           "symbol": "ESTA",
@@ -8526,7 +8530,7 @@
         },
         {
           "symbol": "ETD",
-          "name": "ETHAN ALLEN INTERIORS INC"
+          "name": "ETHAN ALLEN INTERIORS"
         },
         {
           "symbol": "ETON",
@@ -8546,7 +8550,7 @@
         },
         {
           "symbol": "EVER",
-          "name": "EVERQUOTE INC CLASS A"
+          "name": "EVERQUOTE CLASS A"
         },
         {
           "symbol": "EVEX",
@@ -8566,11 +8570,11 @@
         },
         {
           "symbol": "EVLV",
-          "name": "EVOLV TECHNOLOGIES HOLDINGS INC CL"
+          "name": "EVOLV TECHNOLOGIES HOLDINGS CLASS"
         },
         {
           "symbol": "EVMN",
-          "name": "EVOMMUNE INC"
+          "name": "EVOMMUNE"
         },
         {
           "symbol": "EVTC",
@@ -8582,15 +8586,15 @@
         },
         {
           "symbol": "EXPO",
-          "name": "EXPONENT INC"
+          "name": "EXPONENT"
         },
         {
           "symbol": "EXTR",
-          "name": "EXTREME NETWORKS INC"
+          "name": "EXTREME NETWORKS"
         },
         {
           "symbol": "EYE",
-          "name": "NATIONAL VISION HOLDINGS INC"
+          "name": "NATIONAL VISION HOLDINGS"
         },
         {
           "symbol": "EYPT",
@@ -8598,7 +8602,7 @@
         },
         {
           "symbol": "FA",
-          "name": "FIRST ADVANTAGE CORP"
+          "name": "FIRST ADVANTAGE"
         },
         {
           "symbol": "FBIZ",
@@ -8606,7 +8610,7 @@
         },
         {
           "symbol": "FBK",
-          "name": "FB FINANCIAL CORP"
+          "name": "FB FINANCIAL"
         },
         {
           "symbol": "FBLA",
@@ -8678,7 +8682,7 @@
         },
         {
           "symbol": "FELE",
-          "name": "FRANKLIN ELECTRIC INC"
+          "name": "FRANKLIN ELECTRIC"
         },
         {
           "symbol": "FENC",
@@ -8718,7 +8722,7 @@
         },
         {
           "symbol": "FIGS",
-          "name": "FIGS INC CLASS A"
+          "name": "FIGS CLASS A"
         },
         {
           "symbol": "FINW",
@@ -8726,7 +8730,7 @@
         },
         {
           "symbol": "FIP",
-          "name": "FTAI INFRASTRUCTURE INC"
+          "name": "FTAI INFRASTRUCTURE"
         },
         {
           "symbol": "FISI",
@@ -8734,11 +8738,11 @@
         },
         {
           "symbol": "FIVN",
-          "name": "FIVE9 INC"
+          "name": "FIVE9"
         },
         {
           "symbol": "FIZZ",
-          "name": "NATIONAL BEVERAGE CORP"
+          "name": "NATIONAL BEVERAGE"
         },
         {
           "symbol": "FJET",
@@ -8782,11 +8786,11 @@
         },
         {
           "symbol": "FLY",
-          "name": "FIREFLY AEROSPACE INC"
+          "name": "FIREFLY AEROSPACE"
         },
         {
           "symbol": "FLYW",
-          "name": "FLYWIRE CORP"
+          "name": "FLYWIRE"
         },
         {
           "symbol": "FLYX",
@@ -8834,7 +8838,7 @@
         },
         {
           "symbol": "FOXF",
-          "name": "FOX FACTORY HOLDING CORP"
+          "name": "FOX FACTORY HOLDING"
         },
         {
           "symbol": "FPI",
@@ -8854,7 +8858,7 @@
         },
         {
           "symbol": "FRME",
-          "name": "FIRST MERCHANTS CORP"
+          "name": "FIRST MERCHANTS"
         },
         {
           "symbol": "FROG",
@@ -8866,7 +8870,7 @@
         },
         {
           "symbol": "FRSH",
-          "name": "FRESHWORKS INC CLASS A"
+          "name": "FRESHWORKS CLASS A"
         },
         {
           "symbol": "FRST",
@@ -8882,7 +8886,7 @@
         },
         {
           "symbol": "FSLY",
-          "name": "FASTLY INC CLASS A"
+          "name": "FASTLY CLASS A"
         },
         {
           "symbol": "FSS",
@@ -8918,7 +8922,7 @@
         },
         {
           "symbol": "FULC",
-          "name": "FULCRUM THERAPEUTICS INC"
+          "name": "FULCRUM THERAPEUTICS"
         },
         {
           "symbol": "FULT",
@@ -8950,7 +8954,7 @@
         },
         {
           "symbol": "FWRG",
-          "name": "FIRST WATCH RESTAURANT GROUP INC"
+          "name": "FIRST WATCH RESTAURANT GROUP"
         },
         {
           "symbol": "FXNC",
@@ -8966,7 +8970,7 @@
         },
         {
           "symbol": "GATX",
-          "name": "GATX CORP"
+          "name": "GATX"
         },
         {
           "symbol": "GBCI",
@@ -8978,7 +8982,7 @@
         },
         {
           "symbol": "GBTG",
-          "name": "GLOBAL BUSINESS TRAVEL GROUP INC A"
+          "name": "GLOBAL BUSINESS TRAVEL GROUP CLASS"
         },
         {
           "symbol": "GBX",
@@ -8990,7 +8994,7 @@
         },
         {
           "symbol": "GCMG",
-          "name": "GCM GROSVENOR INC CLASS A"
+          "name": "GCM GROSVENOR CLASS A"
         },
         {
           "symbol": "GCO",
@@ -9002,7 +9006,7 @@
         },
         {
           "symbol": "GDOT",
-          "name": "GREEN DOT CORP CLASS A"
+          "name": "GREEN DOT CLASS A"
         },
         {
           "symbol": "GDYN",
@@ -9034,11 +9038,11 @@
         },
         {
           "symbol": "GEO",
-          "name": "GEO GROUP INC"
+          "name": "GEO GROUP"
         },
         {
           "symbol": "GERN",
-          "name": "GERON CORP"
+          "name": "GERON"
         },
         {
           "symbol": "GEVO",
@@ -9046,7 +9050,7 @@
         },
         {
           "symbol": "GFF",
-          "name": "GRIFFON CORP"
+          "name": "GRIFFON"
         },
         {
           "symbol": "GHC",
@@ -9066,7 +9070,7 @@
         },
         {
           "symbol": "GKOS",
-          "name": "GLAUKOS CORP"
+          "name": "GLAUKOS"
         },
         {
           "symbol": "GLIBA",
@@ -9082,7 +9086,7 @@
         },
         {
           "symbol": "GLOB",
-          "name": "GLOBANT SA"
+          "name": "GLOBANT"
         },
         {
           "symbol": "GLRE",
@@ -9094,7 +9098,7 @@
         },
         {
           "symbol": "GLUE",
-          "name": "MONTE ROSA THERAPEUTICS INC"
+          "name": "MONTE ROSA THERAPEUTICS"
         },
         {
           "symbol": "GNE",
@@ -9102,7 +9106,7 @@
         },
         {
           "symbol": "GNK",
-          "name": "GENCO SHIPPING AND TRADING LTD"
+          "name": "GENCO SHIPPING AND TRADING"
         },
         {
           "symbol": "GNL",
@@ -9114,7 +9118,7 @@
         },
         {
           "symbol": "GO",
-          "name": "GROCERY OUTLET HOLDING CORP"
+          "name": "GROCERY OUTLET HOLDING"
         },
         {
           "symbol": "GOGO",
@@ -9142,7 +9146,7 @@
         },
         {
           "symbol": "GPOR",
-          "name": "GULFPORT ENERGY CORP"
+          "name": "GULFPORT ENERGY"
         },
         {
           "symbol": "GPRE",
@@ -9158,7 +9162,7 @@
         },
         {
           "symbol": "GRBK",
-          "name": "GREEN BRICK PARTNERS INC"
+          "name": "GREEN BRICK PARTNERS"
         },
         {
           "symbol": "GRC",
@@ -9166,7 +9170,7 @@
         },
         {
           "symbol": "GRDN",
-          "name": "GUARDIAN PHARMACY SERVICES INC CLA"
+          "name": "GUARDIAN PHARMACY SERVICES CLASS A"
         },
         {
           "symbol": "GRND",
@@ -9186,7 +9190,7 @@
         },
         {
           "symbol": "GSHD",
-          "name": "GOOSEHEAD INSURANCE INC CLASS A"
+          "name": "GOOSEHEAD INSURANCE CLASS A"
         },
         {
           "symbol": "GSIT",
@@ -9202,7 +9206,7 @@
         },
         {
           "symbol": "GTM",
-          "name": "ZOOMINFO TECHNOLOGIES INC"
+          "name": "ZOOMINFO TECHNOLOGIES"
         },
         {
           "symbol": "GTN",
@@ -9214,7 +9218,7 @@
         },
         {
           "symbol": "GTY",
-          "name": "GETTY REALTY REIT CORP"
+          "name": "GETTY REALTY REIT"
         },
         {
           "symbol": "GVA",
@@ -9238,7 +9242,7 @@
         },
         {
           "symbol": "HAPN",
-          "name": "HAPPEN INC"
+          "name": "HAPPEN"
         },
         {
           "symbol": "HASI",
@@ -9274,7 +9278,7 @@
         },
         {
           "symbol": "HCSG",
-          "name": "HEALTHCARE SERVICES GROUP INC"
+          "name": "HEALTHCARE SERVICES GROUP"
         },
         {
           "symbol": "HDSN",
@@ -9282,7 +9286,7 @@
         },
         {
           "symbol": "HE",
-          "name": "HAWAIIAN ELECTRIC INDUSTRIES INC"
+          "name": "HAWAIIAN ELECTRIC INDUSTRIES"
         },
         {
           "symbol": "HELE",
@@ -9294,11 +9298,11 @@
         },
         {
           "symbol": "HG",
-          "name": "HAMILTON INSURANCE GROUP LTD CLASS"
+          "name": "HAMILTON INSURANCE GROUP CLASS B"
         },
         {
           "symbol": "HGV",
-          "name": "HILTON GRAND VACATIONS INC"
+          "name": "HILTON GRAND VACATIONS"
         },
         {
           "symbol": "HIFS",
@@ -9306,7 +9310,7 @@
         },
         {
           "symbol": "HIMS",
-          "name": "HIMS HERS HEALTH INC CLASS A"
+          "name": "HIMS HERS HEALTH CLASS A"
         },
         {
           "symbol": "HIPO",
@@ -9314,7 +9318,7 @@
         },
         {
           "symbol": "HIW",
-          "name": "HIGHWOODS PROPERTIES REIT INC"
+          "name": "HIGHWOODS PROPERTIES REIT"
         },
         {
           "symbol": "HLF",
@@ -9326,7 +9330,7 @@
         },
         {
           "symbol": "HLIT",
-          "name": "HARMONIC INC"
+          "name": "HARMONIC"
         },
         {
           "symbol": "HLLY",
@@ -9350,11 +9354,11 @@
         },
         {
           "symbol": "HNGE",
-          "name": "HINGE HEALTH INC CLASS A"
+          "name": "HINGE HEALTH CLASS A"
         },
         {
           "symbol": "HNI",
-          "name": "HNI CORP"
+          "name": "HNI"
         },
         {
           "symbol": "HNRG",
@@ -9370,7 +9374,7 @@
         },
         {
           "symbol": "HOG",
-          "name": "HARLEY DAVIDSON INC"
+          "name": "HARLEY DAVIDSON"
         },
         {
           "symbol": "HOMB",
@@ -9382,11 +9386,11 @@
         },
         {
           "symbol": "HOV",
-          "name": "HOVNANIAN ENTERPRISES INC CLASS A"
+          "name": "HOVNANIAN ENTERPRISES CLASS A"
         },
         {
           "symbol": "HP",
-          "name": "HELMERICH & PAYNE INC"
+          "name": "HELMERICH & PAYNE"
         },
         {
           "symbol": "HPK",
@@ -9402,19 +9406,19 @@
         },
         {
           "symbol": "HQY",
-          "name": "HEALTHEQUITY INC"
+          "name": "HEALTHEQUITY"
         },
         {
           "symbol": "HRI",
-          "name": "HERC HOLDINGS INC"
+          "name": "HERC HOLDINGS"
         },
         {
           "symbol": "HRMY",
-          "name": "HARMONY BIOSCIENCES HLDG INC"
+          "name": "HARMONY BIOSCIENCES HLDG"
         },
         {
           "symbol": "HROW",
-          "name": "HARROW INC"
+          "name": "HARROW"
         },
         {
           "symbol": "HRTG",
@@ -9430,7 +9434,7 @@
         },
         {
           "symbol": "HSTM",
-          "name": "HEALTHSTREAM INC"
+          "name": "HEALTHSTREAM"
         },
         {
           "symbol": "HTB",
@@ -9438,11 +9442,11 @@
         },
         {
           "symbol": "HTFL",
-          "name": "HEARTFLOW INC"
+          "name": "HEARTFLOW"
         },
         {
           "symbol": "HTH",
-          "name": "HILLTOP HOLDINGS INC"
+          "name": "HILLTOP HOLDINGS"
         },
         {
           "symbol": "HTLD",
@@ -9458,7 +9462,7 @@
         },
         {
           "symbol": "HUBG",
-          "name": "HUB GROUP INC CLASS A"
+          "name": "HUB GROUP CLASS A"
         },
         {
           "symbol": "HUN",
@@ -9466,7 +9470,7 @@
         },
         {
           "symbol": "HURN",
-          "name": "HURON CONSULTING GROUP INC"
+          "name": "HURON CONSULTING GROUP"
         },
         {
           "symbol": "HUT",
@@ -9482,7 +9486,7 @@
         },
         {
           "symbol": "HWC",
-          "name": "HANCOCK WHITNEY CORP"
+          "name": "HANCOCK WHITNEY"
         },
         {
           "symbol": "HWKN",
@@ -9510,7 +9514,7 @@
         },
         {
           "symbol": "IART",
-          "name": "INTEGRA LIFESCIENCES HOLDINGS CORP"
+          "name": "INTEGRA LIFESCIENCES HOLDINGS"
         },
         {
           "symbol": "IBCP",
@@ -9538,15 +9542,15 @@
         },
         {
           "symbol": "ICFI",
-          "name": "ICF INTERNATIONAL INC"
+          "name": "ICF INTERNATIONAL"
         },
         {
           "symbol": "ICHR",
-          "name": "ICHOR HOLDINGS LTD"
+          "name": "ICHOR HOLDINGS"
         },
         {
           "symbol": "ICUI",
-          "name": "ICU MEDICAL INC"
+          "name": "ICU MEDICAL"
         },
         {
           "symbol": "IDCC",
@@ -9562,15 +9566,15 @@
         },
         {
           "symbol": "IDT",
-          "name": "IDT CORP CLASS B"
+          "name": "IDT CLASS B"
         },
         {
           "symbol": "IDYA",
-          "name": "IDEAYA BIOSCIENCES INC"
+          "name": "IDEAYA BIOSCIENCES"
         },
         {
           "symbol": "IE",
-          "name": "IVANHOE ELECTRIC INC"
+          "name": "IVANHOE ELECTRIC"
         },
         {
           "symbol": "IHRT",
@@ -9606,7 +9610,7 @@
         },
         {
           "symbol": "IMKTA",
-          "name": "INGLES MARKETS INC CLASS A"
+          "name": "INGLES MARKETS CLASS A"
         },
         {
           "symbol": "IMMR",
@@ -9618,7 +9622,7 @@
         },
         {
           "symbol": "IMNM",
-          "name": "IMMUNOME INC"
+          "name": "IMMUNOME"
         },
         {
           "symbol": "IMRX",
@@ -9626,7 +9630,7 @@
         },
         {
           "symbol": "IMVT",
-          "name": "IMMUNOVANT INC"
+          "name": "IMMUNOVANT"
         },
         {
           "symbol": "IMXI",
@@ -9674,7 +9678,7 @@
         },
         {
           "symbol": "INOD",
-          "name": "INNODATA INC"
+          "name": "INNODATA"
         },
         {
           "symbol": "INR",
@@ -9690,15 +9694,15 @@
         },
         {
           "symbol": "INSP",
-          "name": "INSPIRE MEDICAL SYSTEMS INC"
+          "name": "INSPIRE MEDICAL SYSTEMS"
         },
         {
           "symbol": "INSW",
-          "name": "INTERNATIONAL SEAWAYS INC"
+          "name": "INTERNATIONAL SEAWAYS"
         },
         {
           "symbol": "INTA",
-          "name": "INTAPP INC"
+          "name": "INTAPP"
         },
         {
           "symbol": "INTT",
@@ -9710,15 +9714,11 @@
         },
         {
           "symbol": "INVA",
-          "name": "INNOVIVA INC"
+          "name": "INNOVIVA"
         },
         {
           "symbol": "INVX",
           "name": "INNOVEX INTERNATIONAL INC"
-        },
-        {
-          "symbol": "IONQ",
-          "name": "IONQ INC"
         },
         {
           "symbol": "IOSP",
@@ -9746,15 +9746,15 @@
         },
         {
           "symbol": "IRMD",
-          "name": "IRADIMED CORP"
+          "name": "IRADIMED"
         },
         {
           "symbol": "IRON",
-          "name": "DISC MEDICINE INC"
+          "name": "DISC MEDICINE"
         },
         {
           "symbol": "IRT",
-          "name": "INDEPENDENCE REALTY INC"
+          "name": "INDEPENDENCE REALTY"
         },
         {
           "symbol": "IRTC",
@@ -9762,7 +9762,7 @@
         },
         {
           "symbol": "IRWD",
-          "name": "IRONWOOD PHARMA INC CLASS A"
+          "name": "IRONWOOD PHARMA CLASS A"
         },
         {
           "symbol": "ISBA",
@@ -9786,7 +9786,7 @@
         },
         {
           "symbol": "ITRI",
-          "name": "ITRON INC"
+          "name": "ITRON"
         },
         {
           "symbol": "IVR",
@@ -9810,7 +9810,7 @@
         },
         {
           "symbol": "JANX",
-          "name": "JANUX THERAPEUTICS INC"
+          "name": "JANUX THERAPEUTICS"
         },
         {
           "symbol": "JBGS",
@@ -9818,7 +9818,7 @@
         },
         {
           "symbol": "JBI",
-          "name": "JANUS INTERNATIONAL GROUP INC"
+          "name": "JANUS INTERNATIONAL GROUP"
         },
         {
           "symbol": "JBIO",
@@ -9826,7 +9826,7 @@
         },
         {
           "symbol": "JBLU",
-          "name": "JETBLUE AIRWAYS CORP"
+          "name": "JETBLUE AIRWAYS"
         },
         {
           "symbol": "JBSS",
@@ -9834,7 +9834,7 @@
         },
         {
           "symbol": "JBTM",
-          "name": "JBT MAREL CORP"
+          "name": "JBT MAREL"
         },
         {
           "symbol": "JCAP",
@@ -9854,7 +9854,7 @@
         },
         {
           "symbol": "JOBY",
-          "name": "JOBY AVIATION INC CLASS A"
+          "name": "JOBY AVIATION CLASS A"
         },
         {
           "symbol": "JOE",
@@ -9870,7 +9870,7 @@
         },
         {
           "symbol": "JXN",
-          "name": "JACKSON FINANCIAL INC CLASS A"
+          "name": "JACKSON FINANCIAL CLASS A"
         },
         {
           "symbol": "KAI",
@@ -9878,7 +9878,7 @@
         },
         {
           "symbol": "KALU",
-          "name": "KAISER ALUMINIUM CORP"
+          "name": "KAISER ALUMINIUM"
         },
         {
           "symbol": "KBH",
@@ -9938,19 +9938,19 @@
         },
         {
           "symbol": "KMPR",
-          "name": "KEMPER CORP"
+          "name": "KEMPER"
         },
         {
           "symbol": "KMT",
-          "name": "KENNAMETAL INC"
+          "name": "KENNAMETAL"
         },
         {
           "symbol": "KMTS",
-          "name": "KESTRA MEDICAL TECHNOLOGIES LTD"
+          "name": "KESTRA MEDICAL TECHNOLOGIES"
         },
         {
           "symbol": "KN",
-          "name": "KNOWLES CORP"
+          "name": "KNOWLES"
         },
         {
           "symbol": "KNF",
@@ -9962,11 +9962,11 @@
         },
         {
           "symbol": "KNTK",
-          "name": "KINETIK HOLDINGS INC CLASS A"
+          "name": "KINETIK HOLDINGS CLASS A"
         },
         {
           "symbol": "KOD",
-          "name": "KODIAK SCIENCES INC"
+          "name": "KODIAK SCIENCES"
         },
         {
           "symbol": "KODK",
@@ -9982,7 +9982,7 @@
         },
         {
           "symbol": "KOS",
-          "name": "KOSMOS ENERGY LTD"
+          "name": "KOSMOS ENERGY"
         },
         {
           "symbol": "KPTI",
@@ -10010,7 +10010,7 @@
         },
         {
           "symbol": "KROS",
-          "name": "KEROS THERAPEUTICS INC"
+          "name": "KEROS THERAPEUTICS"
         },
         {
           "symbol": "KRRO",
@@ -10026,7 +10026,7 @@
         },
         {
           "symbol": "KRYS",
-          "name": "KRYSTAL BIOTECH INC"
+          "name": "KRYSTAL BIOTECH"
         },
         {
           "symbol": "KSS",
@@ -10034,11 +10034,11 @@
         },
         {
           "symbol": "KTB",
-          "name": "KONTOOR BRANDS INC"
+          "name": "KONTOOR BRANDS"
         },
         {
           "symbol": "KURA",
-          "name": "KURA ONCOLOGY INC"
+          "name": "KURA ONCOLOGY"
         },
         {
           "symbol": "KVHI",
@@ -10054,7 +10054,7 @@
         },
         {
           "symbol": "KYMR",
-          "name": "KYMERA THERAPEUTICS INC"
+          "name": "KYMERA THERAPEUTICS"
         },
         {
           "symbol": "KYTX",
@@ -10074,11 +10074,11 @@
         },
         {
           "symbol": "LASR",
-          "name": "NLIGHT INC"
+          "name": "NLIGHT"
         },
         {
           "symbol": "LAUR",
-          "name": "LAUREATE EDUCATION INC"
+          "name": "LAUREATE EDUCATION"
         },
         {
           "symbol": "LAW",
@@ -10086,7 +10086,7 @@
         },
         {
           "symbol": "LBRT",
-          "name": "LIBERTY ENERGY INC CLASS A"
+          "name": "LIBERTY ENERGY CLASS A"
         },
         {
           "symbol": "LBRX",
@@ -10094,7 +10094,7 @@
         },
         {
           "symbol": "LCID",
-          "name": "LUCID GROUP INC"
+          "name": "LUCID GROUP"
         },
         {
           "symbol": "LCII",
@@ -10126,7 +10126,7 @@
         },
         {
           "symbol": "LEG",
-          "name": "LEGGETT & PLATT INC"
+          "name": "LEGGETT & PLATT"
         },
         {
           "symbol": "LEGH",
@@ -10138,7 +10138,7 @@
         },
         {
           "symbol": "LEU",
-          "name": "CENTRUS ENERGY CORP CLASS A"
+          "name": "CENTRUS ENERGY CLASS A"
         },
         {
           "symbol": "LFCR",
@@ -10150,23 +10150,23 @@
         },
         {
           "symbol": "LFST",
-          "name": "LIFESTANCE HEALTH GROUP INC"
+          "name": "LIFESTANCE HEALTH GROUP"
         },
         {
           "symbol": "LGIH",
-          "name": "LGI HOMES INC"
+          "name": "LGI HOMES"
         },
         {
           "symbol": "LGN",
-          "name": "LEGENCE CORP CLASS A"
+          "name": "LEGENCE CLASS A"
         },
         {
           "symbol": "LGND",
-          "name": "LIGAND PHARMACEUTICALS INC"
+          "name": "LIGAND PHARMACEUTICALS"
         },
         {
           "symbol": "LIF",
-          "name": "LIFE360 INC"
+          "name": "LIFE360"
         },
         {
           "symbol": "LILA",
@@ -10182,11 +10182,11 @@
         },
         {
           "symbol": "LIND",
-          "name": "LINDBLAD EXPEDITIONS HOLDINGS INC"
+          "name": "LINDBLAD EXPEDITIONS HOLDINGS"
         },
         {
           "symbol": "LION",
-          "name": "LIONSGATE STUDIOS CORP"
+          "name": "LIONSGATE STUDIOS"
         },
         {
           "symbol": "LIVN",
@@ -10198,7 +10198,7 @@
         },
         {
           "symbol": "LMAT",
-          "name": "LEMAITRE VASCULAR INC"
+          "name": "LEMAITRE VASCULAR"
         },
         {
           "symbol": "LMB",
@@ -10218,15 +10218,15 @@
         },
         {
           "symbol": "LNN",
-          "name": "LINDSAY CORP"
+          "name": "LINDSAY"
         },
         {
           "symbol": "LNTH",
-          "name": "LANTHEUS HOLDINGS INC"
+          "name": "LANTHEUS HOLDINGS"
         },
         {
           "symbol": "LOB",
-          "name": "LIVE OAK BANCSHARES INC"
+          "name": "LIVE OAK BANCSHARES"
         },
         {
           "symbol": "LOCO",
@@ -10242,7 +10242,7 @@
         },
         {
           "symbol": "LPG",
-          "name": "DORIAN LPG LTD"
+          "name": "DORIAN LPG"
         },
         {
           "symbol": "LPTH",
@@ -10250,7 +10250,7 @@
         },
         {
           "symbol": "LQDA",
-          "name": "LIQUIDIA CORP"
+          "name": "LIQUIDIA"
         },
         {
           "symbol": "LQDT",
@@ -10270,11 +10270,11 @@
         },
         {
           "symbol": "LTC",
-          "name": "LTC PROPERTIES REIT INC"
+          "name": "LTC PROPERTIES REIT"
         },
         {
           "symbol": "LTH",
-          "name": "LIFE TIME GROUP HOLDINGS INC"
+          "name": "LIFE TIME GROUP HOLDINGS"
         },
         {
           "symbol": "LTRX",
@@ -10286,7 +10286,7 @@
         },
         {
           "symbol": "LUMN",
-          "name": "LUMEN TECHNOLOGIES INC"
+          "name": "LUMEN TECHNOLOGIES"
         },
         {
           "symbol": "LUNR",
@@ -10302,7 +10302,7 @@
         },
         {
           "symbol": "LWLG",
-          "name": "LIGHTWAVE LOGIC INC"
+          "name": "LIGHTWAVE LOGIC"
         },
         {
           "symbol": "LXEO",
@@ -10334,7 +10334,7 @@
         },
         {
           "symbol": "LZ",
-          "name": "LEGALZOOM COM INC"
+          "name": "LEGALZOOM COM"
         },
         {
           "symbol": "LZB",
@@ -10350,7 +10350,7 @@
         },
         {
           "symbol": "MAGN",
-          "name": "MAGNERA CORP"
+          "name": "MAGNERA"
         },
         {
           "symbol": "MAMA",
@@ -10390,11 +10390,11 @@
         },
         {
           "symbol": "MAZE",
-          "name": "MAZE THERAPEUTICS INC"
+          "name": "MAZE THERAPEUTICS"
         },
         {
           "symbol": "MBC",
-          "name": "MASTERBRAND INC"
+          "name": "MASTERBRAND"
         },
         {
           "symbol": "MBI",
@@ -10414,7 +10414,7 @@
         },
         {
           "symbol": "MBX",
-          "name": "MBX BIOSCIENCES INC"
+          "name": "MBX BIOSCIENCES"
         },
         {
           "symbol": "MC",
@@ -10438,7 +10438,7 @@
         },
         {
           "symbol": "MCRI",
-          "name": "MONARCH CASINO AND RESORT INC"
+          "name": "MONARCH CASINO AND RESORT"
         },
         {
           "symbol": "MCS",
@@ -10446,7 +10446,7 @@
         },
         {
           "symbol": "MCY",
-          "name": "MERCURY GENERAL CORP"
+          "name": "MERCURY GENERAL"
         },
         {
           "symbol": "MD",
@@ -10478,11 +10478,11 @@
         },
         {
           "symbol": "METCB",
-          "name": "RAMACO RESOURCES INC CLASS B"
+          "name": "RAMACO RESOURCES CLASS B"
         },
         {
           "symbol": "MFA",
-          "name": "MFA FINANCIAL INC"
+          "name": "MFA FINANCIAL"
         },
         {
           "symbol": "MFIN",
@@ -10494,11 +10494,11 @@
         },
         {
           "symbol": "MGEE",
-          "name": "MGE ENERGY INC"
+          "name": "MGE ENERGY"
         },
         {
           "symbol": "MGNI",
-          "name": "MAGNITE INC"
+          "name": "MAGNITE"
         },
         {
           "symbol": "MGNX",
@@ -10530,15 +10530,15 @@
         },
         {
           "symbol": "MIAX",
-          "name": "MIAMI INTERNATIONAL HOLDINGS INC"
+          "name": "MIAMI INTERNATIONAL HOLDINGS"
         },
         {
           "symbol": "MIR",
-          "name": "MIRION TECHNOLOGIES INC CLASS A"
+          "name": "MIRION TECHNOLOGIES CLASS A"
         },
         {
           "symbol": "MIRM",
-          "name": "MIRUM PHARMACEUTICALS INC"
+          "name": "MIRUM PHARMACEUTICALS"
         },
         {
           "symbol": "MITK",
@@ -10554,11 +10554,11 @@
         },
         {
           "symbol": "MLAB",
-          "name": "MESA LABORATORIES INC"
+          "name": "MESA LABORATORIES"
         },
         {
           "symbol": "MLKN",
-          "name": "MILLERKNOLL INC"
+          "name": "MILLERKNOLL"
         },
         {
           "symbol": "MLP",
@@ -10570,7 +10570,7 @@
         },
         {
           "symbol": "MLYS",
-          "name": "MINERALYS THERAPEUTICS INC"
+          "name": "MINERALYS THERAPEUTICS"
         },
         {
           "symbol": "MMED",
@@ -10582,7 +10582,7 @@
         },
         {
           "symbol": "MMS",
-          "name": "MAXIMUS INC"
+          "name": "MAXIMUS"
         },
         {
           "symbol": "MMSI",
@@ -10590,7 +10590,7 @@
         },
         {
           "symbol": "MNKD",
-          "name": "MANNKIND CORP"
+          "name": "MANNKIND"
         },
         {
           "symbol": "MNPR",
@@ -10598,7 +10598,7 @@
         },
         {
           "symbol": "MNRO",
-          "name": "MONRO INC"
+          "name": "MONRO"
         },
         {
           "symbol": "MNSB",
@@ -10610,7 +10610,7 @@
         },
         {
           "symbol": "MNTN",
-          "name": "MNTN INC CLASS A"
+          "name": "MNTN CLASS A"
         },
         {
           "symbol": "MOG-A",
@@ -10638,7 +10638,7 @@
         },
         {
           "symbol": "MQ",
-          "name": "MARQETA INC CLASS A"
+          "name": "MARQETA CLASS A"
         },
         {
           "symbol": "MRAM",
@@ -10654,7 +10654,7 @@
         },
         {
           "symbol": "MRTN",
-          "name": "MARTEN TRANSPORT LTD"
+          "name": "MARTEN TRANSPORT"
         },
         {
           "symbol": "MRVI",
@@ -10682,7 +10682,7 @@
         },
         {
           "symbol": "MTRN",
-          "name": "MATERION CORP"
+          "name": "MATERION"
         },
         {
           "symbol": "MTRX",
@@ -10698,7 +10698,7 @@
         },
         {
           "symbol": "MTX",
-          "name": "MINERALS TECHNOLOGIES INC"
+          "name": "MINERALS TECHNOLOGIES"
         },
         {
           "symbol": "MUR",
@@ -10714,15 +10714,15 @@
         },
         {
           "symbol": "MVST",
-          "name": "MICROVAST HOLDINGS INC"
+          "name": "MICROVAST HOLDINGS"
         },
         {
           "symbol": "MWA",
-          "name": "MUELLER WATER PRODUCTS INC SERIES"
+          "name": "MUELLER WATER PRODUCTS SERIES A"
         },
         {
           "symbol": "MXL",
-          "name": "MAXLINEAR INC"
+          "name": "MAXLINEAR"
         },
         {
           "symbol": "MYE",
@@ -10762,7 +10762,7 @@
         },
         {
           "symbol": "NATL",
-          "name": "NCR ATLEOS CORP"
+          "name": "NCR ATLEOS"
         },
         {
           "symbol": "NATR",
@@ -10774,15 +10774,15 @@
         },
         {
           "symbol": "NAVI",
-          "name": "NAVIENT CORP"
+          "name": "NAVIENT"
         },
         {
           "symbol": "NAVN",
-          "name": "NAVAN INC CLASS A"
+          "name": "NAVAN CLASS A"
         },
         {
           "symbol": "NB",
-          "name": "NIOCORP DEVELOPMENTS LTD"
+          "name": "NIOCORP DEVELOPMENTS"
         },
         {
           "symbol": "NBBK",
@@ -10798,11 +10798,11 @@
         },
         {
           "symbol": "NBR",
-          "name": "NABORS INDUSTRIES LTD"
+          "name": "NABORS INDUSTRIES"
         },
         {
           "symbol": "NBTB",
-          "name": "NBT BANCORP INC"
+          "name": "NBT BANCORP"
         },
         {
           "symbol": "NC",
@@ -10814,7 +10814,7 @@
         },
         {
           "symbol": "NCNO",
-          "name": "NCINO INC"
+          "name": "NCINO"
         },
         {
           "symbol": "NE",
@@ -10826,11 +10826,11 @@
         },
         {
           "symbol": "NEO",
-          "name": "NEOGENOMICS INC"
+          "name": "NEOGENOMICS"
         },
         {
           "symbol": "NEOG",
-          "name": "NEOGEN CORP"
+          "name": "NEOGEN"
         },
         {
           "symbol": "NERV",
@@ -10850,7 +10850,7 @@
         },
         {
           "symbol": "NEXT",
-          "name": "NEXTDECADE CORP"
+          "name": "NEXTDECADE"
         },
         {
           "symbol": "NG",
@@ -10862,7 +10862,7 @@
         },
         {
           "symbol": "NGS",
-          "name": "NATURAL GAS SERVICES GROUP INC"
+          "name": "NATURAL GAS SERVICES GROUP"
         },
         {
           "symbol": "NGVC",
@@ -10870,7 +10870,7 @@
         },
         {
           "symbol": "NGVT",
-          "name": "INGEVITY CORP"
+          "name": "INGEVITY"
         },
         {
           "symbol": "NHC",
@@ -10878,7 +10878,7 @@
         },
         {
           "symbol": "NHI",
-          "name": "NATIONAL HEALTH INVESTORS REIT INC"
+          "name": "NATIONAL HEALTH INVESTORS REIT"
         },
         {
           "symbol": "NHP",
@@ -10918,7 +10918,7 @@
         },
         {
           "symbol": "NMIH",
-          "name": "NMI HOLDINGS INC"
+          "name": "NMI HOLDINGS"
         },
         {
           "symbol": "NMRA",
@@ -10930,15 +10930,15 @@
         },
         {
           "symbol": "NN",
-          "name": "NEXTNAV INC"
+          "name": "NEXTNAV"
         },
         {
           "symbol": "NNE",
-          "name": "NANO NUCLEAR ENERGY INC"
+          "name": "NANO NUCLEAR ENERGY"
         },
         {
           "symbol": "NNI",
-          "name": "NELNET INC CLASS A"
+          "name": "NELNET CLASS A"
         },
         {
           "symbol": "NODK",
@@ -10946,11 +10946,11 @@
         },
         {
           "symbol": "NOG",
-          "name": "NORTHERN OIL AND GAS INC"
+          "name": "NORTHERN OIL AND GAS"
         },
         {
           "symbol": "NOVT",
-          "name": "NOVANTA INC"
+          "name": "NOVANTA"
         },
         {
           "symbol": "NP",
@@ -10970,7 +10970,7 @@
         },
         {
           "symbol": "NPKI",
-          "name": "NPK INTERNATIONAL INC"
+          "name": "NPK INTERNATIONAL"
         },
         {
           "symbol": "NPO",
@@ -10994,7 +10994,7 @@
         },
         {
           "symbol": "NRGV",
-          "name": "ENERGY VAULT HOLDINGS INC"
+          "name": "ENERGY VAULT HOLDINGS"
         },
         {
           "symbol": "NRIM",
@@ -11010,11 +11010,11 @@
         },
         {
           "symbol": "NSP",
-          "name": "INSPERITY INC"
+          "name": "INSPERITY"
         },
         {
           "symbol": "NSSC",
-          "name": "NAPCO SECURITY TECHNOLOGIES INC"
+          "name": "NAPCO SECURITY TECHNOLOGIES"
         },
         {
           "symbol": "NTB",
@@ -11022,19 +11022,19 @@
         },
         {
           "symbol": "NTCT",
-          "name": "NETSCOUT SYSTEMS INC"
+          "name": "NETSCOUT SYSTEMS"
         },
         {
           "symbol": "NTGR",
-          "name": "NETGEAR INC"
+          "name": "NETGEAR"
         },
         {
           "symbol": "NTLA",
-          "name": "INTELLIA THERAPEUTICS INC"
+          "name": "INTELLIA THERAPEUTICS"
         },
         {
           "symbol": "NTST",
-          "name": "NETSTREIT CORP"
+          "name": "NETSTREIT"
         },
         {
           "symbol": "NUAI",
@@ -11050,11 +11050,11 @@
         },
         {
           "symbol": "NUVB",
-          "name": "NUVATION BIO INC CLASS A"
+          "name": "NUVATION BIO CLASS A"
         },
         {
           "symbol": "NVAX",
-          "name": "NOVAVAX INC"
+          "name": "NOVAVAX"
         },
         {
           "symbol": "NVCR",
@@ -11078,7 +11078,7 @@
         },
         {
           "symbol": "NVTS",
-          "name": "NAVITAS SEMICONDUCTOR CORP"
+          "name": "NAVITAS SEMICONDUCTOR"
         },
         {
           "symbol": "NWBI",
@@ -11086,7 +11086,7 @@
         },
         {
           "symbol": "NWE",
-          "name": "NORTHWESTERN ENERGY GROUP INC"
+          "name": "NORTHWESTERN ENERGY GROUP"
         },
         {
           "symbol": "NWFL",
@@ -11110,7 +11110,7 @@
         },
         {
           "symbol": "NXDR",
-          "name": "NEXTDOOR HOLDINGS INC CLASS A"
+          "name": "NEXTDOOR HOLDINGS CLASS A"
         },
         {
           "symbol": "NXDT",
@@ -11142,11 +11142,11 @@
         },
         {
           "symbol": "OCGN",
-          "name": "OCUGEN INC"
+          "name": "OCUGEN"
         },
         {
           "symbol": "OCUL",
-          "name": "OCULAR THERAPEUTIX INC"
+          "name": "OCULAR THERAPEUTIX"
         },
         {
           "symbol": "ODC",
@@ -11178,11 +11178,11 @@
         },
         {
           "symbol": "OGS",
-          "name": "ONE GAS INC"
+          "name": "ONE GAS"
         },
         {
           "symbol": "OI",
-          "name": "O I GLASS INC"
+          "name": "O I GLASS"
         },
         {
           "symbol": "OII",
@@ -11190,7 +11190,7 @@
         },
         {
           "symbol": "OIS",
-          "name": "OIL STATES INTERNATIONAL INC"
+          "name": "OIL STATES INTERNATIONAL"
         },
         {
           "symbol": "OKUR",
@@ -11198,7 +11198,7 @@
         },
         {
           "symbol": "OLMA",
-          "name": "OLEMA PHARMACEUTICALS INC"
+          "name": "OLEMA PHARMACEUTICALS"
         },
         {
           "symbol": "OLP",
@@ -11210,11 +11210,11 @@
         },
         {
           "symbol": "OMDA",
-          "name": "OMADA HEALTH INC"
+          "name": "OMADA HEALTH"
         },
         {
           "symbol": "OMER",
-          "name": "OMEROS CORP"
+          "name": "OMEROS"
         },
         {
           "symbol": "ONB",
@@ -11258,7 +11258,7 @@
         },
         {
           "symbol": "OPEN",
-          "name": "OPENDOOR TECHNOLOGIES INC CLASS A"
+          "name": "OPENDOOR TECHNOLOGIES CLASS A"
         },
         {
           "symbol": "OPFI",
@@ -11298,7 +11298,7 @@
         },
         {
           "symbol": "ORIC",
-          "name": "ORIC PHARMACEUTICALS INC"
+          "name": "ORIC PHARMACEUTICALS"
         },
         {
           "symbol": "ORKA",
@@ -11322,7 +11322,7 @@
         },
         {
           "symbol": "OSCR",
-          "name": "OSCAR HEALTH INC CLASS A"
+          "name": "OSCAR HEALTH CLASS A"
         },
         {
           "symbol": "OSG",
@@ -11330,7 +11330,7 @@
         },
         {
           "symbol": "OSIS",
-          "name": "OSI SYSTEMS INC"
+          "name": "OSI SYSTEMS"
         },
         {
           "symbol": "OSPN",
@@ -11350,15 +11350,15 @@
         },
         {
           "symbol": "OTTR",
-          "name": "OTTER TAIL CORP"
+          "name": "OTTER TAIL"
         },
         {
           "symbol": "OUST",
-          "name": "OUSTER INC"
+          "name": "OUSTER"
         },
         {
           "symbol": "OUT",
-          "name": "OUTFRONT MEDIA INC"
+          "name": "OUTFRONT MEDIA"
         },
         {
           "symbol": "OVBC",
@@ -11386,7 +11386,7 @@
         },
         {
           "symbol": "PACS",
-          "name": "PACS GROUP INC"
+          "name": "PACS GROUP"
         },
         {
           "symbol": "PAGS",
@@ -11414,7 +11414,7 @@
         },
         {
           "symbol": "PAR",
-          "name": "PAR TECHNOLOGY CORP"
+          "name": "PAR TECHNOLOGY"
         },
         {
           "symbol": "PARR",
@@ -11422,7 +11422,7 @@
         },
         {
           "symbol": "PATK",
-          "name": "PATRICK INDUSTRIES INC"
+          "name": "PATRICK INDUSTRIES"
         },
         {
           "symbol": "PAX",
@@ -11442,7 +11442,7 @@
         },
         {
           "symbol": "PBF",
-          "name": "PBF ENERGY INC CLASS A"
+          "name": "PBF ENERGY CLASS A"
         },
         {
           "symbol": "PBFS",
@@ -11454,7 +11454,7 @@
         },
         {
           "symbol": "PBI",
-          "name": "PITNEY BOWES INC"
+          "name": "PITNEY BOWES"
         },
         {
           "symbol": "PBYI",
@@ -11466,15 +11466,15 @@
         },
         {
           "symbol": "PCRX",
-          "name": "PACIRA BIOSCIENCES INC"
+          "name": "PACIRA BIOSCIENCES"
         },
         {
           "symbol": "PCT",
-          "name": "PURECYCLE TECHNOLOGIES INC"
+          "name": "PURECYCLE TECHNOLOGIES"
         },
         {
           "symbol": "PCVX",
-          "name": "VAXCYTE INC"
+          "name": "VAXCYTE"
         },
         {
           "symbol": "PCYO",
@@ -11482,7 +11482,7 @@
         },
         {
           "symbol": "PD",
-          "name": "PAGERDUTY INC"
+          "name": "PAGERDUTY"
         },
         {
           "symbol": "PDEX",
@@ -11490,7 +11490,7 @@
         },
         {
           "symbol": "PDFS",
-          "name": "PDF SOLUTIONS INC"
+          "name": "PDF SOLUTIONS"
         },
         {
           "symbol": "PDLB",
@@ -11502,7 +11502,7 @@
         },
         {
           "symbol": "PDM",
-          "name": "PIEDMONT REALTY TRUST INC CLASS A"
+          "name": "PIEDMONT REALTY TRUST CLASS A"
         },
         {
           "symbol": "PDYN",
@@ -11522,7 +11522,7 @@
         },
         {
           "symbol": "PECO",
-          "name": "PHILLIPS EDISON AND COMPANY INC"
+          "name": "PHILLIPS EDISON AND COMPANY"
         },
         {
           "symbol": "PENG",
@@ -11530,7 +11530,7 @@
         },
         {
           "symbol": "PENN",
-          "name": "PENN ENTERTAINMENT INC"
+          "name": "PENN ENTERTAINMENT"
         },
         {
           "symbol": "PESI",
@@ -11550,7 +11550,7 @@
         },
         {
           "symbol": "PFSI",
-          "name": "PENNYMAC FINANCIAL SERVICES INC"
+          "name": "PENNYMAC FINANCIAL SERVICES"
         },
         {
           "symbol": "PGC",
@@ -11562,15 +11562,15 @@
         },
         {
           "symbol": "PGNY",
-          "name": "PROGYNY INC"
+          "name": "PROGYNY"
         },
         {
           "symbol": "PHAT",
-          "name": "PHATHOM PHARMACEUTICALS INC"
+          "name": "PHATHOM PHARMACEUTICALS"
         },
         {
           "symbol": "PHIN",
-          "name": "PHINIA INC"
+          "name": "PHINIA"
         },
         {
           "symbol": "PHR",
@@ -11578,7 +11578,7 @@
         },
         {
           "symbol": "PI",
-          "name": "IMPINJ INC"
+          "name": "IMPINJ"
         },
         {
           "symbol": "PII",
@@ -11594,7 +11594,7 @@
         },
         {
           "symbol": "PJT",
-          "name": "PJT PARTNERS INC CLASS A"
+          "name": "PJT PARTNERS CLASS A"
         },
         {
           "symbol": "PK",
@@ -11614,7 +11614,7 @@
         },
         {
           "symbol": "PLAB",
-          "name": "PHOTRONICS INC"
+          "name": "PHOTRONICS"
         },
         {
           "symbol": "PLAY",
@@ -11634,7 +11634,7 @@
         },
         {
           "symbol": "PLMR",
-          "name": "PALOMAR HOLDINGS INC"
+          "name": "PALOMAR HOLDINGS"
         },
         {
           "symbol": "PLOW",
@@ -11654,7 +11654,7 @@
         },
         {
           "symbol": "PLUG",
-          "name": "PLUG POWER INC"
+          "name": "PLUG POWER"
         },
         {
           "symbol": "PLUS",
@@ -11682,7 +11682,7 @@
         },
         {
           "symbol": "PNTG",
-          "name": "PENNANT GROUP INC"
+          "name": "PENNANT GROUP"
         },
         {
           "symbol": "POR",
@@ -11690,7 +11690,7 @@
         },
         {
           "symbol": "POWI",
-          "name": "POWER INTEGRATIONS INC"
+          "name": "POWER INTEGRATIONS"
         },
         {
           "symbol": "POWW",
@@ -11706,7 +11706,7 @@
         },
         {
           "symbol": "PPTA",
-          "name": "PERPETUA RESOURCES CORP"
+          "name": "PERPETUA RESOURCES"
         },
         {
           "symbol": "PRAA",
@@ -11714,7 +11714,7 @@
         },
         {
           "symbol": "PRAX",
-          "name": "PRAXIS PRECISION MEDICINES INC"
+          "name": "PRAXIS PRECISION MEDICINES"
         },
         {
           "symbol": "PRCH",
@@ -11726,7 +11726,7 @@
         },
         {
           "symbol": "PRDO",
-          "name": "PERDOCEO EDUCATION CORP"
+          "name": "PERDOCEO EDUCATION"
         },
         {
           "symbol": "PRG",
@@ -11750,7 +11750,7 @@
         },
         {
           "symbol": "PRLB",
-          "name": "PROTO LABS INC"
+          "name": "PROTO LABS"
         },
         {
           "symbol": "PRLD",
@@ -11758,11 +11758,11 @@
         },
         {
           "symbol": "PRM",
-          "name": "PERIMETER SOLUTIONS INC"
+          "name": "PERIMETER SOLUTIONS"
         },
         {
           "symbol": "PRME",
-          "name": "PRIME MEDICINE INC"
+          "name": "PRIME MEDICINE"
         },
         {
           "symbol": "PROK",
@@ -11790,11 +11790,11 @@
         },
         {
           "symbol": "PSIX",
-          "name": "POWER SOLUTIONS INTERNATIONAL INC"
+          "name": "POWER SOLUTIONS INTERNATIONAL"
         },
         {
           "symbol": "PSMT",
-          "name": "PRICESMART INC"
+          "name": "PRICESMART"
         },
         {
           "symbol": "PSNL",
@@ -11806,7 +11806,7 @@
         },
         {
           "symbol": "PTCT",
-          "name": "PTC THERAPEUTICS INC"
+          "name": "PTC THERAPEUTICS"
         },
         {
           "symbol": "PTEN",
@@ -11814,7 +11814,7 @@
         },
         {
           "symbol": "PTGX",
-          "name": "PROTAGONIST THERAPEUTICS INC"
+          "name": "PROTAGONIST THERAPEUTICS"
         },
         {
           "symbol": "PTLO",
@@ -11834,7 +11834,7 @@
         },
         {
           "symbol": "PUMP",
-          "name": "PROPETRO HOLDING CORP"
+          "name": "PROPETRO HOLDING"
         },
         {
           "symbol": "PURR",
@@ -11858,7 +11858,7 @@
         },
         {
           "symbol": "QBTS",
-          "name": "D WAVE QUANTUM INC"
+          "name": "D WAVE QUANTUM"
         },
         {
           "symbol": "QCRH",
@@ -11870,7 +11870,7 @@
         },
         {
           "symbol": "QLYS",
-          "name": "QUALYS INC"
+          "name": "QUALYS"
         },
         {
           "symbol": "QNST",
@@ -11890,7 +11890,7 @@
         },
         {
           "symbol": "QUBT",
-          "name": "QUANTUM COMPUTING INC"
+          "name": "QUANTUM COMPUTING"
         },
         {
           "symbol": "QUIK",
@@ -11906,11 +11906,11 @@
         },
         {
           "symbol": "RAPP",
-          "name": "RAPPORT THERAPEUTICS INC"
+          "name": "RAPPORT THERAPEUTICS"
         },
         {
           "symbol": "RARE",
-          "name": "ULTRAGENYX PHARMACEUTICAL INC"
+          "name": "ULTRAGENYX PHARMACEUTICAL"
         },
         {
           "symbol": "RBB",
@@ -11950,15 +11950,15 @@
         },
         {
           "symbol": "RCUS",
-          "name": "ARCUS BIOSCIENCES INC"
+          "name": "ARCUS BIOSCIENCES"
         },
         {
           "symbol": "RDN",
-          "name": "RADIAN GROUP INC"
+          "name": "RADIAN GROUP"
         },
         {
           "symbol": "RDNT",
-          "name": "RADNET INC"
+          "name": "RADNET"
         },
         {
           "symbol": "RDNW",
@@ -11970,7 +11970,7 @@
         },
         {
           "symbol": "RDW",
-          "name": "REDWIRE CORP"
+          "name": "REDWIRE"
         },
         {
           "symbol": "RDZN",
@@ -11978,7 +11978,7 @@
         },
         {
           "symbol": "REAL",
-          "name": "THE REALREAL INC"
+          "name": "THE REALREAL"
         },
         {
           "symbol": "REAX",
@@ -12006,7 +12006,7 @@
         },
         {
           "symbol": "REPL",
-          "name": "REPLIMUNE GROUP INC"
+          "name": "REPLIMUNE GROUP"
         },
         {
           "symbol": "REPX",
@@ -12018,11 +12018,11 @@
         },
         {
           "symbol": "REX",
-          "name": "REX AMERICAN RESOURCES CORP"
+          "name": "REX AMERICAN RESOURCES"
         },
         {
           "symbol": "REZI",
-          "name": "RESIDEO TECHNOLOGIES INC"
+          "name": "RESIDEO TECHNOLOGIES"
         },
         {
           "symbol": "RFIL",
@@ -12038,11 +12038,11 @@
         },
         {
           "symbol": "RGR",
-          "name": "STURM RUGER INC"
+          "name": "STURM RUGER"
         },
         {
           "symbol": "RGTI",
-          "name": "RIGETTI COMPUTING INC"
+          "name": "RIGETTI COMPUTING"
         },
         {
           "symbol": "RH",
@@ -12066,7 +12066,7 @@
         },
         {
           "symbol": "RIGL",
-          "name": "RIGEL PHARMACEUTICALS INC"
+          "name": "RIGEL PHARMACEUTICALS"
         },
         {
           "symbol": "RILY",
@@ -12074,7 +12074,7 @@
         },
         {
           "symbol": "RIOT",
-          "name": "RIOT PLATFORMS INC"
+          "name": "RIOT PLATFORMS"
         },
         {
           "symbol": "RJET",
@@ -12082,7 +12082,7 @@
         },
         {
           "symbol": "RLAY",
-          "name": "RELAY THERAPEUTICS INC"
+          "name": "RELAY THERAPEUTICS"
         },
         {
           "symbol": "RLGT",
@@ -12134,15 +12134,15 @@
         },
         {
           "symbol": "ROAD",
-          "name": "CONSTRUCTION PARTNERS INC CLASS A"
+          "name": "CONSTRUCTION PARTNERS CLASS A"
         },
         {
           "symbol": "ROCK",
-          "name": "GIBRALTAR INDUSTRIES INC"
+          "name": "GIBRALTAR INDUSTRIES"
         },
         {
           "symbol": "ROG",
-          "name": "ROGERS CORP"
+          "name": "ROGERS"
         },
         {
           "symbol": "ROOT",
@@ -12162,7 +12162,7 @@
         },
         {
           "symbol": "RR",
-          "name": "RICHTECH ROBOTICS INC CLASS B"
+          "name": "RICHTECH ROBOTICS CLASS B"
         },
         {
           "symbol": "RRBI",
@@ -12170,11 +12170,11 @@
         },
         {
           "symbol": "RRR",
-          "name": "RED ROCK RESORTS ORS CLASS A INC"
+          "name": "RED ROCK RESORTS ORS CLASS A"
         },
         {
           "symbol": "RSI",
-          "name": "RUSH STREET INTERACTIVE INC CLASS"
+          "name": "RUSH STREET INTERACTIVE CLASS A"
         },
         {
           "symbol": "RSVR",
@@ -12182,7 +12182,7 @@
         },
         {
           "symbol": "RUM",
-          "name": "RUM GROUP INC CLASS A"
+          "name": "RUM GROUP CLASS A"
         },
         {
           "symbol": "RUN",
@@ -12190,11 +12190,11 @@
         },
         {
           "symbol": "RUSHA",
-          "name": "RUSH ENTERPRISES INC CLASS A"
+          "name": "RUSH ENTERPRISES CLASS A"
         },
         {
           "symbol": "RUSHB",
-          "name": "RUSH ENTERPRISES INC CLASS B"
+          "name": "RUSH ENTERPRISES CLASS B"
         },
         {
           "symbol": "RVLV",
@@ -12202,7 +12202,7 @@
         },
         {
           "symbol": "RWT",
-          "name": "REDWOOD TRUST REIT INC"
+          "name": "REDWOOD TRUST REIT"
         },
         {
           "symbol": "RXO",
@@ -12210,7 +12210,7 @@
         },
         {
           "symbol": "RXRX",
-          "name": "RECURSION PHARMACEUTICALS INC CLAS"
+          "name": "RECURSION PHARMACEUTICALS CLASS A"
         },
         {
           "symbol": "RXST",
@@ -12226,11 +12226,11 @@
         },
         {
           "symbol": "RYTM",
-          "name": "RHYTHM PHARMACEUTICALS INC"
+          "name": "RHYTHM PHARMACEUTICALS"
         },
         {
           "symbol": "RYZ",
-          "name": "RYERSON HOLDING CORP"
+          "name": "RYERSON HOLDING"
         },
         {
           "symbol": "RZLT",
@@ -12258,7 +12258,7 @@
         },
         {
           "symbol": "SAM",
-          "name": "BOSTON BEER INC CLASS A"
+          "name": "BOSTON BEER CLASS A"
         },
         {
           "symbol": "SAMG",
@@ -12290,7 +12290,7 @@
         },
         {
           "symbol": "SBGI",
-          "name": "SINCLAIR INC CLASS A"
+          "name": "SINCLAIR CLASS A"
         },
         {
           "symbol": "SBH",
@@ -12302,7 +12302,7 @@
         },
         {
           "symbol": "SBRA",
-          "name": "SABRA HEALTH CARE REIT INC"
+          "name": "SABRA HEALTH CARE REIT"
         },
         {
           "symbol": "SBSI",
@@ -12314,7 +12314,7 @@
         },
         {
           "symbol": "SCHL",
-          "name": "SCHOLASTIC CORP"
+          "name": "SCHOLASTIC"
         },
         {
           "symbol": "SCL",
@@ -12322,7 +12322,7 @@
         },
         {
           "symbol": "SCSC",
-          "name": "SCANSOURCE INC"
+          "name": "SCANSOURCE"
         },
         {
           "symbol": "SD",
@@ -12342,11 +12342,11 @@
         },
         {
           "symbol": "SEI",
-          "name": "SOLARIS OILFIELD INFRASTRUCTURE IN"
+          "name": "SOLARIS ENERGY INFRASTRUCTURE INC"
         },
         {
           "symbol": "SENEA",
-          "name": "SENECA FOODS CORP CLASS A"
+          "name": "SENECA FOODS CLASS A"
         },
         {
           "symbol": "SENS",
@@ -12354,7 +12354,7 @@
         },
         {
           "symbol": "SEPN",
-          "name": "SEPTERNA INC"
+          "name": "SEPTERNA"
         },
         {
           "symbol": "SERV",
@@ -12362,7 +12362,7 @@
         },
         {
           "symbol": "SES",
-          "name": "SES AI CORP CLASS A"
+          "name": "SES AI CLASS A"
         },
         {
           "symbol": "SEVN",
@@ -12382,11 +12382,11 @@
         },
         {
           "symbol": "SFL",
-          "name": "SFL LTD"
+          "name": "SFL"
         },
         {
           "symbol": "SFNC",
-          "name": "SIMMONS FIRST NATIONAL CORP CLASS"
+          "name": "SIMMONS FIRST NATIONAL CLASS A"
         },
         {
           "symbol": "SFST",
@@ -12418,7 +12418,7 @@
         },
         {
           "symbol": "SGRY",
-          "name": "SURGERY PARTNERS INC"
+          "name": "SURGERY PARTNERS"
         },
         {
           "symbol": "SHAK",
@@ -12438,7 +12438,7 @@
         },
         {
           "symbol": "SHLS",
-          "name": "SHOALS TECHNOLOGIES GROUP INC CLAS"
+          "name": "SHOALS TECHNOLOGIES GROUP CLASS A"
         },
         {
           "symbol": "SHO",
@@ -12450,7 +12450,7 @@
         },
         {
           "symbol": "SHOO",
-          "name": "STEVEN MADDEN LTD"
+          "name": "STEVEN MADDEN"
         },
         {
           "symbol": "SI",
@@ -12458,7 +12458,7 @@
         },
         {
           "symbol": "SIBN",
-          "name": "SI BONE INC"
+          "name": "SI BONE"
         },
         {
           "symbol": "SIDU",
@@ -12466,7 +12466,7 @@
         },
         {
           "symbol": "SIG",
-          "name": "SIGNET JEWELERS LTD"
+          "name": "SIGNET JEWELERS"
         },
         {
           "symbol": "SIGA",
@@ -12474,11 +12474,11 @@
         },
         {
           "symbol": "SIGI",
-          "name": "SELECTIVE INSURANCE GROUP INC"
+          "name": "SELECTIVE INSURANCE GROUP"
         },
         {
           "symbol": "SION",
-          "name": "SIONNA THERAPEUTICS INC"
+          "name": "SIONNA THERAPEUTICS"
         },
         {
           "symbol": "SITC",
@@ -12486,7 +12486,7 @@
         },
         {
           "symbol": "SKT",
-          "name": "TANGER INC"
+          "name": "TANGER"
         },
         {
           "symbol": "SKWD",
@@ -12502,11 +12502,11 @@
         },
         {
           "symbol": "SKYW",
-          "name": "SKYWEST INC"
+          "name": "SKYWEST"
         },
         {
           "symbol": "SLAB",
-          "name": "SILICON LABORATORIES INC"
+          "name": "SILICON LABORATORIES"
         },
         {
           "symbol": "SLDB",
@@ -12514,11 +12514,11 @@
         },
         {
           "symbol": "SLDE",
-          "name": "SLIDE INSURANCE HOLDINGS INC"
+          "name": "SLIDE INSURANCE HOLDINGS"
         },
         {
           "symbol": "SLDP",
-          "name": "SOLID POWER INC CLASS A"
+          "name": "SOLID POWER CLASS A"
         },
         {
           "symbol": "SLG",
@@ -12598,7 +12598,7 @@
         },
         {
           "symbol": "SNDX",
-          "name": "SYNDAX PHARMACEUTICALS INC"
+          "name": "SYNDAX PHARMACEUTICALS"
         },
         {
           "symbol": "SNEX",
@@ -12610,19 +12610,19 @@
         },
         {
           "symbol": "SOC",
-          "name": "SABLE OFFSHORE CORP CLASS A"
+          "name": "SABLE OFFSHORE CLASS A"
         },
         {
           "symbol": "SONO",
-          "name": "SONOS INC"
+          "name": "SONOS"
         },
         {
           "symbol": "SOUN",
-          "name": "SOUNDHOUND AI INC CLASS A"
+          "name": "SOUNDHOUND AI CLASS A"
         },
         {
           "symbol": "SPB",
-          "name": "SPECTRUM BRANDS HOLDINGS INC"
+          "name": "SPECTRUM BRANDS HOLDINGS"
         },
         {
           "symbol": "SPCE",
@@ -12658,7 +12658,7 @@
         },
         {
           "symbol": "SPSC",
-          "name": "SPS COMMERCE INC"
+          "name": "SPS COMMERCE"
         },
         {
           "symbol": "SPT",
@@ -12682,11 +12682,11 @@
         },
         {
           "symbol": "SRPT",
-          "name": "SAREPTA THERAPEUTICS INC"
+          "name": "SAREPTA THERAPEUTICS"
         },
         {
           "symbol": "SRRK",
-          "name": "SCHOLAR ROCK HOLDING CORP"
+          "name": "SCHOLAR ROCK HOLDING"
         },
         {
           "symbol": "SRTA",
@@ -12702,7 +12702,7 @@
         },
         {
           "symbol": "SSRM",
-          "name": "SSR MINING INC"
+          "name": "SSR MINING"
         },
         {
           "symbol": "SSTK",
@@ -12722,27 +12722,31 @@
         },
         {
           "symbol": "STEP",
-          "name": "STEPSTONE GROUP INC CLASS A"
+          "name": "STEPSTONE GROUP CLASS A"
         },
         {
           "symbol": "STGW",
           "name": "STAGWELL CLASS A"
         },
         {
+          "symbol": "STLN",
+          "name": "STARLING ONCOLOGY"
+        },
+        {
           "symbol": "STNE",
-          "name": "STONECO LTD CLASS A"
+          "name": "STONECO CLASS A"
         },
         {
           "symbol": "STNG",
-          "name": "SCORPIO TANKERS INC"
+          "name": "SCORPIO TANKERS"
         },
         {
           "symbol": "STOK",
-          "name": "STOKE THERAPEUTICS INC"
+          "name": "STOKE THERAPEUTICS"
         },
         {
           "symbol": "STRA",
-          "name": "STRATEGIC EDUCATION INC"
+          "name": "STRATEGIC EDUCATION"
         },
         {
           "symbol": "STRO",
@@ -12774,7 +12778,7 @@
         },
         {
           "symbol": "SUPN",
-          "name": "SUPERNUS PHARMACEUTICALS INC"
+          "name": "SUPERNUS PHARMACEUTICALS"
         },
         {
           "symbol": "SVC",
@@ -12786,7 +12790,7 @@
         },
         {
           "symbol": "SVRA",
-          "name": "SAVARA INC"
+          "name": "SAVARA"
         },
         {
           "symbol": "SVV",
@@ -12806,7 +12810,7 @@
         },
         {
           "symbol": "SWX",
-          "name": "SOUTHWEST GAS HOLDINGS INC"
+          "name": "SOUTHWEST GAS HOLDINGS"
         },
         {
           "symbol": "SXC",
@@ -12818,7 +12822,7 @@
         },
         {
           "symbol": "SXT",
-          "name": "SENSIENT TECHNOLOGIES CORP"
+          "name": "SENSIENT TECHNOLOGIES"
         },
         {
           "symbol": "SYBT",
@@ -12826,7 +12830,7 @@
         },
         {
           "symbol": "SYNA",
-          "name": "SYNAPTICS INC"
+          "name": "SYNAPTICS"
         },
         {
           "symbol": "SYRE",
@@ -12834,11 +12838,11 @@
         },
         {
           "symbol": "TALK",
-          "name": "TALKSPACE INC"
+          "name": "TALKSPACE"
         },
         {
           "symbol": "TALO",
-          "name": "TALOS ENERGY INC"
+          "name": "TALOS ENERGY"
         },
         {
           "symbol": "TARA",
@@ -12846,7 +12850,7 @@
         },
         {
           "symbol": "TARS",
-          "name": "TARSUS PHARMACEUTICALS INC"
+          "name": "TARSUS PHARMACEUTICALS"
         },
         {
           "symbol": "TATT",
@@ -12874,11 +12878,11 @@
         },
         {
           "symbol": "TBPH",
-          "name": "THERAVANCE BIOPHARMA INC"
+          "name": "THERAVANCE BIOPHARMA"
         },
         {
           "symbol": "TCBI",
-          "name": "TEXAS CAPITAL BANCSHARES INC"
+          "name": "TEXAS CAPITAL BANCSHARES"
         },
         {
           "symbol": "TCBK",
@@ -12894,7 +12898,7 @@
         },
         {
           "symbol": "TCMD",
-          "name": "TACTILE SYSTEMS TECHNOLOGY INC"
+          "name": "TACTILE SYSTEMS TECHNOLOGY"
         },
         {
           "symbol": "TCX",
@@ -12906,7 +12910,7 @@
         },
         {
           "symbol": "TDC",
-          "name": "TERADATA CORP"
+          "name": "TERADATA"
         },
         {
           "symbol": "TDOC",
@@ -12914,7 +12918,7 @@
         },
         {
           "symbol": "TDS",
-          "name": "TELEPHONE AND DATA SYSTEMS INC"
+          "name": "TELEPHONE AND DATA SYSTEMS"
         },
         {
           "symbol": "TDUP",
@@ -12922,11 +12926,11 @@
         },
         {
           "symbol": "TDW",
-          "name": "TIDEWATER INC"
+          "name": "TIDEWATER"
         },
         {
           "symbol": "TE",
-          "name": "T1 ENERGY INC"
+          "name": "T1 ENERGY"
         },
         {
           "symbol": "TECX",
@@ -12934,7 +12938,7 @@
         },
         {
           "symbol": "TENB",
-          "name": "TENABLE HOLDINGS INC"
+          "name": "TENABLE HOLDINGS"
         },
         {
           "symbol": "TENX",
@@ -12942,11 +12946,11 @@
         },
         {
           "symbol": "TEX",
-          "name": "TEREX CORP"
+          "name": "TEREX"
         },
         {
           "symbol": "TFIN",
-          "name": "TRIUMPH FINANCIAL INC"
+          "name": "TRIUMPH FINANCIAL"
         },
         {
           "symbol": "TG",
@@ -12958,7 +12962,7 @@
         },
         {
           "symbol": "TGTX",
-          "name": "TG THERAPEUTICS INC"
+          "name": "TG THERAPEUTICS"
         },
         {
           "symbol": "TH",
@@ -12974,7 +12978,7 @@
         },
         {
           "symbol": "THRM",
-          "name": "GENTHERM INC"
+          "name": "GENTHERM"
         },
         {
           "symbol": "THRY",
@@ -12986,7 +12990,7 @@
         },
         {
           "symbol": "TILE",
-          "name": "INTERFACE INC"
+          "name": "INTERFACE"
         },
         {
           "symbol": "TIPT",
@@ -13014,7 +13018,7 @@
         },
         {
           "symbol": "TMDX",
-          "name": "TRANSMEDICS GROUP INC"
+          "name": "TRANSMEDICS GROUP"
         },
         {
           "symbol": "TMP",
@@ -13026,15 +13030,15 @@
         },
         {
           "symbol": "TNDM",
-          "name": "TANDEM DIABETES CARE INC"
+          "name": "TANDEM DIABETES CARE"
         },
         {
           "symbol": "TNET",
-          "name": "TRINET GROUP INCINARY"
+          "name": "TRINET GROUPINARY"
         },
         {
           "symbol": "TNGX",
-          "name": "TANGO THERAPEUTICS INC"
+          "name": "TANGO THERAPEUTICS"
         },
         {
           "symbol": "TNK",
@@ -13043,10 +13047,6 @@
         {
           "symbol": "TNXP",
           "name": "TONIX PHARMACEUTICALS HOLDING"
-        },
-        {
-          "symbol": "TOI",
-          "name": "ONCOLOGY INSTITUTE INC"
         },
         {
           "symbol": "TOWN",
@@ -13062,7 +13062,7 @@
         },
         {
           "symbol": "TPC",
-          "name": "TUTOR PERINI CORP"
+          "name": "TUTOR PERINI"
         },
         {
           "symbol": "TRAK",
@@ -13086,11 +13086,11 @@
         },
         {
           "symbol": "TRIP",
-          "name": "TRIPADVISOR INC"
+          "name": "TRIPADVISOR"
         },
         {
           "symbol": "TRMK",
-          "name": "TRUSTMARK CORP"
+          "name": "TRUSTMARK"
         },
         {
           "symbol": "TRN",
@@ -13098,11 +13098,11 @@
         },
         {
           "symbol": "TRNO",
-          "name": "TERRENO REALTY REIT CORP"
+          "name": "TERRENO REALTY REIT"
         },
         {
           "symbol": "TRNS",
-          "name": "TRANSCAT INC"
+          "name": "TRANSCAT"
         },
         {
           "symbol": "TRON",
@@ -13114,7 +13114,7 @@
         },
         {
           "symbol": "TRS",
-          "name": "TRIMAS CORP"
+          "name": "TRIMAS"
         },
         {
           "symbol": "TRST",
@@ -13126,11 +13126,11 @@
         },
         {
           "symbol": "TRUP",
-          "name": "TRUPANION INC"
+          "name": "TRUPANION"
         },
         {
           "symbol": "TRVI",
-          "name": "TREVI THERAPEUTICS INC"
+          "name": "TREVI THERAPEUTICS"
         },
         {
           "symbol": "TSBK",
@@ -13142,7 +13142,7 @@
         },
         {
           "symbol": "TSHA",
-          "name": "TAYSHA GENE THERAPIES INC"
+          "name": "TAYSHA GENE THERAPIES"
         },
         {
           "symbol": "TSSI",
@@ -13162,11 +13162,11 @@
         },
         {
           "symbol": "TTI",
-          "name": "TETRA TECHNOLOGIES INC"
+          "name": "TETRA TECHNOLOGIES"
         },
         {
           "symbol": "TVTX",
-          "name": "TRAVERE THERAPEUTICS INC"
+          "name": "TRAVERE THERAPEUTICS"
         },
         {
           "symbol": "TWI",
@@ -13178,15 +13178,15 @@
         },
         {
           "symbol": "TWO",
-          "name": "TWO HARBORS INVESTMENT CORP"
+          "name": "TWO HARBORS INVESTMENT"
         },
         {
           "symbol": "TWST",
-          "name": "TWIST BIOSCIENCE CORP"
+          "name": "TWIST BIOSCIENCE"
         },
         {
           "symbol": "TXG",
-          "name": "10X GENOMICS INC CLASS A"
+          "name": "10X GENOMICS CLASS A"
         },
         {
           "symbol": "TXNM",
@@ -13198,7 +13198,7 @@
         },
         {
           "symbol": "TYRA",
-          "name": "TYRA BIOSCIENCES INC"
+          "name": "TYRA BIOSCIENCES"
         },
         {
           "symbol": "UA",
@@ -13214,7 +13214,7 @@
         },
         {
           "symbol": "UBSI",
-          "name": "UNITED BANKSHARES INC"
+          "name": "UNITED BANKSHARES"
         },
         {
           "symbol": "UCB",
@@ -13230,7 +13230,7 @@
         },
         {
           "symbol": "UEC",
-          "name": "URANIUM ENERGY CORP"
+          "name": "URANIUM ENERGY"
         },
         {
           "symbol": "UFCS",
@@ -13238,7 +13238,7 @@
         },
         {
           "symbol": "UFPI",
-          "name": "UFP INDUSTRIES INC"
+          "name": "UFP INDUSTRIES"
         },
         {
           "symbol": "UFPT",
@@ -13254,7 +13254,7 @@
         },
         {
           "symbol": "ULCC",
-          "name": "FRONTIER GROUP HOLDINGS INC"
+          "name": "FRONTIER GROUP HOLDINGS"
         },
         {
           "symbol": "ULH",
@@ -13278,7 +13278,7 @@
         },
         {
           "symbol": "UNF",
-          "name": "UNIFIRST CORP"
+          "name": "UNIFIRST"
         },
         {
           "symbol": "UNFI",
@@ -13302,19 +13302,19 @@
         },
         {
           "symbol": "UPBD",
-          "name": "UPBOUND GROUP INC"
+          "name": "UPBOUND GROUP"
         },
         {
           "symbol": "UPST",
-          "name": "UPSTART HOLDINGS INC"
+          "name": "UPSTART HOLDINGS"
         },
         {
           "symbol": "UPWK",
-          "name": "UPWORK INC"
+          "name": "UPWORK"
         },
         {
           "symbol": "URBN",
-          "name": "URBAN OUTFITTERS INC"
+          "name": "URBAN OUTFITTERS"
         },
         {
           "symbol": "URG",
@@ -13326,7 +13326,7 @@
         },
         {
           "symbol": "USAR",
-          "name": "USA RARE EARTH INC CLASS A"
+          "name": "USA RARE EARTH CLASS A"
         },
         {
           "symbol": "USAU",
@@ -13354,7 +13354,7 @@
         },
         {
           "symbol": "UTI",
-          "name": "UNIVERSAL TECHNICAL INSTITUTE INC"
+          "name": "UNIVERSAL TECHNICAL INSTITUTE"
         },
         {
           "symbol": "UTL",
@@ -13382,7 +13382,7 @@
         },
         {
           "symbol": "UVV",
-          "name": "UNIVERSAL CORP"
+          "name": "UNIVERSAL"
         },
         {
           "symbol": "VABK",
@@ -13390,7 +13390,7 @@
         },
         {
           "symbol": "VAC",
-          "name": "MARRIOTT VACATIONS WORLDWIDE CORP"
+          "name": "MARRIOTT VACATIONS WORLDWIDE"
         },
         {
           "symbol": "VAL",
@@ -13406,19 +13406,19 @@
         },
         {
           "symbol": "VC",
-          "name": "VISTEON CORP"
+          "name": "VISTEON"
         },
         {
           "symbol": "VCEL",
-          "name": "VERICEL CORP"
+          "name": "VERICEL"
         },
         {
           "symbol": "VCTR",
-          "name": "VICTORY CAPITAL HOLDINGS CLASS A I"
+          "name": "VICTORY CAPITAL HOLDINGS CLASS A"
         },
         {
           "symbol": "VCYT",
-          "name": "VERACYTE INC"
+          "name": "VERACYTE"
         },
         {
           "symbol": "VECO",
@@ -13438,7 +13438,7 @@
         },
         {
           "symbol": "VERA",
-          "name": "VERA THERAPEUTICS INC CLASS A"
+          "name": "VERA THERAPEUTICS CLASS A"
         },
         {
           "symbol": "VERI",
@@ -13462,11 +13462,11 @@
         },
         {
           "symbol": "VIA",
-          "name": "VIA TRANSPORTATION INC CLASS A"
+          "name": "VIA TRANSPORTATION CLASS A"
         },
         {
           "symbol": "VIR",
-          "name": "VIR BIOTECHNOLOGY INC"
+          "name": "VIR BIOTECHNOLOGY"
         },
         {
           "symbol": "VISN",
@@ -13494,7 +13494,7 @@
         },
         {
           "symbol": "VOR",
-          "name": "VOR BIOPHARMA INC"
+          "name": "VOR BIOPHARMA"
         },
         {
           "symbol": "VOXR",
@@ -13506,7 +13506,7 @@
         },
         {
           "symbol": "VPG",
-          "name": "VISHAY PRECISION GROUP INC"
+          "name": "VISHAY PRECISION GROUP"
         },
         {
           "symbol": "VRDN",
@@ -13518,11 +13518,11 @@
         },
         {
           "symbol": "VRNS",
-          "name": "VARONIS SYSTEMS INC"
+          "name": "VARONIS SYSTEMS"
         },
         {
           "symbol": "VRRM",
-          "name": "VERRA MOBILITY CORP CLASS A"
+          "name": "VERRA MOBILITY CLASS A"
         },
         {
           "symbol": "VRTS",
@@ -13546,7 +13546,7 @@
         },
         {
           "symbol": "VSTS",
-          "name": "VESTIS CORP"
+          "name": "VESTIS"
         },
         {
           "symbol": "VSXY",
@@ -13554,7 +13554,7 @@
         },
         {
           "symbol": "VTOL",
-          "name": "BRISTOW GROUP INC"
+          "name": "BRISTOW GROUP"
         },
         {
           "symbol": "VTS",
@@ -13566,7 +13566,7 @@
         },
         {
           "symbol": "VVX",
-          "name": "V2X INC"
+          "name": "V2X"
         },
         {
           "symbol": "VYGR",
@@ -13574,7 +13574,7 @@
         },
         {
           "symbol": "VYX",
-          "name": "NCR VOYIX CORP"
+          "name": "NCR VOYIX"
         },
         {
           "symbol": "WABC",
@@ -13594,7 +13594,7 @@
         },
         {
           "symbol": "WAY",
-          "name": "WAYSTAR HOLDING CORP"
+          "name": "WAYSTAR HOLDING"
         },
         {
           "symbol": "WBTN",
@@ -13618,7 +13618,7 @@
         },
         {
           "symbol": "WERN",
-          "name": "WERNER ENTERPRISES INC"
+          "name": "WERNER ENTERPRISES"
         },
         {
           "symbol": "WEST",
@@ -13634,11 +13634,11 @@
         },
         {
           "symbol": "WGS",
-          "name": "GENEDX HOLDINGS CORP CLASS A"
+          "name": "GENEDX HOLDINGS CLASS A"
         },
         {
           "symbol": "WHD",
-          "name": "CACTUS INC CLASS A"
+          "name": "CACTUS CLASS A"
         },
         {
           "symbol": "WHG",
@@ -13650,15 +13650,15 @@
         },
         {
           "symbol": "WINA",
-          "name": "WINMARK CORP"
+          "name": "WINMARK"
         },
         {
           "symbol": "WK",
-          "name": "WORKIVA INC CLASS A"
+          "name": "WORKIVA CLASS A"
         },
         {
           "symbol": "WKC",
-          "name": "WORLD KINECT CORP"
+          "name": "WORLD KINECT"
         },
         {
           "symbol": "WLDN",
@@ -13666,7 +13666,7 @@
         },
         {
           "symbol": "WLFC",
-          "name": "WILLIS LEASE FINANCE CORP"
+          "name": "WILLIS LEASE FINANCE"
         },
         {
           "symbol": "WLTH",
@@ -13674,15 +13674,15 @@
         },
         {
           "symbol": "WLY",
-          "name": "JOHN WILEY AND SONS INC CLASS A"
+          "name": "JOHN WILEY AND SONS CLASS A"
         },
         {
           "symbol": "WMK",
-          "name": "WEIS MARKETS INC"
+          "name": "WEIS MARKETS"
         },
         {
           "symbol": "WNC",
-          "name": "WABASH NATIONAL CORP"
+          "name": "WABASH NATIONAL"
         },
         {
           "symbol": "WNEB",
@@ -13698,7 +13698,7 @@
         },
         {
           "symbol": "WOR",
-          "name": "WORTHINGTON ENTERPRISES INC"
+          "name": "WORTHINGTON ENTERPRISES"
         },
         {
           "symbol": "WRBY",
@@ -13714,7 +13714,7 @@
         },
         {
           "symbol": "WSBC",
-          "name": "WESBANCO INC"
+          "name": "WESBANCO"
         },
         {
           "symbol": "WSBF",
@@ -13722,11 +13722,11 @@
         },
         {
           "symbol": "WSFS",
-          "name": "WSFS FINANCIAL CORP"
+          "name": "WSFS FINANCIAL"
         },
         {
           "symbol": "WT",
-          "name": "WISDOMTREE INC"
+          "name": "WISDOMTREE"
         },
         {
           "symbol": "WTBA",
@@ -13738,15 +13738,15 @@
         },
         {
           "symbol": "WTTR",
-          "name": "SELECT WATER SOLUTIONS INC CLASS A"
+          "name": "SELECT WATER SOLUTIONS CLASS A"
         },
         {
           "symbol": "WVE",
-          "name": "WAVE LIFE SCIENCES LTD"
+          "name": "WAVE LIFE SCIENCES"
         },
         {
           "symbol": "WWW",
-          "name": "WOLVERINE WORLD WIDE INC"
+          "name": "WOLVERINE WORLD WIDE"
         },
         {
           "symbol": "WYFI",
@@ -13754,11 +13754,11 @@
         },
         {
           "symbol": "XENE",
-          "name": "XENON PHARMACEUTICALS INC"
+          "name": "XENON PHARMACEUTICALS"
         },
         {
           "symbol": "XERS",
-          "name": "XERIS BIOPHARMA HOLDINGS INC"
+          "name": "XERIS BIOPHARMA HOLDINGS"
         },
         {
           "symbol": "XFOR",
@@ -13766,7 +13766,7 @@
         },
         {
           "symbol": "XHR",
-          "name": "XENIA HOTELS RESORTS REIT INC"
+          "name": "XENIA HOTELS RESORTS REIT"
         },
         {
           "symbol": "XMAX",
@@ -13774,11 +13774,11 @@
         },
         {
           "symbol": "XMTR",
-          "name": "XOMETRY INC CLASS A"
+          "name": "XOMETRY CLASS A"
         },
         {
           "symbol": "XNCR",
-          "name": "XENCOR INC"
+          "name": "XENCOR"
         },
         {
           "symbol": "XPEL",
@@ -13798,7 +13798,7 @@
         },
         {
           "symbol": "XRAY",
-          "name": "DENTSPLY SIRONA INC"
+          "name": "DENTSPLY SIRONA"
         },
         {
           "symbol": "XRN",
@@ -13814,11 +13814,11 @@
         },
         {
           "symbol": "YELP",
-          "name": "YELP INC"
+          "name": "YELP"
         },
         {
           "symbol": "YEXT",
-          "name": "YEXT INC"
+          "name": "YEXT"
         },
         {
           "symbol": "YORW",
@@ -13826,7 +13826,7 @@
         },
         {
           "symbol": "YOU",
-          "name": "CLEAR SECURE INC CLASS A"
+          "name": "CLEAR SECURE CLASS A"
         },
         {
           "symbol": "YSS",
@@ -13838,7 +13838,7 @@
         },
         {
           "symbol": "ZBIO",
-          "name": "ZENAS BIOPHARMA INC"
+          "name": "ZENAS BIOPHARMA"
         },
         {
           "symbol": "ZD",
@@ -13850,7 +13850,7 @@
         },
         {
           "symbol": "ZETA",
-          "name": "ZETA GLOBAL HOLDINGS CORP CLASS A"
+          "name": "ZETA GLOBAL HOLDINGS CLASS A"
         },
         {
           "symbol": "ZGN",
@@ -13893,9 +13893,9 @@
     "Nasdaq-100": {
       "source_url": "https://api.nasdaq.com/api/quote/list-type/nasdaq100",
       "source_note": "Nasdaq's own index-membership endpoint (the Wikipedia article no longer carries a components table).",
-      "fetched_at": "2026-08-05",
-      "as_of": "2026-08-05",
-      "member_count": 103,
+      "fetched_at": "2026-08-06",
+      "as_of": "2026-08-06",
+      "member_count": 102,
       "members": [
         {
           "symbol": "AAPL",
@@ -14032,10 +14032,6 @@
         {
           "symbol": "DXCM",
           "name": "DexCom, Inc. Common Stock"
-        },
-        {
-          "symbol": "EA",
-          "name": "Electronic Arts Inc. Common Stock"
         },
         {
           "symbol": "EXC",

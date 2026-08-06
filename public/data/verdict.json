@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-08-05T11:23:01.142573+00:00",
+  "generated_at": "2026-08-06T11:23:01.660232+00:00",
   "signal": "neutral",
-  "conviction": 0.54,
+  "conviction": 0.67,
   "conviction_source": "model",
-  "narrative": "Strong risk-on rally with tech and small caps leading; bullish options flow confirms momentum.",
+  "narrative": "Indices diverge with Dow up and NASDAQ down, while heavy put buying on SPY and IWM suggests hedging against near-term downside despite low VIX.",
   "narrative_source": "llm",
   "model_features": {
-    "vix": 16.58,
+    "vix": 15.97,
     "vix_score": 0.5,
     "sleeve_a_signals": 0,
     "avg_signal_score": 0,
     "max_signal_score": 0,
-    "recent_hit_rate": 0.5,
-    "recent_trades": 1,
+    "recent_hit_rate": 1.0,
+    "recent_trades": 6,
     "breadth": 1.0,
-    "vix_contango": 5.65,
+    "vix_contango": 4.3,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.29,
-      0.79
+      0.42,
+      0.92
     ]
   },
   "confidence_interval": [
-    0.29,
-    0.79
+    0.42,
+    0.92
   ]
 }
