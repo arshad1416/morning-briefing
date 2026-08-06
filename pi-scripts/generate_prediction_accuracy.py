@@ -206,6 +206,54 @@ def main():
 
     if not closed:
         print("No closed trades found")
+        # Still write a fresh, schema-identical accuracy.json. A day with zero
+        # closed trades is a valid state — skipping the save left the file
+        # stale (2026-08-06: 9:35AM run, file dated Aug 5 16:35) and tripped
+        # the watchdog's "accuracy.json not regenerated today" freshness check.
+        starting = float(acct.get("starting_balance", 2000))
+        current = float(acct.get("current_balance", 0) or acct.get("cash", 0) or 0)
+        output = {
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "summary": {
+                "total_trades": len(open_trades),
+                "closed_trades": 0,
+                "open_positions": len(open_trades),
+                "win_rate": 0.0,
+                "return_pct": round((current - starting) / starting * 100, 2) if starting > 0 else 0,
+            },
+            "expectancy": {
+                "expectancy_pct": 0.0,
+                "expectancy_per_dollar_risked": 0.0,
+                "win_rate": 0.0,
+                "loss_rate": 0.0,
+                "avg_win_pct": 0.0,
+                "avg_loss_pct": 0.0,
+                "profit_factor": None,
+                "kelly_fraction_raw": 0.0,
+                "kelly_fraction_half": 0.0,
+                "kelly_fraction": 0.0,
+                "kelly_note": "Half-Kelly (0.5x) recommended — raw Kelly too aggressive for live trading",
+                "n_trades": 0,
+                "n_wins": 0,
+                "n_losses": 0,
+            },
+            "drawdown": {
+                "max_drawdown_pct": 0.0,
+                "drawdown_duration_trades": 0,
+                "max_drawdown_duration_trades": 0,
+            },
+            "slippage": {
+                "avg_slippage_pct": 0,
+                "max_slippage_pct": 0,
+                "n_measured": 0,
+                "note": "No signal_price vs entry_price data available",
+            },
+            "per_strategy": [],
+            "rolling_20": {"current": None, "history": []},
+        }
+        with open(OUTPUT, "w") as f:
+            json.dump(output, f, indent=2, allow_nan=False)
+        print(f"\n✅ Saved (empty state) to {OUTPUT}")
         return
 
     # Extract PnLs
