@@ -1,28 +1,29 @@
 {
  "ticker": "VVV",
  "name": "Valvoline Inc.",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 39.28,
- "change_pct": 1.26,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 37.05,
+ "change_pct": -5.68,
  "sector": "Consumer Cyclical",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 53.9,
-  "sma_20": 39.05,
-  "sma_50": 37.79
+  "rsi_14": 40.9,
+  "sma_20": 39.02,
+  "sma_50": 37.86
  },
  "fundamentals": {
-  "pe_ratio": 52.373333,
-  "market_cap": "5.0B",
+  "pe_ratio": 48.75,
+  "market_cap": "4.7B",
   "beta": 1.016,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,28 +1,29 @@
 {
  "ticker": "DCOM",
  "name": "Dime Commercial Bancshares, Inc",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 41.74,
- "change_pct": 1.29,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 41.42,
+ "change_pct": -0.78,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
   "above_ma",
+  "near_high",
+  "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 65.7,
-  "sma_20": 40.14,
-  "sma_50": 39.25
+  "rsi_14": 62.0,
+  "sma_20": 40.28,
+  "sma_50": 39.34
  },
  "fundamentals": {
-  "pe_ratio": 15.123189,
+  "pe_ratio": 14.844087,
   "market_cap": "1.8B",
   "beta": 0.991,
-  "dividend_yield": 0.0245
+  "dividend_yield": 0.024
  },
  "council_analysis": {
-  "score": 6
+  "score": 9
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

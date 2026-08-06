@@ -1,21 +1,24 @@
 {
  "ticker": "D",
  "name": "Dominion Energy, Inc.",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 69.22,
- "change_pct": 0.69,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 68.43,
+ "change_pct": -1.13,
  "sector": "Utilities",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 47.1,
-  "sma_20": 70.37,
-  "sma_50": 68.72
+  "rsi_14": 42.5,
+  "sma_20": 70.3,
+  "sma_50": 68.75
  },
  "fundamentals": {
-  "pe_ratio": 23.953285,
-  "market_cap": "60.9B",
+  "pe_ratio": 23.67993,
+  "market_cap": "60.2B",
   "beta": 0.63,
-  "dividend_yield": 0.0388
+  "dividend_yield": 0.038599999999999995
  },
  "council_analysis": {
   "score": 5

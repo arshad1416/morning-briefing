@@ -1,30 +1,81 @@
 {
  "ticker": "HON",
  "name": "Honeywell International Inc.",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 248.79,
- "change_pct": 0.82,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 248.81,
+ "change_pct": 0.01,
  "sector": "Industrials",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
   "rsi_14": 63.7,
-  "sma_20": 234.11,
-  "sma_50": 234.47
+  "sma_20": 235.53,
+  "sma_50": 234.66
  },
  "fundamentals": {
-  "pe_ratio": 9.565166,
+  "pe_ratio": 9.424622,
   "market_cap": "78.9B",
   "beta": 0.918,
   "dividend_yield": 0.0113
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "HON",
+   "date": "2026-10-22",
+   "epsEstimate": 2.15,
+   "epsActual": null
+  },
+  {
+   "ticker": "HON",
+   "date": "2026-07-23",
+   "epsEstimate": 1.82,
+   "epsActual": 1.95
+  },
+  {
+   "ticker": "HON",
+   "date": "2026-04-23",
+   "epsEstimate": 4.64,
+   "epsActual": 4.9
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "HON",
+   "date": "2026-07-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000124/hon-20260630.htm"
+  },
+  {
+   "ticker": "HON",
+   "date": "2026-04-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000057/hon-20260331.htm"
+  },
+  {
+   "ticker": "HON",
+   "date": "2026-02-17",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000013/hon-20251231.htm"
+  },
+  {
+   "ticker": "HON",
+   "date": "2025-10-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384025000105/hon-20250930.htm"
+  },
+  {
+   "ticker": "HON",
+   "date": "2025-07-24",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/773840/000077384025000064/hon-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

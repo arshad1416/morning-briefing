@@ -1,26 +1,29 @@
 {
  "ticker": "VSH",
  "name": "Vishay Intertechnology, Inc.",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 38.85,
- "change_pct": 9.75,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 35.43,
+ "change_pct": -8.8,
  "sector": "Technology",
  "signals": [
-  "premium_pe"
+  "rsi_dip",
+  "below_ma",
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.7,
-  "sma_20": 38.37,
-  "sma_50": 48.97
+  "rsi_14": 41.6,
+  "sma_20": 38.03,
+  "sma_50": 48.73
  },
  "fundamentals": {
-  "pe_ratio": 3885.0,
-  "market_cap": "6.0B",
+  "pe_ratio": 3543.0,
+  "market_cap": "5.4B",
   "beta": 1.826,
-  "dividend_yield": 0.0113
+  "dividend_yield": 0.0103
  },
  "council_analysis": {
-  "score": 4
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

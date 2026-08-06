@@ -1,13 +1,14 @@
 {
  "ticker": "GBTG",
  "name": "Global Business Travel Group, I",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
  "price": 9.43,
  "change_pct": 0.0,
  "sector": "Consumer Cyclical",
  "signals": [
   "extended_rsi",
   "above_ma",
+  "near_high",
   "premium_pe"
  ],
  "technical": {
@@ -18,11 +19,11 @@
  "fundamentals": {
   "pe_ratio": 58.937504,
   "market_cap": "4.9B",
-  "beta": 0.936,
+  "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 4
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

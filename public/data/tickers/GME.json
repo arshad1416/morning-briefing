@@ -1,29 +1,28 @@
 {
  "ticker": "GME",
  "name": "GameStop Corporation",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 19.21,
- "change_pct": 0.79,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 19.0,
+ "change_pct": -1.12,
  "sector": "Consumer Cyclical",
  "signals": [
   "oversold_rsi",
   "below_ma",
-  "volume_surge",
-  "value_pe"
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 29.0,
-  "sma_20": 21.55,
-  "sma_50": 21.72
+  "rsi_14": 27.9,
+  "sma_20": 21.41,
+  "sma_50": 21.66
  },
  "fundamentals": {
-  "pe_ratio": 14.33582,
-  "market_cap": "8.6B",
+  "pe_ratio": 16.09746,
+  "market_cap": "8.5B",
   "beta": 1.738,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 8
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

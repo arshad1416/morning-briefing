@@ -1,27 +1,28 @@
 {
  "ticker": "FTS",
  "name": "Fortis Inc.",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 56.58,
- "change_pct": 0.09,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 56.54,
+ "change_pct": -0.07,
  "sector": "Utilities",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 41.8,
-  "sma_20": 57.79,
+  "rsi_14": 41.5,
+  "sma_20": 57.73,
   "sma_50": 56.99
  },
  "fundamentals": {
-  "pe_ratio": 23.28395,
+  "pe_ratio": 23.26749,
   "market_cap": "28.9B",
   "beta": 0.427,
-  "dividend_yield": 0.0326
+  "dividend_yield": 0.032400000000000005
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

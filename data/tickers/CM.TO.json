@@ -1,24 +1,28 @@
 {
  "ticker": "CM.TO",
  "name": "CANADIAN IMPERIAL BANK OF COMME",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 166.06,
- "change_pct": 0.01,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 167.0,
+ "change_pct": 0.57,
  "sector": "Financial Services",
- "signals": [],
+ "signals": [
+  "above_ma",
+  "near_high",
+  "analyst_buy"
+ ],
  "technical": {
-  "rsi_14": 54.2,
-  "sma_20": 166.14,
-  "sma_50": 160.45
+  "rsi_14": 56.2,
+  "sma_20": 166.25,
+  "sma_50": 160.6
  },
  "fundamentals": {
-  "pe_ratio": 16.474207,
-  "market_cap": "151.6B",
+  "pe_ratio": 16.567461,
+  "market_cap": "152.4B",
   "beta": 1.277,
   "dividend_yield": 0.0258
  },
  "council_analysis": {
-  "score": 5
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

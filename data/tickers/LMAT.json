@@ -1,28 +1,30 @@
 {
  "ticker": "LMAT",
  "name": "LeMaitre Vascular, Inc.",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 105.78,
- "change_pct": 2.09,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 85.76,
+ "change_pct": -18.92,
  "sector": "Healthcare",
  "signals": [
-  "above_ma",
+  "oversold_rsi",
+  "below_ma",
+  "volume_surge",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 61.2,
-  "sma_20": 101.07,
-  "sma_50": 97.41
+  "rsi_14": 33.2,
+  "sma_20": 100.27,
+  "sma_50": 97.18
  },
  "fundamentals": {
-  "pe_ratio": 38.889706,
-  "market_cap": "2.4B",
+  "pe_ratio": 31.531067,
+  "market_cap": "2.0B",
   "beta": 0.524,
-  "dividend_yield": 0.0097
+  "dividend_yield": 0.009399999999999999
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

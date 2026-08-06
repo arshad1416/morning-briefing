@@ -1,23 +1,25 @@
 {
  "ticker": "IOSP",
  "name": "Innospec Inc.",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 86.7,
- "change_pct": 1.43,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 89.04,
+ "change_pct": 2.7,
  "sector": "Basic Materials",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 62.2,
-  "sma_20": 84.14,
-  "sma_50": 83.13
+  "rsi_14": 69.1,
+  "sma_20": 84.55,
+  "sma_50": 83.32
  },
  "fundamentals": {
-  "pe_ratio": 18.93013,
-  "market_cap": "2.1B",
-  "beta": 0.905,
-  "dividend_yield": 0.0208
+  "pe_ratio": 19.190733,
+  "market_cap": "2.2B",
+  "beta": null,
+  "dividend_yield": 0.0207
  },
  "council_analysis": {
   "score": 6

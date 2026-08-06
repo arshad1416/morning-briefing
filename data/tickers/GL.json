@@ -1,30 +1,81 @@
 {
  "ticker": "GL",
  "name": "Globe Life Inc.",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 183.9,
- "change_pct": -0.1,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 184.66,
+ "change_pct": 0.41,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 61.9,
-  "sma_20": 180.35,
-  "sma_50": 171.63
+  "rsi_14": 63.0,
+  "sma_20": 180.73,
+  "sma_50": 172.2
  },
  "fundamentals": {
-  "pe_ratio": 12.227393,
+  "pe_ratio": 12.294274,
   "market_cap": "14.3B",
   "beta": 0.472,
   "dividend_yield": 0.0072
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "GL",
+   "date": "2026-10-21",
+   "epsEstimate": 4.88,
+   "epsActual": null
+  },
+  {
+   "ticker": "GL",
+   "date": "2026-07-22",
+   "epsEstimate": 3.68,
+   "epsActual": 3.61
+  },
+  {
+   "ticker": "GL",
+   "date": "2026-04-22",
+   "epsEstimate": 3.48,
+   "epsActual": 3.43
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "GL",
+   "date": "2026-08-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000216/gl-20260630.htm"
+  },
+  {
+   "ticker": "GL",
+   "date": "2026-05-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000169/gl-20260331.htm"
+  },
+  {
+   "ticker": "GL",
+   "date": "2026-02-25",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/320335/000032033526000090/gl-20251231.htm"
+  },
+  {
+   "ticker": "GL",
+   "date": "2025-11-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/320335/000032033525000064/gl-20250930.htm"
+  },
+  {
+   "ticker": "GL",
+   "date": "2025-08-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/320335/000032033525000046/gl-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

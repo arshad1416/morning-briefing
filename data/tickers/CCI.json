@@ -1,24 +1,26 @@
 {
  "ticker": "CCI",
  "name": "Crown Castle Inc.",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 77.66,
- "change_pct": 1.2,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 72.24,
+ "change_pct": -6.98,
  "sector": "Real Estate",
  "signals": [
-  "premium_pe",
+  "rsi_dip",
+  "below_ma",
+  "near_low",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.8,
-  "sma_20": 77.35,
-  "sma_50": 82.45
+  "rsi_14": 36.6,
+  "sma_20": 77.12,
+  "sma_50": 82.09
  },
  "fundamentals": {
-  "pe_ratio": 31.69796,
-  "market_cap": "33.9B",
+  "pe_ratio": 29.12903,
+  "market_cap": "31.6B",
   "beta": 0.97,
-  "dividend_yield": 0.0557
+  "dividend_yield": 0.0547
  },
  "council_analysis": {
   "score": 5

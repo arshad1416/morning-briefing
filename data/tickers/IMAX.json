@@ -1,29 +1,30 @@
 {
  "ticker": "IMAX",
  "name": "Imax Corporation",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
  "price": 51.26,
- "change_pct": 0.51,
+ "change_pct": 0.01,
  "sector": "Communication Services",
  "signals": [
   "overbought_rsi",
   "above_ma",
+  "near_high",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
   "rsi_14": 76.6,
-  "sma_20": 42.56,
-  "sma_50": 41.59
+  "sma_20": 43.2,
+  "sma_50": 41.84
  },
  "fundamentals": {
-  "pe_ratio": 70.21918,
+  "pe_ratio": 70.22603,
   "market_cap": "2.8B",
   "beta": 0.393,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 4
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

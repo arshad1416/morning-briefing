@@ -1,30 +1,29 @@
 {
  "ticker": "MFIN",
  "name": "Medallion Financial Corp.",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 10.9,
- "change_pct": 2.83,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 10.71,
+ "change_pct": -1.74,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
   "above_ma",
-  "volume_surge",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 70.7,
-  "sma_20": 9.99,
-  "sma_50": 9.88
+  "rsi_14": 65.0,
+  "sma_20": 10.03,
+  "sma_50": 9.9
  },
  "fundamentals": {
-  "pe_ratio": 8.195488,
-  "market_cap": "251M",
+  "pe_ratio": 7.817518,
+  "market_cap": "247M",
   "beta": 0.772,
-  "dividend_yield": 0.0529
+  "dividend_yield": 0.051399999999999994
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

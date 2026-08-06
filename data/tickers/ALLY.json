@@ -1,30 +1,81 @@
 {
  "ticker": "ALLY",
  "name": "Ally Financial Inc.",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 44.99,
- "change_pct": 2.09,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 45.13,
+ "change_pct": 0.31,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 54.4,
-  "sma_20": 44.37,
-  "sma_50": 44.12
+  "rsi_14": 55.2,
+  "sma_20": 44.41,
+  "sma_50": 44.18
  },
  "fundamentals": {
-  "pe_ratio": 10.585883,
+  "pe_ratio": 10.618824,
   "market_cap": "13.7B",
   "beta": 1.08,
-  "dividend_yield": 0.0277
+  "dividend_yield": 0.026699999999999998
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "ALLY",
+   "date": "2026-10-16",
+   "epsEstimate": 1.45,
+   "epsActual": null
+  },
+  {
+   "ticker": "ALLY",
+   "date": "2026-07-21",
+   "epsEstimate": 1.22,
+   "epsActual": 1.21
+  },
+  {
+   "ticker": "ALLY",
+   "date": "2026-04-17",
+   "epsEstimate": 0.94,
+   "epsActual": 1.11
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "ALLY",
+   "date": "2026-07-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/40729/000004072926000017/ally-20260630.htm"
+  },
+  {
+   "ticker": "ALLY",
+   "date": "2026-05-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/40729/000004072926000009/ally-20260331.htm"
+  },
+  {
+   "ticker": "ALLY",
+   "date": "2026-02-25",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/40729/000004072926000005/ally-20251231.htm"
+  },
+  {
+   "ticker": "ALLY",
+   "date": "2025-10-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/40729/000004072925000025/ally-20250930.htm"
+  },
+  {
+   "ticker": "ALLY",
+   "date": "2025-08-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/40729/000004072925000020/ally-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

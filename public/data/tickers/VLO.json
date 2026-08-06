@@ -1,30 +1,81 @@
 {
  "ticker": "VLO",
  "name": "Valero Energy Corporation",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 308.73,
- "change_pct": 0.39,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 307.3,
+ "change_pct": -0.46,
  "sector": "Energy",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 62.7,
-  "sma_20": 300.89,
-  "sma_50": 271.81
+  "rsi_14": 61.3,
+  "sma_20": 302.16,
+  "sma_50": 273.03
  },
  "fundamentals": {
-  "pe_ratio": 12.869113,
-  "market_cap": "88.9B",
+  "pe_ratio": 13.043294,
+  "market_cap": "88.5B",
   "beta": 0.554,
-  "dividend_yield": 0.015600000000000001
+  "dividend_yield": 0.0155
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "VLO",
+   "date": "2026-10-22",
+   "epsEstimate": 14.95,
+   "epsActual": null
+  },
+  {
+   "ticker": "VLO",
+   "date": "2026-07-30",
+   "epsEstimate": 10.13,
+   "epsActual": 12.54
+  },
+  {
+   "ticker": "VLO",
+   "date": "2026-04-30",
+   "epsEstimate": 3.16,
+   "epsActual": 4.22
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "VLO",
+   "date": "2026-07-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1035002/000162828026050937/vlo-20260630.htm"
+  },
+  {
+   "ticker": "VLO",
+   "date": "2026-04-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1035002/000162828026028690/vlo-20260331.htm"
+  },
+  {
+   "ticker": "VLO",
+   "date": "2026-02-25",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1035002/000162828026011499/vlo-20251231.htm"
+  },
+  {
+   "ticker": "VLO",
+   "date": "2025-10-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1035002/000162828025046072/vlo-20250930.htm"
+  },
+  {
+   "ticker": "VLO",
+   "date": "2025-07-24",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1035002/000103500225000061/vlo-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

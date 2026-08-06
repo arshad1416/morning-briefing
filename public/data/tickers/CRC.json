@@ -1,23 +1,25 @@
 {
  "ticker": "CRC",
  "name": "California Resources Corporatio",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 52.48,
- "change_pct": 0.65,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 50.95,
+ "change_pct": -2.92,
  "sector": "Energy",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.0,
-  "sma_20": 52.34,
-  "sma_50": 54.96
+  "rsi_14": 42.3,
+  "sma_20": 52.25,
+  "sma_50": 54.75
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "4.7B",
+  "market_cap": "4.5B",
   "beta": 0.901,
-  "dividend_yield": 0.0311
+  "dividend_yield": 0.030899999999999997
  },
  "council_analysis": {
   "score": 6

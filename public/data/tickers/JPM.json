@@ -1,24 +1,26 @@
 {
  "ticker": "JPM",
  "name": "JP Morgan Chase & Co.",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 357.52,
- "change_pct": 1.38,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 361.39,
+ "change_pct": 1.08,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 64.9,
-  "sma_20": 345.88,
-  "sma_50": 328.99
+  "rsi_14": 67.4,
+  "sma_20": 347.42,
+  "sma_50": 330.12
  },
  "fundamentals": {
-  "pe_ratio": 15.331046,
+  "pe_ratio": 15.477302,
   "market_cap": null,
   "beta": 0.977,
-  "dividend_yield": 0.0171
+  "dividend_yield": 0.0168
  },
  "council_analysis": {
   "score": 7
@@ -27,7 +29,7 @@
   {
    "ticker": "JPM",
    "date": "2026-10-13",
-   "epsEstimate": 5.9,
+   "epsEstimate": 5.91,
    "epsActual": null
   },
   {
@@ -61,12 +63,6 @@
    "date": "2025-11-04",
    "form": "Quarterly Report",
    "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828025048859/jpm-20250930.htm"
-  },
-  {
-   "ticker": "JPM",
-   "date": "2025-08-05",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000615/jpm-20250630.htm"
   }
  ],
  "reddit_mentions": []

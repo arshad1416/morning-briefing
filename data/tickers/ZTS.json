@@ -1,24 +1,26 @@
 {
  "ticker": "ZTS",
  "name": "Zoetis Inc.",
- "generated_at": "2026-08-05T14:45:01.677443+00:00",
- "price": 76.04,
- "change_pct": -1.37,
+ "generated_at": "2026-08-06T11:45:01.179751+00:00",
+ "price": 74.92,
+ "change_pct": -1.48,
  "sector": "Healthcare",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.2,
-  "sma_20": 75.68,
-  "sma_50": 76.64
+  "rsi_14": 44.3,
+  "sma_20": 75.69,
+  "sma_50": 76.53
  },
  "fundamentals": {
-  "pe_ratio": 12.506579,
+  "pe_ratio": 12.281164,
   "market_cap": null,
   "beta": 0.73,
-  "dividend_yield": 0.0275
+  "dividend_yield": 0.0279
  },
  "council_analysis": {
   "score": 7
