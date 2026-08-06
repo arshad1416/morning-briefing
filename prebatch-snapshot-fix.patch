@@ -1,0 +1,122 @@
+--- a/automated_paper_trader.py
++++ b/automated_paper_trader.py
+@@ -24,9 +24,43 @@
+ os.makedirs(LOG_DIR, exist_ok=True)
+ 
+ # Import signal_validator
+-from signal_validator import validate_signal, detect_asset_class, get_correlation_group
++from signal_validator import (
++    validate_signal, detect_asset_class, get_correlation_group,
++    check_correlation_limits, check_net_portfolio_risk, get_account_equity,
++)
+ 
+ 
++def entry_blocked(open_trades, ticker, direction, entry_price, stop_loss, equity):
++    """Re-check the book-dependent limits against the CURRENT book.
++
++    Every limit in this pipeline used to be evaluated once, before the entry
++    loop, against the book as it stood pre-batch. So on 2026-08-03 a single run
++    entered 10 positions under MAX_PORTFOLIO_POSITIONS=5 and 3 'financial'
++    positions (JPM, V, XLF) under MAX_IN_HIGH_GROUP=2 — every candidate had been
++    scored against the same stale 4-position snapshot. Only the market-data
++    invariants (regime, confirmation, ATR stop, R:R) are safe to reuse from that
++    snapshot; these three depend on the book and must be re-read per entry.
++
++    Returns a reason string when the candidate must be skipped, else None.
++    """
++    if len(open_trades) >= MAX_PORTFOLIO_POSITIONS:
++        return f"portfolio limit {MAX_PORTFOLIO_POSITIONS}"
++
++    corr = check_correlation_limits(ticker, open_trades)
++    if not corr["allowed"]:
++        return corr["reason"]
++
++    # stop_loss is None only if the defined-risk invariant failed, in which case
++    # the candidate never reached validated=True. Skip rather than assume 0.
++    if stop_loss is not None:
++        net = check_net_portfolio_risk(
++            ticker, direction, entry_price, stop_loss, open_trades, equity)
++        if not net["allowed"]:
++            return net["reason"]
++
++    return None
++
++
+ def _calibration_multiplier():
+     """position_sizing.base_multiplier from strategy_calibration.json — the
+     value strategy_improvement.py recomputes daily from realized outcomes.
+@@ -106,17 +140,25 @@
+     print(f"  Open positions: {open_before}")
+     print(f"  Cash: ${ledger['account']['cash']:,.2f}")
+ 
+-    # Step 2: Check for stop-losses first
+-    print("\n🔄 Checking stop-losses on existing positions...")
+-    from paper_trading import check_stop_losses
+-    closed = check_stop_losses()
++    # Step 2: Run exits BEFORE the position gate reads the book.
++    # check_trade_exits was previously reached only from inside enter_trade,
++    # i.e. downstream of the Step 6 gate — so the gate counted positions the
++    # very next statement would have closed, and a run that should have made
++    # room instead returned "Portfolio limit reached". Same order as
++    # run_exit_check.py: stop/target/timestop first, then the -15% backstop.
++    print("\n🔄 Checking exits on existing positions...")
++    from paper_trading import check_stop_losses, check_trade_exits
++    closed = list(check_trade_exits()) + list(check_stop_losses())
+     if closed:
+         print(f"  Auto-closed {len(closed)} positions")
+         for c in closed:
+-            pnl_pct = c.get("pnl_pct", 0) * 100
+-            print(f"    {c['ticker']}: {c['reason']} ({pnl_pct:+.1f}%)")
++            pnl_pct = (c.get("pnl_pct") or 0) * 100
++            # check_trade_exits returns {'reason': ...}; check_stop_losses
++            # returns the raw trade dict, which carries exit_rationale instead.
++            reason = c.get("reason") or c.get("exit_rationale") or "closed"
++            print(f"    {c['ticker']}: {reason} ({pnl_pct:+.1f}%)")
+     else:
+-        print("  No stops triggered")
++        print("  No exits triggered")
+ 
+     # Step 3: Run V3 strategy
+     print("\n🔄 Running V3 strategy engine...")
+@@ -222,6 +264,9 @@
+         log_validator(f"TRADE REJECTED: daily limit {MAX_DAILY_TRADES}")
+         return
+ 
++    # Fast path only — this count is now post-exit-sweep (Step 2), so it is
++    # accurate. entry_blocked() in the loop below is the authoritative check;
++    # deleting this block changes nothing but the log line.
+     open_positions = len(ledger_data.get("open_trades", []))
+     if open_positions >= MAX_PORTFOLIO_POSITIONS:
+         print(f"  ⎭  Portfolio limit reached ({MAX_PORTFOLIO_POSITIONS})")
+@@ -245,15 +290,28 @@
+             print(f"  ⚖ {tk}: calibrated sizing x{_mult} ({quantity}->{max(1, int(quantity * _mult))} shares)")
+         quantity = max(1, int(quantity * _mult))
+ 
+-        # Check latest ledger state (for correlation-aware limits — 
+-        # most checks already done inside validate_signal)
++        # Re-read the book and re-apply every book-dependent limit. Step 5.5
++        # validated all candidates against the pre-batch snapshot; without this
++        # the batch enters against a book that no longer exists.
+         current_ledger = pt_get_ledger()
++        open_trades = current_ledger.get("open_trades", [])
+ 
+-        existing = {t["ticker"] for t in current_ledger.get("open_trades", [])}
++        existing = {t["ticker"] for t in open_trades}
+         if tk in existing:
+             print(f"  ⏭️  {tk}: already in portfolio, skipping")
+             continue
+ 
++        block = entry_blocked(
++            open_trades, tk, direction, entry_price,
++            v_result.get("stop_loss"), get_account_equity(),
++        )
++        if block:
++            print(f"  ⛔ {tk}: {block}")
++            log_validator(f"TRADE REJECTED (live re-check) {tk}: {block}")
++            if block.startswith("portfolio limit"):
++                break  # book is full — no later candidate can pass either
++            continue
++
+         # Use validator's confidence in rationale
+         rationale_extra = (
+             f"SV{v_result['confidence']}/"
