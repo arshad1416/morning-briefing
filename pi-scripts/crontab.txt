@@ -1,6 +1,6 @@
 # Raspberry Pi (pi-lan, user arshad14) crontab snapshot
 # Source of truth is `crontab -l` on the Pi; this is a version-controlled copy
-# for reference/rebuild. Not auto-applied. Snapshot taken 2026-08-05.
+# for reference/rebuild. Not auto-applied. Snapshot taken 2026-08-06.
 #
 # Everything below the marker is VERBATIM `crontab -l` output, so drift is a
 # clean diff:
@@ -40,7 +40,16 @@
 # Most repeating jobs were moved off :00/:30 to off-minutes to stop the whole
 # fleet hitting APIs on the same tick — preserve that when editing.
 #
-# ── VERBATIM `crontab -l` BELOW THIS LINE ─────────────────────────────────
+#
+# Hermes self-heal 429 swap (2026-08-06): cron_self_heal.py now routes the
+# flat-rate fallback through 9Router — on HTTP 429 it swaps premium models
+# (gpt-5.6-luna/terra/sol, Claude) to `ocg/glm-5.2` with provider `omniroute`
+# (Pi 9Router at 127.0.0.1:20128), instead of CLIProxy. The script's source of
+# truth is arshad1416/hermes-scripts -> ~/.hermes/scripts/cron_self_heal.py on
+# the Pi (synced hourly from the Mac); this snapshot only records the schedule.
+#
+# ── VERBATIM `crontab -l` BELOW THIS LINE ──
+
 # ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
 15 7 * * * cd /home/arshad14/.hermes/scripts && python3 morning_briefing_data.py >> /home/arshad14/.hermes/logs/briefing_data.log 2>&1
 14 7 * * * cd /home/arshad14/.hermes/scripts && python3 consolidate_briefing_data.py >> /home/arshad14/.hermes/logs/consolidate.log 2>&1
@@ -64,14 +73,6 @@
 5 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 sleeve_c_alert.py >> /home/arshad14/.hermes/logs/sleeve.log 2>&1
 10 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 three_sleeve_scorer.py >> /home/arshad14/.hermes/logs/scorer.log 2>&1
 15 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 slippage_tracker.py >> /home/arshad14/.hermes/logs/slippage.log 2>&1
-
-# ── Day-trader loop (paper trading) — added 2026-08-04 ──
-# 09:25 council blessing -> day_trader_ruleset.json; */10 intraday scan/enter/
-# exit (market gate + 15:45-16:10 forced-flat inside the script); 15:50 EOD
-# forced-flat backstop. Shared flock so ticks never overlap. Log: day_trader.log
-25 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 morning_blessing.py >> /home/arshad14/.hermes/logs/day_trader.log 2>&1
-*/10 9-15 * * 1-5 cd /home/arshad14/.hermes/scripts && flock -n /tmp/day_trader.lock python3 intraday_day_trader.py >> /home/arshad14/.hermes/logs/day_trader.log 2>&1
-50 15 * * 1-5 cd /home/arshad14/.hermes/scripts && flock -n /tmp/day_trader.lock python3 intraday_day_trader.py --force-close >> /home/arshad14/.hermes/logs/day_trader.log 2>&1
 
 # ── Solar data — hourly ──
 0 * * * * cd /home/arshad14 && python3 fetch_solar.py >> /home/arshad14/.hermes/logs/solar.log 2>&1
@@ -205,7 +206,7 @@
 12,42 * * * * cd /home/arshad14/.hermes/scripts && flock -n /tmp/ibkr_sentinel.lock python3 ibkr_gateway_sentinel.py >> /home/arshad14/.hermes/logs/ibkr_sentinel.log 2>&1
 
 # Hermes self-heal layer (added 2026-07-17)
-# Runs at :15 and :45, offset from watchdog at :00 and :30
+# Runs at :22 and :52, offset from watchdog at :00 and :30
 22,52 * * * * python3 /home/arshad14/.hermes/scripts/cron_self_heal.py >> /home/arshad14/.hermes/logs/cron_self_heal.log 2>&1
 # Hourly: sync Claude Code memory -> Honcho (Pi-side; added 2026-07-21)
 # DISABLED 2026-07-24: migrated to mnemosyne
@@ -244,3 +245,5 @@
 # unambiguous breakage (scan errors, no bars, no warmup, traceback, stalled
 # ticks). Deduped per day so a persistent fault pages once, not 20 times.
 7,27,47 9-15 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 day_trader_healthcheck.py --intraday >> /home/arshad14/.hermes/logs/day_trader_health.log 2>&1
+# Claude Max OAuth keepalive — 9Router bg refresher never starts (ERR_MODULE_NOT_FOUND); forces on-request refresh every 3h (3h breaks phase-lock with the 8h token)
+0 */3 * * * /home/arshad14/.9router/keepalive.sh >> /home/arshad14/.9router/logs/keepalive.log 2>&1
