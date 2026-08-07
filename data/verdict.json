@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-08-06T11:23:01.660232+00:00",
+  "generated_at": "2026-08-07T11:23:01.104546+00:00",
   "signal": "neutral",
-  "conviction": 0.67,
+  "conviction": 0.45,
   "conviction_source": "model",
-  "narrative": "Indices diverge with Dow up and NASDAQ down, while heavy put buying on SPY and IWM suggests hedging against near-term downside despite low VIX.",
+  "narrative": "Markets slightly lower with low VIX, defensive rotation signals emerging, cautious amid geopolitical tensions.",
   "narrative_source": "llm",
   "model_features": {
-    "vix": 15.97,
+    "vix": 15.22,
     "vix_score": 0.5,
     "sleeve_a_signals": 0,
     "avg_signal_score": 0,
     "max_signal_score": 0,
-    "recent_hit_rate": 1.0,
-    "recent_trades": 6,
+    "recent_hit_rate": 0.12,
+    "recent_trades": 8,
     "breadth": 1.0,
-    "vix_contango": 4.3,
+    "vix_contango": 5.16,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.42,
-      0.92
+      0.2,
+      0.7
     ]
   },
   "confidence_interval": [
-    0.42,
-    0.92
+    0.2,
+    0.7
   ]
 }

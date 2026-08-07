@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-06T17:15:08-04:00",
+  "generated_at": "2026-08-07T07:26:21-04:00",
   "market_summary": {
-    "vix": 15.15,
+    "vix": 15.21,
     "ten_year_yield": 4.67,
     "indices": [
       {
@@ -26,13 +26,13 @@
       },
       {
         "ticker": "TSX",
-        "price": 36136.31,
+        "price": 36136.3,
         "change_pct": -0.03
       },
       {
         "ticker": "VIX",
-        "price": 15.15,
-        "change_pct": -4.17
+        "price": 15.21,
+        "change_pct": 0.4
       },
       {
         "ticker": "10Y Yield",
@@ -48,7 +48,7 @@
     ]
   },
   "narrative": {
-    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,709.96 (-0.18%)\n  \u2022 Dow Jones: 53,885.10 (-0.85%)\n  \u2022 NASDAQ: 26,348.35 (-0.06%)\n  \u2022 Russell 2000: 3,001.55 (-0.58%)\n  \u2022 TSX: 36,136.31 (-0.03%)\n  \u2022 VIX: 15.15\n  \u2022 10Y Yield: 4.67%"
+    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,709.96 (-0.18%)\n  \u2022 Dow Jones: 53,885.10 (-0.85%)\n  \u2022 NASDAQ: 26,348.35 (-0.06%)\n  \u2022 Russell 2000: 3,001.55 (-0.58%)\n  \u2022 TSX: 36,136.30 (-0.03%)\n  \u2022 VIX: 15.21\n  \u2022 10Y Yield: 4.67%"
   },
   "watchlist_summary": {},
   "central_banks": {
@@ -56,6 +56,20 @@
     "boc": ""
   },
   "insider_trades": [
+    {
+      "ticker": "MSFT",
+      "insider": "Althoff Judson",
+      "title": "CEO Microsoft Commercial",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 10000,
+      "price": 487.89,
+      "value": 4878930,
+      "date": "2026-08-05",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/789019/000078901926000143/xslF345X06/form4.xml"
+    },
     {
       "ticker": "MSFT",
       "insider": "Numoto Takeshi",
@@ -69,6 +83,62 @@
       "date": "2026-08-04",
       "source": "SEC EDGAR Form 4",
       "filing_url": "https://www.sec.gov/Archives/edgar/data/789019/000078901926000141/xslF345X06/form4.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Andreessen Marc L",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 250,
+      "price": 588.16,
+      "value": 147040,
+      "date": "2026-08-04",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000116007726000008/xslF345X06/form4-08072026_010856.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Andreessen Marc L",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 87,
+      "price": 589.24,
+      "value": 51264,
+      "date": "2026-08-04",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000116007726000008/xslF345X06/form4-08072026_010856.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Andreessen Marc L",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 44,
+      "price": 590.39,
+      "value": 25977,
+      "date": "2026-08-04",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000116007726000008/xslF345X06/form4-08072026_010856.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Andreessen Marc L",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 45,
+      "price": 591.69,
+      "value": 26626,
+      "date": "2026-08-04",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000116007726000008/xslF345X06/form4-08072026_010856.xml"
     },
     {
       "ticker": "META",
@@ -125,146 +195,76 @@
       "date": "2026-07-27",
       "source": "SEC EDGAR Form 4",
       "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326011342/xslF345X06/ownership.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 57,
-      "price": 607.85,
-      "value": 34647,
-      "date": "2026-07-27",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326011342/xslF345X06/ownership.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 82,
-      "price": 607.85,
-      "value": 49844,
-      "date": "2026-07-27",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326011342/xslF345X06/ownership.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 408,
-      "price": 607.85,
-      "value": 248003,
-      "date": "2026-07-27",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326011342/xslF345X06/ownership.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 837,
-      "price": 645.85,
-      "value": 540576,
-      "date": "2026-07-20",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326011028/xslF345X06/ownership.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 82,
-      "price": 645.85,
-      "value": 52960,
-      "date": "2026-07-20",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326011028/xslF345X06/ownership.xml"
     }
   ],
   "market_news": {
     "headlines": [
       {
-        "title": "Glanbia plc Non-GAAP EPS of $0.81, revenue of $2.1B beats by $90M",
-        "url": "https://seekingalpha.com/news/4628150-glanbia-plc-non-gaap-eps-of-0_81-revenue-of-2_1b-beats-by-90m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Starz Entertainment Corp. GAAP EPS of -$11.27 misses by $5.79, revenue of $307.9M beats by $1.14M",
+        "url": "https://seekingalpha.com/news/4629039-starz-entertainment-corp-gaap-eps-of-11_27-misses-by-5_79-revenue-of-307_9m-beats-by-1_14m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Winpak Ltd. declares CAD 0.05 dividend",
-        "url": "https://seekingalpha.com/news/4628147-winpak-ltd-declares-cad-0_05-dividend?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Chegg's AI overhaul fails to stem revenue slide",
-        "url": "https://seekingalpha.com/news/4628094-cheggs-ai-overhaul-fails-to-stem-revenue-slide?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Ftai infrastructure expects to close Long Ridge sale by end of Q3 and eliminate about $1.4B of debt",
-        "url": "https://seekingalpha.com/news/4628146-ftai-infrastructure-expects-to-close-long-ridge-sale-by-end-of-q3-and-eliminate-about-1_4b-of?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Driven Brands reiterates 2026 revenue guidance of $1.95B-$2.05B while expecting to trend toward the low end",
-        "url": "https://seekingalpha.com/news/4628145-driven-brands-reiterates-2026-revenue-guidance-of-1_95b-2_05b-while-expecting-to-trend-toward?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Consumers Energy Company Cum Pfd Shs declares $1.125 dividend",
-        "url": "https://seekingalpha.com/news/4628144-consumers-energy-company-cum-pfd-shs-declares-1_125-dividend?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Cronos expects CanAdelaar acquisition to close in second half of 2026 as Q2 adjusted EBITDA reaches $13.1M",
-        "url": "https://seekingalpha.com/news/4628143-cronos-expects-canadelaar-acquisition-to-close-in-second-half-of-2026-as-q2-adjusted-ebitda?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "AppLovin: A Dip We Were All Waiting For (Rating Upgrade)",
-        "url": "https://seekingalpha.com/article/4931714-applovin-a-dip-we-were-all-waiting-for-rating-upgrade?source=feed",
+        "title": "Canopy Growth in charts: FQ1 revenue gains driven by growth across medical, adult-use, and Storz & Bickel segments",
+        "url": "https://seekingalpha.com/news/4629035-canopy-growth-in-charts-fq1-revenue-gains-driven-by-growth-across-medical-adult-use-and-storz-bickel-segments?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Forget The Magnificent 7: Two Undervalued Dividends Built For A Different Market",
-        "url": "https://seekingalpha.com/article/4931523-forget-the-magnificent-7-2-undervalued-dividends-built-for-a-different-market?source=feed",
+        "title": "Calumet, Inc. GAAP EPS of -$1.09 misses by $1.03, revenue of $1.44B beats by $320M",
+        "url": "https://seekingalpha.com/news/4629038-calumet-inc-gaap-eps-of-1_09-misses-by-1_03-revenue-of-1_44b-beats-by-320m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Mobility Global, Inc. GAAP EPS of $0.18 misses by $0.06, revenue of $468M misses by $1.88M",
+        "url": "https://seekingalpha.com/news/4629037-mobility-global-inc-gaap-eps-of-0_18-misses-by-0_06-revenue-of-468m-misses-by-1_88m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Manufacturing PMI Hits 4-Year High: 3 Top Industrial Stocks",
-        "url": "https://seekingalpha.com/article/4931055-manufacturing-pmi-hits-4-year-high-3-top-industrial-stocks?source=feed",
+        "title": "Johnson Outdoors GAAP EPS of $1.42 beats by $0.74, revenue of $189.7M beats by $3.51M",
+        "url": "https://seekingalpha.com/news/4629034-johnson-outdoors-gaap-eps-of-1_42-beats-by-0_74-revenue-of-189_7m-beats-by-3_51m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Treace Medical Concepts GAAP EPS of -$0.24 beats by $0.06, revenue of $45.4M beats by $1.48M",
+        "url": "https://seekingalpha.com/news/4629033-treace-medical-concepts-gaap-eps-of-0_24-beats-by-0_06-revenue-of-45_4m-beats-by-1_48m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Purple Biotech GAAP EPADS of -$0.41",
+        "url": "https://seekingalpha.com/news/4629032-purple-biotech-gaap-epads-of--041?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Celsius: Don't Miss The Bigger Picture",
+        "url": "https://seekingalpha.com/article/4932853-celsius-dont-miss-the-bigger-picture?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "SpaceX: The Bottom Is Likely In (Rating Upgrade)",
+        "url": "https://seekingalpha.com/article/4932838-spacex-q2-the-bottom-is-likely-in-rating-upgrade?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Advanced Micro Devices: Trim Before The Hype Ends",
+        "url": "https://seekingalpha.com/article/4932824-advanced-micro-devices-trim-before-the-hype-ends?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
@@ -275,185 +275,185 @@
   },
   "geopolitical": [
     {
-      "title": "In Odesa, no-one is safe from Russia's new Black Sea strikes",
+      "title": "Meta fined $567m in largest child safety ruling against social media giant",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cy8ev4y172yo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-06T05:00:54+00:00",
-      "summary": "Blackened ships and smashed docks mark Russia's recent surge of attacks on Ukraine's coastline."
+      "url": "https://www.bbc.co.uk/news/articles/cd7lz3wr2rlo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-07T09:22:03+00:00",
+      "summary": "The ruling is in addition to $375m in fines Meta was already ordered to pay in the case, for a total of $942m."
     },
     {
-      "title": "Iran says deal with Oman on Strait of Hormuz is in final stages",
+      "title": "Trump again tries to limit US birthright citizenship with new executive orders",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/ckg9d3eyeggo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-06T01:19:59+00:00",
-      "summary": "Neither the US or Oman have commented on the proposed agreement on the vital waterway."
+      "url": "https://www.bbc.co.uk/news/articles/cj63966j95yo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-07T00:34:14+00:00",
+      "summary": "The executive orders ban birth tourism and expand the existing definition of people whose children are not eligible for US birthright citizenship."
     },
     {
-      "title": "Indian journalist Tarun Tejpal sentenced to 10 years in jail for rape",
+      "title": "Uefa says boycott may still go ahead as FA withdraws Infantino support",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cx2v551w9v8o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-06T09:49:24+00:00",
-      "summary": "Tejpal, who has denied the accusations, can appeal against the verdict in India's Supreme Court."
+      "url": "https://www.bbc.co.uk/sport/football/articles/c2k74yevgzwo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-07T01:57:02+00:00",
+      "summary": "Fifa's backing of president Gianni Infantino at a meeting on Wednesday \"changes nothing\", says European governing body Uefa."
     },
     {
-      "title": "Iranian footballers who defied Tehran become Australian citizens",
+      "title": "Australian aviation crew carries out daring midwinter Antarctica rescue",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cn5nlgxv6vdo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-06T09:04:17+00:00",
-      "summary": "There were among seven to be granted humanitarian visas while playing in Australia - but the other five changed their minds and returned to Iran."
+      "url": "https://www.bbc.co.uk/news/articles/c89nqlz5p4qo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-07T05:44:29+00:00",
+      "summary": "Team evacuated a patient from McMurdo Station after landing plane in total darkness and temperature of -43\u00b0C."
     },
     {
-      "title": "Rihanna is 'in the studio', says partner A$AP Rocky",
+      "title": "Trump denies US weapons shortage and says information 'leakers' being 'hunted down'",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c4gwvvw9k1xo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-06T04:44:22+00:00",
-      "summary": "The singer, who last released a full album in 2016, is in the studio and \"cooking\", her partner said."
+      "url": "https://www.bbc.co.uk/news/articles/cy8mjd19xm7o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-06T18:53:51+00:00",
+      "summary": "While precise data is classified, publicly available information suggests the US has used up many difficult-to-manufacture weapons."
     },
     {
-      "title": "Cambridge professor Jason Arday quits amid plagiarism allegations",
+      "title": "Central Europe sees record temperatures as heatwave continues",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/6/cambridge-professor-jason-arday-quits-amid-plagiarism-allegations?traffic_source=rss",
-      "date": "2026-08-06T10:24:59+00:00",
-      "summary": "The scholar announced his resignation amid a new investigation into his qualifications."
+      "url": "https://www.aljazeera.com/news/2026/8/7/central-europe-sees-record-temperatures-as-heatwave-continues?traffic_source=rss",
+      "date": "2026-08-07T10:11:26+00:00",
+      "summary": "Record-breaking temperatures in Slovakia and Austria as Italy places all of its 27 major cities on highest heat alert."
     },
     {
-      "title": "Hormuz deal \u2018close\u2019: What\u2019s the latest on each side\u2019s positions?",
+      "title": "Saudi Pro League\u2019s England international Toney charged with assault",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/6/hormuz-deal-close-whats-the-latest-on-each-sides-positions?traffic_source=rss",
-      "date": "2026-08-06T10:20:57+00:00",
-      "summary": "US officials say they would not accept any arrangement on the waterway that would leave Iran in control."
+      "url": "https://www.aljazeera.com/sports/2026/8/7/saudi-pro-leagues-england-international-toney-charged-with-assault?traffic_source=rss",
+      "date": "2026-08-07T10:11:15+00:00",
+      "summary": "Ivan Toney charged for an assault that allegedly \u200btook place on December 6 last year in United Kingdom."
     },
     {
-      "title": "Uganda football star Owori killed, weeks after death of rugby\u2019s Gongodyo",
+      "title": "\u2018De-escalation\u2019: Europe hesitates as US pushes for Hormuz naval mission",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/sports/2026/8/6/uganda-football-star-owori-killed-weeks-after-death-of-rugbys-gongodyo?traffic_source=rss",
-      "date": "2026-08-06T10:13:26+00:00",
-      "summary": "SC Villa captain and Ugandan international David Owori was found unconscious by passers-by, but later pronounced dead."
+      "url": "https://www.aljazeera.com/news/2026/8/7/hld-european-caution-slowing-us-push-for-hormuz-naval-coalition?traffic_source=rss",
+      "date": "2026-08-07T10:00:56+00:00",
+      "summary": "The UK and France are not seeking confrontation with Iran in the US-Israeli war Europe largely rejected, say analysts."
     }
   ],
   "congress": {
     "recent_trades": [
       {
-        "politician": "April McClain Delaney",
+        "politician": "Lloyd Doggett",
         "chamber": "House",
-        "state": "MD06",
-        "ticker": "BWXT",
-        "action": "Buy",
-        "amount_range": "$15,001 - $50,000",
-        "amount_low": 15001,
-        "transaction_date": "07/24/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
-      },
-      {
-        "politician": "April McClain Delaney",
-        "chamber": "House",
-        "state": "MD06",
-        "ticker": "BWXT",
+        "state": "TX37",
+        "ticker": "KO",
         "action": "Buy",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/27/2026",
+        "transaction_date": "07/01/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035136.pdf"
       },
       {
-        "politician": "April McClain Delaney",
+        "politician": "Julie Johnson",
         "chamber": "House",
-        "state": "MD06",
-        "ticker": "BWXT",
+        "state": "TX32",
+        "ticker": "MMM",
         "action": "Buy",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/30/2026",
+        "transaction_date": "03/15/2025",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035035.pdf"
       },
       {
-        "politician": "April McClain Delaney",
+        "politician": "Julie Johnson",
         "chamber": "House",
-        "state": "MD06",
-        "ticker": "CHRW",
-        "action": "Buy",
-        "amount_range": "$15,001 - $50,000",
-        "amount_low": 15001,
-        "transaction_date": "07/31/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
-      },
-      {
-        "politician": "April McClain Delaney",
-        "chamber": "House",
-        "state": "MD06",
-        "ticker": "CHRW",
-        "action": "Buy",
-        "amount_range": "$15,001 - $50,000",
-        "amount_low": 15001,
-        "transaction_date": "07/27/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
-      },
-      {
-        "politician": "April McClain Delaney",
-        "chamber": "House",
-        "state": "MD06",
-        "ticker": "CHRW",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "07/28/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
-      },
-      {
-        "politician": "April McClain Delaney",
-        "chamber": "House",
-        "state": "MD06",
-        "ticker": "CHRW",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "07/24/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
-      },
-      {
-        "politician": "April McClain Delaney",
-        "chamber": "House",
-        "state": "MD06",
-        "ticker": "CHRW",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "07/20/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
-      },
-      {
-        "politician": "April McClain Delaney",
-        "chamber": "House",
-        "state": "MD06",
-        "ticker": "CLH",
+        "state": "TX32",
+        "ticker": "AOS",
         "action": "Sell",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/24/2026",
+        "transaction_date": "09/23/2025",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035035.pdf"
       },
       {
-        "politician": "April McClain Delaney",
+        "politician": "Julie Johnson",
         "chamber": "House",
-        "state": "MD06",
-        "ticker": "CLH",
+        "state": "TX32",
+        "ticker": "AOS",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "09/23/2025",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035035.pdf"
+      },
+      {
+        "politician": "Julie Johnson",
+        "chamber": "House",
+        "state": "TX32",
+        "ticker": "ADBE",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "10/30/2025",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035035.pdf"
+      },
+      {
+        "politician": "Julie Johnson",
+        "chamber": "House",
+        "state": "TX32",
+        "ticker": "ADBE",
         "action": "Sell",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/27/2026",
+        "transaction_date": "10/30/2025",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035118.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035035.pdf"
+      },
+      {
+        "politician": "Julie Johnson",
+        "chamber": "House",
+        "state": "TX32",
+        "ticker": "A",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "09/23/2025",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035035.pdf"
+      },
+      {
+        "politician": "Julie Johnson",
+        "chamber": "House",
+        "state": "TX32",
+        "ticker": "A",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "09/23/2025",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035035.pdf"
+      },
+      {
+        "politician": "Julie Johnson",
+        "chamber": "House",
+        "state": "TX32",
+        "ticker": "ALK",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "10/21/2025",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035035.pdf"
+      },
+      {
+        "politician": "Julie Johnson",
+        "chamber": "House",
+        "state": "TX32",
+        "ticker": "ALK",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "10/21/2025",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035035.pdf"
       }
     ],
-    "summary": "60 recent congressional trades from 1 House periodic transaction reports (31 buys, 28 sells)."
+    "summary": "60 recent congressional trades from 2 House periodic transaction reports (31 buys, 28 sells)."
   }
 }
