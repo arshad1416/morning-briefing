@@ -1,15 +1,20 @@
 {
  "ticker": "EBS",
  "name": "Emergent BioSolutions Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 7.6,
- "change_pct": 0.4,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 5.14,
+ "change_pct": -31.9,
  "sector": "Healthcare",
- "signals": [],
+ "signals": [
+  "oversold_rsi",
+  "below_ma",
+  "volume_surge",
+  "near_low"
+ ],
  "technical": {
-  "rsi_14": 47.6,
-  "sma_20": 7.58,
-  "sma_50": 8.02
+  "rsi_14": 19.2,
+  "sma_20": 7.43,
+  "sma_50": 7.94
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -18,7 +23,7 @@
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,21 +1,23 @@
 {
  "ticker": "ALTO",
  "name": "Alto Ingredients, Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 5.23,
- "change_pct": -1.13,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 4.53,
+ "change_pct": -10.38,
  "sector": "Basic Materials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 52.6,
-  "sma_20": 5.11,
-  "sma_50": 5.3
+  "rsi_14": 41.9,
+  "sma_20": 5.05,
+  "sma_50": 5.28
  },
  "fundamentals": {
-  "pe_ratio": 13.763158,
-  "market_cap": "405M",
+  "pe_ratio": 12.256756,
+  "market_cap": "351M",
   "beta": 0.188,
   "dividend_yield": null
  },

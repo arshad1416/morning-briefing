@@ -1,24 +1,26 @@
 {
  "ticker": "EOG",
  "name": "EOG Resources, Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 137.35,
- "change_pct": -4.3,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 134.89,
+ "change_pct": 0.49,
  "sector": "Energy",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 45.9,
-  "sma_20": 141.1,
-  "sma_50": 136.7
+  "rsi_14": 43.3,
+  "sma_20": 141.06,
+  "sma_50": 136.64
  },
  "fundamentals": {
-  "pe_ratio": 10.688716,
-  "market_cap": "73.2B",
+  "pe_ratio": 10.497276,
+  "market_cap": "70.8B",
   "beta": 0.278,
-  "dividend_yield": 0.028399999999999998
+  "dividend_yield": 0.0304
  },
  "council_analysis": {
   "score": 7

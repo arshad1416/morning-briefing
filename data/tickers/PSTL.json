@@ -1,25 +1,26 @@
 {
  "ticker": "PSTL",
  "name": "Postal Realty Trust, Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 22.56,
- "change_pct": -2.38,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 23.06,
+ "change_pct": -1.18,
  "sector": "Real Estate",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 34.6,
-  "sma_20": 23.7,
+  "rsi_14": 41.2,
+  "sma_20": 23.68,
   "sma_50": 23.63
  },
  "fundamentals": {
-  "pe_ratio": 43.384617,
-  "market_cap": "848M",
-  "beta": 0.79,
-  "dividend_yield": 0.0425
+  "pe_ratio": 42.694443,
+  "market_cap": "869M",
+  "beta": null,
+  "dividend_yield": 0.042
  },
  "council_analysis": {
   "score": 5

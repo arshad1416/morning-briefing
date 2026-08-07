@@ -1,9 +1,9 @@
 {
  "ticker": "ASB",
  "name": "Associated Banc-Corp",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 31.79,
- "change_pct": 0.13,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 31.64,
+ "change_pct": 0.35,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
@@ -12,20 +12,70 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 63.3,
-  "sma_20": 30.96,
-  "sma_50": 29.88
+  "rsi_14": 60.9,
+  "sma_20": 31.01,
+  "sma_50": 29.95
  },
  "fundamentals": {
-  "pe_ratio": 10.924398,
+  "pe_ratio": 11.062937,
   "market_cap": "6.0B",
   "beta": 0.771,
-  "dividend_yield": 0.0302
+  "dividend_yield": 0.0304
  },
  "council_analysis": {
   "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "ASB",
+   "date": "2026-10-22",
+   "epsEstimate": 0.75,
+   "epsActual": null
+  },
+  {
+   "ticker": "ASB",
+   "date": "2026-07-23",
+   "epsEstimate": 0.72,
+   "epsActual": 0.63
+  },
+  {
+   "ticker": "ASB",
+   "date": "2026-04-23",
+   "epsEstimate": 0.69,
+   "epsActual": 0.7
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "ASB",
+   "date": "2026-08-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/7789/000000778926000202/asb-20260630.htm"
+  },
+  {
+   "ticker": "ASB",
+   "date": "2026-04-28",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/7789/000000778926000141/asb-20260331.htm"
+  },
+  {
+   "ticker": "ASB",
+   "date": "2026-02-12",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/7789/000000778926000071/asb-20251231.htm"
+  },
+  {
+   "ticker": "ASB",
+   "date": "2025-10-28",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/7789/000000778925000179/asb-20250930.htm"
+  },
+  {
+   "ticker": "ASB",
+   "date": "2025-07-29",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/7789/000000778925000116/asb-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

@@ -1,24 +1,26 @@
 {
  "ticker": "SAH",
  "name": "Sonic Automotive, Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 89.22,
- "change_pct": 1.08,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 87.14,
+ "change_pct": 0.39,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 45.0,
-  "sma_20": 97.31,
-  "sma_50": 88.89
+  "rsi_14": 43.0,
+  "sma_20": 96.78,
+  "sma_50": 89.02
  },
  "fundamentals": {
-  "pe_ratio": 14.919733,
+  "pe_ratio": 13.876592,
   "market_cap": "2.8B",
   "beta": 0.888,
-  "dividend_yield": 0.018600000000000002
+  "dividend_yield": 0.0189
  },
  "council_analysis": {
   "score": 7

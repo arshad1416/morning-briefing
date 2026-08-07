@@ -1,28 +1,27 @@
 {
  "ticker": "ONT",
  "name": "Onterris, Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 22.88,
- "change_pct": 0.13,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 14.93,
+ "change_pct": -34.03,
  "sector": "Industrials",
  "signals": [
-  "extended_rsi",
-  "above_ma",
-  "premium_pe"
+  "oversold_rsi",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 66.3,
-  "sma_20": 20.66,
-  "sma_50": 18.96
+  "rsi_14": 32.3,
+  "sma_20": 20.32,
+  "sma_50": 18.93
  },
  "fundamentals": {
-  "pe_ratio": 152.53333,
-  "market_cap": "827M",
+  "pe_ratio": null,
+  "market_cap": "540M",
   "beta": 1.675,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 4
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

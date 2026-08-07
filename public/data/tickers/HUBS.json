@@ -1,23 +1,25 @@
 {
  "ticker": "HUBS",
  "name": "HubSpot, Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 248.86,
- "change_pct": -0.01,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 200.68,
+ "change_pct": -19.8,
  "sector": "Technology",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
+  "volume_surge",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 62.4,
-  "sma_20": 223.74,
-  "sma_50": 207.43
+  "rsi_14": 43.8,
+  "sma_20": 223.54,
+  "sma_50": 207.51
  },
  "fundamentals": {
-  "pe_ratio": 126.324875,
-  "market_cap": "12.7B",
+  "pe_ratio": 71.671425,
+  "market_cap": "10.3B",
   "beta": 1.169,
   "dividend_yield": null
  },

@@ -1,23 +1,25 @@
 {
  "ticker": "AVNT",
  "name": "Avient Corporation",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 37.76,
- "change_pct": -1.09,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 43.02,
+ "change_pct": 13.45,
  "sector": "Basic Materials",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 54.6,
-  "sma_20": 36.74,
-  "sma_50": 36.4
+  "rsi_14": 70.5,
+  "sma_20": 37.1,
+  "sma_50": 36.56
  },
  "fundamentals": {
-  "pe_ratio": 21.950583,
-  "market_cap": "3.5B",
+  "pe_ratio": 25.011627,
+  "market_cap": "3.9B",
   "beta": 1.28,
-  "dividend_yield": 0.0288
+  "dividend_yield": 0.028999999999999998
  },
  "council_analysis": {
   "score": 6

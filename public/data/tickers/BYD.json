@@ -1,28 +1,29 @@
 {
  "ticker": "BYD",
  "name": "Boyd Gaming Corporation",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 87.39,
- "change_pct": 1.24,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 84.69,
+ "change_pct": 0.44,
  "sector": "Consumer Cyclical",
  "signals": [
-  "near_high",
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.5,
-  "sma_20": 87.41,
-  "sma_50": 86.87
+  "rsi_14": 43.2,
+  "sma_20": 87.12,
+  "sma_50": 86.89
  },
  "fundamentals": {
-  "pe_ratio": 3.809555,
-  "market_cap": "6.3B",
+  "pe_ratio": 3.7573202,
+  "market_cap": "6.2B",
   "beta": 1.084,
-  "dividend_yield": 0.0088
+  "dividend_yield": 0.009000000000000001
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

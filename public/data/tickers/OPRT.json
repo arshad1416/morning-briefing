@@ -1,22 +1,25 @@
 {
  "ticker": "OPRT",
  "name": "Oportun Financial Corporation",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 6.12,
- "change_pct": 1.83,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 7.55,
+ "change_pct": 24.59,
  "sector": "Financial Services",
  "signals": [
+  "overbought_rsi",
   "above_ma",
+  "volume_surge",
+  "near_high",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 59.2,
-  "sma_20": 5.79,
-  "sma_50": 5.51
+  "rsi_14": 75.3,
+  "sma_20": 5.88,
+  "sma_50": 5.55
  },
  "fundamentals": {
-  "pe_ratio": 16.54054,
-  "market_cap": "281M",
+  "pe_ratio": 20.405405,
+  "market_cap": "347M",
   "beta": 1.205,
   "dividend_yield": null
  },

@@ -1,24 +1,28 @@
 {
  "ticker": "MRU.TO",
  "name": "METRO INC",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 91.96,
- "change_pct": -0.88,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 90.61,
+ "change_pct": -1.12,
  "sector": "Consumer Defensive",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma",
+  "near_low"
+ ],
  "technical": {
-  "rsi_14": 46.7,
-  "sma_20": 93.14,
-  "sma_50": 91.9
+  "rsi_14": 41.9,
+  "sma_20": 93.06,
+  "sma_50": 91.96
  },
  "fundamentals": {
-  "pe_ratio": 19.691648,
-  "market_cap": "19.4B",
+  "pe_ratio": 19.31983,
+  "market_cap": "19.1B",
   "beta": 0.362,
-  "dividend_yield": 0.0176
+  "dividend_yield": 0.0178
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

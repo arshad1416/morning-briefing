@@ -1,28 +1,29 @@
 {
  "ticker": "WM",
  "name": "Waste Management, Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 225.63,
- "change_pct": 0.17,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 223.63,
+ "change_pct": -0.3,
  "sector": "Industrials",
  "signals": [
   "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 42.6,
-  "sma_20": 233.95,
-  "sma_50": 225.63
+  "rsi_14": 40.0,
+  "sma_20": 233.49,
+  "sma_50": 225.78
  },
  "fundamentals": {
-  "pe_ratio": 59.220474,
-  "market_cap": "90.2B",
+  "pe_ratio": 59.00528,
+  "market_cap": "89.4B",
   "beta": 0.437,
-  "dividend_yield": 0.015600000000000001
+  "dividend_yield": 0.0158
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

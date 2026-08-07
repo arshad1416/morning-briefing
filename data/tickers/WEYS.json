@@ -1,25 +1,26 @@
 {
  "ticker": "WEYS",
  "name": "Weyco Group, Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 42.0,
- "change_pct": 2.54,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 44.12,
+ "change_pct": 0.51,
  "sector": "Consumer Cyclical",
  "signals": [
-  "extended_rsi",
+  "overbought_rsi",
   "above_ma",
-  "near_high"
+  "near_high",
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 70.4,
-  "sma_20": 39.15,
-  "sma_50": 37.8
+  "rsi_14": 76.6,
+  "sma_20": 39.58,
+  "sma_50": 38.0
  },
  "fundamentals": {
-  "pe_ratio": 16.935484,
-  "market_cap": "400M",
-  "beta": null,
-  "dividend_yield": 0.026600000000000002
+  "pe_ratio": 12.122252,
+  "market_cap": "421M",
+  "beta": 0.85,
+  "dividend_yield": 0.025099999999999997
  },
  "council_analysis": {
   "score": 6

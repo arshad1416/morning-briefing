@@ -1,81 +1,32 @@
 {
  "ticker": "ALL",
  "name": "Allstate Corporation (The)",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 266.2,
- "change_pct": 1.38,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 269.99,
+ "change_pct": 2.04,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
   "above_ma",
   "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 63.4,
-  "sma_20": 256.95,
-  "sma_50": 237.91
+  "rsi_14": 66.2,
+  "sma_20": 257.94,
+  "sma_50": 239.05
  },
  "fundamentals": {
-  "pe_ratio": 5.8879676,
-  "market_cap": "68.5B",
+  "pe_ratio": 5.40747,
+  "market_cap": "69.5B",
   "beta": 0.156,
-  "dividend_yield": 0.016399999999999998
+  "dividend_yield": 0.0165
  },
  "council_analysis": {
-  "score": 9
+  "score": 8
  },
- "upcoming_earnings": [
-  {
-   "ticker": "ALL",
-   "date": "2026-11-04",
-   "epsEstimate": 5.99,
-   "epsActual": null
-  },
-  {
-   "ticker": "ALL",
-   "date": "2026-04-29",
-   "epsEstimate": 7.24,
-   "epsActual": 10.65
-  },
-  {
-   "ticker": "ALL",
-   "date": "2026-02-04",
-   "epsEstimate": 10.21,
-   "epsActual": 14.37
-  }
- ],
- "recent_sec_filings": [
-  {
-   "ticker": "ALL",
-   "date": "2026-08-05",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000118/all-20260630.htm"
-  },
-  {
-   "ticker": "ALL",
-   "date": "2026-04-29",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000075/all-20260331.htm"
-  },
-  {
-   "ticker": "ALL",
-   "date": "2026-02-20",
-   "form": "Annual Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000031/all-20251231.htm"
-  },
-  {
-   "ticker": "ALL",
-   "date": "2025-11-05",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905125000102/all-20250930.htm"
-  },
-  {
-   "ticker": "ALL",
-   "date": "2025-07-30",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905125000070/all-20250630.htm"
-  }
- ],
+ "upcoming_earnings": [],
+ "recent_sec_filings": [],
  "reddit_mentions": []
 }

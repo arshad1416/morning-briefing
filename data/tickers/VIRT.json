@@ -1,23 +1,25 @@
 {
  "ticker": "VIRT",
  "name": "Virtu Financial, Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 59.02,
- "change_pct": 3.54,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 56.32,
+ "change_pct": -3.68,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 50.0,
-  "sma_20": 59.65,
-  "sma_50": 58.12
+  "rsi_14": 42.2,
+  "sma_20": 59.09,
+  "sma_50": 58.2
  },
  "fundamentals": {
-  "pe_ratio": 9.803987,
-  "market_cap": "5.2B",
+  "pe_ratio": 9.355066,
+  "market_cap": "5.0B",
   "beta": 0.607,
-  "dividend_yield": 0.0168
+  "dividend_yield": 0.016399999999999998
  },
  "council_analysis": {
   "score": 6

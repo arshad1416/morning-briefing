@@ -1,23 +1,25 @@
 {
  "ticker": "BOH",
  "name": "Bank of Hawaii Corporation",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 80.62,
- "change_pct": -0.29,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 79.65,
+ "change_pct": 0.01,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 46.0,
-  "sma_20": 82.32,
-  "sma_50": 80.36
+  "rsi_14": 42.1,
+  "sma_20": 82.16,
+  "sma_50": 80.38
  },
  "fundamentals": {
-  "pe_ratio": 14.986059,
-  "market_cap": "3.2B",
+  "pe_ratio": 14.804832,
+  "market_cap": "3.1B",
   "beta": 0.696,
-  "dividend_yield": 0.0346
+  "dividend_yield": 0.0352
  },
  "council_analysis": {
   "score": 6

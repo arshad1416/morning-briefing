@@ -1,9 +1,9 @@
 {
  "ticker": "CROX",
  "name": "Crocs, Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 140.34,
- "change_pct": -0.6,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 137.05,
+ "change_pct": -0.2,
  "sector": "Consumer Cyclical",
  "signals": [
   "above_ma",
@@ -12,20 +12,70 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 60.9,
-  "sma_20": 133.85,
-  "sma_50": 126.99
+  "rsi_14": 56.7,
+  "sma_20": 134.2,
+  "sma_50": 127.35
  },
  "fundamentals": {
-  "pe_ratio": 12.452306,
-  "market_cap": "6.7B",
+  "pe_ratio": 12.160604,
+  "market_cap": "6.6B",
   "beta": 1.526,
   "dividend_yield": null
  },
  "council_analysis": {
   "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "CROX",
+   "date": "2026-10-29",
+   "epsEstimate": 3.3,
+   "epsActual": null
+  },
+  {
+   "ticker": "CROX",
+   "date": "2026-07-30",
+   "epsEstimate": 4.35,
+   "epsActual": 4.55
+  },
+  {
+   "ticker": "CROX",
+   "date": "2026-04-30",
+   "epsEstimate": 2.79,
+   "epsActual": 2.99
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "CROX",
+   "date": "2026-07-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1334036/000133403626000052/crox-20260630.htm"
+  },
+  {
+   "ticker": "CROX",
+   "date": "2026-04-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1334036/000133403626000032/crox-20260331.htm"
+  },
+  {
+   "ticker": "CROX",
+   "date": "2026-02-12",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1334036/000133403626000006/crox-20251231.htm"
+  },
+  {
+   "ticker": "CROX",
+   "date": "2025-10-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1334036/000133403625000101/crox-20250930.htm"
+  },
+  {
+   "ticker": "CROX",
+   "date": "2025-08-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1334036/000133403625000085/crox-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

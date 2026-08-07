@@ -1,27 +1,28 @@
 {
  "ticker": "ACIC",
  "name": "American Coastal Insurance Corp",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 11.07,
- "change_pct": 0.36,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 10.15,
+ "change_pct": -7.31,
  "sector": "Financial Services",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 57.0,
-  "sma_20": 10.62,
-  "sma_50": 10.68
+  "rsi_14": 41.3,
+  "sma_20": 10.56,
+  "sma_50": 10.66
  },
  "fundamentals": {
-  "pe_ratio": 5.172897,
-  "market_cap": "536M",
+  "pe_ratio": 4.74299,
+  "market_cap": "492M",
   "beta": -0.457,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

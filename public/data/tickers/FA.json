@@ -1,27 +1,30 @@
 {
  "ticker": "FA",
  "name": "First Advantage Corporation",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 20.38,
- "change_pct": -1.26,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 22.77,
+ "change_pct": 10.75,
  "sector": "Industrials",
  "signals": [
+  "extended_rsi",
+  "above_ma",
+  "near_high",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 53.9,
-  "sma_20": 20.62,
-  "sma_50": 18.41
+  "rsi_14": 66.1,
+  "sma_20": 20.8,
+  "sma_50": 18.57
  },
  "fundamentals": {
-  "pe_ratio": 407.59998,
-  "market_cap": "3.5B",
+  "pe_ratio": 455.4,
+  "market_cap": "3.9B",
   "beta": 1.165,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

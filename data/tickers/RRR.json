@@ -1,23 +1,25 @@
 {
  "ticker": "RRR",
  "name": "Red Rock Resorts, Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 64.2,
- "change_pct": -0.11,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 61.4,
+ "change_pct": 0.7,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.7,
-  "sma_20": 64.66,
-  "sma_50": 62.51
+  "rsi_14": 42.1,
+  "sma_20": 64.39,
+  "sma_50": 62.54
  },
  "fundamentals": {
-  "pe_ratio": 20.316454,
-  "market_cap": "6.5B",
-  "beta": null,
-  "dividend_yield": 0.016200000000000003
+  "pe_ratio": 21.694347,
+  "market_cap": "6.2B",
+  "beta": 1.336,
+  "dividend_yield": 0.0171
  },
  "council_analysis": {
   "score": 6

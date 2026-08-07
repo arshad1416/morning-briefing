@@ -1,28 +1,29 @@
 {
  "ticker": "RDN",
  "name": "Radian Group Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 39.28,
- "change_pct": -0.92,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 36.63,
+ "change_pct": -6.48,
  "sector": "Financial Services",
  "signals": [
-  "above_ma",
-  "near_high",
-  "value_pe"
+  "rsi_dip",
+  "below_ma",
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 59.1,
-  "sma_20": 38.65,
-  "sma_50": 36.75
+  "rsi_14": 39.6,
+  "sma_20": 38.6,
+  "sma_50": 36.77
  },
  "fundamentals": {
-  "pe_ratio": 9.091435,
+  "pe_ratio": 8.538462,
   "market_cap": null,
   "beta": 0.713,
   "dividend_yield": 0.025699999999999997
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,23 +1,26 @@
 {
  "ticker": "CELH",
  "name": "Celsius Holdings, Inc.",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 30.03,
- "change_pct": 1.66,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 24.22,
+ "change_pct": -16.91,
  "sector": "Consumer Defensive",
  "signals": [
-  "above_ma",
+  "oversold_rsi",
+  "below_ma",
+  "volume_surge",
+  "near_low",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 53.3,
-  "sma_20": 29.2,
-  "sma_50": 29.69
+  "rsi_14": 32.1,
+  "sma_20": 28.84,
+  "sma_50": 29.56
  },
  "fundamentals": {
-  "pe_ratio": 69.836975,
-  "market_cap": "7.7B",
+  "pe_ratio": 56.325813,
+  "market_cap": "6.2B",
   "beta": 0.916,
   "dividend_yield": null
  },

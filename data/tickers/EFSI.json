@@ -1,30 +1,82 @@
 {
  "ticker": "EFSI",
  "name": "Eagle Financial Services Inc",
- "generated_at": "2026-08-06T14:45:01.552942+00:00",
- "price": 40.5,
- "change_pct": 0.22,
+ "generated_at": "2026-08-07T11:45:01.169272+00:00",
+ "price": 41.76,
+ "change_pct": 3.7,
  "sector": "Financial Services",
  "signals": [
-  "below_ma",
+  "above_ma",
+  "volume_surge",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.0,
-  "sma_20": 40.88,
-  "sma_50": 40.86
+  "rsi_14": 57.6,
+  "sma_20": 40.96,
+  "sma_50": 40.91
  },
  "fundamentals": {
-  "pe_ratio": 10.629921,
-  "market_cap": "219M",
+  "pe_ratio": 10.960629,
+  "market_cap": "226M",
   "beta": 0.211,
-  "dividend_yield": 0.030699999999999998
+  "dividend_yield": 0.0308
  },
  "council_analysis": {
-  "score": 6
+  "score": 10
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "EFSI",
+   "date": "2026-10-22",
+   "epsEstimate": 0.88,
+   "epsActual": null
+  },
+  {
+   "ticker": "EFSI",
+   "date": "2026-07-22",
+   "epsEstimate": 0.77,
+   "epsActual": 0.41
+  },
+  {
+   "ticker": "EFSI",
+   "date": "2026-04-23",
+   "epsEstimate": 0.88,
+   "epsActual": 0.69
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "EFSI",
+   "date": "2026-05-11",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/880641/000088064126000013/efsi-20260331.htm"
+  },
+  {
+   "ticker": "EFSI",
+   "date": "2026-03-16",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/880641/000088064126000004/efsi-20251231.htm"
+  },
+  {
+   "ticker": "EFSI",
+   "date": "2025-11-13",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/880641/000119312525279991/efsi-20250930.htm"
+  },
+  {
+   "ticker": "EFSI",
+   "date": "2025-08-13",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/880641/000095017025107957/efsi-20250630.htm"
+  },
+  {
+   "ticker": "EFSI",
+   "date": "2025-05-14",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/880641/000095017025071376/efsi-20250331.htm"
+  }
+ ],
  "reddit_mentions": []
 }
