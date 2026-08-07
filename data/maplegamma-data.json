@@ -1,46 +1,46 @@
 {
-  "generated_at": "2026-08-07T10:07:45-04:00",
+  "generated_at": "2026-08-07T10:26:45-04:00",
   "market_overview": {
-    "total_net_gex": 3204428,
-    "total_oi": 3648767,
-    "current_price": 770.84,
-    "change_pct": 0.3
+    "total_net_gex": 3224031,
+    "total_oi": 3461782,
+    "current_price": 772.72,
+    "change_pct": 0.54
   },
   "tickers": {
     "SPY": {
-      "current_price": 770.84,
-      "change_pct": 0.3,
+      "current_price": 772.72,
+      "change_pct": 0.54,
       "gamma_regime": "bullish",
-      "total_gex": 3204428,
-      "total_dex": 167351688,
-      "total_vex": 983933547,
-      "total_vanna": 7832954,
-      "total_charm": -1670617,
-      "total_dealer_gex": 1414794,
-      "gamma_flip": 761.88,
+      "total_gex": 3224031,
+      "total_dex": 182280821,
+      "total_vex": 963872949,
+      "total_vanna": 7634715,
+      "total_charm": -2117122,
+      "total_dealer_gex": 1831235,
+      "gamma_flip": 763.13,
       "max_pain": 744.0,
       "max_gex_strike": 775.0,
-      "max_gex_value": 480624,
+      "max_gex_value": 676739,
       "neutral_range": [],
       "floor_zone": {
-        "strike": 760.0,
-        "net_gex": 288203,
-        "total_gex": 288203,
-        "range_start": 755.0,
-        "range_end": 765.0,
+        "strike": 770.0,
+        "net_gex": 297068,
+        "total_gex": 297068,
+        "range_start": 765.0,
+        "range_end": 775.0,
         "strength": "strong",
-        "narrative": "Gamma floor at $760"
+        "narrative": "Gamma floor at $770"
       },
       "ceiling_zone": {
         "strike": 775.0,
-        "net_gex": 480624,
-        "total_gex": 480624,
+        "net_gex": 676739,
+        "total_gex": 676739,
         "range_start": 770.0,
         "range_end": 780.0,
         "strength": "strong",
         "narrative": "Gamma ceiling at $775"
       },
-      "narrative": "Net GEX: $+3,204,428 \u2014 dealers are long gamma (range-bound)"
+      "narrative": "Net GEX: $+3,224,031 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
