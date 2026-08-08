@@ -41,8 +41,8 @@ export function AuthShell({ title, subtitle, children }: { title: React.ReactNod
           </div>
           <p className="mt-6 text-center text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
             By continuing you agree to the{' '}
-            <a href="/terms.html" className="underline hover:text-[var(--color-text-secondary)]">Terms</a> and{' '}
-            <a href="/privacy.html" className="underline hover:text-[var(--color-text-secondary)]">Privacy Policy</a>.
+            <a href="/terms" className="underline hover:text-[var(--color-text-secondary)]">Terms</a> and{' '}
+            <a href="/privacy" className="underline hover:text-[var(--color-text-secondary)]">Privacy Policy</a>.
             Not investment advice.
           </p>
         </div>

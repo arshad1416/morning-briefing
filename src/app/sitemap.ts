@@ -23,8 +23,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'daily' as const,
       priority: 0.8,
     })),
-    { url: `${SITE}/terms.html`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
-    { url: `${SITE}/privacy.html`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
+    // Pages serves public/terms.html at /terms (pretty URLs) and 308s the
+    // .html and trailing-slash variants — the sitemap must list the 200 URL.
+    { url: `${SITE}/terms`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
+    { url: `${SITE}/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
   ];
 
   let dates: string[] = [];

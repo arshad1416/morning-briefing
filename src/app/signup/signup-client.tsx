@@ -121,11 +121,11 @@ export function SignupClient() {
         <div className="space-y-2.5 pt-1">
           <CheckboxField checked={acceptTerms} onChange={setAcceptTerms}>
             I accept the{' '}
-            <a href="/terms.html" target="_blank" rel="noopener noreferrer" className="underline">
+            <a href="/terms" target="_blank" rel="noopener noreferrer" className="underline">
               Terms of Service
             </a>{' '}
             and{' '}
-            <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="underline">
+            <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline">
               Privacy Policy
             </a>
             .
