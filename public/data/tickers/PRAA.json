@@ -1,21 +1,23 @@
 {
  "ticker": "PRAA",
  "name": "PRA Group, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 17.78,
- "change_pct": 3.46,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 20.74,
+ "change_pct": 14.27,
  "sector": "Financial Services",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 52.9,
-  "sma_20": 17.62,
-  "sma_50": 16.93
+  "rsi_14": 69.9,
+  "sma_20": 17.76,
+  "sma_50": 17.05
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "678M",
+  "market_cap": "791M",
   "beta": 1.1,
   "dividend_yield": null
  },

@@ -1,17 +1,19 @@
 {
  "ticker": "CERT",
  "name": "Certara, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 8.06,
- "change_pct": 0.69,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 8.24,
+ "change_pct": 1.35,
  "sector": "Healthcare",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 64.8,
-  "sma_20": 7.42,
-  "sma_50": 6.49
+  "rsi_14": 66.9,
+  "sma_20": 7.5,
+  "sma_50": 6.54
  },
  "fundamentals": {
   "pe_ratio": null,

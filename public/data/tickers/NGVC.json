@@ -1,24 +1,28 @@
 {
  "ticker": "NGVC",
  "name": "Natural Grocers by Vitamin Cott",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 31.77,
- "change_pct": -0.56,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 28.18,
+ "change_pct": -13.19,
  "sector": "Consumer Defensive",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma",
+  "value_pe"
+ ],
  "technical": {
-  "rsi_14": 49.7,
-  "sma_20": 31.94,
-  "sma_50": 31.39
+  "rsi_14": 36.0,
+  "sma_20": 31.74,
+  "sma_50": 31.37
  },
  "fundamentals": {
-  "pe_ratio": 15.274039,
-  "market_cap": "732M",
+  "pe_ratio": 13.548078,
+  "market_cap": "649M",
   "beta": 1.274,
   "dividend_yield": 0.018799999999999997
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

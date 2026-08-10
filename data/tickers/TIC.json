@@ -1,26 +1,28 @@
 {
  "ticker": "TIC",
  "name": "TIC Solutions, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 8.27,
- "change_pct": 1.1,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 9.48,
+ "change_pct": 9.22,
  "sector": "Industrials",
  "signals": [
-  "above_ma"
+  "overbought_rsi",
+  "above_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 63.3,
-  "sma_20": 7.32,
-  "sma_50": 7.86
+  "rsi_14": 75.4,
+  "sma_20": 7.44,
+  "sma_50": 7.89
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "1.8B",
+  "market_cap": "2.1B",
   "beta": 1.743,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

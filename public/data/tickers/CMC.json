@@ -1,28 +1,28 @@
 {
  "ticker": "CMC",
  "name": "Commercial Metals Company",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 76.14,
- "change_pct": 0.62,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 74.17,
+ "change_pct": 0.64,
  "sector": "Industrials",
  "signals": [
-  "extended_rsi",
   "above_ma",
-  "value_pe"
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 68.5,
-  "sma_20": 68.47,
-  "sma_50": 70.11
+  "rsi_14": 62.4,
+  "sma_20": 68.92,
+  "sma_50": 70.02
  },
  "fundamentals": {
-  "pe_ratio": 14.393195,
+  "pe_ratio": 14.019849,
   "market_cap": null,
   "beta": 1.529,
-  "dividend_yield": 0.0106
+  "dividend_yield": 0.0109
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

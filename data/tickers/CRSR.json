@@ -1,23 +1,26 @@
 {
  "ticker": "CRSR",
  "name": "Corsair Gaming, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 10.81,
- "change_pct": -3.52,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 14.12,
+ "change_pct": 33.08,
  "sector": "Technology",
  "signals": [
+  "overbought_rsi",
   "above_ma",
+  "volume_surge",
+  "near_high",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 58.2,
-  "sma_20": 10.21,
-  "sma_50": 9.71
+  "rsi_14": 75.1,
+  "sma_20": 10.42,
+  "sma_50": 9.79
  },
  "fundamentals": {
-  "pe_ratio": 120.065544,
-  "market_cap": "1.2B",
+  "pe_ratio": 156.88889,
+  "market_cap": "1.5B",
   "beta": 1.86,
   "dividend_yield": null
  },

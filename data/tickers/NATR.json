@@ -1,28 +1,29 @@
 {
  "ticker": "NATR",
  "name": "Nature's Sunshine Products, Inc",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 19.79,
- "change_pct": -1.35,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 16.8,
+ "change_pct": -17.4,
  "sector": "Consumer Defensive",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
+  "volume_surge",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 39.9,
-  "sma_20": 20.67,
-  "sma_50": 20.75
+  "rsi_14": 25.7,
+  "sma_20": 20.48,
+  "sma_50": 20.66
  },
  "fundamentals": {
-  "pe_ratio": 17.99091,
-  "market_cap": "348M",
+  "pe_ratio": 15.272726,
+  "market_cap": "295M",
   "beta": 0.889,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,27 +1,28 @@
 {
  "ticker": "EVGO",
  "name": "EVgo Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 1.57,
- "change_pct": 2.29,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 1.5,
+ "change_pct": -0.99,
  "sector": "Consumer Cyclical",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 43.9,
-  "sma_20": 1.63,
-  "sma_50": 1.85
+  "rsi_14": 40.9,
+  "sma_20": 1.62,
+  "sma_50": 1.84
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "491M",
+  "market_cap": "472M",
   "beta": 2.867,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,22 +1,24 @@
 {
  "ticker": "PLNT",
  "name": "Planet Fitness, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 53.39,
- "change_pct": -5.65,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 50.42,
+ "change_pct": -1.54,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.3,
-  "sma_20": 54.14,
-  "sma_50": 52.76
+  "rsi_14": 37.1,
+  "sma_20": 53.98,
+  "sma_50": 52.69
  },
  "fundamentals": {
-  "pe_ratio": 19.274368,
-  "market_cap": "4.2B",
-  "beta": 1.025,
+  "pe_ratio": 20.168,
+  "market_cap": "4.0B",
+  "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {

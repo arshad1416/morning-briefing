@@ -1,22 +1,24 @@
 {
  "ticker": "PTGX",
  "name": "Protagonist Therapeutics, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 144.97,
- "change_pct": 5.57,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 145.76,
+ "change_pct": -0.29,
  "sector": "Healthcare",
  "signals": [
   "above_ma",
-  "near_high"
+  "near_high",
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 64.4,
-  "sma_20": 135.58,
-  "sma_50": 122.52
+  "rsi_14": 64.7,
+  "sma_20": 136.36,
+  "sma_50": 123.41
  },
  "fundamentals": {
-  "pe_ratio": null,
-  "market_cap": "9.3B",
+  "pe_ratio": 142.90196,
+  "market_cap": "9.4B",
   "beta": 1.794,
   "dividend_yield": null
  },

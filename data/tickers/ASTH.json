@@ -1,23 +1,24 @@
 {
  "ticker": "ASTH",
  "name": "Astrana Health Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 34.48,
- "change_pct": -3.77,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 35.85,
+ "change_pct": 5.02,
  "sector": "Healthcare",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 27.1,
-  "sma_20": 41.03,
-  "sma_50": 41.18
+  "rsi_14": 35.4,
+  "sma_20": 40.46,
+  "sma_50": 41.12
  },
  "fundamentals": {
-  "pe_ratio": 56.52459,
-  "market_cap": "1.7B",
+  "pe_ratio": 58.762295,
+  "market_cap": "1.8B",
   "beta": 0.9,
   "dividend_yield": null
  },

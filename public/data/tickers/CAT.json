@@ -1,24 +1,26 @@
 {
  "ticker": "CAT",
  "name": "Caterpillar, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 875.94,
- "change_pct": 0.56,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 839.58,
+ "change_pct": -2.03,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.5,
-  "sma_20": 874.0,
-  "sma_50": 917.36
+  "rsi_14": 42.6,
+  "sma_20": 867.5,
+  "sma_50": 915.6
  },
  "fundamentals": {
-  "pe_ratio": 37.65864,
-  "market_cap": null,
+  "pe_ratio": 36.157623,
+  "market_cap": "385.9B",
   "beta": 1.605,
-  "dividend_yield": 0.0075
+  "dividend_yield": 0.0076
  },
  "council_analysis": {
   "score": 5

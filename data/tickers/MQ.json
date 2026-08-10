@@ -1,24 +1,27 @@
 {
  "ticker": "MQ",
  "name": "Marqeta, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 16.94,
- "change_pct": 1.71,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 16.45,
+ "change_pct": -1.44,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "below_ma",
+  "premium_pe"
+ ],
  "technical": {
-  "rsi_14": 49.0,
-  "sma_20": 17.28,
-  "sma_50": 16.45
+  "rsi_14": 45.0,
+  "sma_20": 17.3,
+  "sma_50": 16.46
  },
  "fundamentals": {
-  "pe_ratio": 23.534721,
-  "market_cap": "1.8B",
+  "pe_ratio": 182.77779,
+  "market_cap": "1.7B",
   "beta": 1.294,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 3
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,23 +1,25 @@
 {
  "ticker": "CIX",
  "name": "CompX International Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 27.21,
- "change_pct": -3.17,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 30.09,
+ "change_pct": 0.3,
  "sector": "Industrials",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 51.3,
-  "sma_20": 26.98,
-  "sma_50": 26.08
+  "rsi_14": 65.2,
+  "sma_20": 27.28,
+  "sma_50": 26.25
  },
  "fundamentals": {
-  "pe_ratio": 15.286516,
-  "market_cap": "336M",
-  "beta": null,
-  "dividend_yield": 0.042699999999999995
+  "pe_ratio": 16.904495,
+  "market_cap": "371M",
+  "beta": 0.886,
+  "dividend_yield": 0.04
  },
  "council_analysis": {
   "score": 6

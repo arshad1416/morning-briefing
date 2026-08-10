@@ -1,21 +1,24 @@
 {
  "ticker": "ODC",
  "name": "Oil-Dri Corporation Of America",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 97.54,
- "change_pct": -0.39,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 90.29,
+ "change_pct": -6.48,
  "sector": "Basic Materials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 49.6,
-  "sma_20": 99.16,
-  "sma_50": 95.24
+  "rsi_14": 35.4,
+  "sma_20": 98.4,
+  "sma_50": 95.44
  },
  "fundamentals": {
-  "pe_ratio": 25.534033,
+  "pe_ratio": 23.636126,
   "market_cap": null,
   "beta": 0.782,
-  "dividend_yield": 0.0083
+  "dividend_yield": 0.0084
  },
  "council_analysis": {
   "score": 5

@@ -1,26 +1,25 @@
 {
  "ticker": "ARKO",
  "name": "ARKO Corp.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 7.31,
- "change_pct": -0.68,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 6.3,
+ "change_pct": -13.51,
  "sector": "Consumer Cyclical",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
-  "premium_pe",
-  "analyst_buy"
+  "premium_pe"
  ],
  "technical": {
-  "rsi_14": 39.0,
-  "sma_20": 7.84,
-  "sma_50": 7.84
+  "rsi_14": 26.4,
+  "sma_20": 7.75,
+  "sma_50": 7.81
  },
  "fundamentals": {
-  "pe_ratio": 36.55,
-  "market_cap": "820M",
+  "pe_ratio": 31.525,
+  "market_cap": "707M",
   "beta": 0.962,
-  "dividend_yield": 0.0163
+  "dividend_yield": 0.0165
  },
  "council_analysis": {
   "score": 5

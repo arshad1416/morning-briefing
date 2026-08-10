@@ -1,28 +1,29 @@
 {
  "ticker": "HRTG",
  "name": "Heritage Insurance Holdings, In",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 33.4,
- "change_pct": 10.49,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 32.8,
+ "change_pct": -6.84,
  "sector": "Financial Services",
  "signals": [
-  "overbought_rsi",
+  "extended_rsi",
   "above_ma",
-  "value_pe"
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 76.5,
-  "sma_20": 28.49,
-  "sma_50": 25.68
+  "rsi_14": 66.1,
+  "sma_20": 28.82,
+  "sma_50": 25.93
  },
  "fundamentals": {
-  "pe_ratio": 5.1226997,
-  "market_cap": "1.0B",
+  "pe_ratio": 5.030675,
+  "market_cap": "993M",
   "beta": 0.914,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

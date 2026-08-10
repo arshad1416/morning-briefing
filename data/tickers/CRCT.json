@@ -1,28 +1,29 @@
 {
  "ticker": "CRCT",
  "name": "Cricut, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 5.71,
- "change_pct": -5.93,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 5.91,
+ "change_pct": -2.72,
  "sector": "Technology",
  "signals": [
-  "extended_rsi",
+  "overbought_rsi",
   "above_ma",
-  "value_pe"
+  "value_pe",
+  "analyst_sell"
  ],
  "technical": {
-  "rsi_14": 70.4,
-  "sma_20": 4.73,
-  "sma_50": 4.45
+  "rsi_14": 75.7,
+  "sma_20": 4.82,
+  "sma_50": 4.49
  },
  "fundamentals": {
-  "pe_ratio": 14.275,
+  "pe_ratio": 14.762501,
   "market_cap": "1.2B",
   "beta": 0.144,
   "dividend_yield": 0.0329
  },
  "council_analysis": {
-  "score": 6
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

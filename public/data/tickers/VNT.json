@@ -1,25 +1,26 @@
 {
  "ticker": "VNT",
  "name": "Vontier Corporation",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 34.03,
- "change_pct": 1.2,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 35.62,
+ "change_pct": 0.96,
  "sector": "Technology",
  "signals": [
-  "extended_rsi",
+  "overbought_rsi",
   "above_ma",
-  "value_pe"
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 72.1,
-  "sma_20": 31.26,
-  "sma_50": 29.92
+  "rsi_14": 77.6,
+  "sma_20": 31.63,
+  "sma_50": 30.07
  },
  "fundamentals": {
-  "pe_ratio": 12.022969,
-  "market_cap": "4.8B",
-  "beta": 1.135,
-  "dividend_yield": 0.003
+  "pe_ratio": 14.780082,
+  "market_cap": "5.0B",
+  "beta": null,
+  "dividend_yield": 0.0028000000000000004
  },
  "council_analysis": {
   "score": 6

@@ -1,27 +1,28 @@
 {
  "ticker": "NYT",
  "name": "New York Times Company (The)",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 65.56,
- "change_pct": 0.12,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 64.79,
+ "change_pct": 0.04,
  "sector": "Communication Services",
  "signals": [
   "oversold_rsi",
-  "below_ma"
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 33.5,
-  "sma_20": 73.68,
-  "sma_50": 73.41
+  "rsi_14": 32.4,
+  "sma_20": 73.14,
+  "sma_50": 73.2
  },
  "fundamentals": {
-  "pe_ratio": 27.316664,
-  "market_cap": null,
-  "beta": null,
-  "dividend_yield": 0.0141
+  "pe_ratio": 26.997915,
+  "market_cap": "10.5B",
+  "beta": 0.927,
+  "dividend_yield": 0.014199999999999999
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

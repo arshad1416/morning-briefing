@@ -1,22 +1,23 @@
 {
  "ticker": "CMP",
  "name": "Compass Minerals Intl Inc",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 25.11,
- "change_pct": -16.37,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 27.1,
+ "change_pct": 5.61,
  "sector": "Basic Materials",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 29.0,
-  "sma_20": 29.42,
-  "sma_50": 30.09
+  "rsi_14": 39.6,
+  "sma_20": 29.31,
+  "sma_50": 30.01
  },
  "fundamentals": {
-  "pe_ratio": 156.96875,
+  "pe_ratio": 169.375,
   "market_cap": null,
   "beta": 1.255,
   "dividend_yield": null

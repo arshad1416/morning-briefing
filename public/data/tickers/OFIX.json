@@ -1,27 +1,28 @@
 {
  "ticker": "OFIX",
  "name": "Orthofix Medical Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 10.39,
- "change_pct": -0.29,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 10.25,
+ "change_pct": -3.3,
  "sector": "Healthcare",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 41.5,
-  "sma_20": 11.54,
-  "sma_50": 10.48
+  "rsi_14": 40.8,
+  "sma_20": 11.48,
+  "sma_50": 10.51
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "420M",
-  "beta": null,
+  "market_cap": "414M",
+  "beta": 0.673,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

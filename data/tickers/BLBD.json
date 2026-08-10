@@ -1,27 +1,29 @@
 {
  "ticker": "BLBD",
  "name": "Blue Bird Corporation",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 68.42,
- "change_pct": -11.07,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 68.53,
+ "change_pct": 3.82,
  "sector": "Industrials",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 35.1,
-  "sma_20": 76.48,
-  "sma_50": 74.97
+  "rsi_14": 38.0,
+  "sma_20": 75.92,
+  "sma_50": 74.88
  },
  "fundamentals": {
-  "pe_ratio": 16.809582,
+  "pe_ratio": 8.110059,
   "market_cap": "2.2B",
-  "beta": 1.386,
+  "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,25 +1,26 @@
 {
  "ticker": "CCOI",
  "name": "Cogent Communications Holdings,",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 12.18,
- "change_pct": -5.4,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 9.82,
+ "change_pct": -9.99,
  "sector": "Communication Services",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
+  "near_low",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 42.8,
-  "sma_20": 12.6,
-  "sma_50": 14.16
+  "rsi_14": 31.8,
+  "sma_20": 12.4,
+  "sma_50": 13.9
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "610M",
+  "market_cap": "492M",
   "beta": 0.786,
-  "dividend_yield": 0.08349999999999999
+  "dividend_yield": 0.0984
  },
  "council_analysis": {
   "score": 6

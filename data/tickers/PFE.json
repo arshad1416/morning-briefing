@@ -1,25 +1,27 @@
 {
  "ticker": "PFE",
  "name": "Pfizer, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 25.99,
- "change_pct": 0.68,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 26.43,
+ "change_pct": 0.9,
  "sector": "Healthcare",
  "signals": [
   "extended_rsi",
   "above_ma",
+  "near_high",
+  "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 68.5,
-  "sma_20": 24.75,
-  "sma_50": 24.72
+  "rsi_14": 72.4,
+  "sma_20": 24.89,
+  "sma_50": 24.73
  },
  "fundamentals": {
-  "pe_ratio": 19.835878,
-  "market_cap": "148.1B",
+  "pe_ratio": 34.782894,
+  "market_cap": "150.7B",
   "beta": 0.28,
-  "dividend_yield": 0.0666
+  "dividend_yield": 0.06559999999999999
  },
  "council_analysis": {
   "score": 6

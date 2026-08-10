@@ -1,27 +1,28 @@
 {
  "ticker": "WEST",
  "name": "Westrock Coffee Company",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 8.22,
- "change_pct": 0.37,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 7.15,
+ "change_pct": -11.62,
  "sector": "Consumer Defensive",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 55.6,
-  "sma_20": 7.78,
-  "sma_50": 8.09
+  "rsi_14": 39.0,
+  "sma_20": 7.76,
+  "sma_50": 8.07
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "802M",
+  "market_cap": "698M",
   "beta": 0.898,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

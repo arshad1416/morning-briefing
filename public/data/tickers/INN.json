@@ -1,21 +1,24 @@
 {
  "ticker": "INN",
  "name": "Summit Hotel Properties, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 6.77,
- "change_pct": -0.73,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 6.53,
+ "change_pct": -2.32,
  "sector": "Real Estate",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 51.2,
+  "rsi_14": 42.7,
   "sma_20": 6.81,
-  "sma_50": 6.54
+  "sma_50": 6.55
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "734M",
-  "beta": 1.24,
-  "dividend_yield": 0.046900000000000004
+  "market_cap": "704M",
+  "beta": null,
+  "dividend_yield": 0.0479
  },
  "council_analysis": {
   "score": 5

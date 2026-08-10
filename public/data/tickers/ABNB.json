@@ -1,29 +1,31 @@
 {
  "ticker": "ABNB",
  "name": "Airbnb, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 150.76,
- "change_pct": -1.13,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 175.67,
+ "change_pct": 15.85,
  "sector": "Consumer Cyclical",
  "signals": [
+  "overbought_rsi",
   "above_ma",
+  "volume_surge",
   "near_high",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 56.8,
-  "sma_20": 147.59,
-  "sma_50": 142.57
+  "rsi_14": 78.1,
+  "sma_20": 148.99,
+  "sma_50": 143.46
  },
  "fundamentals": {
-  "pe_ratio": 37.22469,
-  "market_cap": "89.5B",
+  "pe_ratio": 40.126713,
+  "market_cap": "104.3B",
   "beta": 1.137,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,22 +1,24 @@
 {
  "ticker": "INDV",
  "name": "Indivior Pharmaceuticals, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 39.44,
- "change_pct": 1.82,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 38.48,
+ "change_pct": -0.49,
  "sector": "Healthcare",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.5,
-  "sma_20": 39.87,
-  "sma_50": 39.15
+  "rsi_14": 44.8,
+  "sma_20": 39.73,
+  "sma_50": 39.16
  },
  "fundamentals": {
-  "pe_ratio": 14.134409,
-  "market_cap": "4.7B",
+  "pe_ratio": 13.841726,
+  "market_cap": "4.5B",
   "beta": 1.136,
   "dividend_yield": null
  },

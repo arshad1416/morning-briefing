@@ -1,22 +1,23 @@
 {
  "ticker": "INTA",
  "name": "Intapp, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 36.04,
- "change_pct": -2.49,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 37.24,
+ "change_pct": 2.42,
  "sector": "Technology",
  "signals": [
-  "extended_rsi",
-  "above_ma"
+  "overbought_rsi",
+  "above_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 72.9,
-  "sma_20": 30.2,
-  "sma_50": 26.55
+  "rsi_14": 76.1,
+  "sma_20": 30.68,
+  "sma_50": 26.92
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "2.8B",
+  "market_cap": "2.9B",
   "beta": 0.409,
   "dividend_yield": null
  },

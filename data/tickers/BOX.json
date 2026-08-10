@@ -1,22 +1,24 @@
 {
  "ticker": "BOX",
  "name": "Box, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 31.56,
- "change_pct": -1.39,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 32.94,
+ "change_pct": 3.42,
  "sector": "Technology",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 60.6,
-  "sma_20": 30.53,
-  "sma_50": 28.1
+  "rsi_14": 67.5,
+  "sma_20": 30.76,
+  "sma_50": 28.27
  },
  "fundamentals": {
-  "pe_ratio": 49.304688,
+  "pe_ratio": 51.46875,
   "market_cap": null,
   "beta": 1.414,
   "dividend_yield": null

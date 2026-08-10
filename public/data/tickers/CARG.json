@@ -1,22 +1,24 @@
 {
  "ticker": "CARG",
  "name": "CarGurus, Inc.",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 35.94,
- "change_pct": -1.29,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 40.75,
+ "change_pct": 12.01,
  "sector": "Consumer Cyclical",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 56.2,
-  "sma_20": 35.29,
-  "sma_50": 32.51
+  "rsi_14": 73.1,
+  "sma_20": 35.64,
+  "sma_50": 32.76
  },
  "fundamentals": {
-  "pe_ratio": 18.915789,
-  "market_cap": "3.2B",
+  "pe_ratio": 21.447369,
+  "market_cap": "3.7B",
   "beta": 1.166,
   "dividend_yield": null
  },

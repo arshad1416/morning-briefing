@@ -1,19 +1,22 @@
 {
  "ticker": "PSFE",
  "name": "Paysafe Limited",
- "generated_at": "2026-08-07T14:45:01.810729+00:00",
- "price": 7.7,
- "change_pct": -4.11,
+ "generated_at": "2026-08-10T11:45:02.002642+00:00",
+ "price": 7.54,
+ "change_pct": 0.27,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.1,
-  "sma_20": 8.17,
-  "sma_50": 7.67
+  "rsi_14": 43.2,
+  "sma_20": 8.14,
+  "sma_50": 7.66
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "398M",
+  "market_cap": "390M",
   "beta": 1.782,
   "dividend_yield": null
  },
