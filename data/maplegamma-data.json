@@ -1,31 +1,31 @@
 {
-  "generated_at": "2026-08-10T12:37:49-04:00",
+  "generated_at": "2026-08-10T13:07:53-04:00",
   "market_overview": {
-    "total_net_gex": 3309858,
+    "total_net_gex": 3362589,
     "total_oi": 3289695,
-    "current_price": 772.78,
+    "current_price": 772.77,
     "change_pct": -0.06
   },
   "tickers": {
     "SPY": {
-      "current_price": 772.78,
+      "current_price": 772.77,
       "change_pct": -0.06,
       "gamma_regime": "bullish",
-      "total_gex": 3309858,
-      "total_dex": 172670628,
-      "total_vex": 968781444,
-      "total_vanna": 8058938,
-      "total_charm": -2863243,
-      "total_dealer_gex": 1858400,
-      "gamma_flip": 764.09,
+      "total_gex": 3362589,
+      "total_dex": 172772984,
+      "total_vex": 965504365,
+      "total_vanna": 7989156,
+      "total_charm": -3034486,
+      "total_dealer_gex": 1959842,
+      "gamma_flip": 763.54,
       "max_pain": 745.0,
       "max_gex_strike": 780.0,
-      "max_gex_value": 680731,
+      "max_gex_value": 696170,
       "neutral_range": [],
       "floor_zone": {
         "strike": 770.0,
-        "net_gex": 313946,
-        "total_gex": 313946,
+        "net_gex": 318326,
+        "total_gex": 318326,
         "range_start": 765.0,
         "range_end": 775.0,
         "strength": "strong",
@@ -33,14 +33,14 @@
       },
       "ceiling_zone": {
         "strike": 780.0,
-        "net_gex": 680731,
-        "total_gex": 680731,
+        "net_gex": 696170,
+        "total_gex": 696170,
         "range_start": 775.0,
         "range_end": 785.0,
         "strength": "strong",
         "narrative": "Gamma ceiling at $780"
       },
-      "narrative": "Net GEX: $+3,309,858 \u2014 dealers are long gamma (range-bound)"
+      "narrative": "Net GEX: $+3,362,589 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
