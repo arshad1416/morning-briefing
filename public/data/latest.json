@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-09T07:22:07-04:00",
+  "generated_at": "2026-08-10T07:26:33-04:00",
   "market_summary": {
-    "vix": 14.9,
+    "vix": 15.47,
     "ten_year_yield": 4.66,
     "indices": [
       {
@@ -31,8 +31,8 @@
       },
       {
         "ticker": "VIX",
-        "price": 14.9,
-        "change_pct": -1.65
+        "price": 15.47,
+        "change_pct": 3.83
       },
       {
         "ticker": "10Y Yield",
@@ -48,84 +48,225 @@
     ]
   },
   "narrative": {
-    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,757.64 (+0.62%)\n  \u2022 Dow Jones: 54,036.93 (+0.28%)\n  \u2022 NASDAQ: 26,690.62 (+1.30%)\n  \u2022 Russell 2000: 3,034.49 (+1.10%)\n  \u2022 TSX: 36,381.20 (+0.68%)\n  \u2022 VIX: 14.9\n  \u2022 10Y Yield: 4.66%"
+    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,757.64 (+0.62%)\n  \u2022 Dow Jones: 54,036.93 (+0.28%)\n  \u2022 NASDAQ: 26,690.62 (+1.30%)\n  \u2022 Russell 2000: 3,034.49 (+1.10%)\n  \u2022 TSX: 36,381.20 (+0.68%)\n  \u2022 VIX: 15.47\n  \u2022 10Y Yield: 4.66%"
   },
   "watchlist_summary": {},
   "central_banks": {
     "fed": "",
     "boc": ""
   },
-  "insider_trades": [],
+  "insider_trades": [
+    {
+      "ticker": "NKE",
+      "insider": "Leinwand Robert",
+      "title": "EVP: Chief Legal Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 821,
+      "price": 41.6,
+      "value": 34154,
+      "date": "2026-08-05",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000109/xslF345X06/form4.xml"
+    },
+    {
+      "ticker": "NKE",
+      "insider": "Alagirisamy Venkatesh",
+      "title": "EVP: CHIEF OPERATING OFFICER",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 890,
+      "price": 41.6,
+      "value": 37024,
+      "date": "2026-08-05",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000107/xslF345X06/form4.xml"
+    },
+    {
+      "ticker": "NKE",
+      "insider": "McCartney Philip",
+      "title": "EVP: CHIEF INN,PROD&amp;DSG OFCR",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 524,
+      "price": 41.6,
+      "value": 21798,
+      "date": "2026-08-05",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000105/xslF345X06/form4.xml"
+    },
+    {
+      "ticker": "NKE",
+      "insider": "Friend Matthew",
+      "title": "EVP: CFO",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 2463,
+      "price": 41.6,
+      "value": 102461,
+      "date": "2026-08-05",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000103/xslF345X06/form4.xml"
+    },
+    {
+      "ticker": "MSFT",
+      "insider": "Althoff Judson",
+      "title": "CEO Microsoft Commercial",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 10000,
+      "price": 487.89,
+      "value": 4878930,
+      "date": "2026-08-05",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/789019/000078901926000143/xslF345X06/form4.xml"
+    },
+    {
+      "ticker": "PLTR",
+      "insider": "Stat Lauren Elaina Friedman",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 3032,
+      "price": 165.0,
+      "value": 500280,
+      "date": "2026-08-05",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000184024426000015/xslF345X06/wk-form4_1786147898.xml"
+    },
+    {
+      "ticker": "MSFT",
+      "insider": "Numoto Takeshi",
+      "title": "EVP, Chief Marketing Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 4810,
+      "price": 496.48,
+      "value": 2388244,
+      "date": "2026-08-04",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/789019/000078901926000141/xslF345X06/form4.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Andreessen Marc L",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 250,
+      "price": 588.16,
+      "value": 147040,
+      "date": "2026-08-04",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000116007726000008/xslF345X06/form4-08072026_010856.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Andreessen Marc L",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 87,
+      "price": 589.24,
+      "value": 51264,
+      "date": "2026-08-04",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000116007726000008/xslF345X06/form4-08072026_010856.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Andreessen Marc L",
+      "title": "Director",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 44,
+      "price": 590.39,
+      "value": 25977,
+      "date": "2026-08-04",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000116007726000008/xslF345X06/form4-08072026_010856.xml"
+    }
+  ],
   "market_news": {
     "headlines": [
       {
-        "title": "Texas moratorium on data centers puts 20% of U.S. pipeline at risk of delay - Bloomberg NEF",
-        "url": "https://seekingalpha.com/news/4629635-texas-moratorium-on-data-centers-puts-20-percent-of-u-s-pipeline-at-risk-of-delay-bloomberg?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "bearish",
-        "summary": ""
-      },
-      {
-        "title": "SA Asks: Should Google's AI leadership changes concern investors?",
-        "url": "https://seekingalpha.com/news/4629653-sa-asks-should-googles-ai-leadership-changes-concern-investors?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Lincoln National appoints Adam Cohen interim CFO, Chris Neczypor steps down",
+        "url": "https://seekingalpha.com/news/4629801-lincoln-national-appoints-adam-cohen-interim-cfo-chris-neczypor-steps-down?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "SA Asks: What's the outlook for Big Pharma M&A?",
-        "url": "https://seekingalpha.com/news/4629652-sa-asks-whats-the-outlook-for-big-pharma-ma?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Duke Energy launches $1.75B equity units offering",
+        "url": "https://seekingalpha.com/news/4629810-duke-energy-launches-1_75b-equity-units-offering?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Apple brings Alibaba's Qwen AI model to Mac users in China",
-        "url": "https://seekingalpha.com/news/4629651-apple-lets-mac-link-alibabas-ai-model-china?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Canada offers concessions in a bid to avoid Trump\u2019s 50% tariffs: NYT",
-        "url": "https://seekingalpha.com/news/4629650-canada-offers-concessions-avoid-trump-tariffs?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Trending stocks this week as SpaceX, Palantir earnings and jobs data drive markets",
-        "url": "https://seekingalpha.com/news/4629310-trending-stocks-this-week-as-spacex-palantir-earnings-and-jobs-data-drive-markets?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "8 out of 12 S&P 500 utilities stocks beat EPS estimates this week: Earnings Scorecard",
-        "url": "https://seekingalpha.com/news/4629245-8-out-of-12-sp-500-utilities-stocks-beat-eps-estimates-this-week-earnings-scorecard?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Silence Therapeutics GAAP EPS of -$0.09 beats by $0.08",
+        "url": "https://seekingalpha.com/news/4629819-silence-therapeutics-gaap-eps-of-0_09-beats-by-0_08?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "We Are Undoubtedly In An AI Bubble",
-        "url": "https://seekingalpha.com/article/4933866-we-are-undoubtedly-in-an-ai-bubble?source=feed",
+        "title": "Camtek Non-GAAP EPS of $0.78 beats by $0.02, revenue of $133.2M beats by $3.01M",
+        "url": "https://seekingalpha.com/news/4629817-camtek-non-gaap-eps-of-0_78-beats-by-0_02-revenue-of-133_2m-beats-by-3_01m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "N-able beats top-line and bottom-line estimates; gives Q3 and updates FY 2026 outlook",
+        "url": "https://seekingalpha.com/news/4629818-n-able-beats-top-line-and-bottom-line-estimates-gives-q3-and-updates-fy-2026-outlook?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Altria Group sees momentum for the On! Plus business",
+        "url": "https://seekingalpha.com/news/4629813-altria-group-sees-momentum-for-the-on-plus-business?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Sandisk: A Better Business Is Emerging From The AI Boom",
-        "url": "https://seekingalpha.com/article/4933855-sandisk-a-better-business-is-emerging-from-the-ai-boom?source=feed",
+        "title": "Apogee Therapeutics reports Q2 results",
+        "url": "https://seekingalpha.com/news/4629816-apogee-therapeutics-reports-q2-results?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Meta's Free Cash Flow Will Surge, Just Give Zuckerberg Time",
+        "url": "https://seekingalpha.com/article/4933964-metas-free-cash-flow-will-surge-just-give-zuckerberg-time?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Top 50 High-Quality Dividend Growth Stocks For August 2026",
-        "url": "https://seekingalpha.com/article/4933848-top-50-high-quality-dividend-growth-stocks-for-august-2026?source=feed",
+        "title": "L3Harris: Strong Buy As The Missile Boom Builds",
+        "url": "https://seekingalpha.com/article/4933989-l3harris-strong-buy-as-the-missile-boom-builds?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Amazon: Stunning Earnings Reaffirm Thesis",
+        "url": "https://seekingalpha.com/article/4933980-amazon-stunning-earnings-reaffirms-thesis?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
         "summary": ""
       }
     ],
@@ -134,60 +275,185 @@
   },
   "geopolitical": [
     {
-      "title": "Israel accused of weaponising archaeology at ancient West Bank sites",
+      "title": "At least 13 killed in Ukrainian strike on Russia's Tatarstan region, officials say",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c20d8qre98do?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-08T23:43:44+00:00",
-      "summary": "Israel is planning large-scale land expropriations in historic, Palestinian areas of the West Bank."
+      "url": "https://www.bbc.co.uk/news/articles/cvgjvgv926po?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-10T10:03:58+00:00",
+      "summary": "It is one of the deadliest Ukrainian drone attacks on Russia since the start of Moscow's war on Ukraine."
     },
     {
-      "title": "Fifa criticises campaign to oust president Infantino",
+      "title": "China evacuates one million from homes as massive storm arrives",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/sport/football/articles/cj03drn965do?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-08T22:06:44+00:00",
-      "summary": "Fifa strongly criticises what it calls a \"concerted and ongoing effort\" to \"undermine\" the organisation and its president Gianni Infantino."
+      "url": "https://www.bbc.co.uk/news/articles/cx2rgzyplg2o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-10T07:23:54+00:00",
+      "summary": "Typhoon Dolphin has made landfall, bringing strong winds and heavy rain across eastern China including Shanghai."
     },
     {
-      "title": "Suspected crime boss Daniel Kinahan returning to Ireland in high-security operation",
+      "title": "Former Thai MP allegedly kills official and confesses on YouTube",
+      "source": "BBC World",
+      "url": "https://www.bbc.co.uk/news/articles/cqx7lje8l79o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-10T09:51:07+00:00",
+      "summary": "Chalong Riewrang called a YouTube livestream to say he had shot a government official."
+    },
+    {
+      "title": "'Body in suitcase' found in Australia turns out to be lifelike doll",
+      "source": "BBC World",
+      "url": "https://www.bbc.co.uk/news/articles/clyqg4w3gz9o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-10T05:16:40+00:00",
+      "summary": "Forensics revealed that the 'realistic' looking body was in fact not human."
+    },
+    {
+      "title": "Suspected crime boss Kinahan spends first night in custody in Ireland",
       "source": "BBC World",
       "url": "https://www.bbc.co.uk/news/articles/c62qd5plzp6o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-09T10:02:52+00:00",
+      "date": "2026-08-10T09:33:25+00:00",
       "summary": "The Irish Prison Service bought a bulletproof and bombproof van to transport the 49-year-old to court after his extradition from Dubai."
     },
     {
-      "title": "State of emergency declared as fast-moving Canada wildfire doubles in size",
-      "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cx25dkwk3e3o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-09T06:46:40+00:00",
-      "summary": "The Bald Range wildfire in British Columbia, still considered \"out of control\", has spread over more than 36 sq miles (95 sq km)."
-    },
-    {
-      "title": "Hormuz talks positive, Oman says, as Iran warns deal would not open strait",
-      "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c934j5y2lq9o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-08T19:18:57+00:00",
-      "summary": "Both sides suggest progress in talks to agree a new shipping route through the strait, but a breakthrough remains unclear."
-    },
-    {
-      "title": "Morocco, Algeria reach WAFCON semifinals and qualify for FIFA World Cup",
+      "title": "UEFA, AFC, CONCACAF hit out at Infantino over World Cup privatisation plan",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/sports/2026/8/9/morocco-algeria-reach-wafcon-semifinals-and-qualify-for-fifa-world-cup?traffic_source=rss",
-      "date": "2026-08-09T10:15:10+00:00",
-      "summary": "The two North African nations become the first teams from the continent to qualify for next year's World Cup in Brazil."
+      "url": "https://www.aljazeera.com/sports/2026/8/10/uefa-afc-concacaf-hit-out-at-infantino-over-world-cup-privatisation-plan?traffic_source=rss",
+      "date": "2026-08-10T10:15:02+00:00",
+      "summary": "Three confederations release letter criticising FIFA's president over his proposal to sell off stakes in the World Cup."
     },
     {
-      "title": "Why is Pezeshkian urging an end to Iran\u2019s \u2018no war, no peace\u2019 status?",
+      "title": "One year on, Gaza mourns journalist Anas al-Sharif\u2019s death",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/9/why-is-pezeshkian-urging-an-end-to-irans-no-war-no-peace-status?traffic_source=rss",
-      "date": "2026-08-09T10:02:59+00:00",
-      "summary": "The Iranian president calls for an end to deadlock with the US, declaring it the right moment for a lasting agreement."
+      "url": "https://www.aljazeera.com/gallery/2026/8/10/one-year-on-gaza-mourns-journalist-anas-al-sharifs-death?traffic_source=rss",
+      "date": "2026-08-10T10:13:31+00:00",
+      "summary": "Gaza remembers Anas al-Sharif, a journalist whose voice defined the impact of war on civilian lives."
     },
     {
-      "title": "It won\u2019t be Trump who kills the ICC",
+      "title": "Who is Mohsen Rezaei, and how significant is his appointment?",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/opinions/2026/8/9/it-wont-be-trump-who-kills-the-icc?traffic_source=rss",
-      "date": "2026-08-09T09:05:47+00:00",
-      "summary": "It would be the International Criminal Court\u2019s alleged supporters who refuse to take action to defend it."
+      "url": "https://www.aljazeera.com/news/2026/8/10/who-is-mohsen-rezaei-and-how-significant-is-his-appointment?traffic_source=rss",
+      "date": "2026-08-10T10:11:48+00:00",
+      "summary": "Former IRGC commander Rezaei will be taking over as secretary of Iran's top security body amid Hormuz talks."
     }
-  ]
+  ],
+  "congress": {
+    "recent_trades": [
+      {
+        "politician": "David J. Taylor",
+        "chamber": "House",
+        "state": "OH02",
+        "ticker": "GOOGL",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/17/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+      },
+      {
+        "politician": "David J. Taylor",
+        "chamber": "House",
+        "state": "OH02",
+        "ticker": "AVGO",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+      },
+      {
+        "politician": "David J. Taylor",
+        "chamber": "House",
+        "state": "OH02",
+        "ticker": "FITB",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+      },
+      {
+        "politician": "David J. Taylor",
+        "chamber": "House",
+        "state": "OH02",
+        "ticker": "FITB",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+      },
+      {
+        "politician": "David J. Taylor",
+        "chamber": "House",
+        "state": "OH02",
+        "ticker": "KR",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+      },
+      {
+        "politician": "David J. Taylor",
+        "chamber": "House",
+        "state": "OH02",
+        "ticker": "KR",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+      },
+      {
+        "politician": "David J. Taylor",
+        "chamber": "House",
+        "state": "OH02",
+        "ticker": "MPC",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+      },
+      {
+        "politician": "David J. Taylor",
+        "chamber": "House",
+        "state": "OH02",
+        "ticker": "MPC",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+      },
+      {
+        "politician": "David J. Taylor",
+        "chamber": "House",
+        "state": "OH02",
+        "ticker": "MSFT",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+      },
+      {
+        "politician": "David J. Taylor",
+        "chamber": "House",
+        "state": "OH02",
+        "ticker": "MSFT",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+      }
+    ],
+    "summary": "60 recent congressional trades from 3 House periodic transaction reports (31 buys, 28 sells)."
+  }
 }
