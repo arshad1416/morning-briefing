@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-10T17:15:10-04:00",
+  "generated_at": "2026-08-11T07:26:31-04:00",
   "market_summary": {
-    "vix": 15.46,
+    "vix": 15.45,
     "ten_year_yield": 4.7,
     "indices": [
       {
@@ -26,13 +26,13 @@
       },
       {
         "ticker": "TSX",
-        "price": 36458.33,
+        "price": 36458.3,
         "change_pct": 0.21
       },
       {
         "ticker": "VIX",
-        "price": 15.46,
-        "change_pct": 3.76
+        "price": 15.45,
+        "change_pct": -0.06
       },
       {
         "ticker": "10Y Yield",
@@ -48,7 +48,7 @@
     ]
   },
   "narrative": {
-    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,753.11 (-0.06%)\n  \u2022 Dow Jones: 53,975.98 (-0.11%)\n  \u2022 NASDAQ: 26,605.36 (-0.32%)\n  \u2022 Russell 2000: 3,017.40 (-0.56%)\n  \u2022 TSX: 36,458.33 (+0.21%)\n  \u2022 VIX: 15.46\n  \u2022 10Y Yield: 4.7%"
+    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,753.11 (-0.06%)\n  \u2022 Dow Jones: 53,975.98 (-0.11%)\n  \u2022 NASDAQ: 26,605.36 (-0.32%)\n  \u2022 Russell 2000: 3,017.40 (-0.56%)\n  \u2022 TSX: 36,458.30 (+0.21%)\n  \u2022 VIX: 15.45\n  \u2022 10Y Yield: 4.7%"
   },
   "watchlist_summary": {},
   "central_banks": {
@@ -56,6 +56,76 @@
     "boc": ""
   },
   "insider_trades": [
+    {
+      "ticker": "PLTR",
+      "insider": "Sankar Shyam",
+      "title": "See Remarks",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 2735,
+      "price": 153.4,
+      "value": 419562,
+      "date": "2026-08-06",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000182415926000011/xslF345X06/wk-form4_1786406477.xml"
+    },
+    {
+      "ticker": "PLTR",
+      "insider": "Sankar Shyam",
+      "title": "See Remarks",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 6191,
+      "price": 154.65,
+      "value": 957457,
+      "date": "2026-08-06",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000182415926000011/xslF345X06/wk-form4_1786406477.xml"
+    },
+    {
+      "ticker": "PLTR",
+      "insider": "Sankar Shyam",
+      "title": "See Remarks",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 16063,
+      "price": 155.74,
+      "value": 2501658,
+      "date": "2026-08-06",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000182415926000011/xslF345X06/wk-form4_1786406477.xml"
+    },
+    {
+      "ticker": "PLTR",
+      "insider": "Sankar Shyam",
+      "title": "See Remarks",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 7976,
+      "price": 156.78,
+      "value": 1250470,
+      "date": "2026-08-06",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000182415926000011/xslF345X06/wk-form4_1786406477.xml"
+    },
+    {
+      "ticker": "PLTR",
+      "insider": "Sankar Shyam",
+      "title": "See Remarks",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 2035,
+      "price": 157.44,
+      "value": 320398,
+      "date": "2026-08-06",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000182415926000011/xslF345X06/wk-form4_1786406477.xml"
+    },
     {
       "ticker": "NKE",
       "insider": "Leinwand Robert",
@@ -125,146 +195,76 @@
       "date": "2026-08-05",
       "source": "SEC EDGAR Form 4",
       "filing_url": "https://www.sec.gov/Archives/edgar/data/789019/000078901926000143/xslF345X06/form4.xml"
-    },
-    {
-      "ticker": "PLTR",
-      "insider": "Stat Lauren Elaina Friedman",
-      "title": "Director",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 3032,
-      "price": 165.0,
-      "value": 500280,
-      "date": "2026-08-05",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000184024426000015/xslF345X06/wk-form4_1786147898.xml"
-    },
-    {
-      "ticker": "MSFT",
-      "insider": "Numoto Takeshi",
-      "title": "EVP, Chief Marketing Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 4810,
-      "price": 496.48,
-      "value": 2388244,
-      "date": "2026-08-04",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/789019/000078901926000141/xslF345X06/form4.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Andreessen Marc L",
-      "title": "Director",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 250,
-      "price": 588.16,
-      "value": 147040,
-      "date": "2026-08-04",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000116007726000008/xslF345X06/form4-08072026_010856.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Andreessen Marc L",
-      "title": "Director",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 87,
-      "price": 589.24,
-      "value": 51264,
-      "date": "2026-08-04",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000116007726000008/xslF345X06/form4-08072026_010856.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Andreessen Marc L",
-      "title": "Director",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 44,
-      "price": 590.39,
-      "value": 25977,
-      "date": "2026-08-04",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000116007726000008/xslF345X06/form4-08072026_010856.xml"
     }
   ],
   "market_news": {
     "headlines": [
       {
-        "title": "Greystone Housing Impact Q2 Earnings Preview",
-        "url": "https://seekingalpha.com/news/4630128-greystone-housing-impact-q2-earnings-preview?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Chicago Atlantic Real Estate Finance GAAP EPS of $0.43 misses by $0.02, revenue of $12.83M misses by $0.91M",
+        "url": "https://seekingalpha.com/news/4630598-chicago-atlantic-real-estate-finance-gaap-eps-of-043-misses-by-002-revenue-of-1283m-misses-by-091m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Elbit Systems Q2 2026 Earnings Preview",
-        "url": "https://seekingalpha.com/news/4630127-elbit-systems-q2-2026-earnings-preview?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Meta playbook: Deeper dive into Mark Zuckerberg's new AI manifesto",
+        "url": "https://seekingalpha.com/news/4630476-meta-playbook-deeper-dive-into-mark-zuckerbergs-new-ai-manifesto?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Ceragon Networks Q2 2026 Earnings Preview",
-        "url": "https://seekingalpha.com/news/4630126-ceragon-networks-q2-2026-earnings-preview?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Phillips 66, Kinder Morgan, HF Sinclair to move forward with $5B Western Gateway Pipeline",
+        "url": "https://seekingalpha.com/news/4630583-phillips-66-kinder-morgan-hf-sinclair-to-move-forward-with-5b-western-gateway-pipeline?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Tencent Music Entertainment Q2 2026 Earnings Preview",
-        "url": "https://seekingalpha.com/news/4630125-tencent-music-entertainment-q2-2026-earnings-preview?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Xtant Medical misses top-line and bottom-line estimates; lowers FY2026 outlook",
+        "url": "https://seekingalpha.com/news/4630596-xtant-medical-misses-top-line-and-bottom-line-estimates-lowers-fy2026-outlook?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Venture Global Q2 2026 Earnings Preview",
-        "url": "https://seekingalpha.com/news/4630124-venture-global-q2-2026-earnings-preview?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Beamr Imaging reports 1H results",
+        "url": "https://seekingalpha.com/news/4630576-beamr-imaging-reports-1h-results?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "SA analyst upgrades/downgrades: SNDK, DELL, ETSY, META",
-        "url": "https://seekingalpha.com/news/4630118-sa-analyst-upgrades-downgrades-sndk-dell-etsy-meta?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Enbridge stock's rough week: Pipeline concerns, analyst downgrade, bearish technicals",
-        "url": "https://seekingalpha.com/news/4630090-enbridge-stocks-rough-week-pipeline-concerns-analyst-downgrade-bearish-technicals?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "JBS falls as investors eye the CEO change and a Q2 profit miss",
+        "url": "https://seekingalpha.com/news/4630571-jbs-falls-as-investors-eye-the-ceo-change-and-a-q2-profit-miss?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bearish",
         "summary": ""
       },
       {
-        "title": "Bloom Energy: Down 50%, While FCF Surges",
-        "url": "https://seekingalpha.com/article/4934051-bloom-energy-stock-down-50-percent-while-fcf-explodes-higher?source=feed",
+        "title": "Neo Performance Materials beats top-line estimates; raises FY26 outlook",
+        "url": "https://seekingalpha.com/news/4630593-neo-performance-materials-beats-top-line-estimates-raises-fy26-outlook?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Sandisk's $94 Billion Bet Against The NAND Cycle",
-        "url": "https://seekingalpha.com/article/4934030-sandisks-94-billion-bet-against-the-nand-cycle?source=feed",
+        "title": "The Gold-S&P 500 Reset: Gold's Outperformance Has Far To Run",
+        "url": "https://seekingalpha.com/article/4934529-gold-sp-500-reset-golds-outperformance-has-far-to-run?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "How To Build $7,500 In Monthly Passive Income Without Selling A Single Share",
-        "url": "https://seekingalpha.com/article/4933973-how-to-build-7500-in-monthly-passive-income-without-selling-a-single-share?source=feed",
+        "title": "Intel Joins Race To Sell Shares At Sky-High Prices After Spike - Big Tech Figured It Out, The Economy Benefits, Maybe Not Investors",
+        "url": "https://seekingalpha.com/article/4934513-intel-joins-race-to-sell-shares-at-sky-high-prices-economy-benefits-maybe-not-investors?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Ciena: AI's Optical Bottleneck Can Keep The Earnings Cycle Running",
+        "url": "https://seekingalpha.com/article/4934491-ciena-ais-optical-bottleneck-can-keep-the-earnings-cycle-running?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
@@ -275,185 +275,185 @@
   },
   "geopolitical": [
     {
-      "title": "At least 13 killed in Ukrainian strike on Russia's Tatarstan region, officials say",
+      "title": "Trump hid in catering truck in secret plane swap over Iran threat, reports say",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cvgjvgv926po?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-10T10:03:58+00:00",
-      "summary": "It is one of the deadliest Ukrainian drone attacks on Russia since the start of Moscow's war on Ukraine."
+      "url": "https://www.bbc.co.uk/news/articles/cm2g90vvy62o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-11T09:58:45+00:00",
+      "summary": "The US president was moved from the old Air Force One to a military plane as he left a Nato summit in Turkey last month, US media say."
     },
     {
-      "title": "China evacuates one million from homes as massive storm arrives",
+      "title": "Russia using North Korean missiles to strike Ukraine, Zelensky says",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cx2rgzyplg2o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-10T07:23:54+00:00",
-      "summary": "Typhoon Dolphin has made landfall, bringing strong winds and heavy rain across eastern China including Shanghai."
+      "url": "https://www.bbc.co.uk/news/articles/c151dpzwnvxo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-11T09:39:58+00:00",
+      "summary": "Ukraine's president says strikes in Zaporizhzhia - which killed at least six and injured 19 - involved ballistic missiles from Russia's ally."
     },
     {
-      "title": "Former Thai MP allegedly kills official and confesses on YouTube",
+      "title": "Ousted Syrian dictator Bashar al-Assad sentenced to death in absentia",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cqx7lje8l79o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-10T09:51:07+00:00",
-      "summary": "Chalong Riewrang called a YouTube livestream to say he had shot a government official."
+      "url": "https://www.bbc.co.uk/news/articles/ce34dkpnyg7o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-11T09:42:48+00:00",
+      "summary": "The ex-president is convicted of committing war crimes and crimes against humanity during the country's civil war."
     },
     {
-      "title": "'Body in suitcase' found in Australia turns out to be lifelike doll",
+      "title": "At least 132 killed in Colombia's largest  earthquake in years",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/clyqg4w3gz9o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-10T05:16:40+00:00",
-      "summary": "Forensics revealed that the 'realistic' looking body was in fact not human."
+      "url": "https://www.bbc.co.uk/news/articles/c20e360lx0vo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-11T04:06:07+00:00",
+      "summary": "More than 480 people were injured in the quakes, with more feared trapped under collapsed buildings."
     },
     {
-      "title": "Suspected crime boss Kinahan spends first night in custody in Ireland",
+      "title": "Libyan authorities battle big blaze at major oil refinery",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c62qd5plzp6o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-10T09:33:25+00:00",
-      "summary": "The Irish Prison Service bought a bulletproof and bombproof van to transport the 49-year-old to court after his extradition from Dubai."
+      "url": "https://www.bbc.co.uk/news/articles/cp308z9pl30o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-11T08:28:24+00:00",
+      "summary": "Monday's drone strike on the Zawiya refinery was the third such incident in two days."
     },
     {
-      "title": "UEFA, AFC, CONCACAF hit out at Infantino over World Cup privatisation plan",
+      "title": "East Libya military intelligence chief killed in car bomb",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/sports/2026/8/10/uefa-afc-concacaf-hit-out-at-infantino-over-world-cup-privatisation-plan?traffic_source=rss",
-      "date": "2026-08-10T10:15:02+00:00",
-      "summary": "Three confederations release letter criticising FIFA's president over his proposal to sell off stakes in the World Cup."
+      "url": "https://www.aljazeera.com/news/2026/8/11/east-libya-military-intelligence-chief-killed-in-car-bomb?traffic_source=rss",
+      "date": "2026-08-11T10:25:50+00:00",
+      "summary": "Prime minister of the Eastern Libyan government condemns killing of Major-General Fawzi al\u2011Mansouri."
     },
     {
-      "title": "One year on, Gaza mourns journalist Anas al-Sharif\u2019s death",
+      "title": "Who is Atef Najib, former Syrian official sentenced to death with al-Assad?",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/gallery/2026/8/10/one-year-on-gaza-mourns-journalist-anas-al-sharifs-death?traffic_source=rss",
-      "date": "2026-08-10T10:13:31+00:00",
-      "summary": "Gaza remembers Anas al-Sharif, a journalist whose voice defined the impact of war on civilian lives."
+      "url": "https://www.aljazeera.com/news/2026/8/11/who-is-atef-najib-former-syrian-official-sentenced-to-death-with-al-assad?traffic_source=rss",
+      "date": "2026-08-11T10:03:25+00:00",
+      "summary": "Experts say this trial has been a test of Syria\u2019s transitional justice."
     },
     {
-      "title": "Who is Mohsen Rezaei, and how significant is his appointment?",
+      "title": "Bangladesh and India battle to save cricket series after political turmoil",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/10/who-is-mohsen-rezaei-and-how-significant-is-his-appointment?traffic_source=rss",
-      "date": "2026-08-10T10:11:48+00:00",
-      "summary": "Former IRGC commander Rezaei will be taking over as secretary of Iran's top security body amid Hormuz talks."
+      "url": "https://www.aljazeera.com/sports/2026/8/11/bangladesh-and-india-battle-to-save-cricket-series-after-political-turmoil?traffic_source=rss",
+      "date": "2026-08-11T10:02:35+00:00",
+      "summary": "Bangladesh and India white-ball series under threat due to tensions that arose when Bangladeshi PM Hasina toppled."
     }
   ],
   "congress": {
     "recent_trades": [
       {
-        "politician": "David J. Taylor",
+        "politician": "Christian D. Menefee",
         "chamber": "House",
-        "state": "OH02",
+        "state": "TX18",
+        "ticker": "PINS",
+        "action": "Sell",
+        "amount_range": "$15,001 - $50,000",
+        "amount_low": 15001,
+        "transaction_date": "08/07/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035157.pdf"
+      },
+      {
+        "politician": "Michael Rulli",
+        "chamber": "House",
+        "state": "OH06",
         "ticker": "GOOGL",
         "action": "Buy",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/17/2026",
+        "transaction_date": "06/29/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
       },
       {
-        "politician": "David J. Taylor",
+        "politician": "Michael Rulli",
         "chamber": "House",
-        "state": "OH02",
-        "ticker": "AVGO",
+        "state": "OH06",
+        "ticker": "GOOGL",
         "action": "Buy",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/24/2026",
+        "transaction_date": "06/25/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
       },
       {
-        "politician": "David J. Taylor",
+        "politician": "Michael Rulli",
         "chamber": "House",
-        "state": "OH02",
-        "ticker": "FITB",
+        "state": "OH06",
+        "ticker": "GOOGL",
         "action": "Sell",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/24/2026",
+        "transaction_date": "07/03/2025",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
       },
       {
-        "politician": "David J. Taylor",
+        "politician": "Michael Rulli",
         "chamber": "House",
-        "state": "OH02",
-        "ticker": "FITB",
+        "state": "OH06",
+        "ticker": "AMZN",
         "action": "Sell",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/24/2026",
+        "transaction_date": "07/03/2025",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
       },
       {
-        "politician": "David J. Taylor",
+        "politician": "Michael Rulli",
         "chamber": "House",
-        "state": "OH02",
-        "ticker": "KR",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "07/24/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
-      },
-      {
-        "politician": "David J. Taylor",
-        "chamber": "House",
-        "state": "OH02",
-        "ticker": "KR",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "07/24/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
-      },
-      {
-        "politician": "David J. Taylor",
-        "chamber": "House",
-        "state": "OH02",
-        "ticker": "MPC",
+        "state": "OH06",
+        "ticker": "AMZN",
         "action": "Sell",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/24/2026",
+        "transaction_date": "06/25/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
       },
       {
-        "politician": "David J. Taylor",
+        "politician": "Michael Rulli",
         "chamber": "House",
-        "state": "OH02",
-        "ticker": "MPC",
+        "state": "OH06",
+        "ticker": "AAPL",
         "action": "Sell",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/24/2026",
+        "transaction_date": "06/25/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
       },
       {
-        "politician": "David J. Taylor",
+        "politician": "Michael Rulli",
         "chamber": "House",
-        "state": "OH02",
-        "ticker": "MSFT",
+        "state": "OH06",
+        "ticker": "AAPL",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "10/27/2025",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
+      },
+      {
+        "politician": "Michael Rulli",
+        "chamber": "House",
+        "state": "OH06",
+        "ticker": "AAPL",
         "action": "Buy",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/24/2026",
+        "transaction_date": "08/01/2025",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
       },
       {
-        "politician": "David J. Taylor",
+        "politician": "Michael Rulli",
         "chamber": "House",
-        "state": "OH02",
-        "ticker": "MSFT",
+        "state": "OH06",
+        "ticker": "KO",
         "action": "Buy",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/24/2026",
+        "transaction_date": "12/03/2025",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035146.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
       }
     ],
-    "summary": "60 recent congressional trades from 3 House periodic transaction reports (31 buys, 28 sells)."
+    "summary": "60 recent congressional trades from 6 House periodic transaction reports (30 buys, 30 sells)."
   }
 }
