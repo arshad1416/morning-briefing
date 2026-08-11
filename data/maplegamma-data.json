@@ -1,46 +1,46 @@
 {
-  "generated_at": "2026-08-11T14:37:50-04:00",
+  "generated_at": "2026-08-11T15:07:49-04:00",
   "market_overview": {
-    "total_net_gex": 3640273,
+    "total_net_gex": 3643252,
     "total_oi": 3543605,
-    "current_price": 770.1,
-    "change_pct": -0.38
+    "current_price": 769.9,
+    "change_pct": -0.4
   },
   "tickers": {
     "SPY": {
-      "current_price": 770.1,
-      "change_pct": -0.38,
+      "current_price": 769.9,
+      "change_pct": -0.4,
       "gamma_regime": "bullish",
-      "total_gex": 3640273,
-      "total_dex": 149022390,
-      "total_vex": 973596340,
-      "total_vanna": 8340455,
-      "total_charm": -3229499,
-      "total_dealer_gex": 891471,
-      "gamma_flip": 766.4,
+      "total_gex": 3643252,
+      "total_dex": 147559545,
+      "total_vex": 974017978,
+      "total_vanna": 8336304,
+      "total_charm": -3216742,
+      "total_dealer_gex": 782802,
+      "gamma_flip": 766.5,
       "max_pain": 749.0,
       "max_gex_strike": 775.0,
-      "max_gex_value": 613602,
+      "max_gex_value": 598014,
       "neutral_range": [],
       "floor_zone": {
-        "strike": 770.0,
-        "net_gex": 604965,
-        "total_gex": 604965,
-        "range_start": 765.0,
-        "range_end": 775.0,
+        "strike": 760.0,
+        "net_gex": 379244,
+        "total_gex": 379244,
+        "range_start": 755.0,
+        "range_end": 765.0,
         "strength": "strong",
-        "narrative": "Gamma floor at $770"
+        "narrative": "Gamma floor at $760"
       },
       "ceiling_zone": {
         "strike": 775.0,
-        "net_gex": 692958,
-        "total_gex": 692958,
+        "net_gex": 676493,
+        "total_gex": 676493,
         "range_start": 770.0,
         "range_end": 780.0,
         "strength": "strong",
         "narrative": "Gamma ceiling at $775"
       },
-      "narrative": "Net GEX: $+3,640,273 \u2014 dealers are long gamma (range-bound)"
+      "narrative": "Net GEX: $+3,643,252 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
