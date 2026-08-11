@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-10T15:22:29.260025+00:00",
+  "generated_at": "2026-08-11T15:23:15.607114+00:00",
   "ticker_count": 3012,
   "universes_scanned": [
     "S&P 500",
@@ -16,252 +16,97 @@
     "S&P 500": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
       "source_note": "Wikipedia 'List of S&P 500 companies', table#constituents.",
-      "as_of": "2026-08-08",
-      "fetched_at": "2026-08-08",
+      "as_of": "2026-08-11",
+      "fetched_at": "2026-08-11",
       "member_count": 503
     },
     "S&P 400": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies",
       "source_note": "S&P MidCap 400. Wikipedia 'List of S&P 400 companies', table#constituents.",
-      "as_of": "2026-08-08",
-      "fetched_at": "2026-08-08",
+      "as_of": "2026-08-11",
+      "fetched_at": "2026-08-11",
       "member_count": 400
     },
     "S&P 600": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_600_companies",
       "source_note": "S&P SmallCap 600. Wikipedia 'List of S&P 600 companies', table#constituents.",
-      "as_of": "2026-08-08",
-      "fetched_at": "2026-08-08",
+      "as_of": "2026-08-11",
+      "fetched_at": "2026-08-11",
       "member_count": 603
     },
     "Nasdaq-100": {
       "source_url": "https://api.nasdaq.com/api/quote/list-type/nasdaq100",
       "source_note": "Nasdaq's own index-membership endpoint (the Wikipedia article no longer carries a components table).",
-      "as_of": "2026-08-08",
-      "fetched_at": "2026-08-08",
+      "as_of": "2026-08-11",
+      "fetched_at": "2026-08-11",
       "member_count": 102
     },
     "Russell 2000": {
       "source_url": "https://www.blackrock.com/varnish-api/blk-one01-product-data/product-data/api/v2/get-product-data?appSubType=ISHARES&appType=PRODUCT_PAGE&component=holdings&locale=en_US&portfolioId=239710&targetSite=us-ishares&userType=individual&excludeContent=true&includeConfig=true",
       "source_note": "Proxy: holdings of the iShares Russell 2000 ETF (IWM), not the index itself. Non-equity balances, contingent value rights and escrow stubs are excluded. Refreshed each business day, and membership can differ slightly from the index.",
-      "as_of": "2026-08-06",
-      "fetched_at": "2026-08-08",
+      "as_of": "2026-08-07",
+      "fetched_at": "2026-08-11",
       "member_count": 1957
     }
   },
   "market_summary": {
-    "avg_price": 91.47,
-    "avg_change": -0.59,
-    "avg_score": 6.0,
-    "green_count": 1049,
-    "red_count": 1929,
+    "avg_price": 91.86,
+    "avg_change": 0.55,
+    "avg_score": 6.1,
+    "green_count": 1934,
+    "red_count": 1053,
     "sector_breakdown": {
       "Technology": {
         "count": 423,
-        "avg_change": -0.86
+        "avg_change": 1.04
       },
       "Consumer Cyclical": {
         "count": 314,
-        "avg_change": -1.09
+        "avg_change": 0.94
       },
       "Communication Services": {
         "count": 113,
-        "avg_change": -1.08
+        "avg_change": -0.56
       },
       "Financial Services": {
         "count": 499,
-        "avg_change": -0.51
+        "avg_change": 0.32
       },
       "Healthcare": {
         "count": 516,
-        "avg_change": -0.27
+        "avg_change": 0.32
       },
       "Consumer Defensive": {
         "count": 128,
-        "avg_change": -1.58
+        "avg_change": 0.03
       },
       "Industrials": {
         "count": 416,
-        "avg_change": -0.74
+        "avg_change": 0.96
       },
       "Energy": {
         "count": 140,
-        "avg_change": 2.88
+        "avg_change": 0.55
       },
       "Utilities": {
         "count": 78,
-        "avg_change": -0.82
+        "avg_change": 0.73
       },
       "Real Estate": {
         "count": 184,
-        "avg_change": -1.97
+        "avg_change": 0.2
       },
       "Basic Materials": {
         "count": 134,
-        "avg_change": -0.15
+        "avg_change": 0.73
       },
       "Unknown": {
         "count": 67,
-        "avg_change": -0.06
+        "avg_change": 0.02
       }
     }
   },
   "tickers": [
-    {
-      "ticker": "MITT",
-      "name": "TPG Mortgage Investment Trust, ",
-      "universe": "Russell 2000",
-      "universes": [
-        "Russell 2000"
-      ],
-      "price": 6.28,
-      "change_pct": -11.5,
-      "pe": 14.940476,
-      "forwardPe": 5.00966,
-      "marketCap": 199566816,
-      "divYield": 0,
-      "sector": "Real Estate",
-      "industry": "REIT - Mortgage",
-      "recommendation": "buy",
-      "targetPrice": 9.25,
-      "beta": 1.707,
-      "volume": 719058,
-      "avgVolume": 193385,
-      "rsi": 22.8,
-      "sma20": 7.26,
-      "sma50": 7.49,
-      "high52w": null,
-      "low52w": null,
-      "institutionPct": 39.9,
-      "above_sma20": false,
-      "above_sma50": false,
-      "above_52w_high_pct": null,
-      "below_52w_low_pct": null,
-      "volume_ratio": 3.72,
-      "score": 9,
-      "signals": [
-        "oversold_rsi",
-        "below_ma",
-        "volume_surge",
-        "value_pe",
-        "analyst_buy"
-      ]
-    },
-    {
-      "ticker": "HON",
-      "name": "Honeywell International Inc.",
-      "universe": "S&P 500",
-      "universes": [
-        "Nasdaq-100",
-        "S&P 500"
-      ],
-      "price": 242.93,
-      "change_pct": -1.33,
-      "pe": 9.343654,
-      "forwardPe": 24.339062,
-      "marketCap": 76995821568,
-      "divYield": 0,
-      "sector": "Industrials",
-      "industry": "Conglomerates",
-      "recommendation": "buy",
-      "targetPrice": 263.10526,
-      "beta": 0.918,
-      "volume": 291286,
-      "avgVolume": 4603750,
-      "rsi": 54.5,
-      "sma20": 238.39,
-      "sma50": 234.64,
-      "high52w": null,
-      "low52w": null,
-      "institutionPct": 82.6,
-      "above_sma20": true,
-      "above_sma50": true,
-      "above_52w_high_pct": null,
-      "below_52w_low_pct": null,
-      "volume_ratio": 0.06,
-      "score": 8,
-      "signals": [
-        "above_ma",
-        "value_pe",
-        "analyst_buy"
-      ]
-    },
-    {
-      "ticker": "MPC",
-      "name": "Marathon Petroleum Corporation",
-      "universe": "S&P 500",
-      "universes": [
-        "S&P 500"
-      ],
-      "price": 310.4,
-      "change_pct": 4.09,
-      "pe": 10.763002,
-      "forwardPe": 10.452427,
-      "marketCap": 90618593280,
-      "divYield": 1.34,
-      "sector": "Energy",
-      "industry": "Oil & Gas Refining & Marketing",
-      "recommendation": "buy",
-      "targetPrice": 316.6111,
-      "beta": 0.508,
-      "volume": 341871,
-      "avgVolume": 2260401,
-      "rsi": 58.6,
-      "sma20": 308.82,
-      "sma50": 280.4,
-      "high52w": null,
-      "low52w": null,
-      "institutionPct": 81.1,
-      "above_sma20": true,
-      "above_sma50": true,
-      "above_52w_high_pct": null,
-      "below_52w_low_pct": null,
-      "volume_ratio": 0.15,
-      "score": 8,
-      "signals": [
-        "above_ma",
-        "value_pe",
-        "analyst_buy"
-      ]
-    },
-    {
-      "ticker": "PSX",
-      "name": "Phillips 66",
-      "universe": "S&P 500",
-      "universes": [
-        "S&P 500"
-      ],
-      "price": 210.29,
-      "change_pct": 3.13,
-      "pe": 12.002763,
-      "forwardPe": 10.536304,
-      "marketCap": 83909476352,
-      "divYield": 2.49,
-      "sector": "Energy",
-      "industry": "Oil & Gas Refining & Marketing",
-      "recommendation": "buy",
-      "targetPrice": 214.26315,
-      "beta": 0.687,
-      "volume": 264407,
-      "avgVolume": 2593830,
-      "rsi": 62.7,
-      "sma20": 206.46,
-      "sma50": 189.3,
-      "high52w": null,
-      "low52w": null,
-      "institutionPct": 81.7,
-      "above_sma20": true,
-      "above_sma50": true,
-      "above_52w_high_pct": null,
-      "below_52w_low_pct": null,
-      "volume_ratio": 0.1,
-      "score": 8,
-      "signals": [
-        "above_ma",
-        "value_pe",
-        "analyst_buy"
-      ]
-    },
     {
       "ticker": "VLO",
       "name": "Valero Energy Corporation",
@@ -269,147 +114,307 @@
       "universes": [
         "S&P 500"
       ],
-      "price": 309.04,
-      "change_pct": 3.6,
-      "pe": 12.887198,
-      "forwardPe": 11.150118,
-      "marketCap": 88979660800,
-      "divYield": 1.61,
+      "price": 318.29,
+      "change_pct": 1.06,
+      "pe": 13.278683,
+      "forwardPe": 11.484042,
+      "marketCap": 91644436480,
+      "divYield": 1.52,
       "sector": "Energy",
       "industry": "Oil & Gas Refining & Marketing",
       "recommendation": "buy",
       "targetPrice": 309.78946,
       "beta": 0.554,
-      "volume": 616049,
-      "avgVolume": 2982490,
-      "rsi": 60.3,
-      "sma20": 304.71,
-      "sma50": 276.67,
-      "high52w": null,
-      "low52w": null,
-      "institutionPct": 90.0,
+      "volume": 325113,
+      "avgVolume": 2966996,
+      "rsi": 65.0,
+      "sma20": 305.91,
+      "sma50": 278.27,
+      "high52w": 319.01,
+      "low52w": 128.06,
+      "institutionPct": 89.9,
       "above_sma20": true,
       "above_sma50": true,
-      "above_52w_high_pct": null,
-      "below_52w_low_pct": null,
-      "volume_ratio": 0.21,
-      "score": 8,
-      "signals": [
-        "above_ma",
-        "value_pe",
-        "analyst_buy"
-      ]
-    },
-    {
-      "ticker": "MKC",
-      "name": "McCormick & Company, Incorporat",
-      "universe": "S&P 500 (continued)",
-      "universes": [
-        "S&P 500"
-      ],
-      "price": 53.25,
-      "change_pct": 0.55,
-      "pe": 8.860232,
-      "forwardPe": 16.141842,
-      "marketCap": 14316345344,
-      "divYield": 0,
-      "sector": "Consumer Defensive",
-      "industry": "Packaged Foods",
-      "recommendation": "buy",
-      "targetPrice": 60.61538,
-      "beta": 0.627,
-      "volume": 373896,
-      "avgVolume": 4235613,
-      "rsi": 59.9,
-      "sma20": 51.79,
-      "sma50": 50.0,
-      "high52w": null,
-      "low52w": null,
-      "institutionPct": 95.0,
-      "above_sma20": true,
-      "above_sma50": true,
-      "above_52w_high_pct": null,
-      "below_52w_low_pct": null,
-      "volume_ratio": 0.09,
-      "score": 8,
-      "signals": [
-        "above_ma",
-        "value_pe",
-        "analyst_buy"
-      ]
-    },
-    {
-      "ticker": "CCL",
-      "name": "Carnival Corporation Ltd.",
-      "universe": "S&P 500 (continued)",
-      "universes": [
-        "S&P 500"
-      ],
-      "price": 28.38,
-      "change_pct": -2.1,
-      "pe": 12.783783,
-      "forwardPe": 10.758883,
-      "marketCap": 38870642688,
-      "divYield": 1.55,
-      "sector": "Consumer Cyclical",
-      "industry": "Travel Services",
-      "recommendation": "buy",
-      "targetPrice": 35.548,
-      "beta": 2.338,
-      "volume": 10270001,
-      "avgVolume": 21816830,
-      "rsi": 54.6,
-      "sma20": 27.33,
-      "sma50": 27.74,
-      "high52w": null,
-      "low52w": null,
-      "institutionPct": 66.8,
-      "above_sma20": true,
-      "above_sma50": true,
-      "above_52w_high_pct": null,
-      "below_52w_low_pct": null,
-      "volume_ratio": 0.47,
-      "score": 8,
-      "signals": [
-        "above_ma",
-        "value_pe",
-        "analyst_buy"
-      ]
-    },
-    {
-      "ticker": "UAL",
-      "name": "United Airlines Holdings, Inc.",
-      "universe": "S&P 500 (continued)",
-      "universes": [
-        "S&P 500"
-      ],
-      "price": 126.22,
-      "change_pct": -2.57,
-      "pe": 11.81882,
-      "forwardPe": 8.1625595,
-      "marketCap": 40968814592,
-      "divYield": 0,
-      "sector": "Industrials",
-      "industry": "Airlines",
-      "recommendation": "strong_buy",
-      "targetPrice": 162.15218,
-      "beta": 1.292,
-      "volume": 556925,
-      "avgVolume": 4861270,
-      "rsi": 53.4,
-      "sma20": 122.45,
-      "sma50": 121.26,
-      "high52w": null,
-      "low52w": null,
-      "institutionPct": 90.0,
-      "above_sma20": true,
-      "above_sma50": true,
-      "above_52w_high_pct": null,
-      "below_52w_low_pct": null,
+      "above_52w_high_pct": 0.2,
+      "below_52w_low_pct": 148.5,
       "volume_ratio": 0.11,
-      "score": 8,
+      "score": 9,
       "signals": [
         "above_ma",
+        "near_high",
+        "value_pe",
+        "analyst_buy"
+      ]
+    },
+    {
+      "ticker": "USB",
+      "name": "U.S. Bancorp",
+      "universe": "S&P 500 (continued)",
+      "universes": [
+        "S&P 500"
+      ],
+      "price": 64.01,
+      "change_pct": -0.28,
+      "pe": 12.776447,
+      "forwardPe": 11.05418,
+      "marketCap": 99730874368,
+      "divYield": 3.24,
+      "sector": "Financial Services",
+      "industry": "Banks - Regional",
+      "recommendation": "buy",
+      "targetPrice": 70.31818,
+      "beta": 0.977,
+      "volume": 565298,
+      "avgVolume": 8775477,
+      "rsi": 58.6,
+      "sma20": 63.69,
+      "sma50": 60.71,
+      "high52w": 65.02,
+      "low52w": 42.64,
+      "institutionPct": 85.3,
+      "above_sma20": true,
+      "above_sma50": true,
+      "above_52w_high_pct": 1.6,
+      "below_52w_low_pct": 50.1,
+      "volume_ratio": 0.06,
+      "score": 9,
+      "signals": [
+        "above_ma",
+        "near_high",
+        "value_pe",
+        "analyst_buy"
+      ]
+    },
+    {
+      "ticker": "PNC",
+      "name": "PNC Financial Services Group, I",
+      "universe": "S&P 500 (continued)",
+      "universes": [
+        "S&P 500"
+      ],
+      "price": 252.15,
+      "change_pct": 0.15,
+      "pe": 13.892562,
+      "forwardPe": 11.803537,
+      "marketCap": 100607844352,
+      "divYield": 3.18,
+      "sector": "Financial Services",
+      "industry": "Banks - Regional",
+      "recommendation": "buy",
+      "targetPrice": 277.725,
+      "beta": 0.898,
+      "volume": 104784,
+      "avgVolume": 2077727,
+      "rsi": 57.1,
+      "sma20": 251.41,
+      "sma50": 242.7,
+      "high52w": 258.13,
+      "low52w": 172.82,
+      "institutionPct": 86.3,
+      "above_sma20": true,
+      "above_sma50": true,
+      "above_52w_high_pct": 2.3,
+      "below_52w_low_pct": 45.9,
+      "volume_ratio": 0.05,
+      "score": 9,
+      "signals": [
+        "above_ma",
+        "near_high",
+        "value_pe",
+        "analyst_buy"
+      ]
+    },
+    {
+      "ticker": "ALL",
+      "name": "Allstate Corporation (The)",
+      "universe": "S&P 500 (continued)",
+      "universes": [
+        "S&P 500"
+      ],
+      "price": 265.76,
+      "change_pct": -1.45,
+      "pe": 5.321586,
+      "forwardPe": 9.689376,
+      "marketCap": 67199533056,
+      "divYield": 1.6,
+      "sector": "Financial Services",
+      "industry": "Insurance - Property & Casualty",
+      "recommendation": "buy",
+      "targetPrice": 270.31818,
+      "beta": 0.156,
+      "volume": 324459,
+      "avgVolume": 1739255,
+      "rsi": 57.7,
+      "sma20": 260.4,
+      "sma50": 242.82,
+      "high52w": 277.22,
+      "low52w": 185.28,
+      "institutionPct": 88.5,
+      "above_sma20": true,
+      "above_sma50": true,
+      "above_52w_high_pct": 4.1,
+      "below_52w_low_pct": 43.4,
+      "volume_ratio": 0.19,
+      "score": 9,
+      "signals": [
+        "above_ma",
+        "near_high",
+        "value_pe",
+        "analyst_buy"
+      ]
+    },
+    {
+      "ticker": "AFG",
+      "name": "American Financial Group, Inc.",
+      "universe": "S&P 500 (continued)",
+      "universes": [
+        "S&P 400"
+      ],
+      "price": 144.23,
+      "change_pct": 0.25,
+      "pe": 12.607517,
+      "forwardPe": 11.917017,
+      "marketCap": 11959761920,
+      "divYield": 2.45,
+      "sector": "Financial Services",
+      "industry": "Insurance - Property & Casualty",
+      "recommendation": "buy",
+      "targetPrice": 149.66667,
+      "beta": 0.601,
+      "volume": 25534,
+      "avgVolume": 487630,
+      "rsi": 56.5,
+      "sma20": 142.7,
+      "sma50": 138.27,
+      "high52w": 148.05,
+      "low52w": 121.55,
+      "institutionPct": 68.3,
+      "above_sma20": true,
+      "above_sma50": true,
+      "above_52w_high_pct": 2.6,
+      "below_52w_low_pct": 18.7,
+      "volume_ratio": 0.05,
+      "score": 9,
+      "signals": [
+        "above_ma",
+        "near_high",
+        "value_pe",
+        "analyst_buy"
+      ]
+    },
+    {
+      "ticker": "RGA",
+      "name": "Reinsurance Group of America, I",
+      "universe": "S&P 500 (continued)",
+      "universes": [
+        "S&P 400"
+      ],
+      "price": 245.26,
+      "change_pct": 1.31,
+      "pe": 10.799648,
+      "forwardPe": 8.295482,
+      "marketCap": 16015885312,
+      "divYield": 1.62,
+      "sector": "Financial Services",
+      "industry": "Insurance - Reinsurance",
+      "recommendation": "buy",
+      "targetPrice": 266.8889,
+      "beta": 0.461,
+      "volume": 36252,
+      "avgVolume": 363867,
+      "rsi": 64.7,
+      "sma20": 238.84,
+      "sma50": 223.46,
+      "high52w": 248.13,
+      "low52w": 175.83,
+      "institutionPct": 104.0,
+      "above_sma20": true,
+      "above_sma50": true,
+      "above_52w_high_pct": 1.2,
+      "below_52w_low_pct": 39.5,
+      "volume_ratio": 0.1,
+      "score": 9,
+      "signals": [
+        "above_ma",
+        "near_high",
+        "value_pe",
+        "analyst_buy"
+      ]
+    },
+    {
+      "ticker": "GL",
+      "name": "Globe Life Inc.",
+      "universe": "S&P 500 (continued 2)",
+      "universes": [
+        "S&P 500"
+      ],
+      "price": 182.72,
+      "change_pct": -0.29,
+      "pe": 12.140863,
+      "forwardPe": 11.061711,
+      "marketCap": 14187250688,
+      "divYield": 0.72,
+      "sector": "Financial Services",
+      "industry": "Insurance - Life",
+      "recommendation": "buy",
+      "targetPrice": 193.90909,
+      "beta": 0.472,
+      "volume": 83230,
+      "avgVolume": 655498,
+      "rsi": 56.7,
+      "sma20": 181.71,
+      "sma50": 174.56,
+      "high52w": 191.55,
+      "low52w": 127.07,
+      "institutionPct": 87.9,
+      "above_sma20": true,
+      "above_sma50": true,
+      "above_52w_high_pct": 4.6,
+      "below_52w_low_pct": 43.8,
+      "volume_ratio": 0.13,
+      "score": 9,
+      "signals": [
+        "above_ma",
+        "near_high",
+        "value_pe",
+        "analyst_buy"
+      ]
+    },
+    {
+      "ticker": "SOLV",
+      "name": "Solventum Corporation",
+      "universe": "S&P 500",
+      "universes": [
+        "S&P 500"
+      ],
+      "price": 85.71,
+      "change_pct": 0.59,
+      "pe": 10.477995,
+      "forwardPe": 11.8695135,
+      "marketCap": 14589875200,
+      "divYield": 0,
+      "sector": "Healthcare",
+      "industry": "Medical Instruments & Supplies",
+      "recommendation": "buy",
+      "targetPrice": 93.92308,
+      "beta": 0.671,
+      "volume": 90153,
+      "avgVolume": 1381627,
+      "rsi": 58.3,
+      "sma20": 83.0,
+      "sma50": 79.72,
+      "high52w": 90.0,
+      "low52w": 62.38,
+      "institutionPct": 75.9,
+      "above_sma20": true,
+      "above_sma50": true,
+      "above_52w_high_pct": 4.8,
+      "below_52w_low_pct": 37.4,
+      "volume_ratio": 0.07,
+      "score": 9,
+      "signals": [
+        "above_ma",
+        "near_high",
         "value_pe",
         "analyst_buy"
       ]
