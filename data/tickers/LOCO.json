@@ -1,27 +1,29 @@
 {
  "ticker": "LOCO",
  "name": "El Pollo Loco Holdings, Inc.",
- "generated_at": "2026-08-10T14:45:01.807617+00:00",
- "price": 15.68,
- "change_pct": -4.22,
+ "generated_at": "2026-08-11T11:45:01.608619+00:00",
+ "price": 15.45,
+ "change_pct": 1.91,
  "sector": "Consumer Cyclical",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 42.8,
-  "sma_20": 16.33,
-  "sma_50": 15.87
+  "rsi_14": 41.8,
+  "sma_20": 16.24,
+  "sma_50": 15.89
  },
  "fundamentals": {
-  "pe_ratio": 16.0,
-  "market_cap": "478M",
+  "pe_ratio": 13.205129,
+  "market_cap": "471M",
   "beta": 0.692,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

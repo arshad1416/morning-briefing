@@ -1,29 +1,29 @@
 {
  "ticker": "TNC",
  "name": "Tennant Company",
- "generated_at": "2026-08-10T14:45:01.807617+00:00",
- "price": 77.75,
- "change_pct": 1.11,
+ "generated_at": "2026-08-11T11:45:01.608619+00:00",
+ "price": 70.33,
+ "change_pct": -4.82,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 36.2,
-  "sma_20": 85.36,
-  "sma_50": 86.33
+  "rsi_14": 27.6,
+  "sma_20": 84.41,
+  "sma_50": 85.91
  },
  "fundamentals": {
-  "pe_ratio": 74.75962,
-  "market_cap": "1.3B",
+  "pe_ratio": 67.62501,
+  "market_cap": "1.2B",
   "beta": 1.134,
-  "dividend_yield": 0.0161
+  "dividend_yield": 0.0168
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

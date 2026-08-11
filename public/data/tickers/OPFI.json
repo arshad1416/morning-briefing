@@ -1,28 +1,29 @@
 {
  "ticker": "OPFI",
  "name": "OppFi Inc.",
- "generated_at": "2026-08-10T14:45:01.807617+00:00",
- "price": 9.54,
- "change_pct": -2.25,
+ "generated_at": "2026-08-11T11:45:01.608619+00:00",
+ "price": 8.91,
+ "change_pct": -5.16,
  "sector": "Financial Services",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 52.8,
-  "sma_20": 9.43,
-  "sma_50": 9.06
+  "rsi_14": 41.9,
+  "sma_20": 9.4,
+  "sma_50": 9.07
  },
  "fundamentals": {
-  "pe_ratio": 4.699507,
-  "market_cap": "1.4B",
+  "pe_ratio": 4.391626,
+  "market_cap": "1.3B",
   "beta": 1.818,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

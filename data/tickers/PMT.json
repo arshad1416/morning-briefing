@@ -1,23 +1,25 @@
 {
  "ticker": "PMT",
  "name": "PennyMac Mortgage Investment Tr",
- "generated_at": "2026-08-10T14:45:01.807617+00:00",
- "price": 9.72,
- "change_pct": 4.01,
+ "generated_at": "2026-08-11T11:45:01.608619+00:00",
+ "price": 9.44,
+ "change_pct": -2.23,
  "sector": "Real Estate",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 49.1,
-  "sma_20": 9.71,
-  "sma_50": 9.88
+  "rsi_14": 43.1,
+  "sma_20": 9.67,
+  "sma_50": 9.87
  },
  "fundamentals": {
-  "pe_ratio": 6.7465277,
-  "market_cap": null,
+  "pe_ratio": 6.5520835,
+  "market_cap": "823M",
   "beta": 1.118,
-  "dividend_yield": 0.17129999999999998
+  "dividend_yield": null
  },
  "council_analysis": {
   "score": 6

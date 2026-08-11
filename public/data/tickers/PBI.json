@@ -1,23 +1,25 @@
 {
  "ticker": "PBI",
  "name": "Pitney Bowes Inc.",
- "generated_at": "2026-08-10T14:45:01.807617+00:00",
- "price": 18.01,
- "change_pct": 0.33,
+ "generated_at": "2026-08-11T11:45:01.608619+00:00",
+ "price": 17.18,
+ "change_pct": -1.38,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 52.3,
-  "sma_20": 18.09,
-  "sma_50": 17.53
+  "rsi_14": 42.7,
+  "sma_20": 18.01,
+  "sma_50": 17.54
  },
  "fundamentals": {
-  "pe_ratio": 14.642277,
-  "market_cap": "2.5B",
+  "pe_ratio": 13.96748,
+  "market_cap": "2.4B",
   "beta": 1.639,
-  "dividend_yield": 0.0223
+  "dividend_yield": 0.023
  },
  "council_analysis": {
   "score": 6

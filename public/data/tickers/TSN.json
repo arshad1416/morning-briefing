@@ -1,27 +1,28 @@
 {
  "ticker": "TSN",
  "name": "Tyson Foods, Inc.",
- "generated_at": "2026-08-10T14:45:01.807617+00:00",
- "price": 58.56,
- "change_pct": 0.03,
+ "generated_at": "2026-08-11T11:45:01.608619+00:00",
+ "price": 57.46,
+ "change_pct": -1.0,
  "sector": "Consumer Defensive",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 49.3,
-  "sma_20": 58.5,
-  "sma_50": 58.1
+  "rsi_14": 44.2,
+  "sma_20": 58.45,
+  "sma_50": 58.0
  },
  "fundamentals": {
-  "pe_ratio": 36.148148,
-  "market_cap": "20.6B",
+  "pe_ratio": 35.469135,
+  "market_cap": "20.2B",
   "beta": 0.378,
-  "dividend_yield": 0.0348
+  "dividend_yield": 0.0351
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

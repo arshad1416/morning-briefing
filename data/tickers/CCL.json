@@ -1,9 +1,9 @@
 {
  "ticker": "CCL",
  "name": "Carnival Corporation Ltd.",
- "generated_at": "2026-08-10T14:45:01.807617+00:00",
- "price": 28.43,
- "change_pct": -1.26,
+ "generated_at": "2026-08-11T11:45:01.608619+00:00",
+ "price": 28.38,
+ "change_pct": -2.1,
  "sector": "Consumer Cyclical",
  "signals": [
   "above_ma",
@@ -11,20 +11,70 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 54.7,
-  "sma_20": 27.34,
-  "sma_50": 27.86
+  "rsi_14": 54.6,
+  "sma_20": 27.33,
+  "sma_50": 27.74
  },
  "fundamentals": {
-  "pe_ratio": 12.808558,
+  "pe_ratio": 12.783783,
   "market_cap": "38.9B",
   "beta": 2.338,
-  "dividend_yield": 0.015600000000000001
+  "dividend_yield": 0.0155
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "CCL",
+   "date": "2026-09-28",
+   "epsEstimate": 1.35,
+   "epsActual": null
+  },
+  {
+   "ticker": "CCL",
+   "date": "2026-06-23",
+   "epsEstimate": 0.34,
+   "epsActual": 0.41
+  },
+  {
+   "ticker": "CCL",
+   "date": "2026-03-27",
+   "epsEstimate": 0.18,
+   "epsActual": 0.2
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "CCL",
+   "date": "2026-06-26",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/815097/000081509726000096/ccl-20260531.htm"
+  },
+  {
+   "ticker": "CCL",
+   "date": "2026-03-27",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/815097/000081509726000037/ccl-20260228.htm"
+  },
+  {
+   "ticker": "CCL",
+   "date": "2026-01-27",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/815097/000081509726000007/ccl-20251130.htm"
+  },
+  {
+   "ticker": "CCL",
+   "date": "2025-09-29",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/815097/000081509725000084/ccl-20250831.htm"
+  },
+  {
+   "ticker": "CCL",
+   "date": "2025-06-26",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/815097/000081509725000052/ccl-20250531.htm"
+  }
+ ],
  "reddit_mentions": []
 }

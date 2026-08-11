@@ -1,18 +1,21 @@
 {
  "ticker": "BANF",
  "name": "BancFirst Corporation",
- "generated_at": "2026-08-10T14:45:01.807617+00:00",
- "price": 113.28,
- "change_pct": -0.04,
+ "generated_at": "2026-08-11T11:45:01.608619+00:00",
+ "price": 112.53,
+ "change_pct": -0.42,
  "sector": "Financial Services",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 46.7,
-  "sma_20": 115.09,
-  "sma_50": 113.24
+  "rsi_14": 44.2,
+  "sma_20": 114.96,
+  "sma_50": 113.29
  },
  "fundamentals": {
-  "pe_ratio": 15.28745,
+  "pe_ratio": 15.186235,
   "market_cap": "3.8B",
   "beta": 0.616,
   "dividend_yield": 0.0173

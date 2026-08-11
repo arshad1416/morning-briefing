@@ -1,27 +1,28 @@
 {
  "ticker": "ENS",
  "name": "EnerSys",
- "generated_at": "2026-08-10T14:45:01.807617+00:00",
- "price": 188.53,
- "change_pct": 0.58,
+ "generated_at": "2026-08-11T11:45:01.608619+00:00",
+ "price": 189.48,
+ "change_pct": -1.17,
  "sector": "Industrials",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 42.6,
-  "sma_20": 192.58,
-  "sma_50": 210.82
+  "rsi_14": 43.8,
+  "sma_20": 192.16,
+  "sma_50": 210.11
  },
  "fundamentals": {
-  "pe_ratio": 24.484417,
+  "pe_ratio": 24.575874,
   "market_cap": "6.9B",
   "beta": 1.225,
-  "dividend_yield": 0.005600000000000001
+  "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,17 +1,18 @@
 {
  "ticker": "XRAY",
  "name": "DENTSPLY SIRONA Inc.",
- "generated_at": "2026-08-10T14:45:01.807617+00:00",
- "price": 12.13,
- "change_pct": -7.9,
+ "generated_at": "2026-08-11T11:45:01.608619+00:00",
+ "price": 11.76,
+ "change_pct": -3.01,
  "sector": "Healthcare",
  "signals": [
-  "rsi_dip"
+  "rsi_dip",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 43.5,
-  "sma_20": 13.41,
-  "sma_50": 11.75
+  "rsi_14": 40.9,
+  "sma_20": 13.35,
+  "sma_50": 11.78
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -20,7 +21,7 @@
   "dividend_yield": 0.0504
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

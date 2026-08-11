@@ -1,26 +1,27 @@
 {
  "ticker": "REET",
  "name": "iShares Global REIT ETF",
- "generated_at": "2026-08-10T14:45:01.807617+00:00",
- "price": 28.26,
- "change_pct": 0.61,
+ "generated_at": "2026-08-11T11:45:01.608619+00:00",
+ "price": 27.83,
+ "change_pct": -1.43,
  "sector": null,
  "signals": [
-  "near_high"
+  "rsi_dip",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 50.9,
-  "sma_20": 28.41,
-  "sma_50": 27.82
+  "rsi_14": 41.8,
+  "sma_20": 28.4,
+  "sma_50": 27.83
  },
  "fundamentals": {
-  "pe_ratio": 23.912796,
+  "pe_ratio": 23.544712,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.0327
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

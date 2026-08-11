@@ -1,29 +1,80 @@
 {
  "ticker": "VLO",
  "name": "Valero Energy Corporation",
- "generated_at": "2026-08-10T14:45:01.807617+00:00",
- "price": 293.77,
- "change_pct": -3.04,
+ "generated_at": "2026-08-11T11:45:01.608619+00:00",
+ "price": 309.04,
+ "change_pct": 3.6,
  "sector": "Energy",
  "signals": [
+  "above_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.0,
-  "sma_20": 303.77,
-  "sma_50": 275.27
+  "rsi_14": 60.3,
+  "sma_20": 304.71,
+  "sma_50": 276.67
  },
  "fundamentals": {
-  "pe_ratio": 12.255528,
-  "market_cap": "84.6B",
+  "pe_ratio": 12.887198,
+  "market_cap": "89.0B",
   "beta": 0.554,
-  "dividend_yield": 0.0158
+  "dividend_yield": 0.0161
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "VLO",
+   "date": "2026-10-22",
+   "epsEstimate": 14.95,
+   "epsActual": null
+  },
+  {
+   "ticker": "VLO",
+   "date": "2026-07-30",
+   "epsEstimate": 10.13,
+   "epsActual": 12.54
+  },
+  {
+   "ticker": "VLO",
+   "date": "2026-04-30",
+   "epsEstimate": 3.16,
+   "epsActual": 4.22
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "VLO",
+   "date": "2026-07-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1035002/000162828026050937/vlo-20260630.htm"
+  },
+  {
+   "ticker": "VLO",
+   "date": "2026-04-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1035002/000162828026028690/vlo-20260331.htm"
+  },
+  {
+   "ticker": "VLO",
+   "date": "2026-02-25",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1035002/000162828026011499/vlo-20251231.htm"
+  },
+  {
+   "ticker": "VLO",
+   "date": "2025-10-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1035002/000162828025046072/vlo-20250930.htm"
+  },
+  {
+   "ticker": "VLO",
+   "date": "2025-07-24",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1035002/000103500225000061/vlo-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }
