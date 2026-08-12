@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-11T17:15:11-04:00",
+  "generated_at": "2026-08-12T07:26:25-04:00",
   "market_summary": {
-    "vix": 15.28,
+    "vix": 15.37,
     "ten_year_yield": 4.68,
     "indices": [
       {
@@ -26,13 +26,13 @@
       },
       {
         "ticker": "TSX",
-        "price": 36475.92,
+        "price": 36475.9,
         "change_pct": 0.05
       },
       {
         "ticker": "VIX",
-        "price": 15.28,
-        "change_pct": -1.16
+        "price": 15.37,
+        "change_pct": 0.59
       },
       {
         "ticker": "10Y Yield",
@@ -48,7 +48,7 @@
     ]
   },
   "narrative": {
-    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,728.20 (-0.32%)\n  \u2022 Dow Jones: 53,791.85 (-0.34%)\n  \u2022 NASDAQ: 26,445.45 (-0.60%)\n  \u2022 Russell 2000: 3,027.12 (+0.32%)\n  \u2022 TSX: 36,475.92 (+0.05%)\n  \u2022 VIX: 15.28\n  \u2022 10Y Yield: 4.68%"
+    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,728.20 (-0.32%)\n  \u2022 Dow Jones: 53,791.85 (-0.34%)\n  \u2022 NASDAQ: 26,445.45 (-0.60%)\n  \u2022 Russell 2000: 3,027.12 (+0.32%)\n  \u2022 TSX: 36,475.90 (+0.05%)\n  \u2022 VIX: 15.37\n  \u2022 10Y Yield: 4.68%"
   },
   "watchlist_summary": {},
   "central_banks": {
@@ -56,6 +56,20 @@
     "boc": ""
   },
   "insider_trades": [
+    {
+      "ticker": "NKE",
+      "insider": "Montagne Amy",
+      "title": "PRESIDENT, NIKE",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 4867,
+      "price": 42.05,
+      "value": 204657,
+      "date": "2026-08-07",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000114/xslF345X06/form4.xml"
+    },
     {
       "ticker": "PLTR",
       "insider": "Sankar Shyam",
@@ -181,90 +195,76 @@
       "date": "2026-08-05",
       "source": "SEC EDGAR Form 4",
       "filing_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000103/xslF345X06/form4.xml"
-    },
-    {
-      "ticker": "MSFT",
-      "insider": "Althoff Judson",
-      "title": "CEO Microsoft Commercial",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 10000,
-      "price": 487.89,
-      "value": 4878930,
-      "date": "2026-08-05",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/789019/000078901926000143/xslF345X06/form4.xml"
     }
   ],
   "market_news": {
     "headlines": [
       {
-        "title": "Amentum anticipates 3% NASA revenue impact in FY27 while lifting FY26 EPS outlook to $2.40-$2.50",
-        "url": "https://seekingalpha.com/news/4630948-amentum-anticipates-3-percent-nasa-revenue-impact-in-fy27-while-lifting-fy26-eps-outlook-to?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Hydro One declares CAD 0.3531 dividend",
+        "url": "https://seekingalpha.com/news/4631410-hydro-one-declares-cad-03531-dividend?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Venture Global signals 2026 EBITDA of $8.7B-$9.1B as it boosts dividend to $0.04",
-        "url": "https://seekingalpha.com/news/4630947-venture-global-signals-2026-ebitda-of-8_7b-9_1b-as-it-boosts-dividend-to-0_04?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "abrdn Asia-Pacific Income Fund VCC declares CAD 0.02 dividend",
+        "url": "https://seekingalpha.com/news/4631408-abrdn-asia-pacific-income-fund-vcc-declares-cad-002-dividend?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "SA analyst upgrades/downgrades: INTC, AMD, ANET, GILD",
-        "url": "https://seekingalpha.com/news/4630944-sa-analyst-upgrades-downgrades-intc-amd-anet-gild?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "SUNation Energy GAAP EPS of -$0.52, revenue of $8.16M",
+        "url": "https://seekingalpha.com/news/4631406-sunation-energy-gaap-eps-of-0_52-revenue-of-8_16m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Analysts defend On Holding after earnings slump",
-        "url": "https://seekingalpha.com/news/4630931-analysts-defend-on-holding-after-earnings-slump?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "bearish",
-        "summary": ""
-      },
-      {
-        "title": "Marex Group 2026 Earnings Preview",
-        "url": "https://seekingalpha.com/news/4630941-marex-group-2026-earnings-preview?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Hydro One GAAP EPS of C$0.62, revenue of C$2.3B",
+        "url": "https://seekingalpha.com/news/4631403-hydro-one-gaap-eps-of-c062-revenue-of-c23b?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Enterprises focused on ROI, but AI spending remains strong: UBS",
-        "url": "https://seekingalpha.com/news/4630927-enterprises-focused-on-roi-but-ai-spending-remains-strong-ubs?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Exchange Income boosts monthly dividend by 4.3% to CAD 0.24 a share",
+        "url": "https://seekingalpha.com/news/4631404-exchange-income-boosts-quarterly-dividend-by-43-to-cad-024-a-share?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Octave Intelligence plc Non-GAAP EPS of $0.36 beats by $0.05, revenue of $398M beats by $0.96M",
+        "url": "https://seekingalpha.com/news/4631400-octave-intelligence-plc-non-gaap-eps-of-0_36-beats-by-0_05-revenue-of-398m-beats-by-0_96m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "James River outlines shift to 55% net retention while prioritizing underwriting profitability over near-term volume",
-        "url": "https://seekingalpha.com/news/4630938-james-river-outlines-shift-to-55-percent-net-retention-while-prioritizing-underwriting?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Local Bounti GAAP EPS of -$0.68, revenue of $13.85M",
+        "url": "https://seekingalpha.com/news/4631401-local-bounti-gaap-eps-of-0_68-revenue-of-13_85m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Micron: How The Memory Supercycle Reaccelerates Right Now",
-        "url": "https://seekingalpha.com/article/4934625-micron-how-memory-supercycle-reaccelerates-right-now?source=feed",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "I'm Buying These 2 Dividend Payers In August",
-        "url": "https://seekingalpha.com/article/4934467-i-am-buying-these-two-dividend-payers-in-august?source=feed",
+        "title": "Nvidia Intends To Make AI Compute An Asset Class Of Its Own (Rating Upgrade)",
+        "url": "https://seekingalpha.com/article/4935209-nvidia-intends-to-make-ai-compute-an-asset-class-of-its-own-rating-upgrade?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Stop Chasing Yield: 2 Dividend Stocks I Want Now",
-        "url": "https://seekingalpha.com/article/4934213-stop-chasing-yield-2-dividend-stocks-i-want-now?source=feed",
+        "title": "Credo's Growth Story Is Only Getting Started",
+        "url": "https://seekingalpha.com/article/4935207-credo-growth-story-is-only-getting-started?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Lumentum: Strike While The Iron Is Hot",
+        "url": "https://seekingalpha.com/article/4935162-lumentum-strike-while-the-iron-is-hot?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
@@ -275,185 +275,185 @@
   },
   "geopolitical": [
     {
-      "title": "Trump hid in catering truck in secret plane swap over Iran threat, reports say",
+      "title": "Rescuers scramble for survivors with 180 dead in Colombia earthquake",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cm2g90vvy62o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-11T09:58:45+00:00",
-      "summary": "The US president was moved from the old Air Force One to a military plane as he left a Nato summit in Turkey last month, US media say."
+      "url": "https://www.bbc.co.uk/news/articles/c20dqd9qwq4o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-11T19:09:52+00:00",
+      "summary": "Colombia experienced a number of aftershocks on Tuesday, as efforts continued to free survivors trapped in rubble and buildings."
     },
     {
-      "title": "Russia using North Korean missiles to strike Ukraine, Zelensky says",
+      "title": "Trump confirms he switched planes after Nato summit because of possible threat",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c151dpzwnvxo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-11T09:39:58+00:00",
-      "summary": "Ukraine's president says strikes in Zaporizhzhia - which killed at least six and injured 19 - involved ballistic missiles from Russia's ally."
+      "url": "https://www.bbc.co.uk/news/articles/c980r4wpl9lo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-12T03:44:55+00:00",
+      "summary": "Journalists and White House staff who were on board the jet were unaware the president had left."
     },
     {
-      "title": "Ousted Syrian dictator Bashar al-Assad sentenced to death in absentia",
+      "title": "Trump's dramatic plane swap hints at personal stakes of Iran war",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/ce34dkpnyg7o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-11T09:42:48+00:00",
-      "summary": "The ex-president is convicted of committing war crimes and crimes against humanity during the country's civil war."
+      "url": "https://www.bbc.co.uk/news/articles/cly8jexn1z9o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-12T00:14:42+00:00",
+      "summary": "It marks another striking episode in the turbulent history of his relationship with Iran, writes the BBC's Anthony Zurcher."
     },
     {
-      "title": "At least 132 killed in Colombia's largest  earthquake in years",
+      "title": "Singapore and S Korea pull Trader Joe's seasoning over poppy seeds",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c20e360lx0vo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-11T04:06:07+00:00",
-      "summary": "More than 480 people were injured in the quakes, with more feared trapped under collapsed buildings."
+      "url": "https://www.bbc.co.uk/news/articles/cdewpklnzwxo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-12T07:44:44+00:00",
+      "summary": "Trader Joe's Everything But the Bagel seasoning contains poppy seeds which are banned in both countries."
     },
     {
-      "title": "Libyan authorities battle big blaze at major oil refinery",
+      "title": "Wisconsin result halts winning streak for Democratic Party's left wing",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cp308z9pl30o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-11T08:28:24+00:00",
-      "summary": "Monday's drone strike on the Zawiya refinery was the third such incident in two days."
+      "url": "https://www.bbc.co.uk/news/articles/c9347ezzwljo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-12T09:55:40+00:00",
+      "summary": "Centrist David Crowley is projected to have beaten democratic socialist Francesca Hong, breaking a recent nationwide trend."
     },
     {
-      "title": "East Libya military intelligence chief killed in car bomb",
+      "title": "Iran refutes Trump\u2019s claim to \u2018control\u2019 Hormuz: What\u2019s the latest in talks?",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/11/east-libya-military-intelligence-chief-killed-in-car-bomb?traffic_source=rss",
-      "date": "2026-08-11T10:25:50+00:00",
-      "summary": "Prime minister of the Eastern Libyan government condemns killing of Major-General Fawzi al\u2011Mansouri."
+      "url": "https://www.aljazeera.com/news/2026/8/12/iran-refutes-trumps-claim-to-control-hormuz-whats-the-latest-in-talks?traffic_source=rss",
+      "date": "2026-08-12T10:27:22+00:00",
+      "summary": "Iran says Hormuz stays closed until US meets its demands and changes its 'behaviour' as global energy prices rise."
     },
     {
-      "title": "Who is Atef Najib, former Syrian official sentenced to death with al-Assad?",
+      "title": "\u2018The hardest mission of my life\u2019: A rescuer\u2019s loss in the Lebanon War",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/11/who-is-atef-najib-former-syrian-official-sentenced-to-death-with-al-assad?traffic_source=rss",
-      "date": "2026-08-11T10:03:25+00:00",
-      "summary": "Experts say this trial has been a test of Syria\u2019s transitional justice."
+      "url": "https://www.aljazeera.com/video/al-jazeera-originals/2026/8/12/aje-onl-or_leb_paramedics_teaser-120826?traffic_source=rss",
+      "date": "2026-08-12T10:02:16+00:00",
+      "summary": "A Lebanon rescuer\u2019s work is shaped by the daughter he lost in an Israeli attack on his station."
     },
     {
-      "title": "Bangladesh and India battle to save cricket series after political turmoil",
+      "title": "More than 100 passengers rescued after Indonesia ferry fire",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/sports/2026/8/11/bangladesh-and-india-battle-to-save-cricket-series-after-political-turmoil?traffic_source=rss",
-      "date": "2026-08-11T10:02:35+00:00",
-      "summary": "Bangladesh and India white-ball series under threat due to tensions that arose when Bangladeshi PM Hasina toppled."
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/8/12/more-than-100-passengers-rescued-after-indonesia-ferry-fire?traffic_source=rss",
+      "date": "2026-08-12T09:26:45+00:00",
+      "summary": "More than 100 passengers rescued after Indonesia ferry fire"
     }
   ],
   "congress": {
     "recent_trades": [
       {
-        "politician": "Christian D. Menefee",
+        "politician": "Josh Gottheimer",
         "chamber": "House",
-        "state": "TX18",
-        "ticker": "PINS",
-        "action": "Sell",
-        "amount_range": "$15,001 - $50,000",
-        "amount_low": 15001,
-        "transaction_date": "08/07/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035157.pdf"
-      },
-      {
-        "politician": "Michael Rulli",
-        "chamber": "House",
-        "state": "OH06",
-        "ticker": "GOOGL",
+        "state": "NJ05",
+        "ticker": "GOOGM",
         "action": "Buy",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "06/29/2026",
+        "transaction_date": "07/24/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035186.pdf"
       },
       {
-        "politician": "Michael Rulli",
+        "politician": "Josh Gottheimer",
         "chamber": "House",
-        "state": "OH06",
-        "ticker": "GOOGL",
+        "state": "NJ05",
+        "ticker": "GOOGN",
         "action": "Buy",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "06/25/2026",
+        "transaction_date": "07/23/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035186.pdf"
       },
       {
-        "politician": "Michael Rulli",
+        "politician": "Josh Gottheimer",
         "chamber": "House",
-        "state": "OH06",
-        "ticker": "GOOGL",
-        "action": "Sell",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "07/03/2025",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
-      },
-      {
-        "politician": "Michael Rulli",
-        "chamber": "House",
-        "state": "OH06",
-        "ticker": "AMZN",
-        "action": "Sell",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "07/03/2025",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
-      },
-      {
-        "politician": "Michael Rulli",
-        "chamber": "House",
-        "state": "OH06",
-        "ticker": "AMZN",
-        "action": "Sell",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "06/25/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
-      },
-      {
-        "politician": "Michael Rulli",
-        "chamber": "House",
-        "state": "OH06",
-        "ticker": "AAPL",
-        "action": "Sell",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "06/25/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
-      },
-      {
-        "politician": "Michael Rulli",
-        "chamber": "House",
-        "state": "OH06",
-        "ticker": "AAPL",
-        "action": "Sell",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "10/27/2025",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
-      },
-      {
-        "politician": "Michael Rulli",
-        "chamber": "House",
-        "state": "OH06",
-        "ticker": "AAPL",
+        "state": "NJ05",
+        "ticker": "GOOGN",
         "action": "Buy",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "08/01/2025",
+        "transaction_date": "07/24/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035186.pdf"
       },
       {
-        "politician": "Michael Rulli",
+        "politician": "Josh Gottheimer",
         "chamber": "House",
-        "state": "OH06",
-        "ticker": "KO",
+        "state": "NJ05",
+        "ticker": "GTLS",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/17/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035186.pdf"
+      },
+      {
+        "politician": "Josh Gottheimer",
+        "chamber": "House",
+        "state": "NJ05",
+        "ticker": "CRWD",
         "action": "Buy",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "12/03/2025",
+        "transaction_date": "07/15/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035147.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035186.pdf"
+      },
+      {
+        "politician": "Josh Gottheimer",
+        "chamber": "House",
+        "state": "NJ05",
+        "ticker": "CCI",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/23/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035186.pdf"
+      },
+      {
+        "politician": "Josh Gottheimer",
+        "chamber": "House",
+        "state": "NJ05",
+        "ticker": "FN",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/14/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035186.pdf"
+      },
+      {
+        "politician": "Josh Gottheimer",
+        "chamber": "House",
+        "state": "NJ05",
+        "ticker": "IBM",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/15/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035186.pdf"
+      },
+      {
+        "politician": "Josh Gottheimer",
+        "chamber": "House",
+        "state": "NJ05",
+        "ticker": "IBM",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/16/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035186.pdf"
+      },
+      {
+        "politician": "Josh Gottheimer",
+        "chamber": "House",
+        "state": "NJ05",
+        "ticker": "MNST",
+        "action": "Buy",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/17/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035186.pdf"
       }
     ],
-    "summary": "60 recent congressional trades from 6 House periodic transaction reports (30 buys, 30 sells)."
+    "summary": "60 recent congressional trades from 6 House periodic transaction reports (25 buys, 35 sells)."
   }
 }
