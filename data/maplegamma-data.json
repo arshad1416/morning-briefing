@@ -1,38 +1,46 @@
 {
-  "generated_at": "2026-08-12T09:37:47-04:00",
+  "generated_at": "2026-08-12T10:07:30-04:00",
   "market_overview": {
-    "total_net_gex": 2298764,
-    "total_oi": 2446374,
-    "current_price": 773.2,
-    "change_pct": 0.34
+    "total_net_gex": 3583931,
+    "total_oi": 3210953,
+    "current_price": 772.25,
+    "change_pct": 0.22
   },
   "tickers": {
     "SPY": {
-      "current_price": 773.2,
-      "change_pct": 0.34,
+      "current_price": 772.25,
+      "change_pct": 0.22,
       "gamma_regime": "bullish",
-      "total_gex": 2298764,
-      "total_dex": 215365890,
-      "total_vex": 42531546,
-      "total_vanna": 4391416,
-      "total_charm": -400059,
-      "total_dealer_gex": 3661926,
-      "gamma_flip": 769.47,
+      "total_gex": 3583931,
+      "total_dex": 162557603,
+      "total_vex": 971990214,
+      "total_vanna": 8222132,
+      "total_charm": -3948080,
+      "total_dealer_gex": 1292365,
+      "gamma_flip": 768.3,
       "max_pain": 750.0,
-      "max_gex_strike": 774.0,
-      "max_gex_value": 882318,
+      "max_gex_strike": 775.0,
+      "max_gex_value": 809767,
       "neutral_range": [],
-      "floor_zone": null,
-      "ceiling_zone": {
-        "strike": 774.0,
-        "net_gex": 882318,
-        "total_gex": 882318,
-        "range_start": 769.0,
-        "range_end": 779.0,
+      "floor_zone": {
+        "strike": 770.0,
+        "net_gex": 695587,
+        "total_gex": 695587,
+        "range_start": 765.0,
+        "range_end": 775.0,
         "strength": "strong",
-        "narrative": "Gamma ceiling at $774"
+        "narrative": "Gamma floor at $770"
       },
-      "narrative": "Net GEX: $+2,298,764 \u2014 dealers are long gamma (range-bound)"
+      "ceiling_zone": {
+        "strike": 775.0,
+        "net_gex": 915731,
+        "total_gex": 915731,
+        "range_start": 770.0,
+        "range_end": 780.0,
+        "strength": "strong",
+        "narrative": "Gamma ceiling at $775"
+      },
+      "narrative": "Net GEX: $+3,583,931 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
