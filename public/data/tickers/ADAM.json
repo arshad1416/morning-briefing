@@ -1,25 +1,26 @@
 {
  "ticker": "ADAM",
  "name": "Adamas Trust, Inc.",
- "generated_at": "2026-08-11T14:45:01.502554+00:00",
- "price": 9.73,
- "change_pct": -0.97,
+ "generated_at": "2026-08-12T11:45:01.761518+00:00",
+ "price": 10.2,
+ "change_pct": 4.24,
  "sector": "Real Estate",
  "signals": [
-  "extended_rsi",
+  "overbought_rsi",
   "above_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 66.7,
-  "sma_20": 9.09,
-  "sma_50": 9.04
+  "rsi_14": 75.4,
+  "sma_20": 9.15,
+  "sma_50": 9.06
  },
  "fundamentals": {
-  "pe_ratio": 5.788691,
-  "market_cap": "874M",
+  "pe_ratio": 6.074345,
+  "market_cap": "917M",
   "beta": 1.248,
-  "dividend_yield": 0.0977
+  "dividend_yield": 0.0981
  },
  "council_analysis": {
   "score": 6

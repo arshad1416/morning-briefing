@@ -1,80 +1,32 @@
 {
  "ticker": "MPC",
  "name": "Marathon Petroleum Corporation",
- "generated_at": "2026-08-11T14:45:01.502554+00:00",
- "price": 310.4,
- "change_pct": 4.09,
+ "generated_at": "2026-08-12T11:45:01.761518+00:00",
+ "price": 329.69,
+ "change_pct": 2.93,
  "sector": "Energy",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 58.6,
-  "sma_20": 308.82,
-  "sma_50": 280.4
+  "rsi_14": 67.1,
+  "sma_20": 310.63,
+  "sma_50": 282.21
  },
  "fundamentals": {
-  "pe_ratio": 10.763002,
-  "market_cap": "90.6B",
+  "pe_ratio": 11.4356575,
+  "market_cap": "96.2B",
   "beta": 0.508,
-  "dividend_yield": 0.0134
+  "dividend_yield": 0.0125
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [
-  {
-   "ticker": "MPC",
-   "date": "2026-11-03",
-   "epsEstimate": 19.53,
-   "epsActual": null
-  },
-  {
-   "ticker": "MPC",
-   "date": "2026-08-04",
-   "epsEstimate": 13.95,
-   "epsActual": 17.73
-  },
-  {
-   "ticker": "MPC",
-   "date": "2026-05-05",
-   "epsEstimate": 0.75,
-   "epsActual": 1.65
-  }
- ],
- "recent_sec_filings": [
-  {
-   "ticker": "MPC",
-   "date": "2026-08-04",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029526000061/mpc-20260630.htm"
-  },
-  {
-   "ticker": "MPC",
-   "date": "2026-05-05",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029526000042/mpc-20260331.htm"
-  },
-  {
-   "ticker": "MPC",
-   "date": "2026-02-26",
-   "form": "Annual Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029526000009/mpc-20251231.htm"
-  },
-  {
-   "ticker": "MPC",
-   "date": "2025-11-04",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029525000064/mpc-20250930.htm"
-  },
-  {
-   "ticker": "MPC",
-   "date": "2025-08-05",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1510295/000151029525000054/mpc-20250630.htm"
-  }
- ],
+ "upcoming_earnings": [],
+ "recent_sec_filings": [],
  "reddit_mentions": []
 }

@@ -1,30 +1,81 @@
 {
  "ticker": "AFG",
  "name": "American Financial Group, Inc.",
- "generated_at": "2026-08-11T14:45:01.502554+00:00",
- "price": 144.49,
- "change_pct": -0.76,
+ "generated_at": "2026-08-12T11:45:01.761518+00:00",
+ "price": 144.23,
+ "change_pct": 0.25,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 57.5,
-  "sma_20": 142.54,
-  "sma_50": 137.98
+  "rsi_14": 56.5,
+  "sma_20": 142.7,
+  "sma_50": 138.27
  },
  "fundamentals": {
-  "pe_ratio": 12.630246,
+  "pe_ratio": 12.607517,
   "market_cap": "12.0B",
   "beta": 0.601,
-  "dividend_yield": 0.0242
+  "dividend_yield": 0.0245
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "AFG",
+   "date": "2026-11-03",
+   "epsEstimate": 3.4,
+   "epsActual": null
+  },
+  {
+   "ticker": "AFG",
+   "date": "2026-08-04",
+   "epsEstimate": 2.37,
+   "epsActual": 2.82
+  },
+  {
+   "ticker": "AFG",
+   "date": "2026-04-29",
+   "epsEstimate": 2.56,
+   "epsActual": 2.47
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "AFG",
+   "date": "2026-08-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1042046/000104204626000024/afg-20260630.htm"
+  },
+  {
+   "ticker": "AFG",
+   "date": "2026-05-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1042046/000104204626000014/afg-20260331.htm"
+  },
+  {
+   "ticker": "AFG",
+   "date": "2026-02-25",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1042046/000104204626000010/afg-20251231.htm"
+  },
+  {
+   "ticker": "AFG",
+   "date": "2025-11-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1042046/000104204625000035/afg-20250930.htm"
+  },
+  {
+   "ticker": "AFG",
+   "date": "2025-08-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1042046/000104204625000024/afg-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

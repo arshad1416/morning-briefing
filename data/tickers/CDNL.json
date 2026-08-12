@@ -1,28 +1,29 @@
 {
  "ticker": "CDNL",
  "name": "Cardinal Infrastructure Group I",
- "generated_at": "2026-08-11T14:45:01.502554+00:00",
- "price": 61.0,
- "change_pct": -4.69,
+ "generated_at": "2026-08-12T11:45:01.761518+00:00",
+ "price": 42.94,
+ "change_pct": -28.43,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
+  "volume_surge",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 42.0,
-  "sma_20": 65.8,
-  "sma_50": 69.51
+  "rsi_14": 27.0,
+  "sma_20": 64.41,
+  "sma_50": 69.31
  },
  "fundamentals": {
-  "pe_ratio": 45.185184,
-  "market_cap": "1.2B",
+  "pe_ratio": 31.807405,
+  "market_cap": "854M",
   "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 4
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

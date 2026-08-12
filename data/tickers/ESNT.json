@@ -1,30 +1,81 @@
 {
  "ticker": "ESNT",
  "name": "Essent Group Ltd.",
- "generated_at": "2026-08-11T14:45:01.502554+00:00",
- "price": 68.35,
- "change_pct": -0.54,
+ "generated_at": "2026-08-12T11:45:01.761518+00:00",
+ "price": 68.24,
+ "change_pct": 0.93,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 62.3,
-  "sma_20": 66.26,
-  "sma_50": 62.86
+  "rsi_14": 60.8,
+  "sma_20": 66.39,
+  "sma_50": 63.06
  },
  "fundamentals": {
-  "pe_ratio": 9.532775,
-  "market_cap": "6.3B",
+  "pe_ratio": 9.517433,
+  "market_cap": "6.1B",
   "beta": 0.758,
-  "dividend_yield": 0.0204
+  "dividend_yield": 0.0207
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "ESNT",
+   "date": "2026-11-06",
+   "epsEstimate": 1.86,
+   "epsActual": null
+  },
+  {
+   "ticker": "ESNT",
+   "date": "2026-08-07",
+   "epsEstimate": 1.76,
+   "epsActual": 2.08
+  },
+  {
+   "ticker": "ESNT",
+   "date": "2026-05-08",
+   "epsEstimate": 1.72,
+   "epsActual": 1.82
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "ESNT",
+   "date": "2026-08-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1448893/000144889326000024/esnt-20260630.htm"
+  },
+  {
+   "ticker": "ESNT",
+   "date": "2026-05-08",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1448893/000144889326000016/esnt-20260331.htm"
+  },
+  {
+   "ticker": "ESNT",
+   "date": "2026-02-18",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1448893/000144889326000009/esnt-20251231.htm"
+  },
+  {
+   "ticker": "ESNT",
+   "date": "2025-11-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1448893/000144889325000093/esnt-20250930.htm"
+  },
+  {
+   "ticker": "ESNT",
+   "date": "2025-08-08",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1448893/000144889325000081/esnt-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

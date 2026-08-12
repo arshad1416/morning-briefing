@@ -1,24 +1,25 @@
 {
  "ticker": "OHI",
  "name": "Omega Healthcare Investors, Inc",
- "generated_at": "2026-08-11T14:45:01.502554+00:00",
- "price": 47.46,
- "change_pct": -2.06,
+ "generated_at": "2026-08-12T11:45:01.761518+00:00",
+ "price": 46.08,
+ "change_pct": -2.76,
  "sector": "Real Estate",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 40.1,
-  "sma_20": 49.34,
+  "rsi_14": 32.8,
+  "sma_20": 49.26,
   "sma_50": 47.3
  },
  "fundamentals": {
-  "pe_ratio": 16.889679,
-  "market_cap": "15.0B",
+  "pe_ratio": 16.398577,
+  "market_cap": "14.5B",
   "beta": 0.582,
-  "dividend_yield": 0.056100000000000004
+  "dividend_yield": 0.0574
  },
  "council_analysis": {
   "score": 7

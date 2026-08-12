@@ -1,24 +1,27 @@
 {
  "ticker": "AWR",
  "name": "American States Water Company",
- "generated_at": "2026-08-11T14:45:01.502554+00:00",
- "price": 86.34,
- "change_pct": -1.2,
+ "generated_at": "2026-08-12T11:45:01.761518+00:00",
+ "price": 86.63,
+ "change_pct": 0.07,
  "sector": "Utilities",
- "signals": [],
+ "signals": [
+  "above_ma",
+  "near_high"
+ ],
  "technical": {
-  "rsi_14": 55.0,
-  "sma_20": 86.53,
-  "sma_50": 82.57
+  "rsi_14": 56.2,
+  "sma_20": 86.62,
+  "sma_50": 82.76
  },
  "fundamentals": {
-  "pe_ratio": 23.59071,
+  "pe_ratio": 23.669397,
   "market_cap": "3.4B",
   "beta": 0.56,
-  "dividend_yield": null
+  "dividend_yield": 0.0252
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

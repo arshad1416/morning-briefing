@@ -1,29 +1,81 @@
 {
  "ticker": "NLY",
  "name": "Annaly Capital Management Inc.",
- "generated_at": "2026-08-11T14:45:01.502554+00:00",
- "price": 22.81,
- "change_pct": -1.0,
+ "generated_at": "2026-08-12T11:45:01.761518+00:00",
+ "price": 23.05,
+ "change_pct": 0.61,
  "sector": "Real Estate",
  "signals": [
+  "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 53.5,
-  "sma_20": 22.82,
-  "sma_50": 22.12
+  "rsi_14": 57.8,
+  "sma_20": 22.83,
+  "sma_50": 22.16
  },
  "fundamentals": {
-  "pe_ratio": 5.509638,
-  "market_cap": "17.2B",
+  "pe_ratio": 5.5676327,
+  "market_cap": "17.4B",
   "beta": 1.239,
-  "dividend_yield": null
+  "dividend_yield": 0.1309
  },
  "council_analysis": {
-  "score": 7
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "NLY",
+   "date": "2026-10-21",
+   "epsEstimate": 0.78,
+   "epsActual": null
+  },
+  {
+   "ticker": "NLY",
+   "date": "2026-07-21",
+   "epsEstimate": 0.75,
+   "epsActual": 0.79
+  },
+  {
+   "ticker": "NLY",
+   "date": "2026-04-21",
+   "epsEstimate": 0.74,
+   "epsActual": 0.76
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "NLY",
+   "date": "2026-07-29",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1043219/000104321926000058/nly-20260630.htm"
+  },
+  {
+   "ticker": "NLY",
+   "date": "2026-04-29",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1043219/000104321926000028/nly-20260331.htm"
+  },
+  {
+   "ticker": "NLY",
+   "date": "2026-02-12",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1043219/000104321926000013/nly-20251231.htm"
+  },
+  {
+   "ticker": "NLY",
+   "date": "2025-10-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1043219/000104321925000012/nly-20250930.htm"
+  },
+  {
+   "ticker": "NLY",
+   "date": "2025-07-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1043219/000162828025036724/nly-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

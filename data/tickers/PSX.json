@@ -1,80 +1,32 @@
 {
  "ticker": "PSX",
  "name": "Phillips 66",
- "generated_at": "2026-08-11T14:45:01.502554+00:00",
- "price": 210.29,
- "change_pct": 3.13,
+ "generated_at": "2026-08-12T11:45:01.761518+00:00",
+ "price": 220.45,
+ "change_pct": 2.29,
  "sector": "Energy",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 62.7,
-  "sma_20": 206.46,
-  "sma_50": 189.3
+  "rsi_14": 70.1,
+  "sma_20": 207.67,
+  "sma_50": 190.3
  },
  "fundamentals": {
-  "pe_ratio": 12.002763,
-  "market_cap": "83.9B",
+  "pe_ratio": 12.582762,
+  "market_cap": "88.0B",
   "beta": 0.687,
-  "dividend_yield": 0.024900000000000002
+  "dividend_yield": 0.0236
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [
-  {
-   "ticker": "PSX",
-   "date": "2026-10-29",
-   "epsEstimate": 9.07,
-   "epsActual": null
-  },
-  {
-   "ticker": "PSX",
-   "date": "2026-08-05",
-   "epsEstimate": 7.5,
-   "epsActual": 9.41
-  },
-  {
-   "ticker": "PSX",
-   "date": "2026-04-29",
-   "epsEstimate": -0.39,
-   "epsActual": 0.49
-  }
- ],
- "recent_sec_filings": [
-  {
-   "ticker": "PSX",
-   "date": "2026-08-05",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1534701/000153470126000032/psx-20260630.htm"
-  },
-  {
-   "ticker": "PSX",
-   "date": "2026-04-29",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1534701/000153470126000022/psx-20260331.htm"
-  },
-  {
-   "ticker": "PSX",
-   "date": "2026-02-20",
-   "form": "Annual Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1534701/000153470126000006/psx-20251231.htm"
-  },
-  {
-   "ticker": "PSX",
-   "date": "2025-10-29",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1534701/000153470125000155/psx-20250930.htm"
-  },
-  {
-   "ticker": "PSX",
-   "date": "2025-07-28",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1534701/000153470125000137/psx-20250630.htm"
-  }
- ],
+ "upcoming_earnings": [],
+ "recent_sec_filings": [],
  "reddit_mentions": []
 }

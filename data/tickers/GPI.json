@@ -1,29 +1,30 @@
 {
  "ticker": "GPI",
  "name": "Group 1 Automotive, Inc.",
- "generated_at": "2026-08-11T14:45:01.502554+00:00",
- "price": 264.12,
- "change_pct": -0.88,
+ "generated_at": "2026-08-12T11:45:01.761518+00:00",
+ "price": 268.19,
+ "change_pct": 1.16,
  "sector": "Consumer Cyclical",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
+  "near_low",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 34.2,
-  "sma_20": 308.29,
-  "sma_50": 308.37
+  "rsi_14": 36.2,
+  "sma_20": 306.79,
+  "sma_50": 307.44
  },
  "fundamentals": {
-  "pe_ratio": 10.927596,
-  "market_cap": "3.1B",
+  "pe_ratio": 11.091398,
+  "market_cap": "3.2B",
   "beta": 0.834,
   "dividend_yield": 0.0083
  },
  "council_analysis": {
-  "score": 8
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

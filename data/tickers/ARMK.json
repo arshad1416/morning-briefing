@@ -1,29 +1,30 @@
 {
  "ticker": "ARMK",
  "name": "Aramark",
- "generated_at": "2026-08-11T14:45:01.502554+00:00",
- "price": 55.62,
- "change_pct": -0.6,
+ "generated_at": "2026-08-12T11:45:01.761518+00:00",
+ "price": 60.54,
+ "change_pct": 8.67,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip",
-  "below_ma",
+  "extended_rsi",
+  "above_ma",
+  "near_high",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 43.6,
-  "sma_20": 56.83,
-  "sma_50": 55.66
+  "rsi_14": 70.9,
+  "sma_20": 56.96,
+  "sma_50": 55.81
  },
  "fundamentals": {
-  "pe_ratio": 41.50373,
-  "market_cap": "14.6B",
+  "pe_ratio": 45.179104,
+  "market_cap": "15.9B",
   "beta": 1.195,
   "dividend_yield": 0.0086
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,27 +1,28 @@
 {
  "ticker": "LAND",
  "name": "Gladstone Land Corporation",
- "generated_at": "2026-08-11T14:45:01.502554+00:00",
- "price": 8.1,
- "change_pct": -2.9,
+ "generated_at": "2026-08-12T11:45:01.761518+00:00",
+ "price": 8.23,
+ "change_pct": 1.23,
  "sector": "Real Estate",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 35.9,
-  "sma_20": 8.45,
-  "sma_50": 8.63
+  "rsi_14": 41.6,
+  "sma_20": 8.43,
+  "sma_50": 8.61
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "349M",
+  "market_cap": "355M",
   "beta": 1.068,
-  "dividend_yield": 0.0672
+  "dividend_yield": 0.0689
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
