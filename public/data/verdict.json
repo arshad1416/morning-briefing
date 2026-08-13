@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-08-12T11:23:01.664486+00:00",
+  "generated_at": "2026-08-13T11:23:02.018159+00:00",
   "signal": "neutral",
-  "conviction": 0.54,
+  "conviction": 0.59,
   "conviction_source": "model",
   "narrative": "Mixed session with small caps leading, heavy QQQ call buying signals tech optimism, but geopolitical jitters and SPY put hedging cap upside.",
   "narrative_source": "llm",
   "model_features": {
-    "vix": 15.38,
-    "vix_score": 0.5,
+    "vix": 14.59,
+    "vix_score": 0.7,
     "sleeve_a_signals": 0,
     "avg_signal_score": 0,
     "max_signal_score": 0,
     "recent_hit_rate": 0.5,
-    "recent_trades": 0,
+    "recent_trades": 1,
     "breadth": 1.0,
-    "vix_contango": 6.21,
+    "vix_contango": 6.39,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.29,
-      0.79
+      0.34,
+      0.84
     ]
   },
   "confidence_interval": [
-    0.29,
-    0.79
+    0.34,
+    0.84
   ]
 }
