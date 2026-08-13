@@ -1,27 +1,29 @@
 {
  "ticker": "IDN",
  "name": "Intellicheck, Inc.",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 3.77,
- "change_pct": 0.27,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 3.74,
+ "change_pct": -0.8,
  "sector": "Technology",
  "signals": [
   "rsi_dip",
+  "below_ma",
+  "near_low",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 44.2,
-  "sma_20": 3.76,
-  "sma_50": 4.0
+  "rsi_14": 43.0,
+  "sma_20": 3.75,
+  "sma_50": 3.99
  },
  "fundamentals": {
-  "pe_ratio": 34.272728,
+  "pe_ratio": 31.166668,
   "market_cap": "76M",
   "beta": 0.813,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 3
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

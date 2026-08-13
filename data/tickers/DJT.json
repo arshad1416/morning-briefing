@@ -1,20 +1,23 @@
 {
  "ticker": "DJT",
  "name": "Trump Media & Technology Group ",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 9.26,
- "change_pct": -1.44,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 8.65,
+ "change_pct": -7.93,
  "sector": "Communication Services",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.2,
-  "sma_20": 9.68,
-  "sma_50": 8.82
+  "rsi_14": 42.5,
+  "sma_20": 9.65,
+  "sma_50": 8.81
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "2.6B",
-  "beta": null,
+  "market_cap": "2.4B",
+  "beta": 4.107,
   "dividend_yield": null
  },
  "council_analysis": {

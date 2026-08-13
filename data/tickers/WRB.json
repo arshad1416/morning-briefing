@@ -1,27 +1,28 @@
 {
  "ticker": "WRB",
  "name": "W.R. Berkley Corporation",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 70.38,
- "change_pct": -0.63,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 70.4,
+ "change_pct": 0.44,
  "sector": "Financial Services",
  "signals": [
   "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 42.9,
-  "sma_20": 72.57,
-  "sma_50": 70.33
+  "rsi_14": 43.5,
+  "sma_20": 72.58,
+  "sma_50": 70.45
  },
  "fundamentals": {
-  "pe_ratio": 14.630978,
+  "pe_ratio": 14.4783945,
   "market_cap": "26.1B",
   "beta": 0.294,
-  "dividend_yield": 0.005600000000000001
+  "dividend_yield": 0.005699999999999999
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

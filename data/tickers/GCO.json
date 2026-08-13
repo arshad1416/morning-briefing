@@ -1,19 +1,22 @@
 {
  "ticker": "GCO",
  "name": "Genesco Inc.",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 37.47,
- "change_pct": -0.65,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 35.81,
+ "change_pct": -2.74,
  "sector": "Consumer Cyclical",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 51.4,
-  "sma_20": 37.57,
-  "sma_50": 36.81
+  "rsi_14": 43.4,
+  "sma_20": 37.56,
+  "sma_50": 36.77
  },
  "fundamentals": {
-  "pe_ratio": 20.25135,
-  "market_cap": "416M",
+  "pe_ratio": 19.356758,
+  "market_cap": "398M",
   "beta": 1.826,
   "dividend_yield": null
  },

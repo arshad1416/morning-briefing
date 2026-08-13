@@ -1,21 +1,24 @@
 {
  "ticker": "VMI",
  "name": "Valmont Industries, Inc.",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 499.93,
- "change_pct": 1.56,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 494.96,
+ "change_pct": 0.32,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 47.1,
-  "sma_20": 498.21,
-  "sma_50": 529.85
+  "rsi_14": 44.8,
+  "sma_20": 495.42,
+  "sma_50": 529.05
  },
  "fundamentals": {
-  "pe_ratio": 19.528515,
-  "market_cap": "9.7B",
+  "pe_ratio": 19.326824,
+  "market_cap": "9.6B",
   "beta": 1.351,
-  "dividend_yield": 0.0063
+  "dividend_yield": 0.0062
  },
  "council_analysis": {
   "score": 5

@@ -1,22 +1,24 @@
 {
  "ticker": "GNTX",
  "name": "Gentex Corporation",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 24.0,
- "change_pct": 0.65,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 23.39,
+ "change_pct": -2.28,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.6,
-  "sma_20": 23.86,
-  "sma_50": 24.41
+  "rsi_14": 44.4,
+  "sma_20": 23.81,
+  "sma_50": 24.39
  },
  "fundamentals": {
-  "pe_ratio": 12.701057,
-  "market_cap": "5.1B",
+  "pe_ratio": 12.307895,
+  "market_cap": "4.9B",
   "beta": 0.798,
   "dividend_yield": 0.020099999999999996
  },

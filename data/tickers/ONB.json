@@ -1,9 +1,9 @@
 {
  "ticker": "ONB",
  "name": "Old National Bancorp",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 26.66,
- "change_pct": 0.53,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 26.81,
+ "change_pct": -0.13,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
@@ -12,20 +12,70 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 54.5,
-  "sma_20": 26.63,
-  "sma_50": 25.74
+  "rsi_14": 56.2,
+  "sma_20": 26.66,
+  "sma_50": 25.82
  },
  "fundamentals": {
-  "pe_ratio": 11.79646,
-  "market_cap": "10.2B",
+  "pe_ratio": 11.86062,
+  "market_cap": "10.3B",
   "beta": 0.839,
-  "dividend_yield": 0.0219
+  "dividend_yield": 0.0216
  },
  "council_analysis": {
   "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "ONB",
+   "date": "2026-10-21",
+   "epsEstimate": 0.66,
+   "epsActual": null
+  },
+  {
+   "ticker": "ONB",
+   "date": "2026-07-22",
+   "epsEstimate": 0.63,
+   "epsActual": 0.65
+  },
+  {
+   "ticker": "ONB",
+   "date": "2026-04-22",
+   "epsEstimate": 0.6,
+   "epsActual": 0.61
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "ONB",
+   "date": "2026-07-29",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/707179/000070717926000046/onb-20260630.htm"
+  },
+  {
+   "ticker": "ONB",
+   "date": "2026-04-29",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/707179/000070717926000038/onb-20260331.htm"
+  },
+  {
+   "ticker": "ONB",
+   "date": "2026-02-19",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/707179/000070717926000010/onb-20251231.htm"
+  },
+  {
+   "ticker": "ONB",
+   "date": "2025-10-29",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/707179/000070717925000064/onb-20250930.htm"
+  },
+  {
+   "ticker": "ONB",
+   "date": "2025-07-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/707179/000070717925000018/onb-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

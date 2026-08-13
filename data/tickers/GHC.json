@@ -1,21 +1,23 @@
 {
  "ticker": "GHC",
  "name": "Graham Holdings Company",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 1176.23,
- "change_pct": -0.12,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 1154.74,
+ "change_pct": -1.63,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 48.3,
-  "sma_20": 1187.01,
-  "sma_50": 1162.68
+  "rsi_14": 42.5,
+  "sma_20": 1185.7,
+  "sma_50": 1163.56
  },
  "fundamentals": {
-  "pe_ratio": 9.511818,
-  "market_cap": "5.0B",
+  "pe_ratio": 9.333495,
+  "market_cap": "4.9B",
   "beta": 0.724,
   "dividend_yield": 0.0064
  },

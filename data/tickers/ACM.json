@@ -1,25 +1,26 @@
 {
  "ticker": "ACM",
  "name": "AECOM",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 67.31,
- "change_pct": -8.17,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 62.58,
+ "change_pct": -6.67,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
+  "near_low",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 39.3,
-  "sma_20": 71.48,
-  "sma_50": 70.26
+  "rsi_14": 31.8,
+  "sma_20": 71.15,
+  "sma_50": 70.07
  },
  "fundamentals": {
-  "pe_ratio": 23.700705,
-  "market_cap": "8.7B",
-  "beta": null,
-  "dividend_yield": 0.016200000000000003
+  "pe_ratio": 22.035213,
+  "market_cap": "8.0B",
+  "beta": 0.92,
+  "dividend_yield": 0.0177
  },
  "council_analysis": {
   "score": 6

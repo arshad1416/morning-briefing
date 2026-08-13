@@ -1,21 +1,23 @@
 {
  "ticker": "TE",
  "name": "T1 Energy Inc.",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 5.61,
- "change_pct": 5.74,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 5.1,
+ "change_pct": -3.96,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.0,
-  "sma_20": 5.33,
-  "sma_50": 7.43
+  "rsi_14": 42.1,
+  "sma_20": 5.31,
+  "sma_50": 7.42
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "1.6B",
+  "market_cap": "1.4B",
   "beta": 2.249,
   "dividend_yield": null
  },

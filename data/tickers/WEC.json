@@ -1,24 +1,23 @@
 {
  "ticker": "WEC",
  "name": "WEC Energy Group, Inc.",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 105.89,
- "change_pct": -0.22,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 108.89,
+ "change_pct": 2.08,
  "sector": "Utilities",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "near_low",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 28.4,
-  "sma_20": 111.09,
-  "sma_50": 113.07
+  "rsi_14": 42.2,
+  "sma_20": 110.92,
+  "sma_50": 113.09
  },
  "fundamentals": {
-  "pe_ratio": 20.561165,
-  "market_cap": "34.5B",
+  "pe_ratio": 21.144659,
+  "market_cap": "35.5B",
   "beta": 0.462,
   "dividend_yield": 0.0359
  },

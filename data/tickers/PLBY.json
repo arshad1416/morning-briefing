@@ -1,28 +1,27 @@
 {
  "ticker": "PLBY",
  "name": "Playboy, Inc.",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 1.45,
- "change_pct": 22.88,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 1.3,
+ "change_pct": 10.17,
  "sector": "Consumer Cyclical",
  "signals": [
-  "extended_rsi",
   "above_ma",
-  "volume_surge"
+  "premium_pe"
  ],
  "technical": {
-  "rsi_14": 65.4,
-  "sma_20": 1.21,
+  "rsi_14": 56.9,
+  "sma_20": 1.2,
   "sma_50": 1.28
  },
  "fundamentals": {
-  "pe_ratio": null,
-  "market_cap": "168M",
-  "beta": null,
+  "pe_ratio": 65.0,
+  "market_cap": "156M",
+  "beta": 1.918,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

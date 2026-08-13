@@ -1,26 +1,29 @@
 {
  "ticker": "CRH",
  "name": "CRH PLC",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 101.07,
- "change_pct": 0.47,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 98.52,
+ "change_pct": -2.73,
  "sector": "Basic Materials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
+  "near_low",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.2,
-  "sma_20": 100.22,
-  "sma_50": 104.29
+  "rsi_14": 44.2,
+  "sma_20": 99.96,
+  "sma_50": 104.13
  },
  "fundamentals": {
-  "pe_ratio": 17.856909,
-  "market_cap": "67.2B",
+  "pe_ratio": 17.40636,
+  "market_cap": "65.5B",
   "beta": 1.204,
-  "dividend_yield": 0.0155
+  "dividend_yield": 0.0154
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

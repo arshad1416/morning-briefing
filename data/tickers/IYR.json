@@ -1,27 +1,28 @@
 {
  "ticker": "IYR",
  "name": "iShares U.S. Real Estate ETF",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 102.79,
- "change_pct": -0.54,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 102.91,
+ "change_pct": 0.33,
  "sector": null,
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 40.3,
-  "sma_20": 105.3,
-  "sma_50": 103.62
+  "rsi_14": 41.6,
+  "sma_20": 105.25,
+  "sma_50": 103.69
  },
  "fundamentals": {
-  "pe_ratio": 27.793877,
+  "pe_ratio": 27.826326,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.0215
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

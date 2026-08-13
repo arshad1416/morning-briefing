@@ -1,9 +1,9 @@
 {
  "ticker": "PNFP",
  "name": "Pinnacle Financial Partners, In",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 105.43,
- "change_pct": 0.84,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 106.06,
+ "change_pct": 0.34,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
@@ -12,20 +12,58 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 58.7,
-  "sma_20": 103.0,
-  "sma_50": 99.54
+  "rsi_14": 60.2,
+  "sma_20": 103.35,
+  "sma_50": 99.76
  },
  "fundamentals": {
-  "pe_ratio": 14.522038,
-  "market_cap": "15.9B",
+  "pe_ratio": 14.608814,
+  "market_cap": "16.0B",
   "beta": 1.023,
-  "dividend_yield": 0.0191
+  "dividend_yield": 0.0189
  },
  "council_analysis": {
   "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "PNFP",
+   "date": "2026-10-14",
+   "epsEstimate": 2.62,
+   "epsActual": null
+  },
+  {
+   "ticker": "PNFP",
+   "date": "2026-07-21",
+   "epsEstimate": 2.46,
+   "epsActual": 2.5
+  },
+  {
+   "ticker": "PNFP",
+   "date": "2026-04-22",
+   "epsEstimate": 2.33,
+   "epsActual": 2.39
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "PNFP",
+   "date": "2026-08-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/2082866/000208286626000082/pnfp-20260630.htm"
+  },
+  {
+   "ticker": "PNFP",
+   "date": "2026-05-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/2082866/000208286626000043/pnfp-20260331.htm"
+  },
+  {
+   "ticker": "PNFP",
+   "date": "2026-03-02",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/2082866/000208286626000018/pnfp-20251231.htm"
+  }
+ ],
  "reddit_mentions": []
 }

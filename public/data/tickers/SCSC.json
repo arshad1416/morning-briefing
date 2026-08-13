@@ -1,19 +1,22 @@
 {
  "ticker": "SCSC",
  "name": "ScanSource, Inc.",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 53.7,
- "change_pct": -0.54,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 50.97,
+ "change_pct": -1.71,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 46.2,
-  "sma_20": 55.62,
-  "sma_50": 52.32
+  "rsi_14": 37.3,
+  "sma_20": 55.41,
+  "sma_50": 52.34
  },
  "fundamentals": {
-  "pe_ratio": 16.32219,
-  "market_cap": "1.1B",
+  "pe_ratio": 15.490882,
+  "market_cap": "1.0B",
   "beta": 1.242,
   "dividend_yield": null
  },

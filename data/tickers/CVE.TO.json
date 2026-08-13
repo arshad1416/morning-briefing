@@ -1,30 +1,50 @@
 {
  "ticker": "CVE.TO",
  "name": "CENOVUS ENERGY INC.",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 41.58,
- "change_pct": 0.97,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 41.97,
+ "change_pct": 0.99,
  "sector": "Energy",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 58.2,
-  "sma_20": 40.22,
-  "sma_50": 38.47
+  "rsi_14": 59.5,
+  "sma_20": 40.38,
+  "sma_50": 38.53
  },
  "fundamentals": {
-  "pe_ratio": 11.550001,
-  "market_cap": "76.7B",
+  "pe_ratio": 11.658334,
+  "market_cap": "77.4B",
   "beta": 0.495,
-  "dividend_yield": 0.021400000000000002
+  "dividend_yield": 0.0212
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "CVE.TO",
+   "date": "2026-10-29",
+   "epsEstimate": 0.83,
+   "epsActual": null
+  },
+  {
+   "ticker": "CVE.TO",
+   "date": "2026-07-29",
+   "epsEstimate": 1.64,
+   "epsActual": 1.61
+  },
+  {
+   "ticker": "CVE.TO",
+   "date": "2026-05-06",
+   "epsEstimate": 0.76,
+   "epsActual": 0.89
+  }
+ ],
  "recent_sec_filings": [],
  "reddit_mentions": []
 }

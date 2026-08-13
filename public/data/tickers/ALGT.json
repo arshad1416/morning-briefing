@@ -1,23 +1,24 @@
 {
  "ticker": "ALGT",
  "name": "Allegiant Travel Company",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 90.55,
- "change_pct": 1.13,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 85.56,
+ "change_pct": -3.15,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
+  "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 38.9,
-  "sma_20": 99.37,
-  "sma_50": 100.22
+  "rsi_14": 34.1,
+  "sma_20": 98.15,
+  "sma_50": 100.1
  },
  "fundamentals": {
-  "pe_ratio": null,
-  "market_cap": "2.4B",
+  "pe_ratio": 73.75862,
+  "market_cap": "2.3B",
   "beta": 1.527,
   "dividend_yield": null
  },

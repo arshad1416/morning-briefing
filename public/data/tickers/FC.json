@@ -1,21 +1,23 @@
 {
  "ticker": "FC",
  "name": "Franklin Covey Company",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 21.22,
- "change_pct": -1.07,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 20.5,
+ "change_pct": -1.32,
  "sector": "Consumer Defensive",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 46.8,
-  "sma_20": 21.21,
-  "sma_50": 22.43
+  "rsi_14": 42.0,
+  "sma_20": 21.2,
+  "sma_50": 22.35
  },
  "fundamentals": {
-  "pe_ratio": 141.46666,
-  "market_cap": "240M",
+  "pe_ratio": 136.69998,
+  "market_cap": "232M",
   "beta": 0.772,
   "dividend_yield": null
  },

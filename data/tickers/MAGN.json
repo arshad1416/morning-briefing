@@ -1,19 +1,22 @@
 {
  "ticker": "MAGN",
  "name": "Magnera Corporation",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 12.98,
- "change_pct": -0.92,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 12.4,
+ "change_pct": -0.48,
  "sector": "Consumer Defensive",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.5,
-  "sma_20": 13.46,
-  "sma_50": 12.67
+  "rsi_14": 42.5,
+  "sma_20": 13.38,
+  "sma_50": 12.68
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "462M",
+  "market_cap": "441M",
   "beta": null,
   "dividend_yield": null
  },

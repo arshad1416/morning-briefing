@@ -1,21 +1,23 @@
 {
  "ticker": "STRT",
  "name": "STRATTEC SECURITY CORPORATION",
- "generated_at": "2026-08-12T14:45:01.934592+00:00",
- "price": 85.58,
- "change_pct": 2.59,
+ "generated_at": "2026-08-13T11:45:01.909533+00:00",
+ "price": 81.51,
+ "change_pct": -2.35,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 52.7,
-  "sma_20": 86.04,
-  "sma_50": 81.85
+  "rsi_14": 41.7,
+  "sma_20": 85.84,
+  "sma_50": 81.86
  },
  "fundamentals": {
-  "pe_ratio": 14.679246,
-  "market_cap": "358M",
+  "pe_ratio": 13.450496,
+  "market_cap": "341M",
   "beta": 1.205,
   "dividend_yield": null
  },
