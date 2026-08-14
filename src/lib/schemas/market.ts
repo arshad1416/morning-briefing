@@ -94,8 +94,8 @@ export const LatestDataSchema = z.object({
 });
 
 // ── GEX ─────────────────────────────────────────────────────────────────────
-// Source of truth is data/maplegamma-data.json (push_gex.py, published hourly
-// in market hours). The schema below parses that file and TRANSFORMS
+// Source of truth is data/maplegamma-data.json (push_gex.py, refreshed every
+// 30 min in market hours). The schema below parses that file and TRANSFORMS
 // it into the GexData/GexMode shape the components consume. The previous
 // schema modeled gex_data.json — a dead artifact last written 2026-06-11,
 // which fed the redesigned Options page month-old gamma levels.

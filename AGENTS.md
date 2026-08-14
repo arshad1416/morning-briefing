@@ -9,13 +9,19 @@ Read this file first; it routes to everything else.
 ## Golden rules
 
 1. **`main` moves on its own.** The Pi commits machine-generated JSON (`Live portfolio
-   YYYY-MM-DD HH:MM`, `Analysis YYYY-MM-DD HH:MM`) hourly during market hours (`push_dashboard`
-   at :07 of 09–15, plus 17:15 weekdays and 07:22 weekends), touching `data/` and `public/data/`.
+   YYYY-MM-DD HH:MM`, `Analysis YYYY-MM-DD HH:MM`) every ~30 minutes during market hours
+   (`push_dashboard` at :07 and :37 of 09–15, plus 17:15 weekdays and 07:22 weekends), touching
+   `data/` and `public/data/`.
    Never hand-edit those JSON files; long-lived branches race these commits. Each *push* consumes
-   a Cloudflare Pages build — measure deployments, not commits: several commits can ride one push
-   (2026-08-14: 22 commits, 17 builds). The quota is 500/month **per account**, shared with the
-   `job-hunt-board` Pages project. The cadence was halved from `7,37` to `7` on 2026-08-14 because
-   the run rate was ~550/month; don't add push frequency without re-measuring.
+   a Cloudflare Pages build, and the quota is 500/month **per account** — shared with the
+   `job-hunt-board` Pages project, so count both.
+   **Measure builds as deployments, never as commits.** Several commits can ride one push
+   (2026-08-14: 22 commits but 17 builds), and extrapolating commits linearly over-counts badly.
+   The real figure is the Pages deployments API (`per_page` caps at 25, so paginate with `page`);
+   `wrangler pages deployment list` truncates at 25 and cannot answer this.
+   Measured 2026-08-14: **256 builds Aug 1–14 across both projects**, projecting ~427 for the
+   month — under the cap, with Aug 4–7 inflated by audit activity. Don't add push frequency
+   without re-measuring this way.
 2. **README.md's Architecture section is the source of truth.** `ARCHITECTURE.md`,
    `SCREENER-ARCHITECTURE.md` (its frontend half), `GEX-DASHBOARD-ARCHITECTURE.md`, and
    `MAPLEGAMMA-DESIGN.md` are June-2026 design history: their file paths, schemas, wrangler
