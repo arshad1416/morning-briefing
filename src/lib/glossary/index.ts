@@ -215,7 +215,7 @@ export const GLOSSARY = {
     plainLabel: 'Current price',
     plain: 'The price the asset is changing hands at, as opposed to any future or agreed price.',
     detail:
-      'The figure shown on this site comes from a delayed feed refreshed roughly every 30 minutes during market hours, so it is a recent snapshot rather than a live quote.',
+      'The figure shown on this site comes from a delayed feed refreshed about once an hour during market hours, so it is a recent snapshot rather than a live quote.',
   },
   fomc: {
     plainLabel: 'Fed interest-rate meeting',

@@ -9,8 +9,9 @@ import { Surface, SurfaceHeader, RegimeChip, InfoTip, PlainLabel, DataFreshness 
 import { formatCompact } from '@/lib/format';
 import type { GlossaryTerm } from '@/lib/glossary';
 
-// The options feed regenerates every ~30 min during market hours.
-const OPTIONS_STALE_MS = 40 * 60_000;
+// See GammaWallChart for the arithmetic: the feed regenerates every ~30 min but
+// publishes hourly, so a fresh payload can legitimately be ~89 min old.
+const OPTIONS_STALE_MS = 100 * 60_000;
 
 function SignBar({ value, max }: { value: number; max: number }) {
   const pct = max > 0 ? Math.min(1, Math.abs(value) / max) * 50 : 0;

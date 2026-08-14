@@ -51,8 +51,13 @@ const FRAME = 'relative w-full aspect-[360/672] md:aspect-[720/648]';
 // Reserved mobile detail slot — taller than the tallest detail card so
 // pin/unpin never shifts the layout below the chart.
 const DETAIL_SLOT = 'md:hidden mt-3 min-h-[156px]';
-// The feed regenerates every ~30 min during market hours; 40 min = cron + slack.
-const OPTIONS_STALE_MS = 40 * 60_000;
+// Measured against the payload's own generated_at, so it must cover generation
+// AND publishing. The feed regenerates every ~30 min, but push_dashboard only
+// publishes hourly (:07 of 09–15), so the newest PUBLISHED payload is up to
+// ~59 min (publish gap) + ~30 min (generated before that push) ≈ 89 min old.
+// 100 min = that worst case + slack. Was 40 min, which assumed half-hourly
+// publishing and would now flag "stale" through most of every hour.
+const OPTIONS_STALE_MS = 100 * 60_000;
 
 function rowAriaLabel(row: StrikeRow): string {
   // Spelled out: screen-reader users were previously read raw "GEX"/"OI", i.e.

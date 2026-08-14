@@ -889,7 +889,7 @@ function NewsTab() {
         {!!d?.geopolitical?.length && (
           <Card title="Geopolitical Risks">
             {/* Dated from the newest headline in the feed, not from the
-                pipeline run: latest.json is rewritten every 30 minutes even
+                pipeline run: latest.json is rewritten every publish cycle even
                 when this block is a cached copy, so the run time would have
                 claimed freshness the headlines do not have. */}
             <GeopoliticalFreshness items={d.geopolitical} />
