@@ -1,28 +1,29 @@
 {
  "ticker": "LQDA",
  "name": "Liquidia Corporation",
- "generated_at": "2026-08-13T14:45:01.820317+00:00",
- "price": 85.43,
- "change_pct": -6.15,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 74.8,
+ "change_pct": 3.74,
  "sector": "Healthcare",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 53.9,
-  "sma_20": 84.98,
-  "sma_50": 76.99
+  "rsi_14": 40.6,
+  "sma_20": 84.75,
+  "sma_50": 78.16
  },
  "fundamentals": {
-  "pe_ratio": 502.5588,
-  "market_cap": "7.6B",
-  "beta": 0.572,
+  "pe_ratio": 53.428574,
+  "market_cap": "6.7B",
+  "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

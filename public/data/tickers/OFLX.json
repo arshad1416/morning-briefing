@@ -1,21 +1,24 @@
 {
  "ticker": "OFLX",
  "name": "Omega Flex, Inc.",
- "generated_at": "2026-08-13T14:45:01.820317+00:00",
- "price": 30.25,
- "change_pct": 1.07,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 28.48,
+ "change_pct": -1.16,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 50.6,
-  "sma_20": 30.08,
-  "sma_50": 30.28
+  "rsi_14": 38.7,
+  "sma_20": 29.88,
+  "sma_50": 30.24
  },
  "fundamentals": {
-  "pe_ratio": 22.74436,
-  "market_cap": "305M",
+  "pe_ratio": 22.599207,
+  "market_cap": "287M",
   "beta": 0.453,
-  "dividend_yield": 0.0454
+  "dividend_yield": 0.044800000000000006
  },
  "council_analysis": {
   "score": 5

@@ -1,81 +1,32 @@
 {
  "ticker": "ASB",
  "name": "Associated Banc-Corp",
- "generated_at": "2026-08-13T14:45:01.820317+00:00",
- "price": 31.95,
- "change_pct": 0.22,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 32.42,
+ "change_pct": 0.81,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
   "above_ma",
   "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 62.9,
-  "sma_20": 31.16,
-  "sma_50": 30.27
+  "rsi_14": 67.0,
+  "sma_20": 31.24,
+  "sma_50": 30.47
  },
  "fundamentals": {
-  "pe_ratio": 11.1713295,
-  "market_cap": "6.0B",
+  "pe_ratio": 11.335664,
+  "market_cap": "6.1B",
   "beta": 0.771,
-  "dividend_yield": 0.030600000000000002
+  "dividend_yield": 0.029900000000000003
  },
  "council_analysis": {
-  "score": 9
+  "score": 8
  },
- "upcoming_earnings": [
-  {
-   "ticker": "ASB",
-   "date": "2026-10-22",
-   "epsEstimate": 0.75,
-   "epsActual": null
-  },
-  {
-   "ticker": "ASB",
-   "date": "2026-07-23",
-   "epsEstimate": 0.72,
-   "epsActual": 0.63
-  },
-  {
-   "ticker": "ASB",
-   "date": "2026-04-23",
-   "epsEstimate": 0.69,
-   "epsActual": 0.7
-  }
- ],
- "recent_sec_filings": [
-  {
-   "ticker": "ASB",
-   "date": "2026-08-04",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/7789/000000778926000202/asb-20260630.htm"
-  },
-  {
-   "ticker": "ASB",
-   "date": "2026-04-28",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/7789/000000778926000141/asb-20260331.htm"
-  },
-  {
-   "ticker": "ASB",
-   "date": "2026-02-12",
-   "form": "Annual Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/7789/000000778926000071/asb-20251231.htm"
-  },
-  {
-   "ticker": "ASB",
-   "date": "2025-10-28",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/7789/000000778925000179/asb-20250930.htm"
-  },
-  {
-   "ticker": "ASB",
-   "date": "2025-07-29",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/7789/000000778925000116/asb-20250630.htm"
-  }
- ],
+ "upcoming_earnings": [],
+ "recent_sec_filings": [],
  "reddit_mentions": []
 }

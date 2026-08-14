@@ -1,23 +1,25 @@
 {
  "ticker": "IMO.TO",
  "name": "IMPERIAL OIL",
- "generated_at": "2026-08-13T14:45:01.820317+00:00",
- "price": 180.27,
- "change_pct": -0.11,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 187.22,
+ "change_pct": 1.35,
  "sector": "Energy",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 58.3,
-  "sma_20": 177.14,
-  "sma_50": 170.54
+  "rsi_14": 66.7,
+  "sma_20": 178.95,
+  "sma_50": 171.09
  },
  "fundamentals": {
-  "pe_ratio": 21.084211,
-  "market_cap": "87.2B",
+  "pe_ratio": 21.897076,
+  "market_cap": "90.5B",
   "beta": 0.817,
-  "dividend_yield": 0.0194
+  "dividend_yield": 0.0191
  },
  "council_analysis": {
   "score": 6

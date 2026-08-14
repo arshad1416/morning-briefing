@@ -1,22 +1,24 @@
 {
  "ticker": "TSSI",
  "name": "TSS, Inc.",
- "generated_at": "2026-08-13T14:45:01.820317+00:00",
- "price": 12.1,
- "change_pct": 6.18,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 9.56,
+ "change_pct": -20.07,
  "sector": "Technology",
  "signals": [
-  "above_ma"
+  "rsi_dip",
+  "below_ma",
+  "volume_surge"
  ],
  "technical": {
-  "rsi_14": 59.8,
-  "sma_20": 10.32,
-  "sma_50": 11.52
+  "rsi_14": 41.1,
+  "sma_20": 10.41,
+  "sma_50": 11.37
  },
  "fundamentals": {
-  "pe_ratio": 23.735294,
-  "market_cap": "340M",
-  "beta": 2.051,
+  "pe_ratio": 18.384617,
+  "market_cap": "268M",
+  "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {

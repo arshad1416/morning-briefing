@@ -1,43 +1,43 @@
 {
-  "generated_at": "2026-08-13T17:15:08-04:00",
+  "generated_at": "2026-08-14T12:37:08-04:00",
   "market_summary": {
-    "vix": 14.63,
-    "ten_year_yield": 4.64,
+    "vix": 14.47,
+    "ten_year_yield": 4.69,
     "indices": [
       {
         "ticker": "S&P 500",
-        "price": 7798.99,
-        "change_pct": 0.65
+        "price": 7787.4,
+        "change_pct": -0.15
       },
       {
         "ticker": "Dow Jones",
-        "price": 53839.99,
-        "change_pct": 0.13
+        "price": 53736.38,
+        "change_pct": -0.19
       },
       {
         "ticker": "NASDAQ",
-        "price": 26803.03,
-        "change_pct": 0.81
+        "price": 26705.5,
+        "change_pct": -0.36
       },
       {
         "ticker": "Russell 2000",
-        "price": 3052.85,
-        "change_pct": 0.24
+        "price": 3065.41,
+        "change_pct": 0.41
       },
       {
         "ticker": "TSX",
-        "price": 36759.29,
-        "change_pct": 0.27
+        "price": 36695.88,
+        "change_pct": -0.17
       },
       {
         "ticker": "VIX",
-        "price": 14.63,
-        "change_pct": 0.55
+        "price": 14.47,
+        "change_pct": -1.09
       },
       {
         "ticker": "10Y Yield",
-        "price": 4.64,
-        "change_pct": -0.85
+        "price": 4.69,
+        "change_pct": 1.08
       }
     ],
     "fx_rates": [
@@ -48,7 +48,7 @@
     ]
   },
   "narrative": {
-    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,798.99 (+0.65%)\n  \u2022 Dow Jones: 53,839.99 (+0.13%)\n  \u2022 NASDAQ: 26,803.03 (+0.81%)\n  \u2022 Russell 2000: 3,052.85 (+0.24%)\n  \u2022 TSX: 36,759.29 (+0.27%)\n  \u2022 VIX: 14.63\n  \u2022 10Y Yield: 4.64%"
+    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,787.40 (-0.15%)\n  \u2022 Dow Jones: 53,736.38 (-0.19%)\n  \u2022 NASDAQ: 26,705.50 (-0.36%)\n  \u2022 Russell 2000: 3,065.41 (+0.41%)\n  \u2022 TSX: 36,695.88 (-0.17%)\n  \u2022 VIX: 14.47\n  \u2022 10Y Yield: 4.69%"
   },
   "watchlist_summary": {},
   "central_banks": {
@@ -56,6 +56,34 @@
     "boc": ""
   },
   "insider_trades": [
+    {
+      "ticker": "AMD",
+      "insider": "Hahn Ava",
+      "title": "SVP, GC &amp; Corporate Secretary",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 143,
+      "price": 474.75,
+      "value": 67889,
+      "date": "2026-08-11",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000141/xslF345X06/wk-form4_1786651900.xml"
+    },
+    {
+      "ticker": "AAPL",
+      "insider": "Newstead Jennifer",
+      "title": "SVP, GC and Secretary",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 1439,
+      "price": 307.75,
+      "value": 442852,
+      "date": "2026-08-11",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/320193/000114036126032884/xslF345X06/form4.xml"
+    },
     {
       "ticker": "META",
       "insider": "Olivan Javier",
@@ -167,104 +195,76 @@
       "date": "2026-08-10",
       "source": "SEC EDGAR Form 4",
       "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 816,
-      "price": 600.0,
-      "value": 489600,
-      "date": "2026-08-10",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
-    },
-    {
-      "ticker": "NKE",
-      "insider": "Montagne Amy",
-      "title": "PRESIDENT, NIKE",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 4867,
-      "price": 42.05,
-      "value": 204657,
-      "date": "2026-08-07",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000114/xslF345X06/form4.xml"
     }
   ],
   "market_news": {
     "headlines": [
       {
-        "title": "Financial peril to pasta power: Noodles leads the restaurant sector with a +200% YTD gain",
-        "url": "https://seekingalpha.com/news/4632655-financial-peril-to-pasta-power-noodles-leads-the-restaurant-sector-with-200-ytd-gain?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "bullish",
-        "summary": ""
-      },
-      {
-        "title": "Eagle Point Institutional Income Fund SER A TERM PFD declares $0.1692 dividend",
-        "url": "https://seekingalpha.com/news/4632673-eagle-point-institutional-income-fund-ser-a-term-pfd-declares-0_1692-dividend?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Adcore GAAP EPS of -C$0.01, revenue of C$7.2M",
-        "url": "https://seekingalpha.com/news/4632672-adcore-gaap-eps-of-c001-revenue-of-c72m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "GMR projects FY2026 revenue of $5.89B-$6.18B while targeting net leverage below 3.3x by year-end",
-        "url": "https://seekingalpha.com/news/4632671-gmr-projects-fy2026-revenue-of-5_89b-6_18b-while-targeting-net-leverage-below-3_3x-by-year?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "WhiteHawk expects 16 MMcf/d in 2027 and $17M incremental cash flow as it signs $112M of acquisitions",
-        "url": "https://seekingalpha.com/news/4632670-whitehawk-expects-16-mmcf-d-in-2027-and-17m-incremental-cash-flow-as-it-signs-112m-of?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "MSGS anticipates Rangers spin-off by end of October while estimating $16M added tax expense in fiscal 2028",
-        "url": "https://seekingalpha.com/news/4632669-msgs-anticipates-rangers-spin-off-by-end-of-october-while-estimating-16m-added-tax-expense-in?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Aggregate assets under management fall in July as broader markets pull back",
-        "url": "https://seekingalpha.com/news/4632633-aggregate-assets-under-management-fall-in-july-as-broader-markets-pull-back?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Midday Need to Know: Retail sales drop, Ackman shakes up portfolio & more",
+        "url": "https://seekingalpha.com/news/4633415-midday-need-to-know-retail-sales-drop-ackman-shakes-up-portfolio-more?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bearish",
         "summary": ""
       },
       {
-        "title": "The Data-Driven AI Play Powering Next-Gen Optical Infrastructure",
-        "url": "https://seekingalpha.com/article/4936142-the-data-driven-ai-play-powering-next-gen-optical-infrastructure?source=feed",
+        "title": "Seabridge Gold Inc. GAAP EPS of C$1.09 and C$117.5M net income.",
+        "url": "https://seekingalpha.com/news/4633422-seabridge-gold-inc-gaap-eps-of-c109-and-c1175m-net-income?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Micron Buried One Sentence About Dec. 9 - It Could Begin Retiring 12% Of Its Shares",
-        "url": "https://seekingalpha.com/article/4935979-micron-buried-one-sentence-about-dec-9-it-could-begin-retiring-12-percent-of-its-shares?source=feed",
+        "title": "LanzaTech outlines FY 2026 revenue of $50M-$55M while reintroducing guidance",
+        "url": "https://seekingalpha.com/news/4633421-lanzatech-outlines-fy-2026-revenue-of-50m-55m-while-reintroducing-guidance?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Navigating Market Turbulence: 6 Top Stocks For Balancing Stability And Growth",
-        "url": "https://seekingalpha.com/article/4935702-navigating-market-turbulence-6-top-stocks-for-balancing-stability-and-growth?source=feed",
+        "title": "BTQ Technologies Q2 GAAP EPS of C$0.12",
+        "url": "https://seekingalpha.com/news/4633420-btq-technologies-q2-gaap-eps-of-c012?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Fury Gold Mines Limited GAAP EPS of $0.15, revenue of $62.6M",
+        "url": "https://seekingalpha.com/news/4633418-fury-gold-mines-limited-gaap-eps-of-0_15-revenue-of-62_6m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Serve Robotics upgraded to Buy as valuation turns attractive",
+        "url": "https://seekingalpha.com/news/4633406-serve-robotics-upgraded-to-buy-as-valuation-turns-attractive?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Mako Mining Q2 GAAP EPS of $0.15, revenue of $62.6M",
+        "url": "https://seekingalpha.com/news/4633417-mako-mining-q2-gaap-eps-of-015-revenue-of-626m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Could Trump Cut Capital Gains Tax?",
+        "url": "https://seekingalpha.com/article/4936673-could-trump-cut-capital-gains-tax?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "This May Be One Of My Favorite Markets Ever",
+        "url": "https://seekingalpha.com/article/4935235-this-may-be-one-of-my-favorite-markets-ever?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Green Dividends: 2 Renewable Energy Compounders To Beat Inflation",
+        "url": "https://seekingalpha.com/article/4934273-green-dividends-2-renewable-energy-compounders-to-beat-inflation?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
@@ -275,64 +275,88 @@
   },
   "geopolitical": [
     {
-      "title": "Putin can no longer claim victory in Ukraine, Nobel Peace Prize winner tells BBC",
+      "title": "'Unprecedented' rain in Japan kills eight people",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c74grmy2v7ko?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-13T04:55:58+00:00",
-      "summary": "In an exclusive interview with the BBC\u2019s Steve Rosenberg, Dmitry Muratov says the Kremlin leader can only \"destroy Ukraine, not conquer it\", with the war now in its fifth year."
+      "url": "https://www.bbc.co.uk/news/articles/cq561gpen8lo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-14T10:36:14+00:00",
+      "summary": "The storm cut power to more than 20,000 households and left 7,000 people stranded at Tokyo's Narita airport."
     },
     {
-      "title": "UK defends seizing shadow fleet tanker after Putin threat",
+      "title": "US says dozens of countries helped China dodge Trump's tariffs",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cn0npn249qvo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-13T09:52:30+00:00",
-      "summary": "The UK government says it is \"disrupting and deterring shadow fleet vessels\" in accordance with the law."
+      "url": "https://www.bbc.co.uk/news/articles/c78gy6ep3n5o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-14T08:39:46+00:00",
+      "summary": "A new US report said China had moved goods through nations with lower tariffs to dodge higher levies."
     },
     {
-      "title": "More troops to be sent to West Bank village besieged by Israeli settlers",
+      "title": "Engine parts smashed Ryanair window that man's head was sucked out of, report says",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cj4kppdk2qwo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-13T08:12:53+00:00",
-      "summary": "Two Palestinian families in the village of Qusra say they have been trapped in their homes, with water and power cut off, since Sunday."
+      "url": "https://www.bbc.co.uk/news/articles/cr59j4z3vl8o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-13T21:43:47+00:00",
+      "summary": "A preliminary report by US investigators says an engine fan blade broke on last month's flight from Greece to Germany."
     },
     {
-      "title": "Ebola outbreak on track to be deadliest ever, WHO chief says",
+      "title": "Conditions on US aircraft carrier at sea for more than 250 days raise alarms",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cgk4pex4mn8o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-13T01:31:21+00:00",
-      "summary": "The outbreak, declared on 15 May, has caused more than 2,000 deaths, with thousands more reported cases."
+      "url": "https://www.bbc.co.uk/news/articles/cyvl2d5j52lo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-13T23:06:23+00:00",
+      "summary": "Thousands of sailors on the USS Abraham Lincoln have reportedly faced food shortages and broken plumbing, with some considering jumping overboard."
     },
     {
-      "title": "Indian actor's video with endangered gibbon sparks investigation",
+      "title": "Stolen Matisse artworks recovered by police in Brazil",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c9q9351yp1xo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-13T07:05:35+00:00",
-      "summary": "A deleted video of Tamil star Vikram cuddling an endangered gibbon has triggered an inquiry into how the animal entered India."
+      "url": "https://www.bbc.co.uk/news/articles/c1l1ym96ydvo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-14T08:34:19+00:00",
+      "summary": "A man is arrested after eight works by the French artist are found at a home in greater S\u00e3o Paulo."
     },
     {
-      "title": "Life and loss as a first responder in southern Lebanon",
+      "title": "New Zealand break ranks with Oceania as FIFA\u2019s Infantino divide grows",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/13/life-and-loss-as-a-first-responder-in-southern-lebanon?traffic_source=rss",
-      "date": "2026-08-13T09:51:30+00:00",
-      "summary": "A new Al Jazeera film speaks to the head of the Civil Defence in Tyre, southern Lebanon's largest city."
+      "url": "https://www.aljazeera.com/sports/2026/8/14/new-zealand-break-ranks-with-oceania-as-fifas-infantino-divide-grows?traffic_source=rss",
+      "date": "2026-08-14T09:35:06+00:00",
+      "summary": "Oceania have offered support to Gianni Infantino, but New Zealand have gone against their own confederation in FIFA row."
     },
     {
-      "title": "What postcolonialism looks like in Southeast Asia",
+      "title": "Russia says hit Ukrainian railway and port facilities in new strikes",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/video/centre-stage/2026/8/13/what-postcolonialism-looks-like-in-southeast-asia?traffic_source=rss",
-      "date": "2026-08-13T09:46:22+00:00",
-      "summary": "AJ's Jamal Elshayyal moderates a panel of academics and leaders from four countries"
+      "url": "https://www.aljazeera.com/news/2026/8/14/russia-says-hit-ukrainian-railway-and-port-facilities-in-new-strikes?traffic_source=rss",
+      "date": "2026-08-14T09:28:03+00:00",
+      "summary": "Kyiv targets Baltic oil hub and warehouse near Moscow with drones."
     },
     {
-      "title": "Japan protests as Russia\u2019s Putin visits disputed Kuril Islands",
+      "title": "Swiatek defeats Rybakina to claim Canadian Open title\u200b",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/13/japan-protests-as-russias-putin-visits-disputed-kuril-islands?traffic_source=rss",
-      "date": "2026-08-13T09:43:38+00:00",
-      "summary": "Japanese PM says Putin's visit to the Pacific island chain, seized by the Soviet Union in 1945, is 'unacceptable'."
+      "url": "https://www.aljazeera.com/sports/2026/8/14/swiatek-defeats-rybakina-to-claim-canadian-open?traffic_source=rss",
+      "date": "2026-08-14T09:26:54+00:00",
+      "summary": "Six-time Grand Slam champion Iga Swiatek defeats Elena Rybakina in Toronto to claim the WTA Canadian Open title."
     }
   ],
   "congress": {
     "recent_trades": [
+      {
+        "politician": "Kevin Hern",
+        "chamber": "House",
+        "state": "OK01",
+        "ticker": "OGN",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "08/05/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035196.pdf"
+      },
+      {
+        "politician": "Kevin Hern",
+        "chamber": "House",
+        "state": "OK01",
+        "ticker": "VSNT",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "08/05/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035196.pdf"
+      },
       {
         "politician": "Mike Kelly",
         "chamber": "House",
@@ -428,32 +452,8 @@
         "transaction_date": "07/15/2026",
         "source": "House Clerk (public domain)",
         "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035186.pdf"
-      },
-      {
-        "politician": "Josh Gottheimer",
-        "chamber": "House",
-        "state": "NJ05",
-        "ticker": "CCI",
-        "action": "Sell",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "07/23/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035186.pdf"
-      },
-      {
-        "politician": "Josh Gottheimer",
-        "chamber": "House",
-        "state": "NJ05",
-        "ticker": "FN",
-        "action": "Sell",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "07/14/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035186.pdf"
       }
     ],
-    "summary": "60 recent congressional trades from 6 House periodic transaction reports (23 buys, 37 sells)."
+    "summary": "60 recent congressional trades from 7 House periodic transaction reports (23 buys, 37 sells)."
   }
 }

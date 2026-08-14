@@ -1,27 +1,28 @@
 {
  "ticker": "RCKT",
  "name": "Rocket Pharmaceuticals, Inc.",
- "generated_at": "2026-08-13T14:45:01.820317+00:00",
- "price": 3.45,
- "change_pct": -5.22,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 3.3,
+ "change_pct": -1.35,
  "sector": "Healthcare",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.9,
-  "sma_20": 3.38,
-  "sma_50": 3.32
+  "rsi_14": 44.6,
+  "sma_20": 3.36,
+  "sma_50": 3.35
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "379M",
-  "beta": null,
+  "market_cap": "362M",
+  "beta": 0.474,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

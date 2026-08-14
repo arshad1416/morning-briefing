@@ -1,21 +1,23 @@
 {
  "ticker": "AMCX",
  "name": "AMC Global Media Inc.",
- "generated_at": "2026-08-13T14:45:01.820317+00:00",
- "price": 11.79,
- "change_pct": 0.0,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 12.17,
+ "change_pct": 1.25,
  "sector": "Communication Services",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 64.4,
-  "sma_20": 10.86,
-  "sma_50": 10.28
+  "rsi_14": 67.8,
+  "sma_20": 10.99,
+  "sma_50": 10.37
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "486M",
+  "market_cap": "502M",
   "beta": 1.34,
   "dividend_yield": null
  },

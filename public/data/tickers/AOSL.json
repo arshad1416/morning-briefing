@@ -1,19 +1,22 @@
 {
  "ticker": "AOSL",
  "name": "Alpha and Omega Semiconductor L",
- "generated_at": "2026-08-13T14:45:01.820317+00:00",
- "price": 36.21,
- "change_pct": 3.93,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 30.83,
+ "change_pct": 0.68,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 53.5,
-  "sma_20": 32.54,
-  "sma_50": 38.71
+  "rsi_14": 42.9,
+  "sma_20": 32.52,
+  "sma_50": 37.81
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "1.1B",
+  "market_cap": "923M",
   "beta": 2.598,
   "dividend_yield": null
  },
