@@ -16,13 +16,26 @@
 # Phase C (crontab) does NOT apply by default: it prints the proposed diff and
 # needs APPLY_CRONTAB=1 to touch cron.
 #
-# Prerequisite: the repo edits must be merged and pulled first —
-#   cd ~/morning-briefing && git pull
+# Phase A needs the repo copies of the three scripts it deploys. Either:
+#   (a) merge the branch and `cd ~/morning-briefing && git pull` first, or
+#   (b) run against a staging dir that holds them, without merging anything:
+#         MB=~/audit-fixes-2026-08-14 bash ~/audit-fixes-2026-08-14/deploy-audit-fixes-2026-08-14.sh
+#       That dir needs a pi-scripts/ subdir with the three Phase A files in it.
 
 set -euo pipefail
 HS=~/.hermes/scripts
-MB=~/morning-briefing
+MB="${MB:-$HOME/morning-briefing}"
 TAG="bak-2026-08-14"
+
+# Fail early and clearly rather than part-way through Phase A.
+for f in generate_prediction_accuracy.py nope_calculator.py r2_sync.py; do
+  [ -f "$MB/pi-scripts/$f" ] || {
+    echo "ABORT: $MB/pi-scripts/$f not found."
+    echo "  MB is currently '$MB'. Either pull the merged branch into ~/morning-briefing,"
+    echo "  or set MB to a staging dir containing pi-scripts/$f (see header)."
+    exit 1
+  }
+done
 
 edit_once() {  # edit_once <file> <old> <new> — replace exactly-once or abort
   python3 - "$1" "$2" "$3" <<'PY'
