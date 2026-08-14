@@ -1,19 +1,22 @@
 {
  "ticker": "ADCT",
  "name": "ADC Therapeutics SA",
- "generated_at": "2026-08-13T14:45:01.820317+00:00",
- "price": 1.18,
- "change_pct": 4.87,
+ "generated_at": "2026-08-14T11:45:01.988179+00:00",
+ "price": 1.04,
+ "change_pct": -15.04,
  "sector": "Healthcare",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 46.2,
-  "sma_20": 1.17,
-  "sma_50": 1.27
+  "rsi_14": 37.7,
+  "sma_20": 1.16,
+  "sma_50": 1.23
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "151M",
+  "market_cap": "133M",
   "beta": 1.835,
   "dividend_yield": null
  },

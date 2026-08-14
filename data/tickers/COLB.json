@@ -1,30 +1,81 @@
 {
  "ticker": "COLB",
  "name": "Columbia Banking System, Inc.",
- "generated_at": "2026-08-13T14:45:01.820317+00:00",
- "price": 31.86,
- "change_pct": 0.47,
+ "generated_at": "2026-08-14T11:45:01.988179+00:00",
+ "price": 32.53,
+ "change_pct": 0.88,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 53.6,
-  "sma_20": 31.79,
-  "sma_50": 31.4
+  "rsi_14": 59.6,
+  "sma_20": 31.75,
+  "sma_50": 31.47
  },
  "fundamentals": {
-  "pe_ratio": 12.543307,
-  "market_cap": "9.0B",
+  "pe_ratio": 12.809055,
+  "market_cap": "9.2B",
   "beta": 0.659,
-  "dividend_yield": 0.0467
+  "dividend_yield": 0.045899999999999996
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "COLB",
+   "date": "2026-10-29",
+   "epsEstimate": 0.77,
+   "epsActual": null
+  },
+  {
+   "ticker": "COLB",
+   "date": "2026-07-23",
+   "epsEstimate": 0.73,
+   "epsActual": 0.76
+  },
+  {
+   "ticker": "COLB",
+   "date": "2026-04-23",
+   "epsEstimate": 0.69,
+   "epsActual": 0.72
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "COLB",
+   "date": "2026-08-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/887343/000088734326000170/colb-20260630.htm"
+  },
+  {
+   "ticker": "COLB",
+   "date": "2026-05-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/887343/000088734326000135/colb-20260331.htm"
+  },
+  {
+   "ticker": "COLB",
+   "date": "2026-02-26",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/887343/000088734326000088/colb-20251231.htm"
+  },
+  {
+   "ticker": "COLB",
+   "date": "2025-11-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/887343/000088734325000268/colb-20250930.htm"
+  },
+  {
+   "ticker": "COLB",
+   "date": "2025-08-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/887343/000088734325000233/colb-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

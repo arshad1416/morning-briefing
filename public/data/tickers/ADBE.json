@@ -1,28 +1,34 @@
 {
  "ticker": "ADBE",
  "name": "Adobe Inc.",
- "generated_at": "2026-08-13T14:45:01.820317+00:00",
- "price": 256.55,
- "change_pct": -2.71,
+ "generated_at": "2026-08-14T11:45:01.988179+00:00",
+ "price": 261.35,
+ "change_pct": 1.0,
  "sector": "Technology",
  "signals": [
-  "above_ma"
+  "above_ma",
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 57.0,
-  "sma_20": 246.28,
-  "sma_50": 230.16
+  "rsi_14": 59.7,
+  "sma_20": 247.69,
+  "sma_50": 230.19
  },
  "fundamentals": {
-  "pe_ratio": 15.198756,
-  "market_cap": "102.0B",
+  "pe_ratio": 14.94597,
+  "market_cap": "103.9B",
   "beta": 1.397,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
- "reddit_mentions": []
+ "reddit_mentions": [
+  {
+   "sub": "wsb",
+   "count": 1
+  }
+ ]
 }

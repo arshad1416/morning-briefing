@@ -1,22 +1,24 @@
 {
  "ticker": "ASH",
  "name": "Ashland Inc.",
- "generated_at": "2026-08-13T14:45:01.820317+00:00",
- "price": 74.19,
- "change_pct": -0.52,
+ "generated_at": "2026-08-14T11:45:01.988179+00:00",
+ "price": 74.73,
+ "change_pct": 0.01,
  "sector": "Basic Materials",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 64.1,
-  "sma_20": 70.82,
-  "sma_50": 66.76
+  "rsi_14": 66.1,
+  "sma_20": 71.14,
+  "sma_50": 67.11
  },
  "fundamentals": {
-  "pe_ratio": 47.557697,
+  "pe_ratio": 47.90385,
   "market_cap": "3.4B",
   "beta": 0.39,
   "dividend_yield": 0.0225
