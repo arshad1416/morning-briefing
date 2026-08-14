@@ -87,20 +87,21 @@ export function VerdictBar() {
                 be confirmed to describe this field — and the live value sits at
                 a flat 1.00. An unexplained number beats a wrong explanation. */}
             <span>Breadth: {verdict.model_features.breadth.toFixed(2)}</span>
-            {/* The sample size has to travel with the number. On the live file
-                recent_trades is 0 while recent_hit_rate still reads 0.5, so
-                naming "recent paper trades" as the source of a 50% would be a
-                measurement that never happened. */}
+            {/* The sample size has to travel with the number, and below the
+                generator's own five-trade threshold there is no number to
+                travel with: it writes a constant 0.5 recent_hit_rate while
+                still reporting the true 1–4 trade count, so a >0 guard printed
+                "last 1 paper trade: 50%" — a measurement that never happened.
+                Only recent_trades >= 5 is measured (and then it is 5–10). */}
             <span>
               <InfoTip term="hit_rate">Hit rate</InfoTip>
-              {verdict.model_features.recent_trades > 0 ? (
+              {verdict.model_features.recent_trades >= 5 ? (
                 <>
-                  , last {verdict.model_features.recent_trades} paper{' '}
-                  {verdict.model_features.recent_trades === 1 ? 'trade' : 'trades'}:{' '}
+                  , last {verdict.model_features.recent_trades} paper trades:{' '}
                   {(verdict.model_features.recent_hit_rate * 100).toFixed(0)}%
                 </>
               ) : (
-                <>: no recent paper trades yet</>
+                <>: not enough closed paper trades yet</>
               )}
             </span>
           </div>

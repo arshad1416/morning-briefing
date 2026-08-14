@@ -224,13 +224,17 @@ export function mountBilling(app) {
     const type = (evt.type || evt.event || '').toLowerCase();
     if (type.includes('cancel') || type.includes('delete')) {
       await updateSubscriptionState(c.env.DB, row.user_id, { status: 'canceled' });
-    } else if (type.includes('fail') || type.includes('declin')) {
+      // 'unpaid'/'unsuccess' first: they contain the success words below.
+    } else if (type.includes('fail') || type.includes('declin') || type.includes('unpaid') || type.includes('unsuccess')) {
       await updateSubscriptionState(c.env.DB, row.user_id, { status: 'past_due' });
-    } else {
+    } else if (type.includes('renew') || type.includes('paid') || type.includes('success') || type.includes('approved')) {
       const next = evt.dateBilling || evt.data?.dateBilling;
       await updateSubscriptionState(c.env.DB, row.user_id, {
         status: 'active', periodEnd: next ? Date.parse(next) : null,
       });
+    } else {
+      // Never activate on a type nobody enumerated — leave entitlement as-is.
+      console.log('[billing] webhook: unhandled event type', type || '(none)');
     }
     return c.json({ ok: true });
   });

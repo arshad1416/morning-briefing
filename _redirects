@@ -1,4 +1,0 @@
-# Cloudflare Pages redirects
-# SPA fallback: any unmatched path serves index.html
-/data/*  /data/:splat  200
-/*  /index.html  200

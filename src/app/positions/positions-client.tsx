@@ -211,6 +211,9 @@ function PaperTab({ data }: { data: Any }) {
   // the total_balance field (where total_pnl was realized-only, so it didn't
   // double-count).
   const equity = p.total_balance ?? (p.starting_balance || 0) + (p.total_pnl || 0) + (p.unrealized_pnl || 0);
+  // market_value marks the open book to market, so this share is what the
+  // positions are worth now — not what was invested in them (p.invested is the
+  // cost basis, shown untouched in the "Invested" tile below).
   const deployed = p.market_value ?? p.invested ?? 0;
   const totalPnl = p.total_pnl || 0;
   const fx = data.fx_rate_usdcad || 1.38;
@@ -237,7 +240,7 @@ function PaperTab({ data }: { data: Any }) {
             ({(p.return_pct || 0) >= 0 ? '+' : ''}{fmt(p.return_pct)}%)
           </span>
           <span className="ml-auto text-xs text-[var(--color-text-tertiary)]" data-numeric>
-            Equity ${fmt(equity)} · Cash ${fmt(p.cash)} · {deployed > 0 ? `${Math.round((deployed / equity) * 100)}% invested` : 'all cash'}
+            Equity ${fmt(equity)} · Cash ${fmt(p.cash)} · {deployed > 0 ? `${Math.round((deployed / equity) * 100)}% in positions` : 'all cash'}
           </span>
         </div>
         <div className="mt-4 grid grid-cols-2 gap-4 border-t pt-4 sm:grid-cols-5" style={{ borderColor: 'var(--color-border-subtle)' }}>

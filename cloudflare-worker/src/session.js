@@ -61,7 +61,6 @@ export async function entitlement(DB, userId) {
   return { entitled: !!live, tier: sub.tier, status: sub.status, periodEnd: sub.current_period_end, billingInterval: sub.billing_interval || 'monthly' };
 }
 
-export const ROUTE_TIER = { research: 'basic', screener: 'basic', charts: 'pro', models: 'pro', positions: 'basic' };
 export function meetsTier(userTier, needTier) {
   const rank = { basic: 1, pro: 2 };
   const have = userTier === 'trial' ? 2 : (rank[userTier] || 0);

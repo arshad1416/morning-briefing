@@ -15,6 +15,7 @@ wrapped by the caller so a sync hiccup never blocks the data pipeline.
 import json
 import os
 import sys
+import time
 
 from pipeline_runtime import atomic_write_json
 from pipeline_schemas import ArtifactValidationError, load_and_validate_artifact
@@ -24,6 +25,17 @@ DATA_DIR = os.path.expanduser("~/morning-briefing/data")
 # which hermes may regenerate and wipe manual edits.
 ENV_FILES = [os.path.expanduser("~/.hermes/.r2_env"), os.path.expanduser("~/.hermes/.env")]
 BUCKET = "maplegamma-private"
+# (size, mtime_ns) of what is already in R2, keyed by absolute local path, so a
+# run re-uploads only what changed: charts/ is 7.7 MB of the 10.7 MB total and
+# regenerates once a day, but every run re-sent it. Delete this file to force a
+# full re-upload (e.g. after objects are deleted from the bucket).
+STATE_FILE = os.path.expanduser("~/.hermes/.r2_sync_state.json")
+# "Exists" used to be the only check, so 28-day-old ibkr_*.json kept serving at
+# HTTP 200. Bounds are per-file: the default has to survive a weekday-only job
+# across a long weekend (screener-data.json Fri 10:30 → Tue 07:00 ≈ 92.5h), and
+# run_walk_forward_v2.py is weekly (0 6 * * 0), so it gets two missed runs.
+DEFAULT_MAX_AGE_H = 96
+MAX_AGE_H = {"walk_forward_v2.json": 336, "walk_forward.json": 336}
 
 PRIVATE_FILES = [
     # basic tier
@@ -88,8 +100,10 @@ def make_screener_lite():
 def sync_private_to_r2():
     """Upload the premium set + charts to R2.
 
-    Returns (uploaded, invalid, failed): ``invalid`` holds artifacts rejected for
-    bad data — the caller skips those and still publishes; ``failed`` holds
+    Returns (uploaded, invalid, failed): ``uploaded`` counts artifacts now
+    current in R2, including ones skipped as unchanged; ``invalid`` holds
+    artifacts rejected for bad or stale data — the caller skips those and
+    still publishes (their previous R2 copy keeps serving); ``failed`` holds
     transport/credential problems, which mean R2 is unhealthy and the caller must
     abort. Both are lists of "<key>: <reason>" strings for alerting.
     """
@@ -110,9 +124,28 @@ def sync_private_to_r2():
     uploaded = 0
     invalid = []  # bad DATA in one artifact — caller skips it and publishes the rest
     failed = []   # transport/credentials — R2 itself is unhealthy, caller must abort
+    try:
+        with open(STATE_FILE) as fh:
+            state = json.load(fh)
+    except Exception:
+        state = {}
 
     def put(key, path):
         nonlocal uploaded
+        st = os.stat(path)
+        age_h = (time.time() - st.st_mtime) / 3600
+        limit = MAX_AGE_H.get(os.path.basename(key), DEFAULT_MAX_AGE_H)
+        if age_h > limit:
+            # Stale data is bad data: same lane as a validation failure, so the
+            # caller alerts and still publishes everything else. Refusing the
+            # upload does NOT unpublish the copy already in R2 — the Worker
+            # keeps serving it until the generator is fixed.
+            invalid.append(f"{key}: STALE, {age_h/24:.1f}d old (limit {limit/24:.1f}d) — generator has stopped")
+            print(f"  R2 STALE, not uploaded {key}: {age_h/24:.1f} days old", file=sys.stderr)
+            return
+        if state.get(path) == [st.st_size, st.st_mtime_ns]:
+            uploaded += 1  # already current in R2; counts as uploaded for the caller's check
+            return
         try:
             # R2 is the publish/database boundary for premium AI artifacts.
             # Reject malformed schemas and non-standard NaN/Infinity values
@@ -120,6 +153,7 @@ def sync_private_to_r2():
             load_and_validate_artifact(path)
             s3.upload_file(path, BUCKET, key, ExtraArgs={"ContentType": "application/json"})
             uploaded += 1
+            state[path] = [st.st_size, st.st_mtime_ns]
         except ArtifactValidationError as e:
             # Split from transport failures deliberately. A bad value in ONE
             # premium file must not freeze all public publishing — on 2026-07-30
@@ -141,7 +175,11 @@ def sync_private_to_r2():
         for fn in os.listdir(charts_dir):
             if fn.endswith(".json"):
                 put(f"charts/{fn}", os.path.join(charts_dir, fn))
-    print(f"  R2 sync: {uploaded} uploaded, {len(invalid)} invalid, {len(failed)} failed")
+    try:
+        atomic_write_json(STATE_FILE, state)
+    except Exception as e:  # a cache write must never abort the publish
+        print(f"  R2 sync: could not save {STATE_FILE}: {e}", file=sys.stderr)
+    print(f"  R2 sync: {uploaded} uploaded/current, {len(invalid)} invalid, {len(failed)} failed")
     return (uploaded, invalid, failed)
 
 

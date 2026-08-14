@@ -172,7 +172,7 @@ export function OptionsClient() {
           min-width, so a live-data swap between regimes never shifts the
           grid. */}
       <div
-        className="relative overflow-hidden flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4 p-4 rounded-[var(--radius-tile)] border"
+        className="relative overflow-hidden p-4 rounded-[var(--radius-tile)] border"
         style={{ backgroundColor: 'var(--color-bg-surface)', borderColor: 'var(--color-border-subtle)' }}
       >
         <span
@@ -187,39 +187,46 @@ export function OptionsClient() {
                 : 'rgba(139,139,150,0.08)',
           }}
         />
-        {/* The chip reads BULLISH/BEARISH, but it is the sign of gross gamma
-            exposure — a read on market stability, not a direction call. The
-            subtitle and the sentence beside it say so, since the chip wording
-            itself lives in a shared primitive. min-w/justify-center keep the
-            chip's own footprint stable across regimes. */}
-        <div className="relative z-10 flex flex-col items-start gap-1">
-          <InfoTip term="gamma_regime">
-            <RegimeChip regime={regime} className="min-w-[104px] justify-center" />
-          </InfoTip>
-          <PlainLabel term="gamma_regime" />
+        {/* This card is also the page's only h1 — /options/ had no top-level
+            heading at all, so the document outline started at the tile H3s. */}
+        <h1 className="relative z-10 font-display text-3xl text-[var(--color-text-primary)]">
+          Options <em className="italic" style={{ color: 'var(--color-accent)' }}>Intelligence</em>
+        </h1>
+        <div className="mt-3 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+          {/* The chip reads BULLISH/BEARISH, but it is the sign of gross gamma
+              exposure — a read on market stability, not a direction call. The
+              subtitle and the sentence beside it say so, since the chip wording
+              itself lives in a shared primitive. min-w/justify-center keep the
+              chip's own footprint stable across regimes. */}
+          <div className="relative z-10 flex flex-col items-start gap-1">
+            <InfoTip term="gamma_regime">
+              <RegimeChip regime={regime} className="min-w-[104px] justify-center" />
+            </InfoTip>
+            <PlainLabel term="gamma_regime" />
+          </div>
+          <p className="relative z-10 flex-1 text-sm text-[var(--color-text-secondary)]">
+            {/* This sentence must describe SIGNED dealer gamma, not the gross GEX
+                figure shown in the card below. The regime used to be derived from
+                the gross total, in which puts are stored positive — so it was
+                structurally almost always "bullish" and said so. It now comes from
+                signed dealer gamma, which can be negative while gross GEX is
+                positive; wording that referred to "total gamma exposure" would
+                therefore contradict the number displayed alongside it.
+                The invisible span below is the longest (bearish) variant — it
+                reserves the block's height so the live-data swap between
+                regimes never shifts the grid; the real text is layered on top. */}
+            <span aria-hidden="true" className="invisible block">
+              Dealers are net short gamma, so their hedging leans toward amplifying moves rather than damping them. That means bigger swings in either direction — it is not a forecast that prices will fall. The gross GEX figure below adds calls and puts together, so it can look positive even now; this reading counts puts as negative.
+            </span>
+            <span className="absolute inset-0 flex items-center">
+              {regime === 'bullish'
+                ? 'Dealers are net long gamma, so their hedging leans toward damping moves rather than amplifying them. That is a read on how steady the market is, not a forecast that prices will rise. The gross GEX figure below adds calls and puts together, so it stays positive either way — this reading counts puts as negative.'
+                : regime === 'bearish'
+                ? 'Dealers are net short gamma, so their hedging leans toward amplifying moves rather than damping them. That means bigger swings in either direction — it is not a forecast that prices will fall. The gross GEX figure below adds calls and puts together, so it can look positive even now; this reading counts puts as negative.'
+                : 'Dealer gamma is close to flat, so hedging is not pushing the market either way right now.'}
+            </span>
+          </p>
         </div>
-        <p className="relative z-10 flex-1 text-sm text-[var(--color-text-secondary)]">
-          {/* This sentence must describe SIGNED dealer gamma, not the gross GEX
-              figure shown in the card below. The regime used to be derived from
-              the gross total, in which puts are stored positive — so it was
-              structurally almost always "bullish" and said so. It now comes from
-              signed dealer gamma, which can be negative while gross GEX is
-              positive; wording that referred to "total gamma exposure" would
-              therefore contradict the number displayed alongside it.
-              The invisible span below is the longest (bearish) variant — it
-              reserves the block's height so the live-data swap between
-              regimes never shifts the grid; the real text is layered on top. */}
-          <span aria-hidden="true" className="invisible block">
-            Dealers are net short gamma, so their hedging leans toward amplifying moves rather than damping them. That means bigger swings in either direction — it is not a forecast that prices will fall. The gross GEX figure below adds calls and puts together, so it can look positive even now; this reading counts puts as negative.
-          </span>
-          <span className="absolute inset-0 flex items-center">
-            {regime === 'bullish'
-              ? 'Dealers are net long gamma, so their hedging leans toward damping moves rather than amplifying them. That is a read on how steady the market is, not a forecast that prices will rise. The gross GEX figure below adds calls and puts together, so it stays positive either way — this reading counts puts as negative.'
-              : regime === 'bearish'
-              ? 'Dealers are net short gamma, so their hedging leans toward amplifying moves rather than damping them. That means bigger swings in either direction — it is not a forecast that prices will fall. The gross GEX figure below adds calls and puts together, so it can look positive even now; this reading counts puts as negative.'
-              : 'Dealer gamma is close to flat, so hedging is not pushing the market either way right now.'}
-          </span>
-        </p>
       </div>
 
       <DraggableBentoGrid pageId="options" items={OPTIONS_ITEMS} />

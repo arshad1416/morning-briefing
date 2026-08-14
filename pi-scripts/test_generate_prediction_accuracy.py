@@ -1,9 +1,11 @@
 import importlib.util
 import json
 import os
+import sys
 from pathlib import Path
 
 
+sys.path.insert(0, str(Path(__file__).parent))  # the module imports pipeline_runtime
 MODULE_PATH = Path(__file__).with_name("generate_prediction_accuracy.py")
 spec = importlib.util.spec_from_file_location("generate_prediction_accuracy", MODULE_PATH)
 module = importlib.util.module_from_spec(spec)

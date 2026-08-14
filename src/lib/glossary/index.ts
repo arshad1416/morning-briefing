@@ -204,7 +204,7 @@ export const GLOSSARY = {
     plain:
       'Whether dealer hedging is currently damping moves or amplifying them. This describes market stability — it is not a prediction that prices will go up or down.',
     detail:
-      'Derived from the sign of total gamma exposure. The bullish/bearish wording refers to the hedging backdrop, not to a directional call.',
+      'Derived from the sign of dealer gamma positioning, which counts puts as negative — not from the gross gamma exposure total, which stays positive either way. The bullish/bearish wording refers to the hedging backdrop, not to a directional call.',
   },
   breadth: {
     plainLabel: 'How many stocks are joining in',

@@ -77,6 +77,13 @@ public/data/charts/
 data/*.bak*
 public/data/*.bak*
 
+# Audio briefings: generate_audio_briefing.py writes both copies, but only
+# public/data/audio is served. MP3s do not delta-compress — one copy is enough.
+data/audio/
+
+# Write-only scratch output of bootstrap_volatility_data.py.
+pi-scripts/options-intelligence/volatility-history/raw_json/
+
 # ── E2E test artifacts ──
 e2e/test-results/
 e2e/results.json

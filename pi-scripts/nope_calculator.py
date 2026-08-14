@@ -326,30 +326,6 @@ class NopeCalculator:
             'put_fill_ratio': self.put_fill_ratio
         }
 
-    def save_snapshot(self, data, filepath="nope_history.csv"):
-        """
-        Save calculated snapshot data to a local file.
-        Supports appending to existing CSV/JSON format history.
-        """
-        df = pd.DataFrame([data])
-        
-        # Handle file paths gracefully
-        if filepath.endswith('.csv'):
-            if os.path.exists(filepath):
-                df.to_csv(filepath, mode='a', header=False, index=False)
-            else:
-                df.to_csv(filepath, index=False)
-        elif filepath.endswith('.json'):
-            history = []
-            if os.path.exists(filepath):
-                try:
-                    with open(filepath, 'r') as f:
-                        history = json.load(f)
-                except Exception:
-                    pass
-            history.append(data)
-            with open(filepath, 'w') as f:
-                json.dump(history, f, indent=2)
 
 def fetch_tiingo_underlying(ticker, api_key):
     import urllib.request
