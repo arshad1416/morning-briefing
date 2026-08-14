@@ -1,28 +1,29 @@
 {
  "ticker": "EZPW",
  "name": "EZCORP, Inc.",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 29.25,
- "change_pct": 1.18,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 28.86,
+ "change_pct": 0.73,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
   "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 45.4,
-  "sma_20": 29.88,
-  "sma_50": 31.5
+  "rsi_14": 43.8,
+  "sma_20": 29.69,
+  "sma_50": 31.43
  },
  "fundamentals": {
-  "pe_ratio": 14.698492,
+  "pe_ratio": 14.575758,
   "market_cap": "1.8B",
   "beta": 0.638,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

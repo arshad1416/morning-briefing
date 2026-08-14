@@ -1,19 +1,22 @@
 {
  "ticker": "GEMI",
  "name": "Gemini Space Station, Inc.",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 4.25,
- "change_pct": 1.92,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 3.97,
+ "change_pct": -7.67,
  "sector": "Financial Services",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 50.2,
+  "rsi_14": 43.8,
   "sma_20": 4.22,
-  "sma_50": 4.36
+  "sma_50": 4.35
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "537M",
+  "market_cap": "502M",
   "beta": null,
   "dividend_yield": null
  },

@@ -1,20 +1,23 @@
 {
  "ticker": "CRBU",
  "name": "Caribou Biosciences, Inc.",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 1.65,
- "change_pct": -2.65,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 1.57,
+ "change_pct": -2.8,
  "sector": "Healthcare",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 50.2,
-  "sma_20": 1.6,
-  "sma_50": 1.72
+  "rsi_14": 43.0,
+  "sma_20": 1.59,
+  "sma_50": 1.7
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "164M",
-  "beta": 2.276,
+  "market_cap": "155M",
+  "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {

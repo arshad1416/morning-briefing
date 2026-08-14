@@ -1,29 +1,28 @@
 {
  "ticker": "PLGO",
  "name": "Pelagos Insurance Capital Limit",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 22.85,
- "change_pct": -6.02,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 23.43,
+ "change_pct": 2.99,
  "sector": "Financial Services",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "volume_surge",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 30.8,
-  "sma_20": 25.19,
-  "sma_50": 24.3
+  "rsi_14": 38.4,
+  "sma_20": 25.09,
+  "sma_50": 24.34
  },
  "fundamentals": {
-  "pe_ratio": 6.278846,
+  "pe_ratio": 5.8138957,
   "market_cap": "2.0B",
   "beta": 0.29,
-  "dividend_yield": 0.0245
+  "dividend_yield": 0.0264
  },
  "council_analysis": {
-  "score": 8
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

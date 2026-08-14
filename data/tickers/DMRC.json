@@ -1,19 +1,22 @@
 {
  "ticker": "DMRC",
  "name": "Digimarc Corporation",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 7.09,
- "change_pct": -4.96,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 6.68,
+ "change_pct": -5.11,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 47.0,
-  "sma_20": 6.8,
-  "sma_50": 8.22
+  "rsi_14": 42.4,
+  "sma_20": 6.83,
+  "sma_50": 8.07
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "159M",
+  "market_cap": "150M",
   "beta": 2.303,
   "dividend_yield": null
  },

@@ -1,27 +1,29 @@
 {
  "ticker": "ZGN",
  "name": "Ermenegildo Zegna N.V.",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 13.98,
- "change_pct": -0.36,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 13.78,
+ "change_pct": -0.93,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 45.1,
-  "sma_20": 14.54,
-  "sma_50": 14.04
+  "rsi_14": 42.7,
+  "sma_20": 14.51,
+  "sma_50": 14.03
  },
  "fundamentals": {
-  "pe_ratio": 31.772726,
-  "market_cap": "3.8B",
+  "pe_ratio": 31.318182,
+  "market_cap": "3.7B",
   "beta": 0.889,
   "dividend_yield": 0.0097
  },
  "council_analysis": {
-  "score": 3
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

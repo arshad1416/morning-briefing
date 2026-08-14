@@ -1,24 +1,26 @@
 {
  "ticker": "FIZZ",
  "name": "National Beverage Corp.",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 31.43,
- "change_pct": 1.55,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 31.25,
+ "change_pct": -0.26,
  "sector": "Consumer Defensive",
- "signals": [],
+ "signals": [
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 50.7,
+  "rsi_14": 49.3,
   "sma_20": 31.47,
-  "sma_50": 31.29
+  "sma_50": 31.26
  },
  "fundamentals": {
-  "pe_ratio": 16.035713,
+  "pe_ratio": 15.943877,
   "market_cap": "2.9B",
   "beta": 0.756,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

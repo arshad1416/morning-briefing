@@ -1,19 +1,22 @@
 {
  "ticker": "WATT",
  "name": "Energous Corporation",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 16.8,
- "change_pct": -1.06,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 15.3,
+ "change_pct": 2.62,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.9,
-  "sma_20": 15.99,
-  "sma_50": 20.04
+  "rsi_14": 40.8,
+  "sma_20": 15.91,
+  "sma_50": 19.74
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "92M",
+  "market_cap": "84M",
   "beta": 1.598,
   "dividend_yield": null
  },

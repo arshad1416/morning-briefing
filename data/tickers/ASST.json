@@ -1,19 +1,22 @@
 {
  "ticker": "ASST",
  "name": "Strive, Inc.",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 12.56,
- "change_pct": 1.37,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 12.0,
+ "change_pct": -4.61,
  "sector": "Financial Services",
- "signals": [],
+ "signals": [
+  "below_ma",
+  "analyst_buy"
+ ],
  "technical": {
-  "rsi_14": 51.1,
-  "sma_20": 12.16,
-  "sma_50": 12.93
+  "rsi_14": 46.3,
+  "sma_20": 12.17,
+  "sma_50": 12.88
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "1.1B",
+  "market_cap": "1.0B",
   "beta": 13.193,
   "dividend_yield": null
  },

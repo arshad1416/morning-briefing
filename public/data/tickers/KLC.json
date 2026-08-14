@@ -1,26 +1,28 @@
 {
  "ticker": "KLC",
  "name": "KinderCare Learning Companies, ",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 4.81,
- "change_pct": 3.66,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 2.94,
+ "change_pct": -39.03,
  "sector": "Consumer Defensive",
  "signals": [
-  "rsi_dip"
+  "oversold_rsi",
+  "below_ma",
+  "volume_surge"
  ],
  "technical": {
-  "rsi_14": 44.9,
-  "sma_20": 5.14,
-  "sma_50": 4.68
+  "rsi_14": 22.1,
+  "sma_20": 5.03,
+  "sma_50": 4.66
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "570M",
+  "market_cap": "349M",
   "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

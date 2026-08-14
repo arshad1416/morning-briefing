@@ -1,27 +1,28 @@
 {
  "ticker": "COLM",
  "name": "Columbia Sportswear Company",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 57.62,
- "change_pct": 2.34,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 57.21,
+ "change_pct": -1.0,
  "sector": "Consumer Cyclical",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 38.7,
-  "sma_20": 60.23,
-  "sma_50": 62.66
+  "rsi_14": 37.6,
+  "sma_20": 59.93,
+  "sma_50": 62.51
  },
  "fundamentals": {
-  "pe_ratio": 15.044387,
+  "pe_ratio": 14.937337,
   "market_cap": "2.9B",
   "beta": 0.937,
-  "dividend_yield": 0.0213
+  "dividend_yield": 0.0208
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

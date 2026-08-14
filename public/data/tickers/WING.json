@@ -1,24 +1,23 @@
 {
  "ticker": "WING",
  "name": "Wingstop Inc.",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 112.5,
- "change_pct": 0.38,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 120.95,
+ "change_pct": 6.19,
  "sector": "Consumer Cyclical",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "near_low",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 28.4,
-  "sma_20": 128.23,
-  "sma_50": 145.43
+  "rsi_14": 39.8,
+  "sma_20": 127.23,
+  "sma_50": 145.0
  },
  "fundamentals": {
-  "pe_ratio": 26.659954,
-  "market_cap": "3.1B",
+  "pe_ratio": 28.193472,
+  "market_cap": "3.3B",
   "beta": 1.806,
   "dividend_yield": 0.0118
  },

@@ -1,23 +1,24 @@
 {
  "ticker": "JCAP",
  "name": "Jefferson Capital, Inc.",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 21.52,
- "change_pct": 1.99,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 23.55,
+ "change_pct": 8.98,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
+  "overbought_rsi",
   "above_ma",
+  "volume_surge",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 71.0,
-  "sma_20": 20.23,
-  "sma_50": 18.67
+  "rsi_14": 81.4,
+  "sma_20": 20.43,
+  "sma_50": 18.81
  },
  "fundamentals": {
-  "pe_ratio": 4.178641,
-  "market_cap": "1.3B",
+  "pe_ratio": 4.460227,
+  "market_cap": "1.5B",
   "beta": null,
   "dividend_yield": 0.045599999999999995
  },

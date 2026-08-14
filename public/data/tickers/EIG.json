@@ -1,22 +1,24 @@
 {
  "ticker": "EIG",
  "name": "Employers Holdings Inc",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 48.7,
- "change_pct": 1.23,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 48.38,
+ "change_pct": -0.25,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.2,
-  "sma_20": 49.58,
-  "sma_50": 48.69
+  "rsi_14": 43.8,
+  "sma_20": 49.49,
+  "sma_50": 48.78
  },
  "fundamentals": {
-  "pe_ratio": 61.64557,
-  "market_cap": "875M",
+  "pe_ratio": 61.240505,
+  "market_cap": "869M",
   "beta": 0.484,
   "dividend_yield": 0.028300000000000002
  },

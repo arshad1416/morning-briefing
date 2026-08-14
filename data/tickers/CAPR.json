@@ -1,22 +1,23 @@
 {
  "ticker": "CAPR",
  "name": "Capricor Therapeutics, Inc.",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 4.36,
- "change_pct": 3.94,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 7.03,
+ "change_pct": 66.98,
  "sector": "Healthcare",
  "signals": [
-  "oversold_rsi",
-  "below_ma"
+  "rsi_dip",
+  "below_ma",
+  "volume_surge"
  ],
  "technical": {
-  "rsi_14": 17.8,
-  "sma_20": 9.11,
-  "sma_50": 18.66
+  "rsi_14": 35.1,
+  "sma_20": 8.48,
+  "sma_50": 18.25
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "252M",
+  "market_cap": "407M",
   "beta": 0.528,
   "dividend_yield": null
  },

@@ -1,27 +1,28 @@
 {
  "ticker": "AFL",
  "name": "AFLAC Incorporated",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 121.46,
- "change_pct": 0.61,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 121.02,
+ "change_pct": -0.07,
  "sector": "Financial Services",
  "signals": [
   "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 43.5,
-  "sma_20": 124.97,
-  "sma_50": 121.21
+  "rsi_14": 41.9,
+  "sma_20": 124.77,
+  "sma_50": 121.34
  },
  "fundamentals": {
-  "pe_ratio": 13.102589,
-  "market_cap": "60.9B",
+  "pe_ratio": 13.012902,
+  "market_cap": "60.7B",
   "beta": 0.595,
-  "dividend_yield": 0.0202
+  "dividend_yield": 0.020099999999999996
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,21 +1,23 @@
 {
  "ticker": "MSTR",
  "name": "Strategy Inc",
- "generated_at": "2026-08-14T15:02:06.697196+00:00",
- "price": 98.62,
- "change_pct": 4.0,
+ "generated_at": "2026-08-14T15:12:39.892251+00:00",
+ "price": 93.23,
+ "change_pct": -3.99,
  "sector": "Technology",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.6,
-  "sma_20": 96.69,
-  "sma_50": 102.15
+  "rsi_14": 43.5,
+  "sma_20": 96.53,
+  "sma_50": 101.45
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "38.8B",
+  "market_cap": "36.7B",
   "beta": 3.555,
   "dividend_yield": null
  },
