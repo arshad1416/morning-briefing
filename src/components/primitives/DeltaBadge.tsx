@@ -11,7 +11,6 @@ interface DeltaBadgeProps {
 
 export function DeltaBadge({ value, suffix = '%', className = '' }: DeltaBadgeProps) {
   const isPositive = value > 0;
-  const isNegative = value < 0;
   const isZero = value === 0;
 
   const color = isZero

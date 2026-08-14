@@ -16,6 +16,8 @@ import os
 import math
 from datetime import datetime, timezone
 
+from pipeline_runtime import atomic_write_json
+
 DATA_DIR = os.path.expanduser("~/morning-briefing/data")
 INTEL_DIR = os.path.expanduser("~/.hermes/market-intel")
 OUTPUT = os.path.join(DATA_DIR, "accuracy.json")
@@ -251,8 +253,7 @@ def main():
             "per_strategy": [],
             "rolling_20": {"current": None, "history": []},
         }
-        with open(OUTPUT, "w") as f:
-            json.dump(output, f, indent=2, allow_nan=False)
+        atomic_write_json(OUTPUT, output)
         print(f"\n✅ Saved (empty state) to {OUTPUT}")
         return
 
@@ -331,11 +332,12 @@ def main():
         },
     }
 
-    with open(OUTPUT, "w") as f:
-        # allow_nan=False: a non-finite value here is invalid strict JSON and
-        # r2_sync's validator is fail-closed, which freezes the ENTIRE public
-        # publish. Fail loudly in this job's own log instead. (2026-07-30 outage)
-        json.dump(output, f, indent=2, allow_nan=False)
+    # atomic_write_json writes allow_nan=False through a temp file + os.replace:
+    # a non-finite value here is invalid strict JSON and r2_sync's validator is
+    # fail-closed, which freezes the ENTIRE public publish, so fail loudly in
+    # this job's own log instead (2026-07-30 outage); and a crash mid-write can
+    # no longer leave a truncated accuracy.json for the next reader.
+    atomic_write_json(OUTPUT, output)
 
     print(f"\n✅ Saved to {OUTPUT}")
 

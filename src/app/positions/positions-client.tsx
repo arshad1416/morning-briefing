@@ -211,6 +211,9 @@ function PaperTab({ data }: { data: Any }) {
   // the total_balance field (where total_pnl was realized-only, so it didn't
   // double-count).
   const equity = p.total_balance ?? (p.starting_balance || 0) + (p.total_pnl || 0) + (p.unrealized_pnl || 0);
+  // market_value marks the open book to market, so this share is what the
+  // positions are worth now — not what was invested in them (p.invested is the
+  // cost basis, shown untouched in the "Invested" tile below).
   const deployed = p.market_value ?? p.invested ?? 0;
   const totalPnl = p.total_pnl || 0;
   const fx = data.fx_rate_usdcad || 1.38;
@@ -237,7 +240,7 @@ function PaperTab({ data }: { data: Any }) {
             ({(p.return_pct || 0) >= 0 ? '+' : ''}{fmt(p.return_pct)}%)
           </span>
           <span className="ml-auto text-xs text-[var(--color-text-tertiary)]" data-numeric>
-            Equity ${fmt(equity)} · Cash ${fmt(p.cash)} · {deployed > 0 ? `${Math.round((deployed / equity) * 100)}% invested` : 'all cash'}
+            Equity ${fmt(equity)} · Cash ${fmt(p.cash)} · {deployed > 0 ? `${Math.round((deployed / equity) * 100)}% in positions` : 'all cash'}
           </span>
         </div>
         <div className="mt-4 grid grid-cols-2 gap-4 border-t pt-4 sm:grid-cols-5" style={{ borderColor: 'var(--color-border-subtle)' }}>
@@ -520,9 +523,21 @@ function IbkrTab() {
   if (!account.data && !positions.data && !trades.data)
     return (
       <p className="p-6 text-center text-sm text-[var(--color-text-tertiary)]">
-        No account data yet — these figures are refreshed once a day, at 7:12 am Eastern time.
+        No account data right now. These figures come from a once-a-day 7:12 am Eastern refresh, so
+        this usually means the most recent run did not produce one.
       </p>
     );
+
+  // The envelope's own timestamp, which nothing used to render: when the IBKR
+  // gateway dies the agent stops writing, R2 keeps serving the last upload, and
+  // every figure below silently becomes a snapshot of whenever it last worked
+  // (it sat 28 days stale in Aug 2026). It is ISO with an offset, unlike the
+  // Paper tab's naive Pi-local string, so Date is safe here.
+  const asOf = account.data?.timestamp ?? positions.data?.timestamp ?? null;
+  const asOfMs = asOf ? Date.parse(String(asOf)) : NaN;
+  const staleDays = Number.isNaN(asOfMs) ? null : (Date.now() - asOfMs) / 86_400_000;
+  // The refresh is daily, so >2d means runs are failing, not that it is a weekend.
+  const isStale = staleDays != null && staleDays > 2;
 
   // The agent writes enveloped files: {timestamp, version, data: [...]}.
   // The old accessors read keys that never existed, so real positions
@@ -535,7 +550,26 @@ function IbkrTab() {
   return (
     <div className="space-y-4">
       <SimLabel />
-      <Card title={`Account Summary (${s.currency || 'USD'})`}>
+      {isStale && (
+        <p
+          className="rounded-lg border px-3 py-2 text-xs leading-relaxed"
+          style={{
+            borderColor: 'color-mix(in srgb, var(--color-bear) 30%, transparent)',
+            backgroundColor: 'color-mix(in srgb, var(--color-bear) 6%, transparent)',
+            color: 'var(--color-text-secondary)',
+          }}
+        >
+          These figures are {Math.floor(staleDays as number)} days old — the brokerage feed stopped
+          updating after {String(asOf).slice(0, 10)}. Everything below is that day&apos;s snapshot,
+          not your account today.
+        </p>
+      )}
+      {/* As-of in the title, not a sixth cell in a 5-col grid. Always shown, not
+          only past the stale threshold — a date the reader can check beats a
+          badge that only appears once something is already wrong. */}
+      <Card
+        title={`Account Summary (${s.currency || 'USD'})${asOf ? ` — as of ${String(asOf).slice(0, 10)}` : ''}`}
+      >
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
           <Metric label="Net Liquidation" value={s.net_liquidation != null ? `$${fmt(s.net_liquidation)}` : '—'} />
           <Metric label="Buying Power" value={s.buying_power != null ? `$${fmt(s.buying_power)}` : '—'} />

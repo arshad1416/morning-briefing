@@ -15,8 +15,10 @@ Runs without the Pi venv: boto3/botocore/pydantic are stubbed.
 """
 
 import importlib.util
+import os
 import sys
 import tempfile
+import time
 import types
 import unittest
 from pathlib import Path
@@ -93,6 +95,7 @@ class FailureSplitTest(unittest.TestCase):
         for name, body in files.items():
             (Path(tmp) / name).write_text(body)
         mod.DATA_DIR = tmp
+        mod.STATE_FILE = str(Path(tmp) / "state.json")  # never touch the real ~/.hermes
         return mod.sync_private_to_r2()
 
     def test_bad_data_is_invalid_not_failed_and_others_still_upload(self):
@@ -127,6 +130,60 @@ class FailureSplitTest(unittest.TestCase):
         self.assertEqual(uploaded, 0)
         self.assertEqual(invalid, [])
         self.assertTrue(failed, "missing R2 creds must abort the publish, not pass silently")
+
+
+class SkipAndStaleTest(unittest.TestCase):
+    """The 2026-08-14 audit: 10.7 MB re-uploaded every run, and 28-day-old
+    ibkr_*.json still served at HTTP 200 because "exists" was the only check."""
+
+    def _module(self, tmp, sent=None):
+        mod = load_r2_sync()
+        mod.DATA_DIR = tmp
+        mod.STATE_FILE = str(Path(tmp) / "state.json")
+        if sent is not None:
+            class _Counting:
+                def upload_file(self, path, bucket, key, ExtraArgs=None):
+                    sent.append(key)
+            sys.modules["boto3"].client = lambda *a, **kw: _Counting()
+        return mod
+
+    def test_unchanged_file_is_skipped_but_still_counts_as_uploaded(self):
+        # push_dashboard raises when `uploaded` is 0, so a no-op run must not
+        # report 0 — "uploaded" means "current in R2", not "bytes sent".
+        tmp = tempfile.mkdtemp()
+        (Path(tmp) / "journal.json").write_text(GOOD)
+        sent = []
+        self.assertEqual(self._module(tmp, sent).sync_private_to_r2()[0], 1)
+        self.assertEqual(sent, ["journal.json"])
+        sent.clear()
+        self.assertEqual(self._module(tmp, sent).sync_private_to_r2(), (1, [], []))
+        self.assertEqual(sent, [], "an unchanged file must not be re-uploaded")
+        # A real change must go back out.
+        time.sleep(0.01)
+        (Path(tmp) / "journal.json").write_text(GOOD + " ")
+        self.assertEqual(self._module(tmp, sent).sync_private_to_r2()[0], 1)
+        self.assertEqual(sent, ["journal.json"])
+
+    def test_stale_file_is_refused_and_reported_without_blocking_the_publish(self):
+        tmp = tempfile.mkdtemp()
+        (Path(tmp) / "ibkr_account.json").write_text(GOOD)
+        (Path(tmp) / "journal.json").write_text(GOOD)
+        old = time.time() - 28 * 86400
+        os.utime(Path(tmp) / "ibkr_account.json", (old, old))
+        uploaded, invalid, failed = self._module(tmp).sync_private_to_r2()
+        self.assertEqual(uploaded, 1, "the fresh file must still publish")
+        self.assertEqual(failed, [], "stale data must never abort the whole publish")
+        self.assertEqual(len(invalid), 1)
+        self.assertIn("STALE", invalid[0])
+
+    def test_a_weekly_artifact_gets_a_weekly_bound(self):
+        # run_walk_forward_v2.py is `0 6 * * 0`; the 96h default would flag it
+        # every single Friday.
+        tmp = tempfile.mkdtemp()
+        (Path(tmp) / "walk_forward_v2.json").write_text(GOOD)
+        old = time.time() - 6 * 86400
+        os.utime(Path(tmp) / "walk_forward_v2.json", (old, old))
+        self.assertEqual(self._module(tmp).sync_private_to_r2(), (1, [], []))
 
 
 if __name__ == "__main__":

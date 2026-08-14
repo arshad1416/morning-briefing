@@ -27,6 +27,10 @@ export function MaxPainCard() {
   const maxPainAbove = distancePct != null && distancePct > 0;
   const maxPainBelow = distancePct != null && distancePct < 0;
 
+  // Key-levels marker offset: proportional to the gap (1% of spot = 5% of the
+  // bar) instead of a flat ±5%, clamped so a distant max pain stays inside.
+  const markerPct = 50 + Math.max(-45, Math.min(45, (distancePct ?? 0) * 5));
+
   return (
     <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)] overflow-hidden h-full">
       <div
@@ -60,7 +64,7 @@ export function MaxPainCard() {
                 </p>
                 <p className="text-[10px] text-[var(--color-text-tertiary)] mt-1">
                   {distancePct != null
-                    ? `${maxPainAbove ? '↓' : maxPainBelow ? '↑' : '·'} ${Math.abs(distancePct).toFixed(1)}% ${maxPainAbove ? 'below' : maxPainBelow ? 'above' : 'at'} spot`
+                    ? `${maxPainAbove ? '↑' : maxPainBelow ? '↓' : '·'} ${Math.abs(distancePct).toFixed(1)}% ${maxPainAbove ? 'above' : maxPainBelow ? 'below' : 'at'} spot`
                     : 'N/A'}
                 </p>
               </div>
@@ -106,7 +110,7 @@ export function MaxPainCard() {
                           : maxPain < spot
                           ? 'var(--color-bear)'
                           : 'var(--color-text-tertiary)',
-                      left: maxPain > spot ? '45%' : maxPain < spot ? '55%' : '50%',
+                      left: `${markerPct}%`,
                     }}
                     aria-hidden="true"
                   />

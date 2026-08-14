@@ -150,6 +150,27 @@ describe('helcim billing', () => {
     expect((await res.json()).ignored).toBe(true);
   });
 
+  it('webhook leaves entitlement alone on an event type nobody enumerated', async () => {
+    const { u } = await session();
+    await upsertSubscription(env.DB, u.id, {
+      tier: 'pro', status: 'past_due', helcimSubscriptionId: 'SUB77', helcimCustomerId: 'CST77',
+    });
+    env.HELCIM_WEBHOOK_VERIFIER = btoa('k');
+    const body = JSON.stringify({ type: 'subscription.updated', subscriptionId: 'SUB77' });
+    // No webhook-id/timestamp headers, so the signed content is just `..${body}`.
+    const key = await crypto.subtle.importKey('raw', Uint8Array.from('k', (ch) => ch.charCodeAt(0)),
+      { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+    const mac = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`..${body}`));
+    const res = await app.request('/api/billing/webhook', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'webhook-signature': btoa(String.fromCharCode(...new Uint8Array(mac))) },
+      body,
+    }, env);
+    delete env.HELCIM_WEBHOOK_VERIFIER;
+    expect(res.status).toBe(200);
+    expect((await getSubscription(env.DB, u.id)).status).toBe('past_due');
+  });
+
   it('mock billing grants entitlement without Helcim', async () => {
     const { cookie, u } = await session();
     env.MOCK_BILLING = '1';

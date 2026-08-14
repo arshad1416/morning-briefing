@@ -13,6 +13,9 @@ name: deadman-monitor
 
 on:
   schedule:
+    # Best-effort, not a clock: GitHub queues scheduled runs and the observed
+    # median interval here is ~61 minutes, not 30. Never size an alert threshold
+    # assuming this fires on time.
     - cron: '*/30 * * * *'
   workflow_dispatch:
 
@@ -24,12 +27,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check public data freshness
+        # One line per public payload the site actually renders: filename, then the
+        # age at which it is unambiguously broken. Watching two files was never
+        # enough — ibkr_*.json sat 28 days stale because nothing was looking at it.
+        # The premium payloads still have no watcher and cannot get one here:
+        # /api/data/* is 401 without a session cookie, which a GitHub runner has no
+        # way to hold. archive-index.json is absent on purpose — it carries no
+        # timestamp field, and it ships in the same daily push as latest.json, so a
+        # bespoke parser for it would buy no signal that latest.json doesn't give.
+        #
+        # Thresholds are per file because the cadences differ by 3x:
+        #   26h — publish-gated. push_dashboard runs every 30 min on weekdays but
+        #         only once at 07:22 on Sat/Sun, so even crypto-cohorts (regenerated
+        #         every 15 min on the Pi) reaches the site at most once a day.
+        #   80h — weekday-only generators. Measured Fri→Mon gap in git history is
+        #         exactly 72h for both; anything tighter red-alerts every Sunday,
+        #         which is how a monitor gets ignored and then muted.
         env:
-          PRIMARY_URL: https://maplegamma.com/data/maplegamma-data.json
-          PRIMARY_MAX_AGE_HOURS: "26"
-          SECONDARY_URL: https://maplegamma.com/data/crypto-cohorts.json
-          # Public freshness follows the shared Git/Cloudflare deployment cadence, not the Pi's 15-minute local generation cadence.
-          SECONDARY_MAX_AGE_HOURS: "26"
+          BASE_URL: https://maplegamma.com/data
+          FRESHNESS: |
+            maplegamma-data.json 26
+            crypto-cohorts.json 26
+            latest.json 26
+            analysis.json 26
+            briefing-intel.json 26
+            reddit-sentiment.json 26
+            options-status.json 26
+            verdict.json 80
+            screener-lite.json 80
         run: |
           python3 - <<'PY'
           import json, os, sys, urllib.request
@@ -55,14 +80,17 @@ jobs:
               return (datetime.now(timezone.utc) - t).total_seconds() / 3600
 
           failures = []
-          for name in ("PRIMARY", "SECONDARY"):
-              url = os.environ[f"{name}_URL"]
-              limit = float(os.environ[f"{name}_MAX_AGE_HOURS"])
+          for line in os.environ["FRESHNESS"].split("\n"):
+              if not line.strip():
+                  continue
+              name, limit = line.split()
+              limit = float(limit)
+              url = f"{os.environ['BASE_URL']}/{name}"
               try:
                   a = age_hours(url)
-                  print(f"{name}: {url} age={a:.1f}h (limit {limit}h)")
+                  print(f"{name}: age={a:.1f}h (limit {limit}h)")
                   if a > limit:
-                      failures.append(f"{name} data is {a:.1f}h old (limit {limit}h) — Pi pipeline may be DOWN")
+                      failures.append(f"{name} is {a:.1f}h old (limit {limit}h) — its generator may be DOWN")
               except SystemExit as e:
                   failures.append(str(e))
               except Exception as e:

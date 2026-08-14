@@ -10,8 +10,15 @@ export type TickerCoverage = {
 
 const SAFE_SYMBOL = /^[A-Z0-9][A-Z0-9.-]{0,14}$/;
 
+let cached: TickerCoverage[] | undefined;
+
 /** Active public ticker artifacts available in the static export. */
 export function getTickerCoverage(): TickerCoverage[] {
+  // Build-time only (static export), so one scan per process is enough.
+  return (cached ??= scanTickers());
+}
+
+function scanTickers(): TickerCoverage[] {
   const directory = path.join(process.cwd(), 'data', 'tickers');
   try {
     return fs
