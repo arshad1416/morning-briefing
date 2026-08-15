@@ -300,6 +300,13 @@ export const GLOSSARY = {
     plain:
       'How often trades ended in profit. A high win rate is not automatically good if the occasional loss is huge.',
   },
+  scratch_band: {
+    plainLabel: 'Too small to call a direction',
+    plain:
+      'A day the market barely moved either way. Moves this small count as going nowhere rather than as up or down.',
+    detail:
+      'On this site the band is the S&P 500 finishing within 0.1% of the previous trading day’s close, in either direction. A day inside the band is graded neutral, so a bullish or bearish call made on it is scored wrong — the band is not a let-off. See the grading rule for the full test.',
+  },
   max_drawdown: {
     plainLabel: 'Worst losing stretch',
     plain:
@@ -719,6 +726,13 @@ export const GLOSSARY = {
   change_pct: {
     plainLabel: 'Move since the previous close',
     plain: 'How far the price has moved compared with where it finished the session before.',
+  },
+  daily_briefing: {
+    plainLabel: 'Free email, weekday mornings',
+    plain:
+      'One email before the opening bell: the day’s call on the market, the main indexes, central-bank and geopolitical notes, what Reddit and Congress filings are showing, and the headlines.',
+    detail:
+      'Free-tier data only — the same public figures the free dashboard shows. The paid research desk, the practice portfolio and the track record are not in it. Nothing in it is tailored to you and none of it is investment advice. Every send carries a one-click unsubscribe link.',
   },
 } satisfies Record<string, GlossaryEntry>;
 

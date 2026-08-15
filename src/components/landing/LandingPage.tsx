@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { GammaMark } from "@/components/brand/GammaMark";
+import { CheckboxField } from "@/components/auth/AuthShell";
+import { InfoTip } from "@/components/primitives/InfoTip";
+import { PlainLabel } from "@/components/primitives/PlainLabel";
 import { useMe } from "@/lib/auth/useMe";
 import { useUI } from "@/stores/ui";
 
@@ -311,6 +314,125 @@ function PricingCard({
 }
 
 /* ------------------------------------------------------------------ */
+/*  Free briefing capture (logged-out visitors only)                  */
+/* ------------------------------------------------------------------ */
+
+// The only email capture on the site that does not create an account. It POSTs
+// to the Worker's /api/briefing/subscribe, which writes a STANDALONE
+// briefing_subscribers row — deliberately never a `users` row, whose nullable
+// pw_hash would make a public write squattable. Signed-in visitors don't see
+// this: they toggle the same preference on /account.
+function BriefingSignup() {
+  const { fadeUp, stagger, viewport } = useMotionKit();
+  const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [state, setState] = useState<"idle" | "busy" | "done" | "error">("idle");
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setState("busy");
+    // Same-origin — the Worker owns maplegamma.com/api/*.
+    const res = await fetch("/api/briefing/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // The checkbox must reach the server: CASL express consent is evidenced by
+      // what the subscriber affirmed, not by the Worker's env vars at insert time.
+      body: JSON.stringify({ email: email.trim(), consent }),
+    }).catch(() => null);
+    setState(res?.ok ? "done" : "error");
+  }
+
+  return (
+    <motion.section
+      id="briefing"
+      variants={stagger}
+      initial="hidden"
+      whileInView="show"
+      viewport={viewport}
+      aria-labelledby="briefing-heading"
+      className="mx-auto max-w-2xl px-5 pb-24 text-center"
+    >
+      <motion.h2
+        variants={fadeUp}
+        id="briefing-heading"
+        className="font-display text-3xl tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+      >
+        Not ready for an account? Take the{" "}
+        <InfoTip term="daily_briefing">
+          <em className="italic" style={{ color: "var(--color-accent)" }}>
+            Daily Briefing
+          </em>
+        </InfoTip>
+        .
+      </motion.h2>
+      <motion.div variants={fadeUp}>
+        <PlainLabel term="daily_briefing" className="mt-3 text-xs" />
+      </motion.div>
+
+      {state === "done" ? (
+        <motion.p
+          variants={fadeUp}
+          role="status"
+          className="mt-6 text-sm text-[var(--color-text-secondary)]"
+        >
+          You&apos;re on the list. The first email goes out when the briefing launches — we
+          will not email you before then, and every send carries a one-click unsubscribe
+          link.
+        </motion.p>
+      ) : (
+        <motion.form variants={fadeUp} onSubmit={onSubmit} className="mt-6 text-left">
+          {/* CASL: express consent, asked on its own and never pre-checked, with
+              the sender named. Not bundled with the Terms/Quebec account gate —
+              a briefing subscriber is not creating an account. It sits ABOVE the
+              submit button, which stays disabled until it is ticked, so the
+              disabled state is never unexplained. */}
+          <div className="mb-4">
+            <CheckboxField checked={consent} onChange={setConsent}>
+              Yes, email me the free MapleGamma Daily Briefing. I can unsubscribe from any
+              email.
+            </CheckboxField>
+          </div>
+
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <label htmlFor="briefing-email" className="sr-only">
+              Email address
+            </label>
+            <input
+              id="briefing-email"
+              type="email"
+              required
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="w-full min-w-0 rounded-xl border border-[var(--color-border-default)] bg-[var(--color-bg-surface)] px-4 py-3 text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:flex-1"
+            />
+            <button
+              type="submit"
+              disabled={!consent || state === "busy"}
+              className="w-full shrink-0 rounded-xl bg-[var(--color-accent)] px-6 py-3 text-sm font-semibold text-[var(--color-on-accent)] transition hover:bg-[var(--color-accent-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-base)] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            >
+              {state === "busy" ? "Sending…" : "Send it to me"}
+            </button>
+          </div>
+
+          <p className="mt-3 text-xs text-[var(--color-text-tertiary)]">
+            The first email goes out when the briefing launches — we will not email you
+            before then. General market information only, not investment advice.
+          </p>
+
+          {state === "error" && (
+            <p role="alert" className="mt-3 text-xs" style={{ color: "var(--color-bear)" }}>
+              That didn&apos;t go through. Check the address and try again.
+            </p>
+          )}
+        </motion.form>
+      )}
+    </motion.section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Landing page                                                      */
 /* ------------------------------------------------------------------ */
 
@@ -339,10 +461,15 @@ export default function MapleGammaLanding() {
     }
   }, []);
 
+  // Every figure here must reconcile against a page a logged-out visitor can
+  // open. The backtest pair is what /research publishes (11 runs, 109 trades);
+  // the ticker count is screener-lite's ticker_count, floored because the
+  // universe drifts between builds. The previous trio (17.5K / 59 / 26) could
+  // only be reconciled against the $99-gated prediction-engine.json.
   const stats = [
-    { value: "17.5K", label: "trades tested on past data" },
-    { value: "59", label: "stocks covered" },
-    { value: "26", label: "years of market history" },
+    { value: "11", label: "backtest runs you can open" },
+    { value: "3,000+", label: "tickers scanned" },
+    { value: "109", label: "completed backtest trades" },
   ];
 
   return (
@@ -483,6 +610,21 @@ export default function MapleGammaLanding() {
                 See how it works
               </a>
             </motion.div>
+
+            <motion.p
+              variants={fadeUp}
+              className="mt-6 text-sm text-[var(--color-text-tertiary)]"
+            >
+              We publish the rule our daily call is marked against, before the record it
+              grades —{" "}
+              <a
+                href="/grading-rule/"
+                className="underline underline-offset-4 transition hover:text-[var(--color-text-secondary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+              >
+                read the grading rule
+              </a>
+              .
+            </motion.p>
           </motion.div>
         </section>
 
@@ -492,7 +634,7 @@ export default function MapleGammaLanding() {
           initial="hidden"
           whileInView="show"
           viewport={viewport}
-          aria-label="Platform coverage"
+          aria-label="What MapleGamma publishes"
           className="mx-auto max-w-4xl px-5"
         >
           <div className="grid grid-cols-3 divide-x divide-[var(--color-border-subtle)] rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-bg-surface)] py-6">
@@ -734,6 +876,10 @@ export default function MapleGammaLanding() {
             Cancel anytime. General information only, not investment advice.
           </motion.p>
         </section>
+
+        {/* Email capture for visitors who won't sign up today. Signed-in users
+            manage the same preference on /account, so it's hidden for them. */}
+        {!me && <BriefingSignup />}
       </main>
 
       {/* Footer */}

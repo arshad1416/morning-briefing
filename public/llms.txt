@@ -7,6 +7,12 @@
 > realized ^GSPC direction and the lessons feed back into the next morning
 > prompt. Paper trading only — nothing here is financial advice.
 
+The scoring rule is published in full — benchmark, horizon, the ±0.1% scratch
+band, and what is left unscored — at https://maplegamma.com/grading-rule/. It
+grades the council's regime call (maplegamma_analysis, subscriber data), not the
+public /data/verdict.json conviction score, which nothing scores. No scored
+track record is published yet.
+
 ## Daily briefing archive (indexable pages)
 
 Every weekday briefing is published as a standalone page at
@@ -26,7 +32,7 @@ trial:
   positions and trade journal.
 - **Pro** — everything in Basic, plus interactive charts, gamma walls,
   strike-level exposure, model/backtest data, walk-forward validation, the
-  prediction engine, live simulation and council history. Options-strategy and
+  prediction engine and live simulation. Options-strategy and
   crypto-cohort previews are currently public; deeper subscriber controls and
   analysis are planned for Pro.
 
@@ -70,7 +76,7 @@ they are not published as fetchable public URLs:
 - **Pro:** charts and per-ticker analytics (charts), walk-forward validation
   (walk_forward and walk_forward_v2), strategy-improvement/model-accuracy
   weights (including the B arm), scored trade outcomes (including the B arm),
-  prediction-engine, accuracy, council history, and simulation data.
+  prediction-engine, accuracy, and simulation data.
 
 ## Engine
 
