@@ -14,6 +14,7 @@
 // derived from it that the page needs — the drawdown — is already in `results`.
 import fs from 'node:fs';
 import path from 'node:path';
+import { parseTolerantJson } from '@/lib/json';
 
 export type BacktestTrade = {
   entry_date: string;
@@ -148,28 +149,6 @@ function derive(results: BacktestResults, trades: BacktestTrade[], start: string
 
 /** `TICKER_strategy_name_YYYY-MM-DD_YYYY-MM-DD.json` */
 const FILENAME = /^(.+?)_(.+)_(\d{4}-\d{2}-\d{2})_(\d{4}-\d{2}-\d{2})\.json$/;
-
-/**
- * Bare `Infinity` / `-Infinity` / `NaN` in a numeric slot. Python's json module
- * emits these by default and they are NOT valid JSON, so `JSON.parse` throws.
- *
- * This is not hypothetical: 4 of the 11 committed runs carry
- * `"profit_factor": Infinity` (a run with no losing trades has nothing to
- * divide by), and a plain parse silently dropped every one of them — the page
- * reported "7 saved runs" as though that were the whole corpus. The lookarounds
- * keep the match in value position so the word inside a string is untouched.
- */
-const NON_FINITE = /(?<=[:[,]\s*)(-?Infinity|NaN)(?=\s*[,\]}])/g;
-
-function parseTolerantJson(text: string): unknown {
-  return JSON.parse(text.replace(NON_FINITE, (token) => `"__nonfinite__${token}"`), (_key, value) => {
-    if (typeof value === 'string' && value.startsWith('__nonfinite__')) {
-      const token = value.slice('__nonfinite__'.length);
-      return token === 'NaN' ? NaN : token === '-Infinity' ? -Infinity : Infinity;
-    }
-    return value;
-  });
-}
 
 export type BacktestCoverage = {
   runs: BacktestRun[];

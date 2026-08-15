@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { InfoTip, PlainLabel } from '@/components/primitives';
 import { lookup, type GlossaryTerm } from '@/lib/glossary';
+import { parseTolerantJson } from '@/lib/json';
 
 /** Glossary wording for a native `title`, where an InfoTip button cannot go. */
 const chipHint = (term: GlossaryTerm) => lookup(term)?.plain;
@@ -18,7 +19,9 @@ type Any = any;
 const fetchJson = async (url: string) => {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+  // Five archived briefings carry bare `NaN` from Python's json writer, so
+  // res.json() throws on them and the card renders nothing at all.
+  return parseTolerantJson(await res.text());
 };
 
 const CORE_INDICES = ['S&P 500', 'Dow Jones', 'NASDAQ', 'TSX', 'Russell 2000'];
@@ -136,7 +139,7 @@ function Chip({ children, color, hint }: { children: React.ReactNode; color?: st
   );
 }
 
-function BriefingCard({ date }: { date: string }) {
+function BriefingCard({ date, repeatOf }: { date: string; repeatOf?: string }) {
   const [open, setOpen] = useState(false);
   const q = useQuery<Any>({
     queryKey: ['archive', date],
@@ -150,9 +153,16 @@ function BriefingCard({ date }: { date: string }) {
 
   const ms = brief?.market_summary || {};
   const indices: Any[] = ms.indices || [];
-  const core = indices.filter((i) => CORE_INDICES.includes(i.ticker));
+  // Five briefings have `NaN` in every index row (the morning fetch failed);
+  // the fx filter below already drops those, so the index rows do too rather
+  // than print "NaN" in the chip and the table.
+  const core = indices.filter((i) => CORE_INDICES.includes(i.ticker) && Number.isFinite(Number(i.price)));
   const fx: Any[] = (ms.fx_rates || []).filter((f: Any) => f.price > 0);
-  const text = brief ? narrativeText(brief) : '';
+  // `repeatOf` is the earlier date this briefing's note was first published on,
+  // resolved over the whole corpus by the server (../page.tsx). Blanking the
+  // text here closes both surfaces at once: the collapsed preview and the
+  // expanded sections below.
+  const text = brief && !repeatOf ? narrativeText(brief) : '';
   const preview = text ? `${text.replace(/\*\*/g, '').replace(/[•●]/g, '').substring(0, 150).trim()}${text.length > 150 ? '…' : ''}` : '';
   const timeStr = brief?.generated_at
     ? new Date(brief.generated_at).toLocaleTimeString('en-CA', { timeZone: 'America/Toronto', hour: '2-digit', minute: '2-digit' })
@@ -196,7 +206,18 @@ function BriefingCard({ date }: { date: string }) {
                 <Chip key={f.pair}>{f.pair}: {Number(f.price).toFixed(2)}</Chip>
               ))}
             </div>
-            {preview && <p className="mt-2 text-xs leading-relaxed text-[var(--color-text-secondary)]">{preview}</p>}
+            {/* No <Link> here — this whole card is a <button>, and an anchor
+                inside one is invalid HTML for the same reason InfoTip is. The
+                per-date page carries the linked version of this sentence. */}
+            {repeatOf ? (
+              <p className="mt-2 text-xs leading-relaxed text-[var(--color-text-tertiary)]">
+                No new analysis was written for this date — the briefing repeated the note
+                first published on {repeatOf}, so it is not reprinted here as that
+                morning&apos;s reading.
+              </p>
+            ) : (
+              preview && <p className="mt-2 text-xs leading-relaxed text-[var(--color-text-secondary)]">{preview}</p>
+            )}
           </>
         )}
       </button>
@@ -278,7 +299,8 @@ function BriefingCard({ date }: { date: string }) {
   );
 }
 
-export function ArchiveClient() {
+/** `repeats`: date → the earlier date whose note it repeats. See ./page.tsx. */
+export function ArchiveClient({ repeats }: { repeats: Record<string, string> }) {
   const index = useQuery<Any>({
     queryKey: ['archive-index'],
     queryFn: () => fetchJson('/data/archive-index.json'),
@@ -318,7 +340,7 @@ export function ArchiveClient() {
       ) : (
         <div className="space-y-3">
           {dates.map((date) => (
-            <BriefingCard key={date} date={date} />
+            <BriefingCard key={date} date={date} repeatOf={repeats[date]} />
           ))}
         </div>
       )}
