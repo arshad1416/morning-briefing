@@ -1,0 +1,45 @@
+# r2_sync.py.patch — 2026-08-14 launch-readiness fix
+#
+# Target on the Pi: ~/.hermes/scripts/r2_sync.py
+#   (repo arshad1416/hermes-scripts; push_dashboard.py imports r2_sync from
+#   there, so the pi-scripts/ copy in morning-briefing deploys nothing —
+#   AGENTS.md rule 4.)
+#
+# What it fixes: drops council_history.json from PRIVATE_FILES. Its only writer,
+# backfill_council_outcomes.py, is a manual tool and is not in crontab, so the
+# file no longer exists under ~/morning-briefing/data/ at all — the
+# `if os.path.exists(p)` in sync_private_to_r2() has been skipping it silently,
+# which also means the DEFAULT_MAX_AGE_H=96 staleness guard never fires for it.
+# The July R2 object stayed live and the Worker served it at HTTP 200.
+#
+# Before/after: PRIVATE_FILES 25 entries -> 24. Serving-side: a Pro subscriber
+# got HTTP 200 on a 42,178-byte artifact stamped generated_at 2026-07-05
+# (~40 days stale, with concrete trade entries) -> 404. The Worker half of that
+# (cloudflare-worker/src/data_gate.js) ships in the same PR but needs a manual
+# `npm run deploy`; this patch only stops any future re-upload.
+#
+# Apply ON THE PI:
+#   cd ~/.hermes/scripts
+#   cp r2_sync.py r2_sync.py.bak-2026-08-14
+#   patch -p1 --dry-run < /path/to/r2_sync.py.patch   # verify first
+#   patch -p1 < /path/to/r2_sync.py.patch
+#   python3 -m py_compile r2_sync.py
+#
+# Verify after applying:
+#   grep -c council_history r2_sync.py            # expect 0
+#   python3 -c "import r2_sync; print(len(r2_sync.PRIVATE_FILES))"   # expect 24
+#   # and in morning-briefing (this repo, after the PR merges):
+#   python3 scripts/check_premium_registration.py  # expect "24 files"
+#
+# Still an owner action, NOT done by this patch: the orphaned R2 object itself.
+--- a/r2_sync.py
++++ b/r2_sync.py
+@@ -46,7 +46,7 @@
+     # pro tier
+     "walk_forward_v2.json", "walk_forward.json", "strategy_improvement.json",
+     "strategy_improvement_b.json", "trade_outcomes.json", "trade_outcomes_b.json",
+-    "prediction-engine.json", "accuracy.json", "council_history.json",
++    "prediction-engine.json", "accuracy.json",
+     "simulation.json", "gex-detail.json", "nope-detail.json",
+     "ibkr_account.json", "ibkr_positions.json", "ibkr_trades.json",
+ ]

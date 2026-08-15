@@ -346,6 +346,7 @@ const RealAccuracyFileSchema = z
     summary: z
       .object({
         total_trades: z.number().default(0),
+        closed_trades: z.number().default(0),
         win_rate: z.number().default(0),
       })
       .passthrough(),
@@ -368,16 +369,22 @@ const RealAccuracyFileSchema = z
   })
   .passthrough();
 
+// Two windows, never blended: `summary` is the account's whole history (the
+// prune-immune ledger counters push_dashboard.py publishes on /positions), while
+// `expectancy`/`drawdown` cover only the trades still in the ledger after the
+// 08:00 archive. The old `expectancy.n_trades || summary.total_trades` fallback
+// labelled the second window's count "Closed Trades" and fell through to a
+// third quantity when it was 0.
 export const AccuracySchema = RealAccuracyFileSchema.transform((f) => ({
-  total_signals: f.expectancy.n_trades || f.summary.total_trades,
-  hit_rate: (f.expectancy.win_rate || f.summary.win_rate) / 100,
+  total_signals: f.summary.closed_trades,
+  hit_rate: f.summary.win_rate / 100,
   /** Percent per trade (expectancy_pct) — render with a % suffix, not $. */
   expectancy: f.expectancy.expectancy_pct,
   profit_factor: f.expectancy.profit_factor,
   max_drawdown: f.drawdown.max_drawdown_pct / 100,
   kelly_fraction: f.expectancy.kelly_fraction / 100,
-  win_count: f.expectancy.n_wins,
-  loss_count: f.expectancy.n_losses,
+  /** Sample behind expectancy/drawdown/kelly — 0 means those have no sample, not a zero result. */
+  sample_trades: f.expectancy.n_trades,
 }));
 
 // ── Prediction engine (backtest corpus + live trading summary) ───────────────
