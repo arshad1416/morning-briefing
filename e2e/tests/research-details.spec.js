@@ -84,6 +84,23 @@ async function installResearchMocks(page) {
   await page.route('**/*google-analytics.com/**', (route) => route.abort());
 }
 
+// A tab click that lands before hydration is silently swallowed: the tablist
+// ships in the static export's HTML, so Playwright's actionability checks pass
+// immediately, but React has not attached its root listener yet and never
+// replays an event that predates it. The click moves focus and nothing else —
+// the pane never switches, and the test then burns its whole budget on the NEXT
+// locator, hunting a button that pane would have rendered. Under `workers: 2`
+// the hydration window outlasts the click; alone it does not, which is why this
+// only ever failed in the full suite. Same retry idiom responsive-layout.spec.js
+// already uses for its own pre-hydration clicks.
+async function selectTab(page, name) {
+  const tab = page.getByRole('tab', { name });
+  await expect(async () => {
+    if ((await tab.getAttribute('aria-selected')) !== 'true') await tab.click();
+    await expect(tab).toHaveAttribute('aria-selected', 'true', { timeout: 1_000 });
+  }).toPass({ timeout: 15_000 });
+}
+
 test.describe('research analysis details', () => {
   test.beforeEach(async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'chromium-desktop', 'One browser covers the interaction contract.');
@@ -92,7 +109,7 @@ test.describe('research analysis details', () => {
   });
 
   test('an Analysis Idea opens an explanatory, keyboard-dismissible dialog', async ({ page }) => {
-    await page.getByRole('tab', { name: 'Ideas' }).click();
+    await selectTab(page, 'Ideas');
     const trigger = page.getByRole('button', { name: 'Open analysis details for META' });
     await trigger.click();
 
@@ -109,7 +126,7 @@ test.describe('research analysis details', () => {
   });
 
   test('Market Pulse, opportunities, risks and positions each open tailored details', async ({ page }) => {
-    await page.getByRole('tab', { name: 'MapleGamma Analysis' }).click();
+    await selectTab(page, 'MapleGamma Analysis');
 
     const cases = [
       { trigger: 'Open Market Pulse analysis details', title: 'Market Pulse', section: 'How to read this' },
