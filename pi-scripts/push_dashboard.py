@@ -743,7 +743,7 @@ def _main_inner():
         if _push_result.returncode != 0:
             raise RuntimeError(f"Git push failed: {_push_result.stderr or _push_result.stdout}")
     
-    print(f"Pushed {len(positions)} positions — all prices from yfinance:")
+    print(f"Pushed {len(positions)} positions — entries booked, current from yfinance:")
     for p in positions:
         print(f"  {p['ticker']:8s} entry=${p['entry_price']:.2f} {p['currency']} → ${p['current_price']:.2f} ({p['pnl_pct']:+.2f}%)")
 

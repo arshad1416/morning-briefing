@@ -1,0 +1,70 @@
+# backfill_council_outcomes.py.patch — stop the REBUILD tool re-poisoning the ledger
+#
+# TARGET (the executing copy; AGENTS.md rule 4):
+#     ~/.hermes/scripts/backfill_council_outcomes.py    repo: arshad1416/hermes-scripts
+#   No copy of this script exists in arshad1416/morning-briefing, so this patch is
+#   the only deliverable. Generated with `diff -u` against the live Pi copy.
+#
+# WHAT IT FIXES
+#   trade_outcome_logger.py was patched to stop booking a missing council call as a
+#   "neutral" prediction and grading it wrong. This manual backfill tool — the ONLY
+#   way to rebuild trade_outcomes.json — carried the identical defect at :231-232 and
+#   :239, so a rebuild would have re-created exactly the 22 fabricated misses the
+#   other patch just stopped. That made the poisoned ledger unrepairable.
+#
+# BEFORE / AFTER
+#   build_entry() on a date whose council produced no call:
+#     before -> writes {"prediction": "neutral", "confidence": 0.5} and grades it,
+#               which is a miss the model never made
+#     after  -> returns None; the caller logs SKIP and writes nothing
+#   Trade ideas with no "direction" are likewise skipped rather than defaulted.
+#
+# VERIFY AFTER APPLYING
+#   python3 -m py_compile ~/.hermes/scripts/backfill_council_outcomes.py
+#   python3 ~/.hermes/scripts/backfill_council_outcomes.py --dry-run --limit 1
+--- a/backfill_council_outcomes.py	2026-08-14 23:06:13
++++ b/backfill_council_outcomes.py	2026-08-14 23:06:13
+@@ -223,20 +223,28 @@
+ 
+ 
+ def build_entry(date_str, council_out, outcome):
+-    """trade_outcomes.json entry in the live logger's schema, flagged as backfilled."""
+-    mp = council_out.get("market_pulse", {})
++    """trade_outcomes.json entry in the live logger's schema, flagged as backfilled.
++
++    Returns None when the council made no call. Defaulting a missing regime to
++    "neutral" books a prediction that was never made and then grades it wrong --
++    the defect that put 22 fabricated misses in trade_outcomes.json. Same guard as
++    trade_outcome_logger.extract_council_recommendations.
++    """
++    mp = council_out.get("market_pulse", {}) or {}
++    if council_out.get("meta", {}).get("status") == "aggregator_failed" or not mp.get("regime"):
++        return None
+     trades = council_out.get("trades", []) or []
+     recommendations = [{
+         "model": f"{mc.AGGREGATOR_MODEL}-aggregator",
+-        "prediction": mp.get("regime", "neutral"),
++        "prediction": mp.get("regime"),
+         "confidence": float(mp.get("confidence", 5) or 5) / 10.0,
+         "source": "market_pulse",
+     }]
+     for t in trades[:5]:
+-        if isinstance(t, dict):
++        if isinstance(t, dict) and t.get("direction"):
+             recommendations.append({
+                 "model": t.get("source", "unknown"),
+-                "prediction": t.get("direction", "neutral"),
++                "prediction": t.get("direction"),
+                 "confidence": float(t.get("conviction", 5) or 5) / 10.0,
+                 "source": "trade_recommendation",
+                 "ticker": t.get("ticker", ""),
+@@ -368,6 +376,9 @@
+         if not out:
+             continue
+         entry = build_entry(d, out, outcome)
++        if entry is None:
++            print("    SKIP — council produced no call for this date; nothing to grade")
++            continue
+         save_entry(entry)
+         append_history(d, out)
+         regime = out.get("market_pulse", {}).get("regime", "?")
