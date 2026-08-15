@@ -1,0 +1,102 @@
+# maplegamma_council.py.patch — the council aggregator has never once succeeded
+#
+# TARGET (the executing copy; AGENTS.md rule 4):
+#     ~/.hermes/scripts/maplegamma_council.py    repo: arshad1416/hermes-scripts
+#   No copy exists in arshad1416/morning-briefing, so this patch is the only
+#   deliverable. Generated with `diff -u` against the live Pi copy.
+#
+# WHAT IT FIXES
+#   agent_council.log: 111 completions 2026-06-30 -> 2026-08-14, 30 "degraded",
+#   81 "fallback", ZERO clean. Every run logged the same line:
+#       ✗ Aggregator deepseek-v4-pro failed: None — trying next
+#   The five specialists all succeed; only the synthesis step dies, so
+#   maplegamma_analysis.json ships with meta.status "aggregator_failed" and no
+#   market_pulse — which is what made trade_outcome_logger book a default
+#   "neutral" call and grade it wrong 22 times.
+#
+#   Cause: deepseek-v4-pro is a REASONING model and max_tokens caps total
+#   completion tokens, reasoning included. Reproduced against the real payload:
+#       prompt 13,541 chars (5 expert outputs)
+#       max_tokens 3000 -> finish_reason "length", content 0 chars,
+#                          reasoning_tokens 3000 of 3000
+#   The model spent its entire budget thinking and emitted nothing. The HTTP call
+#   returned 200, so call_api's `except (KeyError, IndexError): pass` left both
+#   content and error as None — printing "failed: None" and hiding the cause.
+#
+# BEFORE / AFTER  (measured on the live 2026-08-14 expert_outputs)
+#   max_tokens 3000  -> finish "length", content 0 chars                 [before]
+#   max_tokens 8000  -> finish "stop",   content 1,716 chars of valid JSON
+#   max_tokens 16000 -> finish "stop",   content 1,852 chars, 4,036 tokens used
+#   Shipped at 16000: billing is per token consumed, not per cap.
+#   call_api now names an empty completion instead of returning error=None.
+#
+# VERIFY AFTER APPLYING
+#   python3 -m py_compile ~/.hermes/scripts/maplegamma_council.py
+#   cd ~/.hermes/scripts && python3 maplegamma_council.py --variant b
+#   then: python3 -c "import json;d=json.load(open('/home/arshad14/morning-briefing/data/maplegamma_analysis_b.json'));print(d['meta']['status'], d.get('market_pulse',{}).get('regime'))"
+#   Expect status != aggregator_failed and a non-empty regime.
+--- a/maplegamma_council.py	2026-08-14 23:10:40
++++ b/maplegamma_council.py	2026-08-14 23:10:40
+@@ -222,7 +222,7 @@
+ 
+ # ── API Call ─────────────────────────────────────────────────────────────────
+ 
+-def call_api(base_url, api_key, model, system_prompt, user_prompt, timeout=90):
++def call_api(base_url, api_key, model, system_prompt, user_prompt, timeout=90, max_tokens=3000):
+     """
+     Generic OpenAI-compatible chat completions call.
+     Returns: {"content": str|None, "tokens_in": int, "tokens_out": int, "error": str|None}
+@@ -237,7 +237,7 @@
+             {"role": "system", "content": system_prompt},
+             {"role": "user", "content": user_prompt},
+         ],
+-        "max_tokens": 3000,
++        "max_tokens": max_tokens,
+         "temperature": 0.3,
+     }
+     headers = {
+@@ -271,11 +271,30 @@
+ 
+     # Extract content
+     content = None
++    finish = None
+     try:
+-        content = body["choices"][0]["message"]["content"]
++        choice = body["choices"][0]
++        finish = choice.get("finish_reason")
++        content = choice["message"]["content"]
+     except (KeyError, IndexError):
+         pass
+ 
++    # A reasoning model bills its thinking against max_tokens. When the budget runs
++    # out mid-thought the call still returns HTTP 200 with an EMPTY content string,
++    # so reporting error=None here printed "failed: None" and hid the cause for 111
++    # consecutive runs. Name it instead.
++    if not content:
++        usage = body.get("usage", {}) or {}
++        detail = (usage.get("completion_tokens_details") or {}).get("reasoning_tokens")
++        if finish == "length":
++            return {"content": None, "tokens_in": usage.get("prompt_tokens", 0),
++                    "tokens_out": usage.get("completion_tokens", 0),
++                    "error": f"empty_content: hit max_tokens ({usage.get('completion_tokens')} used, "
++                             f"{detail} of them reasoning) — raise max_tokens for this model"}
++        return {"content": None, "tokens_in": usage.get("prompt_tokens", 0),
++                "tokens_out": usage.get("completion_tokens", 0),
++                "error": f"empty_content (finish_reason={finish})"}
++
+     usage = body.get("usage", {})
+     tokens_in = usage.get("prompt_tokens", 0)
+     tokens_out = usage.get("completion_tokens", 0)
+@@ -539,7 +558,11 @@
+             print(f"  ⚠ Aggregator {_model}: no API key — trying next")
+             continue
+         print(f"  🧠 Calling aggregator ({_model})...")
+-        agg = call_api(_base, _key, _model, AGG_SYSTEM, agg_user, timeout=90)
++        # 13k chars of specialist output makes this model reason for ~3k tokens before
++        # it writes a character; at the 3000 default it spent the whole budget thinking
++        # and returned empty every time. Measured on the real payload: 8000 -> finish
++        # "stop" with 1.7k of JSON. Billing is per token used, not per cap.
++        agg = call_api(_base, _key, _model, AGG_SYSTEM, agg_user, timeout=180, max_tokens=16000)
+         if not agg["content"]:
+             print(f"  ✗ Aggregator {_model} failed: {agg['error']} — trying next")
+             continue

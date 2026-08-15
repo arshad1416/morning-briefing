@@ -470,21 +470,66 @@ class this whole exercise exists to catch, introduced by a fix for it.
 
 ---
 
-## Still open
+## Shipped to production, 2026-08-14/15
 
-1. **The ledger cannot be repaired with what ships.** NEW-D stops *new* fabrications; the 25
-   existing entries (22 default-neutral, 21 graded wrong) remain — and the only rebuild tool,
-   `backfill_council_outcomes.py`, carries the **identical** bug. Truncate or fix that tool before
-   any scored record is published.
-2. **The aggregator is still broken** — 111/111 runs without a clean completion. The patch stops the
-   ledger recording calls that were never made; it does not make the council produce one.
-3. **Defect A survives on 2026-06-03 and 2026-06-04**, which the builder judged benign and the
-   critic showed are not: both still preview and describe a note headed *"Market Intel — May 26,
-   2026"* carrying May-26 prices.
-4. **Two Pi-side sequencing hazards.** The frontend ships on merge; the Pi patch is applied by hand.
-   Until it is, `/grading-rule` publicly asserts a rule the scorer does not follow. And the email
-   capture 404s every submission unless the deploy order is **D1 migration → Worker deploy → Pages
-   merge**.
+PR #53 merged (`902dcdd05`), CI green on `main`. Deploy order was D1 migration → Worker → Pages.
+Verified against production, anonymously:
+
+| Probe | Was | Now |
+|---|---|---|
+| `POST /chat`, `POST /` | live, unauthenticated, OpenRouter-billed | **404** |
+| `council_history.json` | **200** + a 40-day-stale artifact | **404** |
+| subscribe without consent | — | **400** |
+| `accuracy.json` | 401 | **401** (gate intact) |
+
+`OPENROUTER_API_KEY` deleted from the Worker; the orphaned `council_history.json` R2 object deleted.
+
+**All Pi patches applied** (backups in `~/.hermes/backups/pre-launch-2026-08-14/`), every one
+dry-run first, compiled after, and repo/Pi md5 parity re-verified. The publisher was then run for
+real:
+
+    header unrealized  425.07
+    sum of row pnl     425.07
+    GAP                0.0        (was $63.40)
+    win_rate           46.8
+    entry_price        DIA 540.43 · IWM 296.19 · XLK 186.90   (booked fills)
+
+### The aggregator: root cause found, fixed, and proven
+
+It had failed **111/111 runs** since 2026-06-30, always logging `failed: None`. The cause was not
+the model, the key, or the proxy — all three test clean. `deepseek-v4-pro` is a **reasoning** model,
+and `max_tokens` caps *total* completion tokens with reasoning included. Reproduced against the real
+13,541-char expert payload:
+
+| `max_tokens` | `finish_reason` | content | reasoning tokens |
+|---|---|---|---|
+| 3000 (shipped) | `length` | **0 chars** | 3000 of 3000 |
+| 8000 | `stop` | 1,716 chars | 1,908 |
+| 16000 | `stop` | 1,852 chars | 3,467 |
+
+The model spent its entire budget thinking and emitted nothing. The call returned HTTP 200, so
+`call_api`'s `except (KeyError, IndexError): pass` left content **and** error as `None` — which is
+why six weeks of failures printed no reason. Both are fixed: the aggregator gets a budget its
+reasoning cannot exhaust, and an empty completion now names itself.
+
+First clean run in 111: `status` **`full`** (was `aggregator_failed`), `market_pulse` present,
+regime `bullish`, 5/5 experts.
+
+`backfill_council_outcomes.py` carried the identical default-neutral bug — so a rebuild would have
+re-created the fabrications. Fixed too; the ledger is repairable again. The 22 fabricated entries
+were then removed (**25 → 3** real ones), with a note in the file recording why.
+
+---
+
+## Still open — owner decisions only
+
+1. **CASL constants.** `OPERATOR_NAME` and `OPERATOR_ADDR` need a real legal entity and a real
+   mailing address; nobody but the owner can supply them. The runtime guard already refuses to send
+   until they are filled, and the subscriber cron line is still commented out. **No mail goes out
+   until both are done** — the capture form is collecting addresses that currently go nowhere.
+2. **`paper_trades.json` in public git history**, 2026-06-03 → 2026-07-12, 1,251 commits. Removing
+   it means `git-filter-repo` plus a force-push that invalidates every clone and races the Pi's
+   ~30-minute commits. Not attempted.
 
 Lower severity: no operator visibility into `briefing_subscribers` (a global-429 day is
 indistinguishable from a quiet day); both unsubscribe pages and the Pi footer tell capture

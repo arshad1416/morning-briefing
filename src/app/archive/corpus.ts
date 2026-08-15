@@ -75,8 +75,32 @@ export function publishedOn(block: Any): string[] {
  */
 export const repeatOf = (date: string, block: Any): string | null => {
   const [first] = publishedOn(block);
-  return first && first !== date ? first : null;
+  if (first && first !== date) return first;
+  return selfDeclaredDate(date, block);
 };
+
+const MONTHS = ['january', 'february', 'march', 'april', 'may', 'june',
+  'july', 'august', 'september', 'october', 'november', 'december'];
+
+/**
+ * The date a block names for ITSELF, when that is not the date it is published
+ * under — otherwise null.
+ *
+ * The repeat rule above cannot suppress a block's FIRST publication, and two of
+ * those firsts are themselves stale: /archive/2026-06-03/ and /archive/2026-06-04/
+ * both open "📊 **Market Intel — May 26, 2026**", 8 and 9 days before the page
+ * they head. Only the opening line is read, so a date mentioned in passing later
+ * in the narrative cannot trip this.
+ */
+function selfDeclaredDate(date: string, block: Any): string | null {
+  const head = (typeof block === 'string' ? block : JSON.stringify(block ?? '')).slice(0, 80);
+  const m = /(\w+)\s+(\d{1,2}),\s*(20\d\d)/.exec(head);
+  if (!m) return null;
+  const month = MONTHS.indexOf(m[1].toLowerCase());
+  if (month < 0) return null;
+  const named = `${m[3]}-${String(month + 1).padStart(2, '0')}-${m[2].padStart(2, '0')}`;
+  return named !== date ? named : null;
+}
 
 /**
  * date → the earlier date whose narrative that date merely repeats.
