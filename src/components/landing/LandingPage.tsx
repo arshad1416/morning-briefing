@@ -4,9 +4,12 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { GammaMark } from "@/components/brand/GammaMark";
 import { CheckboxField } from "@/components/auth/AuthShell";
+import { DataFreshness } from "@/components/primitives";
 import { InfoTip } from "@/components/primitives/InfoTip";
 import { PlainLabel } from "@/components/primitives/PlainLabel";
+import { api } from "@/lib/api";
 import { useMe } from "@/lib/auth/useMe";
+import type { Verdict } from "@/lib/schemas/market";
 import { useUI } from "@/stores/ui";
 
 // Legacy hash-router routes (old bookmarks, briefing-email deep links, and
@@ -165,7 +168,59 @@ const FEATURES: Feature[] = [
 
 function VerdictBar() {
   const { reduce, fadeUp, viewport } = useMotionKit();
-  const score = 72; // 0 = max bearish, 100 = max bullish
+  const [verdict, setVerdict] = useState<Verdict | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    void api
+      .verdict()
+      .then((data) => {
+        if (!cancelled) setVerdict(data);
+      })
+      .catch(() => {
+        if (!cancelled) setFailed(true);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const signal = verdict
+    ? {
+        bullish: {
+          label: "Bullish",
+          prefix: "▲",
+          color: "var(--color-bull)",
+        },
+        bearish: {
+          label: "Bearish",
+          prefix: "▼",
+          color: "var(--color-bear)",
+        },
+        neutral: {
+          label: "Neutral",
+          prefix: "●",
+          color: "var(--color-neutral)",
+        },
+      }[verdict.signal]
+    : null;
+
+  const score = verdict
+    ? verdict.signal === "bullish"
+      ? 50 + verdict.conviction * 50
+      : verdict.signal === "bearish"
+        ? 50 - verdict.conviction * 50
+        : 50
+    : null;
+
+  // zod validates signal/conviction before `verdict` is set, so the success
+  // block is only reachable with a well-formed payload. Guard anyway: an
+  // unusable verdict should surface as the failure state, never as nothing.
+  const unusable = verdict !== null && (signal === null || score === null || !Number.isFinite(score));
+  const clampedScore = score !== null ? Math.min(100, Math.max(0, score)) : null;
 
   return (
     <motion.div
@@ -182,30 +237,68 @@ function VerdictBar() {
         </p>
       </div>
 
-      <div
-        className="mt-6"
-        role="img"
-        aria-label={`Verdict reading: ${score} out of 100, leaning bullish`}
-      >
-        <div
-          className="relative h-3 w-full rounded-full"
-          style={{ background: "var(--gradient-conviction)" }}
-        >
-          <motion.span
-            className="absolute top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white shadow-[0_0_12px_rgba(255,255,255,0.6)]"
-            style={{ borderColor: "var(--color-bg-base)" }}
-            initial={{ left: reduce ? `${score}%` : "50%" }}
-            whileInView={{ left: `${score}%` }}
-            viewport={viewport}
-            transition={{ duration: reduce ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] }}
+      {!verdict && !failed && (
+        <div className="mt-6" role="status" aria-busy="true" aria-label="Loading the daily verdict">
+          <div
+            className="h-5 w-48 animate-pulse rounded bg-[var(--color-border-subtle)]"
+            aria-hidden="true"
+          />
+          <div
+            className="mt-4 h-3 w-full animate-pulse rounded-full bg-[var(--color-border-subtle)]"
+            aria-hidden="true"
           />
         </div>
-        <div className="mt-3 flex justify-between text-xs font-medium uppercase tracking-wider">
-          <span style={{ color: "var(--color-bear)" }}>Bearish</span>
-          <span style={{ color: "var(--color-caution)" }}>Neutral</span>
-          <span style={{ color: "var(--color-bull)" }}>Bullish</span>
-        </div>
-      </div>
+      )}
+
+      {(failed || unusable) && (
+        <p role="status" className="mt-6 text-sm text-[var(--color-text-secondary)]">
+          The daily verdict isn&apos;t available right now — check back after the next briefing.
+        </p>
+      )}
+
+      {!unusable && verdict && signal && clampedScore !== null && (
+        <>
+          <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span className="font-semibold" style={{ color: signal.color }}>
+              {signal.prefix} {signal.label.toUpperCase()}
+            </span>
+            <DataFreshness
+              timestamp={verdict.generated_at}
+              staleAfterMs={86_400_000}
+              className="text-xs text-[var(--color-text-tertiary)]"
+            />
+          </div>
+
+          <div
+            className="mt-4"
+            role="img"
+            aria-label={`Verdict reading: ${signal.label} (${Math.round(verdict.conviction * 100)}% conviction)`}
+          >
+            <div
+              className="relative h-3 w-full rounded-full"
+              style={{ background: "var(--gradient-conviction)" }}
+            >
+              <motion.span
+                className="absolute top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white shadow-[0_0_12px_rgba(255,255,255,0.6)]"
+                style={{ borderColor: "var(--color-bg-base)" }}
+                initial={{ left: reduce ? `${clampedScore}%` : "50%" }}
+                whileInView={{ left: `${clampedScore}%` }}
+                viewport={viewport}
+                transition={{ duration: reduce ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] }}
+              />
+            </div>
+            <div className="mt-3 flex justify-between text-xs font-medium uppercase tracking-wider">
+              <span style={{ color: "var(--color-bear)" }}>Bearish</span>
+              <span style={{ color: "var(--color-caution)" }}>Neutral</span>
+              <span style={{ color: "var(--color-bull)" }}>Bullish</span>
+            </div>
+          </div>
+
+          <p className="mt-4 text-sm leading-relaxed text-[var(--color-text-tertiary)]">
+            {verdict.narrative}
+          </p>
+        </>
+      )}
     </motion.div>
   );
 }
