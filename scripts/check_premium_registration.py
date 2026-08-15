@@ -20,11 +20,17 @@ None of those raises anything at publish time, which is exactly why the rule
 needs a check rather than a paragraph. Runs in CI on every PR touching code;
 stdlib only, no deps.
 
+Not every private path belongs in PRIVATE_FILES: pi-scripts/publish_policy.py
+UNPUBLISHED_PATHS is a deliberate fifth category (a directory there makes
+s3.upload_file fail, which fail-closes the whole publish). Don't "fix" it by
+adding those paths here.
+
     python3 scripts/check_premium_registration.py
 """
 from __future__ import annotations
 
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -61,10 +67,28 @@ def gitignored() -> set[str]:
     return lines
 
 
+def tracked() -> set[str]:
+    """Paths git actually tracks under both data trees.
+
+    .gitignore has NO effect on an already-tracked path, so being listed there
+    does not prove the file is out of the repo — that is how paper_trades.json
+    stayed published for 7h59m (804a87200 gitignored both copies but git rm'd
+    only the data/ one).
+    """
+    out = subprocess.run(
+        ["git", "-C", str(ROOT), "ls-files", "data", "public/data"],
+        capture_output=True, text=True, check=True).stdout.splitlines()
+    if "public/data/verdict.json" not in out:
+        sys.exit("FAIL: git ls-files returned no repo-root-relative paths "
+                 "— the tracked check would pass vacuously")
+    return set(out)
+
+
 def main() -> int:
     private = private_files()
     gated = gated_files()
     ignored = gitignored()
+    in_git = tracked()
     problems: list[str] = []
 
     for name in sorted(private):
@@ -76,6 +100,12 @@ def main() -> int:
             problems.append(
                 f"{name}: in PRIVATE_FILES but 'public/data/{name}' is not gitignored "
                 f"— the premium file would be PUBLISHED to the live site")
+        for tree in ("data", "public/data"):
+            if f"{tree}/{name}" in in_git:
+                problems.append(
+                    f"{name}: in PRIVATE_FILES but '{tree}/{name}' is TRACKED by git "
+                    f"— gitignoring a tracked path does nothing; it LEAKS on every "
+                    f"commit until `git rm --cached {tree}/{name}`")
         if name not in gated:
             problems.append(
                 f"{name}: in PRIVATE_FILES but not in data_gate.js "
@@ -94,7 +124,8 @@ def main() -> int:
         return 1
 
     print(f"Premium registration consistent: {len(private)} files "
-          f"registered in r2_sync, .gitignore (both trees) and data_gate.js.")
+          f"registered in r2_sync, .gitignore (both trees) and data_gate.js, "
+          f"and untracked in both trees.")
     return 0
 
 

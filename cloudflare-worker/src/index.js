@@ -1,5 +1,4 @@
 import { Hono } from 'hono';
-import { handleChat } from './chat.js';
 import { handleFeedback } from './feedback.js';
 import { getOrigin } from './util.js';
 import { mountPasswordAuth } from './auth_password.js';
@@ -48,8 +47,6 @@ app.use('*', async (c, next) => {
   c.res.headers.set('Access-Control-Allow-Credentials', 'true');
 });
 
-app.post('/', (c) => handleChat(c.req.raw, c.env));
-app.post('/chat', (c) => handleChat(c.req.raw, c.env));
 app.post('/feedback', (c) => handleFeedback(c.req.raw, c.env));
 mountPasswordAuth(app);
 mountOauth(app);

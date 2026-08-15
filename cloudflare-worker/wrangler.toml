@@ -16,7 +16,7 @@ binding = "PRIVATE"
 bucket_name = "maplegamma-private"
 
 # Route auth/api on the canonical domain to this Worker (Pages serves everything
-# else). chat/feedback still work via the workers.dev URL + CORS allow-list.
+# else). /feedback still works via the workers.dev URL + CORS allow-list.
 [[routes]]
 pattern = "maplegamma.com/api/*"
 zone_name = "maplegamma.com"
@@ -50,9 +50,6 @@ pattern = "maplegamma.com/.well-known/webauthn"
 zone_name = "maplegamma.com"
 
 [vars]
-OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-OPENROUTER_MODEL = "deepseek/deepseek-v4-pro"
-RATE_LIMIT_PER_MIN = 10
 APP_URL = "https://maplegamma.com"
 MOCK_BILLING = "0"
 TERMS_VERSION = "2026-07-10"
