@@ -1,12 +1,17 @@
 # Launch-readiness verification — 2026-08-14
 
-> **STATUS.** Round 1 (verify) and round 2 (build) completed: 16 + 14 agents, 0 errors. Round 3
-> (closeout) **died on a session limit before any agent did work** — nothing was written by it; the
-> gaps it was scoped to close were then closed by hand, except the four listed under
-> **Still open** at the end of this file. Nothing has been committed, pushed or deployed.
+> **STATUS — everything below has SHIPPED.** PRs #53, #54 and #55 are merged; the Worker is
+> deployed, D1 migrated, and all Pi patches applied and verified. Two owner decisions remain, both
+> at the end of this file: the CASL constants (nothing mails until they are real) and the historical
+> `paper_trades.json` exposure (decided: accept it — it is paper money, and a force-push over a
+> public repo would cost more than it buys).
+>
+> Read the sections in order — they are a running record, so an early section may describe a defect
+> that a later one closes. Round 3 died on a session limit before any agent did work; its scope was
+> closed by hand, and rounds 4 and 5 finished the rest.
 
-Round 1 of the gauntlet: **verify, don't assume**. Read-only. No source file was edited, nothing
-committed, pushed or deployed; no Pi state changed. HEAD `74eb72e35`, branch
+The gauntlet's first pass: **verify, don't assume**. Read-only at that point — no source file
+edited, nothing committed or deployed, no Pi state changed. HEAD `74eb72e35`, branch
 `claude/maplegamma-launch-ready-43a81f`.
 
 **Method.** 8 investigators over exclusive scopes, then 8 *fresh* adversarial critics prompted to
