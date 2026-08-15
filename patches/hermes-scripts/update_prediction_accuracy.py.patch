@@ -1,0 +1,73 @@
+# update_prediction_accuracy.py.patch — the /predictions half of the same fix
+#
+# Target on the Pi: ~/.hermes/scripts/update_prediction_accuracy.py
+#   (repo arshad1416/hermes-scripts; invoked from push_dashboard.py:708 via
+#   _run_step. This script has NO copy anywhere in morning-briefing — this patch
+#   file is the only deliverable for it, and it is invisible to repo-only review.
+#   md5 on the Pi 2026-08-14: 9d3c8fd4aa3c732c9a3d2a235ac9373c.)
+#
+# What it fixes: it writes prediction-engine.json -> live_trading.summary, which
+# /predictions renders in one row (predictions-client.tsx:106-108). It computed
+# closed_trades / winning_trades / losing_trades / win_rate from the ledger's
+# closed_trades LIST, emptied every weekday 08:00 by
+# archive_trades_to_turso.py --prune, while taking total_trades from the
+# prune-immune metadata counters — so the row read "Live Win Rate 0% of closed
+# trades | Closed Trades 0 | 0W / 0L | Open Positions 5" against a
+# total_trades of 84.
+#
+# The fix uses variables that were ALREADY THERE and never read: `wins` and
+# `losses` are assigned from meta at :219-220 and then dropped on the floor.
+# Wiring them in is the whole change; it also makes this row agree with the
+# lifetime win rate push_dashboard.py:437-440 publishes on /positions and with
+# the accuracy.json summary fixed by generate_prediction_accuracy.py.patch.
+#
+# Before/after, run against the live ledger (metadata 37W/42L/84, 5 open):
+#   live_trading.summary.win_rate        0  -> 46.8
+#   live_trading.summary.closed_trades   0  -> 79
+#   live_trading.summary.winning_trades  0  -> 37
+#   live_trading.summary.losing_trades   0  -> 42
+#   live_trading.summary.total_trades    84 -> 84  (unchanged; = 79 + 5, now coherent)
+#   live_trading.per_strategy            unchanged (still the retained-trade window,
+#                                        and each row prints its own denominator)
+#
+# Fail-closed safety: prediction-engine.json has no entry in
+# pipeline_schemas._MODELS, so only strict-parse + _assert_finite apply. The one
+# division is guarded by `if closed_total > 0`, unchanged from before. No
+# non-finite value can be produced. This patch cannot freeze the publish.
+#
+# Apply ON THE PI:
+#   cd ~/.hermes/scripts
+#   cp update_prediction_accuracy.py update_prediction_accuracy.py.bak-2026-08-14
+#   patch -p1 --dry-run < /path/to/update_prediction_accuracy.py.patch  # verify first
+#   patch -p1 < /path/to/update_prediction_accuracy.py.patch
+#   python3 -m py_compile update_prediction_accuracy.py
+#
+# Verify after applying:
+#   python3 update_prediction_accuracy.py
+#   # last printed line should read "Live accuracy updated — 79 closed trades, 46.8% WR"
+#   python3 -c "import json;print(json.load(open('/home/arshad14/morning-briefing/data/prediction-engine.json'))['live_trading']['summary'])"
+#   # expect closed_trades == winning_trades + losing_trades, and win_rate equal to
+#   # data/paper_trades.json -> portfolio.win_rate and data/accuracy.json -> summary.win_rate
+--- a/update_prediction_accuracy.py
++++ b/update_prediction_accuracy.py
+@@ -231,10 +231,16 @@
+     backtest_predicted = load_backtest_predictions()
+     strategy_metrics = calc_strategy_metrics(closed, open_trades, backtest_predicted)
+ 
+-    # Overall stats
+-    closed_total = len(closed)
+-    closed_wins = sum(1 for t in closed if float(t.get("pnl_pct", 0) or 0) > 0)
+-    closed_losses = closed_total - closed_wins
++    # Overall stats — wins/losses above are the ledger's lifetime counters, which
++    # archive_trades_to_turso.py --prune leaves alone at 08:00; len(closed) is only
++    # what closed since that prune. Use the lifetime window so this row matches the
++    # win rate push_dashboard.py publishes on /positions instead of being a second,
++    # smaller-denominator win rate for the same account.
++    if not (wins or losses):  # ledger with no lifetime counters — count what is here
++        wins = sum(1 for t in closed if float(t.get("pnl_pct", 0) or 0) > 0)
++        losses = len(closed) - wins
++    closed_total = wins + losses
++    closed_wins, closed_losses = wins, losses
+     closed_wr = round(closed_wins / closed_total * 100, 1) if closed_total > 0 else 0
+ 
+     # Build live_trading section

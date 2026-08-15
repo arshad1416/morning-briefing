@@ -206,6 +206,20 @@ def main():
     meta = ledger.get("metadata", {})
     acct = ledger.get("account", {})
 
+    # archive_trades_to_turso.py --prune empties closed_trades at 08:00 but the
+    # metadata counters keep counting, so len(closed) is "closed since the last
+    # prune" — a different denominator from the lifetime one push_dashboard.py
+    # publishes on /positions. summary reports the lifetime counters so both
+    # tiles show one win rate; expectancy/drawdown stay on the retained trades
+    # because only those still carry pnl_pct.
+    wins = int(meta.get("winning_trades", 0) or 0)
+    losses = int(meta.get("losing_trades", 0) or 0)
+    if not (wins or losses):  # ledger with no lifetime counters — count what is here
+        wins = sum(1 for t in closed if float(t.get("pnl_pct", 0) or 0) > 0)
+        losses = len(closed) - wins
+    closed_total = wins + losses
+    lifetime_wr = round(wins / closed_total * 100, 1) if closed_total > 0 else 0.0
+
     if not closed:
         print("No closed trades found")
         # Still write a fresh, schema-identical accuracy.json. A day with zero
@@ -217,10 +231,10 @@ def main():
         output = {
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "summary": {
-                "total_trades": len(open_trades),
-                "closed_trades": 0,
+                "total_trades": closed_total + len(open_trades),
+                "closed_trades": closed_total,
                 "open_positions": len(open_trades),
-                "win_rate": 0.0,
+                "win_rate": lifetime_wr,
                 "return_pct": round((current - starting) / starting * 100, 2) if starting > 0 else 0,
             },
             "expectancy": {
@@ -316,10 +330,10 @@ def main():
     output = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "summary": {
-            "total_trades": len(closed) + len(open_trades),
-            "closed_trades": len(closed),
+            "total_trades": closed_total + len(open_trades),
+            "closed_trades": closed_total,
             "open_positions": len(open_trades),
-            "win_rate": expectancy["win_rate"],
+            "win_rate": lifetime_wr,
             "return_pct": round((current - starting) / starting * 100, 2) if starting > 0 else 0,
         },
         "expectancy": expectancy,

@@ -66,6 +66,12 @@ data/prediction-engine.json
 public/data/prediction-engine.json
 data/accuracy.json
 public/data/accuracy.json
+# council_history.json is deliberately NOT in r2_sync PRIVATE_FILES or
+# data_gate.js any more — its only writer (backfill_council_outcomes.py) is a
+# manual tool, not a cron job. The ignore stays: this repo is public, so if the
+# tool is ever run by hand the output must not land in a commit. Do not "fix"
+# the asymmetry by re-registering it; re-register only when it has a scheduled
+# writer again.
 data/council_history.json
 public/data/council_history.json
 data/gex-detail.json

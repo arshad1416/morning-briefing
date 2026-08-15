@@ -6,38 +6,16 @@
 // these pages exist so search engines and AI crawlers can read the analysis.
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import fs from 'node:fs';
-import path from 'node:path';
 import { InfoTip, PlainLabel } from '@/components/primitives';
 import type { GlossaryTerm } from '@/lib/glossary';
 import { buildMetadata } from '@/lib/seo';
+import { listDates, loadBriefing, publishedOn, repeatOf } from '../corpus';
 
 export const dynamicParams = false;
 
 const SITE = 'https://maplegamma.com';
-const ARCHIVE_DIR = path.join(process.cwd(), 'data', 'archive');
 
 type Any = any;
-
-function listDates(): string[] {
-  try {
-    const idx = JSON.parse(
-      fs.readFileSync(path.join(process.cwd(), 'data', 'archive-index.json'), 'utf8'),
-    );
-    const dates: string[] = idx.dates ?? [];
-    return dates.filter((d) => fs.existsSync(path.join(ARCHIVE_DIR, `${d}.json`)));
-  } catch {
-    return [];
-  }
-}
-
-function loadBriefing(date: string): Any | null {
-  try {
-    return JSON.parse(fs.readFileSync(path.join(ARCHIVE_DIR, `${date}.json`), 'utf8'));
-  } catch {
-    return null;
-  }
-}
 
 function longDate(date: string): string {
   return new Date(`${date}T12:00:00Z`).toLocaleDateString('en-US', {
@@ -54,6 +32,49 @@ function narrativeText(d: Any): string {
   if (typeof n === 'string') return n;
   if (n && typeof n === 'object') return Object.values(n).filter((v) => typeof v === 'string').join('\n\n');
   return '';
+}
+
+/**
+ * The one sentence describing this date, for BOTH <meta name=description> and
+ * the NewsArticle JSON-LD.
+ *
+ * The JSON-LD used to take `narrative.slice(0, 200)` of its own, which is the
+ * empty string on the 51 dates whose narrative is a repeat — and an empty
+ * `description` property asserts the article has none, which is worse than
+ * omitting it. Both surfaces now get the same real sentence.
+ *
+ * The fallback also used to be one boilerplate line with only the date swapped,
+ * i.e. 51 near-duplicate descriptions across two-thirds of the indexed archive.
+ * What genuinely differs per date is the closing tape this page already renders
+ * in its table, so that is quoted instead — measured present on all 51.
+ */
+function describe(date: string, d: Any): string {
+  // A narrative this date only repeated is not this date's briefing, so it must
+  // not be the sentence Google prints under the headline either.
+  const raw = repeatOf(date, d?.narrative)
+    ? ''
+    : narrativeText(d).replace(/\*\*/g, '').replace(/\s+/g, ' ').trim();
+  if (raw) return `${raw.slice(0, 152)}…`;
+  // "Key levels" and "dealer gamma" were promised by the old fallback and have
+  // no field in data/archive/*.json at all; the central-bank notes it also
+  // promised are missing from some days. These two are what is actually there.
+  const sp = (d?.market_summary?.indices ?? []).find((x: Any) => x.ticker === 'S&P 500');
+  const vix = Number(d?.market_summary?.vix);
+  // These are the levels the briefing was written against — the LAST close, not
+  // this date's. Briefings generate pre-market, and 17 archived dates fall on a
+  // weekend (2026-07-04 and 07-05 both carry Friday's 7,483.24), so "closed at
+  // <date>" would be flatly false on those. State the levels, not a close.
+  const tape = [
+    Number.isFinite(Number(sp?.price)) &&
+      Number.isFinite(Number(sp?.change_pct)) &&
+      `S&P 500 ${Number(sp.price).toLocaleString('en-US', { maximumFractionDigits: 2 })} (${Number(sp.change_pct) >= 0 ? '+' : ''}${Number(sp.change_pct).toFixed(2)}%)`,
+    Number.isFinite(vix) && `VIX ${vix.toFixed(2)}`,
+  ]
+    .filter(Boolean)
+    .join(', ');
+  return tape
+    ? `MapleGamma daily market briefing for ${longDate(date)}, written before the open against the last close: ${tape}.`
+    : `MapleGamma daily market briefing for ${longDate(date)}: where the major indexes and the VIX fear gauge stood before the open.`;
 }
 
 // Two rows of the archived `indices` array are not indexes at all — a fear
@@ -121,17 +142,9 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ date: string }> }): Promise<Metadata> {
   const { date } = await params;
   const d = loadBriefing(date);
-  const raw = narrativeText(d).replace(/\*\*/g, '').replace(/\s+/g, ' ').trim();
-  // The fallback fires exactly when the narrative is EMPTY, so it must not
-  // promise analysis the page will not contain. "Key levels" and "dealer gamma"
-  // have no field in data/archive/*.json at all; what is always there is the
-  // index table and the central-bank notes.
-  const description = raw
-    ? `${raw.slice(0, 152)}…`
-    : `MapleGamma daily market briefing for ${longDate(date)}: where the major indexes finished, the VIX fear gauge, and what the Fed and the Bank of Canada said.`;
   return buildMetadata({
     title: `S&P 500 Market Briefing — ${longDate(date)}`,
-    description,
+    description: describe(date, d),
     path: `/archive/${date}/`,
     ogType: 'article',
     publishedTime: d?.generated_at ?? `${date}T07:20:00-04:00`,
@@ -170,12 +183,27 @@ export default async function BriefingPage({ params }: { params: Promise<{ date:
   // rendered separately from the scalar market_summary.vix /
   // .ten_year_yield fields with their own unit and a dash for Change rather
   // than a misleading percent.
-  const coreIndices = indices.filter((x: Any) => !(x.ticker in ROW_TERMS));
+  // On the five mornings the index fetch failed, all four real index rows are
+  // `NaN` — now that they parse, a row would print "NaN" at "NaN%".
+  const coreIndices = indices.filter((x: Any) => !(x.ticker in ROW_TERMS) && Number.isFinite(Number(x.price)));
   const vix = d?.market_summary?.vix;
   const tenYearYield = d?.market_summary?.ten_year_yield;
-  const narrative = narrativeText(d);
+  const narrativeRepeatOf = repeatOf(date, d?.narrative);
+  const narrative = narrativeRepeatOf ? '' : narrativeText(d);
   const geo: Any[] = (d?.geopolitical ?? []).slice(0, 6);
-  const setups: Any[] = (d?.premarket_top_setups ?? []).slice(0, 6);
+  // A premarket scan is a same-morning artifact, and this corpus holds exactly
+  // one of them: 50 of the 76 archived files carry setups and every one is the
+  // same scan — MSFT at 426.989990234375 throughout — spread over seven weeks,
+  // 2026-06-04 … 2026-07-27. The two "first publications" an origin-keeps-it
+  // rule left standing (06-04, 06-08) are that same scan differing only in
+  // signal spelling ("neutral rsi" vs "neutral_rsi", which signalLabel() below
+  // renders identically), so neither is a first publication at all. Nothing in
+  // the payload can say which morning it ran, so a scan carrying more than one
+  // date is dropped from all of them. This stays a repeat rule rather than a
+  // deletion of the section because a scan published under exactly one date is
+  // that date's own and still renders.
+  const setups: Any[] =
+    publishedOn(d?.premarket_top_setups).length > 1 ? [] : (d?.premarket_top_setups ?? []).slice(0, 6);
   const cb = d?.central_banks ?? {};
 
   const ARTICLE_LD = {
@@ -187,7 +215,7 @@ export default async function BriefingPage({ params }: { params: Promise<{ date:
     author: { '@type': 'Organization', name: 'MapleGamma', url: SITE },
     publisher: { '@type': 'Organization', name: 'MapleGamma', url: SITE },
     mainEntityOfPage: `${SITE}/archive/${date}/`,
-    description: narrative.replace(/\*\*/g, '').slice(0, 200),
+    description: describe(date, d),
   };
 
   return (
@@ -263,6 +291,19 @@ export default async function BriefingPage({ params }: { params: Promise<{ date:
               </tbody>
             </table>
           </div>
+        </Section>
+      )}
+
+      {narrativeRepeatOf && (
+        <Section title="Morning Analysis">
+          <p className="text-sm text-[var(--color-text-secondary)]">
+            No new analysis was written for this date — the briefing repeated the note
+            first published on{' '}
+            <Link href={`/archive/${narrativeRepeatOf}/`} className="underline text-[var(--color-accent)]">
+              {longDate(narrativeRepeatOf)}
+            </Link>
+            , so it is not reprinted here as that morning&apos;s reading.
+          </p>
         </Section>
       )}
 

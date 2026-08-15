@@ -15,7 +15,7 @@ const PRO_PREFIXES = ['charts/'];
 const PRO_FILES = new Set([
   'walk_forward_v2.json', 'walk_forward.json', 'strategy_improvement.json',
   'strategy_improvement_b.json', 'trade_outcomes.json', 'trade_outcomes_b.json',
-  'prediction-engine.json', 'accuracy.json', 'council_history.json',
+  'prediction-engine.json', 'accuracy.json',
   'simulation.json', 'gex-detail.json',
   'nope-detail.json',
 ]);

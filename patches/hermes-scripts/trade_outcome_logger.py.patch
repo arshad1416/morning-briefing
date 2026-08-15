@@ -1,0 +1,151 @@
+# trade_outcome_logger.py.patch — 2026-08-14 launch-readiness fix (NEW-D + portfolio_fallback)
+#
+# Target on the Pi: ~/.hermes/scripts/trade_outcome_logger.py
+#   (repo arshad1416/hermes-scripts; run by ~/.hermes/scripts/agents/agent_outcome.sh
+#   at 16:30 ET weekdays and by `trade_outcome_logger.py --variant b` at 16:32.
+#   There is NO copy of this script in morning-briefing/pi-scripts/, so this
+#   patch is the only deliverable — AGENTS.md rule 4. Nothing imports the module,
+#   so the two hunks are local: `grep -rl trade_outcome_logger ~/.hermes/scripts`
+#   returns only doc-comment mentions.)
+#
+# What it fixes — two ways a day with nothing to grade got graded anyway:
+#
+# 1. NEW-D, default-neutral. The council aggregator has never once succeeded
+#    (agent_council.log: 111 completions 2026-06-30 -> 2026-08-14, 0 clean), so
+#    `maplegamma_analysis.json` has no `market_pulse` key at all — both arms are
+#    {expert_outputs, meta} with meta.status == "aggregator_failed". Line 113
+#    `mp.get("regime", "neutral")` and line 114 `mp.get("confidence", 5)` then
+#    booked that absence as a real prediction and compute_correlations graded it.
+#    Fingerprint in the live ledger: all 25 market_pulse recommendations carry
+#    confidence exactly 0.5, and 22 predict "neutral".
+#    -> Skip the day instead of booking a default.
+#
+# 2. portfolio_fallback. `fetch_market_outcome` returns None on every non-trading
+#    day and on any yfinance failure; main() then stamped
+#    outcome_source = "portfolio_fallback" and scored the council's *market*
+#    regime call against the paper portfolio's P&L direction. That contradicts
+#    both this file's own docstring ("must be scored against the market — not
+#    the paper portfolio's P&L") and the rule published at
+#    https://maplegamma.com/grading-rule/, which commits to leaving those days
+#    out of the score. It has produced 0 of the 25 logged entries (all 25 are
+#    market_^GSPC, because cron only runs Mon-Fri), so this branch has never
+#    yielded a usable grade and can only ever yield a wrong one.
+#    -> Skip the day instead of substituting a different measure.
+#
+# 3. The same default-neutral pattern one loop below, at line 145:
+#    `"prediction": t.get("direction", "neutral")`. A council trade dict with no
+#    direction is not a call, but it was appended and graded as a neutral one —
+#    and /grading-rule now states publicly that trade directions are graded, so
+#    this had to go with the other two. Guarded on line 142 instead.
+#    -> Drop the trade rather than invent a direction for it.
+#
+# Before/after, reproduced locally against this exact file (md5
+# b1f3e2ea0296dfc9ceb1674179de3ced) under a scratch HOME, with today's real A-arm
+# meta as the fixture:
+#
+#   fixture: aggregator_failed (no market_pulse)
+#     before: 1 entry written, correlation_score 0.0, outcome_source
+#             portfolio_fallback, rec {"prediction": "neutral", "confidence": 0.5,
+#             "correct": false}   <- fabricated miss
+#     after:  no entry written; log "SKIP: no council market_pulse ...
+#             (meta.status=aggregator_failed)"; exit 1
+#   fixture: healthy council day (market_pulse regime=bullish), no ^GSPC close
+#     before: 1 entry written, outcome_source portfolio_fallback, bullish call
+#             marked correct: false against the portfolio's direction
+#     after:  no entry written; log "SKIP: no ^GSPC close for this date"; exit 0
+#   fixture: healthy council day + a real ^GSPC close (stubbed)
+#     before and after IDENTICAL: correlation_score 1.0, outcome_source
+#     market_^GSPC, correct: true  <- a normal scoring day is untouched
+#   fixture: healthy day whose one trade idea has no "direction" key
+#     before: 2 recs, the trade booked as {"prediction": "neutral", "correct":
+#             false}, dragging the day's correlation_score 1.0 -> 0.5
+#     after:  1 rec (the regime call), correlation_score 1.0
+#
+# SCOPE the diff does not show: hunk 1 skips the whole day, so any `trades` in a
+# market_pulse-less file go unscored with it. That combination does not occur
+# today — an aggregator_failed file is {expert_outputs, meta} with no trades key
+# in either arm — but it is the behaviour to re-check if the aggregator is fixed
+# to emit trades without a pulse.
+#
+# EXIT-CODE CHANGE the diff does not show: hunk 1 returns None, which reaches
+# main()'s existing "No council data available" branch and exits 1, so
+# agent_outcome.sh will log "ERROR: trade_outcome_logger.py failed (exit 4)"
+# every weekday until the aggregator is fixed. That is deliberate — 111 silent
+# failures is how this got missed — and nothing pages on it: no watchdog under
+# ~/.hermes/scripts/ references agent_outcome or that log. If the noise is
+# unwanted, change hunk 1's `return None` to a clean skip in main(), not by
+# restoring the default. Hunk 2 exits 0: a market holiday is not a failure.
+#
+# Apply ON THE PI:
+#   cd ~/.hermes/scripts
+#   cp trade_outcome_logger.py trade_outcome_logger.py.bak-2026-08-14
+#   patch -p1 --dry-run < /path/to/trade_outcome_logger.py.patch   # verify first
+#   patch -p1 < /path/to/trade_outcome_logger.py.patch
+#   python3 -m py_compile trade_outcome_logger.py
+#
+# Verify after applying:
+#   grep -c portfolio_fallback trade_outcome_logger.py        # expect 0
+#   grep -n 'isinstance(t, dict)' trade_outcome_logger.py     # expect the and-clause
+#   python3 trade_outcome_logger.py --date $(date +%F)        # expect the SKIP
+#     # line and NO new entry; then re-check the ledger is unchanged:
+#   python3 -c "import json;print(len(json.load(open('$HOME/morning-briefing/data/trade_outcomes.json'))['entries']))"
+#   python3 trade_outcome_logger.py --variant b --date $(date +%F)   # same, B arm
+#
+# NOT done by this patch, still owner actions:
+#   - The 25 entries already in trade_outcomes.json (22 default-neutral) are not
+#     rewritten. The file is Pro-gated and no page fetches it, so nothing is
+#     published from it today; it should be truncated or rebuilt before anything
+#     ever is.
+#   - backfill_council_outcomes.py:227-233 repeats the same
+#     mp.get("regime", "neutral") / mp.get("confidence", 5) pattern. It is a
+#     manual tool, not in crontab, so it is not accruing entries — but it needs
+#     the same guard before it is next run.
+#   - The aggregator itself. This patch stops the ledger recording calls that
+#     were never made; it does not make the council produce one.
+#   - /grading-rule (this repo, src/app/grading-rule/page.tsx) states as a
+#     published commitment that days with no benchmark close and days with no
+#     call are left out of the score. That page is only true once this patch is
+#     applied.
+--- a/trade_outcome_logger.py
++++ b/trade_outcome_logger.py
+@@ -105,6 +105,14 @@
+ 
+     # Extract recommendations from market_pulse and trades
+     mp = council.get("market_pulse", {})
++    # No market_pulse means the aggregator produced no call. The .get() defaults
++    # below would book a fabricated "neutral" at confidence 0.5 and grade it —
++    # that is 22 of the 25 entries currently in trade_outcomes.json. A day with
++    # no call is not scored: https://maplegamma.com/grading-rule/
++    if meta.get("status") == "aggregator_failed" or not mp.get("regime"):
++        log(f"  SKIP: no council market_pulse for {target_date} "
++            f"(meta.status={meta.get('status') or 'unknown'}) — nothing to grade")
++        return None
+     trades = council.get("trades", [])
+ 
+     recommendations = []
+@@ -139,7 +147,9 @@
+ 
+     # Trade recommendations from council
+     for t in trades[:5]:
+-        if isinstance(t, dict):
++        # Same defect as market_pulse above: a trade with no direction is not a
++        # call, and the "neutral" default would be graded as if it were one.
++        if isinstance(t, dict) and t.get("direction"):
+             recommendations.append({
+                 "model": t.get("source", "unknown"),
+                 "prediction": t.get("direction", "neutral"),
+@@ -358,8 +368,12 @@
+         actual_outcome["outcome_source"] = "market_^GSPC"
+         log(f"  Market direction: {market['direction']} ({market['return_pct']:+.2f}%)")
+     else:
+-        actual_outcome["outcome_source"] = "portfolio_fallback"
+-        log("  WARNING: no market data for this date — falling back to portfolio direction")
++        # No benchmark close (weekend/holiday/fetch failure). The old fallback
++        # graded a *market* regime call against paper-portfolio P&L direction —
++        # a different question, and one this file's own docstring rules out.
++        # The published rule leaves those days out: /grading-rule/
++        log("  SKIP: no ^GSPC close for this date — nothing to score, no entry written")
++        return 0
+ 
+     # Step 3: Compute correlations
+     log("")

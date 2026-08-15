@@ -7,11 +7,19 @@ import React from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { InfoTip, PlainLabel } from '@/components/primitives';
+import { DataFreshness, InfoTip, PlainLabel } from '@/components/primitives';
 import type { GlossaryTerm } from '@/lib/glossary';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
+
+// data/tickers/*.json regenerate twice per weekday (crontab.txt:177,193 —
+// 07:45 and 10:45, Mon-Fri), so the longest healthy gap is Friday 10:45 to
+// Monday 07:45 = 69h. 72h is the tightest threshold above that; the stalest
+// files actually shipping sit at 9d and 35d, well clear of it. Ceiling: a
+// holiday Monday makes the healthy gap 93h, so those weeks read amber — the
+// price really is four days old, so that is the honest side to err on.
+const TICKER_STALE_MS = 72 * 3_600_000;
 
 const fetchJson = async (url: string) => {
   const res = await fetch(url);
@@ -119,6 +127,10 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
 
   const price = t.price ?? scan.price;
   const changePct = t.change_pct ?? scan.change_pct;
+  // Same fallback order as the price above: with no detail file the numbers
+  // come from the latest.json scan entry, so that payload's stamp is the
+  // honest age for what is on screen.
+  const generatedAt = t.generated_at ?? latest.data?.generated_at;
   // BUG FIX: this used to fall back to scan.score (latest.json
   // premarket_top_setups) whenever a ticker had no detail file / no
   // council_analysis. That fallback is a different, unclamped scale — live
@@ -144,6 +156,14 @@ export function TickerClient({ initialTicker }: { initialTicker?: string }) {
           <h1 className="font-display text-3xl text-[var(--color-text-primary)]" data-numeric>{ticker}</h1>
           {t.name && <span className="text-sm text-[var(--color-text-secondary)]">{t.name}</span>}
         </div>
+        {/* Own line, not a third child of the baseline-aligned row above: the
+            badge's first box is the 1.5px dot, so baseline alignment would hang
+            it low. 24 ticker files are frozen (BK at 35 days) — the age has to
+            be visible on the page that renders their price. Gated on !loading
+            because the two queries resolve independently: latest.json landing
+            first would paint a fresh dot from the fallback while the stale
+            detail file is still in flight. */}
+        {!loading && generatedAt && <DataFreshness timestamp={generatedAt} staleAfterMs={TICKER_STALE_MS} className="relative z-10 mt-2" />}
       </div>
 
       {loading ? (

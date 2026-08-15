@@ -1,0 +1,104 @@
+# send_subscriber_briefing.py.patch — 2026-08-14 launch-readiness fix (P0-C #8)
+#
+# Target on the Pi: ~/.hermes/scripts/send_subscriber_briefing.py
+#   (repo arshad1416/hermes-scripts. There is NO copy of this script under
+#   morning-briefing/pi-scripts/, so this patch is the ONLY deliverable for the
+#   Pi half — AGENTS.md rule 4. Cut against the live file, md5
+#   07fa1a6184e78d86211666ea04bd82a9, 194 lines, fetched read-only 2026-08-14.)
+#
+# What it fixes: the recipient query at :143 reads ONE source,
+# `SELECT id,email FROM users WHERE briefing_opt_in=1`. The new landing-page
+# email capture writes to a standalone `briefing_subscribers` table (Worker
+# migration 0006) and never to `users`, so without this change every capture is
+# invisible to the sender and no logged-out subscriber would ever receive the
+# briefing they consented to.
+#
+# Why standalone and not a `users` row: users.pw_hash is nullable
+# (0001_init.sql:4), and a public endpoint inserting there creates squattable
+# rows. All three consequences were reproduced against the current tree before
+# the table was designed: auth_password.js:34 returns 409 email_taken (locking
+# the real owner out of signup); auth_oauth.js:72 fires its anti-hijack guard
+# only `if (existing && existing.pw_hash)`, so a pw_hash-NULL row falls through
+# to `existing || createUser(...)` at :85 and becomes the victim's Google
+# account; and the gate at :82 (`!existing && !consented`) is skipped, along
+# with insertConsent at :93.
+#
+# `unsubscribed_at IS NULL` is load-bearing. The Worker's unsubscribe SETS that
+# column rather than deleting the row (so an unsubscribe sticks against a
+# re-submission of the same address through the INSERT OR IGNORE subscribe
+# route). Drop the clause and every unsubscribed person keeps getting mail.
+#
+# `email NOT IN (SELECT email FROM users)` keeps one address to one recipient:
+# once an account exists, users.briefing_opt_in is authoritative and the account
+# page's toggle is the single truth the subscriber sees.
+#
+# NOT touched by this patch:
+#   * the `--test` branch at :139 (owner-only send) — unchanged.
+#   * send_one() at :104 and its RFC 8058 List-Unsubscribe /
+#     List-Unsubscribe-Post headers — unchanged, and no change is needed. The
+#     Worker's GET /api/briefing/unsubscribe now returns a CONFIRMATION page
+#     instead of writing (a bare-GET write let link scanners and Outlook Safe
+#     Links unsubscribe real people), while POST still performs the one-click
+#     write, which is what RFC 8058 requires. The same URL therefore keeps
+#     working for both the visible body link (GET → confirm button) and the
+#     List-Unsubscribe header (POST → one-click). A client that ignores
+#     List-Unsubscribe-Post falls back to GET-ing the URL and gets the
+#     confirmation page, which reads standalone with no referrer.
+#   * footer_block() at :94 — still points captures at the account page they
+#     don't have. The Unsubscribe link next to it is the working path, so this
+#     is cosmetic; left alone to keep the diff to the one query.
+#
+# Ordering: apply this ONLY after the Worker migration 0006 has been applied to
+# D1 (`npm run db:migrate:remote` in cloudflare-worker/). Against a database
+# without the table, d1_query() raises and the run aborts before any send.
+#
+# Before/after: recipient sources 1 -> 2. With 0 captures the query returns the
+# same rows it does today (verified below), so applying this early is a no-op.
+#
+# Apply ON THE PI:
+#   cd ~/.hermes/scripts
+#   cp send_subscriber_briefing.py send_subscriber_briefing.py.bak-2026-08-14
+#   patch -p1 --dry-run < /path/to/send_subscriber_briefing.py.patch   # verify first
+#   patch -p1 < /path/to/send_subscriber_briefing.py.patch
+#   python3 -m py_compile send_subscriber_briefing.py
+#
+# Verify after applying:
+#   grep -c briefing_subscribers send_subscriber_briefing.py     # expect 2 (comment + SQL)
+#   python3 send_subscriber_briefing.py --dry-run                # lists recipients, sends nothing
+#   # and against D1 directly, the union must equal the two parts:
+#   npx wrangler d1 execute maplegamma --remote --command \
+#     "SELECT COUNT(*) FROM (SELECT id,email FROM users WHERE briefing_opt_in=1 \
+#      UNION ALL SELECT id,email FROM briefing_subscribers \
+#      WHERE unsubscribed_at IS NULL AND email NOT IN (SELECT email FROM users))"
+#
+# STILL BLOCKED after this patch — nothing here makes mail go out:
+#   1. OPERATOR_NAME / OPERATOR_ADDR at :48-49 are literal placeholders
+#      ('[operator legal name]' / '[mailing address]') and the runtime guard at
+#      :167 refuses --send until they are real.
+#   2. The crontab line for this sender is commented out.
+#   3. The From is arshad@carfii.com; moving it to @maplegamma.com needs
+#      SPF/DKIM/DMARC on a zone that currently has none.
+--- a/send_subscriber_briefing.py
++++ b/send_subscriber_briefing.py
+@@ -140,7 +140,20 @@
+         if not subs:  # owner isn't a registered user — still send with a synthetic id (unsub is a no-op)
+             subs = [{"id": "owner-test-0000", "email": OWNER_EMAIL}]
+     else:
+-        subs = d1_query("SELECT id,email FROM users WHERE briefing_opt_in=1")
++        # Two kinds of recipient share one list: registered users who ticked the
++        # opt-in, and landing-page captures in the standalone
++        # briefing_subscribers table (migration 0006 — deliberately NOT rows in
++        # `users`, whose nullable pw_hash makes a public write squattable).
++        # unsubscribed_at IS NULL is load-bearing: the Worker marks that column
++        # instead of deleting, so without it every unsubscribed capture keeps
++        # getting mail. The NOT IN clause keeps one address to one recipient —
++        # once an account exists, users.briefing_opt_in is authoritative.
++        subs = d1_query(
++            "SELECT id,email FROM users WHERE briefing_opt_in=1 "
++            "UNION ALL "
++            "SELECT id,email FROM briefing_subscribers "
++            "WHERE unsubscribed_at IS NULL AND email NOT IN (SELECT email FROM users)"
++        )
+
+     if not subs:
+         print("No opted-in subscribers — nothing to send (clean no-op).")

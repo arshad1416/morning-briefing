@@ -407,7 +407,12 @@ function PaperTab({ data }: { data: Any }) {
           through). accuracy.json shape: summary/expectancy/drawdown/per_strategy
           — the old version read acc.overall/top_performers, which the producer
           never wrote, so these sections were permanently invisible. */}
-      {acc?.summary && (
+      {acc?.summary && (() => {
+        // win_rate is the lifetime figure; expectancy/drawdown cover only the
+        // trades still retained after the 08:00 prune. No sample is "—", not a
+        // zero result — same handling AccuracyStats.tsx uses.
+        const sampled = (acc.expectancy?.n_trades ?? 0) > 0;
+        return (
         <Card title="Live Trading Accuracy">
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
             <Metric
@@ -417,21 +422,28 @@ function PaperTab({ data }: { data: Any }) {
             />
             <Metric
               label={<InfoTip term="expectancy">Expectancy</InfoTip>}
-              value={`${(acc.expectancy?.expectancy_pct ?? 0) >= 0 ? '+' : ''}${fmt(acc.expectancy?.expectancy_pct, 2)}%`}
+              value={sampled ? `${(acc.expectancy?.expectancy_pct ?? 0) >= 0 ? '+' : ''}${fmt(acc.expectancy?.expectancy_pct, 2)}%` : '—'}
               color={pnlColor(acc.expectancy?.expectancy_pct ?? 0)}
             />
-            <Metric label={<InfoTip term="profit_factor">Profit Factor</InfoTip>} value={fmt(acc.expectancy?.profit_factor, 2)} />
-            <Metric label={<InfoTip term="max_drawdown">Max Drawdown</InfoTip>} value={`${fmt(acc.drawdown?.max_drawdown_pct, 1)}%`} color="var(--color-bear)" />
+            <Metric label={<InfoTip term="profit_factor">Profit Factor</InfoTip>} value={sampled ? fmt(acc.expectancy?.profit_factor, 2) : '—'} />
+            <Metric label={<InfoTip term="max_drawdown">Max Drawdown</InfoTip>} value={sampled ? `${fmt(acc.drawdown?.max_drawdown_pct, 1)}%` : '—'} color="var(--color-bear)" />
             <Metric
               label="Avg Win / Loss"
-              value={`+${fmt(acc.expectancy?.avg_win_pct, 2)}% / ${fmt(acc.expectancy?.avg_loss_pct, 2)}%`}
+              value={sampled ? `+${fmt(acc.expectancy?.avg_win_pct, 2)}% / ${fmt(acc.expectancy?.avg_loss_pct, 2)}%` : '—'}
             />
           </div>
+          <p className="mt-3 text-xs text-[var(--color-text-tertiary)]">
+            Win rate covers the whole practice account.{' '}
+            {sampled
+              ? `Expectancy, profit factor, drawdown and avg win/loss cover only its ${acc.expectancy.n_trades} most recent closes.`
+              : 'Expectancy, profit factor, drawdown and avg win/loss have no recent closes to measure.'}
+          </p>
           {acc.expectancy?.kelly_note && (
             <p className="mt-3 text-xs text-[var(--color-text-tertiary)]">{acc.expectancy.kelly_note}</p>
           )}
         </Card>
-      )}
+        );
+      })()}
       {/* Same defect as above: acc.top_performers does not exist on the real
           accuracy.json shape (see note above) — per_strategy is the closest
           real field, but it is live-sim per-strategy expectancy, not a

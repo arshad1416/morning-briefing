@@ -46,13 +46,17 @@ export function AccuracyStats() {
     );
   }
 
+  // Win Rate and Closed Trades are the account's whole history; the four
+  // pnl-derived tiles can only use the trades still in the ledger, so an empty
+  // sample is "—", not a zero result (same handling profit_factor already has).
+  const sampled = data.sample_trades > 0;
   const stats: Array<{ label: string; value: string; term?: GlossaryTerm }> = [
     // expectancy is percent-per-trade (expectancy_pct) — not dollars.
-    { label: 'Expectancy / Trade', value: `${data.expectancy >= 0 ? '+' : ''}${data.expectancy.toFixed(2)}%`, term: 'expectancy' },
+    { label: 'Expectancy / Trade', value: sampled ? `${data.expectancy >= 0 ? '+' : ''}${data.expectancy.toFixed(2)}%` : '—', term: 'expectancy' },
     { label: 'Win Rate', value: `${(data.hit_rate * 100).toFixed(1)}%`, term: 'win_rate' },
     { label: 'Profit Factor', value: data.profit_factor == null ? '—' : data.profit_factor.toFixed(2), term: 'profit_factor' },
-    { label: 'Max Drawdown', value: `${(data.max_drawdown * 100).toFixed(1)}%`, term: 'max_drawdown' },
-    { label: 'Kelly Fraction', value: `${(data.kelly_fraction * 100).toFixed(1)}%`, term: 'kelly' },
+    { label: 'Max Drawdown', value: sampled ? `${(data.max_drawdown * 100).toFixed(1)}%` : '—', term: 'max_drawdown' },
+    { label: 'Kelly Fraction', value: sampled ? `${(data.kelly_fraction * 100).toFixed(1)}%` : '—', term: 'kelly' },
     { label: 'Closed Trades', value: data.total_signals.toLocaleString() },
   ];
 
@@ -73,8 +77,12 @@ export function AccuracyStats() {
           ))}
         </div>
         <p className="mt-3 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
-          From the practice account — simulated trades, no real money. Expectancy is a percentage of the amount put into
-          each trade, not a dollar figure.
+          From the practice account — simulated trades, no real money. Win rate and closed trades cover the whole
+          account;{' '}
+          {sampled
+            ? `expectancy, profit factor, drawdown and Kelly cover only its ${data.sample_trades.toLocaleString()} most recent closes.`
+            : 'expectancy, profit factor, drawdown and Kelly have no recent closes to measure.'}{' '}
+          Expectancy is a percentage of the amount put into each trade, not a dollar figure.
         </p>
       </div>
     </Surface>

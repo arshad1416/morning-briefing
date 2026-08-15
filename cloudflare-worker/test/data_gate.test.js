@@ -95,6 +95,18 @@ describe('hard data gate', () => {
     expect(res.status).toBe(404);
   });
 
+  it('does not serve council_history.json even though a stale R2 object exists', async () => {
+    // The July object is still in the bucket and there is no scheduled writer,
+    // so serving it hands a Pro subscriber a 40-day-old artifact at HTTP 200.
+    // 'not_found' (never gated) is the assertion — 'not_generated' would mean
+    // the entry is back in PRO_FILES.
+    await env.PRIVATE.put('council_history.json', JSON.stringify({ runs: [] }));
+    const { cookie } = await sessionFor('council@test.ca', { tier: 'pro', status: 'active' });
+    const res = await app.request('/api/data/council_history.json', { headers: { Cookie: cookie } }, env);
+    expect(res.status).toBe(404);
+    expect((await res.json()).error).toBe('not_found');
+  });
+
   it('rejects path traversal', async () => {
     const { cookie } = await sessionFor('trav@test.ca', { tier: 'pro', status: 'active' });
     const res = await app.request('/api/data/..%2f..%2fsecret', { headers: { Cookie: cookie } }, env);

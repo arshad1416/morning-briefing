@@ -1,6 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const { readFileSync } = require('node:fs');
+const { existsSync, readFileSync } = require('node:fs');
 const path = require('node:path');
 
 const archiveIndex = JSON.parse(
@@ -8,12 +8,40 @@ const archiveIndex = JSON.parse(
 );
 const GENERATED_ARCHIVE_DATE = archiveIndex.dates[0];
 
+// Pinning dates[0] alone left 75 of 76 archive routes untested, and five of them
+// were broken: their payload carries bare `NaN` from Python's json writer, which
+// a plain JSON.parse rejects, so those pages built as content-empty shells.
+// Every date a plain parse cannot read is exercised too, so the tolerant reader
+// cannot regress unnoticed.
+const ARCHIVE_DIR = path.resolve(__dirname, '../../public/data/archive');
+const NON_PARSING_DATES = archiveIndex.dates.filter((date) => {
+  const file = path.join(ARCHIVE_DIR, `${date}.json`);
+  if (!existsSync(file)) return false;
+  try {
+    JSON.parse(readFileSync(file, 'utf8'));
+    return false;
+  } catch {
+    return true;
+  }
+});
+const ARCHIVE_DATES = [GENERATED_ARCHIVE_DATE, ...NON_PARSING_DATES];
+
+// /ticker serves one page for 3,040 symbols, so its data-age stamp is the only
+// thing that can tell a reader the price on screen is frozen. BK is the stalest
+// file shipping — every assertion below is derived from the file itself rather
+// than from the day count it happens to show.
+const STALE_TICKER = 'BK';
+const STALE_TICKER_GENERATED_AT = JSON.parse(
+  readFileSync(path.resolve(__dirname, `../../public/data/tickers/${STALE_TICKER}.json`), 'utf8'),
+).generated_at;
+
 const CONCRETE_ROUTES = [
   '/',
   '/account/',
   '/archive/',
   '/charts/',
   '/dashboard/',
+  '/grading-rule/',
   '/login/',
   '/models/',
   '/options/',
@@ -161,15 +189,60 @@ test.describe('responsive route matrix', () => {
     }
   });
 
-  test('a generated archive-detail route stays within the viewport', async ({ page }, testInfo) => {
+  test('generated archive-detail routes render their briefing and stay within the viewport', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'chromium-desktop', 'One engine is sufficient for dynamic-route discovery.');
+    // NON_PARSING_DATES is derived from the shipped payloads, so a Pi
+    // regeneration that fixed all five would shrink this loop back to the one
+    // date that always parsed and retire the tolerant-reader guard with nothing
+    // going red. Fail loudly instead of testing less.
+    expect(
+      NON_PARSING_DATES.length,
+      'no unparseable archive payload is left, so this loop no longer covers the tolerant reader — re-point it or delete it',
+    ).toBeGreaterThan(0);
     await installMocks(page, { loggedIn: true });
-    expect(GENERATED_ARCHIVE_DATE).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-    const response = await page.goto(`/archive/${GENERATED_ARCHIVE_DATE}/`, { waitUntil: 'domcontentloaded' });
-    expect(response?.status()).toBeLessThan(400);
-    await settleLayout(page);
-    const measurement = await measureOverflow(page);
-    expect(measurement.scrollWidth).toBeLessThanOrEqual(measurement.clientWidth);
+    for (const date of ARCHIVE_DATES) {
+      await test.step(date, async () => {
+        expect(date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+        const response = await page.goto(`/archive/${date}/`, { waitUntil: 'domcontentloaded' });
+        expect(response?.status()).toBeLessThan(400);
+        await settleLayout(page);
+        // An unreadable payload still renders the header, so the page only
+        // looks fine until you ask for a section that comes from the payload.
+        // The two assertions pin different halves: the heading disappears if the
+        // payload stops parsing, and a leaked `NaN` means it parsed but a
+        // non-finite row reached the table.
+        await expect(page.getByRole('heading', { name: 'Market Snapshot' })).toBeVisible();
+        await expect(page.locator('body')).not.toContainText('NaN');
+        const measurement = await measureOverflow(page);
+        expect(measurement.scrollWidth).toBeLessThanOrEqual(measurement.clientWidth);
+      });
+    }
+  });
+
+  test('a frozen ticker page states how old its price is', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'chromium-desktop', 'Data age is not viewport-dependent.');
+    // The stamp only proves anything while this fixture is genuinely frozen.
+    const ageDays = (Date.now() - Date.parse(STALE_TICKER_GENERATED_AT)) / 86_400_000;
+    expect(ageDays, `${STALE_TICKER}.json is fresh again — re-point this at a frozen ticker`).toBeGreaterThan(3);
+
+    await installMocks(page, { loggedIn: true });
+    await page.goto(`/ticker/?symbol=${STALE_TICKER}`, { waitUntil: 'domcontentloaded' });
+
+    // Strict on purpose: one stamp on the page today, and a second one appearing
+    // should fail rather than let this silently assert about the wrong element.
+    const stamp = page.locator('time');
+    // The attribute pins the fallback order. latest.json — the fallback when a
+    // detail file is missing — is stamped today, so a stamp reading from it
+    // instead of the detail payload would carry today's date, not this one.
+    await expect(stamp).toHaveAttribute(
+      'datetime',
+      new Date(STALE_TICKER_GENERATED_AT).toISOString(),
+      { timeout: 15_000 },
+    );
+    // DataFreshness renders that same attribute with an em dash before it
+    // mounts, so only the text proves an age was actually computed. Shape, not
+    // a pinned "35d": the file keeps ageing on its own.
+    await expect(stamp).toHaveText(/^\d+d ago$/);
   });
 });
 

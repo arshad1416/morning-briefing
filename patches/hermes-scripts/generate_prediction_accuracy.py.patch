@@ -1,0 +1,102 @@
+# generate_prediction_accuracy.py.patch — ONE win rate for one account
+#
+# Target on the Pi: ~/.hermes/scripts/generate_prediction_accuracy.py
+#   (repo arshad1416/hermes-scripts. The pi-scripts/ copy in morning-briefing is
+#   byte-identical today — md5 f55944de97b57bbbdee6b74a530d21e6 in both places,
+#   re-verified 2026-08-14 — but editing it deploys nothing; AGENTS.md rule 4.)
+#
+# What it fixes: accuracy.json's summary block was computed from the ledger's
+# closed_trades LIST, which archive_trades_to_turso.py --prune empties every
+# weekday at 08:00 (crontab: `0 8 * * 1-5 ... archive_trades_to_turso.py --prune`).
+# metadata.winning_trades / losing_trades are incremented on every close
+# (stop_loss_monitor.py:215-217) and the prune never touches them, so they are
+# the account's whole history — and they are exactly what push_dashboard.py:437-440
+# already publishes as paper_trades.json portfolio.win_rate. /positions was
+# therefore rendering 46.8% (header, :258) and 0.0% ("Live Trading Accuracy",
+# :415) for the same account under the same `win_rate` glossary term.
+# summary now reports the lifetime window; expectancy/drawdown/slippage/
+# per_strategy stay on the retained trades because only those still carry pnl_pct.
+#
+# Before/after, run against the live ledger (5 open, metadata 37W/42L/84 total):
+#   summary.win_rate       0.0  -> 46.8
+#   summary.closed_trades  0    -> 79
+#   summary.total_trades   5    -> 84       (= 79 closed + 5 open)
+#   summary.open_positions 5    -> 5        (unchanged)
+#   summary.return_pct     -10.34 -> -10.34 (unchanged)
+# Every other block of the payload is byte-for-byte unchanged.
+#
+# Fail-closed safety (r2_sync.load_and_validate_artifact, the 2026-07-30 Infinity
+# outage): accuracy.json has NO entry in pipeline_schemas._MODELS, so only the
+# strict-parse + _assert_finite checks apply to it. The one new division is
+# guarded by `if closed_total > 0`, so no non-finite value can be produced and
+# no field this validator inspects changes shape. This patch cannot freeze the
+# publish.
+#
+# Apply ON THE PI:
+#   cd ~/.hermes/scripts
+#   cp generate_prediction_accuracy.py generate_prediction_accuracy.py.bak-2026-08-14
+#   patch -p1 --dry-run < /path/to/generate_prediction_accuracy.py.patch  # verify first
+#   patch -p1 < /path/to/generate_prediction_accuracy.py.patch
+#   python3 -m py_compile generate_prediction_accuracy.py
+#
+# Verify after applying:
+#   python3 generate_prediction_accuracy.py
+#   python3 -c "import json;print(json.load(open('/home/arshad14/morning-briefing/data/accuracy.json'))['summary'])"
+#   # expect closed_trades == metadata.winning_trades + losing_trades (79 today)
+#   # and win_rate == the same number push_dashboard.py writes to
+#   #   data/paper_trades.json -> portfolio.win_rate (46.8 today):
+#   python3 -c "import json;print(json.load(open('/home/arshad14/morning-briefing/data/paper_trades.json'))['portfolio']['win_rate'])"
+#
+# Regression test (runs in this repo, no Pi venv needed):
+#   cd pi-scripts && python3 -m unittest test_generate_prediction_accuracy
+--- a/generate_prediction_accuracy.py
++++ b/generate_prediction_accuracy.py
+@@ -206,6 +206,20 @@
+     meta = ledger.get("metadata", {})
+     acct = ledger.get("account", {})
+ 
++    # archive_trades_to_turso.py --prune empties closed_trades at 08:00 but the
++    # metadata counters keep counting, so len(closed) is "closed since the last
++    # prune" — a different denominator from the lifetime one push_dashboard.py
++    # publishes on /positions. summary reports the lifetime counters so both
++    # tiles show one win rate; expectancy/drawdown stay on the retained trades
++    # because only those still carry pnl_pct.
++    wins = int(meta.get("winning_trades", 0) or 0)
++    losses = int(meta.get("losing_trades", 0) or 0)
++    if not (wins or losses):  # ledger with no lifetime counters — count what is here
++        wins = sum(1 for t in closed if float(t.get("pnl_pct", 0) or 0) > 0)
++        losses = len(closed) - wins
++    closed_total = wins + losses
++    lifetime_wr = round(wins / closed_total * 100, 1) if closed_total > 0 else 0.0
++
+     if not closed:
+         print("No closed trades found")
+         # Still write a fresh, schema-identical accuracy.json. A day with zero
+@@ -217,10 +231,10 @@
+         output = {
+             "generated_at": datetime.now(timezone.utc).isoformat(),
+             "summary": {
+-                "total_trades": len(open_trades),
+-                "closed_trades": 0,
++                "total_trades": closed_total + len(open_trades),
++                "closed_trades": closed_total,
+                 "open_positions": len(open_trades),
+-                "win_rate": 0.0,
++                "win_rate": lifetime_wr,
+                 "return_pct": round((current - starting) / starting * 100, 2) if starting > 0 else 0,
+             },
+             "expectancy": {
+@@ -316,10 +330,10 @@
+     output = {
+         "generated_at": datetime.now(timezone.utc).isoformat(),
+         "summary": {
+-            "total_trades": len(closed) + len(open_trades),
+-            "closed_trades": len(closed),
++            "total_trades": closed_total + len(open_trades),
++            "closed_trades": closed_total,
+             "open_positions": len(open_trades),
+-            "win_rate": expectancy["win_rate"],
++            "win_rate": lifetime_wr,
+             "return_pct": round((current - starting) / starting * 100, 2) if starting > 0 else 0,
+         },
+         "expectancy": expectancy,

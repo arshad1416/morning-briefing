@@ -46,7 +46,7 @@ PRIVATE_FILES = [
     # pro tier
     "walk_forward_v2.json", "walk_forward.json", "strategy_improvement.json",
     "strategy_improvement_b.json", "trade_outcomes.json", "trade_outcomes_b.json",
-    "prediction-engine.json", "accuracy.json", "council_history.json",
+    "prediction-engine.json", "accuracy.json",
     "simulation.json", "gex-detail.json", "nope-detail.json",
     "ibkr_account.json", "ibkr_positions.json", "ibkr_trades.json",
 ]

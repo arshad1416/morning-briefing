@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-Definitive dashboard data generator — uses yfinance historical closes for entry prices.
-Bypasses ALL Pi CAD/USD confusion by getting prices directly from the market.
+Definitive dashboard data generator — entry prices are the ledger's booked fills,
+current prices come from yfinance. One cost basis, so the per-row P&L and the
+portfolio header can never disagree.
 """
-import json, os, datetime, subprocess, sys, math, fcntl, yfinance as yf, pandas as pd
+import json, os, datetime, subprocess, sys, math, fcntl, yfinance as yf
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from yfinance_session import download as yf_download, ticker as yf_ticker
@@ -157,53 +158,12 @@ def dual_price(price, currency):
     else:  # CAD
         return round(p / RATE, 2), round(p, 2)
 
-def to_native(price, ticker, cur):
-    """Convert Pi's raw price to native currency. Pi stores in CAD.
-    For US tickers: ALWAYS divide by RATE (CAD→USD), ignoring entry_currency field.
-    For CA tickers: keep as-is (already CAD). Used as fallback when entry_currency is wrong or missing."""
-    if not price or float(price) == 0:
-        return 0
-    p = float(price)
-    if ticker_currency(ticker) == "USD":
-        return round(p / RATE, 2)
-    return round(p, 2)
-
 def get_native_currency(ticker, entry_currency=None):
     """Determine the TRUE native currency for a ticker.
     Uses entry_currency only if it matches the known market. Falls back to ticker-based detection."""
     if entry_currency in ("USD", "CAD"):
         return entry_currency
     return ticker_currency(ticker)
-
-def get_entry_price(ticker, entry_date_str, raw_entry=None):
-    """Get the ACTUAL entry price from yfinance historical data on the entry date.
-    For today's entries, uses raw_entry (converted to native currency)."""
-    today = datetime.datetime.now().strftime("%Y-%m-%d")
-    
-    # For today's entries — use raw_entry (actual entry price), convert to native
-    if entry_date_str == today:
-        if raw_entry and raw_entry > 0:
-            p = round(raw_entry, 2)
-            curr = ticker_currency(ticker)
-            if curr == "USD":
-                p = round(p / RATE, 2)
-            return p, curr
-        return None, None
-    
-    try:
-        yf_t = YF_MAP.get(ticker, ticker)
-        start = (pd.Timestamp(entry_date_str) - pd.Timedelta(days=5)).strftime("%Y-%m-%d")
-        end = (pd.Timestamp(entry_date_str) + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
-        d = yf_download(yf, yf_t, start=start, end=end, auto_adjust=False, progress=False)
-        if d.empty: return None, None
-        if isinstance(d.columns, type(d.columns)):
-            d.columns = d.columns.get_level_values(0)
-        entry = round(float(d["Close"].iloc[-1]), 2)
-        if not math.isfinite(entry):
-            return None, None
-        curr = ticker_currency(ticker)
-        return entry, curr
-    except: return None, None
 
 def get_current_price(ticker, entry_date_str=None, raw_entry=None):
     """Get current market price from yfinance. For today's entries, tries yfinance first (live/intraday
@@ -407,9 +367,9 @@ def _main_inner():
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # ── Fetch live USDCAD rate FIRST so every conversion below (dual_price,
-    # to_native, get_entry_price, get_current_price) uses it; the module
-    # default 1.38 is only the fallback when the fetch fails. Also published
-    # as fx_rate_usdcad for the frontend currency toggle.
+    # get_current_price) uses it; the module default 1.38 is only the fallback
+    # when the fetch fails. Also published as fx_rate_usdcad for the frontend
+    # currency toggle.
     try:
         fx_hist = yf_ticker(yf, "USDCAD=X").history(period="5d")
         if not fx_hist.empty:
@@ -441,60 +401,28 @@ def _main_inner():
     cash = round(float(acct.get("cash", 0)), 2)
     start = float(acct.get("starting_balance", 2000))
     
-    # ── Compute closed trade P&L from yfinance ──
+    # ── Read closed trade P&L off the ledger ──
     # Process ALL closed trades for P&L, but only show last 20
     all_closed = pt.get("closed_trades", [])
     recent = []
     realized_pnl = 0.0
-    for c in all_closed[-40:]:  # process up to 40 for P&L (yfinance is slow)
+    for c in all_closed[-40:]:  # process up to 40 for P&L
         ticker = c.get('ticker','?')
-        yf_t = YF_MAP.get(ticker, ticker)
         cur = ticker_currency(ticker, c.get("entry_currency", ""))
         qty = float(c.get('quantity') or 1)
         qty = int(qty) if qty.is_integer() else qty
-        
-        entry_date = str(c.get('entry_date',''))[:10]
-        exit_date = str(c.get('exit_date',''))[:10]
-        
-        # Get yfinance close on entry and exit dates
-        entry_price, exit_price = None, None
-        
-        # For today's entries: prefer ledger's entry_price_usd when available (correct after fix_ledger_pnl)
-        today_str = datetime.datetime.now().strftime("%Y-%m-%d")
-        if entry_date == today_str:
-            usd_entry = c.get("entry_price_usd")
-            if usd_entry and cur == "USD":
-                entry_price = round(float(usd_entry), 2)
-            else:
-                raw_entry = float(c.get("entry_price_cad", c.get("entry_price", 0)))
-                ep, _ = get_entry_price(ticker, entry_date, raw_entry)
-                entry_price = ep
-        else:
-            if entry_date:
-                ep, _ = get_entry_price(ticker, entry_date)
-                entry_price = ep
-        if exit_date:
-            try:
-                end = (pd.Timestamp(exit_date) + pd.Timedelta(days=2)).strftime('%Y-%m-%d')
-                dx = yf_download(yf, yf_t, start=exit_date, end=end, auto_adjust=False, progress=False)
-                if not dx.empty:
-                    if isinstance(dx.columns, pd.MultiIndex):
-                        dx.columns = dx.columns.get_level_values(0)
-                    exit_price = round(float(dx['Close'].iloc[-1]), 2)
-            except:
-                pass
-        
-        # Fallback: to_native on Pi's raw prices if yfinance fails
-        raw_entry = float(c.get('entry_price', 0) or 0)
-        raw_exit = float(c.get('exit_price', 0) or 0)
-        if entry_price is None:
-            entry_price = to_native(raw_entry, ticker, cur)
-        if exit_price is None:
-            exit_price = to_native(raw_exit, ticker, cur)
-        
-        pnl_pct = round((exit_price - entry_price) / entry_price * 100, 2) if entry_price > 0 else 0
-        # Position-level P&L: per-share move × share count from the ledger
-        pnl_usd = round((exit_price - entry_price) * qty, 2)
+
+        # Booked fills and booked P&L, straight off the ledger — the same basis
+        # the header sums. Re-deriving either end from a yfinance close on the
+        # trade date put the rows on a different cost basis than the cash the
+        # engine actually moved. Per-unit prices stay native for options too;
+        # entry_value carries their 100x CAD multiplier, so it only bases the pct
+        # (where the multiplier cancels).
+        entry_price = round(float(c.get('entry_price') or 0), 2)
+        exit_price = round(float(c.get('exit_price') or 0), 2)
+        entry_value = float(c.get("entry_value") or 0) or round(entry_price * qty, 2)
+        pnl_usd = round(float(c.get('pnl') or 0), 2)
+        pnl_pct = round(pnl_usd / entry_value * 100, 2) if entry_value else 0
         realized_pnl += pnl_usd
 
         display_ticker = DISPLAY_MAP.get(ticker, ticker)
@@ -590,23 +518,11 @@ def _main_inner():
             })
             continue
         
-        # For today's entries: prefer entry_price_usd when available (avoids FX rate approximation)
-        today_str = datetime.datetime.now().strftime("%Y-%m-%d")
-        if entry_date == today_str:
-            usd_entry = t.get("entry_price_usd")
-            if usd_entry and ticker_currency(ticker) == "USD":
-                entry_price = round(float(usd_entry), 2)
-            else:
-                entry_price, _ = get_entry_price(ticker, entry_date, raw_entry)
-        else:
-            entry_price, _ = get_entry_price(ticker, entry_date, raw_entry)
-        
-        if entry_price is None:
-            # Fall back to normalize prices (last resort)
-            entry_price = round(float(t.get("entry_price_usd", t.get("entry_price", 0))), 2)
-            if cur not in ("USD", "CAD"):
-                cur = ticker_currency(ticker)
-        
+        # The booked fill, from the same dollars the header sums as `invested`,
+        # so the rows and the tile cannot sit on two cost bases. A yfinance close
+        # on the entry date is a different number than what the engine debited.
+        entry_price = round(ledger_entry_value / qty, 2)
+
         current_price = get_current_price(ticker, entry_date, raw_entry)
         if isinstance(current_price, tuple):
             current_price = current_price[0]
@@ -619,6 +535,10 @@ def _main_inner():
         
         entry_usd, entry_cad = dual_price(entry_price, cur)
         current_usd, current_cad = dual_price(current_price, cur)
+        # Hoisted so row pnl is market_value − entry_value exactly, the same two
+        # rounded numbers the header differences; a fractional qty makes
+        # (current − entry_value/qty) × qty drift from it by up to half a cent.
+        market_val = round(current_price * qty, 2)
         positions.append({
             'ticker': display,
             'type': asset,
@@ -632,8 +552,8 @@ def _main_inner():
             'current_price_cad': current_cad,
             'quantity': qty,
             'entry_value': ledger_entry_value,
-            'market_value': round(current_price * qty, 2),
-            'pnl': round((current_price - entry_price) * qty, 2),
+            'market_value': market_val,
+            'pnl': round(market_val - ledger_entry_value, 2),
             'pnl_pct': pnl_pct,
             'strategy': strategy,
             'direction': 'long',
@@ -674,7 +594,7 @@ def _main_inner():
     live_data = {
         'status': 'LIVE',
         'generated_at': now,
-        'price_source': 'yfinance historical closes — no CAD/USD math',
+        'price_source': 'ledger-booked fills; current prices from yfinance quotes',
         # Live rate fetched once at the top of main(); 1.38 only if the fetch failed.
         'fx_rate_usdcad': RATE,
         'portfolio': {
