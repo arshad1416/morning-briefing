@@ -1,12 +1,17 @@
 # Launch-readiness verification — 2026-08-14
 
-> **STATUS.** Round 1 (verify) and round 2 (build) completed: 16 + 14 agents, 0 errors. Round 3
-> (closeout) **died on a session limit before any agent did work** — nothing was written by it; the
-> gaps it was scoped to close were then closed by hand, except the four listed under
-> **Still open** at the end of this file. Nothing has been committed, pushed or deployed.
+> **STATUS — everything below has SHIPPED.** PRs #53, #54 and #55 are merged; the Worker is
+> deployed, D1 migrated, and all Pi patches applied and verified. Two owner decisions remain, both
+> at the end of this file: the CASL constants (nothing mails until they are real) and the historical
+> `paper_trades.json` exposure (decided: accept it — it is paper money, and a force-push over a
+> public repo would cost more than it buys).
+>
+> Read the sections in order — they are a running record, so an early section may describe a defect
+> that a later one closes. Round 3 died on a session limit before any agent did work; its scope was
+> closed by hand, and rounds 4 and 5 finished the rest.
 
-Round 1 of the gauntlet: **verify, don't assume**. Read-only. No source file was edited, nothing
-committed, pushed or deployed; no Pi state changed. HEAD `74eb72e35`, branch
+The gauntlet's first pass: **verify, don't assume**. Read-only at that point — no source file
+edited, nothing committed or deployed, no Pi state changed. HEAD `74eb72e35`, branch
 `claude/maplegamma-launch-ready-43a81f`.
 
 **Method.** 8 investigators over exclusive scopes, then 8 *fresh* adversarial critics prompted to
@@ -518,6 +523,53 @@ regime `bullish`, 5/5 experts.
 `backfill_council_outcomes.py` carried the identical default-neutral bug — so a rebuild would have
 re-created the fabrications. Fixed too; the ledger is repairable again. The 22 fabricated entries
 were then removed (**25 → 3** real ones), with a note in the file recording why.
+
+---
+
+## Follow-up sweep, 2026-08-15
+
+**Two more stale artifacts were being served at HTTP 200, same class as
+`council_history.json`.** Both were registered, had no UI consumer at any tier, and no live
+producer — and both turned out to hold real bytes in R2:
+
+| File | R2 contents | Now |
+|---|---|---|
+| `walk_forward.json` | `generated_at` **2026-06-03** — 73 days stale | deregistered, object deleted |
+| `journal.json` | entries with June-30 trade ids | deregistered, object deleted |
+
+`r2_sync`'s own state file said "never uploaded" for all three, so **the upload cache is not
+evidence of what R2 holds** — the objects had to be fetched to know. `.gitignore` entries kept for
+both, same asymmetry and same reason as `council_history`.
+
+**The specialist token budgets had the aggregator's bug too.** The first run after the aggregator
+fix reported, in the new error message that fix added:
+
+    failed_experts: {"deepseek_quantitative": "empty_content: hit max_tokens
+                     (3000 used, 3000 of them reasoning)"}
+
+So every council run had been a silent **4-of-5**, not 5-of-5 — the specialist calls still used the
+3000 default. Budgets are now named module constants sized for models that think longer, not
+literals at the call site:
+
+    EXPERT_MAX_TOKENS      32000    EXPERT_TIMEOUT      240s   (was 3000 / 90s)
+    AGGREGATOR_MAX_TOKENS  65536    AGGREGATOR_TIMEOUT  420s   (was 3000 / 90s)
+
+The proxy accepts at least 131072, verified; billing is per token *used*, not per cap. Both arms now
+report `status: full`, `experts_succeeded: 5/5`, `failed_experts: {}`, in ~134s.
+
+**Also closed:** `sitemap.ts` no longer re-implements `listDates()` a third time (a sitemap that
+disagreed with the routes about which dates exist is how you publish URLs that 404); the prerendered
+`/ticker/SPY/` route joined `CONCRETE_ROUTES` alongside the `?symbol=` fallback, which exercises a
+different render path; a global-ceiling trip now logs loudly, because from outside it is
+indistinguishable from a quiet day; and both unsubscribe pages plus the Pi email footer stopped
+telling landing-page captures to "manage email on your account page" — they have no account, and
+`/#/account` was a dead legacy-SPA route for account holders too.
+
+**Not written: the first graded entry.** A dry run proves the chain end to end — a real `neutral`
+call graded against a real `bearish` outcome (−0.17%), scoring 0.0, with `market_pulse` present so
+the guard correctly let it through. It was not saved: tonight's analysis was regenerated at 23:51,
+*after* the close it would be graded against, and a look-ahead entry is fabricated in a different
+way. Monday's scheduled run (council 07:23, graded 16:32) produces the first honest one.
 
 ---
 

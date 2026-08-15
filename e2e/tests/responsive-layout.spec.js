@@ -51,6 +51,10 @@ const CONCRETE_ROUTES = [
   '/screener/',
   '/signup/',
   '/ticker/?symbol=SPY',
+  // The prerendered per-symbol route — 3,040 of these ship, and it is what the
+  // sitemap and the screener actually link to. The ?symbol= form above is the
+  // client fallback and exercises a different render path.
+  '/ticker/SPY/',
 ];
 
 const PRIORITY_ROUTES = ['/dashboard/', '/options/', '/models/'];

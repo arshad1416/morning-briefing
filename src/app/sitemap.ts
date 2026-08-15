@@ -2,9 +2,8 @@
 // public/sitemap.xml (which listed 7 URLs and never updated). Archive entries
 // are read from data/archive-index.json so every briefing page is discoverable.
 import type { MetadataRoute } from 'next';
-import fs from 'node:fs';
-import path from 'node:path';
 import { getTickerCoverage } from '@/lib/seo/ticker-coverage';
+import { listDates } from './archive/corpus';
 
 const SITE = 'https://maplegamma.com';
 
@@ -31,17 +30,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE}/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
   ];
 
-  let dates: string[] = [];
-  try {
-    const idx = JSON.parse(
-      fs.readFileSync(path.join(process.cwd(), 'data', 'archive-index.json'), 'utf8'),
-    );
-    dates = (idx.dates ?? []).filter((d: string) =>
-      fs.existsSync(path.join(process.cwd(), 'data', 'archive', `${d}.json`)),
-    );
-  } catch {
-    // no archive index at build — sitemap still covers the main routes
-  }
+  // Same corpus read the two archive routes use. It lived here a third time,
+  // byte-for-byte, until corpus.ts gave it one home — and a sitemap that
+  // disagreed with the routes about which dates exist is how you publish URLs
+  // that 404. listDates() already swallows a missing index and returns [].
+  const dates = listDates();
 
   const archive: MetadataRoute.Sitemap = dates.map((d) => ({
     url: `${SITE}/archive/${d}/`,

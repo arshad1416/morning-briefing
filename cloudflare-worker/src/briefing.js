@@ -80,7 +80,14 @@ async function rateLimited(c) {
     // the rest of the day — turning the ceiling into an amplifier.
     if ((mine?.count || 0) > PER_IP_PER_HOUR) return true;
     const all = await bump('@global', day);
-    return (all?.count || 0) > GLOBAL_PER_DAY;
+    if ((all?.count || 0) > GLOBAL_PER_DAY) {
+      // Loud on purpose: a global trip silences the site's only email capture for
+      // the rest of the day, and from the outside that is indistinguishable from
+      // a quiet day. There is no admin surface, so `wrangler tail` is the read.
+      console.warn(`briefing/subscribe: GLOBAL daily ceiling hit (${all.count}/${GLOBAL_PER_DAY}) — capture is closed until UTC midnight`);
+      return true;
+    }
+    return false;
   } catch {
     return false;
   }
@@ -121,7 +128,7 @@ export function mountBriefing(app) {
     // HTML, not text: the GET confirmation page's form lands here too, so a
     // human sees a real page. RFC 8058 one-click clients ignore the body.
     return c.html(PAGE('Unsubscribed', "You're unsubscribed",
-      'You will no longer receive the MapleGamma Daily Briefing. You can re-subscribe anytime from your <a href="/#/account">account page</a>.'));
+      'You will no longer receive the MapleGamma Daily Briefing. You can sign up again anytime from <a href="https://maplegamma.com/">maplegamma.com</a>.'));
   });
 
   // Human-facing unsubscribe link (GET) — CONFIRMS, never writes. The Pi sender
@@ -133,7 +140,7 @@ export function mountBriefing(app) {
     const id = await verifyToken(c.env, c.req.query('t') || '');
     if (!id) {
       return c.html(PAGE('Invalid link', 'Link invalid or expired',
-        'Please use the unsubscribe link from a recent email, or manage email preferences on your <a href="/#/account">account page</a>.'), 400);
+        'Please use the unsubscribe link from a recent email. If you have a MapleGamma account you can also manage email in <a href="https://maplegamma.com/account/">your account</a>.'), 400);
     }
     return c.html(PAGE('Confirm unsubscribe', 'Unsubscribe from the Daily Briefing?',
       'You will stop receiving the MapleGamma Daily Briefing. Nothing has changed yet.',

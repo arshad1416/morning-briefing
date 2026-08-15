@@ -42,9 +42,9 @@ PRIVATE_FILES = [
     "screener-data.json", "morning_analysis.json", "maplegamma_analysis.json",
     "maplegamma_analysis_b.json",
     "web-news.json", "polymarket_sentiment.json", "earnings.json",
-    "sec_filings.json", "journal.json", "paper_trades.json",
+    "sec_filings.json", "paper_trades.json",
     # pro tier
-    "walk_forward_v2.json", "walk_forward.json", "strategy_improvement.json",
+    "walk_forward_v2.json", "strategy_improvement.json",
     "strategy_improvement_b.json", "trade_outcomes.json", "trade_outcomes_b.json",
     "prediction-engine.json", "accuracy.json",
     "simulation.json", "gex-detail.json", "nope-detail.json",
