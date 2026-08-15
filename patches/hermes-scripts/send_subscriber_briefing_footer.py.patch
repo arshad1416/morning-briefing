@@ -1,0 +1,23 @@
+# send_subscriber_briefing.py — footer: drop the account-page link
+#
+# TARGET: ~/.hermes/scripts/send_subscriber_briefing.py  repo: arshad1416/hermes-scripts
+#
+# The footer told every recipient to 'manage email on your account page'. A
+# landing-page capture (briefing_subscribers) has no account, and the link
+# pointed at /#/account — a dead legacy-SPA hash route, wrong for account
+# holders too. The unsubscribe link beside it is the path that works for both.
+# CASL identification (OPERATOR_NAME/OPERATOR_ADDR) is untouched.
+--- a/send_subscriber_briefing.py	2026-08-15 00:09:22
++++ b/send_subscriber_briefing.py	2026-08-15 00:09:23
+@@ -96,7 +96,10 @@
+         '<div style="font-size:10px;color:#94a3b8;margin-bottom:8px;line-height:1.5;">'
+         'You are receiving the free MapleGamma Daily Briefing because you opted in. '
+         f'<a href="{unsub_url(user_id)}" style="color:#94a3b8;text-decoration:underline;">Unsubscribe</a>'
+-        f' · manage email on your <a href="{SITE_URL}/#/account" style="color:#94a3b8;">account page</a>.<br>'
++        # Landing-page captures have no account, and /#/account is a dead legacy-SPA
++        # hash route in any case — the working path for every recipient is the
++        # unsubscribe link beside this.
++        '.<br>'
+         f'{OPERATOR_NAME} · {OPERATOR_ADDR}</div>'
+     )
+ 

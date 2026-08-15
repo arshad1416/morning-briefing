@@ -521,6 +521,53 @@ were then removed (**25 → 3** real ones), with a note in the file recording wh
 
 ---
 
+## Follow-up sweep, 2026-08-15
+
+**Two more stale artifacts were being served at HTTP 200, same class as
+`council_history.json`.** Both were registered, had no UI consumer at any tier, and no live
+producer — and both turned out to hold real bytes in R2:
+
+| File | R2 contents | Now |
+|---|---|---|
+| `walk_forward.json` | `generated_at` **2026-06-03** — 73 days stale | deregistered, object deleted |
+| `journal.json` | entries with June-30 trade ids | deregistered, object deleted |
+
+`r2_sync`'s own state file said "never uploaded" for all three, so **the upload cache is not
+evidence of what R2 holds** — the objects had to be fetched to know. `.gitignore` entries kept for
+both, same asymmetry and same reason as `council_history`.
+
+**The specialist token budgets had the aggregator's bug too.** The first run after the aggregator
+fix reported, in the new error message that fix added:
+
+    failed_experts: {"deepseek_quantitative": "empty_content: hit max_tokens
+                     (3000 used, 3000 of them reasoning)"}
+
+So every council run had been a silent **4-of-5**, not 5-of-5 — the specialist calls still used the
+3000 default. Budgets are now named module constants sized for models that think longer, not
+literals at the call site:
+
+    EXPERT_MAX_TOKENS      32000    EXPERT_TIMEOUT      240s   (was 3000 / 90s)
+    AGGREGATOR_MAX_TOKENS  65536    AGGREGATOR_TIMEOUT  420s   (was 3000 / 90s)
+
+The proxy accepts at least 131072, verified; billing is per token *used*, not per cap. Both arms now
+report `status: full`, `experts_succeeded: 5/5`, `failed_experts: {}`, in ~134s.
+
+**Also closed:** `sitemap.ts` no longer re-implements `listDates()` a third time (a sitemap that
+disagreed with the routes about which dates exist is how you publish URLs that 404); the prerendered
+`/ticker/SPY/` route joined `CONCRETE_ROUTES` alongside the `?symbol=` fallback, which exercises a
+different render path; a global-ceiling trip now logs loudly, because from outside it is
+indistinguishable from a quiet day; and both unsubscribe pages plus the Pi email footer stopped
+telling landing-page captures to "manage email on your account page" — they have no account, and
+`/#/account` was a dead legacy-SPA route for account holders too.
+
+**Not written: the first graded entry.** A dry run proves the chain end to end — a real `neutral`
+call graded against a real `bearish` outcome (−0.17%), scoring 0.0, with `market_pulse` present so
+the guard correctly let it through. It was not saved: tonight's analysis was regenerated at 23:51,
+*after* the close it would be graded against, and a look-ahead entry is fabricated in a different
+way. Monday's scheduled run (council 07:23, graded 16:32) produces the first honest one.
+
+---
+
 ## Still open — owner decisions only
 
 1. **CASL constants.** `OPERATOR_NAME` and `OPERATOR_ADDR` need a real legal entity and a real

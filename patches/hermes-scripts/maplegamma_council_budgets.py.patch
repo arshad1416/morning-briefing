@@ -1,0 +1,68 @@
+# maplegamma_council.py — token budgets as named constants, sized for reasoning models
+#
+# TARGET: ~/.hermes/scripts/maplegamma_council.py   repo: arshad1416/hermes-scripts
+# Supersedes the two earlier ad-hoc raises (8000 specialist / 16000 aggregator).
+#
+# WHY: max_tokens caps thought + answer on a reasoning model, so a budget sized
+# for the answer alone starves it and returns EMPTY. That killed the aggregator
+# 111/111 runs and, one level down, made every run a silent 4-of-5. As these
+# models think longer the old numbers would have failed again, so the budgets
+# are now generous named constants rather than literals buried at the call site.
+#
+#   EXPERT_MAX_TOKENS      32000   (~10x measured specialist use)
+#   AGGREGATOR_MAX_TOKENS  65536   (~16x measured synthesis use)
+#   EXPERT_TIMEOUT         240s    (was 90 — deeper reasoning is slower too)
+#   AGGREGATOR_TIMEOUT     420s    (was 180)
+#
+# Billing is per token USED, not per cap, so headroom costs nothing. The proxy
+# accepts at least 131072, verified. Raise these; do not tighten them.
+#
+# VERIFY: cd ~/.hermes/scripts && python3 maplegamma_council.py
+#   expect meta.status full and experts_succeeded 5/5
+--- a/maplegamma_council.py	2026-08-14 23:58:25
++++ b/maplegamma_council.py	2026-08-14 23:58:25
+@@ -321,7 +321,19 @@
+ # subscription, $0 marginal cost). No direct provider fallbacks.
+ AGGREGATOR_MODEL = "deepseek-v4-pro"
+ 
++# Reasoning models bill their thinking against max_tokens, so the cap must cover
++# thought + answer, not just the answer. At the old 3000 the aggregator spent the
++# entire budget reasoning and emitted nothing for 111 consecutive runs, and
++# deepseek_quantitative did the same as a specialist. Billing is per token USED,
++# not per cap, so headroom is free — and these models keep thinking longer.
++# Measured 2026-08-15: aggregator ~4.0k tokens on a 13.5k-char prompt, specialists
++# ~3k+. The proxy accepts up to at least 131072. Raise these, don't tighten them.
++EXPERT_MAX_TOKENS = 32000
++AGGREGATOR_MAX_TOKENS = 65536
++EXPERT_TIMEOUT = 240        # seconds; deeper reasoning is slower as well as longer
++AGGREGATOR_TIMEOUT = 420
+ 
++
+ def compute_cost(model, tokens_in, tokens_out):
+     """Compute cost in USD given model and token counts."""
+     per_mil_in, per_mil_out = COST_TABLE.get(model, (0.0, 0.0))
+@@ -451,10 +463,12 @@
+         # completion tokens, thinking included, so deepseek_quantitative spent all
+         # 3000 reasoning and returned empty — a silent 4-of-5 every run. Billing is
+         # per token used, not per cap, so the headroom is free.
+-        r = call_api(base_url, api_key, model, system_prompt, user_prompt, max_tokens=8000)
++        r = call_api(base_url, api_key, model, system_prompt, user_prompt,
++                     timeout=EXPERT_TIMEOUT, max_tokens=EXPERT_MAX_TOKENS)
+         if not r["content"] and r.get("error") in ("timeout", "http_429", "http_500", "http_502", "http_503"):
+             print(f"  ↻ Retrying {name} once ({r['error']})...")
+-            r = call_api(base_url, api_key, model, system_prompt, user_prompt, max_tokens=8000)
++            r = call_api(base_url, api_key, model, system_prompt, user_prompt,
++                     timeout=EXPERT_TIMEOUT, max_tokens=EXPERT_MAX_TOKENS)
+         status = "✓" if r["content"] else f"✗ {r['error']}"
+         print(f"  {'✓' if r['content'] else '✗'} {name}: {status}")
+         with lock:
+@@ -566,7 +580,8 @@
+         # it writes a character; at the 3000 default it spent the whole budget thinking
+         # and returned empty every time. Measured on the real payload: 8000 -> finish
+         # "stop" with 1.7k of JSON. Billing is per token used, not per cap.
+-        agg = call_api(_base, _key, _model, AGG_SYSTEM, agg_user, timeout=180, max_tokens=16000)
++        agg = call_api(_base, _key, _model, AGG_SYSTEM, agg_user,
++                       timeout=AGGREGATOR_TIMEOUT, max_tokens=AGGREGATOR_MAX_TOKENS)
+         if not agg["content"]:
+             print(f"  ✗ Aggregator {_model} failed: {agg['error']} — trying next")
+             continue

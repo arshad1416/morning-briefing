@@ -13,7 +13,7 @@ import { SESSION_COOKIE, verifySession, entitlement, meetsTier } from './session
 // (tickers/* backs the ungated #/ticker page, so it is NOT gated here.)
 const PRO_PREFIXES = ['charts/'];
 const PRO_FILES = new Set([
-  'walk_forward_v2.json', 'walk_forward.json', 'strategy_improvement.json',
+  'walk_forward_v2.json', 'strategy_improvement.json',
   'strategy_improvement_b.json', 'trade_outcomes.json', 'trade_outcomes_b.json',
   'prediction-engine.json', 'accuracy.json',
   'simulation.json', 'gex-detail.json',
@@ -23,7 +23,7 @@ const BASIC_FILES = new Set([
   'screener-data.json', 'morning_analysis.json', 'maplegamma_analysis.json',
   'maplegamma_analysis_b.json',
   'web-news.json', 'polymarket_sentiment.json', 'earnings.json',
-  'sec_filings.json', 'journal.json', 'paper_trades.json',
+  'sec_filings.json', 'paper_trades.json',
   'ibkr_account.json', 'ibkr_positions.json', 'ibkr_trades.json',
 ]);
 
