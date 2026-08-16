@@ -18,7 +18,7 @@ pass "disk ${disk_used}% used"
 
 # 2. Cron: required lines present
 crontab -l > /tmp/preflight_cron.txt 2>/dev/null || fail "crontab -l failed"
-for needle in "25 7 \* \* 1-5" "40 7 \* \* 1-5" "20 7 \* \*" "22 7 \* \* 0,6" "7,37 9-15" "32 7 \* \* 1-5" "34,44 7 \* \* 1-5" "verdict_chain"; do
+for needle in "25 7 \* \* 1-5" "41 7 \* \* 1-5" "20 7 \* \*" "22 7 \* \* 0,6" "7,37 9-15" "32 7 \* \* 1-5" "44,50 7 \* \* 1-5" "verdict_chain" "45 7 \* \* 1-5" "43 7 \* \*"; do
   grep -qE "$needle" /tmp/preflight_cron.txt || fail "crontab missing: $needle"
 done
 grep -qE "^MAPLEGAMMA_GATE_DAYS=[0-9,]+" /tmp/preflight_cron.txt || fail "crontab missing MAPLEGAMMA_GATE_DAYS"
