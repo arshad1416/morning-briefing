@@ -19,12 +19,13 @@ pass() { echo "PASS: $*"; }
 fail() { echo "FAIL: $*"; exit 1; }
 skip() { echo "SKIP: $*"; }
 
-# 1) council artifact: full run, 5 experts, sane regime
+# 1) council artifact: full run, 5 experts, sane regime, generated TODAY (council CRITICAL #3 —
+#    a stale Friday artifact must not pass Monday's gate)
 [ -f "$ANALYSIS_JSON" ] || fail "analysis json missing: $ANALYSIS_JSON"
-read -r status experts regime <<<"$(python3 - "$ANALYSIS_JSON" <<'PY'
+read -r status experts regime gen_at <<<"$(python3 - "$ANALYSIS_JSON" <<'PY'
 import json, sys
 d = json.load(open(sys.argv[1]))
-print(d.get("meta", {}).get("status", ""), d.get("meta", {}).get("experts_succeeded", ""), d.get("market_pulse", {}).get("regime", ""))
+print(d.get("meta", {}).get("status", ""), d.get("meta", {}).get("experts_succeeded", ""), d.get("market_pulse", {}).get("regime", ""), d.get("meta", {}).get("generated_at", ""))
 PY
 )" || fail "could not parse analysis json: $ANALYSIS_JSON"
 [ "$status" = "full" ] || fail "meta.status != full (got '$status')"
@@ -33,7 +34,21 @@ case "$regime" in
   bullish|bearish|neutral) ;;
   *) fail "market_pulse.regime invalid (got '$regime')" ;;
 esac
-pass "analysis json full / 5 experts / regime=$regime"
+if [ -n "$gen_at" ]; then
+  gen_date="$(python3 - "$gen_at" <<'PY'
+import sys, datetime, zoneinfo
+raw = sys.argv[1].strip()
+if raw.endswith("Z"):
+    raw = raw[:-1] + "+00:00"
+dt = datetime.datetime.fromisoformat(raw)
+if dt.tzinfo is None:
+    dt = dt.replace(tzinfo=datetime.timezone.utc)
+print(dt.astimezone(zoneinfo.ZoneInfo("America/Toronto")).strftime("%Y-%m-%d"))
+PY
+)" || gen_date=""
+  [ "$gen_date" = "$TODAY_ET" ] || fail "council artifact generated $gen_date, not today ($TODAY_ET) — stale run"
+fi
+pass "analysis json full / 5 experts / regime=$regime / generated today"
 
 # 2) public analysis.json exists, non-empty, modified today (ET)
 [ -s "$ANALYSIS_PUBLIC" ] || fail "public analysis.json missing or empty: $ANALYSIS_PUBLIC"
@@ -69,14 +84,11 @@ anon_code="$(curl -s -o /dev/null -w '%{http_code}' "$LIVE_BASE/$GATED_PATH")" |
 [ "$anon_code" = "401" ] || fail "anonymous gated GET returned $anon_code, expected 401"
 pass "anonymous gated GET returned 401"
 
-# 6) entitled gated GET is 200 (only when a session cookie is provided)
-if [ -n "${TEST_SESSION_COOKIE:-}" ]; then
-  auth_code="$(curl -s -o /dev/null -w '%{http_code}' -H "Cookie: __session=$TEST_SESSION_COOKIE" "$LIVE_BASE/$GATED_PATH")" || fail "curl gated URL with cookie failed"
-  [ "$auth_code" = "200" ] || fail "entitled gated GET returned $auth_code, expected 200"
-  pass "entitled gated GET returned 200"
-else
-  skip "entitled check (set TEST_SESSION_COOKIE)"
-fi
+# 6) entitled gated GET is 200 — REQUIRED, fail-closed (council CRITICAL #9)
+: "${TEST_SESSION_COOKIE:?TEST_SESSION_COOKIE must be set (a valid session cookie for an entitled user)}"
+auth_code="$(curl -s -o /dev/null -w '%{http_code}' -H "Cookie: __session=$TEST_SESSION_COOKIE" "$LIVE_BASE/$GATED_PATH")" || fail "curl gated URL with cookie failed"
+[ "$auth_code" = "200" ] || fail "entitled gated GET returned $auth_code, expected 200"
+pass "entitled gated GET returned 200"
 
 # 7) data repo has nothing pending against origin/main (push happened)
 [ -d "$DATA_REPO/.git" ] || fail "data repo not found: $DATA_REPO"
@@ -91,3 +103,9 @@ trunc="$(find "$LOG_DIR" -type f -name '*.log' -mmin -1440 -print0 2>/dev/null |
 pass "no truncation in council logs (last 24h)"
 
 echo "PASS: monday_gate — all checks passed"
+
+# Write the gate-passed sentinel (council CRITICAL #1): guarded downstream jobs
+# (send_comprehensive_briefing, council_trade_executor, automated_paper_trader)
+# exit 0 silently unless today's sentinel exists.
+touch "/tmp/maplegamma_gate_passed_$TODAY_ET"
+echo "SENTINEL: /tmp/maplegamma_gate_passed_$TODAY_ET"
