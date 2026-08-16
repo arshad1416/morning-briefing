@@ -38,7 +38,7 @@ else
 fi
 
 # 3. Council script: token lines + routing present
-for needle in 'AGGREGATOR_MAX_TOKENS = 65536' 'EXPERT_MAX_TOKENS = 32000' '"stream": False' 'ag/gemini-3.7-flash-high' 'ocg/deepseek-v4-pro' 'ocg/glm-5.2' 'qd/qmodel_38max' 'cx/gpt-5.6-sol' 'ROUTER_BASE = "http://127.0.0.1:20128/v1"' 'claude-opus-5'; do
+for needle in 'AGGREGATOR_MAX_TOKENS = 65536' 'EXPERT_MAX_TOKENS = 32000' '"stream": False' 'ag/gemini-3.7-flash-medium' 'ocg/deepseek-v4-pro' 'ocg/glm-5.2' 'qd/qmodel_38max' 'cx/gpt-5.6-sol' 'ROUTER_BASE = "http://127.0.0.1:20128/v1"'; do
   grep -qF "$needle" "$SCRIPTS/maplegamma_council.py" || fail "maplegamma_council.py missing: $needle"
 done
 pass "council routing + token caps + stream:False present"
