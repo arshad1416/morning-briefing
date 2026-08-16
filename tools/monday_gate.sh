@@ -131,5 +131,7 @@ echo "PASS: monday_gate — all checks passed"
 STATE_DIR="$HOME/.hermes/state"
 install -d -m 700 "$STATE_DIR"
 umask 077
-: > "$STATE_DIR/maplegamma_gate_passed_$TODAY_ET"
+SENTINEL_TMP="$STATE_DIR/.maplegamma_gate_passed_$TODAY_ET.tmp"
+printf 'ok %s %s\n' "$TODAY_ET" "$(TZ=America/Toronto date +%H:%M:%S)" > "$SENTINEL_TMP"
+mv -f "$SENTINEL_TMP" "$STATE_DIR/maplegamma_gate_passed_$TODAY_ET"   # atomic replace
 echo "SENTINEL: $STATE_DIR/maplegamma_gate_passed_$TODAY_ET"
