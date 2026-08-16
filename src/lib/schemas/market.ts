@@ -87,10 +87,15 @@ export const LatestDataSchema = z.object({
   // Every consumer already treats it as optional (`?? []`); the schema was the
   // only thing that disagreed.
   premarket_top_setups: z.array(PremarketSetupSchema).default([]),
+  // Same conditional-upstream shape as premarket_top_setups above:
+  // generate_latest.py:251 only sets this when congress_trades.json is within
+  // UPSTREAM_MAX_AGE_H, so it is legitimately ABSENT once that upstream ages
+  // out — which is exactly what the 2026-08-16 07:22 push did, throwing the
+  // whole parse. research-client.tsx already reads it as `d?.congress?.…`.
   congress: z.object({
     recent_trades: z.array(z.any()),
     summary: z.string(),
-  }),
+  }).optional(),
 });
 
 // ── GEX ─────────────────────────────────────────────────────────────────────
