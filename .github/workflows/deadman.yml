@@ -37,22 +37,24 @@ jobs:
         # bespoke parser for it would buy no signal that latest.json doesn't give.
         #
         # Thresholds are per file because the cadences differ by 3x:
-        #   26h — publish-gated. push_dashboard runs every 30 min on weekdays but
+        #   20h — publish-gated. push_dashboard runs every 30 min on weekdays but
         #         only once at 07:22 on Sat/Sun, so even crypto-cohorts (regenerated
         #         every 15 min on the Pi) reaches the site at most once a day.
+        #         20h (not 26h) so a weekend/failed-morning pipeline alerts the same
+        #         evening or before the next market open, not 26h later.
         #   80h — weekday-only generators. Measured Fri→Mon gap in git history is
         #         exactly 72h for both; anything tighter red-alerts every Sunday,
         #         which is how a monitor gets ignored and then muted.
         env:
           BASE_URL: https://maplegamma.com/data
           FRESHNESS: |
-            maplegamma-data.json 26
-            crypto-cohorts.json 26
-            latest.json 26
-            analysis.json 26
-            briefing-intel.json 26
-            reddit-sentiment.json 26
-            options-status.json 26
+            maplegamma-data.json 20
+            crypto-cohorts.json 20
+            latest.json 20
+            analysis.json 20
+            briefing-intel.json 20
+            reddit-sentiment.json 20
+            options-status.json 20
             verdict.json 80
             screener-lite.json 80
         run: |

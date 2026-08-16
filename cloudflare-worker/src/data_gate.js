@@ -35,22 +35,35 @@ export function neededTier(file) {
 }
 
 export function mountDataGate(app) {
+  // Error responses must carry the same private/no-store + Vary: Cookie headers
+  // as the 200 path — a CDN must never cache or share a 401/403 cross-user.
+  function gatedError(c, body, status) {
+    return new Response(JSON.stringify(body), {
+      status,
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Cache-Control': 'private, no-store',
+        'Vary': 'Cookie',
+      },
+    });
+  }
+
   app.get('/api/data/*', async (c) => {
     // path is /api/data/<file> where <file> may contain a slash (charts/AAPL.json)
     const file = decodeURIComponent(c.req.path.replace(/^\/api\/data\//, ''));
-    if (!file || file.includes('..')) return c.json({ error: 'bad_request' }, 400);
+    if (!file || file.includes('..')) return gatedError(c, { error: 'bad_request' }, 400);
 
     const need = neededTier(file);
-    if (!need) return c.json({ error: 'not_found' }, 404);
+    if (!need) return gatedError(c, { error: 'not_found' }, 404);
 
     const sess = await verifySession(getCookie(c, SESSION_COOKIE), c.env.SESSION_SECRET, c.env.DB);
-    if (!sess) return c.json({ error: 'not_signed_in' }, 401);
+    if (!sess) return gatedError(c, { error: 'not_signed_in' }, 401);
     const ent = await entitlement(c.env.DB, sess.user.id);
-    if (!ent.entitled) return c.json({ error: 'no_subscription' }, 403);
-    if (!meetsTier(ent.tier, need)) return c.json({ error: 'upgrade_required', need }, 403);
+    if (!ent.entitled) return gatedError(c, { error: 'no_subscription' }, 403);
+    if (!meetsTier(ent.tier, need)) return gatedError(c, { error: 'upgrade_required', need }, 403);
 
     const obj = await c.env.PRIVATE.get(file);
-    if (!obj) return c.json({ error: 'not_generated' }, 404);
+    if (!obj) return gatedError(c, { error: 'not_generated' }, 404);
     // Buffer rather than stream obj.body: these JSON files are small, and a
     // dangling R2 stream trips isolated-storage cleanup in the test runner.
     const buf = await obj.arrayBuffer();
@@ -58,6 +71,7 @@ export function mountDataGate(app) {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
         'Cache-Control': 'private, no-store',
+        'Vary': 'Cookie',
       },
     });
   });
