@@ -51,6 +51,7 @@
 # ── VERBATIM `crontab -l` BELOW THIS LINE ──
 
 # ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
+# ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
 15 7 * * * cd /home/arshad14/.hermes/scripts && python3 morning_briefing_data.py >> /home/arshad14/.hermes/logs/briefing_data.log 2>&1
 14 7 * * * cd /home/arshad14/.hermes/scripts && python3 consolidate_briefing_data.py >> /home/arshad14/.hermes/logs/consolidate.log 2>&1
 18 7 * * * cd /home/arshad14/.hermes/scripts && python3 fetch_polymarket.py >> /home/arshad14/.hermes/logs/polymarket.log 2>&1
@@ -58,7 +59,8 @@
 20 7 * * * cd /home/arshad14/.hermes/scripts && python3 run_morning_analysis.py >> /home/arshad14/.hermes/logs/morning_analysis.log 2>&1
 22 7 * * 0,6 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
 25 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
-28 7 * * * cd /home/arshad14/.hermes/scripts && python3 send_comprehensive_briefing.py >> /home/arshad14/.hermes/logs/briefing_delivery.log 2>&1
+32 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
+37 7 * * * cd /home/arshad14/.hermes/scripts && python3 send_comprehensive_briefing.py >> /home/arshad14/.hermes/logs/briefing_delivery.log 2>&1
 
 # ── Agent-Reach data collection (6:30-6:36 AM, before pipeline) ──
 30 6 * * * cd /home/arshad14/.hermes/skills/TRADING/scripts && python3 fetch_wsb.py >> /home/arshad14/.hermes/logs/wsb.log 2>&1
@@ -88,7 +90,7 @@
 7,37 9-15 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
 
 # ── Verdict generation ──
-23 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 generate_verdict.py >> /home/arshad14/.hermes/logs/verdict.log 2>&1
+30 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 generate_verdict.py >> /home/arshad14/.hermes/logs/verdict.log 2>&1
 
 # ── Job Hunt Dashboard ──
 0 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 job_hunt_daily.py --no-telegram >> /home/arshad14/.hermes/logs/job_hunt.log 2>&1
@@ -103,7 +105,7 @@
 2,17,32,47 * * * * /opt/homeassistant/git-sync.sh
 
 # ── IBKR Portfolio Agent ──
-12 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 ibkr_portfolio_agent.py >> /home/arshad14/.hermes/logs/ibkr_portfolio.log 2>&1
+12 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 ibkr_portfolio_agent.py >> /home/arshad14/.hermes/logs/ibkr_portfolio.log 2>&1 || python3 -c "import sys; sys.path.insert(0, '/home/arshad14/.hermes/scripts'); from tg_notify import send_telegram; send_telegram('MapleGamma: ibkr_portfolio_agent FAILED - ibkr_*.json is not being refreshed. See ~/.hermes/logs/ibkr_portfolio.log')"
 11,26,41,56 9-16 * * 1-5 cd /home/arshad14/.hermes/scripts && flock -n /tmp/exit_check.lock python3 run_exit_check.py >> /home/arshad14/.hermes/logs/exit_check.log 2>&1
 
 # ── Upwork Daily ──
@@ -248,3 +250,5 @@
 7,27,47 9-15 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 day_trader_healthcheck.py --intraday >> /home/arshad14/.hermes/logs/day_trader_health.log 2>&1
 # Claude Max OAuth keepalive — 9Router bg refresher never starts (ERR_MODULE_NOT_FOUND); forces on-request refresh every 3h (3h breaks phase-lock with the 8h token)
 0 */3 * * * /home/arshad14/.9router/keepalive.sh >> /home/arshad14/.9router/logs/keepalive.log 2>&1
+*/15 14-23 * * 5 /home/arshad14/.hermes/scripts/bg305_delay.py >> /home/arshad14/.hermes/logs/bg305_delay_cron.log 2>&1
+*/15 0-16 * * 6 /home/arshad14/.hermes/scripts/bg305_delay.py >> /home/arshad14/.hermes/logs/bg305_delay_cron.log 2>&1

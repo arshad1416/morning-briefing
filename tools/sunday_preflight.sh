@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# tools/sunday_preflight.sh — Sunday-before-launch preflight (Pi).
+# Prints PASS:/FAIL: per check, exits non-zero on first failure.
+# Run: bash tools/sunday_preflight.sh
+set -uo pipefail
+export TZ=America/Toronto
+
+DATA_REPO="${DATA_REPO:-$HOME/morning-briefing}"
+SCRIPTS="${SCRIPTS:-$HOME/.hermes/scripts}"
+
+pass() { echo "PASS: $*"; }
+fail() { echo "FAIL: $*"; exit 1; }
+
+# 1. Disk
+disk_used="$(df -h "$HOME" | awk 'NR==2{print $5}' | tr -d '%')"
+[ "${disk_used:-100}" -lt 85 ] || fail "disk ${disk_used}% used (>=85%)"
+pass "disk ${disk_used}% used"
+
+# 2. Cron: required lines present
+crontab -l > /tmp/preflight_cron.txt 2>/dev/null || fail "crontab -l failed"
+for needle in "25 7 \* \* 1-5" "40 7 \* \* 1-5" "20 7 \* \*" "22 7 \* \* 0,6" "7,37 9-15"; do
+  grep -qE "$needle" /tmp/preflight_cron.txt || fail "crontab missing: $needle"
+done
+pass "crontab has 07:25 weekday push, 07:40 paper_trader, 07:20 council, weekend push, intraday"
+
+# 3. Council script: token lines + routing present
+for needle in 'AGGREGATOR_MAX_TOKENS = 65536' 'EXPERT_MAX_TOKENS = 32000' '"stream": False' 'ag/gemini-3.7-flash-medium' 'ocg/deepseek-v4-pro' 'ocg/glm-5.2' 'qd/qmodel_38max' 'cx/gpt-5.6-sol' 'ROUTER_BASE = "http://127.0.0.1:20128/v1"'; do
+  grep -qF "$needle" "$SCRIPTS/maplegamma_council.py" || fail "maplegamma_council.py missing: $needle"
+done
+pass "council routing + token caps + stream:False present"
+
+# 4. push_dashboard skip logic present
+grep -qF "rev-list --count origin/main..HEAD" "$SCRIPTS/push_dashboard.py" || fail "push_dashboard.py missing skip logic"
+pass "push_dashboard.py has push-skip"
+
+# 5. Repo clean + synced
+[ -d "$DATA_REPO/.git" ] || fail "data repo missing"
+git -C "$DATA_REPO" fetch origin -q 2>/dev/null || fail "git fetch failed"
+behind="$(git -C "$DATA_REPO" rev-list --count HEAD..origin/main 2>/dev/null || echo "?")"
+[ "$behind" = "0" ] || fail "data repo is $behind commit(s) BEHIND origin/main — run: ssh pi pull"
+ahead="$(git -C "$DATA_REPO" rev-list --count origin/main..HEAD 2>/dev/null || echo "?")"
+[ "$ahead" = "0" ] || fail "data repo is $ahead commit(s) AHEAD (unpushed)"
+pass "data repo in sync with origin/main"
+
+# 6. Deadman workflow present in repo
+[ -f "$DATA_REPO/.github/workflows/deadman.yml" ] || fail "deadman.yml missing"
+grep -qE "maplegamma-data.json 20" "$DATA_REPO/.github/workflows/deadman.yml" || fail "deadman thresholds not 20h"
+pass "deadman.yml thresholds 20h"
+
+# 7. Gate script present + executable
+[ -x "$DATA_REPO/tools/monday_gate.sh" ] || fail "monday_gate.sh missing/not executable"
+bash -n "$DATA_REPO/tools/monday_gate.sh" || fail "monday_gate.sh syntax"
+pass "monday_gate.sh present + syntax OK"
+
+# 8. Latest council artifact state (informational — not a fail at weekend)
+if [ -f "$DATA_REPO/data/maplegamma_analysis.json" ]; then
+  status="$(python3 -c "import json;print(json.load(open('$DATA_REPO/data/maplegamma_analysis.json')).get('meta',{}).get('status','?'))" 2>/dev/null || echo "?")"
+  echo "INFO: last council artifact status=$status (gate requires full on Monday)"
+else
+  echo "INFO: no council artifact yet (expected if never run)"
+fi
+
+# 9. Key log paths writable
+for f in push_dashboard morning_analysis briefing_delivery paper_trader; do
+  touch "$HOME/.hermes/logs/$f.log" 2>/dev/null || fail "log not writable: $f.log"
+done
+pass "log paths writable"
+
+echo "PASS: sunday_preflight — all checks passed"

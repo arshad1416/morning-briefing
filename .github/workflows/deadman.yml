@@ -82,15 +82,23 @@ jobs:
               return (datetime.now(timezone.utc) - t).total_seconds() / 3600
 
           failures = []
+          now = datetime.now(timezone.utc)
+          # Weekend-aware thresholds: on Sat/Sun the publish-gated cadence is
+          # 07:22 only (~24h between runs), so a 20h limit would red-alert every
+          # weekend. Give the publish-gated entries +10h on weekends; the 80h
+          # weekday-only entries are already weekend-safe.
+          is_weekend = now.astimezone().weekday() >= 5
           for line in os.environ["FRESHNESS"].split("\n"):
               if not line.strip():
                   continue
               name, limit = line.split()
               limit = float(limit)
+              if is_weekend and limit < 30:
+                  limit += 10.0
               url = f"{os.environ['BASE_URL']}/{name}"
               try:
                   a = age_hours(url)
-                  print(f"{name}: age={a:.1f}h (limit {limit}h)")
+                  print(f"{name}: age={a:.1f}h (limit {limit}h{' +10 weekend' if is_weekend and limit > 20 else ''})")
                   if a > limit:
                       failures.append(f"{name} is {a:.1f}h old (limit {limit}h) — its generator may be DOWN")
               except SystemExit as e:
