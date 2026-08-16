@@ -60,6 +60,10 @@ pass "data repo in sync with origin/main"
 [ -f "$DATA_REPO/.github/workflows/deadman.yml" ] || fail "deadman.yml missing"
 grep -qE "maplegamma-data.json 20" "$DATA_REPO/.github/workflows/deadman.yml" || fail "deadman thresholds not 20h"
 pass "deadman.yml thresholds 20h"
+# The weekend/Monday grace windows are Pi-cron windows; a bare .astimezone() on a
+# UTC runner evaluates them 4-5h early and false-pages every Monday 04:00-07:25 ET.
+grep -q "America/New_York" "$DATA_REPO/.github/workflows/deadman.yml" || fail "deadman grace windows not ET-anchored"
+pass "deadman grace windows ET-anchored"
 
 # 7. Gate script present + executable
 [ -x "$DATA_REPO/tools/monday_gate.sh" ] || fail "monday_gate.sh missing/not executable"
