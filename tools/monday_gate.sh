@@ -133,9 +133,13 @@ trunc="$(find "$LOG_DIR" -type f -name '*.log' -mmin -1440 -print0 2>/dev/null |
 [ -z "$trunc" ] || fail "truncation (finish_reason=length) in council logs (24h): $trunc"
 pass "no truncation in council logs (last 24h)"
 
+# R7 (Sol round-7): hard deadline enforcement. Sentinel is written ONLY if the
+# gate completes by 07:40 ET. A late completion = exit 1, NO sentinel, alert.
 now_hm="$(TZ=America/Toronto date +%H%M)"
 if [ "$now_hm" -gt 0740 ]; then
-  echo "WARN: gate completed at $now_hm ET — AFTER the 07:40 deadline; guarded consumers will have skipped (fail-closed). Re-run them manually."
+  echo "FAIL: gate completed at $now_hm ET — AFTER the 07:40 deadline. No sentinel written; guarded consumers will skip (fail-closed)."
+  python3 "$HOME/.hermes/scripts/tg_notify.py" "🚨 MapleGamma gate FAILED: completed after 07:40 ET deadline ($now_hm ET). No sentinel — consumers skipped. Investigate and re-run: bash ~/morning-briefing/tools/monday_gate.sh" >/dev/null 2>&1 || true
+  exit 1
 fi
 
 echo "PASS: monday_gate — all checks passed"
@@ -144,6 +148,7 @@ echo "PASS: monday_gate — all checks passed"
 # (tmpfs/reboot-cleared/world-writable — council round-2 HIGH). Guarded jobs
 # (send_comprehensive_briefing, council_trade_executor, automated_paper_trader)
 # only enforce on gate days; sentinel here makes the Monday launch chain safe.
+# Round-7: this write is unreachable after 07:40 — a late run never publishes.
 STATE_DIR="$HOME/.hermes/state"
 install -d -m 700 "$STATE_DIR"
 umask 077
