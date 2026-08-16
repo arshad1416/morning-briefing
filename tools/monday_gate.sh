@@ -57,7 +57,7 @@ analysis_date="$(date -r "$ANALYSIS_PUBLIC" +%F)"
 pass "public analysis.json present and fresh (mtime $analysis_date)"
 
 # 3) live latest.json generated_at is today (ET); ISO with Z handled
-latest_body="$(curl -fsS "$LIVE_BASE/data/latest.json")" || fail "could not fetch $LIVE_BASE/data/latest.json"
+latest_body="$(curl -fsS --max-time 15 --retry 2 --retry-delay 2 "$LIVE_BASE/data/latest.json?gate=$(date +%s)")" || fail "could not fetch $LIVE_BASE/data/latest.json"
 generated_at="$(python3 -c "import json,sys; print(json.loads(sys.stdin.read()).get('generated_at',''))" <<<"$latest_body")" || fail "could not parse latest.json"
 [ -n "$generated_at" ] || fail "latest.json missing generated_at"
 gen_date="$(python3 - "$generated_at" <<'PY'
@@ -77,7 +77,7 @@ pass "latest.json generated_at is today ET ($generated_at)"
 # 3b) production verdict.json is fresh today (council round-2 CRITICAL #2 — the
 #     07:30 generate_verdict && push chain publishes it; verify the DEPLOYED copy,
 #     not just local repo state)
-verdict_body="$(curl -fsS "$LIVE_BASE/data/verdict.json")" || fail "could not fetch $LIVE_BASE/data/verdict.json"
+verdict_body="$(curl -fsS --max-time 15 --retry 2 --retry-delay 2 "$LIVE_BASE/data/verdict.json?gate=$(date +%s)")" || fail "could not fetch $LIVE_BASE/data/verdict.json"
 vgen_at="$(python3 -c "import json,sys; print(json.loads(sys.stdin.read()).get('generated_at',''))" <<<"$verdict_body")" || fail "could not parse verdict.json"
 [ -n "$vgen_at" ] || fail "verdict.json missing generated_at"
 vgen_date="$(python3 - "$vgen_at" <<'PY'
