@@ -57,6 +57,8 @@ MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
 # ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
 MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
 # ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
+MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
+# ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
 15 7 * * * cd /home/arshad14/.hermes/scripts && python3 morning_briefing_data.py >> /home/arshad14/.hermes/logs/briefing_data.log 2>&1
 14 7 * * * cd /home/arshad14/.hermes/scripts && python3 consolidate_briefing_data.py >> /home/arshad14/.hermes/logs/consolidate.log 2>&1
 18 7 * * * cd /home/arshad14/.hermes/scripts && python3 fetch_polymarket.py >> /home/arshad14/.hermes/logs/polymarket.log 2>&1
@@ -65,7 +67,7 @@ MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
 22 7 * * 0,6 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
 25 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
 32 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
-37 7 * * * cd /home/arshad14/.hermes/scripts && python3 send_comprehensive_briefing.py >> /home/arshad14/.hermes/logs/briefing_delivery.log 2>&1
+43 7 * * * cd /home/arshad14/.hermes/scripts && python3 send_comprehensive_briefing.py >> /home/arshad14/.hermes/logs/briefing_delivery.log 2>&1
 
 # ── Agent-Reach data collection (6:30-6:36 AM, before pipeline) ──
 30 6 * * * cd /home/arshad14/.hermes/skills/TRADING/scripts && python3 fetch_wsb.py >> /home/arshad14/.hermes/logs/wsb.log 2>&1
@@ -120,7 +122,7 @@ MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
 27,57 * * * * nice -n 19 ~/autoresearch-controller.sh run "auto-poll" >> ~/autoresearch-poll.log 2>&1
 
 # ── Automated paper trader ──
-40 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 automated_paper_trader.py >> /home/arshad14/.hermes/logs/paper_trader.log 2>&1
+45 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 automated_paper_trader.py >> /home/arshad14/.hermes/logs/paper_trader.log 2>&1
 
 # ── Archive closed trades to Turso ──
 0 8 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 archive_trades_to_turso.py --prune >> /home/arshad14/.hermes/logs/turso_archive.log 2>&1
@@ -165,7 +167,7 @@ MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
 */30 * * * * python3 /home/arshad14/.hermes/scripts/cron_watchdog.py >> /home/arshad14/.hermes/logs/cron_watchdog.log 2>&1
 
 # ── Council trade executor — turns high-conviction council trades into paper trades ──
-35 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 council_trade_executor.py >> /home/arshad14/.hermes/logs/council_executor.log 2>&1
+41 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 council_trade_executor.py >> /home/arshad14/.hermes/logs/council_executor.log 2>&1
 
 # ── Cost tripwire — weekly spend monitor (OpenRouter/DeepSeek/Gemini-council/OpenCode/Claude usage) → Telegram ──
 0 9 * * 0 cd /home/arshad14/.hermes/scripts && python3 cost_tripwire.py >> /home/arshad14/.hermes/logs/cost_tripwire.log 2>&1
@@ -178,7 +180,7 @@ MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
 
 # ── Council context A/B experiment (variant B) — RESTORED 2026-07-07 after crontab wipe ──
 26 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 maplegamma_council.py --variant b >> /home/arshad14/.hermes/logs/agent_council_b.log 2>&1
-39 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 council_trade_executor.py --variant b >> /home/arshad14/.hermes/logs/council_executor_b.log 2>&1
+42 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 council_trade_executor.py --variant b >> /home/arshad14/.hermes/logs/council_executor_b.log 2>&1
 32 16 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 trade_outcome_logger.py --variant b >> /home/arshad14/.hermes/logs/trade_outcome_logger_b.log 2>&1
 2 17 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 strategy_improvement.py --variant b >> /home/arshad14/.hermes/logs/strategy_improvement_b.log 2>&1
 8 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 publish_research_tabs.py >> /home/arshad14/.hermes/logs/publish_research_tabs.log 2>&1
