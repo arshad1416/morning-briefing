@@ -737,11 +737,23 @@ def _main_inner():
         _nothing_to_commit = "nothing to commit" in (_commit_result.stderr + _commit_result.stdout).lower()
         if _commit_result.returncode != 0 and not _nothing_to_commit:
             raise RuntimeError(f"Git commit failed; refusing to publish: {_commit_result.stderr or _commit_result.stdout}")
-        # A prior push can fail after a successful commit. Always retry push so a
-        # later no-op run still publishes that local private-data deletion.
-        _push_result = subprocess.run("git push origin main", shell=True, capture_output=True, text=True)
-        if _push_result.returncode != 0:
-            raise RuntimeError(f"Git push failed: {_push_result.stderr or _push_result.stdout}")
+        # A prior push can fail after a successful commit; origin/main only advances
+        # on a successful push, so a non-zero ahead count still catches that pending
+        # retry WITHOUT fetching (a fetch would mask it). Fail-open: if the ahead-
+        # check itself fails, push anyway so the retry still happens.
+        _ahead_result = subprocess.run("git rev-list --count origin/main..HEAD", shell=True, capture_output=True, text=True)
+        _ahead_count = None
+        if _ahead_result.returncode == 0:
+            try:
+                _ahead_count = int(_ahead_result.stdout.strip())
+            except ValueError:
+                _ahead_count = None  # ponytail: non-numeric ahead output — treat as unknown, push anyway
+        if _ahead_count == 0:
+            print("push_dashboard: nothing ahead of origin/main — skipping push")
+        else:
+            _push_result = subprocess.run("git push origin main", shell=True, capture_output=True, text=True)
+            if _push_result.returncode != 0:
+                raise RuntimeError(f"Git push failed: {_push_result.stderr or _push_result.stdout}")
     
     print(f"Pushed {len(positions)} positions — entries booked, current from yfinance:")
     for p in positions:

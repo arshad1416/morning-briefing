@@ -57,6 +57,7 @@
 17 7 * * * cd /home/arshad14/.hermes/scripts && python3 generate_analysis.py >> /home/arshad14/.hermes/logs/generate_analysis.log 2>&1
 20 7 * * * cd /home/arshad14/.hermes/scripts && python3 run_morning_analysis.py >> /home/arshad14/.hermes/logs/morning_analysis.log 2>&1
 22 7 * * 0,6 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
+25 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
 28 7 * * * cd /home/arshad14/.hermes/scripts && python3 send_comprehensive_briefing.py >> /home/arshad14/.hermes/logs/briefing_delivery.log 2>&1
 
 # ── Agent-Reach data collection (6:30-6:36 AM, before pipeline) ──
@@ -112,7 +113,7 @@
 27,57 * * * * nice -n 19 ~/autoresearch-controller.sh run "auto-poll" >> ~/autoresearch-poll.log 2>&1
 
 # ── Automated paper trader ──
-5 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 automated_paper_trader.py >> /home/arshad14/.hermes/logs/paper_trader.log 2>&1
+40 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 automated_paper_trader.py >> /home/arshad14/.hermes/logs/paper_trader.log 2>&1
 
 # ── Archive closed trades to Turso ──
 0 8 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 archive_trades_to_turso.py --prune >> /home/arshad14/.hermes/logs/turso_archive.log 2>&1
