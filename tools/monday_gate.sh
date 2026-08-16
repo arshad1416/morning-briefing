@@ -74,6 +74,26 @@ PY
 [ "$gen_date" = "$TODAY_ET" ] || fail "latest.json generated_at $generated_at is $gen_date ET, not $TODAY_ET"
 pass "latest.json generated_at is today ET ($generated_at)"
 
+# 3b) production verdict.json is fresh today (council round-2 CRITICAL #2 — the
+#     07:30 generate_verdict && push chain publishes it; verify the DEPLOYED copy,
+#     not just local repo state)
+verdict_body="$(curl -fsS "$LIVE_BASE/data/verdict.json")" || fail "could not fetch $LIVE_BASE/data/verdict.json"
+vgen_at="$(python3 -c "import json,sys; print(json.loads(sys.stdin.read()).get('generated_at',''))" <<<"$verdict_body")" || fail "could not parse verdict.json"
+[ -n "$vgen_at" ] || fail "verdict.json missing generated_at"
+vgen_date="$(python3 - "$vgen_at" <<'PY'
+import sys, datetime, zoneinfo
+raw = sys.argv[1].strip()
+if raw.endswith("Z"):
+    raw = raw[:-1] + "+00:00"
+dt = datetime.datetime.fromisoformat(raw)
+if dt.tzinfo is None:
+    dt = dt.replace(tzinfo=datetime.timezone.utc)
+print(dt.astimezone(zoneinfo.ZoneInfo("America/Toronto")).strftime("%Y-%m-%d"))
+PY
+)" || fail "could not parse verdict.json generated_at: $vgen_at"
+[ "$vgen_date" = "$TODAY_ET" ] || fail "verdict.json generated_at $vgen_at is $vgen_date ET, not $TODAY_ET"
+pass "production verdict.json generated_at is today ET ($vgen_at)"
+
 # 4) /api/health is 200
 health_code="$(curl -s -o /dev/null -w '%{http_code}' "$LIVE_BASE/api/health")" || fail "curl /api/health failed"
 [ "$health_code" = "200" ] || fail "/api/health returned $health_code"
@@ -104,8 +124,12 @@ pass "no truncation in council logs (last 24h)"
 
 echo "PASS: monday_gate — all checks passed"
 
-# Write the gate-passed sentinel (council CRITICAL #1): guarded downstream jobs
+# Write the gate-passed sentinel (round-2): persistent private state dir, not /tmp
+# (tmpfs/reboot-cleared/world-writable — council round-2 HIGH). Guarded jobs
 # (send_comprehensive_briefing, council_trade_executor, automated_paper_trader)
-# exit 0 silently unless today's sentinel exists.
-touch "/tmp/maplegamma_gate_passed_$TODAY_ET"
-echo "SENTINEL: /tmp/maplegamma_gate_passed_$TODAY_ET"
+# only enforce on gate days; sentinel here makes the Monday launch chain safe.
+STATE_DIR="$HOME/.hermes/state"
+install -d -m 700 "$STATE_DIR"
+umask 077
+: > "$STATE_DIR/maplegamma_gate_passed_$TODAY_ET"
+echo "SENTINEL: $STATE_DIR/maplegamma_gate_passed_$TODAY_ET"

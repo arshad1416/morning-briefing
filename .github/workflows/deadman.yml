@@ -88,17 +88,22 @@ jobs:
           # weekend. Give the publish-gated entries +10h on weekends; the 80h
           # weekday-only entries are already weekend-safe.
           is_weekend = now.astimezone().weekday() >= 5
+          # Monday-morning grace (council round-2 #5): Sunday 07:22 push -> Monday
+          # 07:20 check is ~24h > the 20h weekday limit, and Monday's first push is
+          # 07:25 — a pre-push alert would false-page inside the launch window.
+          # Treat Mon < 08:00 like the weekend until the morning push lands.
+          mon_morning = now.astimezone().weekday() == 0 and now.astimezone().hour < 8
           for line in os.environ["FRESHNESS"].split("\n"):
               if not line.strip():
                   continue
               name, limit = line.split()
               limit = float(limit)
-              if is_weekend and limit < 30:
+              if (is_weekend or mon_morning) and limit < 30:
                   limit += 10.0
               url = f"{os.environ['BASE_URL']}/{name}"
               try:
                   a = age_hours(url)
-                  print(f"{name}: age={a:.1f}h (limit {limit}h{' +10 weekend' if is_weekend and limit > 20 else ''})")
+                  print(f"{name}: age={a:.1f}h (limit {limit}h{' +10 weekend' if (is_weekend or mon_morning) and limit > 20 else ''})")
                   if a > limit:
                       failures.append(f"{name} is {a:.1f}h old (limit {limit}h) — its generator may be DOWN")
               except SystemExit as e:
