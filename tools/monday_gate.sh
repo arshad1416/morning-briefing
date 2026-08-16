@@ -3,6 +3,17 @@
 # Prints PASS:/FAIL: per check and exits non-zero on the first failure.
 # Run from the Pi after 07:35 ET on a weekday: bash tools/monday_gate.sh
 # Deps: curl, git, python3 (no jq — the Pi does not have it).
+#
+# INVARIANT (R5 NEW-11): every production operating day requires that day's
+# successful gate sentinel (~/.hermes/state/maplegamma_gate_passed_<date>,
+# content 'ok YYYY-MM-DD HH:MM:SS'). Guards fail closed without it. Do not
+# shrink MAPLEGAMMA_GATE_DAYS to bypass; document any mode change instead.
+#
+# GATE DEADLINE (R6 NEW-13): this gate must COMPLETE by 07:40 ET on gate days.
+# Guarded consumers fire at 07:41+ (executor), 07:43 (send), 07:45 (paper) and
+# fail closed if the sentinel is absent. If you start late, the consumers will
+# skip + alert; re-run them manually after the gate passes. The watchdog
+# (07:44/07:50) escalates when no sentinel exists.
 set -uo pipefail
 export TZ=America/Toronto
 
@@ -121,6 +132,11 @@ pass "data repo in sync with origin/main"
 trunc="$(find "$LOG_DIR" -type f -name '*.log' -mmin -1440 -print0 2>/dev/null | xargs -0 -r grep -lE 'finish_reason.*length' 2>/dev/null || true)"
 [ -z "$trunc" ] || fail "truncation (finish_reason=length) in council logs (24h): $trunc"
 pass "no truncation in council logs (last 24h)"
+
+now_hm="$(TZ=America/Toronto date +%H%M)"
+if [ "$now_hm" -gt 0740 ]; then
+  echo "WARN: gate completed at $now_hm ET — AFTER the 07:40 deadline; guarded consumers will have skipped (fail-closed). Re-run them manually."
+fi
 
 echo "PASS: monday_gate — all checks passed"
 
