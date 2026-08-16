@@ -2,6 +2,7 @@
 # tools/monday_gate.sh — fail-closed gate for the Monday 07:20 scheduled run.
 # Prints PASS:/FAIL: per check and exits non-zero on the first failure.
 # Run from the Pi after 07:35 ET on a weekday: bash tools/monday_gate.sh
+# Deps: curl, git, python3 (no jq — the Pi does not have it).
 set -uo pipefail
 export TZ=America/Toronto
 
@@ -20,9 +21,12 @@ skip() { echo "SKIP: $*"; }
 
 # 1) council artifact: full run, 5 experts, sane regime
 [ -f "$ANALYSIS_JSON" ] || fail "analysis json missing: $ANALYSIS_JSON"
-status="$(jq -r '.meta.status // empty' "$ANALYSIS_JSON")"
-experts="$(jq -r '.meta.experts_succeeded // empty' "$ANALYSIS_JSON")"
-regime="$(jq -r '.market_pulse.regime // empty' "$ANALYSIS_JSON")"
+read -r status experts regime <<<"$(python3 - "$ANALYSIS_JSON" <<'PY'
+import json, sys
+d = json.load(open(sys.argv[1]))
+print(d.get("meta", {}).get("status", ""), d.get("meta", {}).get("experts_succeeded", ""), d.get("market_pulse", {}).get("regime", ""))
+PY
+)" || fail "could not parse analysis json: $ANALYSIS_JSON"
 [ "$status" = "full" ] || fail "meta.status != full (got '$status')"
 [ "$experts" = "5" ] || fail "meta.experts_succeeded != 5 (got '$experts')"
 case "$regime" in
@@ -31,8 +35,7 @@ case "$regime" in
 esac
 pass "analysis json full / 5 experts / regime=$regime"
 
-# 2) public analysis.json exists, non-empty, modified today (ET) — the payload
-#    the site actually renders for logged-out visitors
+# 2) public analysis.json exists, non-empty, modified today (ET)
 [ -s "$ANALYSIS_PUBLIC" ] || fail "public analysis.json missing or empty: $ANALYSIS_PUBLIC"
 analysis_date="$(date -r "$ANALYSIS_PUBLIC" +%F)"
 [ "$analysis_date" = "$TODAY_ET" ] || fail "public analysis.json mtime $analysis_date != today ($TODAY_ET)"
@@ -40,7 +43,7 @@ pass "public analysis.json present and fresh (mtime $analysis_date)"
 
 # 3) live latest.json generated_at is today (ET); ISO with Z handled
 latest_body="$(curl -fsS "$LIVE_BASE/data/latest.json")" || fail "could not fetch $LIVE_BASE/data/latest.json"
-generated_at="$(printf '%s' "$latest_body" | jq -r '.generated_at // empty')"
+generated_at="$(python3 -c "import json,sys; print(json.loads(sys.stdin.read()).get('generated_at',''))" <<<"$latest_body")" || fail "could not parse latest.json"
 [ -n "$generated_at" ] || fail "latest.json missing generated_at"
 gen_date="$(python3 - "$generated_at" <<'PY'
 import sys, datetime, zoneinfo
