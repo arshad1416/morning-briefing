@@ -136,9 +136,10 @@ pass "no truncation in council logs (last 24h)"
 # R7 (Sol round-7): hard deadline enforcement. Sentinel is written ONLY if the
 # gate completes by 07:40 ET. A late completion = exit 1, NO sentinel, alert.
 now_hm="$(TZ=America/Toronto date +%H%M)"
-# Sol round-8: strip the leading zero — `[ 0800 -gt 0740 ]` fails octal parsing in bash,
-# which would fail-open a late run. `${now_hm#0}` compares decimal 800 vs 740 correctly.
-if [ "${now_hm#0}" -gt 740 ]; then
+# Sol round-9: `10#` forces base-10 — immune to octal parsing for EVERY case
+# (0800, 0008, 0059, 0915). `${now_hm#0}` only stripped one zero; hour-00 values
+# with 8/9 remained invalid octal. `[ $((10#HHMM)) -gt 740 ]` is deterministic.
+if [ "$((10#$now_hm))" -gt 740 ]; then
   echo "FAIL: gate completed at $now_hm ET — AFTER the 07:40 deadline. No sentinel written; guarded consumers will skip (fail-closed)."
   python3 "$HOME/.hermes/scripts/tg_notify.py" "🚨 MapleGamma gate FAILED: completed after 07:40 ET deadline ($now_hm ET). No sentinel — consumers skipped. Investigate and re-run: bash ~/morning-briefing/tools/monday_gate.sh" >/dev/null 2>&1 || true
   exit 1
