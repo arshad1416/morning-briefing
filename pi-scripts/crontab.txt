@@ -53,6 +53,8 @@
 # ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
 # ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
 # ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
+MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
+# ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
 15 7 * * * cd /home/arshad14/.hermes/scripts && python3 morning_briefing_data.py >> /home/arshad14/.hermes/logs/briefing_data.log 2>&1
 14 7 * * * cd /home/arshad14/.hermes/scripts && python3 consolidate_briefing_data.py >> /home/arshad14/.hermes/logs/consolidate.log 2>&1
 18 7 * * * cd /home/arshad14/.hermes/scripts && python3 fetch_polymarket.py >> /home/arshad14/.hermes/logs/polymarket.log 2>&1
@@ -91,7 +93,7 @@
 7,37 9-15 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
 
 # ── Verdict generation ──
-30 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 generate_verdict.py >> /home/arshad14/.hermes/logs/verdict.log 2>&1 && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
+30 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 verdict_chain.py >> /home/arshad14/.hermes/logs/verdict_chain.log 2>&1
 
 # ── Job Hunt Dashboard ──
 0 9 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 job_hunt_daily.py --no-telegram >> /home/arshad14/.hermes/logs/job_hunt.log 2>&1
@@ -253,3 +255,4 @@
 0 */3 * * * /home/arshad14/.9router/keepalive.sh >> /home/arshad14/.9router/logs/keepalive.log 2>&1
 */15 14-23 * * 5 /home/arshad14/.hermes/scripts/bg305_delay.py >> /home/arshad14/.hermes/logs/bg305_delay_cron.log 2>&1
 */15 0-16 * * 6 /home/arshad14/.hermes/scripts/bg305_delay.py >> /home/arshad14/.hermes/logs/bg305_delay_cron.log 2>&1
+34,44 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 mg_gate_watchdog.py >> /home/arshad14/.hermes/logs/gate_watchdog.log 2>&1
