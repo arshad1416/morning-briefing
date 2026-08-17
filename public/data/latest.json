@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-16T07:22:04-04:00",
+  "generated_at": "2026-08-17T07:25:04-04:00",
   "market_summary": {
-    "vix": 14.25,
+    "vix": 14.9,
     "ten_year_yield": 4.7,
     "indices": [
       {
@@ -31,8 +31,8 @@
       },
       {
         "ticker": "VIX",
-        "price": 14.25,
-        "change_pct": -2.6
+        "price": 14.9,
+        "change_pct": 4.56
       },
       {
         "ticker": "10Y Yield",
@@ -48,82 +48,223 @@
     ]
   },
   "narrative": {
-    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,785.76 (-0.17%)\n  \u2022 Dow Jones: 53,732.41 (-0.20%)\n  \u2022 NASDAQ: 26,729.16 (-0.28%)\n  \u2022 Russell 2000: 3,068.42 (+0.51%)\n  \u2022 TSX: 36,730.30 (-0.08%)\n  \u2022 VIX: 14.25\n  \u2022 10Y Yield: 4.7%"
+    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,785.76 (-0.17%)\n  \u2022 Dow Jones: 53,732.41 (-0.20%)\n  \u2022 NASDAQ: 26,729.16 (-0.28%)\n  \u2022 Russell 2000: 3,068.42 (+0.51%)\n  \u2022 TSX: 36,730.30 (-0.08%)\n  \u2022 VIX: 14.9\n  \u2022 10Y Yield: 4.7%"
   },
   "watchlist_summary": {},
   "central_banks": {
     "fed": "",
     "boc": ""
   },
-  "insider_trades": [],
+  "insider_trades": [
+    {
+      "ticker": "AMD",
+      "insider": "Hahn Ava",
+      "title": "SVP, GC &amp; Corporate Secretary",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 143,
+      "price": 474.75,
+      "value": 67889,
+      "date": "2026-08-11",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000141/xslF345X06/wk-form4_1786651900.xml"
+    },
+    {
+      "ticker": "INTC",
+      "insider": "Tan Lip Bu",
+      "title": "CEO",
+      "type": "Buy",
+      "code": "P",
+      "open_market": true,
+      "shares": 105263,
+      "price": 95.0,
+      "value": 9999985,
+      "date": "2026-08-11",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000177/xslF345X06/form4.xml"
+    },
+    {
+      "ticker": "AAPL",
+      "insider": "Newstead Jennifer",
+      "title": "SVP, GC and Secretary",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 1439,
+      "price": 307.75,
+      "value": 442852,
+      "date": "2026-08-11",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/320193/000114036126032884/xslF345X06/form4.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Olivan Javier",
+      "title": "Chief Operating Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 149,
+      "price": 600.0,
+      "value": 89400,
+      "date": "2026-08-10",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Olivan Javier",
+      "title": "Chief Operating Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 113,
+      "price": 602.41,
+      "value": 68073,
+      "date": "2026-08-10",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Olivan Javier",
+      "title": "Chief Operating Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 92,
+      "price": 604.08,
+      "value": 55576,
+      "date": "2026-08-10",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Olivan Javier",
+      "title": "Chief Operating Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 40,
+      "price": 605.97,
+      "value": 24239,
+      "date": "2026-08-10",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Olivan Javier",
+      "title": "Chief Operating Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 40,
+      "price": 607.14,
+      "value": 24286,
+      "date": "2026-08-10",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Olivan Javier",
+      "title": "Chief Operating Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 164,
+      "price": 600.0,
+      "value": 98400,
+      "date": "2026-08-10",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Olivan Javier",
+      "title": "Chief Operating Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 114,
+      "price": 600.0,
+      "value": 68400,
+      "date": "2026-08-10",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
+    }
+  ],
   "market_news": {
     "headlines": [
       {
-        "title": "Trump asks Americans to accept high pump prices as Iran standoff drags on",
-        "url": "https://seekingalpha.com/news/4633590-trump-asks-americans-to-accept-high-pump-prices-as-iran-standoff-drags-on?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "NRx Pharmaceuticals GAAP EPS of -$0.44, revenue of $1.1M",
+        "url": "https://seekingalpha.com/news/4633744-nrx-pharmaceuticals-gaap-eps-of-0_44-revenue-of-1_1m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Key deals this week: Workday, Diversified Energy, Aurora Cannabis, and more",
-        "url": "https://seekingalpha.com/news/4633577-key-deals-this-week-workday-diversified-energy-aurora-cannabis-and-more?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Jane Street lost $15B in July after Situational Awareness meltdown: report",
-        "url": "https://seekingalpha.com/news/4633589-jane-street-lost-15b-post-situational-awareness-meltdown?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "China to lift travel ban on Manus founders as Meta unwinds buyout deal: FT",
-        "url": "https://seekingalpha.com/news/4633587-manus-founders-return-china-meta-unwinds-buyout-deal?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Madison Air Solutions enters $5.4B deal to buy ebm-papst",
+        "url": "https://seekingalpha.com/news/4633740-madison-air-solutions-enters-54b-deal-to-buy-ebm-papst?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Apple gets U.S. warning not to buy memory chips from China: WSJ",
-        "url": "https://seekingalpha.com/news/4633586-apple-gets-us-warning-not-to-buy-memory-chips-from-china-wsj?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "bearish",
-        "summary": ""
-      },
-      {
-        "title": "Real estate stocks show mixed performance; data center REITs gain, health care REITs lose",
-        "url": "https://seekingalpha.com/news/4633485-real-estate-stocks-show-mixed-performance-data-center-reits-gain-health-care-reits-lose?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "bullish",
-        "summary": ""
-      },
-      {
-        "title": "How value, viral marketing, and better operations helped Chili's turn the tables on fast food",
-        "url": "https://seekingalpha.com/news/4633338-how-value-viral-marketing-and-better-operations-helped-chilis-turn-the-tables-on-fast-food?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Adial Pharmaceuticals GAAP EPS of -$11.25 misses by $8.60",
+        "url": "https://seekingalpha.com/news/4633743-adial-pharmaceuticals-gaap-eps-of-11_25-misses-by-8_60?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Micron: I Think We Could Get An Upside Breakout",
-        "url": "https://seekingalpha.com/article/4937117-micron-i-think-we-could-get-an-upside-breakout?source=feed",
+        "title": "Ten consumer staples stocks with the strongest YTD performance",
+        "url": "https://seekingalpha.com/news/4633739-ten-consumer-staples-stocks-with-the-strongest-ytd-performance?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Nebius: Avoid Chasing, Even If You Missed The Ride (Rating Downgrade)",
-        "url": "https://seekingalpha.com/article/4937114-nebius-avoid-chasing-even-if-you-missed-ride?source=feed",
+        "title": "InspireMD GAAP EPS of -$0.17, revenue of $1.77M misses by $0.36M",
+        "url": "https://seekingalpha.com/news/4633742-inspiremd-gaap-eps-of-0_17-revenue-of-1_77m-misses-by-0_36m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
-        "sentiment": "bearish",
+        "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "UTG: Retirees Got A Well-Supported Income Raise",
-        "url": "https://seekingalpha.com/article/4937100-utg-retirees-got-a-well-supported-income-raise?source=feed",
+        "title": "TTM Technologies to buy Epiq Solutions in $1.1B deal",
+        "url": "https://seekingalpha.com/news/4633735-ttm-technologies-to-buy-epiq-solutions-in-1_1b-deal?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "IM Cannabis to sell IMC Holdings and European assets to Slil",
+        "url": "https://seekingalpha.com/news/4633737-im-cannabis-to-sell-imc-holdings-and-european-assets-to-slil?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Weekly Market Pulse: Situational Awareness",
+        "url": "https://seekingalpha.com/article/4937237-weekly-market-pulse-situational-awareness?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Super Micro: A Massive Safety Margin Is Priced In",
+        "url": "https://seekingalpha.com/article/4937234-super-micro-a-massive-safety-margin-is-priced-in?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Digi Power X: Power Scarcity Makes Cerebras Contract More Valuable Than Market Thinks",
+        "url": "https://seekingalpha.com/article/4937221-digi-power-x-power-scarcity-makes-cerebras-contract-more-valuable-than-market-thinks?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
@@ -134,60 +275,185 @@
   },
   "geopolitical": [
     {
-      "title": "Five killed as Russia launches fresh aerial attacks across Ukraine",
+      "title": "Trump says US to reduce military drills with South Korea after it stayed out of Iran war",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c1411pgje8xo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-16T10:09:10+00:00",
-      "summary": "Ukrainian President Volodymyr Zelensky accuses Russia of targeting civilian infrastructure, while Moscow reports that a warehouse was hit."
+      "url": "https://www.bbc.co.uk/news/articles/cx2lll7zvn0o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-17T06:24:31+00:00",
+      "summary": "Trump cites his \"very good relationship\" with North Korea's leader in deciding to downsize the exercises."
     },
     {
-      "title": "Thousands displaced by deadly Indonesia earthquake as rescue efforts continue",
+      "title": "Trump envoy Kushner arrives in Israel after rare Hamas talks on Gaza peace plan",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c3v00w5ylw9o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-16T08:23:38+00:00",
-      "summary": "Hundreds of homes and public buildings have been severely damaged with at least 51 people killed."
+      "url": "https://www.bbc.co.uk/news/articles/c77gg5vn44yo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-17T08:43:12+00:00",
+      "summary": "US President Trump's son-in-law Jared Kushner is expected to meet Israeli Prime Minister Benjamin Netanyahu later on Monday."
     },
     {
-      "title": "Hurricane Lala lashes Hawaii with strong winds and torrential rain",
+      "title": "Ukrainian strikes kill six in Russia, acting governor says",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/crmrr7kjy9vo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-16T08:49:32+00:00",
-      "summary": "If the storm makes landfall, it will be Hawaii's first direct hit by a hurricane in 34 years."
+      "url": "https://www.bbc.co.uk/news/articles/cn7n4lm11vro?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-17T08:47:19+00:00",
+      "summary": "A 14-year-old child was among four others injured, the acting governor of Russia's Belgorod region says."
     },
     {
-      "title": "Twelve killed as Polish bus veers off Hungarian motorway",
+      "title": "Aid shortages and fears of starvation as Indonesia reels from deadly earthquake",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/ckg4424zd7go?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-16T07:04:17+00:00",
-      "summary": "Dozens more are seriously injured after the tourist bus overturned in the early hours of Sunday morning."
+      "url": "https://www.bbc.co.uk/news/articles/crl7686r71yo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-17T08:38:41+00:00",
+      "summary": "Some 53 people were killed and thousands displaced by the earthquake, which struck early on Saturday."
     },
     {
-      "title": "Morocco detains dozens of migrants trying to cross into Ceuta, reports say",
+      "title": "Ebola outbreak in DR Congo becomes deadliest in its history",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/ckg44x2ey1ro?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-15T20:58:31+00:00",
-      "summary": "Security had been stepped up amid suggestions on social media of a second mass crossing on Saturday."
+      "url": "https://www.bbc.co.uk/news/articles/cvgll74vvydo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-17T04:41:31+00:00",
+      "summary": "The outbreak was already the fastest growing on record, caused by a rare species of Ebola called Bundibugyo."
     },
     {
-      "title": "Premier League: Key talking points heading into the new 2026-27 season",
+      "title": "Thousands await aid after deadly Indonesia quake as rescue work conducted",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/sports/2026/8/16/premier-league-key-talking-points-heading-into-the-new-2026-27-season?traffic_source=rss",
-      "date": "2026-08-16T10:33:42+00:00",
-      "summary": "City, Liverpool and Chelsea have new faces in the dugout as Arsenal attempt to defend title for first time in 90 years."
+      "url": "https://www.aljazeera.com/news/2026/8/17/thousands-await-aid-after-deadly-indonesia-quake-as-rescue-work-conducted?traffic_source=rss",
+      "date": "2026-08-17T10:14:28+00:00",
+      "summary": "Thousands remain displaced after magnitude 7.7 quake struck East Nusa Tenggara province on Saturday."
     },
     {
-      "title": "Doctor describes amputating girl\u2019s leg in Gaza without anaesthesia",
+      "title": "Inside the UK\u2019s \u2018stressful\u2019 cost of living crisis Burnham hopes to tackle",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/video/newsfeed/2026/8/16/doctor-describes-amputating-girls-leg-in-gaza-without-anaesthesia?traffic_source=rss",
-      "date": "2026-08-16T10:32:42+00:00",
-      "summary": "\u2018We were praying for her to faint\u2019."
+      "url": "https://www.aljazeera.com/news/2026/8/17/who-can-live-on-340-a-month-inside-the-uks-cost-of-living-crisis?traffic_source=rss",
+      "date": "2026-08-17T09:41:19+00:00",
+      "summary": "Britain's new premier has promised to ease the suffering of millions of families unable to afford basic items."
     },
     {
-      "title": "The post-Hormuz era offers Africa a great opportunity",
+      "title": "Will India\u2019s \u2018Cockroach\u2019 movement force Modi\u2019s BJP to rethink its politics?",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/opinions/2026/8/16/the-post-hormuz-era-offers-africa-a-great-opportunity?traffic_source=rss",
-      "date": "2026-08-16T10:09:32+00:00",
-      "summary": "But to capture its benefits, the continent needs to develop an effective, common maritime policy."
+      "url": "https://www.aljazeera.com/news/2026/8/17/has-indias-cockroach-movement-forced-modis-bjp-to-recalibrate-agenda?traffic_source=rss",
+      "date": "2026-08-17T09:03:57+00:00",
+      "summary": "Modi's BJP once controlled media narratives in India, but this might be changing with the 'Cockroach' movement."
     }
-  ]
+  ],
+  "congress": {
+    "recent_trades": [
+      {
+        "politician": "Carol Devine Miller",
+        "chamber": "House",
+        "state": "WV01",
+        "ticker": "PFE",
+        "action": "Sell",
+        "amount_range": "$15,001 - $50,000",
+        "amount_low": 15001,
+        "transaction_date": "03/10/2025",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033779.pdf"
+      },
+      {
+        "politician": "Carol Devine Miller",
+        "chamber": "House",
+        "state": "WV01",
+        "ticker": "DGX",
+        "action": "Sell",
+        "amount_range": "$15,001 - $50,000",
+        "amount_low": 15001,
+        "transaction_date": "03/10/2025",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033779.pdf"
+      },
+      {
+        "politician": "Carol Devine Miller",
+        "chamber": "House",
+        "state": "WV01",
+        "ticker": "TGT",
+        "action": "Sell",
+        "amount_range": "$15,001 - $50,000",
+        "amount_low": 15001,
+        "transaction_date": "03/10/2025",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033779.pdf"
+      },
+      {
+        "politician": "Carol Devine Miller",
+        "chamber": "House",
+        "state": "WV01",
+        "ticker": "USB",
+        "action": "Sell",
+        "amount_range": "$15,001 - $50,000",
+        "amount_low": 15001,
+        "transaction_date": "03/10/2025",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033779.pdf"
+      },
+      {
+        "politician": "Shri Thanedar",
+        "chamber": "House",
+        "state": "MI13",
+        "ticker": "AAPL",
+        "action": "Sell",
+        "amount_range": "$100,001 - $250,000",
+        "amount_low": 100001,
+        "transaction_date": "01/09/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033910.pdf"
+      },
+      {
+        "politician": "Shri Thanedar",
+        "chamber": "House",
+        "state": "MI13",
+        "ticker": "MSTR",
+        "action": "Sell",
+        "amount_range": "$15,001 - $50,000",
+        "amount_low": 15001,
+        "transaction_date": "10/21/2025",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033910.pdf"
+      },
+      {
+        "politician": "Derek Tran",
+        "chamber": "House",
+        "state": "CA45",
+        "ticker": "LTC",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/28/2025",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035183.pdf"
+      },
+      {
+        "politician": "Kevin Hern",
+        "chamber": "House",
+        "state": "OK01",
+        "ticker": "OGN",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "08/05/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035196.pdf"
+      },
+      {
+        "politician": "Kevin Hern",
+        "chamber": "House",
+        "state": "OK01",
+        "ticker": "VSNT",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "08/05/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035196.pdf"
+      },
+      {
+        "politician": "Mike Kelly",
+        "chamber": "House",
+        "state": "PA16",
+        "ticker": "ABT",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/17/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035203.pdf"
+      }
+    ],
+    "summary": "60 recent congressional trades from 10 House periodic transaction reports (20 buys, 40 sells)."
+  }
 }
