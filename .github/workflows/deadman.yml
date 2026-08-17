@@ -42,6 +42,11 @@ jobs:
         #         every 15 min on the Pi) reaches the site at most once a day.
         #         20h (not 26h) so a weekend/failed-morning pipeline alerts the same
         #         evening or before the next market open, not 26h later.
+        #   26h — once-daily generators. twitter-intel.json is consolidated at
+        #         07:14 and published only with the 07:2x morning push (intraday
+        #         pushes never re-stamp it), so the normal gap is ~24h and a 20h
+        #         limit would red-page every night 03:14→07:25. 26h alerts by
+        #         ~09:15 if the morning consolidate/publish dies.
         #   80h — weekday-only generators. Measured Fri→Mon gap in git history is
         #         exactly 72h for both; anything tighter red-alerts every Sunday,
         #         which is how a monitor gets ignored and then muted.
@@ -55,7 +60,7 @@ jobs:
             briefing-intel.json 20
             reddit-sentiment.json 20
             options-status.json 20
-            twitter-intel.json 20
+            twitter-intel.json 26
             verdict.json 80
             screener-lite.json 80
         run: |
