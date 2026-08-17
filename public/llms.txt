@@ -28,8 +28,8 @@ no account needed. Everything else is behind a subscription with a 7-day free
 trial:
 
 - **Basic** — everything in Free, plus the full screener, research desk,
-  prediction-market sentiment and trade ideas, and the simulated portfolio,
-  positions and trade journal.
+  prediction-market sentiment and trade ideas, and the simulated portfolio
+  and positions.
 - **Pro** — everything in Basic, plus interactive charts, gamma walls,
   strike-level exposure, model/backtest data, walk-forward validation, the
   prediction engine and live simulation. Options-strategy and
@@ -54,7 +54,7 @@ These are public and free to fetch:
 - /data/analysis.json : curated market headlines with sentiment tags
   (Seeking Alpha + BNN Bloomberg)
 - /data/screener-lite.json : public teaser of the screener — market summary and
-  a handful of top tickers (the full 1,600+-ticker screener is subscriber-only)
+  a handful of top tickers (the full 3,000+-ticker screener is subscriber-only)
 - /data/options-status.json : options module heartbeat — VIX vs the entry gate,
   open option positions, active strategies
 - /data/crypto-cohorts.json : crypto paper-trading cohort A/B status
@@ -71,10 +71,10 @@ they are not published as fetchable public URLs:
 
 - **Basic:** council briefing/context A/B arm (maplegamma_analysis), full
   screener (screener-data), morning analysis, web news, Polymarket sentiment,
-  earnings, SEC filings, trade journal, simulated portfolio (paper_trades), and
+  earnings, SEC filings, simulated portfolio (paper_trades), and
   IBKR account/positions/trades data.
 - **Pro:** charts and per-ticker analytics (charts), walk-forward validation
-  (walk_forward and walk_forward_v2), strategy-improvement/model-accuracy
+  (walk_forward_v2), strategy-improvement/model-accuracy
   weights (including the B arm), scored trade outcomes (including the B arm),
   prediction-engine, accuracy, and simulation data.
 

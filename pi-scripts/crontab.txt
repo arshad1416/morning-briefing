@@ -1,6 +1,7 @@
 # Raspberry Pi (pi-lan, user arshad14) crontab snapshot
 # Source of truth is `crontab -l` on the Pi; this is a version-controlled copy
-# for reference/rebuild. Not auto-applied. Snapshot taken 2026-08-06.
+# for reference/rebuild. Not auto-applied. Snapshot 2026-08-06; junk-line
+# duplication removed and re-verified against the live crontab 2026-08-16.
 #
 # Everything below the marker is VERBATIM `crontab -l` output, so drift is a
 # clean diff:
@@ -50,15 +51,6 @@
 #
 # ── VERBATIM `crontab -l` BELOW THIS LINE ──
 
-# ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
-# ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
-# ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
-MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
-# ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
-MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
-# ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
-MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
-# ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
 MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
 # ── Briefing Pipeline (legacy — transition to agent wrappers below) ──
 15 7 * * * cd /home/arshad14/.hermes/scripts && python3 morning_briefing_data.py >> /home/arshad14/.hermes/logs/briefing_data.log 2>&1
