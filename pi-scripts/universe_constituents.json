@@ -1,12 +1,12 @@
 {
   "_note": "Index membership cache for generate-screener-data.py. Regenerate with fetch_universe_constituents.py \u2014 do not hand-edit; membership changes several times a year and a stale hand-edit becomes wrong silently.",
-  "generated_at": "2026-08-15",
+  "generated_at": "2026-08-18",
   "indices": {
     "S&P 500": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
       "source_note": "Wikipedia 'List of S&P 500 companies', table#constituents.",
-      "fetched_at": "2026-08-15",
-      "as_of": "2026-08-15",
+      "fetched_at": "2026-08-18",
+      "as_of": "2026-08-18",
       "member_count": 503,
       "members": [
         {
@@ -184,10 +184,6 @@
         {
           "symbol": "ATO",
           "name": "Atmos Energy"
-        },
-        {
-          "symbol": "AVB",
-          "name": "AvalonBay Communities"
         },
         {
           "symbol": "AVGO",
@@ -664,10 +660,6 @@
         {
           "symbol": "EQIX",
           "name": "Equinix"
-        },
-        {
-          "symbol": "EQR",
-          "name": "Equity Residential"
         },
         {
           "symbol": "EQT",
@@ -1558,6 +1550,10 @@
           "name": "Royal Caribbean Group"
         },
         {
+          "symbol": "RDDT",
+          "name": "Reddit"
+        },
+        {
           "symbol": "REG",
           "name": "Regency Centers"
         },
@@ -1890,6 +1886,10 @@
           "name": "Vulcan Materials Company"
         },
         {
+          "symbol": "VMRK",
+          "name": "Vivmark Residential"
+        },
+        {
           "symbol": "VRSK",
           "name": "Verisk Analytics"
         },
@@ -2026,8 +2026,8 @@
     "S&P 400": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies",
       "source_note": "S&P MidCap 400. Wikipedia 'List of S&P 400 companies', table#constituents.",
-      "fetched_at": "2026-08-15",
-      "as_of": "2026-08-15",
+      "fetched_at": "2026-08-18",
+      "as_of": "2026-08-18",
       "member_count": 400,
       "members": [
         {
@@ -3635,8 +3635,8 @@
     "S&P 600": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_600_companies",
       "source_note": "S&P SmallCap 600. Wikipedia 'List of S&P 600 companies', table#constituents.",
-      "fetched_at": "2026-08-15",
-      "as_of": "2026-08-15",
+      "fetched_at": "2026-08-18",
+      "as_of": "2026-08-18",
       "member_count": 603,
       "members": [
         {
@@ -6056,8 +6056,8 @@
     "Russell 2000": {
       "source_url": "https://www.blackrock.com/varnish-api/blk-one01-product-data/product-data/api/v2/get-product-data?appSubType=ISHARES&appType=PRODUCT_PAGE&component=holdings&locale=en_US&portfolioId=239710&targetSite=us-ishares&userType=individual&excludeContent=true&includeConfig=true",
       "source_note": "Proxy: holdings of the iShares Russell 2000 ETF (IWM), not the index itself. Non-equity balances, contingent value rights and escrow stubs are excluded. Refreshed each business day, and membership can differ slightly from the index.",
-      "fetched_at": "2026-08-15",
-      "as_of": "2026-08-13",
+      "fetched_at": "2026-08-18",
+      "as_of": "2026-08-17",
       "member_count": 1956,
       "members": [
         {
@@ -6134,7 +6134,7 @@
         },
         {
           "symbol": "ACH",
-          "name": "ACCENDRA HEALTH INC"
+          "name": "ACCENDRA HEALTH"
         },
         {
           "symbol": "ACHC",
@@ -6778,7 +6778,7 @@
         },
         {
           "symbol": "ATRC",
-          "name": "ATRICURE"
+          "name": "ATRICURE INC"
         },
         {
           "symbol": "ATRO",
@@ -6911,10 +6911,6 @@
         {
           "symbol": "BBAI",
           "name": "BIGBEAR.AI HOLDINGS"
-        },
-        {
-          "symbol": "BBBY",
-          "name": "BED BATH AND BEYOND INC"
         },
         {
           "symbol": "BBCP",
@@ -9506,7 +9502,7 @@
         },
         {
           "symbol": "HYPR",
-          "name": "HYPERFINE INC CLASS A"
+          "name": "HYPERFINE CLASS A"
         },
         {
           "symbol": "HZO",
@@ -11111,6 +11107,10 @@
         {
           "symbol": "NXDT",
           "name": "NEXPOINT DIVERSIFIED REAL ESTATE T"
+        },
+        {
+          "symbol": "NXH",
+          "name": "NEIGHBORHOOD INTELLIGENCE"
         },
         {
           "symbol": "NXRT",
@@ -13889,8 +13889,8 @@
     "Nasdaq-100": {
       "source_url": "https://api.nasdaq.com/api/quote/list-type/nasdaq100",
       "source_note": "Nasdaq's own index-membership endpoint (the Wikipedia article no longer carries a components table).",
-      "fetched_at": "2026-08-15",
-      "as_of": "2026-08-15",
+      "fetched_at": "2026-08-18",
+      "as_of": "2026-08-18",
       "member_count": 102,
       "members": [
         {
