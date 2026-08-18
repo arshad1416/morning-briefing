@@ -1,9 +1,9 @@
 {
  "ticker": "WFC",
  "name": "Wells Fargo & Company",
- "generated_at": "2026-08-17T14:45:01.652323+00:00",
- "price": 88.54,
- "change_pct": 0.49,
+ "generated_at": "2026-08-18T11:45:01.845524+00:00",
+ "price": 88.88,
+ "change_pct": 0.06,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
@@ -11,20 +11,70 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 58.3,
-  "sma_20": 86.84,
-  "sma_50": 85.2
+  "rsi_14": 59.4,
+  "sma_20": 87.0,
+  "sma_50": 85.36
  },
  "fundamentals": {
-  "pe_ratio": 12.982405,
-  "market_cap": "267.7B",
+  "pe_ratio": 12.917878,
+  "market_cap": "268.8B",
   "beta": 0.92,
-  "dividend_yield": 0.0227
+  "dividend_yield": 0.0225
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "WFC",
+   "date": "2026-10-13",
+   "epsEstimate": 1.84,
+   "epsActual": null
+  },
+  {
+   "ticker": "WFC",
+   "date": "2026-07-14",
+   "epsEstimate": 1.72,
+   "epsActual": 2.0
+  },
+  {
+   "ticker": "WFC",
+   "date": "2026-04-14",
+   "epsEstimate": 1.6,
+   "epsActual": 1.56
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "WFC",
+   "date": "2026-07-28",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297126000302/wfc-20260630.htm"
+  },
+  {
+   "ticker": "WFC",
+   "date": "2026-04-29",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297126000217/wfc-20260331.htm"
+  },
+  {
+   "ticker": "WFC",
+   "date": "2026-02-24",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297126000133/wfc-20251231_d2.htm"
+  },
+  {
+   "ticker": "WFC",
+   "date": "2025-10-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297125000253/wfc-20250930.htm"
+  },
+  {
+   "ticker": "WFC",
+   "date": "2025-08-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297125000201/wfc-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

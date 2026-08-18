@@ -1,19 +1,22 @@
 {
  "ticker": "TCX",
  "name": "Tucows Inc.",
- "generated_at": "2026-08-17T14:45:01.652323+00:00",
- "price": 11.81,
- "change_pct": -1.42,
+ "generated_at": "2026-08-18T11:45:01.845524+00:00",
+ "price": 10.62,
+ "change_pct": -5.43,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 47.9,
-  "sma_20": 11.67,
-  "sma_50": 12.22
+  "rsi_14": 42.9,
+  "sma_20": 11.66,
+  "sma_50": 12.15
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "132M",
+  "market_cap": "119M",
   "beta": 0.89,
   "dividend_yield": null
  },

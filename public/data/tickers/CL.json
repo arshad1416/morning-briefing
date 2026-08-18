@@ -1,24 +1,26 @@
 {
  "ticker": "CL",
  "name": "Colgate-Palmolive Company",
- "generated_at": "2026-08-17T14:45:01.652323+00:00",
- "price": 91.98,
- "change_pct": -1.02,
+ "generated_at": "2026-08-18T11:45:01.845524+00:00",
+ "price": 90.42,
+ "change_pct": -1.67,
  "sector": "Consumer Defensive",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.0,
-  "sma_20": 92.03,
-  "sma_50": 91.15
+  "rsi_14": 44.3,
+  "sma_20": 91.95,
+  "sma_50": 91.26
  },
  "fundamentals": {
-  "pe_ratio": 35.92965,
-  "market_cap": "73.3B",
+  "pe_ratio": 35.59646,
+  "market_cap": "72.1B",
   "beta": 0.327,
-  "dividend_yield": 0.023
+  "dividend_yield": 0.0231
  },
  "council_analysis": {
   "score": 5

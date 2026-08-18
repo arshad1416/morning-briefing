@@ -1,31 +1,81 @@
 {
  "ticker": "USCB",
  "name": "USCB Financial Holdings, Inc.",
- "generated_at": "2026-08-17T14:45:01.652323+00:00",
- "price": 22.7,
- "change_pct": 0.31,
+ "generated_at": "2026-08-18T11:45:01.845524+00:00",
+ "price": 22.6,
+ "change_pct": 0.6,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
   "above_ma",
+  "volume_surge",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 66.1,
-  "sma_20": 21.82,
-  "sma_50": 20.57
+  "rsi_14": 64.0,
+  "sma_20": 21.91,
+  "sma_50": 20.66
  },
  "fundamentals": {
-  "pe_ratio": 14.551283,
-  "market_cap": "419M",
+  "pe_ratio": 14.490385,
+  "market_cap": "418M",
   "beta": 0.465,
   "dividend_yield": 0.021099999999999997
  },
  "council_analysis": {
-  "score": 7
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "USCB",
+   "date": "2026-10-22",
+   "epsEstimate": 0.56,
+   "epsActual": null
+  },
+  {
+   "ticker": "USCB",
+   "date": "2026-07-23",
+   "epsEstimate": 0.49,
+   "epsActual": 0.49
+  },
+  {
+   "ticker": "USCB",
+   "date": "2026-04-23",
+   "epsEstimate": 0.47,
+   "epsActual": 0.51
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "USCB",
+   "date": "2026-08-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1901637/000156276226000090/uscb-20260630.htm"
+  },
+  {
+   "ticker": "USCB",
+   "date": "2026-05-08",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1901637/000156276226000062/uscb-20260331.htm"
+  },
+  {
+   "ticker": "USCB",
+   "date": "2026-03-13",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1901637/000156276226000027/uscb-20251231.htm"
+  },
+  {
+   "ticker": "USCB",
+   "date": "2025-11-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1901637/000156276225000269/uscb-20250930.htm"
+  },
+  {
+   "ticker": "USCB",
+   "date": "2025-08-08",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1901637/000156276225000206/uscb-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

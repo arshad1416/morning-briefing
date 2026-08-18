@@ -1,24 +1,27 @@
 {
  "ticker": "SES",
  "name": "SES AI Corporation",
- "generated_at": "2026-08-17T14:45:01.652323+00:00",
- "price": 0.59,
- "change_pct": -3.94,
+ "generated_at": "2026-08-18T11:45:01.845524+00:00",
+ "price": 0.57,
+ "change_pct": -5.54,
  "sector": "Consumer Cyclical",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "analyst_buy"
+ ],
  "technical": {
-  "rsi_14": 45.1,
+  "rsi_14": 42.9,
   "sma_20": 0.56,
-  "sma_50": 0.79
+  "sma_50": 0.77
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "218M",
+  "market_cap": "211M",
   "beta": 1.019,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

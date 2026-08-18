@@ -1,27 +1,28 @@
 {
  "ticker": "LQD",
  "name": "iShares iBoxx $ Investment Grad",
- "generated_at": "2026-08-17T14:45:01.652323+00:00",
- "price": 106.25,
- "change_pct": -0.29,
+ "generated_at": "2026-08-18T11:45:01.845524+00:00",
+ "price": 106.01,
+ "change_pct": -0.1,
  "sector": null,
  "signals": [
-  "near_high",
+  "rsi_dip",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 46.2,
-  "sma_20": 106.21,
-  "sma_50": 107.14
+  "rsi_14": 43.5,
+  "sma_20": 106.17,
+  "sma_50": 107.1
  },
  "fundamentals": {
-  "pe_ratio": 32.127308,
+  "pe_ratio": 32.056217,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.0466
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

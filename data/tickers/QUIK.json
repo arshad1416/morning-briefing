@@ -1,18 +1,19 @@
 {
  "ticker": "QUIK",
  "name": "QuickLogic Corporation",
- "generated_at": "2026-08-17T14:45:01.652323+00:00",
+ "generated_at": "2026-08-18T11:45:01.845524+00:00",
  "price": 12.95,
- "change_pct": 3.11,
+ "change_pct": 1.49,
  "sector": "Technology",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 42.7,
-  "sma_20": 13.32,
-  "sma_50": 16.33
+  "rsi_14": 42.8,
+  "sma_20": 13.33,
+  "sma_50": 16.11
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -21,7 +22,7 @@
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

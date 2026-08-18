@@ -1,21 +1,24 @@
 {
  "ticker": "HIW",
  "name": "Highwoods Properties, Inc.",
- "generated_at": "2026-08-17T14:45:01.652323+00:00",
- "price": 31.74,
- "change_pct": -0.25,
+ "generated_at": "2026-08-18T11:45:01.845524+00:00",
+ "price": 30.86,
+ "change_pct": -2.05,
  "sector": "Real Estate",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.6,
-  "sma_20": 32.6,
-  "sma_50": 31.27
+  "rsi_14": 41.8,
+  "sma_20": 32.49,
+  "sma_50": 31.33
  },
  "fundamentals": {
-  "pe_ratio": 21.019867,
-  "market_cap": "3.6B",
+  "pe_ratio": 20.440397,
+  "market_cap": "3.5B",
   "beta": 1.075,
-  "dividend_yield": 0.0638
+  "dividend_yield": 0.0635
  },
  "council_analysis": {
   "score": 5

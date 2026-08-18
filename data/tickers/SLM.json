@@ -1,30 +1,80 @@
 {
  "ticker": "SLM",
  "name": "SLM Corporation",
- "generated_at": "2026-08-17T14:45:01.652323+00:00",
- "price": 27.81,
- "change_pct": 0.23,
+ "generated_at": "2026-08-18T11:45:01.845524+00:00",
+ "price": 27.55,
+ "change_pct": -1.71,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
   "above_ma",
-  "value_pe"
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 66.7,
-  "sma_20": 26.38,
-  "sma_50": 24.96
+  "rsi_14": 62.0,
+  "sma_20": 26.5,
+  "sma_50": 25.07
  },
  "fundamentals": {
-  "pe_ratio": 7.745126,
+  "pe_ratio": 7.6740947,
   "market_cap": "5.2B",
   "beta": 0.972,
-  "dividend_yield": 0.0187
+  "dividend_yield": 0.018500000000000003
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "SLM",
+   "date": "2026-10-22",
+   "epsEstimate": 0.42,
+   "epsActual": null
+  },
+  {
+   "ticker": "SLM",
+   "date": "2026-07-23",
+   "epsEstimate": 0.44,
+   "epsActual": 0.29
+  },
+  {
+   "ticker": "SLM",
+   "date": "2026-04-23",
+   "epsEstimate": 1.2,
+   "epsActual": 1.54
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "SLM",
+   "date": "2026-07-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1032033/000103203326000042/slm-20260630.htm"
+  },
+  {
+   "ticker": "SLM",
+   "date": "2026-04-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1032033/000103203326000025/slm-20260331.htm"
+  },
+  {
+   "ticker": "SLM",
+   "date": "2026-02-19",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1032033/000103203326000011/slm-20251231.htm"
+  },
+  {
+   "ticker": "SLM",
+   "date": "2025-10-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1032033/000103203325000033/slm-20250930.htm"
+  },
+  {
+   "ticker": "SLM",
+   "date": "2025-07-24",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1032033/000103203325000012/slm-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

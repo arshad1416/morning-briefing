@@ -1,23 +1,22 @@
 {
  "ticker": "NMAX",
  "name": "Newsmax, Inc.",
- "generated_at": "2026-08-17T14:45:01.652323+00:00",
- "price": 11.03,
- "change_pct": 16.28,
+ "generated_at": "2026-08-18T11:45:01.845524+00:00",
+ "price": 9.92,
+ "change_pct": -8.74,
  "sector": "Communication Services",
  "signals": [
-  "overbought_rsi",
   "above_ma",
-  "volume_surge"
+  "premium_pe"
  ],
  "technical": {
-  "rsi_14": 78.6,
-  "sma_20": 8.37,
-  "sma_50": 8.31
+  "rsi_14": 63.4,
+  "sma_20": 8.45,
+  "sma_50": 8.32
  },
  "fundamentals": {
-  "pe_ratio": null,
-  "market_cap": "1.4B",
+  "pe_ratio": 58.35294,
+  "market_cap": "1.3B",
   "beta": null,
   "dividend_yield": null
  },

@@ -1,22 +1,24 @@
 {
  "ticker": "BURL",
  "name": "Burlington Stores, Inc.",
- "generated_at": "2026-08-17T14:45:01.652323+00:00",
- "price": 351.49,
- "change_pct": -1.08,
+ "generated_at": "2026-08-18T11:45:01.845524+00:00",
+ "price": 341.3,
+ "change_pct": -1.83,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.2,
-  "sma_20": 360.64,
-  "sma_50": 340.76
+  "rsi_14": 41.1,
+  "sma_20": 360.59,
+  "sma_50": 341.67
  },
  "fundamentals": {
-  "pe_ratio": 36.08727,
-  "market_cap": "22.1B",
+  "pe_ratio": 35.07708,
+  "market_cap": "21.4B",
   "beta": 1.466,
   "dividend_yield": null
  },

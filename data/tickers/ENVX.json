@@ -1,22 +1,24 @@
 {
  "ticker": "ENVX",
  "name": "Enovix Corporation",
- "generated_at": "2026-08-17T14:45:01.652323+00:00",
- "price": 4.41,
- "change_pct": -0.45,
+ "generated_at": "2026-08-18T11:45:01.845524+00:00",
+ "price": 3.71,
+ "change_pct": -15.38,
  "sector": "Industrials",
  "signals": [
   "rsi_dip",
+  "below_ma",
+  "volume_surge",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 44.4,
-  "sma_20": 4.37,
-  "sma_50": 5.4
+  "rsi_14": 35.3,
+  "sma_20": 4.33,
+  "sma_50": 5.3
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "968M",
+  "market_cap": "815M",
   "beta": 2.332,
   "dividend_yield": null
  },

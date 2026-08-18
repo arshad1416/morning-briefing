@@ -1,13 +1,15 @@
 {
  "ticker": "TSEOQ",
  "name": "TSEOQ",
- "generated_at": "2026-08-17T14:45:01.652323+00:00",
+ "generated_at": "2026-08-18T11:45:01.845524+00:00",
  "price": 0.0,
  "change_pct": 0.0,
  "sector": "",
  "signals": [
   "rsi_dip",
-  "above_ma"
+  "above_ma",
+  "volume_surge",
+  "analyst_buy"
  ],
  "technical": {
   "rsi_14": 40.9,
@@ -21,9 +23,59 @@
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 7
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "TSEOQ",
+   "date": "2026-11-05",
+   "epsEstimate": -2.1,
+   "epsActual": null
+  },
+  {
+   "ticker": "TSEOQ",
+   "date": "2026-04-30",
+   "epsEstimate": -2.42,
+   "epsActual": -2.06
+  },
+  {
+   "ticker": "TSEOQ",
+   "date": "2026-03-13",
+   "epsEstimate": -2.84,
+   "epsActual": -2.65
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "TSEOQ",
+   "date": "2026-08-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1519061/000110465926091910/tse-20260630x10q.htm"
+  },
+  {
+   "ticker": "TSEOQ",
+   "date": "2026-04-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1519061/000110465926052646/tse-20260331x10q.htm"
+  },
+  {
+   "ticker": "TSEOQ",
+   "date": "2026-03-13",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1519061/000110465926027518/tse-20251231x10k.htm"
+  },
+  {
+   "ticker": "TSEOQ",
+   "date": "2025-11-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1519061/000110465925108273/tse-20250930x10q.htm"
+  },
+  {
+   "ticker": "TSEOQ",
+   "date": "2025-08-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1519061/000155837025010698/tse-20250630x10q.htm"
+  }
+ ],
  "reddit_mentions": []
 }
