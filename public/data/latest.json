@@ -1,43 +1,43 @@
 {
-  "generated_at": "2026-08-17T19:20:04-04:00",
+  "generated_at": "2026-08-18T09:37:03-04:00",
   "market_summary": {
-    "vix": 15.19,
-    "ten_year_yield": 4.72,
+    "vix": 15.82,
+    "ten_year_yield": 4.74,
     "indices": [
       {
         "ticker": "S&P 500",
-        "price": 7745.06,
-        "change_pct": -0.52
+        "price": 7704.44,
+        "change_pct": -1.04
       },
       {
         "ticker": "Dow Jones",
-        "price": 53459.78,
-        "change_pct": -0.51
+        "price": 53304.11,
+        "change_pct": -0.8
       },
       {
         "ticker": "NASDAQ",
-        "price": 26644.91,
-        "change_pct": -0.32
+        "price": 26355.52,
+        "change_pct": -1.4
       },
       {
         "ticker": "Russell 2000",
-        "price": 3057.54,
-        "change_pct": -0.35
+        "price": 3068.42,
+        "change_pct": 0.51
       },
       {
         "ticker": "TSX",
-        "price": 36667.92,
-        "change_pct": -0.17
+        "price": 36578.05,
+        "change_pct": -0.41
       },
       {
         "ticker": "VIX",
-        "price": 15.19,
-        "change_pct": 6.6
+        "price": 15.82,
+        "change_pct": 11.02
       },
       {
         "ticker": "10Y Yield",
-        "price": 4.72,
-        "change_pct": 0.43
+        "price": 4.74,
+        "change_pct": 0.85
       }
     ],
     "fx_rates": [
@@ -48,7 +48,7 @@
     ]
   },
   "narrative": {
-    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,745.06 (-0.52%)\n  \u2022 Dow Jones: 53,459.78 (-0.51%)\n  \u2022 NASDAQ: 26,644.91 (-0.32%)\n  \u2022 Russell 2000: 3,057.54 (-0.35%)\n  \u2022 TSX: 36,667.92 (-0.17%)\n  \u2022 VIX: 15.19\n  \u2022 10Y Yield: 4.72%"
+    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,704.44 (-1.04%)\n  \u2022 Dow Jones: 53,304.11 (-0.80%)\n  \u2022 NASDAQ: 26,355.52 (-1.40%)\n  \u2022 Russell 2000: 3,068.42 (+0.51%)\n  \u2022 TSX: 36,578.05 (-0.41%)\n  \u2022 VIX: 15.82\n  \u2022 10Y Yield: 4.74%"
   },
   "watchlist_summary": {},
   "central_banks": {
@@ -56,6 +56,20 @@
     "boc": ""
   },
   "insider_trades": [
+    {
+      "ticker": "DIS",
+      "insider": "Woodford Brent",
+      "title": "EVP, Control, Fin Plan &amp; Tax",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 7238,
+      "price": 105.31,
+      "value": 762234,
+      "date": "2026-08-14",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1744489/000162828026057481/xslF345X06/wk-form4_1787004533.xml"
+    },
     {
       "ticker": "AMD",
       "insider": "Hahn Ava",
@@ -181,92 +195,78 @@
       "date": "2026-08-10",
       "source": "SEC EDGAR Form 4",
       "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 114,
-      "price": 600.0,
-      "value": 68400,
-      "date": "2026-08-10",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
     }
   ],
   "market_news": {
     "headlines": [
       {
-        "title": "Surge Energy declares CAD 0.0433 dividend",
-        "url": "https://seekingalpha.com/news/4633993-surge-energy-declares-cad-0_0433-dividend?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Evogene GAAP EPS of -$0.13 beats by $0.14, revenue of $0.35M beats by $0.02M",
+        "url": "https://seekingalpha.com/news/4634238-evogene-gaap-eps-of-0_13-beats-by-0_14-revenue-of-0_35m-beats-by-0_02m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "INVO BioScience GAAP EPS of $0.35 beats by $5.55, revenue of $2.18M misses by $0.53M",
-        "url": "https://seekingalpha.com/news/4633992-invo-bioscience-gaap-eps-of-0_35-beats-by-5_55-revenue-of-2_18m-misses-by-0_53m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Immatics GAAP EPS of -\u20ac0.46, revenue of \u20ac9.14M",
+        "url": "https://seekingalpha.com/news/4634237-immatics-gaap-eps-of--046-revenue-of-914m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Unitree's IPO places a bright spotlight on the humanoid robot sector",
+        "url": "https://seekingalpha.com/news/4634235-unitrees-ipo-places-a-bright-spotlight-on-the-humanoid-robot-sector?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "South Korea must prepare for worst-case scenario, president says",
+        "url": "https://seekingalpha.com/news/4634206-south-korea-must-prepare-for-worst-case-scenario-president-says?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Stantec expands share buyback authorization",
+        "url": "https://seekingalpha.com/news/4634233-stantec-expands-share-buyback-authorization?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Constellation Brands is the biggest decliner in the S&P 500 after Berkshire exit",
-        "url": "https://seekingalpha.com/news/4633989-constellation-brands-is-the-biggest-decliner-in-the-sp-500-after-berkshire-exit?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Haemonetics rises after supply deal with CSL",
+        "url": "https://seekingalpha.com/news/4634234-haemonetics-stock-rises-supply-deal-csl?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Retail earnings will reveal consumer health with spending under pressure",
+        "url": "https://seekingalpha.com/news/4634228-retail-earnings-will-reveal-consumer-health-with-spending-under-pressure?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Pagaya Technologies: The Business Is Getting Better Even As My Price Target Falls",
+        "url": "https://seekingalpha.com/article/4937604-pagaya-technologies-stock-business-getting-better-even-price-target-falls?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "bearish",
         "summary": ""
       },
       {
-        "title": "YieldMax TSLA Performance & Distribution Target 25 ETF declares $0.1776 dividend",
-        "url": "https://seekingalpha.com/news/4633990-yieldmax-tsla-performance-and-distribution-target-25-etf-declares-0_1776-dividend?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Three Charts - One Conclusion",
+        "url": "https://seekingalpha.com/article/4937598-three-charts-one-conclusion?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Moody\u2019s upgrades Bombardier ratings as debt falls, cash flow improves",
-        "url": "https://seekingalpha.com/news/4633984-moody-s-upgrades-bombardier-ratings-as-debt-falls-cash-flow-improves?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "bearish",
-        "summary": ""
-      },
-      {
-        "title": "YieldMax NVDA Performance & Distribution Target 25 ETF declares $0.2461 dividend",
-        "url": "https://seekingalpha.com/news/4633987-yieldmax-nvda-performance-and-distribution-target-25-etf-declares-0_2461-dividend?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Why I Bought Nike After A 6-Year Hiatus",
+        "url": "https://seekingalpha.com/article/4937575-why-i-bought-nike-after-a-6-year-hiatus?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "YieldMax MSTR Performance & Distribution Tg 25 ETF declares $0.1061 dividend",
-        "url": "https://seekingalpha.com/news/4633985-yieldmax-mstr-performance-and-distribution-tg-25-etf-declares-0_1061-dividend?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Coal Is Dying? This +9.5% Yielding Energy Play Is Thriving - Alliance Resource Partners",
-        "url": "https://seekingalpha.com/article/4937226-coal-is-dying-this-plus-9-5-percent-yielding-energy-play-is-thriving-alliance-resource-partners?source=feed",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "2 Blue-Chip REITs With Safe Dividends On Sale",
-        "url": "https://seekingalpha.com/article/4937121-2-blue-chip-reits-with-safe-dividend-on-sale?source=feed",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "This May Be The Last Chance For These Golden Income Buying Opportunities",
-        "url": "https://seekingalpha.com/article/4937255-this-may-be-the-last-chance-for-these-golden-income-buying-opportunities?source=feed",
-        "source": "Seeking Alpha",
-        "sentiment": "bullish",
         "summary": ""
       }
     ],
@@ -275,185 +275,185 @@
   },
   "geopolitical": [
     {
-      "title": "Trump says US to reduce military drills with South Korea after it stayed out of Iran war",
+      "title": "Russia warns UK will pay for supplying drones to Ukraine",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cx2lll7zvn0o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-17T06:24:31+00:00",
-      "summary": "Trump cites his \"very good relationship\" with North Korea's leader in deciding to downsize the exercises."
+      "url": "https://www.bbc.co.uk/news/articles/cy5dz0kkn0wo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-18T09:55:00+00:00",
+      "summary": "Russia accuses the UK of escalating the Ukraine war after British-made drones were used, but the MoD says it stands against Russian aggression."
     },
     {
-      "title": "Trump envoy Kushner arrives in Israel after rare Hamas talks on Gaza peace plan",
+      "title": "IVF staff accused of misleading UK parents about sperm and egg donors in northern Cyprus",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c77gg5vn44yo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-17T08:43:12+00:00",
-      "summary": "US President Trump's son-in-law Jared Kushner is expected to meet Israeli Prime Minister Benjamin Netanyahu later on Monday."
+      "url": "https://www.bbc.co.uk/news/articles/c75gv9xnr3po?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-18T08:07:37+00:00",
+      "summary": "Multiple children are feared to have been conceived using sperm and egg donors which were not the ones selected by the parents."
     },
     {
-      "title": "Ukrainian strikes kill six in Russia, acting governor says",
+      "title": "Tupac murder trial: 'All hell broke loose' night of rapper's shooting, witness says",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cn7n4lm11vro?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-17T08:47:19+00:00",
-      "summary": "A 14-year-old child was among four others injured, the acting governor of Russia's Belgorod region says."
+      "url": "https://www.bbc.co.uk/news/articles/cp3r0kz775ko?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-18T05:24:15+00:00",
+      "summary": "After he was shot multiple times, Tupac Shakur refused to cooperate with police and told an officer \"we'll take care of it\", an officer testified."
     },
     {
-      "title": "Aid shortages and fears of starvation as Indonesia reels from deadly earthquake",
+      "title": "Inside secret police warehouse as Germany targets small boats gangs",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/crl7686r71yo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-17T08:38:41+00:00",
-      "summary": "Some 53 people were killed and thousands displaced by the earthquake, which struck early on Saturday."
+      "url": "https://www.bbc.co.uk/news/articles/cpq809zrvqdo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-18T05:02:58+00:00",
+      "summary": "German authorities seize dinghies and life jackets during their first raids under a new law that cracks down on smuggling."
     },
     {
-      "title": "Ebola outbreak in DR Congo becomes deadliest in its history",
+      "title": "China censors public mourning as it holds former premier's funeral",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cvgll74vvydo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-17T04:41:31+00:00",
-      "summary": "The outbreak was already the fastest growing on record, caused by a rare species of Ebola called Bundibugyo."
+      "url": "https://www.bbc.co.uk/news/articles/c8dn3rqlyrgo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-18T07:17:07+00:00",
+      "summary": "While hailing Zhu\u2019s legacy, authorities are wary that the nostalgia could lead to criticisms of Xi\u2019s rule."
     },
     {
-      "title": "Thousands await aid after deadly Indonesia quake as rescue work conducted",
+      "title": "Eight air strikes hit airbase in Syria\u2019s Idlib",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/17/thousands-await-aid-after-deadly-indonesia-quake-as-rescue-work-conducted?traffic_source=rss",
-      "date": "2026-08-17T10:14:28+00:00",
-      "summary": "Thousands remain displaced after magnitude 7.7 quake struck East Nusa Tenggara province on Saturday."
+      "url": "https://www.aljazeera.com/news/2026/8/18/eight-air-strikes-hit-airbase-in-syrias-idlib?traffic_source=rss",
+      "date": "2026-08-18T10:11:53+00:00",
+      "summary": "Syrian state TV quotes military source as saying Israeli forces carried out attack, causing damage and no casualties."
     },
     {
-      "title": "Inside the UK\u2019s \u2018stressful\u2019 cost of living crisis Burnham hopes to tackle",
+      "title": "Brazil\u2019s president says Amazon oil is \u2018passport to the future\u2019",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/17/who-can-live-on-340-a-month-inside-the-uks-cost-of-living-crisis?traffic_source=rss",
-      "date": "2026-08-17T09:41:19+00:00",
-      "summary": "Britain's new premier has promised to ease the suffering of millions of families unable to afford basic items."
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/8/18/brazils-president-says-amazon-oil-is-passport-to-the?traffic_source=rss",
+      "date": "2026-08-18T10:08:04+00:00",
+      "summary": "Brazil's president says Amazon oil is \u2018passport to the future\u2019"
     },
     {
-      "title": "Will India\u2019s \u2018Cockroach\u2019 movement force Modi\u2019s BJP to rethink its politics?",
+      "title": "Syrian man dies in custody after alleged abuse by security officers",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/17/has-indias-cockroach-movement-forced-modis-bjp-to-recalibrate-agenda?traffic_source=rss",
-      "date": "2026-08-17T09:03:57+00:00",
-      "summary": "Modi's BJP once controlled media narratives in India, but this might be changing with the 'Cockroach' movement."
+      "url": "https://www.aljazeera.com/video/newsfeed/2026/8/18/syrian-man-dies-in-custody-after-alleged-abuse-by-security-officers?traffic_source=rss",
+      "date": "2026-08-18T10:07:24+00:00",
+      "summary": "A Syrian man died in police custody after his family alleged he was severely beaten."
     }
   ],
   "congress": {
     "recent_trades": [
       {
-        "politician": "Carol Devine Miller",
+        "politician": "Michael Patrick Guest",
         "chamber": "House",
-        "state": "WV01",
-        "ticker": "PFE",
-        "action": "Sell",
-        "amount_range": "$15,001 - $50,000",
-        "amount_low": 15001,
-        "transaction_date": "03/10/2025",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033779.pdf"
-      },
-      {
-        "politician": "Carol Devine Miller",
-        "chamber": "House",
-        "state": "WV01",
-        "ticker": "DGX",
-        "action": "Sell",
-        "amount_range": "$15,001 - $50,000",
-        "amount_low": 15001,
-        "transaction_date": "03/10/2025",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033779.pdf"
-      },
-      {
-        "politician": "Carol Devine Miller",
-        "chamber": "House",
-        "state": "WV01",
-        "ticker": "TGT",
-        "action": "Sell",
-        "amount_range": "$15,001 - $50,000",
-        "amount_low": 15001,
-        "transaction_date": "03/10/2025",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033779.pdf"
-      },
-      {
-        "politician": "Carol Devine Miller",
-        "chamber": "House",
-        "state": "WV01",
-        "ticker": "USB",
-        "action": "Sell",
-        "amount_range": "$15,001 - $50,000",
-        "amount_low": 15001,
-        "transaction_date": "03/10/2025",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033779.pdf"
-      },
-      {
-        "politician": "Shri Thanedar",
-        "chamber": "House",
-        "state": "MI13",
-        "ticker": "AAPL",
-        "action": "Sell",
-        "amount_range": "$100,001 - $250,000",
-        "amount_low": 100001,
-        "transaction_date": "01/09/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033910.pdf"
-      },
-      {
-        "politician": "Shri Thanedar",
-        "chamber": "House",
-        "state": "MI13",
-        "ticker": "MSTR",
-        "action": "Sell",
-        "amount_range": "$15,001 - $50,000",
-        "amount_low": 15001,
-        "transaction_date": "10/21/2025",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033910.pdf"
-      },
-      {
-        "politician": "Derek Tran",
-        "chamber": "House",
-        "state": "CA45",
-        "ticker": "LTC",
+        "state": "MS03",
+        "ticker": "ABNB",
         "action": "Sell",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/28/2025",
+        "transaction_date": "12/16/2025",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035183.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035130.pdf"
       },
       {
-        "politician": "Kevin Hern",
+        "politician": "Michael Patrick Guest",
         "chamber": "House",
-        "state": "OK01",
-        "ticker": "OGN",
+        "state": "MS03",
+        "ticker": "CVX",
         "action": "Sell",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "08/05/2026",
+        "transaction_date": "12/16/2025",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035196.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035130.pdf"
       },
       {
-        "politician": "Kevin Hern",
+        "politician": "Michael Patrick Guest",
         "chamber": "House",
-        "state": "OK01",
-        "ticker": "VSNT",
+        "state": "MS03",
+        "ticker": "ELF",
         "action": "Sell",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "08/05/2026",
+        "transaction_date": "12/16/2025",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035196.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035130.pdf"
       },
       {
-        "politician": "Mike Kelly",
+        "politician": "Michael Patrick Guest",
         "chamber": "House",
-        "state": "PA16",
+        "state": "MS03",
+        "ticker": "XOM",
+        "action": "Exchange",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/02/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035130.pdf"
+      },
+      {
+        "politician": "Michael Patrick Guest",
+        "chamber": "House",
+        "state": "MS03",
+        "ticker": "XOM",
+        "action": "Exchange",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/02/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035130.pdf"
+      },
+      {
+        "politician": "Richard Dean Dr McCormick",
+        "chamber": "House",
+        "state": "GA06",
         "ticker": "ABT",
         "action": "Sell",
         "amount_range": "$1,001 - $15,000",
         "amount_low": 1001,
-        "transaction_date": "07/17/2026",
+        "transaction_date": "07/30/2026",
         "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035203.pdf"
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035204.pdf"
+      },
+      {
+        "politician": "Richard Dean Dr McCormick",
+        "chamber": "House",
+        "state": "GA06",
+        "ticker": "APD",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/30/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035204.pdf"
+      },
+      {
+        "politician": "Richard Dean Dr McCormick",
+        "chamber": "House",
+        "state": "GA06",
+        "ticker": "AWK",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/30/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035204.pdf"
+      },
+      {
+        "politician": "Richard Dean Dr McCormick",
+        "chamber": "House",
+        "state": "GA06",
+        "ticker": "ADI",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/30/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035204.pdf"
+      },
+      {
+        "politician": "Richard Dean Dr McCormick",
+        "chamber": "House",
+        "state": "GA06",
+        "ticker": "AAPL",
+        "action": "Sell",
+        "amount_range": "$1,001 - $15,000",
+        "amount_low": 1001,
+        "transaction_date": "07/30/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035204.pdf"
       }
     ],
-    "summary": "60 recent congressional trades from 10 House periodic transaction reports (20 buys, 40 sells)."
+    "summary": "60 recent congressional trades from 9 House periodic transaction reports (9 buys, 49 sells)."
   }
 }
