@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-18T17:15:03-04:00",
+  "generated_at": "2026-08-19T07:25:03-04:00",
   "market_summary": {
-    "vix": 15.84,
+    "vix": 15.76,
     "ten_year_yield": 4.71,
     "indices": [
       {
@@ -26,13 +26,13 @@
       },
       {
         "ticker": "TSX",
-        "price": 36367.93,
+        "price": 36367.9,
         "change_pct": -0.82
       },
       {
         "ticker": "VIX",
-        "price": 15.84,
-        "change_pct": 4.28
+        "price": 15.76,
+        "change_pct": -0.51
       },
       {
         "ticker": "10Y Yield",
@@ -48,7 +48,7 @@
     ]
   },
   "narrative": {
-    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,691.76 (-0.69%)\n  \u2022 Dow Jones: 53,343.40 (-0.22%)\n  \u2022 NASDAQ: 26,289.71 (-1.33%)\n  \u2022 Russell 2000: 3,017.89 (-1.30%)\n  \u2022 TSX: 36,367.93 (-0.82%)\n  \u2022 VIX: 15.84\n  \u2022 10Y Yield: 4.71%"
+    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,691.76 (-0.69%)\n  \u2022 Dow Jones: 53,343.40 (-0.22%)\n  \u2022 NASDAQ: 26,289.71 (-1.33%)\n  \u2022 Russell 2000: 3,017.89 (-1.30%)\n  \u2022 TSX: 36,367.90 (-0.82%)\n  \u2022 VIX: 15.76\n  \u2022 10Y Yield: 4.71%"
   },
   "watchlist_summary": {},
   "central_banks": {
@@ -56,6 +56,48 @@
     "boc": ""
   },
   "insider_trades": [
+    {
+      "ticker": "RIVN",
+      "insider": "McDonough Claire",
+      "title": "Chief Financial Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 13144,
+      "price": 14.5,
+      "value": 190650,
+      "date": "2026-08-18",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1874178/000189092526000023/xslF345X06/wk-form4_1787088293.xml"
+    },
+    {
+      "ticker": "AMD",
+      "insider": "Grasby Paul Darren",
+      "title": "EVP &amp; CSO",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 15000,
+      "price": 514.91,
+      "value": 7723650,
+      "date": "2026-08-17",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000161/xslF345X06/wk-form4_1787086197.xml"
+    },
+    {
+      "ticker": "META",
+      "insider": "Li Susan J",
+      "title": "Chief Financial Officer",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 2127,
+      "price": 689.85,
+      "value": 1467311,
+      "date": "2026-08-15",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012607/xslF345X06/ownership.xml"
+    },
     {
       "ticker": "DIS",
       "insider": "Woodford Brent",
@@ -69,20 +111,6 @@
       "date": "2026-08-14",
       "source": "SEC EDGAR Form 4",
       "filing_url": "https://www.sec.gov/Archives/edgar/data/1744489/000162828026057481/xslF345X06/wk-form4_1787004533.xml"
-    },
-    {
-      "ticker": "AMD",
-      "insider": "Hahn Ava",
-      "title": "SVP, GC &amp; Corporate Secretary",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 143,
-      "price": 474.75,
-      "value": 67889,
-      "date": "2026-08-11",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000141/xslF345X06/wk-form4_1786651900.xml"
     },
     {
       "ticker": "INTC",
@@ -113,158 +141,130 @@
       "filing_url": "https://www.sec.gov/Archives/edgar/data/320193/000114036126032884/xslF345X06/form4.xml"
     },
     {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
+      "ticker": "NKE",
+      "insider": "Montagne Amy",
+      "title": "PRESIDENT, NIKE",
       "type": "Sell",
       "code": "S",
       "open_market": true,
-      "shares": 149,
-      "price": 600.0,
-      "value": 89400,
-      "date": "2026-08-10",
+      "shares": 4867,
+      "price": 42.05,
+      "value": 204657,
+      "date": "2026-08-07",
       "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000114/xslF345X06/form4.xml"
     },
     {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
+      "ticker": "PLTR",
+      "insider": "Sankar Shyam",
+      "title": "See Remarks",
       "type": "Sell",
       "code": "S",
       "open_market": true,
-      "shares": 113,
-      "price": 602.41,
-      "value": 68073,
-      "date": "2026-08-10",
+      "shares": 2735,
+      "price": 153.4,
+      "value": 419562,
+      "date": "2026-08-06",
       "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000182415926000011/xslF345X06/wk-form4_1786406477.xml"
     },
     {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
+      "ticker": "PLTR",
+      "insider": "Sankar Shyam",
+      "title": "See Remarks",
       "type": "Sell",
       "code": "S",
       "open_market": true,
-      "shares": 92,
-      "price": 604.08,
-      "value": 55576,
-      "date": "2026-08-10",
+      "shares": 6191,
+      "price": 154.65,
+      "value": 957457,
+      "date": "2026-08-06",
       "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000182415926000011/xslF345X06/wk-form4_1786406477.xml"
     },
     {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
+      "ticker": "PLTR",
+      "insider": "Sankar Shyam",
+      "title": "See Remarks",
       "type": "Sell",
       "code": "S",
       "open_market": true,
-      "shares": 40,
-      "price": 605.97,
-      "value": 24239,
-      "date": "2026-08-10",
+      "shares": 16063,
+      "price": 155.74,
+      "value": 2501658,
+      "date": "2026-08-06",
       "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 40,
-      "price": 607.14,
-      "value": 24286,
-      "date": "2026-08-10",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
-    },
-    {
-      "ticker": "META",
-      "insider": "Olivan Javier",
-      "title": "Chief Operating Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 164,
-      "price": 600.0,
-      "value": 98400,
-      "date": "2026-08-10",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1326801/000095010326012279/xslF345X06/ownership.xml"
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000182415926000011/xslF345X06/wk-form4_1786406477.xml"
     }
   ],
   "market_news": {
     "headlines": [
       {
-        "title": "TikTok explores feature to send money through DMs - report",
-        "url": "https://seekingalpha.com/news/4634462-tiktok-explores-feature-to-send-money-through-dms---report?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Coty Q4 2026 Earnings Preview",
-        "url": "https://seekingalpha.com/news/4634465-coty-q4-2026-earnings-preview?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Datavault AI Q2 2026 Earnings Preview",
-        "url": "https://seekingalpha.com/news/4634464-datavault-ai-q2-2026-earnings-preview?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Ibogaine could rise as potential psychedelic treatment with Trump announcement",
-        "url": "https://seekingalpha.com/news/4634458-ibogaine-could-rise-potential-psychedlic-treatment-trump-announcement?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "StoneX buys Advanced Marketing Group",
+        "url": "https://seekingalpha.com/news/4634826-stonex-buys-advanced-marketing-group?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Jefferson Capital prices $100M senior notes",
-        "url": "https://seekingalpha.com/news/4634459-jefferson-capital-prices-100m-senior-notes?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Antalpha Platform Holding misses top-line and bottom-line estimates; gives Q3 outlook",
+        "url": "https://seekingalpha.com/news/4634829-antalpha-platform-holding-misses-top-line-and-bottom-line-estimates-gives-q3-outlook?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "Crossroads Capital Investment adds TTWO, cuts NBIS among Q2 moves",
-        "url": "https://seekingalpha.com/news/4634461-crossroads-capital-investment-adds-ttwo-cuts-nbis-among-q2-moves?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "bearish",
-        "summary": ""
-      },
-      {
-        "title": "Target turns Ulta's empty spaces into a beautiful opportunity",
-        "url": "https://seekingalpha.com/news/4634445-target-turns-ultas-empty-spaces-into-a-beautiful-opportunity?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "iQSTEL reports 1H results",
+        "url": "https://seekingalpha.com/news/4634825-iqstel-reports-1h-results?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "The 9% Portfolio That Retires Your Paycheck",
-        "url": "https://seekingalpha.com/article/4937400-9-percent-portfolio-that-retires-your-paycheck?source=feed",
+        "title": "Mizuo is bullish on Unitree Robotics right out of the IPO gate",
+        "url": "https://seekingalpha.com/news/4634823-mizuo-is-bullish-on-unitree-robotics-right-out-of-the-ipo-gate?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Viking Holdings Ltd Non-GAAP EPS of $1.31 beats by $0.07, revenue of $2.19B beats by $50M",
+        "url": "https://seekingalpha.com/news/4634821-viking-holdings-ltd-non-gaap-eps-of-1_31-beats-by-0_07-revenue-of-2_19b-beats-by-50m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Nasus Pharma CFO Eyal Rubin to leave",
+        "url": "https://seekingalpha.com/news/4634819-nasus-pharma-cfo-eyal-rubin-to-leave?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "America's Debt Problem Is Bad - Prepare Your Portfolio For What Comes Next",
-        "url": "https://seekingalpha.com/article/4937399-americas-debt-problem-is-bad-prepare-your-portfolio-for-what-comes-next?source=feed",
+        "title": "Opera beats top-line estimates; gives Q3 and raises FY2026 outlook",
+        "url": "https://seekingalpha.com/news/4634822-opera-beats-top-line-estimates-gives-q3-and-raises-fy2026-outlook?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "VICI Properties: One Step Further Into Value Investing",
+        "url": "https://seekingalpha.com/article/4938134-vici-properties-one-step-further-into-value-investing?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "The Real Reason Markets Are Rising Despite A Bearish Macro Backdrop",
-        "url": "https://seekingalpha.com/article/4937525-the-real-reason-markets-are-rising-despite-a-bearish-macro-backdrop?source=feed",
+        "title": "Adobe: The Software Company To Own",
+        "url": "https://seekingalpha.com/article/4938130-adobe-the-software-company-to-own?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Volatility/Convexity Premia Fall To Lowest YTD Levels On Benign Inflation Data",
+        "url": "https://seekingalpha.com/article/4938094-volatility-convexity-premia-fall-to-lowest-ytd-levels-on-benign-inflation-data?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "bearish",
         "summary": ""
@@ -275,60 +275,60 @@
   },
   "geopolitical": [
     {
-      "title": "Russia warns UK will pay for supplying drones to Ukraine",
+      "title": "Sacked Ukrainian defence minister calls for presidential election",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cy5dz0kkn0wo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-18T09:55:00+00:00",
-      "summary": "Russia accuses the UK of escalating the Ukraine war after British-made drones were used, but the MoD says it stands against Russian aggression."
+      "url": "https://www.bbc.co.uk/news/articles/cdew8n9erlwo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-19T09:02:08+00:00",
+      "summary": "Martial law has been in place in Ukraine since February 2022, under which elections are suspended."
     },
     {
-      "title": "IVF staff accused of misleading UK parents about sperm and egg donors in northern Cyprus",
+      "title": "Mushroom murderer trial undermined by 'catastrophic' hotel mix-up, appeal court told",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c75gv9xnr3po?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-18T08:07:37+00:00",
-      "summary": "Multiple children are feared to have been conceived using sperm and egg donors which were not the ones selected by the parents."
+      "url": "https://www.bbc.co.uk/news/articles/czjlxenlgkko?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-19T08:25:03+00:00",
+      "summary": "Erin Patterson's defence team appeal against her conviction for killing relatives with a beef Wellington laced with toxic mushrooms."
     },
     {
-      "title": "Tupac murder trial: 'All hell broke loose' night of rapper's shooting, witness says",
+      "title": "Trump pauses new tariffs on Canada for three days, saying deal close",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cp3r0kz775ko?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-18T05:24:15+00:00",
-      "summary": "After he was shot multiple times, Tupac Shakur refused to cooperate with police and told an officer \"we'll take care of it\", an officer testified."
+      "url": "https://www.bbc.co.uk/news/articles/cy9wz79ze29o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-19T03:56:35+00:00",
+      "summary": "The US president says the two sides are finalising documents to avert import taxes targeting a range of Canadian goods."
     },
     {
-      "title": "Inside secret police warehouse as Germany targets small boats gangs",
+      "title": "South Korea shortens war games with US, citing Washington request",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cpq809zrvqdo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-18T05:02:58+00:00",
-      "summary": "German authorities seize dinghies and life jackets during their first raids under a new law that cracks down on smuggling."
+      "url": "https://www.bbc.co.uk/news/articles/cnvn0j31qj8o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-19T05:53:53+00:00",
+      "summary": "It comes after Trump announced plans to curtail joint military exercises with South Korea, citing a \"very good\" relationship with North Korea's Kim Jong Un."
     },
     {
-      "title": "China censors public mourning as it holds former premier's funeral",
+      "title": "French civil servant drugged us to make us urinate on ourselves, say accusers",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c8dn3rqlyrgo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-18T07:17:07+00:00",
-      "summary": "While hailing Zhu\u2019s legacy, authorities are wary that the nostalgia could lead to criticisms of Xi\u2019s rule."
+      "url": "https://www.bbc.co.uk/news/articles/crrv48lenwgo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-19T05:00:39+00:00",
+      "summary": "More than 200 women accuse Christian N\u00e8gre of drugging them to make them urinate - two share their stories."
     },
     {
-      "title": "Eight air strikes hit airbase in Syria\u2019s Idlib",
+      "title": "Why White House envoys cannot sway Israel\u2019s war leader",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/18/eight-air-strikes-hit-airbase-in-syrias-idlib?traffic_source=rss",
-      "date": "2026-08-18T10:11:53+00:00",
-      "summary": "Syrian state TV quotes military source as saying Israeli forces carried out attack, causing damage and no casualties."
+      "url": "https://www.aljazeera.com/opinions/2026/8/19/why-white-house-envoys-cannot-sway-israels-war-leader?traffic_source=rss",
+      "date": "2026-08-19T10:24:26+00:00",
+      "summary": "Any deal in any of Israel\u2019s conflicts would be politically damaging for its prime minister."
     },
     {
-      "title": "Brazil\u2019s president says Amazon oil is \u2018passport to the future\u2019",
+      "title": "Manav Suthar takes 10-wicket haul as India beat Sri Lanka in 600th Test",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/video/newsfeed/2026/8/18/brazils-president-says-amazon-oil-is-passport-to-the?traffic_source=rss",
-      "date": "2026-08-18T10:08:04+00:00",
-      "summary": "Brazil's president says Amazon oil is \u2018passport to the future\u2019"
+      "url": "https://www.aljazeera.com/sports/2026/8/19/manav-suthar-takes-10-wicket-haul-as-sri-lanka-beaten-in-indias-600th-test?traffic_source=rss",
+      "date": "2026-08-19T10:02:16+00:00",
+      "summary": "India take a 1-0 lead with a 165-run win against the hosts in Galle to begin the two-Test series."
     },
     {
-      "title": "Syrian man dies in custody after alleged abuse by security officers",
+      "title": "At least five killed in Russian air attacks on Ukraine",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/video/newsfeed/2026/8/18/syrian-man-dies-in-custody-after-alleged-abuse-by-security-officers?traffic_source=rss",
-      "date": "2026-08-18T10:07:24+00:00",
-      "summary": "A Syrian man died in police custody after his family alleged he was severely beaten."
+      "url": "https://www.aljazeera.com/news/2026/8/19/at-least-five-killed-in-russian-air-attacks-on-ukraine?traffic_source=rss",
+      "date": "2026-08-19T09:34:38+00:00",
+      "summary": "Russia's Defence Ministry says 453 Ukrainian drones were downed overnight in various regions."
     }
   ],
   "congress": {
