@@ -1,21 +1,23 @@
 {
  "ticker": "HROW",
  "name": "Harrow, Inc.",
- "generated_at": "2026-08-18T14:45:01.214145+00:00",
- "price": 40.03,
- "change_pct": 0.0,
+ "generated_at": "2026-08-19T11:45:02.095919+00:00",
+ "price": 38.63,
+ "change_pct": -3.5,
  "sector": "Healthcare",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.0,
-  "sma_20": 39.86,
-  "sma_50": 40.69
+  "rsi_14": 43.5,
+  "sma_20": 39.79,
+  "sma_50": 40.67
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "1.5B",
+  "market_cap": "1.4B",
   "beta": 0.254,
   "dividend_yield": null
  },

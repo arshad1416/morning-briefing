@@ -1,31 +1,80 @@
 {
  "ticker": "USB",
  "name": "U.S. Bancorp",
- "generated_at": "2026-08-18T14:45:01.214145+00:00",
- "price": 65.61,
- "change_pct": 0.29,
+ "generated_at": "2026-08-19T11:45:02.095919+00:00",
+ "price": 64.79,
+ "change_pct": -0.96,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
   "above_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 67.5,
-  "sma_20": 64.1,
-  "sma_50": 61.65
+  "rsi_14": 60.5,
+  "sma_20": 64.06,
+  "sma_50": 61.63
  },
  "fundamentals": {
-  "pe_ratio": 13.095808,
-  "market_cap": "102.2B",
+  "pe_ratio": 12.932136,
+  "market_cap": "100.9B",
   "beta": 0.977,
-  "dividend_yield": 0.0318
+  "dividend_yield": 0.0321
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "USB",
+   "date": "2026-10-15",
+   "epsEstimate": 1.32,
+   "epsActual": null
+  },
+  {
+   "ticker": "USB",
+   "date": "2026-07-16",
+   "epsEstimate": 1.29,
+   "epsActual": 1.35
+  },
+  {
+   "ticker": "USB",
+   "date": "2026-04-16",
+   "epsEstimate": 1.14,
+   "epsActual": 1.18
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "USB",
+   "date": "2026-08-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/36104/000003610426000044/usb-20260630.htm"
+  },
+  {
+   "ticker": "USB",
+   "date": "2026-05-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/36104/000003610426000024/usb-20260331.htm"
+  },
+  {
+   "ticker": "USB",
+   "date": "2026-02-23",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/36104/000003610426000011/usb-20251231.htm"
+  },
+  {
+   "ticker": "USB",
+   "date": "2025-11-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/36104/000003610425000064/usb-20250930.htm"
+  },
+  {
+   "ticker": "USB",
+   "date": "2025-08-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/36104/000003610425000055/usb-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

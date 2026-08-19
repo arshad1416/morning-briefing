@@ -1,21 +1,23 @@
 {
  "ticker": "ATOM",
  "name": "Atomera Incorporated",
- "generated_at": "2026-08-18T14:45:01.214145+00:00",
- "price": 5.58,
- "change_pct": -0.36,
+ "generated_at": "2026-08-19T11:45:02.095919+00:00",
+ "price": 5.04,
+ "change_pct": -10.0,
  "sector": "Technology",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.5,
-  "sma_20": 5.36,
-  "sma_50": 6.65
+  "rsi_14": 39.9,
+  "sma_20": 5.33,
+  "sma_50": 6.64
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "218M",
+  "market_cap": "197M",
   "beta": 2.06,
   "dividend_yield": null
  },

@@ -1,22 +1,24 @@
 {
  "ticker": "INTT",
  "name": "inTest Corporation",
- "generated_at": "2026-08-18T14:45:01.214145+00:00",
- "price": 14.04,
- "change_pct": 0.5,
+ "generated_at": "2026-08-19T11:45:02.095919+00:00",
+ "price": 13.31,
+ "change_pct": -4.76,
  "sector": "Technology",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.6,
-  "sma_20": 13.61,
-  "sma_50": 15.11
+  "rsi_14": 44.4,
+  "sma_20": 13.54,
+  "sma_50": 15.29
  },
  "fundamentals": {
-  "pe_ratio": 200.57143,
-  "market_cap": "180M",
+  "pe_ratio": 190.07143,
+  "market_cap": "171M",
   "beta": 1.537,
   "dividend_yield": null
  },

@@ -1,30 +1,74 @@
 {
  "ticker": "BAC",
  "name": "Bank of America Corporation",
- "generated_at": "2026-08-18T14:45:01.214145+00:00",
- "price": 65.03,
- "change_pct": 0.83,
+ "generated_at": "2026-08-19T11:45:02.095919+00:00",
+ "price": 64.01,
+ "change_pct": -0.74,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
   "above_ma",
+  "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 70.7,
-  "sma_20": 62.84,
-  "sma_50": 59.85
+  "rsi_14": 64.0,
+  "sma_20": 62.79,
+  "sma_50": 59.83
  },
  "fundamentals": {
-  "pe_ratio": 15.017322,
-  "market_cap": "454.7B",
+  "pe_ratio": 14.784065,
+  "market_cap": "447.6B",
   "beta": 1.168,
-  "dividend_yield": 0.019799999999999998
+  "dividend_yield": 0.02
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "BAC",
+   "date": "2026-10-14",
+   "epsEstimate": 1.2,
+   "epsActual": null
+  },
+  {
+   "ticker": "BAC",
+   "date": "2026-07-14",
+   "epsEstimate": 1.12,
+   "epsActual": 1.21
+  },
+  {
+   "ticker": "BAC",
+   "date": "2026-04-15",
+   "epsEstimate": 1.02,
+   "epsActual": 1.11
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "BAC",
+   "date": "2026-07-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000394/bac-20260630.htm"
+  },
+  {
+   "ticker": "BAC",
+   "date": "2026-05-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000249/bac-20260331.htm"
+  },
+  {
+   "ticker": "BAC",
+   "date": "2026-02-25",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm"
+  },
+  {
+   "ticker": "BAC",
+   "date": "2025-10-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085825000405/bac-20250930.htm"
+  }
+ ],
  "reddit_mentions": []
 }

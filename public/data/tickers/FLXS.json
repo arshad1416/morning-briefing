@@ -1,23 +1,25 @@
 {
  "ticker": "FLXS",
  "name": "Flexsteel Industries, Inc.",
- "generated_at": "2026-08-18T14:45:01.214145+00:00",
- "price": 72.13,
- "change_pct": -2.25,
+ "generated_at": "2026-08-19T11:45:02.095919+00:00",
+ "price": 85.16,
+ "change_pct": 15.41,
  "sector": "Consumer Cyclical",
  "signals": [
-  "rsi_dip",
+  "extended_rsi",
+  "above_ma",
+  "volume_surge",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 43.8,
-  "sma_20": 75.38,
-  "sma_50": 70.84
+  "rsi_14": 74.1,
+  "sma_20": 75.79,
+  "sma_50": 70.11
  },
  "fundamentals": {
-  "pe_ratio": 13.162408,
-  "market_cap": "294M",
+  "pe_ratio": 14.0296545,
+  "market_cap": "347M",
   "beta": 0.581,
   "dividend_yield": 0.0115
  },

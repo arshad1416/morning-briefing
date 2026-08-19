@@ -1,29 +1,61 @@
 {
  "ticker": "ALL",
  "name": "Allstate Corporation (The)",
- "generated_at": "2026-08-18T14:45:01.214145+00:00",
- "price": 261.23,
- "change_pct": -0.07,
+ "generated_at": "2026-08-19T11:45:02.095919+00:00",
+ "price": 263.33,
+ "change_pct": 0.73,
  "sector": "Financial Services",
  "signals": [
+  "above_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 53.2,
-  "sma_20": 262.92,
-  "sma_50": 246.77
+  "rsi_14": 54.9,
+  "sma_20": 263.02,
+  "sma_50": 246.81
  },
  "fundamentals": {
-  "pe_ratio": 5.231925,
-  "market_cap": "66.1B",
+  "pe_ratio": 5.2728276,
+  "market_cap": "66.6B",
   "beta": 0.156,
-  "dividend_yield": 0.0165
+  "dividend_yield": 0.0167
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
  "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "recent_sec_filings": [
+  {
+   "ticker": "ALL",
+   "date": "2026-08-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000118/all-20260630.htm"
+  },
+  {
+   "ticker": "ALL",
+   "date": "2026-04-29",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000075/all-20260331.htm"
+  },
+  {
+   "ticker": "ALL",
+   "date": "2026-02-20",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000031/all-20251231.htm"
+  },
+  {
+   "ticker": "ALL",
+   "date": "2025-11-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905125000102/all-20250930.htm"
+  },
+  {
+   "ticker": "ALL",
+   "date": "2025-07-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905125000070/all-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }
