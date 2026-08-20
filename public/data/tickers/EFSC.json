@@ -1,23 +1,25 @@
 {
  "ticker": "EFSC",
  "name": "Enterprise Financial Services C",
- "generated_at": "2026-08-19T14:45:01.752079+00:00",
- "price": 65.65,
- "change_pct": -1.17,
+ "generated_at": "2026-08-20T11:45:01.884077+00:00",
+ "price": 64.57,
+ "change_pct": -1.33,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 48.6,
-  "sma_20": 66.43,
-  "sma_50": 64.91
+  "rsi_14": 40.9,
+  "sma_20": 66.12,
+  "sma_50": 65.45
  },
  "fundamentals": {
-  "pe_ratio": 13.051689,
-  "market_cap": "2.4B",
+  "pe_ratio": 12.836978,
+  "market_cap": "2.3B",
   "beta": 0.807,
-  "dividend_yield": 0.0203
+  "dividend_yield": 0.020499999999999997
  },
  "council_analysis": {
   "score": 6

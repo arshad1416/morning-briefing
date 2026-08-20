@@ -1,28 +1,29 @@
 {
  "ticker": "CRGY",
  "name": "Crescent Energy Company",
- "generated_at": "2026-08-19T14:45:01.752079+00:00",
- "price": 12.73,
- "change_pct": null,
+ "generated_at": "2026-08-20T11:45:01.884077+00:00",
+ "price": 13.35,
+ "change_pct": 3.05,
  "sector": "Energy",
  "signals": [
-  "below_ma",
+  "extended_rsi",
+  "above_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 62.6,
-  "sma_20": null,
-  "sma_50": null
+  "rsi_14": 72.7,
+  "sma_20": 11.59,
+  "sma_50": 10.8
  },
  "fundamentals": {
-  "pe_ratio": 159.06252,
-  "market_cap": "5.0B",
+  "pe_ratio": 166.8125,
+  "market_cap": "5.2B",
   "beta": 0.892,
-  "dividend_yield": 0.0378
+  "dividend_yield": 0.0371
  },
  "council_analysis": {
-  "score": 4
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

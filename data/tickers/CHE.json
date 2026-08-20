@@ -1,26 +1,27 @@
 {
  "ticker": "CHE",
  "name": "Chemed Corp",
- "generated_at": "2026-08-19T14:45:01.752079+00:00",
- "price": 536.23,
- "change_pct": null,
+ "generated_at": "2026-08-20T11:45:01.884077+00:00",
+ "price": 534.85,
+ "change_pct": 1.06,
  "sector": "Healthcare",
  "signals": [
-  "below_ma"
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 60.2,
-  "sma_20": null,
-  "sma_50": null
+  "rsi_14": 59.3,
+  "sma_20": 532.56,
+  "sma_50": 493.16
  },
  "fundamentals": {
-  "pe_ratio": 26.94623,
+  "pe_ratio": 26.87701,
   "market_cap": "7.0B",
   "beta": 0.511,
   "dividend_yield": 0.0053
  },
  "council_analysis": {
-  "score": 4
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

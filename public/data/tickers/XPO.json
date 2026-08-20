@@ -1,22 +1,24 @@
 {
  "ticker": "XPO",
  "name": "XPO, Inc.",
- "generated_at": "2026-08-19T14:45:01.752079+00:00",
- "price": 206.2,
- "change_pct": -2.3,
+ "generated_at": "2026-08-20T11:45:01.884077+00:00",
+ "price": 200.83,
+ "change_pct": -0.93,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.1,
-  "sma_20": 205.43,
-  "sma_50": 208.28
+  "rsi_14": 44.4,
+  "sma_20": 204.91,
+  "sma_50": 208.25
  },
  "fundamentals": {
-  "pe_ratio": 60.647057,
-  "market_cap": "24.1B",
+  "pe_ratio": 59.241886,
+  "market_cap": "23.5B",
   "beta": 1.715,
   "dividend_yield": null
  },

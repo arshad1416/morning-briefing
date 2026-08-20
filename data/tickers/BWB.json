@@ -1,31 +1,81 @@
 {
  "ticker": "BWB",
  "name": "Bridgewater Bancshares, Inc.",
- "generated_at": "2026-08-19T14:45:01.752079+00:00",
- "price": 22.45,
- "change_pct": 0.99,
+ "generated_at": "2026-08-20T11:45:01.884077+00:00",
+ "price": 22.04,
+ "change_pct": -1.39,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 67.7,
-  "sma_20": 21.25,
-  "sma_50": 20.94
+  "rsi_14": 60.1,
+  "sma_20": 21.33,
+  "sma_50": 21.05
  },
  "fundamentals": {
-  "pe_ratio": 12.201087,
-  "market_cap": "626M",
+  "pe_ratio": 11.978261,
+  "market_cap": "615M",
   "beta": 0.578,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 7
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "BWB",
+   "date": "2026-10-20",
+   "epsEstimate": 0.47,
+   "epsActual": null
+  },
+  {
+   "ticker": "BWB",
+   "date": "2026-07-21",
+   "epsEstimate": 0.45,
+   "epsActual": 0.45
+  },
+  {
+   "ticker": "BWB",
+   "date": "2026-04-21",
+   "epsEstimate": 0.41,
+   "epsActual": 0.41
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "BWB",
+   "date": "2026-07-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1341317/000110465926088454/bwb-20260630x10q.htm"
+  },
+  {
+   "ticker": "BWB",
+   "date": "2026-04-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1341317/000110465926052124/bwb-20260331x10q.htm"
+  },
+  {
+   "ticker": "BWB",
+   "date": "2026-02-26",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1341317/000110465926020063/bwb-20251231x10k.htm"
+  },
+  {
+   "ticker": "BWB",
+   "date": "2025-10-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1341317/000110465925104003/bwb-20250930x10q.htm"
+  },
+  {
+   "ticker": "BWB",
+   "date": "2025-07-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1341317/000155837025009841/bwb-20250630x10q.htm"
+  }
+ ],
  "reddit_mentions": []
 }

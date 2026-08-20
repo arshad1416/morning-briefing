@@ -1,23 +1,25 @@
 {
  "ticker": "FFBC",
  "name": "First Financial Bancorp.",
- "generated_at": "2026-08-19T14:45:01.752079+00:00",
- "price": 33.94,
- "change_pct": -1.29,
+ "generated_at": "2026-08-20T11:45:01.884077+00:00",
+ "price": 33.42,
+ "change_pct": -1.1,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 49.7,
-  "sma_20": 34.05,
-  "sma_50": 33.59
+  "rsi_14": 43.4,
+  "sma_20": 33.94,
+  "sma_50": 33.7
  },
  "fundamentals": {
-  "pe_ratio": 11.991167,
-  "market_cap": "3.6B",
+  "pe_ratio": 11.809187,
+  "market_cap": "3.5B",
   "beta": 0.929,
-  "dividend_yield": 0.029500000000000002
+  "dividend_yield": 0.029900000000000003
  },
  "council_analysis": {
   "score": 6

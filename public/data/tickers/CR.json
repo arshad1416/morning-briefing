@@ -1,22 +1,24 @@
 {
  "ticker": "CR",
  "name": "Crane Company",
- "generated_at": "2026-08-19T14:45:01.752079+00:00",
- "price": 214.78,
- "change_pct": -1.63,
+ "generated_at": "2026-08-20T11:45:01.884077+00:00",
+ "price": 212.2,
+ "change_pct": -1.29,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.7,
-  "sma_20": 219.59,
-  "sma_50": 213.69
+  "rsi_14": 43.4,
+  "sma_20": 219.32,
+  "sma_50": 214.85
  },
  "fundamentals": {
-  "pe_ratio": 37.48342,
-  "market_cap": "12.4B",
+  "pe_ratio": 36.968643,
+  "market_cap": "12.3B",
   "beta": 1.094,
   "dividend_yield": 0.004699999999999999
  },

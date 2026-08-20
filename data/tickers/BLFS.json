@@ -1,23 +1,24 @@
 {
  "ticker": "BLFS",
  "name": "BioLife Solutions, Inc.",
- "generated_at": "2026-08-19T14:45:01.752079+00:00",
- "price": 34.98,
- "change_pct": -0.26,
+ "generated_at": "2026-08-20T11:45:01.884077+00:00",
+ "price": 36.5,
+ "change_pct": 4.46,
  "sector": "Healthcare",
  "signals": [
-  "extended_rsi",
+  "overbought_rsi",
   "above_ma",
+  "near_high",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 73.5,
-  "sma_20": 32.7,
-  "sma_50": 29.53
+  "rsi_14": 76.1,
+  "sma_20": 33.28,
+  "sma_50": 29.92
  },
  "fundamentals": {
-  "pe_ratio": 34.98,
-  "market_cap": "1.7B",
+  "pe_ratio": 36.5,
+  "market_cap": "1.8B",
   "beta": 1.896,
   "dividend_yield": null
  },

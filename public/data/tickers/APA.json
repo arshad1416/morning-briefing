@@ -1,25 +1,26 @@
 {
  "ticker": "APA",
  "name": "APA Corporation",
- "generated_at": "2026-08-19T14:45:01.752079+00:00",
- "price": 41.77,
- "change_pct": 3.21,
+ "generated_at": "2026-08-20T11:45:01.884077+00:00",
+ "price": 44.56,
+ "change_pct": 5.17,
  "sector": "Energy",
  "signals": [
-  "extended_rsi",
+  "overbought_rsi",
   "above_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 68.8,
-  "sma_20": 37.48,
-  "sma_50": 35.5
+  "rsi_14": 75.1,
+  "sma_20": 38.23,
+  "sma_50": 35.76
  },
  "fundamentals": {
-  "pe_ratio": 8.812237,
-  "market_cap": "14.6B",
+  "pe_ratio": 9.400845,
+  "market_cap": "15.6B",
   "beta": 0.348,
-  "dividend_yield": 0.024
+  "dividend_yield": 0.0236
  },
  "council_analysis": {
   "score": 6

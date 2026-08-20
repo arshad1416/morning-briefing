@@ -1,28 +1,30 @@
 {
  "ticker": "UMH",
  "name": "UMH Properties, Inc.",
- "generated_at": "2026-08-19T14:45:01.752079+00:00",
- "price": 16.24,
- "change_pct": null,
+ "generated_at": "2026-08-20T11:45:01.884077+00:00",
+ "price": 16.42,
+ "change_pct": 1.73,
  "sector": "Real Estate",
  "signals": [
-  "below_ma",
+  "extended_rsi",
+  "above_ma",
+  "near_high",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 64.4,
-  "sma_20": null,
-  "sma_50": null
+  "rsi_14": 66.6,
+  "sma_20": 15.6,
+  "sma_50": 15.3
  },
  "fundamentals": {
-  "pe_ratio": 135.33333,
+  "pe_ratio": 136.83334,
   "market_cap": "1.4B",
   "beta": 0.94,
   "dividend_yield": 0.0558
  },
  "council_analysis": {
-  "score": 4
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

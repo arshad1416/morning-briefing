@@ -1,25 +1,27 @@
 {
  "ticker": "JNJ",
  "name": "Johnson & Johnson",
- "generated_at": "2026-08-19T14:45:01.752079+00:00",
- "price": 268.86,
- "change_pct": 3.27,
+ "generated_at": "2026-08-20T11:45:01.884077+00:00",
+ "price": 274.81,
+ "change_pct": 1.36,
  "sector": "Healthcare",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 64.4,
-  "sma_20": 259.81,
-  "sma_50": 252.12
+  "rsi_14": 69.6,
+  "sma_20": 261.47,
+  "sma_50": 253.61
  },
  "fundamentals": {
-  "pe_ratio": 31.153963,
-  "market_cap": "647.9B",
+  "pe_ratio": 31.88051,
+  "market_cap": "662.3B",
   "beta": 0.231,
-  "dividend_yield": 0.0204
+  "dividend_yield": 0.019799999999999998
  },
  "council_analysis": {
   "score": 6

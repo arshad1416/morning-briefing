@@ -1,28 +1,30 @@
 {
  "ticker": "A",
  "name": "Agilent Technologies, Inc.",
- "generated_at": "2026-08-19T14:45:01.752079+00:00",
- "price": 148.37,
- "change_pct": -0.11,
+ "generated_at": "2026-08-20T11:45:01.884077+00:00",
+ "price": 155.26,
+ "change_pct": 4.59,
  "sector": "Healthcare",
  "signals": [
-  "extended_rsi",
+  "overbought_rsi",
   "above_ma",
+  "near_high",
+  "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 67.8,
-  "sma_20": 141.8,
-  "sma_50": 135.94
+  "rsi_14": 77.3,
+  "sma_20": 143.9,
+  "sma_50": 136.48
  },
  "fundamentals": {
-  "pe_ratio": 29.853119,
-  "market_cap": "41.9B",
+  "pe_ratio": 31.239437,
+  "market_cap": "43.9B",
   "beta": 1.229,
   "dividend_yield": 0.0069
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

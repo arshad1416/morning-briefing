@@ -1,21 +1,22 @@
 {
  "ticker": "IBB",
  "name": "iShares Biotechnology ETF",
- "generated_at": "2026-08-19T14:45:01.752079+00:00",
- "price": 202.79,
- "change_pct": 2.28,
+ "generated_at": "2026-08-20T11:45:01.884077+00:00",
+ "price": 214.89,
+ "change_pct": 5.57,
  "sector": null,
  "signals": [
-  "extended_rsi",
-  "above_ma"
+  "overbought_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 69.0,
-  "sma_20": 192.81,
-  "sma_50": 186.9
+  "rsi_14": 79.2,
+  "sma_20": 194.87,
+  "sma_50": 188.55
  },
  "fundamentals": {
-  "pe_ratio": 26.304016,
+  "pe_ratio": 27.873516,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.0022
