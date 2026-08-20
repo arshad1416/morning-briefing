@@ -1,12 +1,12 @@
 {
   "_note": "Index membership cache for generate-screener-data.py. Regenerate with fetch_universe_constituents.py \u2014 do not hand-edit; membership changes several times a year and a stale hand-edit becomes wrong silently.",
-  "generated_at": "2026-08-19",
+  "generated_at": "2026-08-20",
   "indices": {
     "S&P 500": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
       "source_note": "Wikipedia 'List of S&P 500 companies', table#constituents.",
-      "fetched_at": "2026-08-19",
-      "as_of": "2026-08-19",
+      "fetched_at": "2026-08-20",
+      "as_of": "2026-08-20",
       "member_count": 503,
       "members": [
         {
@@ -2026,8 +2026,8 @@
     "S&P 400": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies",
       "source_note": "S&P MidCap 400. Wikipedia 'List of S&P 400 companies', table#constituents.",
-      "fetched_at": "2026-08-19",
-      "as_of": "2026-08-19",
+      "fetched_at": "2026-08-20",
+      "as_of": "2026-08-20",
       "member_count": 400,
       "members": [
         {
@@ -3635,8 +3635,8 @@
     "S&P 600": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_600_companies",
       "source_note": "S&P SmallCap 600. Wikipedia 'List of S&P 600 companies', table#constituents.",
-      "fetched_at": "2026-08-19",
-      "as_of": "2026-08-19",
+      "fetched_at": "2026-08-20",
+      "as_of": "2026-08-20",
       "member_count": 603,
       "members": [
         {
@@ -6056,13 +6056,13 @@
     "Russell 2000": {
       "source_url": "https://www.blackrock.com/varnish-api/blk-one01-product-data/product-data/api/v2/get-product-data?appSubType=ISHARES&appType=PRODUCT_PAGE&component=holdings&locale=en_US&portfolioId=239710&targetSite=us-ishares&userType=individual&excludeContent=true&includeConfig=true",
       "source_note": "Proxy: holdings of the iShares Russell 2000 ETF (IWM), not the index itself. Non-equity balances, contingent value rights and escrow stubs are excluded. Refreshed each business day, and membership can differ slightly from the index.",
-      "fetched_at": "2026-08-19",
-      "as_of": "2026-08-17",
-      "member_count": 1956,
+      "fetched_at": "2026-08-20",
+      "as_of": "2026-08-19",
+      "member_count": 1955,
       "members": [
         {
           "symbol": "AAMI",
-          "name": "ACADIAN ASSET MANAGEMENT INC"
+          "name": "ACADIAN ASSET MANAGEMENT"
         },
         {
           "symbol": "AAP",
@@ -6362,7 +6362,7 @@
         },
         {
           "symbol": "ALH",
-          "name": "ALLIANCE LAUNDRY HOLDINGS INC"
+          "name": "ALLIANCE LAUNDRY HOLDINGS"
         },
         {
           "symbol": "ALHC",
@@ -6454,7 +6454,7 @@
         },
         {
           "symbol": "AMCX",
-          "name": "AMC GLOBAL MEDIA INC CLASS A"
+          "name": "AMC GLOBAL MEDIA CLASS A"
         },
         {
           "symbol": "AMLX",
@@ -6622,7 +6622,7 @@
         },
         {
           "symbol": "ARHS",
-          "name": "ARHAUS INC CLASS A"
+          "name": "ARHAUS CLASS A"
         },
         {
           "symbol": "ARKO",
@@ -6642,7 +6642,7 @@
         },
         {
           "symbol": "AROC",
-          "name": "ARCHROCK INC"
+          "name": "ARCHROCK"
         },
         {
           "symbol": "AROW",
@@ -6742,7 +6742,7 @@
         },
         {
           "symbol": "ATEC",
-          "name": "ALPHATEC HOLDNGS INC"
+          "name": "ALPHATEC HOLDNGS"
         },
         {
           "symbol": "ATEN",
@@ -6754,7 +6754,7 @@
         },
         {
           "symbol": "ATKR",
-          "name": "ATKORE INC"
+          "name": "ATKORE"
         },
         {
           "symbol": "ATLC",
@@ -6778,7 +6778,7 @@
         },
         {
           "symbol": "ATRC",
-          "name": "ATRICURE INC"
+          "name": "ATRICURE"
         },
         {
           "symbol": "ATRO",
@@ -6790,7 +6790,7 @@
         },
         {
           "symbol": "AUPH",
-          "name": "AURINIA PHARMACEUTICALS INC"
+          "name": "AURINIA PHARMACEUTICALS"
         },
         {
           "symbol": "AURA",
@@ -7214,7 +7214,7 @@
         },
         {
           "symbol": "BRSP",
-          "name": "BRIGHTSPIRE CAPITAL INC CLASS A"
+          "name": "BRIGHTSPIRE CAPITAL CLASS A"
         },
         {
           "symbol": "BRT",
@@ -7274,7 +7274,7 @@
         },
         {
           "symbol": "BW",
-          "name": "BABCOCK AND WILCOX ENTERPRISES INC"
+          "name": "BABCOCK AND WILCOX ENTERPRISES"
         },
         {
           "symbol": "BWB",
@@ -7530,7 +7530,7 @@
         },
         {
           "symbol": "CEVA",
-          "name": "CEVA INC"
+          "name": "CEVA"
         },
         {
           "symbol": "CFBK",
@@ -8578,7 +8578,7 @@
         },
         {
           "symbol": "EWTX",
-          "name": "EDGEWISE THERAPEUTICS INC"
+          "name": "EDGEWISE THERAPEUTICS"
         },
         {
           "symbol": "EXPO",
@@ -8610,7 +8610,7 @@
         },
         {
           "symbol": "FBLA",
-          "name": "FB BANCORP INC"
+          "name": "FB BANCORP"
         },
         {
           "symbol": "FBNC",
@@ -8750,7 +8750,7 @@
         },
         {
           "symbol": "FLGT",
-          "name": "FULGENT GENETICS INC"
+          "name": "FULGENT GENETICS"
         },
         {
           "symbol": "FLNC",
@@ -8858,7 +8858,7 @@
         },
         {
           "symbol": "FROG",
-          "name": "JFROG LTD"
+          "name": "JFROG"
         },
         {
           "symbol": "FRPH",
@@ -9070,11 +9070,11 @@
         },
         {
           "symbol": "GLIBA",
-          "name": "LIBERTY CAPITAL CORP SERIES A"
+          "name": "LIBERTY CAPITAL SERIES A"
         },
         {
           "symbol": "GLIBK",
-          "name": "LIBERTY CAPITAL CORP SERIES C"
+          "name": "LIBERTY CAPITAL SERIES C"
         },
         {
           "symbol": "GLNG",
@@ -9146,7 +9146,7 @@
         },
         {
           "symbol": "GPRE",
-          "name": "GREEN PLAINS INC"
+          "name": "GREEN PLAINS"
         },
         {
           "symbol": "GPRO",
@@ -9218,7 +9218,7 @@
         },
         {
           "symbol": "GVA",
-          "name": "GRANITE CONSTRUCTION INC"
+          "name": "GRANITE CONSTRUCTION"
         },
         {
           "symbol": "GWRS",
@@ -9509,6 +9509,10 @@
           "name": "MARINEMAX INC"
         },
         {
+          "symbol": "IA",
+          "name": "INNOVATIVE SOLUTIONS AND SUPPORT I"
+        },
+        {
           "symbol": "IART",
           "name": "INTEGRA LIFESCIENCES HOLDINGS"
         },
@@ -9763,10 +9767,6 @@
         {
           "symbol": "ISBA",
           "name": "ISABELLA BANK CORP"
-        },
-        {
-          "symbol": "ISSC",
-          "name": "INNOVATIVE SOLUTIONS AND SUPPORT I"
         },
         {
           "symbol": "ISTR",
@@ -10314,7 +10314,7 @@
         },
         {
           "symbol": "LXRX",
-          "name": "LEXICON PHARMACEUTICALS INC"
+          "name": "LEXICON PHARMACEUTICALS"
         },
         {
           "symbol": "LXU",
@@ -10362,7 +10362,7 @@
         },
         {
           "symbol": "MARA",
-          "name": "MARA HOLDINGS INC"
+          "name": "MARA HOLDINGS"
         },
         {
           "symbol": "MASS",
@@ -10966,11 +10966,11 @@
         },
         {
           "symbol": "NPO",
-          "name": "ENPRO INC"
+          "name": "ENPRO"
         },
         {
           "symbol": "NPWR",
-          "name": "NET POWER INC CLASS A"
+          "name": "NET POWER CLASS A"
         },
         {
           "symbol": "NRC",
@@ -11234,7 +11234,7 @@
         },
         {
           "symbol": "ONT",
-          "name": "ONTERRIS INC"
+          "name": "ONTERRIS"
         },
         {
           "symbol": "OOMA",
@@ -11570,7 +11570,7 @@
         },
         {
           "symbol": "PHR",
-          "name": "PHREESIA INC"
+          "name": "PHREESIA"
         },
         {
           "symbol": "PI",
@@ -11742,7 +11742,7 @@
         },
         {
           "symbol": "PRKS",
-          "name": "UNITED PARKS AND RESORTS INC"
+          "name": "UNITED PARKS AND RESORTS"
         },
         {
           "symbol": "PRLB",
@@ -11994,7 +11994,7 @@
         },
         {
           "symbol": "RELY",
-          "name": "REMITLY GLOBAL INC"
+          "name": "REMITLY GLOBAL"
         },
         {
           "symbol": "RENT",
@@ -12262,7 +12262,7 @@
         },
         {
           "symbol": "SANA",
-          "name": "SANA BIOTECHNOLOGY INC"
+          "name": "SANA BIOTECHNOLOGY"
         },
         {
           "symbol": "SATL",
@@ -12398,7 +12398,7 @@
         },
         {
           "symbol": "SGHC",
-          "name": "SUPER GROUP LTD"
+          "name": "SUPER GROUP"
         },
         {
           "symbol": "SGHT",
@@ -12638,7 +12638,7 @@
         },
         {
           "symbol": "SPNT",
-          "name": "SIRIUSPOINT LTD"
+          "name": "SIRIUSPOINT"
         },
         {
           "symbol": "SPOK",
@@ -12831,10 +12831,6 @@
         {
           "symbol": "SYRE",
           "name": "SPYRE THERAPEUTICS INC"
-        },
-        {
-          "symbol": "TALK",
-          "name": "TALKSPACE"
         },
         {
           "symbol": "TALO",
@@ -13150,7 +13146,7 @@
         },
         {
           "symbol": "TTAN",
-          "name": "SERVICETITAN INC CLASS A"
+          "name": "SERVICETITAN CLASS A"
         },
         {
           "symbol": "TTGT",
@@ -13190,7 +13186,7 @@
         },
         {
           "symbol": "TYGO",
-          "name": "TIGO ENERGY INC"
+          "name": "TIGO ENERGY"
         },
         {
           "symbol": "TYRA",
@@ -13310,7 +13306,7 @@
         },
         {
           "symbol": "URBN",
-          "name": "URBAN OUTFITTERS INC"
+          "name": "URBAN OUTFITTERS"
         },
         {
           "symbol": "URG",
@@ -13318,7 +13314,7 @@
         },
         {
           "symbol": "URGN",
-          "name": "UROGEN PHARMA LTD"
+          "name": "UROGEN PHARMA"
         },
         {
           "symbol": "USAR",
@@ -13366,7 +13362,7 @@
         },
         {
           "symbol": "UUUU",
-          "name": "ENERGY FUELS INC"
+          "name": "ENERGY FUELS"
         },
         {
           "symbol": "UVE",
@@ -13442,7 +13438,7 @@
         },
         {
           "symbol": "VERX",
-          "name": "VERTEX INC CLASS A"
+          "name": "VERTEX CLASS A"
         },
         {
           "symbol": "VGNT",
@@ -13626,7 +13622,7 @@
         },
         {
           "symbol": "WGO",
-          "name": "WINNEBAGO INDUSTRIES INC"
+          "name": "WINNEBAGO INDUSTRIES"
         },
         {
           "symbol": "WGS",
@@ -13658,7 +13654,7 @@
         },
         {
           "symbol": "WLDN",
-          "name": "WILLDAN GROUP INC"
+          "name": "WILLDAN GROUP"
         },
         {
           "symbol": "WLFC",
@@ -13889,8 +13885,8 @@
     "Nasdaq-100": {
       "source_url": "https://api.nasdaq.com/api/quote/list-type/nasdaq100",
       "source_note": "Nasdaq's own index-membership endpoint (the Wikipedia article no longer carries a components table).",
-      "fetched_at": "2026-08-19",
-      "as_of": "2026-08-19",
+      "fetched_at": "2026-08-20",
+      "as_of": "2026-08-20",
       "member_count": 102,
       "members": [
         {
