@@ -281,6 +281,18 @@ for line in COUNCIL:
     src = src.replace(line + "\n", line + CHAIN + "\n", 1)
 for line in DASHBOARD:
     src = src.replace(line + "\n", "", 1)
+# The section comment would otherwise be left describing entries that no longer
+# exist, and crontab.txt is re-snapshotted verbatim, so the stale comment gets
+# committed. Cosmetic, so warn rather than abort if it has been reworded.
+OLD_C = "# Agent 3: dashboard-writer — runs after council\n"
+NEW_C = ("# Agent 3: dashboard-writer — chained onto the council above (2026-08-21).\n"
+         "# It was a separate entry until the council outgrew the gap between them and\n"
+         "# the freshness guard started skipping the publish; see\n"
+         "# pi-scripts/deploy-council-dashboard-race-2026-08-21.sh\n")
+if src.count(OLD_C) == 1:
+    src = src.replace(OLD_C, NEW_C, 1)
+elif NEW_C not in src:
+    print(f"  NOTE: section comment not found verbatim ({src.count(OLD_C)} matches) — left as is")
 open(sys.argv[2], "w").write(src)
 print("  built the proposed crontab")
 PY
@@ -299,6 +311,13 @@ rm -f "$CRON_ORIG" "$CRON_NEW"
 echo "── All phases complete ──"
 echo "Nothing was restarted; the next council cycle picks Phases A and B up."
 echo "Backups: $DASH.$TAG, $WATCHDOG.$TAG"
+echo
+echo "DELETE THOSE TWO .bak FILES once a cycle has published cleanly. ~/.hermes/scripts"
+echo "is itself a git repo that is snapshotted to arshad1416/hermes-scripts, its"
+echo ".gitignore does not cover *.bak*, and deploy-hermes-fixes.sh Phase A checks with"
+echo "\`git status --porcelain -uno\` — which ignores untracked files, so nothing will"
+echo "warn you. That is how HEAD there came to be \"Remove 5 committed .bak files\":"
+echo "    rm $DASH.$TAG $WATCHDOG.$TAG"
 echo
 echo "After applying Phase C, do both of these:"
 echo "  1. Re-snapshot the crontab (AGENTS.md rule 4 — keep it verbatim):"
