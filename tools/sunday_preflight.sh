@@ -43,6 +43,100 @@ for needle in 'AGGREGATOR_MAX_TOKENS = 65536' 'EXPERT_MAX_TOKENS = 32000' '"stre
 done
 pass "council routing + token caps + stream:False present"
 
+# 3b. Council -> dashboard ordering (regression 2026-08-18, found 2026-08-21).
+# agent_dashboard.sh refuses to publish unless maplegamma_analysis.json is
+# younger than its MAX_AGE guard, and agent_council.sh is the only thing that
+# writes that file. The two are scheduled as INDEPENDENT crontab entries, so the
+# guard silently depends on the council finishing inside the gap between them.
+# On 2026-08-16 the council's budgets were raised for reasoning models
+# (call_api timeout 90 -> EXPERT_TIMEOUT 240 / AGGREGATOR_TIMEOUT 420,
+# max_tokens 3000 -> 32000/65536). The 3-minute 07:23->07:26 gap did not move,
+# so from 2026-08-18 the 07:26 and 10:26 runs stat()'d the PREVIOUS cycle's
+# file, measured it in hours and aborted (exit 4) every weekday. Nothing failed:
+# the pushes just stopped, and only cron_watchdog.py's check 8 ever said so.
+#
+# The satisfiable window is W <= (dashboard - council) <= MAX_AGE, where W is the
+# council's worst-case runtime. W > MAX_AGE makes it EMPTY — no gap can work, and
+# the only fix is to chain the two so the dashboard runs when the council returns.
+# Chaining also passes this check: it looks for an independent dashboard entry.
+council_py="$SCRIPTS/maplegamma_council.py"
+dash_sh="$SCRIPTS/agents/agent_dashboard.sh"
+[ -f "$dash_sh" ] || fail "agent_dashboard.sh missing: $dash_sh"
+python3 - "$council_py" "$dash_sh" /tmp/preflight_cron.txt <<'PY' || fail "council -> dashboard schedule cannot satisfy the freshness guard (see above)"
+import re, sys
+
+council_py, dash_sh, cron = sys.argv[1], sys.argv[2], sys.argv[3]
+
+def const(path, name):
+    m = re.search(rf"^{name}\s*=\s*(\d+)", open(path).read(), re.M)
+    return int(m.group(1)) if m else None
+
+max_age = const(dash_sh, "MAX_AGE")
+expert = const(council_py, "EXPERT_TIMEOUT")
+agg = const(council_py, "AGGREGATOR_TIMEOUT")
+if max_age is None:
+    sys.exit("could not read MAX_AGE from agent_dashboard.sh")
+if expert is None or agg is None:
+    sys.exit("could not read EXPERT_TIMEOUT/AGGREGATOR_TIMEOUT from maplegamma_council.py")
+
+# Conservative LOWER bound on the council's worst case: one expert burning its
+# timeout, then the aggregator burning its own. The real ceiling is higher (each
+# expert retries once, and the joins are sequential), so a pass here is not proof
+# the schedule is generous — only that it is not provably impossible.
+worst = expert + agg
+
+def slots(needle):
+    out = []
+    for line in open(cron):
+        line = line.strip()
+        if line.startswith("#") or needle not in line:
+            continue
+        f = line.split()
+        if len(f) < 5:
+            continue
+        for h in re.findall(r"\d+", f[1]):
+            for m in re.findall(r"\d+", f[0]):
+                out.append(int(h) * 60 + int(m))
+    return sorted(set(out))
+
+council = slots("agent_council.sh")
+dash = slots("agent_dashboard.sh")
+
+if not council:
+    sys.exit("crontab has no agent_council.sh entry")
+if not dash:
+    print(f"INFO: agent_dashboard.sh has no independent crontab entry — chained off "
+          f"the council, so the {max_age}s guard cannot race the schedule")
+    sys.exit(0)
+
+if worst > max_age:
+    sys.exit(
+        f"agent_dashboard.sh MAX_AGE={max_age}s is below the council's worst case "
+        f"{worst}s (EXPERT_TIMEOUT {expert} + AGGREGATOR_TIMEOUT {agg}). No cron gap "
+        f"can satisfy the guard — chain agent_dashboard.sh off agent_council.sh "
+        f"instead of scheduling it separately, or raise MAX_AGE above {worst}s AND "
+        f"move the dashboard slot into [{worst}s, {max_age}s] after the council.")
+
+bad = []
+for d in dash:
+    prior = [c for c in council if c <= d]
+    if not prior:
+        bad.append(f"{d//60:02d}:{d%60:02d} runs before any council slot")
+        continue
+    gap = (d - prior[-1]) * 60
+    if gap < worst:
+        bad.append(f"{d//60:02d}:{d%60:02d} is {gap}s after the council slot "
+                   f"{prior[-1]//60:02d}:{prior[-1]%60:02d}, under the {worst}s worst case")
+    elif gap > max_age:
+        bad.append(f"{d//60:02d}:{d%60:02d} is {gap}s after the council slot "
+                   f"{prior[-1]//60:02d}:{prior[-1]%60:02d}, over the {max_age}s guard")
+if bad:
+    sys.exit("council -> dashboard gaps outside [%ds, %ds]: %s" % (worst, max_age, "; ".join(bad)))
+print(f"INFO: council worst case >= {worst}s, guard {max_age}s, all "
+      f"{len(dash)} dashboard slot(s) inside the window")
+PY
+pass "council -> dashboard schedule satisfies agent_dashboard.sh's freshness guard"
+
 # 4. push_dashboard skip logic present
 grep -qF "rev-list --count origin/main..HEAD" "$SCRIPTS/push_dashboard.py" || fail "push_dashboard.py missing skip logic"
 pass "push_dashboard.py has push-skip"

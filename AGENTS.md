@@ -51,6 +51,16 @@ Read this file first; it routes to everything else.
 7. **One pitch per gated tile.** A tile wrapped in `FeatureGate` must never also render its own
    `GateCard` on a server 401/403 — render a quiet frame under the overlay instead. Regression
    specs: `e2e/tests/gating.spec.js`.
+8. **Touching a council timeout reschedules the publish.** `agents/agent_council.sh` (in
+   `arshad1416/hermes-scripts`) writes `data/maplegamma_analysis.json`; `agents/agent_dashboard.sh`
+   then refuses to publish — exit 4, `ABORT:` in `agent_dashboard_writer.log` — unless that file is
+   younger than its `MAX_AGE`. The two are *separate* crontab entries, so the guard silently depends
+   on the council finishing inside the gap between them (3 min at 07:23→07:26, 6 min at :20→:26).
+   Raising `EXPERT_TIMEOUT`/`AGGREGATOR_TIMEOUT` for reasoning models on 2026-08-16 made the council
+   outlive that gap, so it began stat()ing the *previous* cycle's file: the 07:26 and 10:26 publishes
+   stopped every weekday from 08-18 and nothing failed — only `cron_watchdog.py` check 8 said so. The
+   window is `[council worst case, MAX_AGE]`; when it is empty no gap works and the two must be
+   chained. `tools/sunday_preflight.sh` check 3b fails on both cases.
 
 ## Setup and commands
 
