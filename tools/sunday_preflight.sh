@@ -137,6 +137,21 @@ print(f"INFO: council worst case >= {worst}s, guard {max_age}s, all "
 PY
 pass "council -> dashboard schedule satisfies agent_dashboard.sh's freshness guard"
 
+# 3c. Freshness is not health (Sol, 2026-08-21). maplegamma_council.py writes the
+# artifact in FOUR states and returns 0 in all of them: "full"/"partial_Nof5"
+# (:655), "aggregator_failed" (:672, raw expert outputs, no aggregated analysis)
+# and "insufficient_experts" (:551). Every one goes through _write_output(), so
+# every one refreshes the mtime and sails past agent_dashboard.sh's MAX_AGE check
+# — the wrapper publishes a fallback as if it were a healthy council. monday_gate.sh
+# catches it (meta.status = full AND experts_succeeded = 5) but only once a day at
+# 07:40; the other three cycles have no such check. The wrapper must read
+# meta.status, not just the mtime.
+grep -qE 'meta.*status|\["status"\]|get\("status"|\.meta\.status' "$dash_sh" \
+  || fail "agent_dashboard.sh gates on file age alone — it never reads meta.status, so a
+  council that wrote status=aggregator_failed or insufficient_experts still publishes as
+  healthy (both refresh the mtime and exit 0). Require meta.status like monday_gate.sh does."
+pass "agent_dashboard.sh validates council meta.status, not just mtime"
+
 # 4. push_dashboard skip logic present
 grep -qF "rev-list --count origin/main..HEAD" "$SCRIPTS/push_dashboard.py" || fail "push_dashboard.py missing skip logic"
 pass "push_dashboard.py has push-skip"

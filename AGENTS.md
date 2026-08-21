@@ -60,7 +60,10 @@ Read this file first; it routes to everything else.
    outlive that gap, so it began stat()ing the *previous* cycle's file: the 07:26 and 10:26 publishes
    stopped every weekday from 08-18 and nothing failed — only `cron_watchdog.py` check 8 said so. The
    window is `[council worst case, MAX_AGE]`; when it is empty no gap works and the two must be
-   chained. `tools/sunday_preflight.sh` check 3b fails on both cases.
+   chained. `tools/sunday_preflight.sh` check 3b fails on both cases. And freshness is not health:
+   the council also writes `status=aggregator_failed` / `insufficient_experts` fallbacks that
+   refresh the mtime and exit 0, so the wrapper must read `meta.status` the way `monday_gate.sh`
+   does — check 3c.
 
 ## Setup and commands
 
