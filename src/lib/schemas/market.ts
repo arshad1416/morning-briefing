@@ -381,6 +381,10 @@ const RealAccuracyFileSchema = z
 // labelled the second window's count "Closed Trades" and fell through to a
 // third quantity when it was 0.
 export const AccuracySchema = RealAccuracyFileSchema.transform((f) => ({
+  /** Kept through the transform: /models had no freshness signal anywhere on
+   *  the page because the only stamp its tiles could have shown was parsed here
+   *  and then dropped. generate_prediction_accuracy.py emits it UTC-aware. */
+  generated_at: f.generated_at,
   total_signals: f.summary.closed_trades,
   hit_rate: f.summary.win_rate / 100,
   /** Percent per trade (expectancy_pct) — render with a % suffix, not $. */

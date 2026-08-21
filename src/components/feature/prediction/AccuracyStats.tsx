@@ -4,9 +4,10 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { accuracyQuery } from '@/lib/query/options';
-import { Surface, SurfaceHeader, InfoTip } from '@/components/primitives';
+import { Surface, SurfaceHeader, InfoTip, DataFreshness } from '@/components/primitives';
 import type { GlossaryTerm } from '@/lib/glossary';
 import { GateError } from '@/lib/api/gated';
+import { STALE_AFTER } from '@/lib/query/policy';
 
 export function AccuracyStats() {
   const { data, isLoading, isError, error } = useQuery(accuracyQuery());
@@ -62,7 +63,10 @@ export function AccuracyStats() {
 
   return (
     <Surface span="half">
-      <SurfaceHeader title="Accuracy Stats" />
+      <SurfaceHeader
+        title="Accuracy Stats"
+        right={<DataFreshness timestamp={data.generated_at} staleAfterMs={STALE_AFTER.models} />}
+      />
       <div className="p-4">
         <div className="grid grid-cols-3 gap-4">
           {stats.map((s) => (
