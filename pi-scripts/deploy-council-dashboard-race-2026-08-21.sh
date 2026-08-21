@@ -21,10 +21,15 @@
 # ── ROOT CAUSE ──────────────────────────────────────────────────────────────
 # agent_council.sh writes data/maplegamma_analysis.json; agent_dashboard.sh
 # refuses to publish unless that file is younger than MAX_AGE=600s. They are
-# SEPARATE crontab entries — council 07:23 and 10:20/12:20/14:20, dashboard
-# 07:26 and 10:26/12:26/14:26 — so the guard silently depends on the council
-# finishing inside a 3- or 6-minute gap. agent_dashboard.sh's own comment
-# records where that assumption came from: "observed 9s-85s+".
+# SEPARATE crontab entries — council 07:23 and 10:20/12:20/14:20, wrapper 07:30
+# and 10:30/12:30/14:30 — so the guard silently depends on the council finishing
+# inside the gap between them (420s in the morning, 600s intraday).
+# agent_dashboard.sh's own comment records where that assumption came from:
+# "observed 9s-85s+". The wrapper slot has already moved once for this reason,
+# :26 -> :30, reconciled into pi-scripts/crontab.txt on 2026-08-21 (50b4bb02e).
+# That bought 4 more minutes and covers the MEASURED council times, but not the
+# configured worst case, which is why Phase C still has work to do. Phase C
+# discovers the wrapper's minute rather than hardcoding it.
 #
 # On 2026-08-16 the council moved to reasoning models via 9Router and its
 # budgets went from call_api(timeout=90, max_tokens=3000) to EXPERT_TIMEOUT=240
@@ -36,9 +41,12 @@
 # council's runtime.
 #
 # origin/main, counting paired "Analysis"+"Live portfolio" commits: all four
-# daily cycles published every weekday 2026-08-05..08-17; {07:26, 10:26} absent
-# every weekday since 08-18. Public publishing was never affected — the :07/:37
-# push_dashboard cron is independent and ran 21x on 08-20.
+# daily cycles published every weekday 2026-08-05..08-17; the two morning cycles
+# then went missing every weekday 08-18..08-20. After the :30 move the morning
+# cycle published again on 08-21 (Analysis 07:30:10 -> Live portfolio 07:30:28),
+# so the common case is covered; the worst case still is not. Public publishing
+# was never affected — the :07/:37 push_dashboard cron is independent and ran
+# 21x on 08-20.
 #
 # ── FIXES ───────────────────────────────────────────────────────────────────
 # A. Gate on meta.status, not just mtime. maplegamma_council.py writes the
@@ -47,18 +55,19 @@
 #    expert text, no aggregated analysis) and "insufficient_experts" (below the
 #    3-of-5 quorum). The last two have no market_pulse at all, so publishing
 #    them ships a fallback as a healthy council. monday_gate.sh already rejects
-#    them — but once a day at 07:40; the 10:26/12:26/14:26 cycles had no check.
+#    them — but once a day at 07:40; the intraday cycles have no such check.
 # B. Let the watchdog clear. cron_watchdog.py check 8 is already today-scoped,
 #    but it never clears within the day, so it kept reporting the morning
 #    aborts as live after the 12:30 and 14:30 publishes succeeded. That is what
 #    made the alert read "STILL being skipped".
-# C. Chain producer and consumer. This is the actual race fix: run the wrapper
-#    off the council's exit rather than a fixed offset, so the age is ~0 by
-#    construction. A fixed stagger cannot work here — the satisfiable window is
-#    [council worst case, MAX_AGE] and EXPERT_TIMEOUT+AGGREGATOR_TIMEOUT = 660s
-#    already exceeds MAX_AGE=600s, so the window is empty. Chaining also keeps
-#    the morning inside monday_gate.sh's 07:40 sentinel deadline (council 07:23
-#    + ~3.5 min + publish ~3 min lands ~07:30); a 15-minute wait would not.
+# C. Chain producer and consumer — OPTIONAL HARDENING, not urgent. The :30 move
+#    already covers every council time measured so far, so run Phase C only if
+#    you want the configured worst case covered too: the satisfiable window is
+#    [council worst case, MAX_AGE], and EXPERT_TIMEOUT+AGGREGATOR_TIMEOUT = 660s
+#    exceeds MAX_AGE=600s, so NO fixed offset is safe in the limit. Chaining
+#    makes the age ~0 by construction. It also stays inside monday_gate.sh's
+#    07:40 sentinel deadline (council 07:23 + ~3.5 min + publish ~1 min).
+#    Phases A and B are independent of this and worth applying either way.
 #
 # Regression cover for A and C lives in the repo: tools/sunday_preflight.sh
 # checks 3b (schedule/guard window) and 3c (meta.status is read at all). Both
@@ -254,33 +263,55 @@ crontab -l > "$CRON_ORIG"
 python3 - "$CRON_ORIG" "$CRON_NEW" <<'PY'
 import sys
 src = open(sys.argv[1]).read()
-A = "/home/arshad14/.hermes/scripts/agents"
-CHAIN = (" && bash agent_dashboard.sh"
-         " >> /home/arshad14/.hermes/logs/agent_dashboard_writer.log 2>&1")
-COUNCIL = [
-    f"23 7 * * 1-5 cd {A} && bash agent_council.sh >> /home/arshad14/.hermes/logs/agent_council.log 2>&1",
-    f"20 10,12,14 * * 1-5 cd {A} && bash agent_council.sh >> /home/arshad14/.hermes/logs/agent_council.log 2>&1",
-]
-DASHBOARD = [
-    f"26 7 * * 1-5 cd {A} && bash agent_dashboard.sh >> /home/arshad14/.hermes/logs/agent_dashboard_writer.log 2>&1",
-    f"26 10,12,14 * * 1-5 cd {A} && bash agent_dashboard.sh >> /home/arshad14/.hermes/logs/agent_dashboard_writer.log 2>&1",
-]
-if all(c + CHAIN in src for c in COUNCIL) and not any(d + "\n" in src for d in DASHBOARD):
-    print("  already applied")
-    open(sys.argv[2], "w").write(src)
-    sys.exit(0)
-for line in COUNCIL + DASHBOARD:
-    n = src.count(line + "\n")
-    if n != 1:
-        sys.exit(
-            f"ABORT: expected exactly 1 live crontab line\n    {line}\n  found {n}. The live "
-            "crontab has drifted from pi-scripts/crontab.txt (last verified 2026-08-16). "
-            "Reconcile by hand first:\n    diff <(crontab -l) ~/morning-briefing/pi-scripts/crontab.txt\n"
-            "  Note the unexplained 2026-08-20 11:41 publish, which matches no snapshot slot.")
-for line in COUNCIL:
-    src = src.replace(line + "\n", line + CHAIN + "\n", 1)
-for line in DASHBOARD:
-    src = src.replace(line + "\n", "", 1)
+LOG = "/home/arshad14/.hermes/logs/agent_dashboard_writer.log"
+
+def cmd(line):
+    """The command half of a crontab line (everything after the 5 schedule fields)."""
+    f = line.split(None, 5)
+    return f[5] if len(f) > 5 else ""
+
+lines = src.split("\n")
+council, dash = [], []
+for i, line in enumerate(lines):
+    if line.lstrip().startswith("#"):
+        continue
+    if "agent_council.sh" in line:
+        council.append(i)      # a chained line counts as council, never as dashboard
+    elif "agent_dashboard.sh" in line:
+        dash.append(i)
+
+# Discover the wrapper invocation rather than hardcoding its minute. The slot has
+# already moved once (:26 -> :30, reconciled into the snapshot 2026-08-21 02:30),
+# and a hardcoded minute turns a schedule change into a failed deploy.
+if not council:
+    sys.exit("ABORT: no agent_council.sh line in the live crontab — nothing to chain onto.")
+if not dash:
+    if all("agent_dashboard.sh" in lines[i] for i in council):
+        print("  already applied")
+        open(sys.argv[2], "w").write(src)
+        sys.exit(0)
+    sys.exit("ABORT: no standalone agent_dashboard.sh entry, and the council lines do not "
+             "invoke it either — the wrapper is not scheduled at all. Investigate first.")
+if any("agent_dashboard.sh" in lines[i] for i in council):
+    sys.exit("ABORT: crontab is half-applied — a council line is already chained while a "
+             "standalone wrapper entry still exists. Reconcile by hand:\n"
+             "    diff <(crontab -l) ~/morning-briefing/pi-scripts/crontab.txt")
+
+wrapper_cmds = {cmd(lines[i]) for i in dash}
+if len(wrapper_cmds) != 1:
+    sys.exit(f"ABORT: the {len(dash)} agent_dashboard.sh entries do not share one command "
+             f"({len(wrapper_cmds)} distinct). Reconcile by hand:\n"
+             "    diff <(crontab -l) ~/morning-briefing/pi-scripts/crontab.txt")
+WRAPPER = wrapper_cmds.pop()
+if LOG not in WRAPPER:
+    sys.exit(f"ABORT: the wrapper entry does not redirect to {LOG}:\n    {WRAPPER}")
+
+for i in council:
+    lines[i] = lines[i] + " && " + WRAPPER
+for i in sorted(dash, reverse=True):
+    del lines[i]
+src = "\n".join(lines)
+
 # The section comment would otherwise be left describing entries that no longer
 # exist, and crontab.txt is re-snapshotted verbatim, so the stale comment gets
 # committed. Cosmetic, so warn rather than abort if it has been reworded.
@@ -292,9 +323,9 @@ NEW_C = ("# Agent 3: dashboard-writer — chained onto the council above (2026-0
 if src.count(OLD_C) == 1:
     src = src.replace(OLD_C, NEW_C, 1)
 elif NEW_C not in src:
-    print(f"  NOTE: section comment not found verbatim ({src.count(OLD_C)} matches) — left as is")
+    print("  NOTE: section comment not found verbatim — left as is")
 open(sys.argv[2], "w").write(src)
-print("  built the proposed crontab")
+print(f"  chained {len(council)} council line(s); removed {len(dash)} standalone wrapper entry(ies)")
 PY
 echo "  proposed diff (current -> proposed):"
 diff -u "$CRON_ORIG" "$CRON_NEW" | sed 's/^/    /' || true
