@@ -1,30 +1,81 @@
 {
  "ticker": "ASIC",
  "name": "Ategrity Specialty Insurance Co",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 24.67,
- "change_pct": 0.41,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 24.89,
+ "change_pct": 1.61,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 53.6,
-  "sma_20": 24.47,
-  "sma_50": 23.31
+  "rsi_14": 55.2,
+  "sma_20": 24.57,
+  "sma_50": 23.6
  },
  "fundamentals": {
-  "pe_ratio": 11.421296,
+  "pe_ratio": 11.520833,
   "market_cap": "1.2B",
   "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "ASIC",
+   "date": "2026-10-21",
+   "epsEstimate": 0.52,
+   "epsActual": null
+  },
+  {
+   "ticker": "ASIC",
+   "date": "2026-07-29",
+   "epsEstimate": 0.54,
+   "epsActual": 0.67
+  },
+  {
+   "ticker": "ASIC",
+   "date": "2026-04-29",
+   "epsEstimate": 0.41,
+   "epsActual": 0.51
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "ASIC",
+   "date": "2026-08-13",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/2040491/000204049126000045/asic-20260630.htm"
+  },
+  {
+   "ticker": "ASIC",
+   "date": "2026-05-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/2040491/000204049126000024/asic-20260331.htm"
+  },
+  {
+   "ticker": "ASIC",
+   "date": "2026-03-06",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/2040491/000204049126000011/asic-20251231.htm"
+  },
+  {
+   "ticker": "ASIC",
+   "date": "2025-11-12",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/2040491/000204049125000015/asic-20250930.htm"
+  },
+  {
+   "ticker": "ASIC",
+   "date": "2025-08-14",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/2040491/000162828025040252/asic-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

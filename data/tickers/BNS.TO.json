@@ -1,26 +1,27 @@
 {
  "ticker": "BNS.TO",
  "name": "BANK OF NOVA SCOTIA",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 123.69,
- "change_pct": -1.33,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 119.53,
+ "change_pct": -1.39,
  "sector": "Financial Services",
  "signals": [
-  "near_high"
+  "rsi_dip",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 50.1,
-  "sma_20": 123.97,
-  "sma_50": 122.25
+  "rsi_14": 39.6,
+  "sma_20": 123.7,
+  "sma_50": 121.43
  },
  "fundamentals": {
-  "pe_ratio": 17.06069,
-  "market_cap": "150.8B",
+  "pe_ratio": 16.486897,
+  "market_cap": "145.7B",
   "beta": 1.209,
-  "dividend_yield": 0.0364
+  "dividend_yield": 0.037599999999999995
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

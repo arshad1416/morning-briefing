@@ -1,22 +1,24 @@
 {
  "ticker": "PLAY",
  "name": "Dave & Buster's Entertainment, ",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 10.06,
- "change_pct": 1.31,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 9.7,
+ "change_pct": -2.73,
  "sector": "Communication Services",
  "signals": [
+  "rsi_dip",
   "below_ma",
+  "near_low",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.0,
-  "sma_20": 10.3,
-  "sma_50": 10.82
+  "rsi_14": 42.1,
+  "sma_20": 10.32,
+  "sma_50": 10.77
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "350M",
+  "market_cap": "337M",
   "beta": 1.845,
   "dividend_yield": null
  },

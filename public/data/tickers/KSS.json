@@ -1,23 +1,25 @@
 {
  "ticker": "KSS",
  "name": "Kohl's Corporation",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 18.98,
- "change_pct": 1.5,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 17.5,
+ "change_pct": -7.14,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 53.3,
-  "sma_20": 19.03,
-  "sma_50": 17.95
+  "rsi_14": 42.5,
+  "sma_20": 18.99,
+  "sma_50": 17.99
  },
  "fundamentals": {
-  "pe_ratio": 7.974789,
+  "pe_ratio": 7.3508406,
   "market_cap": null,
   "beta": 1.416,
-  "dividend_yield": 0.026699999999999998
+  "dividend_yield": 0.0265
  },
  "council_analysis": {
   "score": 6

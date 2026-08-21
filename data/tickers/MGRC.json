@@ -1,21 +1,24 @@
 {
  "ticker": "MGRC",
  "name": "McGrath RentCorp",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 119.64,
- "change_pct": 0.64,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 117.3,
+ "change_pct": -0.87,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 51.5,
-  "sma_20": 119.75,
-  "sma_50": 117.52
+  "rsi_14": 44.9,
+  "sma_20": 119.68,
+  "sma_50": 117.66
  },
  "fundamentals": {
-  "pe_ratio": 19.2657,
+  "pe_ratio": 18.88889,
   "market_cap": "2.9B",
   "beta": 0.453,
-  "dividend_yield": 0.0165
+  "dividend_yield": 0.0166
  },
  "council_analysis": {
   "score": 5

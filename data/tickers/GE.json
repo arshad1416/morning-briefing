@@ -1,24 +1,26 @@
 {
  "ticker": "GE",
  "name": "GE Aerospace",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 363.92,
- "change_pct": -2.98,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 351.86,
+ "change_pct": -1.23,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.8,
-  "sma_20": 365.16,
-  "sma_50": 358.89
+  "rsi_14": 43.6,
+  "sma_20": 364.92,
+  "sma_50": 359.17
  },
  "fundamentals": {
-  "pe_ratio": 42.9151,
-  "market_cap": "377.6B",
+  "pe_ratio": 41.492924,
+  "market_cap": "365.1B",
   "beta": 1.366,
-  "dividend_yield": 0.005
+  "dividend_yield": 0.0053
  },
  "council_analysis": {
   "score": 5

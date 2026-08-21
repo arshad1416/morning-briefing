@@ -1,28 +1,29 @@
 {
  "ticker": "BFH",
  "name": "Bread Financial Holdings, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 111.15,
- "change_pct": 0.05,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 103.71,
+ "change_pct": -4.42,
  "sector": "Financial Services",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 61.1,
-  "sma_20": 108.91,
-  "sma_50": 103.72
+  "rsi_14": 43.0,
+  "sma_20": 108.99,
+  "sma_50": 103.92
  },
  "fundamentals": {
-  "pe_ratio": 9.073469,
-  "market_cap": "4.5B",
+  "pe_ratio": 8.045772,
+  "market_cap": "4.0B",
   "beta": 1.138,
-  "dividend_yield": 0.0083
+  "dividend_yield": 0.0085
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

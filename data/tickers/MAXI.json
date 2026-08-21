@@ -1,26 +1,29 @@
 {
  "ticker": "MAXI",
  "name": "Simplify Bitcoin Strategy ETF",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 9.23,
- "change_pct": 1.93,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 10.89,
+ "change_pct": 9.83,
  "sector": null,
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "volume_surge",
+  "premium_pe"
  ],
  "technical": {
-  "rsi_14": 54.7,
-  "sma_20": 9.03,
-  "sma_50": 8.93
+  "rsi_14": 74.0,
+  "sma_20": 9.14,
+  "sma_50": 8.98
  },
  "fundamentals": {
-  "pe_ratio": 26.712742,
+  "pe_ratio": 31.516985,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.5475
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

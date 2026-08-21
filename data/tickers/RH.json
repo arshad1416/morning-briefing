@@ -1,21 +1,23 @@
 {
  "ticker": "RH",
  "name": "RH",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 174.18,
- "change_pct": 1.83,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 160.45,
+ "change_pct": -5.6,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 48.3,
-  "sma_20": 178.81,
-  "sma_50": 169.27
+  "rsi_14": 39.4,
+  "sma_20": 178.32,
+  "sma_50": 169.39
  },
  "fundamentals": {
-  "pe_ratio": 34.628227,
-  "market_cap": "3.3B",
+  "pe_ratio": 30.974903,
+  "market_cap": "3.0B",
   "beta": 1.871,
   "dividend_yield": null
  },

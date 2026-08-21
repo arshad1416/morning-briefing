@@ -1,28 +1,29 @@
 {
  "ticker": "PNC",
  "name": "PNC Financial Services Group, I",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 251.98,
- "change_pct": -0.91,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 246.39,
+ "change_pct": -0.03,
  "sector": "Financial Services",
  "signals": [
-  "near_high",
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 52.0,
-  "sma_20": 252.48,
-  "sma_50": 246.77
+  "rsi_14": 42.4,
+  "sma_20": 252.06,
+  "sma_50": 246.58
  },
  "fundamentals": {
-  "pe_ratio": 13.875276,
-  "market_cap": "100.5B",
+  "pe_ratio": 13.567731,
+  "market_cap": "98.3B",
   "beta": 0.898,
-  "dividend_yield": 0.0315
+  "dividend_yield": 0.0325
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

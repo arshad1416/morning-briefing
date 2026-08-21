@@ -1,22 +1,24 @@
 {
  "ticker": "UPST",
  "name": "Upstart Holdings, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 30.6,
- "change_pct": 5.14,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 28.08,
+ "change_pct": -8.24,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 52.9,
-  "sma_20": 29.09,
-  "sma_50": 30.86
+  "rsi_14": 43.2,
+  "sma_20": 29.11,
+  "sma_50": 30.8
  },
  "fundamentals": {
-  "pe_ratio": 58.85577,
-  "market_cap": "3.0B",
+  "pe_ratio": 51.054543,
+  "market_cap": "2.7B",
   "beta": 2.165,
   "dividend_yield": null
  },

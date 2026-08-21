@@ -1,28 +1,29 @@
 {
  "ticker": "TOL",
  "name": "Toll Brothers, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 153.59,
- "change_pct": 7.51,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 145.4,
+ "change_pct": -2.14,
  "sector": "Consumer Cyclical",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 54.0,
-  "sma_20": 150.28,
-  "sma_50": 150.87
+  "rsi_14": 44.6,
+  "sma_20": 149.95,
+  "sma_50": 150.89
  },
  "fundamentals": {
-  "pe_ratio": 11.670973,
+  "pe_ratio": 11.049012,
   "market_cap": null,
   "beta": 1.34,
-  "dividend_yield": 0.0072
+  "dividend_yield": 0.006999999999999999
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

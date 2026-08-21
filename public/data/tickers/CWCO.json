@@ -1,21 +1,24 @@
 {
  "ticker": "CWCO",
  "name": "Consolidated Water Co. Ltd.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 29.72,
- "change_pct": -1.16,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 29.47,
+ "change_pct": -0.76,
  "sector": "Utilities",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 46.6,
-  "sma_20": 30.12,
-  "sma_50": 29.67
+  "rsi_14": 44.7,
+  "sma_20": 30.14,
+  "sma_50": 29.63
  },
  "fundamentals": {
-  "pe_ratio": 29.137255,
-  "market_cap": "476M",
+  "pe_ratio": 28.887255,
+  "market_cap": "472M",
   "beta": 0.524,
-  "dividend_yield": 0.018600000000000002
+  "dividend_yield": 0.0189
  },
  "council_analysis": {
   "score": 5

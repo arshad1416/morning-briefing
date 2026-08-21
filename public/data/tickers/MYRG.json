@@ -1,28 +1,29 @@
 {
  "ticker": "MYRG",
  "name": "MYR Group, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 315.93,
- "change_pct": -2.46,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 327.58,
+ "change_pct": 0.49,
  "sector": "Industrials",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
+  "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 32.2,
-  "sma_20": 343.26,
-  "sma_50": 401.88
+  "rsi_14": 36.4,
+  "sma_20": 340.14,
+  "sma_50": 399.72
  },
  "fundamentals": {
-  "pe_ratio": 29.974382,
-  "market_cap": "4.9B",
+  "pe_ratio": 31.109686,
+  "market_cap": "5.1B",
   "beta": 1.337,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 7
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

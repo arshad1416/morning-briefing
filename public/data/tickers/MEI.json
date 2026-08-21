@@ -1,21 +1,24 @@
 {
  "ticker": "MEI",
  "name": "Methode Electronics, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 15.57,
- "change_pct": -2.72,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 14.6,
+ "change_pct": 2.74,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.8,
-  "sma_20": 15.76,
-  "sma_50": 15.05
+  "rsi_14": 44.9,
+  "sma_20": 15.62,
+  "sma_50": 15.09
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "553M",
+  "market_cap": "518M",
   "beta": 1.506,
-  "dividend_yield": 0.0125
+  "dividend_yield": 0.0141
  },
  "council_analysis": {
   "score": 5

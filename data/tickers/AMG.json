@@ -1,21 +1,23 @@
 {
  "ticker": "AMG",
  "name": "Affiliated Managers Group, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 361.01,
- "change_pct": -0.7,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 354.04,
+ "change_pct": -0.39,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.2,
-  "sma_20": 366.81,
-  "sma_50": 358.64
+  "rsi_14": 44.4,
+  "sma_20": 365.9,
+  "sma_50": 357.99
  },
  "fundamentals": {
-  "pe_ratio": 12.667018,
+  "pe_ratio": 12.417193,
   "market_cap": null,
   "beta": 1.108,
   "dividend_yield": 0.0001

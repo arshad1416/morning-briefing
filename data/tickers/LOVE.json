@@ -1,27 +1,28 @@
 {
  "ticker": "LOVE",
  "name": "The Lovesac Company",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 17.37,
- "change_pct": 1.76,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 16.49,
+ "change_pct": -3.23,
  "sector": "Consumer Cyclical",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 51.8,
-  "sma_20": 17.13,
-  "sma_50": 16.81
+  "rsi_14": 44.3,
+  "sma_20": 17.12,
+  "sma_50": 16.8
  },
  "fundamentals": {
-  "pe_ratio": 69.48,
-  "market_cap": "254M",
+  "pe_ratio": 65.96,
+  "market_cap": "241M",
   "beta": 2.04,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

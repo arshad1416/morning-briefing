@@ -1,28 +1,29 @@
 {
  "ticker": "MOG-A",
  "name": "Moog Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 423.5,
- "change_pct": -3.25,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 397.75,
+ "change_pct": -3.21,
  "sector": "Industrials",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 54.0,
-  "sma_20": 415.51,
-  "sma_50": 407.1
+  "rsi_14": 44.4,
+  "sma_20": 414.99,
+  "sma_50": 407.38
  },
  "fundamentals": {
-  "pe_ratio": 35.981308,
-  "market_cap": "13.4B",
+  "pe_ratio": 33.851063,
+  "market_cap": "12.6B",
   "beta": 0.981,
-  "dividend_yield": 0.0027
+  "dividend_yield": 0.0029
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

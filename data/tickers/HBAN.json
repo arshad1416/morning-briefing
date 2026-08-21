@@ -1,24 +1,26 @@
 {
  "ticker": "HBAN",
  "name": "Huntington Bancshares Incorpora",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 17.56,
- "change_pct": -0.57,
+ "generated_at": "2026-08-21T11:45:01.591574+00:00",
+ "price": 17.22,
+ "change_pct": 0.29,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.1,
-  "sma_20": 17.48,
+  "rsi_14": 43.5,
+  "sma_20": 17.46,
   "sma_50": 17.58
  },
  "fundamentals": {
-  "pe_ratio": 13.507692,
-  "market_cap": "35.5B",
+  "pe_ratio": 13.246154,
+  "market_cap": "34.8B",
   "beta": 0.946,
-  "dividend_yield": 0.0351
+  "dividend_yield": 0.0361
  },
  "council_analysis": {
   "score": 7
