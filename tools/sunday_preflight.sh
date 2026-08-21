@@ -85,11 +85,20 @@ if expert is None or agg is None:
 # the schedule is generous — only that it is not provably impossible.
 worst = expert + agg
 
-def slots(needle):
+def slots(needle, exclude=None):
+    """Cron minutes that invoke `needle`, skipping lines that also run `exclude`.
+
+    A chained line (`... && bash agent_council.sh ... && bash agent_dashboard.sh ...`)
+    mentions BOTH scripts. Counting it as an independent dashboard slot would score
+    the gap as 0 and fail the very configuration this check recommends, so the
+    dashboard lookup excludes council lines.
+    """
     out = []
     for line in open(cron):
         line = line.strip()
         if line.startswith("#") or needle not in line:
+            continue
+        if exclude and exclude in line:
             continue
         f = line.split()
         if len(f) < 5:
@@ -100,7 +109,7 @@ def slots(needle):
     return sorted(set(out))
 
 council = slots("agent_council.sh")
-dash = slots("agent_dashboard.sh")
+dash = slots("agent_dashboard.sh", exclude="agent_council.sh")
 
 if not council:
     sys.exit("crontab has no agent_council.sh entry")
