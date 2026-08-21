@@ -7,19 +7,26 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchGated, GateError } from '@/lib/api/gated';
-import { InfoTip } from '@/components/primitives';
+import { DataFreshness, InfoTip } from '@/components/primitives';
+import { STALE_AFTER } from '@/lib/query/policy';
 import type { GlossaryTerm } from '@/lib/glossary';
 import { SimulationSchema } from '@/lib/schemas/market';
 
-function Shell({ children }: { children: React.ReactNode }) {
+function Shell({ children, stamp }: { children: React.ReactNode; stamp?: React.ReactNode }) {
   return (
     // Not clipped: the header's <InfoTip> tooltip opens upward, and a clipped
     // box would place it outside the tile where it cannot be seen.
     <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)]">
-      <div className="px-4 py-3 border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
-        <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">
+      {/* min-w-0 lets this long title keep wrapping at 320px instead of forcing
+          the stamp out past the tile edge. */}
+      <div
+        className="px-4 py-3 border-b flex items-start justify-between gap-2"
+        style={{ borderColor: 'var(--color-border-subtle)' }}
+      >
+        <h3 className="min-w-0 text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">
           <InfoTip term="paper_trading">Live Simulation — $100K Paper Account</InfoTip>
         </h3>
+        {stamp && <div className="shrink-0">{stamp}</div>}
       </div>
       {children}
     </div>
@@ -79,7 +86,7 @@ export function SimulationTile() {
   ];
 
   return (
-    <Shell>
+    <Shell stamp={<DataFreshness timestamp={data.generated_at} staleAfterMs={STALE_AFTER.models} />}>
       <div className="p-4">
         <p className="text-[10px] uppercase tracking-wider font-semibold mb-3" style={{ color: 'var(--color-text-tertiary)' }}>
           $100,000 of pretend money traded against real prices — not a recommendation

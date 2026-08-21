@@ -5,7 +5,8 @@
 
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { InfoTip } from '@/components/primitives';
+import { DataFreshness, InfoTip } from '@/components/primitives';
+import { STALE_AFTER } from '@/lib/query/policy';
 
 interface Strat {
   name: string;
@@ -30,14 +31,20 @@ interface StatusData {
   note: string;
 }
 
-function Shell({ children }: { children: React.ReactNode }) {
+function Shell({ children, stamp }: { children: React.ReactNode; stamp?: React.ReactNode }) {
   return (
     // Not clipped: the <InfoTip> tooltips inside open upward, and near the top
     // of the tile a clipped box would cut them off entirely.
     <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)]">
-      <div className="px-4 py-3 border-b flex items-center gap-2" style={{ borderColor: 'var(--color-border-subtle)' }}>
+      {/* flex-wrap + gap-y: this row already ends in a right-aligned chip, so at
+          320px the stamp needs somewhere to go other than past the tile edge. */}
+      <div
+        className="px-4 py-3 border-b flex flex-wrap items-center gap-x-2 gap-y-1"
+        style={{ borderColor: 'var(--color-border-subtle)' }}
+      >
         <span aria-hidden className="inline-block h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: '#ec4899' }} />
         <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">Options Strategies</h3>
+        {stamp}
         {/* Advertised under Pro on the landing page; data is public for now. */}
         <span
           className="ml-auto rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
@@ -68,7 +75,7 @@ export function OptionsStrategiesTile() {
   if (isLoading || !data) return <Shell><div className="p-4 skeleton h-28" /></Shell>;
 
   return (
-    <Shell>
+    <Shell stamp={<DataFreshness timestamp={data.generated_at} staleAfterMs={STALE_AFTER.optionsStatus} />}>
       <div className="p-4">
         <div className="flex items-baseline gap-3 mb-3 text-sm">
           <span className="text-[var(--color-text-tertiary)]"><InfoTip term="vix">VIX</InfoTip></span>

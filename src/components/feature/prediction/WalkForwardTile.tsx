@@ -8,7 +8,8 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 import { fetchGated, GateError } from '@/lib/api/gated';
-import { InfoTip, PlainLabel } from '@/components/primitives';
+import { DataFreshness, InfoTip, PlainLabel } from '@/components/primitives';
+import { STALE_AFTER } from '@/lib/query/policy';
 import type { GlossaryTerm } from '@/lib/glossary';
 
 const StrategyWfSchema = z
@@ -22,6 +23,10 @@ const StrategyWfSchema = z
 
 const WalkForwardSchema = z
   .object({
+    // Declared so the tile can stamp its data; research-client already reads
+    // this same field off this same file. Optional because the tile degrades to
+    // an unknown stamp rather than failing the whole parse if a run omits it.
+    generated_at: z.string().optional(),
     summary: z.record(StrategyWfSchema).default({}),
   })
   .passthrough();
@@ -33,16 +38,24 @@ const LABELS: Record<string, { label: string; term: GlossaryTerm }> = {
   sector_rotation: { label: 'Sector Rotation', term: 'sector_rotation' },
 };
 
-function Shell({ children }: { children: React.ReactNode }) {
+function Shell({ children, stamp }: { children: React.ReactNode; stamp?: React.ReactNode }) {
   return (
     // Not clipped: the header's <InfoTip> tooltip opens upward, and a clipped
     // box would place it outside the tile where it cannot be seen.
     <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)]">
-      <div className="px-4 py-3 border-b" style={{ borderColor: 'var(--color-border-subtle)' }}>
-        <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">
-          <InfoTip term="walk_forward">Walk-Forward Analysis</InfoTip>
-        </h3>
-        <PlainLabel term="walk_forward" className="mt-0.5" />
+      {/* items-start, not center: the left column is two lines (title plus its
+          plain-English caption) and the stamp belongs beside the first. */}
+      <div
+        className="px-4 py-3 border-b flex items-start justify-between gap-2"
+        style={{ borderColor: 'var(--color-border-subtle)' }}
+      >
+        <div className="min-w-0">
+          <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">
+            <InfoTip term="walk_forward">Walk-Forward Analysis</InfoTip>
+          </h3>
+          <PlainLabel term="walk_forward" className="mt-0.5" />
+        </div>
+        {stamp && <div className="shrink-0">{stamp}</div>}
       </div>
       {children}
     </div>
@@ -88,7 +101,7 @@ export function WalkForwardTile() {
   const rows = Object.entries(data.summary).filter(([k]) => LABELS[k]);
 
   return (
-    <Shell>
+    <Shell stamp={<DataFreshness timestamp={data.generated_at} staleAfterMs={STALE_AFTER.walkForward} />}>
       <div className="p-4 overflow-x-auto">
         {/* min-w keeps the two-line plain-English column captions from
             crushing the five columns on a phone; the wrapper scrolls instead.
