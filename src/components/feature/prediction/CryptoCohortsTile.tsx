@@ -8,7 +8,8 @@
 
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { InfoTip } from '@/components/primitives';
+import { DataFreshness, InfoTip } from '@/components/primitives';
+import { STALE_AFTER } from '@/lib/query/policy';
 
 interface Cohort {
   id: string;
@@ -32,10 +33,15 @@ interface CohortsData {
   cohorts: Cohort[];
 }
 
-function Shell({ children }: { children: React.ReactNode }) {
+function Shell({ children, stamp }: { children: React.ReactNode; stamp?: React.ReactNode }) {
   return (
     <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border-subtle)] rounded-[var(--radius-tile)] shadow-[var(--shadow-tile)] overflow-hidden">
-      <div className="px-4 py-3 border-b flex items-center gap-2" style={{ borderColor: 'var(--color-border-subtle)' }}>
+      {/* flex-wrap + gap-y: this row already ends in a right-aligned chip, so at
+          320px the stamp needs somewhere to go other than past the tile edge. */}
+      <div
+        className="px-4 py-3 border-b flex flex-wrap items-center gap-x-2 gap-y-1"
+        style={{ borderColor: 'var(--color-border-subtle)' }}
+      >
         <span aria-hidden className="inline-block h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: '#f7931a' }} />
         {/* Was "Crypto Strategy Cohorts". Each row is one strategy running its own
             separate $10K simulated account — not a cohort in the usual sense of a
@@ -43,6 +49,7 @@ function Shell({ children }: { children: React.ReactNode }) {
         <h3 className="text-[11px] font-medium text-[var(--color-text-tertiary)] uppercase tracking-[0.14em]">
           Crypto Strategy Accounts
         </h3>
+        {stamp}
         {/* Advertised under Pro on the landing page; data is public for now. */}
         <span
           className="ml-auto rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
@@ -75,7 +82,7 @@ export function CryptoCohortsTile() {
   }
 
   return (
-    <Shell>
+    <Shell stamp={<DataFreshness timestamp={data.generated_at} staleAfterMs={STALE_AFTER.cryptoCohorts} />}>
       <div className="p-4">
         <p className="mb-3 text-[11px] leading-relaxed text-[var(--color-text-tertiary)]">
           {data.cohort_count} strategies, each trading its own separate pot of pretend money on crypto. The names are our
