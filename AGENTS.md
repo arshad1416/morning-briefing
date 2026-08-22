@@ -51,6 +51,20 @@ Read this file first; it routes to everything else.
 7. **One pitch per gated tile.** A tile wrapped in `FeatureGate` must never also render its own
    `GateCard` on a server 401/403 — render a quiet frame under the overlay instead. Regression
    specs: `e2e/tests/gating.spec.js`.
+8. **Touching a council timeout reschedules the publish.** `agents/agent_council.sh` (in
+   `arshad1416/hermes-scripts`) writes `data/maplegamma_analysis.json`; `agents/agent_dashboard.sh`
+   then refuses to publish — exit 4, `ABORT:` in `agent_dashboard_writer.log` — unless that file is
+   younger than its `MAX_AGE`. The two are *separate* crontab entries, so the guard silently depends
+   on the council finishing inside the gap between them (07:23→07:30 and :20→:30 since 2026-08-21;
+   it was :26 before, which is why two morning publishes vanished 08-18..08-20).
+   Raising `EXPERT_TIMEOUT`/`AGGREGATOR_TIMEOUT` for reasoning models on 2026-08-16 made the council
+   outlive that gap, so it began stat()ing the *previous* cycle's file: the two morning publishes
+   stopped every weekday from 08-18 and nothing failed — only `cron_watchdog.py` check 8 said so. The
+   window is `[council worst case, MAX_AGE]`; when it is empty no gap works and the two must be
+   chained. `tools/sunday_preflight.sh` check 3b fails on both cases. And freshness is not health:
+   the council also writes `status=aggregator_failed` / `insufficient_experts` fallbacks that
+   refresh the mtime and exit 0, so the wrapper must read `meta.status` the way `monday_gate.sh`
+   does — check 3c.
 
 ## Setup and commands
 
@@ -66,7 +80,7 @@ Fresh checkouts and worktrees need three installs: `npm install` at the root, in
 | `cloudflare-worker/` | `npm test` | vitest via `@cloudflare/vitest-pool-workers` — runs fully local (miniflare), fast |
 | `cloudflare-worker/` | `npm run dev` / `npm run deploy` | wrangler dev / deploy |
 | `cloudflare-worker/` | `npm run db:migrate:local` / `npm run db:migrate:remote` | D1 migrations |
-| `pi-scripts/` | `python3 -m unittest test_fetch_universe_constituents test_universe_membership test_volume_nan test_push_autostash_conflict test_generate_prediction_accuracy test_push_dashboard_basis` | runs locally without the Pi venv (stubs yfinance/pandas; the autostash suite drives real `git` in a tmpdir); CI runs exactly this set. Other `test_*.py` here need the Pi venv — don't use `unittest discover` |
+| `pi-scripts/` | `python3 -m unittest test_fetch_universe_constituents test_universe_membership test_volume_nan test_push_autostash_conflict test_generate_prediction_accuracy test_push_dashboard_basis test_r2_sync_failure_split test_run_step_timeout` | runs locally without the Pi venv (stubs yfinance/pandas; the autostash suite drives real `git` in a tmpdir); CI runs exactly this set. Other `test_*.py` here need the Pi venv — don't use `unittest discover` |
 
 **Deploys:** frontend ships by merging to `main` (Pages auto-builds). The Worker is manual —
 run `npm run deploy` in `cloudflare-worker/` after merging Worker changes. Worker secrets go
