@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import { GateCard } from '@/components/feature/gating/GateCard';
 import { InfoTip } from '@/components/primitives';
 import { fetchGated, GateError } from '@/lib/api/gated';
+import { assessStaleness } from '@/lib/staleness';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type Any = any;
@@ -535,8 +536,8 @@ function IbkrTab() {
   if (!account.data && !positions.data && !trades.data)
     return (
       <p className="p-6 text-center text-sm text-[var(--color-text-tertiary)]">
-        No account data right now. These figures come from a once-a-day 7:12 am Eastern refresh, so
-        this usually means the most recent run did not produce one.
+        No account data right now. These figures refresh once each weekday morning at 7:12 am
+        Eastern, so this usually means the most recent run did not produce one.
       </p>
     );
 
@@ -546,10 +547,9 @@ function IbkrTab() {
   // (it sat 28 days stale in Aug 2026). It is ISO with an offset, unlike the
   // Paper tab's naive Pi-local string, so Date is safe here.
   const asOf = account.data?.timestamp ?? positions.data?.timestamp ?? null;
-  const asOfMs = asOf ? Date.parse(String(asOf)) : NaN;
-  const staleDays = Number.isNaN(asOfMs) ? null : (Date.now() - asOfMs) / 86_400_000;
-  // The refresh is daily, so >2d means runs are failing, not that it is a weekend.
-  const isStale = staleDays != null && staleDays > 2;
+  // Schedule-aware: the cron is `12 7 * * 1-5`, weekdays only, so raw age lies
+  // every weekend (see docs/positions_staleness/README.md).
+  const { isStale, missedRuns } = assessStaleness(asOf, new Date());
 
   // The agent writes enveloped files: {timestamp, version, data: [...]}.
   // The old accessors read keys that never existed, so real positions
@@ -571,9 +571,9 @@ function IbkrTab() {
             color: 'var(--color-text-secondary)',
           }}
         >
-          These figures are {Math.floor(staleDays as number)} days old — the brokerage feed stopped
-          updating after {String(asOf).slice(0, 10)}. Everything below is that day&apos;s snapshot,
-          not your account today.
+          These figures are from {String(asOf).slice(0, 10)} — the brokerage feed has missed{' '}
+          {missedRuns} scheduled updates. Everything below is that day&apos;s snapshot, not your
+          account today.
         </p>
       )}
       {/* As-of in the title, not a sixth cell in a 5-col grid. Always shown, not
