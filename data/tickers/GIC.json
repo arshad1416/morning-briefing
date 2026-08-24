@@ -1,23 +1,25 @@
 {
  "ticker": "GIC",
  "name": "Global Industrial Company",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 38.56,
- "change_pct": -0.82,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 38.94,
+ "change_pct": 0.54,
  "sector": "Industrials",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 64.2,
-  "sma_20": 37.56,
-  "sma_50": 34.66
+  "rsi_14": 67.1,
+  "sma_20": 37.83,
+  "sma_50": 35.06
  },
  "fundamentals": {
-  "pe_ratio": 17.447964,
+  "pe_ratio": 17.61991,
   "market_cap": "1.5B",
   "beta": 0.747,
-  "dividend_yield": 0.028300000000000002
+  "dividend_yield": 0.028399999999999998
  },
  "council_analysis": {
   "score": 6

@@ -1,28 +1,29 @@
 {
  "ticker": "ROL",
  "name": "Rollins, Inc.",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 35.95,
- "change_pct": -0.85,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 36.85,
+ "change_pct": 1.28,
  "sector": "Consumer Cyclical",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
+  "near_low",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 27.9,
-  "sma_20": 37.28,
-  "sma_50": 41.47
+  "rsi_14": 35.6,
+  "sma_20": 37.22,
+  "sma_50": 41.19
  },
  "fundamentals": {
-  "pe_ratio": 32.68182,
-  "market_cap": "17.3B",
+  "pe_ratio": 33.495457,
+  "market_cap": "17.7B",
   "beta": 0.744,
   "dividend_yield": 0.020099999999999996
  },
  "council_analysis": {
-  "score": 5
+  "score": 3
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

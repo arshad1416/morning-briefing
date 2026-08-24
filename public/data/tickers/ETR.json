@@ -1,23 +1,25 @@
 {
  "ticker": "ETR",
  "name": "Entergy Corporation",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 108.41,
- "change_pct": 0.42,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 106.26,
+ "change_pct": -1.01,
  "sector": "Utilities",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.9,
-  "sma_20": 108.08,
-  "sma_50": 110.8
+  "rsi_14": 40.0,
+  "sma_20": 107.58,
+  "sma_50": 110.89
  },
  "fundamentals": {
-  "pe_ratio": 27.726343,
-  "market_cap": "50.6B",
+  "pe_ratio": 27.17647,
+  "market_cap": "49.6B",
   "beta": 0.486,
-  "dividend_yield": 0.023700000000000002
+  "dividend_yield": 0.023799999999999998
  },
  "council_analysis": {
   "score": 6

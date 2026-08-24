@@ -1,23 +1,25 @@
 {
  "ticker": "CZNC",
  "name": "Citizens & Northern Corp",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 25.4,
- "change_pct": -0.72,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 25.7,
+ "change_pct": 0.02,
  "sector": "Financial Services",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 59.0,
-  "sma_20": 25.31,
-  "sma_50": 23.68
+  "rsi_14": 65.9,
+  "sma_20": 25.43,
+  "sma_50": 23.74
  },
  "fundamentals": {
-  "pe_ratio": 17.27551,
-  "market_cap": "455M",
+  "pe_ratio": 17.486395,
+  "market_cap": "461M",
   "beta": 0.387,
-  "dividend_yield": 0.0438
+  "dividend_yield": 0.0435
  },
  "council_analysis": {
   "score": 6

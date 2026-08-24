@@ -1,21 +1,24 @@
 {
  "ticker": "IPAR",
  "name": "Interparfums, Inc.",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 115.82,
- "change_pct": -1.02,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 114.68,
+ "change_pct": -0.06,
  "sector": "Consumer Defensive",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 46.4,
-  "sma_20": 120.83,
-  "sma_50": 115.38
+  "rsi_14": 44.8,
+  "sma_20": 120.39,
+  "sma_50": 115.7
  },
  "fundamentals": {
-  "pe_ratio": 22.145315,
+  "pe_ratio": 22.354774,
   "market_cap": "3.7B",
   "beta": 1.146,
-  "dividend_yield": 0.0273
+  "dividend_yield": 0.0279
  },
  "council_analysis": {
   "score": 5

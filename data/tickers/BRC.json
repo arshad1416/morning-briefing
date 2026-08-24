@@ -1,26 +1,27 @@
 {
  "ticker": "BRC",
  "name": "Brady Corporation",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 91.36,
- "change_pct": -0.71,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 91.12,
+ "change_pct": 0.44,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip"
+  "rsi_dip",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 41.6,
-  "sma_20": 95.18,
-  "sma_50": 90.56
+  "rsi_14": 40.3,
+  "sma_20": 95.01,
+  "sma_50": 91.66
  },
  "fundamentals": {
-  "pe_ratio": 20.763521,
+  "pe_ratio": 20.710226,
   "market_cap": null,
   "beta": 0.615,
-  "dividend_yield": 0.010700000000000001
+  "dividend_yield": 0.0108
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

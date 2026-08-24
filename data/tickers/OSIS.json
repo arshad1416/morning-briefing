@@ -1,28 +1,29 @@
 {
  "ticker": "OSIS",
  "name": "OSI Systems, Inc.",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 219.32,
- "change_pct": -0.72,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 197.41,
+ "change_pct": -9.48,
  "sector": "Technology",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
+  "volume_surge",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 44.2,
-  "sma_20": 225.83,
-  "sma_50": 220.48
+  "rsi_14": 28.9,
+  "sma_20": 225.15,
+  "sma_50": 220.4
  },
  "fundamentals": {
-  "pe_ratio": 25.093822,
-  "market_cap": "3.6B",
+  "pe_ratio": 22.534986,
+  "market_cap": "3.3B",
   "beta": 1.213,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

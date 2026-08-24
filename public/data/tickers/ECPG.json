@@ -1,30 +1,81 @@
 {
  "ticker": "ECPG",
  "name": "Encore Capital Group Inc",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 97.19,
- "change_pct": -4.01,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 100.6,
+ "change_pct": 2.51,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 52.3,
-  "sma_20": 97.02,
-  "sma_50": 91.53
+  "rsi_14": 57.6,
+  "sma_20": 97.59,
+  "sma_50": 91.96
  },
  "fundamentals": {
-  "pe_ratio": 7.385638,
+  "pe_ratio": 7.6443768,
   "market_cap": "2.1B",
   "beta": 1.278,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "ECPG",
+   "date": "2026-11-04",
+   "epsEstimate": 3.08,
+   "epsActual": null
+  },
+  {
+   "ticker": "ECPG",
+   "date": "2026-08-05",
+   "epsEstimate": 2.62,
+   "epsActual": 3.95
+  },
+  {
+   "ticker": "ECPG",
+   "date": "2026-05-06",
+   "epsEstimate": 2.78,
+   "epsActual": 3.91
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "ECPG",
+   "date": "2026-08-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1084961/000108496126000058/ecpg-20260630.htm"
+  },
+  {
+   "ticker": "ECPG",
+   "date": "2026-05-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1084961/000108496126000039/ecpg-20260331.htm"
+  },
+  {
+   "ticker": "ECPG",
+   "date": "2026-02-25",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1084961/000108496126000009/ecpg-20251231.htm"
+  },
+  {
+   "ticker": "ECPG",
+   "date": "2025-11-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1084961/000108496125000116/ecpg-20250930.htm"
+  },
+  {
+   "ticker": "ECPG",
+   "date": "2025-08-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1084961/000108496125000097/ecpg-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

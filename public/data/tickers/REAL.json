@@ -1,21 +1,23 @@
 {
  "ticker": "REAL",
  "name": "The RealReal, Inc.",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 11.44,
- "change_pct": -2.89,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 11.03,
+ "change_pct": -5.32,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.8,
-  "sma_20": 11.76,
-  "sma_50": 11.38
+  "rsi_14": 43.9,
+  "sma_20": 11.8,
+  "sma_50": 11.58
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "1.4B",
+  "market_cap": "1.3B",
   "beta": 2.744,
   "dividend_yield": null
  },

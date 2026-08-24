@@ -1,24 +1,25 @@
 {
  "ticker": "AII",
  "name": "American Integrity Insurance Gr",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 24.78,
- "change_pct": -0.36,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 26.1,
+ "change_pct": 2.11,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
+  "overbought_rsi",
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 74.6,
-  "sma_20": 21.61,
-  "sma_50": 19.51
+  "rsi_14": 80.1,
+  "sma_20": 22.14,
+  "sma_50": 19.84
  },
  "fundamentals": {
-  "pe_ratio": 5.858156,
-  "market_cap": "486M",
+  "pe_ratio": 6.1702127,
+  "market_cap": "511M",
   "beta": null,
   "dividend_yield": null
  },

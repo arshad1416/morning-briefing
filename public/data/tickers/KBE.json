@@ -1,26 +1,29 @@
 {
  "ticker": "KBE",
  "name": "State Street SPDR S&P Bank ETF",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 69.0,
- "change_pct": -0.17,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 68.43,
+ "change_pct": -0.28,
  "sector": null,
  "signals": [
+  "rsi_dip",
+  "below_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 45.2,
-  "sma_20": 70.2,
-  "sma_50": 68.55
+  "rsi_14": 41.2,
+  "sma_20": 70.18,
+  "sma_50": 68.94
  },
  "fundamentals": {
-  "pe_ratio": 13.34408,
+  "pe_ratio": 13.233847,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.021099999999999997
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

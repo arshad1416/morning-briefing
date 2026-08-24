@@ -1,21 +1,23 @@
 {
  "ticker": "AFRI",
  "name": "Forafric Global PLC",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 10.98,
- "change_pct": 2.94,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 11.5,
+ "change_pct": 8.29,
  "sector": "Consumer Defensive",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 60.0,
-  "sma_20": 10.63,
-  "sma_50": 10.41
+  "rsi_14": 68.0,
+  "sma_20": 10.66,
+  "sma_50": 10.43
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "296M",
+  "market_cap": "310M",
   "beta": 0.368,
   "dividend_yield": null
  },

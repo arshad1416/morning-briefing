@@ -1,21 +1,23 @@
 {
  "ticker": "IESC",
  "name": "IES Holdings, Inc.",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 698.99,
- "change_pct": 0.23,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 662.0,
+ "change_pct": -3.11,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 49.1,
-  "sma_20": 701.8,
-  "sma_50": 691.19
+  "rsi_14": 44.4,
+  "sma_20": 706.85,
+  "sma_50": 688.24
  },
  "fundamentals": {
-  "pe_ratio": 31.05242,
-  "market_cap": "13.9B",
+  "pe_ratio": 30.009068,
+  "market_cap": "13.2B",
   "beta": 1.816,
   "dividend_yield": null
  },

@@ -1,22 +1,24 @@
 {
  "ticker": "CIEN",
  "name": "Ciena Corporation",
- "generated_at": "2026-08-21T14:45:01.982349+00:00",
- "price": 399.86,
- "change_pct": 0.1,
+ "generated_at": "2026-08-24T11:45:01.891302+00:00",
+ "price": 385.64,
+ "change_pct": -1.74,
  "sector": "Technology",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.0,
-  "sma_20": 397.7,
-  "sma_50": 422.48
+  "rsi_14": 44.1,
+  "sma_20": 397.06,
+  "sma_50": 421.35
  },
  "fundamentals": {
-  "pe_ratio": 133.285,
-  "market_cap": "56.6B",
+  "pe_ratio": 129.40771,
+  "market_cap": "54.6B",
   "beta": 1.315,
   "dividend_yield": null
  },
