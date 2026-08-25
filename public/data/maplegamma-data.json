@@ -1,38 +1,46 @@
 {
-  "generated_at": "2026-08-25T09:37:24-04:00",
+  "generated_at": "2026-08-25T10:07:25-04:00",
   "market_overview": {
-    "total_net_gex": 1516137,
-    "total_oi": 1881425,
-    "current_price": 766.46,
-    "change_pct": 0.39
+    "total_net_gex": 2774113,
+    "total_oi": 2956737,
+    "current_price": 765.33,
+    "change_pct": 0.24
   },
   "tickers": {
     "SPY": {
-      "current_price": 766.46,
-      "change_pct": 0.39,
+      "current_price": 765.33,
+      "change_pct": 0.24,
       "gamma_regime": "bullish",
-      "total_gex": 1516137,
-      "total_dex": 136161046,
-      "total_vex": 35942189,
-      "total_vanna": 3321912,
-      "total_charm": -280992,
-      "total_dealer_gex": 2688452,
-      "gamma_flip": 763.99,
+      "total_gex": 2774113,
+      "total_dex": 79980868,
+      "total_vex": 967679808,
+      "total_vanna": 8065086,
+      "total_charm": -2467901,
+      "total_dealer_gex": -760135,
+      "gamma_flip": 770.02,
       "max_pain": 750.0,
-      "max_gex_strike": 767.0,
-      "max_gex_value": 562421,
+      "max_gex_strike": 760.0,
+      "max_gex_value": 446290,
       "neutral_range": [],
-      "floor_zone": null,
-      "ceiling_zone": {
-        "strike": 767.0,
-        "net_gex": 562421,
-        "total_gex": 562421,
-        "range_start": 762.0,
-        "range_end": 772.0,
+      "floor_zone": {
+        "strike": 760.0,
+        "net_gex": 529370,
+        "total_gex": 529370,
+        "range_start": 755.0,
+        "range_end": 765.0,
         "strength": "strong",
-        "narrative": "Gamma ceiling at $767"
+        "narrative": "Gamma floor at $760"
       },
-      "narrative": "Net GEX: $+1,516,137 \u2014 dealers are long gamma (range-bound)"
+      "ceiling_zone": {
+        "strike": 770.0,
+        "net_gex": 349463,
+        "total_gex": 349463,
+        "range_start": 765.0,
+        "range_end": 775.0,
+        "strength": "strong",
+        "narrative": "Gamma ceiling at $770"
+      },
+      "narrative": "Net GEX: $+2,774,113 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
