@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-24T17:15:03-04:00",
+  "generated_at": "2026-08-25T07:25:02-04:00",
   "market_summary": {
-    "vix": 15.85,
+    "vix": 15.83,
     "ten_year_yield": 4.7,
     "indices": [
       {
@@ -26,13 +26,13 @@
       },
       {
         "ticker": "TSX",
-        "price": 36714.12,
+        "price": 36714.1,
         "change_pct": 0.26
       },
       {
         "ticker": "VIX",
-        "price": 15.85,
-        "change_pct": 4.76
+        "price": 15.83,
+        "change_pct": -0.13
       },
       {
         "ticker": "10Y Yield",
@@ -43,12 +43,12 @@
     "fx_rates": [
       {
         "pair": "USD/CAD",
-        "price": 1.38
+        "price": 1.39
       }
     ]
   },
   "narrative": {
-    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,652.86 (-0.28%)\n  \u2022 Dow Jones: 53,417.16 (+0.26%)\n  \u2022 NASDAQ: 25,980.19 (-0.76%)\n  \u2022 Russell 2000: 2,995.08 (-0.76%)\n  \u2022 TSX: 36,714.12 (+0.26%)\n  \u2022 VIX: 15.85\n  \u2022 10Y Yield: 4.7%"
+    "summary_paragraph": "\ud83d\udcca **Market Snapshot**\n  \u2022 S&P 500: 7,652.86 (-0.28%)\n  \u2022 Dow Jones: 53,417.16 (+0.26%)\n  \u2022 NASDAQ: 25,980.19 (-0.76%)\n  \u2022 Russell 2000: 2,995.08 (-0.76%)\n  \u2022 TSX: 36,714.10 (+0.26%)\n  \u2022 VIX: 15.83\n  \u2022 10Y Yield: 4.7%"
   },
   "watchlist_summary": {},
   "central_banks": {
@@ -56,6 +56,20 @@
     "boc": ""
   },
   "insider_trades": [
+    {
+      "ticker": "PLTR",
+      "insider": "Buckley Jeffrey",
+      "title": "See Remarks",
+      "type": "Sell",
+      "code": "S",
+      "open_market": true,
+      "shares": 1250,
+      "price": 174.29,
+      "value": 217862,
+      "date": "2026-08-21",
+      "source": "SEC EDGAR Form 4",
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000170518926000015/xslF345X06/wk-form4_1787616201.xml"
+    },
     {
       "ticker": "AMD",
       "insider": "Papermaster Mark D",
@@ -169,102 +183,88 @@
       "filing_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000174/xslF345X06/wk-form4_1787349005.xml"
     },
     {
-      "ticker": "RIVN",
-      "insider": "McDonough Claire",
-      "title": "Chief Financial Officer",
+      "ticker": "PLTR",
+      "insider": "Buckley Jeffrey",
+      "title": "See Remarks",
       "type": "Sell",
       "code": "S",
       "open_market": true,
-      "shares": 8023,
-      "price": 16.0,
-      "value": 128368,
+      "shares": 58,
+      "price": 172.65,
+      "value": 10014,
       "date": "2026-08-20",
       "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1874178/000189092526000025/xslF345X06/wk-form4_1787361845.xml"
-    },
-    {
-      "ticker": "DIS",
-      "insider": "Roeder Paul M",
-      "title": "Sr EVP and Chief Comm Officer",
-      "type": "Sell",
-      "code": "S",
-      "open_market": true,
-      "shares": 3596,
-      "price": 106.32,
-      "value": 382327,
-      "date": "2026-08-19",
-      "source": "SEC EDGAR Form 4",
-      "filing_url": "https://www.sec.gov/Archives/edgar/data/1744489/000162828026058293/xslF345X06/wk-form4_1787261642.xml"
+      "filing_url": "https://www.sec.gov/Archives/edgar/data/1321655/000170518926000015/xslF345X06/wk-form4_1787616201.xml"
     }
   ],
   "market_news": {
     "headlines": [
       {
-        "title": "Siemens Energy taps Goldman Sachs for steam turbine stake sale - Bloomberg",
-        "url": "https://seekingalpha.com/news/4636339-siemens-energy-taps-goldman-sachs-for-steam-turbine-stake-sale-bloomberg?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "XPeng slides after earnings despite eye-popping humanoid robot business valuation",
-        "url": "https://seekingalpha.com/news/4636234-xpeng-slides-after-earnings-despite-eye-popping-humanoid-robot-business-valuation?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Vision Marine Technologies announces 1-for-10 reverse stock split",
-        "url": "https://seekingalpha.com/news/4636340-vision-marine-technologies-announces-1-for-10-reverse-stock-split?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "Stock market mixed as tech stocks come under pressure",
-        "url": "https://seekingalpha.com/news/4636267-stock-market-mixed-as-tech-stocks-come-under-pressure?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
-        "title": "PulteGroup raised to Outperform at Wolfe on favorable consumer segment mix",
-        "url": "https://seekingalpha.com/news/4636336-pultegroup-raised-to-outperform-at-wolfe-on-favorable-consumer-segment-mix?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Druckenmiller, Bessent's former mentor, slams Treasury buyback plan",
+        "url": "https://seekingalpha.com/news/4636449-stanley-druckenmiller-treasury-buyback-plan?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "AI, chip stocks fall ahead of Nvidia earnings",
-        "url": "https://seekingalpha.com/news/4636330-ai-chip-stocks-fall-ahead-of-nvidia-earnings?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "bearish",
-        "summary": ""
-      },
-      {
-        "title": "Tenon Medical regains Nasdaq bid-price compliance",
-        "url": "https://seekingalpha.com/news/4636337-tenon-medical-regains-nasdaq-bid-price-compliance?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "title": "Scotiabank Q3 earnings top consensus, driven by growth in all business lines",
+        "url": "https://seekingalpha.com/news/4636512-scotiabank-q3-earnings-top-consensus-driven-by-growth-in-all-business-lines?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
       },
       {
-        "title": "Bessent Triggers The Nightmare Scenario For The Bond Market",
-        "url": "https://seekingalpha.com/article/4939575-bessent-triggers-the-nightmare-scenario-for-the-bond-market?source=feed",
+        "title": "Oura advances toward a $3B IPO that may jolt the health and fitness tracking sector",
+        "url": "https://seekingalpha.com/news/4636529-oura-advances-toward-3b-ipo-that-may-jolt-the-health-and-fitness-tracking-sector?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "2 Income Opportunities With +8% Yields",
-        "url": "https://seekingalpha.com/article/4939538-2-income-opportunities-with-plus-8-percent-yields?source=feed",
+        "title": "Kanzhun Non-GAAP EPS of $0.33 beats by $0.01, revenue of $353.5M misses by $4.16M",
+        "url": "https://seekingalpha.com/news/4636530-kanzhun-non-gaap-eps-of-0_33-beats-by-0_01-revenue-of-353_5m-misses-by-4_16m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Immatics launches $150M securities offering",
+        "url": "https://seekingalpha.com/news/4636524-immatics-launches-150m-securities-offering?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
         "source": "Seeking Alpha",
         "sentiment": "neutral",
         "summary": ""
       },
       {
-        "title": "3 REITs To Buy Before They Hike Their Dividends",
-        "url": "https://seekingalpha.com/article/4939419-3-reits-to-buy-before-they-hike-their-dividends?source=feed",
+        "title": "Info Tech was biggest net-sold sector last week, Goldman Sachs says",
+        "url": "https://seekingalpha.com/news/4636528-info-tech-was-biggest-net-sold-sector-last-week-goldman-sachs-says?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Madison Air announces $2.250B private placement",
+        "url": "https://seekingalpha.com/news/4636522-madison-air-announces-2250b-private-placement?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Intel: Priced For Potential Of CPUs, Not For The Momentum Of The Foundry (Upgrade)",
+        "url": "https://seekingalpha.com/article/4939864-intel-priced-for-potential-of-cpus-not-for-the-momentum-of-the-foundry-upgrade?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "TTM Technologies: Priced Like A Board Shop, Booked Like A Defense Prime",
+        "url": "https://seekingalpha.com/article/4939862-ttm-technologies-stock-priced-like-board-shop-booked-like-defense-prime?source=feed",
+        "source": "Seeking Alpha",
+        "sentiment": "neutral",
+        "summary": ""
+      },
+      {
+        "title": "Applied Optoelectronics: Investors Are Over-Discounting Growth Prospects",
+        "url": "https://seekingalpha.com/article/4939838-applied-optoelectronics-investors-are-over-discounting-growth-prospects?source=feed",
         "source": "Seeking Alpha",
         "sentiment": "bullish",
         "summary": ""
@@ -275,64 +275,136 @@
   },
   "geopolitical": [
     {
-      "title": "Divorce, smartphones and control - BBC sees how Taliban run Afghanistan",
+      "title": "Iran says it is 'fully prepared' to counter widened US economic sanctions",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/ckgvk9p2n7ko?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-24T05:00:22+00:00",
-      "summary": "Five years after the Taliban\u2019s return, the BBC follows senior figures as the group reshapes the country."
+      "url": "https://www.bbc.co.uk/news/articles/c0qxew81y83o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-25T08:08:26+00:00",
+      "summary": "The US calls its latest sanctions on Iran an \"economic D-Day\", but Tehran says it has a plan to address them."
     },
     {
-      "title": "Nearly 90,000 told to evacuate as wildfire approaches Reno, Nevada",
+      "title": "Lockerbie bombing trial postponed days before it was due to start",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c4gqlp0yzyjo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-24T10:08:40+00:00",
-      "summary": "The fire has burned around 10,500 acres and is completely uncontained, officials say."
+      "url": "https://www.bbc.co.uk/news/articles/cq63rmj1zl1o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-25T09:08:13+00:00",
+      "summary": "The trial of a Libyan man is delayed for a third time, after new evidence on the 37-year-old case came to light three days ago."
     },
     {
-      "title": "Trump says Canada wants 'benefits' of being US state after trade talks collapse",
+      "title": "US removes Syria from list of state sponsors of terrorism",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cx272np7vgyo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-23T19:11:30+00:00",
-      "summary": "Canada's PM said he was \"reluctantly\" announcing retaliatory tariffs and accused the US of starting a trade war."
+      "url": "https://www.bbc.co.uk/news/articles/c33knmyl0y5o?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-25T00:17:25+00:00",
+      "summary": "The Trump administration has embraced Syria's new president, former al-Qaeda linked militant Ahmed al-Sharaa."
     },
     {
-      "title": "King of Norway's health has worsened, palace says",
+      "title": "Tornado tears through French village, leaving dozens hurt and homes ravaged",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/c36lnekj659o?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-24T08:31:55+00:00",
-      "summary": "Norway's King Harald remains in hospital receiving antibiotics for a bloodstream bacterial infection."
+      "url": "https://www.bbc.co.uk/news/articles/c0m3npvpgdno?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-25T08:52:17+00:00",
+      "summary": "The south-western village of Pomas was hardest hit, with hundreds of homes damaged and fifteen people taken to hospital."
     },
     {
-      "title": "Zambia courts sealed off as election petition deadline looms",
+      "title": "Kit Harington replaces Nicholas Hoult in HBO's Harry Potter series",
       "source": "BBC World",
-      "url": "https://www.bbc.co.uk/news/articles/cgrvjn88rxqo?at_medium=RSS&at_campaign=rss",
-      "date": "2026-08-24T10:22:45+00:00",
-      "summary": "Preparations for President Hakainde Hichilema's second inauguration appear to be continuing."
+      "url": "https://www.bbc.co.uk/news/articles/c783lnz12vlo?at_medium=RSS&at_campaign=rss",
+      "date": "2026-08-25T07:39:25+00:00",
+      "summary": "Hoult was announced as Gilderoy Lockhart two weeks ago but has dropped out due to scheduling issues."
     },
     {
-      "title": "US threatens toughest sanctions yet against Iran: What we know",
+      "title": "Can Pakistan\u2019s Asim Munir convince Iran military chiefs to return to talks?",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/24/us-threatens-toughest-sanctions-yet-against-iran-what-we-know?traffic_source=rss",
-      "date": "2026-08-24T10:23:11+00:00",
-      "summary": "Tehran has threatened to retaliate against any country that joins new US economic measures."
+      "url": "https://www.aljazeera.com/news/2026/8/25/can-pakistans-asim-munir-convince-iran-military-chiefs-to-return-to-talks?traffic_source=rss",
+      "date": "2026-08-25T10:22:00+00:00",
+      "summary": "Pakistan says progress was made in Tehran, but Iran\u2019s security establishment remains wary of Washington."
     },
     {
-      "title": "Ukraine\u2019s offensive against Russia causes petrol panic across Central Asia",
+      "title": "Palestinian artist Sliman Mansour, giant of resistance art, dies aged 79",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/24/ukraines-offensive-against-russia-causes-petrol-panic-across-central-asia?traffic_source=rss",
-      "date": "2026-08-24T10:11:19+00:00",
-      "summary": "War-induced shortages set off cross-border fuel runs and deepen energy problems for Russia's allies."
+      "url": "https://www.aljazeera.com/gallery/2026/8/25/palestinian-artist-sliman-mansour-giant-of-resistance-art-dies-aged-79?traffic_source=rss",
+      "date": "2026-08-25T10:11:46+00:00",
+      "summary": "Sliman Mansour's art captured the essence of Palestine, blending ancient traditions with modern themes of resistance."
     },
     {
-      "title": "US military says strike on alleged drug-smuggling boat kills two",
+      "title": "What would justice look like if there were no Rohingya left in Myanmar?",
       "source": "Al Jazeera",
-      "url": "https://www.aljazeera.com/news/2026/8/24/us-military-says-strike-on-alleged-drug-smuggling-boat-kills-two?traffic_source=rss",
-      "date": "2026-08-24T09:58:03+00:00",
-      "summary": "US Southern Command says Sunday's strike targeted vessel operating along established narco-trafficking routes."
+      "url": "https://www.aljazeera.com/opinions/2026/8/25/what-would-justice-look-like-if-there-were-no-rohingya-left-in-myanmar?traffic_source=rss",
+      "date": "2026-08-25T09:46:11+00:00",
+      "summary": "Nine years after the 2017 atrocities, Rohingya are still being forced to flee because the genocide has never stopped."
     }
   ],
   "congress": {
     "recent_trades": [
+      {
+        "politician": "Nancy Pelosi",
+        "chamber": "House",
+        "state": "CA11",
+        "ticker": "BE",
+        "action": "Buy",
+        "amount_range": "$1,000,001 - $5,000,000",
+        "amount_low": 1000001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035143.pdf"
+      },
+      {
+        "politician": "Nancy Pelosi",
+        "chamber": "House",
+        "state": "CA11",
+        "ticker": "BE",
+        "action": "Buy",
+        "amount_range": "$1,000,001 - $5,000,000",
+        "amount_low": 1000001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035143.pdf"
+      },
+      {
+        "politician": "Nancy Pelosi",
+        "chamber": "House",
+        "state": "CA11",
+        "ticker": "BE",
+        "action": "Buy",
+        "amount_range": "$500,001 - $1,000,000",
+        "amount_low": 500001,
+        "transaction_date": "07/28/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035143.pdf"
+      },
+      {
+        "politician": "Nancy Pelosi",
+        "chamber": "House",
+        "state": "CA11",
+        "ticker": "BE",
+        "action": "Buy",
+        "amount_range": "$500,001 - $1,000,000",
+        "amount_low": 500001,
+        "transaction_date": "07/28/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035143.pdf"
+      },
+      {
+        "politician": "Nancy Pelosi",
+        "chamber": "House",
+        "state": "CA11",
+        "ticker": "INTC",
+        "action": "Buy",
+        "amount_range": "$250,001 - $500,000",
+        "amount_low": 250001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035143.pdf"
+      },
+      {
+        "politician": "Nancy Pelosi",
+        "chamber": "House",
+        "state": "CA11",
+        "ticker": "INTC",
+        "action": "Buy",
+        "amount_range": "$500,001 - $1,000,000",
+        "amount_low": 500001,
+        "transaction_date": "07/24/2026",
+        "source": "House Clerk (public domain)",
+        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035143.pdf"
+      },
       {
         "politician": "Tim Moore",
         "chamber": "House",
@@ -380,80 +452,8 @@
         "transaction_date": "08/14/2026",
         "source": "House Clerk (public domain)",
         "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035289.pdf"
-      },
-      {
-        "politician": "David J. Taylor",
-        "chamber": "House",
-        "state": "OH02",
-        "ticker": "MSFT",
-        "action": "Sell",
-        "amount_range": "$15,001 - $50,000",
-        "amount_low": 15001,
-        "transaction_date": "08/11/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035289.pdf"
-      },
-      {
-        "politician": "David J. Taylor",
-        "chamber": "House",
-        "state": "OH02",
-        "ticker": "PG",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "08/11/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035289.pdf"
-      },
-      {
-        "politician": "Richard W. Allen",
-        "chamber": "House",
-        "state": "GA12",
-        "ticker": "ABT",
-        "action": "Sell",
-        "amount_range": "$15,001 - $50,000",
-        "amount_low": 15001,
-        "transaction_date": "07/14/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035260.pdf"
-      },
-      {
-        "politician": "Richard W. Allen",
-        "chamber": "House",
-        "state": "GA12",
-        "ticker": "AMD",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "07/14/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035260.pdf"
-      },
-      {
-        "politician": "Richard W. Allen",
-        "chamber": "House",
-        "state": "GA12",
-        "ticker": "AVGO",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "07/14/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035260.pdf"
-      },
-      {
-        "politician": "Ed Case",
-        "chamber": "House",
-        "state": "HI01",
-        "ticker": "AAPL",
-        "action": "Buy",
-        "amount_range": "$1,001 - $15,000",
-        "amount_low": 1001,
-        "transaction_date": "08/13/2026",
-        "source": "House Clerk (public domain)",
-        "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035275.pdf"
       }
     ],
-    "summary": "60 recent congressional trades from 13 House periodic transaction reports (13 buys, 45 sells)."
+    "summary": "60 recent congressional trades from 11 House periodic transaction reports (18 buys, 40 sells)."
   }
 }
