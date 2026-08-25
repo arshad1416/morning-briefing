@@ -1,29 +1,80 @@
 {
  "ticker": "EG",
  "name": "Everest Group, Ltd.",
- "generated_at": "2026-08-24T14:45:01.769572+00:00",
- "price": 370.59,
- "change_pct": 0.61,
+ "generated_at": "2026-08-25T11:45:01.792729+00:00",
+ "price": 375.12,
+ "change_pct": 1.37,
  "sector": "Financial Services",
  "signals": [
+  "above_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 51.1,
-  "sma_20": 373.11,
-  "sma_50": 365.6
+  "rsi_14": 54.9,
+  "sma_20": 372.37,
+  "sma_50": 366.41
  },
  "fundamentals": {
-  "pe_ratio": 7.8299174,
-  "market_cap": "14.2B",
+  "pe_ratio": 7.925628,
+  "market_cap": "14.4B",
   "beta": 0.279,
-  "dividend_yield": 0.0217
+  "dividend_yield": 0.0216
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "EG",
+   "date": "2026-10-28",
+   "epsEstimate": 8.2,
+   "epsActual": null
+  },
+  {
+   "ticker": "EG",
+   "date": "2026-07-29",
+   "epsEstimate": 14.53,
+   "epsActual": 14.85
+  },
+  {
+   "ticker": "EG",
+   "date": "2026-04-29",
+   "epsEstimate": 13.96,
+   "epsActual": 16.08
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "EG",
+   "date": "2026-08-03",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1095073/000109507326000032/eg-20260630.htm"
+  },
+  {
+   "ticker": "EG",
+   "date": "2026-05-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1095073/000109507326000022/eg-20260331.htm"
+  },
+  {
+   "ticker": "EG",
+   "date": "2026-02-26",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1095073/000109507326000006/eg-20251231.htm"
+  },
+  {
+   "ticker": "EG",
+   "date": "2025-10-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1095073/000109507325000086/eg-20250930.htm"
+  },
+  {
+   "ticker": "EG",
+   "date": "2025-08-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1095073/000109507325000061/eg-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

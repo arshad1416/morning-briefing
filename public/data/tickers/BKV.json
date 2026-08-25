@@ -1,28 +1,29 @@
 {
  "ticker": "BKV",
  "name": "BKV Corporation",
- "generated_at": "2026-08-24T14:45:01.769572+00:00",
- "price": 25.53,
- "change_pct": -2.18,
+ "generated_at": "2026-08-25T11:45:01.792729+00:00",
+ "price": 24.03,
+ "change_pct": -0.7,
  "sector": "Energy",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.4,
-  "sma_20": 25.06,
-  "sma_50": 25.51
+  "rsi_14": 40.7,
+  "sma_20": 24.96,
+  "sma_50": 25.47
  },
  "fundamentals": {
-  "pe_ratio": 9.150538,
-  "market_cap": "2.8B",
+  "pe_ratio": 8.612904,
+  "market_cap": "2.6B",
   "beta": null,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

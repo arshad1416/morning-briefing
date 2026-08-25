@@ -1,21 +1,24 @@
 {
  "ticker": "MKTW",
  "name": "MarketWise, Inc.",
- "generated_at": "2026-08-24T14:45:01.769572+00:00",
- "price": 18.92,
- "change_pct": 3.97,
+ "generated_at": "2026-08-25T11:45:01.792729+00:00",
+ "price": 18.28,
+ "change_pct": 0.94,
  "sector": "Financial Services",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.3,
-  "sma_20": 19.45,
-  "sma_50": 18.68
+  "rsi_14": 42.7,
+  "sma_20": 19.33,
+  "sma_50": 18.7
  },
  "fundamentals": {
-  "pe_ratio": 21.261684,
-  "market_cap": "53M",
+  "pe_ratio": 20.539328,
+  "market_cap": "51M",
   "beta": 0.205,
-  "dividend_yield": 0.0622
+  "dividend_yield": 0.06280000000000001
  },
  "council_analysis": {
   "score": 5

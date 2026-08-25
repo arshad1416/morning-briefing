@@ -1,9 +1,9 @@
 {
  "ticker": "LKQ",
  "name": "LKQ Corporation",
- "generated_at": "2026-08-24T14:45:01.769572+00:00",
- "price": 26.06,
- "change_pct": 0.31,
+ "generated_at": "2026-08-25T11:45:01.792729+00:00",
+ "price": 25.52,
+ "change_pct": -0.97,
  "sector": "Consumer Cyclical",
  "signals": [
   "above_ma",
@@ -11,20 +11,70 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 59.6,
-  "sma_20": 24.67,
-  "sma_50": 25.13
+  "rsi_14": 54.7,
+  "sma_20": 24.64,
+  "sma_50": 25.12
  },
  "fundamentals": {
-  "pe_ratio": 14.4777775,
-  "market_cap": "6.6B",
+  "pe_ratio": 14.177778,
+  "market_cap": "6.5B",
   "beta": 0.827,
-  "dividend_yield": 0.0462
+  "dividend_yield": 0.04650000000000001
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "LKQ",
+   "date": "2026-10-29",
+   "epsEstimate": 0.71,
+   "epsActual": null
+  },
+  {
+   "ticker": "LKQ",
+   "date": "2026-07-30",
+   "epsEstimate": 0.71,
+   "epsActual": 0.67
+  },
+  {
+   "ticker": "LKQ",
+   "date": "2026-04-30",
+   "epsEstimate": 0.67,
+   "epsActual": 0.67
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "LKQ",
+   "date": "2026-07-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1065696/000106569626000044/lkq-20260630.htm"
+  },
+  {
+   "ticker": "LKQ",
+   "date": "2026-04-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1065696/000106569626000033/lkq-20260331.htm"
+  },
+  {
+   "ticker": "LKQ",
+   "date": "2026-02-19",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1065696/000106569626000012/lkq-20251231.htm"
+  },
+  {
+   "ticker": "LKQ",
+   "date": "2025-10-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1065696/000106569625000063/lkq-20250930.htm"
+  },
+  {
+   "ticker": "LKQ",
+   "date": "2025-07-24",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1065696/000106569625000044/lkq-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

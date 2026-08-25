@@ -1,22 +1,24 @@
 {
  "ticker": "COMP",
  "name": "Compass, Inc.",
- "generated_at": "2026-08-24T14:45:01.769572+00:00",
- "price": 11.69,
- "change_pct": -1.89,
+ "generated_at": "2026-08-25T11:45:01.792729+00:00",
+ "price": 11.48,
+ "change_pct": -2.3,
  "sector": "Real Estate",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.2,
-  "sma_20": 12.26,
-  "sma_50": 11.57
+  "rsi_14": 44.2,
+  "sma_20": 12.25,
+  "sma_50": 11.63
  },
  "fundamentals": {
-  "pe_ratio": 194.91667,
-  "market_cap": "9.0B",
+  "pe_ratio": 191.33333,
+  "market_cap": "8.8B",
   "beta": 2.343,
   "dividend_yield": null
  },

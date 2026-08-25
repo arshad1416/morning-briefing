@@ -1,19 +1,22 @@
 {
  "ticker": "NVTS",
  "name": "Navitas Semiconductor Corporati",
- "generated_at": "2026-08-24T14:45:01.769572+00:00",
- "price": 13.01,
- "change_pct": 0.27,
+ "generated_at": "2026-08-25T11:45:01.792729+00:00",
+ "price": 12.27,
+ "change_pct": -5.39,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 47.2,
-  "sma_20": 12.56,
-  "sma_50": 14.94
+  "rsi_14": 43.3,
+  "sma_20": 12.6,
+  "sma_50": 14.74
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "3.4B",
+  "market_cap": "3.2B",
   "beta": 3.882,
   "dividend_yield": null
  },

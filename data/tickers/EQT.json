@@ -1,9 +1,9 @@
 {
  "ticker": "EQT",
  "name": "EQT Corporation",
- "generated_at": "2026-08-24T14:45:01.769572+00:00",
- "price": 53.94,
- "change_pct": 0.08,
+ "generated_at": "2026-08-25T11:45:01.792729+00:00",
+ "price": 54.03,
+ "change_pct": 0.58,
  "sector": "Energy",
  "signals": [
   "above_ma",
@@ -11,20 +11,70 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 56.9,
-  "sma_20": 53.03,
-  "sma_50": 51.86
+  "rsi_14": 57.2,
+  "sma_20": 53.13,
+  "sma_50": 51.92
  },
  "fundamentals": {
-  "pe_ratio": 12.513922,
-  "market_cap": "33.7B",
+  "pe_ratio": 12.535963,
+  "market_cap": "33.8B",
   "beta": 0.578,
-  "dividend_yield": 0.012199999999999999
+  "dividend_yield": 0.0123
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "EQT",
+   "date": "2026-10-20",
+   "epsEstimate": 0.49,
+   "epsActual": null
+  },
+  {
+   "ticker": "EQT",
+   "date": "2026-07-21",
+   "epsEstimate": 0.4,
+   "epsActual": 0.39
+  },
+  {
+   "ticker": "EQT",
+   "date": "2026-04-21",
+   "epsEstimate": 2.09,
+   "epsActual": 2.33
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "EQT",
+   "date": "2026-07-22",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000043/eqt-20260630.htm"
+  },
+  {
+   "ticker": "EQT",
+   "date": "2026-04-22",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000030/eqt-20260331.htm"
+  },
+  {
+   "ticker": "EQT",
+   "date": "2026-02-18",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm"
+  },
+  {
+   "ticker": "EQT",
+   "date": "2025-10-22",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321325000049/eqt-20250930.htm"
+  },
+  {
+   "ticker": "EQT",
+   "date": "2025-07-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321325000033/eqt-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

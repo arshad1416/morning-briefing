@@ -1,9 +1,9 @@
 {
  "ticker": "DVA",
  "name": "DaVita Inc.",
- "generated_at": "2026-08-24T14:45:01.769572+00:00",
- "price": 174.63,
- "change_pct": -0.35,
+ "generated_at": "2026-08-25T11:45:01.792729+00:00",
+ "price": 173.71,
+ "change_pct": -0.07,
  "sector": "Healthcare",
  "signals": [
   "oversold_rsi",
@@ -12,12 +12,12 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 24.6,
-  "sma_20": 199.75,
-  "sma_50": 214.41
+  "rsi_14": 24.2,
+  "sma_20": 196.58,
+  "sma_50": 213.79
  },
  "fundamentals": {
-  "pe_ratio": 14.8117895,
+  "pe_ratio": 14.720762,
   "market_cap": "11.1B",
   "beta": 0.87,
   "dividend_yield": null
@@ -25,7 +25,57 @@
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "DVA",
+   "date": "2026-10-28",
+   "epsEstimate": 3.58,
+   "epsActual": null
+  },
+  {
+   "ticker": "DVA",
+   "date": "2026-08-04",
+   "epsEstimate": 3.88,
+   "epsActual": 4.02
+  },
+  {
+   "ticker": "DVA",
+   "date": "2026-05-05",
+   "epsEstimate": 2.33,
+   "epsActual": 2.87
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "DVA",
+   "date": "2026-08-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/927066/000092706626000108/dva-20260630.htm"
+  },
+  {
+   "ticker": "DVA",
+   "date": "2026-05-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/927066/000092706626000062/dva-20260331.htm"
+  },
+  {
+   "ticker": "DVA",
+   "date": "2026-02-11",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/927066/000092706626000012/dva-20251231.htm"
+  },
+  {
+   "ticker": "DVA",
+   "date": "2025-10-29",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/927066/000092706625000165/dva-20250930.htm"
+  },
+  {
+   "ticker": "DVA",
+   "date": "2025-08-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/927066/000092706625000124/dva-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

@@ -1,29 +1,80 @@
 {
  "ticker": "OMF",
  "name": "OneMain Holdings, Inc.",
- "generated_at": "2026-08-24T14:45:01.769572+00:00",
- "price": 63.24,
- "change_pct": 2.49,
+ "generated_at": "2026-08-25T11:45:01.792729+00:00",
+ "price": 63.96,
+ "change_pct": 1.22,
  "sector": "Financial Services",
  "signals": [
+  "above_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 53.6,
-  "sma_20": 63.46,
-  "sma_50": 60.37
+  "rsi_14": 56.4,
+  "sma_20": 63.64,
+  "sma_50": 60.53
  },
  "fundamentals": {
-  "pe_ratio": 9.537707,
-  "market_cap": "7.3B",
+  "pe_ratio": 9.6470585,
+  "market_cap": "7.4B",
   "beta": 1.193,
-  "dividend_yield": 0.0681
+  "dividend_yield": 0.0665
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "OMF",
+   "date": "2026-10-30",
+   "epsEstimate": 1.88,
+   "epsActual": null
+  },
+  {
+   "ticker": "OMF",
+   "date": "2026-07-29",
+   "epsEstimate": 1.26,
+   "epsActual": 1.31
+  },
+  {
+   "ticker": "OMF",
+   "date": "2026-05-01",
+   "epsEstimate": 1.86,
+   "epsActual": 1.95
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "OMF",
+   "date": "2026-07-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1584207/000158420726000031/omf-20260630.htm"
+  },
+  {
+   "ticker": "OMF",
+   "date": "2026-05-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1584207/000158420726000020/omf-20260331.htm"
+  },
+  {
+   "ticker": "OMF",
+   "date": "2026-02-06",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1584207/000158420726000008/omf-20251231.htm"
+  },
+  {
+   "ticker": "OMF",
+   "date": "2025-10-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1584207/000158420725000046/omf-20250930.htm"
+  },
+  {
+   "ticker": "OMF",
+   "date": "2025-07-29",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1584207/000158420725000038/omf-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

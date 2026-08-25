@@ -1,9 +1,9 @@
 {
  "ticker": "COF",
  "name": "Capital One Financial Corporati",
- "generated_at": "2026-08-24T14:45:01.769572+00:00",
- "price": 218.21,
- "change_pct": 2.7,
+ "generated_at": "2026-08-25T11:45:01.792729+00:00",
+ "price": 220.62,
+ "change_pct": 1.24,
  "sector": "Financial Services",
  "signals": [
   "above_ma",
@@ -11,20 +11,70 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 54.8,
-  "sma_20": 217.05,
-  "sma_50": 207.24
+  "rsi_14": 57.4,
+  "sma_20": 217.75,
+  "sma_50": 208.02
  },
  "fundamentals": {
-  "pe_ratio": 12.022865,
-  "market_cap": "133.9B",
+  "pe_ratio": 12.155372,
+  "market_cap": "135.4B",
   "beta": 1.016,
-  "dividend_yield": 0.0151
+  "dividend_yield": 0.0147
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "COF",
+   "date": "2026-10-20",
+   "epsEstimate": 5.33,
+   "epsActual": null
+  },
+  {
+   "ticker": "COF",
+   "date": "2026-07-21",
+   "epsEstimate": 4.69,
+   "epsActual": 5.81
+  },
+  {
+   "ticker": "COF",
+   "date": "2026-04-21",
+   "epsEstimate": 4.57,
+   "epsActual": 4.42
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "COF",
+   "date": "2026-07-28",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000089/cof-20260630.htm"
+  },
+  {
+   "ticker": "COF",
+   "date": "2026-05-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000048/cof-20260331.htm"
+  },
+  {
+   "ticker": "COF",
+   "date": "2026-02-19",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762826000024/cof-20251231.htm"
+  },
+  {
+   "ticker": "COF",
+   "date": "2025-11-03",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762825000276/cof-20250930.htm"
+  },
+  {
+   "ticker": "COF",
+   "date": "2025-07-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762825000247/cof-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

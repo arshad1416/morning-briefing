@@ -1,26 +1,30 @@
 {
  "ticker": "NSSC",
  "name": "NAPCO Security Technologies, In",
- "generated_at": "2026-08-24T14:45:01.769572+00:00",
- "price": 37.78,
- "change_pct": 0.01,
+ "generated_at": "2026-08-25T11:45:01.792729+00:00",
+ "price": 42.6,
+ "change_pct": 11.84,
  "sector": "Industrials",
  "signals": [
-  "premium_pe"
+  "extended_rsi",
+  "above_ma",
+  "volume_surge",
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.7,
-  "sma_20": 38.43,
-  "sma_50": 37.51
+  "rsi_14": 71.5,
+  "sma_20": 38.76,
+  "sma_50": 37.65
  },
  "fundamentals": {
-  "pe_ratio": 36.67476,
-  "market_cap": "1.3B",
+  "pe_ratio": 41.359222,
+  "market_cap": "1.5B",
   "beta": 1.434,
-  "dividend_yield": 0.0159
+  "dividend_yield": 0.0158
  },
  "council_analysis": {
-  "score": 4
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
