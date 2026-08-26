@@ -54,9 +54,11 @@ jobs:
       # test_r2_sync_failure_split guards the 2026-07-30 outage (one Infinity
       # froze all publishing); it had rotted to 5/7 failing and was never run
       # here. test_run_step_timeout guards push_dashboard's per-step timeouts.
+      # test_maplegamma_gate protects the daily sentinel producer, authenticated
+      # probe, secure credential loader, and producer-before-consumer schedule.
       - name: Pipeline tests (pi-scripts)
         working-directory: pi-scripts
-        run: python3 -m unittest test_fetch_universe_constituents test_universe_membership test_volume_nan test_push_autostash_conflict test_generate_prediction_accuracy test_push_dashboard_basis test_r2_sync_failure_split test_run_step_timeout
+        run: python3 -m unittest test_fetch_universe_constituents test_universe_membership test_volume_nan test_push_autostash_conflict test_generate_prediction_accuracy test_push_dashboard_basis test_r2_sync_failure_split test_run_step_timeout test_maplegamma_gate
       - run: npm run build
 
   worker-tests:

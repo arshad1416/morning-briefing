@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# tools/monday_gate.sh — fail-closed gate for the Monday 07:20 scheduled run.
+# tools/monday_gate.sh — fail-closed gate for the daily production morning run.
 # Prints PASS:/FAIL: per check and exits non-zero on the first failure.
-# Run from the Pi after 07:35 ET on a weekday: bash tools/monday_gate.sh
+# Cron invokes run_maplegamma_gate.sh at 07:34/07:36/07:38 ET on weekdays.
 # Deps: curl, git, python3 (no jq — the Pi does not have it).
 #
 # INVARIANT (R5 NEW-11): every production operating day requires that day's
@@ -11,9 +11,8 @@
 #
 # GATE DEADLINE (R6 NEW-13): this gate must COMPLETE by 07:40 ET on gate days.
 # Guarded consumers fire at 07:41+ (executor), 07:43 (send), 07:45 (paper) and
-# fail closed if the sentinel is absent. If you start late, the consumers will
-# skip + alert; re-run them manually after the gate passes. The watchdog
-# (07:44/07:50) escalates when no sentinel exists.
+# fail closed if the sentinel is absent. The 07:40 watchdog alerts before the
+# first consumer; 07:50 is a backstop. Never fabricate or backdate a sentinel.
 set -uo pipefail
 export TZ=America/Toronto
 
@@ -25,10 +24,35 @@ LOG_DIR="${LOG_DIR:-$HOME/.hermes/logs}"
 LIVE_BASE="${LIVE_BASE:-https://maplegamma.com}"
 GATED_PATH="api/data/maplegamma_analysis.json"
 TODAY_ET="$(date +%F)"
+STATE_DIR="${STATE_DIR:-$HOME/.hermes/state}"
+GATE_SENTINEL="$STATE_DIR/maplegamma_gate_passed_$TODAY_ET"
 
 pass() { echo "PASS: $*"; }
 fail() { echo "FAIL: $*"; exit 1; }
-skip() { echo "SKIP: $*"; }
+
+# Cron retries the gate while the Pages deployment settles. Once one attempt
+# writes a valid on-time sentinel, later attempts must be cheap and harmless.
+if [ -f "$GATE_SENTINEL" ]; then
+  marker=""
+  sentinel_date=""
+  sentinel_time=""
+  trailing=""
+  read -r marker sentinel_date sentinel_time trailing < "$GATE_SENTINEL" || true
+  if [ "$marker" = "ok" ] && [ "$sentinel_date" = "$TODAY_ET" ] && [ -z "$trailing" ] \
+      && [[ "$sentinel_time" =~ ^[0-9]{2}:[0-9]{2}:[0-9]{2}$ ]]; then
+    sentinel_hour="${sentinel_time:0:2}"
+    sentinel_minute="${sentinel_time:3:2}"
+    sentinel_second="${sentinel_time:6:2}"
+    sentinel_hm="$sentinel_hour$sentinel_minute"
+    if [ "$((10#$sentinel_hour))" -le 23 ] \
+        && [ "$((10#$sentinel_minute))" -le 59 ] \
+        && [ "$((10#$sentinel_second))" -le 59 ] \
+        && [ "$((10#$sentinel_hm))" -le 740 ]; then
+      pass "monday_gate already passed at $sentinel_time ET"
+      exit 0
+    fi
+  fi
+fi
 
 # 1) council artifact: full run, 5 experts, sane regime, generated TODAY (council CRITICAL #3 —
 #    a stale Friday artifact must not pass Monday's gate)
@@ -117,7 +141,7 @@ pass "anonymous gated GET returned 401"
 
 # 6) entitled gated GET is 200 — REQUIRED, fail-closed (council CRITICAL #9)
 : "${TEST_SESSION_COOKIE:?TEST_SESSION_COOKIE must be set (a valid session cookie for an entitled user)}"
-auth_code="$(curl -s -o /dev/null -w '%{http_code}' -H "Cookie: __session=$TEST_SESSION_COOKIE" "$LIVE_BASE/$GATED_PATH")" || fail "curl gated URL with cookie failed"
+auth_code="$(curl -s -o /dev/null -w '%{http_code}' -H "Cookie: mg_session=$TEST_SESSION_COOKIE" "$LIVE_BASE/$GATED_PATH")" || fail "curl gated URL with cookie failed"
 [ "$auth_code" = "200" ] || fail "entitled gated GET returned $auth_code, expected 200"
 pass "entitled gated GET returned 200"
 
@@ -150,12 +174,11 @@ echo "PASS: monday_gate — all checks passed"
 # Write the gate-passed sentinel (round-2): persistent private state dir, not /tmp
 # (tmpfs/reboot-cleared/world-writable — council round-2 HIGH). Guarded jobs
 # (send_comprehensive_briefing, council_trade_executor, automated_paper_trader)
-# only enforce on gate days; sentinel here makes the Monday launch chain safe.
+# only enforce on gate days; the sentinel makes the daily production chain safe.
 # Round-7: this write is unreachable after 07:40 — a late run never publishes.
-STATE_DIR="$HOME/.hermes/state"
 install -d -m 700 "$STATE_DIR"
 umask 077
 SENTINEL_TMP="$STATE_DIR/.maplegamma_gate_passed_$TODAY_ET.tmp"
 printf 'ok %s %s\n' "$TODAY_ET" "$(TZ=America/Toronto date +%H:%M:%S)" > "$SENTINEL_TMP"
-mv -f "$SENTINEL_TMP" "$STATE_DIR/maplegamma_gate_passed_$TODAY_ET"   # atomic replace
-echo "SENTINEL: $STATE_DIR/maplegamma_gate_passed_$TODAY_ET"
+mv -f "$SENTINEL_TMP" "$GATE_SENTINEL"   # atomic replace
+echo "SENTINEL: $GATE_SENTINEL"
