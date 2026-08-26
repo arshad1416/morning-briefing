@@ -1,27 +1,29 @@
 {
  "ticker": "JEF",
  "name": "Jefferies Financial Group Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 54.56,
- "change_pct": 1.34,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 51.72,
+ "change_pct": -0.36,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
   "below_ma",
+  "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.1,
-  "sma_20": 55.13,
-  "sma_50": 55.37
+  "rsi_14": 37.7,
+  "sma_20": 54.27,
+  "sma_50": 54.75
  },
  "fundamentals": {
-  "pe_ratio": 15.240224,
-  "market_cap": "11.1B",
+  "pe_ratio": 14.447626,
+  "market_cap": "10.5B",
   "beta": null,
-  "dividend_yield": 0.0297
+  "dividend_yield": 0.0308
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

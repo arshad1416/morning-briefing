@@ -1,27 +1,28 @@
 {
  "ticker": "VC",
  "name": "Visteon Corporation",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 107.78,
- "change_pct": 2.1,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 102.72,
+ "change_pct": 0.84,
  "sector": "Consumer Cyclical",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 54.3,
-  "sma_20": 105.46,
-  "sma_50": 107.33
+  "rsi_14": 42.6,
+  "sma_20": 105.34,
+  "sma_50": 106.1
  },
  "fundamentals": {
-  "pe_ratio": 20.76686,
-  "market_cap": "2.9B",
+  "pe_ratio": 20.58517,
+  "market_cap": "2.7B",
   "beta": 1.313,
-  "dividend_yield": 0.014199999999999999
+  "dividend_yield": 0.0147
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

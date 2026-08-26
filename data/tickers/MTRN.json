@@ -1,28 +1,29 @@
 {
  "ticker": "MTRN",
  "name": "Materion Corporation",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 256.12,
- "change_pct": -2.99,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 232.32,
+ "change_pct": 1.08,
  "sector": "Basic Materials",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.5,
-  "sma_20": 255.2,
-  "sma_50": 256.04
+  "rsi_14": 42.2,
+  "sma_20": 252.26,
+  "sma_50": 256.1
  },
  "fundamentals": {
-  "pe_ratio": 59.842285,
-  "market_cap": "5.3B",
+  "pe_ratio": 54.027905,
+  "market_cap": "4.8B",
   "beta": 1.071,
-  "dividend_yield": 0.0022
+  "dividend_yield": 0.0025
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

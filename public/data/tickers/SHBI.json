@@ -1,24 +1,26 @@
 {
  "ticker": "SHBI",
  "name": "Shore Bancshares, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 23.44,
- "change_pct": -0.93,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 23.06,
+ "change_pct": -0.73,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.7,
-  "sma_20": 24.0,
-  "sma_50": 23.19
+  "rsi_14": 42.2,
+  "sma_20": 23.87,
+  "sma_50": 23.26
  },
  "fundamentals": {
-  "pe_ratio": 11.898478,
-  "market_cap": "782M",
+  "pe_ratio": 11.705584,
+  "market_cap": "770M",
   "beta": 0.808,
-  "dividend_yield": 0.023700000000000002
+  "dividend_yield": 0.0241
  },
  "council_analysis": {
   "score": 7

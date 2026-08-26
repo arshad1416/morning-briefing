@@ -1,28 +1,29 @@
 {
  "ticker": "ALNT",
  "name": "Allient Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 105.12,
- "change_pct": -3.33,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 94.46,
+ "change_pct": 1.48,
  "sector": "Technology",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 56.2,
-  "sma_20": 99.46,
-  "sma_50": 94.96
+  "rsi_14": 44.5,
+  "sma_20": 101.14,
+  "sma_50": 95.41
  },
  "fundamentals": {
-  "pe_ratio": 61.835293,
-  "market_cap": "1.8B",
+  "pe_ratio": 55.564705,
+  "market_cap": "1.6B",
   "beta": 1.616,
-  "dividend_yield": 0.0015
+  "dividend_yield": 0.0017000000000000001
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

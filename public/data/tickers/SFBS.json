@@ -1,24 +1,26 @@
 {
  "ticker": "SFBS",
  "name": "ServisFirst Bancshares, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 89.61,
- "change_pct": -0.46,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 43.28,
+ "change_pct": -1.5,
  "sector": "Financial Services",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
+  "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 55.1,
-  "sma_20": 89.39,
-  "sma_50": 85.93
+  "rsi_14": 43.3,
+  "sma_20": 44.64,
+  "sma_50": 43.52
  },
  "fundamentals": {
-  "pe_ratio": 15.2657585,
-  "market_cap": "4.9B",
+  "pe_ratio": 14.721087,
+  "market_cap": "4.7B",
   "beta": 0.857,
-  "dividend_yield": 0.0169
+  "dividend_yield": 0.0173
  },
  "council_analysis": {
   "score": 7

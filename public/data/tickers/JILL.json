@@ -1,28 +1,30 @@
 {
  "ticker": "JILL",
  "name": "J. Jill, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 20.43,
- "change_pct": 2.17,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 19.97,
+ "change_pct": -0.2,
  "sector": "Consumer Cyclical",
  "signals": [
   "extended_rsi",
   "above_ma",
-  "value_pe"
+  "near_high",
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 72.1,
-  "sma_20": 18.46,
-  "sma_50": 16.48
+  "rsi_14": 65.7,
+  "sma_20": 19.13,
+  "sma_50": 17.2
  },
  "fundamentals": {
-  "pe_ratio": 14.916058,
-  "market_cap": "306M",
+  "pe_ratio": 14.576642,
+  "market_cap": "299M",
   "beta": 0.855,
   "dividend_yield": 0.017
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

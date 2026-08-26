@@ -1,28 +1,29 @@
 {
  "ticker": "AGX",
  "name": "Argan, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 518.4,
- "change_pct": -6.26,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 459.79,
+ "change_pct": -1.96,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 37.7,
-  "sma_20": 572.04,
-  "sma_50": 637.79
+  "rsi_14": 30.4,
+  "sma_20": 556.46,
+  "sma_50": 622.91
  },
  "fundamentals": {
-  "pe_ratio": 45.51317,
-  "market_cap": "7.3B",
+  "pe_ratio": 40.33246,
+  "market_cap": "6.4B",
   "beta": 0.612,
-  "dividend_yield": 0.0036
+  "dividend_yield": 0.0043
  },
  "council_analysis": {
-  "score": 4
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,17 +1,19 @@
 {
  "ticker": "WIP",
  "name": "State Street SPDR FTSE Internat",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 39.65,
- "change_pct": 0.69,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 39.99,
+ "change_pct": 0.19,
  "sector": null,
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 61.4,
-  "sma_20": 39.2,
-  "sma_50": 39.06
+  "rsi_14": 66.5,
+  "sma_20": 39.46,
+  "sma_50": 39.1
  },
  "fundamentals": {
   "pe_ratio": null,

@@ -1,25 +1,26 @@
 {
  "ticker": "LHX",
  "name": "L3Harris Technologies, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 279.31,
- "change_pct": -0.08,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 261.35,
+ "change_pct": -0.56,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
+  "near_low",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 42.5,
-  "sma_20": 288.23,
-  "sma_50": 292.65
+  "rsi_14": 32.2,
+  "sma_20": 280.76,
+  "sma_50": 288.27
  },
  "fundamentals": {
-  "pe_ratio": 28.213133,
-  "market_cap": "52.0B",
+  "pe_ratio": 26.371847,
+  "market_cap": "48.7B",
   "beta": 0.746,
-  "dividend_yield": 0.0179
+  "dividend_yield": 0.019
  },
  "council_analysis": {
   "score": 6

@@ -1,22 +1,24 @@
 {
  "ticker": "GHM",
  "name": "Graham Corporation",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 106.51,
- "change_pct": -4.19,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 97.57,
+ "change_pct": 0.42,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.5,
-  "sma_20": 105.74,
-  "sma_50": 108.25
+  "rsi_14": 40.7,
+  "sma_20": 104.33,
+  "sma_50": 108.06
  },
  "fundamentals": {
-  "pe_ratio": 103.40777,
-  "market_cap": "1.3B",
+  "pe_ratio": 94.72816,
+  "market_cap": "1.1B",
   "beta": 1.07,
   "dividend_yield": null
  },

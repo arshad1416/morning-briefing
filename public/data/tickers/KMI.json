@@ -1,27 +1,28 @@
 {
  "ticker": "KMI",
  "name": "Kinder Morgan, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 32.22,
- "change_pct": -1.98,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 31.11,
+ "change_pct": 0.37,
  "sector": "Energy",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 53.2,
-  "sma_20": 31.78,
-  "sma_50": 31.82
+  "rsi_14": 43.8,
+  "sma_20": 31.62,
+  "sma_50": 31.8
  },
  "fundamentals": {
-  "pe_ratio": 20.787098,
-  "market_cap": "71.7B",
+  "pe_ratio": 20.074194,
+  "market_cap": "69.3B",
   "beta": 0.554,
-  "dividend_yield": 0.0359
+  "dividend_yield": 0.0381
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

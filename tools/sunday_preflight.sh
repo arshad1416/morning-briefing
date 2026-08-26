@@ -18,11 +18,13 @@ pass "disk ${disk_used}% used"
 
 # 2. Cron: required lines present
 crontab -l > /tmp/preflight_cron.txt 2>/dev/null || fail "crontab -l failed"
-for needle in "25 7 \* \* 1-5" "41 7 \* \* 1-5" "20 7 \* \*" "22 7 \* \* 0,6" "7,37 9-15" "32 7 \* \* 1-5" "44,50 7 \* \* 1-5" "verdict_chain" "45 7 \* \* 1-5" "43 7 \* \*"; do
+for needle in "25 7 \* \* 1-5" "41 7 \* \* 1-5" "20 7 \* \*" "22 7 \* \* 0,6" "7,37 9-15" "32 7 \* \* 1-5" "40,50 7 \* \* 1-5" "verdict_chain" "45 7 \* \* 1-5" "43 7 \* \*"; do
   grep -qE "$needle" /tmp/preflight_cron.txt || fail "crontab missing: $needle"
 done
 grep -qE "^MAPLEGAMMA_GATE_DAYS=[0-9,]+" /tmp/preflight_cron.txt || fail "crontab missing MAPLEGAMMA_GATE_DAYS"
-pass "crontab has 07:25/07:32 push, verdict chain, watchdog, GATE_DAYS, paper_trader, council, intraday"
+python3 "$DATA_REPO/tools/check_maplegamma_gate_schedule.py" /tmp/preflight_cron.txt \
+  || fail "crontab MapleGamma gate schedule invalid"
+pass "crontab has bounded gate producer before watchdog and guarded consumers"
 
 # 2b. Time sync (council R3-9): gate depends on correct ET date
 if command -v timedatectl >/dev/null 2>&1; then
@@ -185,8 +187,14 @@ pass "deadman grace windows ET-anchored"
 
 # 7. Gate script present + executable
 [ -x "$DATA_REPO/tools/monday_gate.sh" ] || fail "monday_gate.sh missing/not executable"
+[ -x "$DATA_REPO/tools/run_maplegamma_gate.sh" ] || fail "run_maplegamma_gate.sh missing/not executable"
+[ -x "$DATA_REPO/tools/check_maplegamma_gate_schedule.py" ] || fail "gate schedule checker missing/not executable"
 bash -n "$DATA_REPO/tools/monday_gate.sh" || fail "monday_gate.sh syntax"
-pass "monday_gate.sh present + syntax OK"
+bash -n "$DATA_REPO/tools/run_maplegamma_gate.sh" || fail "run_maplegamma_gate.sh syntax"
+pass "gate scripts present + executable + syntax OK"
+MAPLEGAMMA_GATE_CHECK_ONLY=1 bash "$DATA_REPO/tools/run_maplegamma_gate.sh" \
+  || fail "MapleGamma gate credential configuration invalid"
+pass "gate credential file present, private, and populated"
 
 # 8. Latest council artifact state (informational — not a fail at weekend)
 if [ -f "$DATA_REPO/data/maplegamma_analysis.json" ]; then

@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-08-21T11:30:01.570029+00:00",
+  "generated_at": "2026-08-26T11:30:01.236774+00:00",
   "signal": "neutral",
-  "conviction": 0.54,
+  "conviction": 0.63,
   "conviction_source": "model",
-  "narrative": "Broad equity decline with heavy index put flow but VIX 15.69 signals orderly selling.",
+  "narrative": "Indices grind higher with mega-cap call flow but heavy put premiums in NVDA/QQQ signal pre-earnings hedging; internal breadth mixed with oversold industrial and utility flags.",
   "narrative_source": "llm",
   "model_features": {
-    "vix": 15.66,
+    "vix": 15.64,
     "vix_score": 0.5,
     "sleeve_a_signals": 0,
     "avg_signal_score": 0,
     "max_signal_score": 0,
-    "recent_hit_rate": 0.5,
-    "recent_trades": 0,
+    "recent_hit_rate": 0.88,
+    "recent_trades": 8,
     "breadth": 1.0,
-    "vix_contango": 5.91,
+    "vix_contango": 4.49,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.29,
-      0.79
+      0.38,
+      0.88
     ]
   },
   "confidence_interval": [
-    0.29,
-    0.79
+    0.38,
+    0.88
   ]
 }

@@ -1,27 +1,28 @@
 {
  "ticker": "BBWI",
  "name": "Bath & Body Works, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 20.61,
- "change_pct": 2.84,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 18.54,
+ "change_pct": -3.29,
  "sector": "Consumer Cyclical",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 54.7,
-  "sma_20": 19.86,
-  "sma_50": 20.35
+  "rsi_14": 42.3,
+  "sma_20": 19.47,
+  "sma_50": 20.17
  },
  "fundamentals": {
-  "pe_ratio": 5.855114,
-  "market_cap": "4.2B",
+  "pe_ratio": 5.267046,
+  "market_cap": "3.7B",
   "beta": 1.378,
-  "dividend_yield": 0.039900000000000005
+  "dividend_yield": 0.0417
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

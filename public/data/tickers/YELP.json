@@ -1,27 +1,28 @@
 {
  "ticker": "YELP",
  "name": "Yelp Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 24.32,
- "change_pct": 4.11,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 23.61,
+ "change_pct": -0.92,
  "sector": "Communication Services",
  "signals": [
+  "rsi_dip",
   "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 46.8,
-  "sma_20": 25.26,
-  "sma_50": 24.8
+  "rsi_14": 43.3,
+  "sma_20": 24.81,
+  "sma_50": 24.94
  },
  "fundamentals": {
-  "pe_ratio": 11.580953,
+  "pe_ratio": 11.405798,
   "market_cap": "1.3B",
   "beta": 0.455,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

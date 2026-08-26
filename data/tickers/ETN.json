@@ -1,24 +1,26 @@
 {
  "ticker": "ETN",
  "name": "Eaton Corporation, PLC",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 423.83,
- "change_pct": -1.74,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 411.33,
+ "change_pct": 0.65,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.2,
-  "sma_20": 428.18,
-  "sma_50": 414.11
+  "rsi_14": 44.1,
+  "sma_20": 430.94,
+  "sma_50": 416.26
  },
  "fundamentals": {
-  "pe_ratio": 45.47479,
-  "market_cap": "164.6B",
+  "pe_ratio": 41.930172,
+  "market_cap": "159.8B",
   "beta": 1.177,
-  "dividend_yield": 0.0102
+  "dividend_yield": 0.0108
  },
  "council_analysis": {
   "score": 5

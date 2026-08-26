@@ -1,12 +1,12 @@
 {
   "_note": "Index membership cache for generate-screener-data.py. Regenerate with fetch_universe_constituents.py \u2014 do not hand-edit; membership changes several times a year and a stale hand-edit becomes wrong silently.",
-  "generated_at": "2026-08-21",
+  "generated_at": "2026-08-26",
   "indices": {
     "S&P 500": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
       "source_note": "Wikipedia 'List of S&P 500 companies', table#constituents.",
-      "fetched_at": "2026-08-21",
-      "as_of": "2026-08-21",
+      "fetched_at": "2026-08-26",
+      "as_of": "2026-08-26",
       "member_count": 503,
       "members": [
         {
@@ -2026,8 +2026,8 @@
     "S&P 400": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies",
       "source_note": "S&P MidCap 400. Wikipedia 'List of S&P 400 companies', table#constituents.",
-      "fetched_at": "2026-08-21",
-      "as_of": "2026-08-21",
+      "fetched_at": "2026-08-26",
+      "as_of": "2026-08-26",
       "member_count": 400,
       "members": [
         {
@@ -3387,6 +3387,10 @@
           "name": "Starwood Property Trust"
         },
         {
+          "symbol": "SUI",
+          "name": "Sun Communities"
+        },
+        {
           "symbol": "SWX",
           "name": "Southwest Gas Corp"
         },
@@ -3551,10 +3555,6 @@
           "name": "Western Alliance Bancorporation"
         },
         {
-          "symbol": "WBS",
-          "name": "Webster Bank"
-        },
-        {
           "symbol": "WCC",
           "name": "WESCO International"
         },
@@ -3635,8 +3635,8 @@
     "S&P 600": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_600_companies",
       "source_note": "S&P SmallCap 600. Wikipedia 'List of S&P 600 companies', table#constituents.",
-      "fetched_at": "2026-08-21",
-      "as_of": "2026-08-21",
+      "fetched_at": "2026-08-26",
+      "as_of": "2026-08-26",
       "member_count": 603,
       "members": [
         {
@@ -6056,9 +6056,9 @@
     "Russell 2000": {
       "source_url": "https://www.blackrock.com/varnish-api/blk-one01-product-data/product-data/api/v2/get-product-data?appSubType=ISHARES&appType=PRODUCT_PAGE&component=holdings&locale=en_US&portfolioId=239710&targetSite=us-ishares&userType=individual&excludeContent=true&includeConfig=true",
       "source_note": "Proxy: holdings of the iShares Russell 2000 ETF (IWM), not the index itself. Non-equity balances, contingent value rights and escrow stubs are excluded. Refreshed each business day, and membership can differ slightly from the index.",
-      "fetched_at": "2026-08-21",
-      "as_of": "2026-08-20",
-      "member_count": 1955,
+      "fetched_at": "2026-08-26",
+      "as_of": "2026-08-24",
+      "member_count": 1954,
       "members": [
         {
           "symbol": "AAMI",
@@ -6254,7 +6254,7 @@
         },
         {
           "symbol": "AEVA",
-          "name": "AEVA TECHNOLOGIES INC"
+          "name": "AEVA TECHNOLOGIES"
         },
         {
           "symbol": "AFRI",
@@ -6750,7 +6750,7 @@
         },
         {
           "symbol": "ATEX",
-          "name": "ANTERIX INC"
+          "name": "ANTERIX"
         },
         {
           "symbol": "ATKR",
@@ -6850,7 +6850,7 @@
         },
         {
           "symbol": "AVTX",
-          "name": "AVALO THERAPEUTICS INC"
+          "name": "AVALO THERAPEUTICS"
         },
         {
           "symbol": "AVXL",
@@ -7086,7 +7086,7 @@
         },
         {
           "symbol": "BKSY",
-          "name": "BLACKSKY TECHNOLOGY INC CLASS A"
+          "name": "BLACKSKY TECHNOLOGY CLASS A"
         },
         {
           "symbol": "BKTI",
@@ -7942,7 +7942,7 @@
         },
         {
           "symbol": "CTNM",
-          "name": "CONTINEUM THERAPEUTICS INC CLASS A"
+          "name": "CONTINEUM THERAPEUTICS CLASS A"
         },
         {
           "symbol": "CTO",
@@ -7950,7 +7950,7 @@
         },
         {
           "symbol": "CTOS",
-          "name": "CUSTOM TRUCK ONE SOURCE INC"
+          "name": "CUSTOM TRUCK ONE SOURCE"
         },
         {
           "symbol": "CTRE",
@@ -8106,7 +8106,7 @@
         },
         {
           "symbol": "DBI",
-          "name": "DESIGNER BRANDS INC CLASS A"
+          "name": "DESIGNER BRANDS CLASS A"
         },
         {
           "symbol": "DBRG",
@@ -8298,7 +8298,7 @@
         },
         {
           "symbol": "DX",
-          "name": "DYNEX CAPITAL REIT INC"
+          "name": "DYNEX CAPITAL REIT"
         },
         {
           "symbol": "DXC",
@@ -8362,7 +8362,7 @@
         },
         {
           "symbol": "EFOR",
-          "name": "EVERFORTH INC"
+          "name": "EVERFORTH"
         },
         {
           "symbol": "EFSC",
@@ -8714,7 +8714,7 @@
         },
         {
           "symbol": "FIBK",
-          "name": "FIRST INTERSTATE BANCSYSTEM INC"
+          "name": "FIRST INTERSTATE BANCSYSTEM"
         },
         {
           "symbol": "FIGS",
@@ -8922,7 +8922,7 @@
         },
         {
           "symbol": "FULT",
-          "name": "FULTON FINANCIAL CORP"
+          "name": "FULTON FINANCIAL"
         },
         {
           "symbol": "FUN",
@@ -10498,7 +10498,7 @@
         },
         {
           "symbol": "MGPI",
-          "name": "MGP INGREDIENTS INC"
+          "name": "MGP INGREDIENTS"
         },
         {
           "symbol": "MGRC",
@@ -10850,7 +10850,7 @@
         },
         {
           "symbol": "NGNE",
-          "name": "NEUROGENE INC"
+          "name": "NEUROGENE"
         },
         {
           "symbol": "NGS",
@@ -10906,7 +10906,7 @@
         },
         {
           "symbol": "NMAX",
-          "name": "NEWSMAX INC CLASS B"
+          "name": "NEWSMAX CLASS B"
         },
         {
           "symbol": "NMIH",
@@ -11266,7 +11266,7 @@
         },
         {
           "symbol": "OPLN",
-          "name": "OPENLANE INC"
+          "name": "OPENLANE"
         },
         {
           "symbol": "OPRT",
@@ -11446,7 +11446,7 @@
         },
         {
           "symbol": "PBH",
-          "name": "PRESTIGE CONSUMER HEALTHCARE INC"
+          "name": "PRESTIGE CONSUMER HEALTHCARE"
         },
         {
           "symbol": "PBI",
@@ -12074,7 +12074,7 @@
         },
         {
           "symbol": "RJET",
-          "name": "REPUBLIC AIRWAYS HOLDINGS INC"
+          "name": "REPUBLIC AIRWAYS HOLDINGS"
         },
         {
           "symbol": "RLAY",
@@ -12095,10 +12095,6 @@
         {
           "symbol": "RM",
           "name": "REGIONAL MANAGEMENT CORP"
-        },
-        {
-          "symbol": "RMAX",
-          "name": "RE MAX HOLDINGS INC CLASS A"
         },
         {
           "symbol": "RMBI",
@@ -12650,7 +12646,7 @@
         },
         {
           "symbol": "SPRY",
-          "name": "ARS PHARMACEUTICALS INC"
+          "name": "ARS PHARMACEUTICALS"
         },
         {
           "symbol": "SPSC",
@@ -12926,7 +12922,7 @@
         },
         {
           "symbol": "TECX",
-          "name": "TECTONIC THERAPEUTIC INC"
+          "name": "TECTONIC THERAPEUTIC"
         },
         {
           "symbol": "TENB",
@@ -13518,7 +13514,7 @@
         },
         {
           "symbol": "VRTS",
-          "name": "VIRTUS INVESTMENT PARTNERS INC"
+          "name": "VIRTUS INVESTMENT PARTNERS"
         },
         {
           "symbol": "VSAT",
@@ -13638,7 +13634,7 @@
         },
         {
           "symbol": "WHWK",
-          "name": "WHITEHAWK THERAPEUTICS INC"
+          "name": "WHITEHAWK THERAPEUTICS"
         },
         {
           "symbol": "WINA",
@@ -13694,7 +13690,7 @@
         },
         {
           "symbol": "WRBY",
-          "name": "WARBY PARKER INC CLASS A"
+          "name": "WARBY PARKER CLASS A"
         },
         {
           "symbol": "WRLD",
@@ -13854,7 +13850,7 @@
         },
         {
           "symbol": "ZNTL",
-          "name": "ZENTALIS PHARMACEUTICALS INC"
+          "name": "ZENTALIS PHARMACEUTICALS"
         },
         {
           "symbol": "ZSQR",
@@ -13885,8 +13881,8 @@
     "Nasdaq-100": {
       "source_url": "https://api.nasdaq.com/api/quote/list-type/nasdaq100",
       "source_note": "Nasdaq's own index-membership endpoint (the Wikipedia article no longer carries a components table).",
-      "fetched_at": "2026-08-21",
-      "as_of": "2026-08-21",
+      "fetched_at": "2026-08-26",
+      "as_of": "2026-08-26",
       "member_count": 102,
       "members": [
         {

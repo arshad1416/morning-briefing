@@ -1,26 +1,27 @@
 {
  "ticker": "BDC",
  "name": "Belden Inc",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 128.03,
- "change_pct": -1.06,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 117.4,
+ "change_pct": 0.55,
  "sector": "Technology",
  "signals": [
-  "above_ma"
+  "rsi_dip",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 56.2,
-  "sma_20": 123.8,
-  "sma_50": 116.51
+  "rsi_14": 43.0,
+  "sma_20": 127.02,
+  "sma_50": 117.26
  },
  "fundamentals": {
-  "pe_ratio": 20.784092,
-  "market_cap": "5.0B",
+  "pe_ratio": 19.058443,
+  "market_cap": "4.6B",
   "beta": 1.105,
-  "dividend_yield": 0.0015
+  "dividend_yield": 0.0017000000000000001
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

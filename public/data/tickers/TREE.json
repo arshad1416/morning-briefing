@@ -1,23 +1,24 @@
 {
  "ticker": "TREE",
  "name": "LendingTree, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 32.43,
- "change_pct": 3.78,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 30.96,
+ "change_pct": -0.03,
  "sector": "Financial Services",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
+  "near_low",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 38.6,
-  "sma_20": 34.12,
-  "sma_50": 38.64
+  "rsi_14": 33.4,
+  "sma_20": 32.23,
+  "sma_50": 38.15
  },
  "fundamentals": {
-  "pe_ratio": 2.5061824,
-  "market_cap": "455M",
+  "pe_ratio": 2.3925812,
+  "market_cap": "435M",
   "beta": 2.076,
   "dividend_yield": null
  },

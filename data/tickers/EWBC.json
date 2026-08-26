@@ -1,81 +1,31 @@
 {
  "ticker": "EWBC",
  "name": "East West Bancorp, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 133.19,
- "change_pct": -1.39,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 128.68,
+ "change_pct": -0.18,
  "sector": "Financial Services",
  "signals": [
-  "above_ma",
-  "near_high",
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 52.8,
-  "sma_20": 132.4,
-  "sma_50": 130.9
+  "rsi_14": 39.9,
+  "sma_20": 132.16,
+  "sma_50": 130.87
  },
  "fundamentals": {
-  "pe_ratio": 12.794429,
-  "market_cap": "18.2B",
+  "pe_ratio": 12.361191,
+  "market_cap": "17.6B",
   "beta": 0.933,
-  "dividend_yield": 0.023700000000000002
+  "dividend_yield": 0.0248
  },
  "council_analysis": {
-  "score": 9
+  "score": 7
  },
- "upcoming_earnings": [
-  {
-   "ticker": "EWBC",
-   "date": "2026-10-20",
-   "epsEstimate": 2.71,
-   "epsActual": null
-  },
-  {
-   "ticker": "EWBC",
-   "date": "2026-07-21",
-   "epsEstimate": 2.62,
-   "epsActual": 2.63
-  },
-  {
-   "ticker": "EWBC",
-   "date": "2026-04-21",
-   "epsEstimate": 2.47,
-   "epsActual": 2.57
-  }
- ],
- "recent_sec_filings": [
-  {
-   "ticker": "EWBC",
-   "date": "2026-08-07",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1069157/000106915726000044/ewbc-20260630.htm"
-  },
-  {
-   "ticker": "EWBC",
-   "date": "2026-05-08",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1069157/000106915726000020/ewbc-20260331.htm"
-  },
-  {
-   "ticker": "EWBC",
-   "date": "2026-02-27",
-   "form": "Annual Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1069157/000106915726000009/ewbc-20251231.htm"
-  },
-  {
-   "ticker": "EWBC",
-   "date": "2025-11-07",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1069157/000106915725000119/ewbc-20250930.htm"
-  },
-  {
-   "ticker": "EWBC",
-   "date": "2025-08-07",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1069157/000106915725000096/ewbc-20250630.htm"
-  }
- ],
+ "upcoming_earnings": [],
+ "recent_sec_filings": [],
  "reddit_mentions": []
 }

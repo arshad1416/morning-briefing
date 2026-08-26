@@ -1,19 +1,22 @@
 {
  "ticker": "VRRM",
  "name": "Verra Mobility Corporation",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 4.64,
- "change_pct": 4.16,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 4.41,
+ "change_pct": -1.45,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.9,
-  "sma_20": 4.81,
+  "rsi_14": 40.9,
+  "sma_20": 4.89,
   "sma_50": 4.55
  },
  "fundamentals": {
-  "pe_ratio": 17.166666,
-  "market_cap": "704M",
+  "pe_ratio": 16.314816,
+  "market_cap": "669M",
   "beta": 0.406,
   "dividend_yield": null
  },

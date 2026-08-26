@@ -1,27 +1,28 @@
 {
  "ticker": "WLK",
  "name": "Westlake Corporation",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 80.39,
- "change_pct": 3.71,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 75.54,
+ "change_pct": -1.24,
  "sector": "Basic Materials",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 56.2,
-  "sma_20": 76.68,
-  "sma_50": 78.28
+  "rsi_14": 44.1,
+  "sma_20": 77.13,
+  "sma_50": 76.85
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "10.3B",
+  "market_cap": "9.7B",
   "beta": 0.622,
-  "dividend_yield": 0.0275
+  "dividend_yield": 0.0279
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

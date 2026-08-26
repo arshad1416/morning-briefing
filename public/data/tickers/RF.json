@@ -1,27 +1,28 @@
 {
  "ticker": "RF",
  "name": "Regions Financial Corporation",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 31.43,
- "change_pct": -0.85,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 30.45,
+ "change_pct": -0.57,
  "sector": "Financial Services",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 53.8,
-  "sma_20": 31.37,
-  "sma_50": 30.5
+  "rsi_14": 42.8,
+  "sma_20": 31.24,
+  "sma_50": 30.7
  },
  "fundamentals": {
-  "pe_ratio": 12.7764225,
-  "market_cap": "26.8B",
+  "pe_ratio": 12.380081,
+  "market_cap": "25.9B",
   "beta": 1.012,
-  "dividend_yield": 0.0345
+  "dividend_yield": 0.035699999999999996
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

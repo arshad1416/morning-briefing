@@ -1,29 +1,28 @@
 {
  "ticker": "CMI",
  "name": "Cummins Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 611.0,
- "change_pct": -1.58,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 572.69,
+ "change_pct": 0.19,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
-  "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 38.8,
-  "sma_20": 638.81,
-  "sma_50": 662.95
+  "rsi_14": 30.1,
+  "sma_20": 621.04,
+  "sma_50": 653.87
  },
  "fundamentals": {
-  "pe_ratio": 31.237219,
-  "market_cap": "84.1B",
+  "pe_ratio": 29.293608,
+  "market_cap": "78.8B",
   "beta": 1.246,
-  "dividend_yield": 0.014199999999999999
+  "dividend_yield": 0.0154
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

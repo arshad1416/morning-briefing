@@ -1,28 +1,29 @@
 {
  "ticker": "NXH",
- "name": "Neighborhood Intelligence, Inc. Common Stock",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 4.29,
- "change_pct": 0.7,
+ "name": "Neighborhood Intelligence, Inc.",
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 3.99,
+ "change_pct": 2.35,
  "sector": "Consumer Cyclical",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
-  "near_low"
+  "near_low",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 38.4,
-  "sma_20": 4.74,
-  "sma_50": 5.31
+  "rsi_14": 34.7,
+  "sma_20": 4.52,
+  "sma_50": 5.17
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "410M",
+  "market_cap": "381M",
   "beta": 2.889,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 4
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

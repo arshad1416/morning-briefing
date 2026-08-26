@@ -1,27 +1,28 @@
 {
  "ticker": "CUBE",
  "name": "CubeSmart",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 41.6,
- "change_pct": 1.56,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 40.61,
+ "change_pct": -0.73,
  "sector": "Real Estate",
  "signals": [
-  "near_high",
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 53.0,
-  "sma_20": 41.61,
-  "sma_50": 41.0
+  "rsi_14": 43.4,
+  "sma_20": 41.39,
+  "sma_50": 40.97
  },
  "fundamentals": {
-  "pe_ratio": 28.299318,
-  "market_cap": "9.4B",
+  "pe_ratio": 27.62585,
+  "market_cap": "9.2B",
   "beta": 1.062,
   "dividend_yield": 0.0518
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

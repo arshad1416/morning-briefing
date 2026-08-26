@@ -1,26 +1,27 @@
 {
  "ticker": "WD",
  "name": "Walker & Dunlop, Inc",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 41.56,
- "change_pct": 4.66,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 39.38,
+ "change_pct": -0.24,
  "sector": "Financial Services",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
+  "near_low",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 35.4,
-  "sma_20": 46.23,
-  "sma_50": 49.35
+  "rsi_14": 32.1,
+  "sma_20": 43.83,
+  "sma_50": 47.6
  },
  "fundamentals": {
-  "pe_ratio": 37.107143,
+  "pe_ratio": 35.165176,
   "market_cap": "1.4B",
   "beta": 1.469,
-  "dividend_yield": 0.06849999999999999
+  "dividend_yield": 0.0689
  },
  "council_analysis": {
   "score": 5

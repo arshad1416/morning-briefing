@@ -1,27 +1,28 @@
 {
  "ticker": "MTB",
  "name": "M&T Bank Corporation",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 248.8,
- "change_pct": -1.07,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 240.06,
+ "change_pct": -0.72,
  "sector": "Financial Services",
  "signals": [
-  "near_high",
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 50.9,
-  "sma_20": 250.62,
-  "sma_50": 242.61
+  "rsi_14": 40.2,
+  "sma_20": 248.61,
+  "sma_50": 243.56
  },
  "fundamentals": {
-  "pe_ratio": 13.170991,
-  "market_cap": "35.9B",
+  "pe_ratio": 12.715043,
+  "market_cap": "34.7B",
   "beta": 0.573,
-  "dividend_yield": 0.0239
+  "dividend_yield": 0.0248
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

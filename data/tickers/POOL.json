@@ -1,24 +1,28 @@
 {
  "ticker": "POOL",
  "name": "Pool Corporation",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 196.24,
- "change_pct": 4.66,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 185.41,
+ "change_pct": -1.5,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma",
+  "analyst_buy"
+ ],
  "technical": {
-  "rsi_14": 49.8,
-  "sma_20": 193.91,
-  "sma_50": 198.81
+  "rsi_14": 41.5,
+  "sma_20": 194.54,
+  "sma_50": 198.55
  },
  "fundamentals": {
-  "pe_ratio": 18.288445,
-  "market_cap": "7.1B",
+  "pe_ratio": 17.010092,
+  "market_cap": "6.7B",
   "beta": 1.054,
-  "dividend_yield": 0.0277
+  "dividend_yield": 0.0276
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

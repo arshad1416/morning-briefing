@@ -1,21 +1,23 @@
 {
  "ticker": "ENOV",
  "name": "Enovis Corporation",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 26.81,
- "change_pct": 4.56,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 24.95,
+ "change_pct": -1.01,
  "sector": "Healthcare",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 51.7,
-  "sma_20": 27.37,
-  "sma_50": 25.07
+  "rsi_14": 44.7,
+  "sma_20": 26.93,
+  "sma_50": 25.34
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "1.5B",
+  "market_cap": "1.4B",
   "beta": 1.45,
   "dividend_yield": null
  },

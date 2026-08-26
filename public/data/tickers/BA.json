@@ -1,22 +1,24 @@
 {
  "ticker": "BA",
  "name": "Boeing Company (The)",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 222.52,
- "change_pct": -0.24,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 211.98,
+ "change_pct": 0.72,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.3,
-  "sma_20": 225.55,
-  "sma_50": 221.76
+  "rsi_14": 39.1,
+  "sma_20": 225.53,
+  "sma_50": 221.51
  },
  "fundamentals": {
-  "pe_ratio": 79.75627,
-  "market_cap": "175.9B",
+  "pe_ratio": 77.363144,
+  "market_cap": "167.5B",
   "beta": 1.221,
   "dividend_yield": null
  },

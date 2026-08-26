@@ -1,27 +1,28 @@
 {
  "ticker": "INDB",
  "name": "Independent Bank Corp.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 84.63,
- "change_pct": -0.83,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 83.11,
+ "change_pct": -0.44,
  "sector": "Financial Services",
  "signals": [
-  "near_high",
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.8,
-  "sma_20": 84.97,
-  "sma_50": 83.96
+  "rsi_14": 42.8,
+  "sma_20": 84.56,
+  "sma_50": 84.12
  },
  "fundamentals": {
-  "pe_ratio": 15.303797,
-  "market_cap": "4.0B",
+  "pe_ratio": 15.028933,
+  "market_cap": "3.9B",
   "beta": 0.786,
-  "dividend_yield": 0.0288
+  "dividend_yield": 0.030600000000000002
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

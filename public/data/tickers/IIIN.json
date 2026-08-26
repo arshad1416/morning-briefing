@@ -1,21 +1,24 @@
 {
  "ticker": "IIIN",
  "name": "Insteel Industries, Inc.",
- "generated_at": "2026-08-20T14:45:01.557628+00:00",
- "price": 32.17,
- "change_pct": 0.44,
+ "generated_at": "2026-08-26T14:45:01.956576+00:00",
+ "price": 30.01,
+ "change_pct": -0.74,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 54.9,
-  "sma_20": 32.23,
-  "sma_50": 30.5
+  "rsi_14": 39.4,
+  "sma_20": 31.71,
+  "sma_50": 30.81
  },
  "fundamentals": {
-  "pe_ratio": 17.203207,
-  "market_cap": "623M",
+  "pe_ratio": 16.050802,
+  "market_cap": "581M",
   "beta": 0.502,
-  "dividend_yield": 0.0037
+  "dividend_yield": 0.004
  },
  "council_analysis": {
   "score": 5
