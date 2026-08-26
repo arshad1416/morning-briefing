@@ -1,17 +1,19 @@
 {
  "ticker": "XBI",
  "name": "State Street SPDR S&P Biotech E",
- "generated_at": "2026-08-25T14:45:01.507124+00:00",
- "price": 163.21,
- "change_pct": -1.52,
+ "generated_at": "2026-08-26T11:45:01.216050+00:00",
+ "price": 169.35,
+ "change_pct": 3.16,
  "sector": null,
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 59.0,
-  "sma_20": 156.58,
-  "sma_50": 153.89
+  "rsi_14": 66.0,
+  "sma_20": 157.6,
+  "sma_50": 154.63
  },
  "fundamentals": {
   "pe_ratio": null,

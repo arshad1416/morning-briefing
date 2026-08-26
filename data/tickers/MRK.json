@@ -1,26 +1,27 @@
 {
  "ticker": "MRK",
  "name": "Merck & Company, Inc.",
- "generated_at": "2026-08-25T14:45:01.507124+00:00",
- "price": 149.93,
- "change_pct": -1.72,
+ "generated_at": "2026-08-26T11:45:01.216050+00:00",
+ "price": 153.99,
+ "change_pct": 2.21,
  "sector": "Healthcare",
  "signals": [
-  "extended_rsi",
+  "overbought_rsi",
   "above_ma",
+  "near_high",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 72.2,
-  "sma_20": 135.18,
-  "sma_50": 128.56
+  "rsi_14": 76.1,
+  "sma_20": 136.33,
+  "sma_50": 129.29
  },
  "fundamentals": {
-  "pe_ratio": 119.94,
-  "market_cap": "369.9B",
+  "pe_ratio": 123.19192,
+  "market_cap": "379.9B",
   "beta": 0.211,
-  "dividend_yield": 0.0223
+  "dividend_yield": 0.0226
  },
  "council_analysis": {
   "score": 5

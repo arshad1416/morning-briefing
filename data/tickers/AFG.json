@@ -1,80 +1,30 @@
 {
  "ticker": "AFG",
  "name": "American Financial Group, Inc.",
- "generated_at": "2026-08-25T14:45:01.507124+00:00",
- "price": 145.12,
- "change_pct": 0.99,
+ "generated_at": "2026-08-26T11:45:01.216050+00:00",
+ "price": 143.29,
+ "change_pct": -0.8,
  "sector": "Financial Services",
  "signals": [
-  "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 56.1,
-  "sma_20": 144.31,
-  "sma_50": 141.03
+  "rsi_14": 49.9,
+  "sma_20": 144.2,
+  "sma_50": 141.22
  },
  "fundamentals": {
-  "pe_ratio": 12.685752,
-  "market_cap": "12.0B",
+  "pe_ratio": 12.590949,
+  "market_cap": "11.9B",
   "beta": 0.601,
-  "dividend_yield": 0.0245
+  "dividend_yield": 0.024399999999999998
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [
-  {
-   "ticker": "AFG",
-   "date": "2026-11-03",
-   "epsEstimate": 3.55,
-   "epsActual": null
-  },
-  {
-   "ticker": "AFG",
-   "date": "2026-08-04",
-   "epsEstimate": 2.37,
-   "epsActual": 2.82
-  },
-  {
-   "ticker": "AFG",
-   "date": "2026-04-29",
-   "epsEstimate": 2.56,
-   "epsActual": 2.47
-  }
- ],
- "recent_sec_filings": [
-  {
-   "ticker": "AFG",
-   "date": "2026-08-06",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1042046/000104204626000024/afg-20260630.htm"
-  },
-  {
-   "ticker": "AFG",
-   "date": "2026-05-07",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1042046/000104204626000014/afg-20260331.htm"
-  },
-  {
-   "ticker": "AFG",
-   "date": "2026-02-25",
-   "form": "Annual Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1042046/000104204626000010/afg-20251231.htm"
-  },
-  {
-   "ticker": "AFG",
-   "date": "2025-11-06",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1042046/000104204625000035/afg-20250930.htm"
-  },
-  {
-   "ticker": "AFG",
-   "date": "2025-08-07",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/1042046/000104204625000024/afg-20250630.htm"
-  }
- ],
+ "upcoming_earnings": [],
+ "recent_sec_filings": [],
  "reddit_mentions": []
 }

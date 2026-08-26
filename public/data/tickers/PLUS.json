@@ -1,21 +1,24 @@
 {
  "ticker": "PLUS",
  "name": "ePlus inc.",
- "generated_at": "2026-08-25T14:45:01.507124+00:00",
- "price": 87.43,
- "change_pct": 0.67,
+ "generated_at": "2026-08-26T11:45:01.216050+00:00",
+ "price": 85.73,
+ "change_pct": -0.61,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 46.7,
-  "sma_20": 90.0,
-  "sma_50": 86.81
+  "rsi_14": 41.3,
+  "sma_20": 89.6,
+  "sma_50": 86.84
  },
  "fundamentals": {
-  "pe_ratio": 18.761803,
-  "market_cap": "2.3B",
+  "pe_ratio": 18.396997,
+  "market_cap": "2.2B",
   "beta": 0.983,
-  "dividend_yield": 0.0124
+  "dividend_yield": 0.0125
  },
  "council_analysis": {
   "score": 5

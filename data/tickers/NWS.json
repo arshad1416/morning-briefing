@@ -1,29 +1,30 @@
 {
  "ticker": "NWS",
  "name": "News Corporation",
- "generated_at": "2026-08-25T14:45:01.507124+00:00",
- "price": 34.72,
- "change_pct": 0.48,
+ "generated_at": "2026-08-26T11:45:01.216050+00:00",
+ "price": 34.77,
+ "change_pct": -0.8,
  "sector": "Communication Services",
  "signals": [
   "extended_rsi",
   "above_ma",
+  "near_high",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 67.2,
-  "sma_20": 32.91,
-  "sma_50": 31.19
+  "rsi_14": 65.9,
+  "sma_20": 33.07,
+  "sma_50": 31.31
  },
  "fundamentals": {
-  "pe_ratio": 33.703884,
-  "market_cap": "18.7B",
+  "pe_ratio": 33.757282,
+  "market_cap": "18.8B",
   "beta": 0.911,
-  "dividend_yield": 0.0058
+  "dividend_yield": 0.005699999999999999
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

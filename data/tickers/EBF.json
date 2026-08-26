@@ -1,23 +1,25 @@
 {
  "ticker": "EBF",
  "name": "Ennis, Inc.",
- "generated_at": "2026-08-25T14:45:01.507124+00:00",
- "price": 21.78,
- "change_pct": 1.0,
+ "generated_at": "2026-08-26T11:45:01.216050+00:00",
+ "price": 21.32,
+ "change_pct": -0.93,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 48.6,
-  "sma_20": 22.07,
-  "sma_50": 21.44
+  "rsi_14": 40.2,
+  "sma_20": 22.03,
+  "sma_50": 21.45
  },
  "fundamentals": {
-  "pe_ratio": 13.04491,
-  "market_cap": "551M",
+  "pe_ratio": 12.766467,
+  "market_cap": null,
   "beta": 0.28,
-  "dividend_yield": 0.0464
+  "dividend_yield": 0.04650000000000001
  },
  "council_analysis": {
   "score": 6

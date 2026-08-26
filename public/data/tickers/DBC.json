@@ -1,23 +1,21 @@
 {
  "ticker": "DBC",
  "name": "Invesco DB Commodity Index Trac",
- "generated_at": "2026-08-25T14:45:01.507124+00:00",
- "price": 31.03,
- "change_pct": -0.73,
+ "generated_at": "2026-08-26T11:45:01.216050+00:00",
+ "price": 30.59,
+ "change_pct": -1.12,
  "sector": null,
  "signals": [
-  "extended_rsi",
   "above_ma",
-  "volume_surge",
-  "value_pe"
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 65.2,
-  "sma_20": 29.76,
-  "sma_50": 28.69
+  "rsi_14": 59.1,
+  "sma_20": 29.86,
+  "sma_50": 28.73
  },
  "fundamentals": {
-  "pe_ratio": 7.504691,
+  "pe_ratio": null,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.0253

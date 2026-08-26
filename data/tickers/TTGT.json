@@ -1,19 +1,22 @@
 {
  "ticker": "TTGT",
  "name": "TechTarget, Inc.",
- "generated_at": "2026-08-25T14:45:01.507124+00:00",
- "price": 3.89,
- "change_pct": 1.83,
+ "generated_at": "2026-08-26T11:45:01.216050+00:00",
+ "price": 3.78,
+ "change_pct": -1.05,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.5,
-  "sma_20": 4.07,
-  "sma_50": 3.86
+  "rsi_14": 44.8,
+  "sma_20": 4.03,
+  "sma_50": 3.87
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "281M",
+  "market_cap": "273M",
   "beta": 1.199,
   "dividend_yield": null
  },

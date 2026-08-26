@@ -1,23 +1,25 @@
 {
  "ticker": "FSS",
  "name": "Federal Signal Corporation",
- "generated_at": "2026-08-25T14:45:01.507124+00:00",
- "price": 121.66,
- "change_pct": -0.69,
+ "generated_at": "2026-08-26T11:45:01.216050+00:00",
+ "price": 119.5,
+ "change_pct": -0.23,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.5,
+  "rsi_14": 44.1,
   "sma_20": 124.63,
-  "sma_50": 121.59
+  "sma_50": 121.76
  },
  "fundamentals": {
-  "pe_ratio": 26.21983,
-  "market_cap": "7.4B",
+  "pe_ratio": 25.75431,
+  "market_cap": "7.3B",
   "beta": 1.24,
-  "dividend_yield": 0.0049
+  "dividend_yield": 0.005
  },
  "council_analysis": {
   "score": 6

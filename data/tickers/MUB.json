@@ -1,18 +1,19 @@
 {
  "ticker": "MUB",
  "name": "iShares National Muni Bond ETF",
- "generated_at": "2026-08-25T14:45:01.507124+00:00",
- "price": 105.46,
- "change_pct": 0.11,
+ "generated_at": "2026-08-26T11:45:01.216050+00:00",
+ "price": 105.43,
+ "change_pct": 0.02,
  "sector": null,
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 43.2,
-  "sma_20": 105.67,
-  "sma_50": 106.18
+  "rsi_14": 42.6,
+  "sma_20": 105.65,
+  "sma_50": 106.15
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -21,7 +22,7 @@
   "dividend_yield": 0.0323
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

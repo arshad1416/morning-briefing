@@ -1,21 +1,24 @@
 {
  "ticker": "NVEC",
  "name": "NVE Corporation",
- "generated_at": "2026-08-25T14:45:01.507124+00:00",
- "price": 107.87,
- "change_pct": -1.84,
+ "generated_at": "2026-08-26T11:45:01.216050+00:00",
+ "price": 105.43,
+ "change_pct": -1.16,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.5,
-  "sma_20": 117.94,
-  "sma_50": 106.31
+  "rsi_14": 43.5,
+  "sma_20": 117.37,
+  "sma_50": 106.08
  },
  "fundamentals": {
-  "pe_ratio": 28.997313,
-  "market_cap": "522M",
+  "pe_ratio": 28.341398,
+  "market_cap": "510M",
   "beta": 1.341,
-  "dividend_yield": 0.0363
+  "dividend_yield": 0.037599999999999995
  },
  "council_analysis": {
   "score": 5

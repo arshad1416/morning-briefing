@@ -1,27 +1,28 @@
 {
  "ticker": "SHY",
  "name": "iShares 1-3 Year Treasury Bond ",
- "generated_at": "2026-08-25T14:45:01.507124+00:00",
- "price": 82.01,
- "change_pct": 0.01,
+ "generated_at": "2026-08-26T11:45:01.216050+00:00",
+ "price": 82.06,
+ "change_pct": 0.07,
  "sector": null,
  "signals": [
+  "extended_rsi",
   "above_ma",
-  "premium_pe"
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 62.3,
-  "sma_20": 81.9,
-  "sma_50": 81.73
+  "rsi_14": 65.3,
+  "sma_20": 81.92,
+  "sma_50": 81.74
  },
  "fundamentals": {
-  "pe_ratio": 3727.7273,
+  "pe_ratio": null,
   "market_cap": null,
   "beta": null,
   "dividend_yield": 0.0365
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

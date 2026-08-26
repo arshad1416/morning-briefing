@@ -1,25 +1,26 @@
 {
  "ticker": "BXMT",
  "name": "Blackstone Mortgage Trust, Inc.",
- "generated_at": "2026-08-25T14:45:01.507124+00:00",
- "price": 14.26,
- "change_pct": -0.07,
+ "generated_at": "2026-08-26T11:45:01.216050+00:00",
+ "price": 14.07,
+ "change_pct": -0.35,
  "sector": "Real Estate",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
+  "near_low",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 35.4,
-  "sma_20": 14.56,
-  "sma_50": 16.1
+  "rsi_14": 33.1,
+  "sma_20": 14.43,
+  "sma_50": 16.02
  },
  "fundamentals": {
-  "pe_ratio": 178.25,
+  "pe_ratio": 175.875,
   "market_cap": "2.4B",
   "beta": 0.949,
-  "dividend_yield": 0.1317
+  "dividend_yield": 0.1331
  },
  "council_analysis": {
   "score": 4
