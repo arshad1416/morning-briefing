@@ -61,6 +61,7 @@ MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
 22 7 * * 0,6 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
 25 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
 32 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 push_dashboard.py >> /home/arshad14/.hermes/logs/push_dashboard.log 2>&1
+34,36,38 7 * * 1-5 cd /home/arshad14/morning-briefing && /usr/bin/flock -n /tmp/maplegamma_gate.lock /usr/bin/timeout 90 bash tools/run_maplegamma_gate.sh >> /home/arshad14/.hermes/logs/maplegamma_gate.log 2>&1
 43 7 * * * cd /home/arshad14/.hermes/scripts && python3 send_comprehensive_briefing.py >> /home/arshad14/.hermes/logs/briefing_delivery.log 2>&1
 
 # ── Agent-Reach data collection (6:30-6:36 AM, before pipeline) ──
@@ -256,7 +257,7 @@ MAPLEGAMMA_GATE_DAYS=0,1,2,3,4
 0 */3 * * * /home/arshad14/.9router/keepalive.sh >> /home/arshad14/.9router/logs/keepalive.log 2>&1
 */15 14-23 * * 5 /home/arshad14/.hermes/scripts/bg305_delay.py >> /home/arshad14/.hermes/logs/bg305_delay_cron.log 2>&1
 */15 0-16 * * 6 /home/arshad14/.hermes/scripts/bg305_delay.py >> /home/arshad14/.hermes/logs/bg305_delay_cron.log 2>&1
-44,50 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 mg_gate_watchdog.py >> /home/arshad14/.hermes/logs/gate_watchdog.log 2>&1
+40,50 7 * * 1-5 cd /home/arshad14/.hermes/scripts && python3 mg_gate_watchdog.py >> /home/arshad14/.hermes/logs/gate_watchdog.log 2>&1
 
 # Mnemosyne sync freshness watchdog (added 2026-08-19; sync fails silently)
 */15 * * * * /usr/bin/python3 /home/arshad14/.hermes/scripts/mnem_sync_watchdog.py --quiet >> /home/arshad14/.hermes/logs/mnemosyne-sync-watchdog.log 2>&1
