@@ -1,22 +1,24 @@
 {
  "ticker": "ABUS",
  "name": "Arbutus Biopharma Corporation",
- "generated_at": "2026-08-26T14:45:01.956576+00:00",
- "price": 5.16,
- "change_pct": -0.67,
+ "generated_at": "2026-08-27T11:45:01.294511+00:00",
+ "price": 5.2,
+ "change_pct": 0.1,
  "sector": "Healthcare",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 65.0,
-  "sma_20": 4.68,
-  "sma_50": 4.64
+  "rsi_14": 66.6,
+  "sma_20": 4.73,
+  "sma_50": 4.66
  },
  "fundamentals": {
-  "pe_ratio": 6.5379744,
+  "pe_ratio": 6.5886073,
   "market_cap": "1.0B",
   "beta": 0.602,
   "dividend_yield": null

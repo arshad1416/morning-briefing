@@ -1,26 +1,28 @@
 {
  "ticker": "ECBK",
  "name": "ECB Bancorp, Inc.",
- "generated_at": "2026-08-26T14:45:01.956576+00:00",
- "price": 20.84,
- "change_pct": 1.07,
+ "generated_at": "2026-08-27T11:45:01.294511+00:00",
+ "price": 20.68,
+ "change_pct": -0.98,
  "sector": "Financial Services",
  "signals": [
-  "above_ma"
+  "above_ma",
+  "near_high",
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 58.5,
-  "sma_20": 20.58,
-  "sma_50": 20.2
+  "rsi_14": 54.3,
+  "sma_20": 20.61,
+  "sma_50": 20.26
  },
  "fundamentals": {
-  "pe_ratio": 15.248175,
-  "market_cap": "183M",
+  "pe_ratio": 14.98913,
+  "market_cap": "181M",
   "beta": 0.452,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

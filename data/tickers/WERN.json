@@ -1,17 +1,18 @@
 {
  "ticker": "WERN",
  "name": "Werner Enterprises, Inc.",
- "generated_at": "2026-08-26T14:45:01.956576+00:00",
- "price": 37.94,
- "change_pct": 0.73,
+ "generated_at": "2026-08-27T11:45:01.294511+00:00",
+ "price": 37.63,
+ "change_pct": -0.03,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip"
+  "rsi_dip",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 44.0,
-  "sma_20": 37.75,
-  "sma_50": 40.97
+  "rsi_14": 42.2,
+  "sma_20": 37.78,
+  "sma_50": 40.85
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -20,7 +21,7 @@
   "dividend_yield": 0.0149
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

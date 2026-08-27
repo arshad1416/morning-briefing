@@ -1,25 +1,27 @@
 {
  "ticker": "VICI",
  "name": "VICI Properties Inc.",
- "generated_at": "2026-08-26T14:45:01.956576+00:00",
- "price": 26.47,
- "change_pct": -1.18,
+ "generated_at": "2026-08-27T11:45:01.294511+00:00",
+ "price": 26.08,
+ "change_pct": -0.8,
  "sector": "Real Estate",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "near_low",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.9,
-  "sma_20": 26.4,
-  "sma_50": 26.56
+  "rsi_14": 44.6,
+  "sma_20": 26.34,
+  "sma_50": 26.53
  },
  "fundamentals": {
-  "pe_ratio": 10.257752,
-  "market_cap": "29.1B",
+  "pe_ratio": 10.108527,
+  "market_cap": "28.7B",
   "beta": 0.687,
-  "dividend_yield": 0.0672
+  "dividend_yield": 0.06849999999999999
  },
  "council_analysis": {
   "score": 6
