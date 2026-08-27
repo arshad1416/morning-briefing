@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-08-26T11:30:01.236774+00:00",
-  "signal": "neutral",
-  "conviction": 0.63,
+  "generated_at": "2026-08-27T11:30:01.986877+00:00",
+  "signal": "bullish",
+  "conviction": 0.65,
   "conviction_source": "model",
-  "narrative": "Indices grind higher with mega-cap call flow but heavy put premiums in NVDA/QQQ signal pre-earnings hedging; internal breadth mixed with oversold industrial and utility flags.",
+  "narrative": "Indices are flat with low VIX (14.92) and elevated 10Y (4.66%), while options flow concentrates in META/PLTR calls and Canadian trade risk keeps a range-bound tone.",
   "narrative_source": "llm",
   "model_features": {
-    "vix": 15.64,
-    "vix_score": 0.5,
-    "sleeve_a_signals": 0,
-    "avg_signal_score": 0,
-    "max_signal_score": 0,
-    "recent_hit_rate": 0.88,
+    "vix": 14.89,
+    "vix_score": 0.7,
+    "sleeve_a_signals": 1,
+    "avg_signal_score": 6.0,
+    "max_signal_score": 6,
+    "recent_hit_rate": 0.38,
     "recent_trades": 8,
     "breadth": 1.0,
-    "vix_contango": 4.49,
+    "vix_contango": 4.76,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.38,
-      0.88
+      0.4,
+      0.9
     ]
   },
   "confidence_interval": [
-    0.38,
-    0.88
+    0.4,
+    0.9
   ]
 }
