@@ -1,9 +1,23 @@
 {
-  "generated_at": "2026-08-28 07:17:12",
+  "generated_at": "2026-08-28 07:30:13",
   "date": "2026-08-28",
   "market_overview": {
     "source": "Seeking Alpha + BNN Bloomberg",
     "top_headlines": [
+      {
+        "title": "Chagee sees sluggish growth amid economic headwinds and 'intense' industry competition",
+        "url": "https://seekingalpha.com/news/4637821-chagee-sees-sluggish-growth-amid-economic-headwinds-and-intense-industry-competition?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bullish",
+        "summary": ""
+      },
+      {
+        "title": "Lilly wins FDA label expansion for Mounjaro to reduce cardiovascular risk",
+        "url": "https://seekingalpha.com/news/4637819-lilly-mounjaro-approved-cut-cardiovascular-risk?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
+        "source": "Seeking Alpha",
+        "sentiment": "bearish",
+        "summary": ""
+      },
       {
         "title": "N-able raises share repurchase authorization by $50M",
         "url": "https://seekingalpha.com/news/4637813-n-able-raises-share-repurchase-authorization-by-50m?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
@@ -40,20 +54,6 @@
         "summary": ""
       },
       {
-        "title": "Lucid issues an over-the-air remedy for fire risk related to the lighting circuit",
-        "url": "https://seekingalpha.com/news/4637811-lucid-issues-an-over-the-air-remedy-for-fire-risk-related-to-lighting-circuit?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "bearish",
-        "summary": ""
-      },
-      {
-        "title": "Range Resources declares $0.10 dividend",
-        "url": "https://seekingalpha.com/news/4637812-range-resources-declares-0_10-dividend?utm_source=feed_news_all&utm_medium=referral&feed_item_type=news",
-        "source": "Seeking Alpha",
-        "sentiment": "neutral",
-        "summary": ""
-      },
-      {
         "title": "A 0.09x PEG Makes Sezzle Hard To Ignore",
         "url": "https://seekingalpha.com/article/4941113-a-0-09x-peg-makes-sezzle-hard-to-ignore?source=feed",
         "source": "Seeking Alpha",
@@ -79,12 +79,11 @@
       [
         "C",
         {
-          "news_count": 20,
+          "news_count": 19,
           "articles": [
+            "Chagee sees sluggish growth amid economic headwinds and 'intense' industry competition",
             "Chagee Holdings Non-GAAP EPS of $0.37 beats by $0.03, revenue of $503.3M misses by $24.82M",
             "McDonald's is bringing back a popular limited-time menu offering next week",
-            "Lucid issues an over-the-air remedy for fire risk related to the lighting circuit",
-            "Range Resources declares $0.10 dividend",
             "A 0.09x PEG Makes Sezzle Hard To Ignore",
             "Meta: When An $18 Billion Settlement Is Bullish",
             "SpaceX: Long Term Prospects Are Bright Despite Risks, A Buy",
@@ -104,8 +103,7 @@
           ],
           "sentiments": [
             "bullish",
-            "neutral",
-            "bearish",
+            "bullish",
             "neutral",
             "neutral",
             "bullish",
@@ -129,8 +127,10 @@
       [
         "V",
         {
-          "news_count": 13,
+          "news_count": 15,
           "articles": [
+            "Lilly wins FDA label expansion for Mounjaro to reduce cardiovascular risk",
+            "Nvidia Is Becoming The AI Nation-State",
             "Marvell Technology, Inc. 2027 Q2 - Results - Earnings Call Presentation",
             "Emerging Market Surge: 3 Top Stocks For Diversity And Growth",
             "2 Income Picks That Hiked Their Dividends, And Will Hike Again",
@@ -146,6 +146,8 @@
             "I Love Recurrent Income - For My Retirement Portfolio"
           ],
           "sentiments": [
+            "bearish",
+            "neutral",
             "neutral",
             "bullish",
             "bullish",
@@ -165,8 +167,9 @@
       [
         "F",
         {
-          "news_count": 5,
+          "news_count": 6,
           "articles": [
+            "Lilly wins FDA label expansion for Mounjaro to reduce cardiovascular risk",
             "Meta: When An $18 Billion Settlement Is Bullish",
             "Nvidia Is Becoming The AI Nation-State",
             "Nvidia Q2: The $10 Trillion Thesis",
@@ -174,6 +177,7 @@
             "Forget Iran; Bessent Gave Us 1 Trillion Reasons To Buy"
           ],
           "sentiments": [
+            "bearish",
             "bullish",
             "neutral",
             "neutral",
@@ -183,18 +187,22 @@
         }
       ],
       [
-        "MU",
+        "NVDA",
         {
-          "news_count": 4,
+          "news_count": 6,
           "articles": [
-            "Micron: Customers Want 50% More Than It Can Supply",
+            "Nvidia Is Becoming The AI Nation-State",
+            "Nvidia: A 16.0x P/E Is A Crime",
+            "Nvidia Q2: The $10 Trillion Thesis",
+            "Broadcom Is The New Nvidia, And That's The Problem",
             "Nvidia Earnings: Top AI Stocks And What We Need To See For A Rally",
-            "Retirement Income On Autopilot: 3 Dividend Growth Machines To Buy On The Dip",
             "How To Retire: Stop Looking For Magic"
           ],
           "sentiments": [
             "neutral",
-            "bullish",
+            "neutral",
+            "neutral",
+            "neutral",
             "bullish",
             "neutral"
           ]
@@ -219,28 +227,28 @@
     ],
     "sentiment_by_ticker": {
       "C": {
-        "mentions": 20,
-        "bullish": 7,
-        "bearish": 1,
-        "net_sentiment": 6
+        "mentions": 19,
+        "bullish": 8,
+        "bearish": 0,
+        "net_sentiment": 8
       },
       "V": {
-        "mentions": 13,
+        "mentions": 15,
         "bullish": 5,
-        "bearish": 0,
-        "net_sentiment": 5
+        "bearish": 1,
+        "net_sentiment": 4
       },
       "F": {
-        "mentions": 5,
+        "mentions": 6,
         "bullish": 2,
-        "bearish": 0,
-        "net_sentiment": 2
+        "bearish": 1,
+        "net_sentiment": 1
       },
-      "MU": {
-        "mentions": 4,
-        "bullish": 2,
+      "NVDA": {
+        "mentions": 6,
+        "bullish": 1,
         "bearish": 0,
-        "net_sentiment": 2
+        "net_sentiment": 1
       },
       "META": {
         "mentions": 3,
@@ -248,14 +256,14 @@
         "bearish": 0,
         "net_sentiment": 1
       },
-      "AI": {
+      "MU": {
         "mentions": 3,
-        "bullish": 1,
+        "bullish": 2,
         "bearish": 0,
-        "net_sentiment": 1
+        "net_sentiment": 2
       },
-      "NVDA": {
-        "mentions": 3,
+      "GAAP": {
+        "mentions": 2,
         "bullish": 1,
         "bearish": 0,
         "net_sentiment": 1
@@ -266,23 +274,23 @@
         "bearish": 0,
         "net_sentiment": 1
       },
-      "GAAP": {
+      "BA": {
         "mentions": 2,
         "bullish": 1,
         "bearish": 0,
         "net_sentiment": 1
       },
-      "MCD": {
-        "mentions": 1,
-        "bullish": 0,
+      "AI": {
+        "mentions": 2,
+        "bullish": 1,
         "bearish": 0,
-        "net_sentiment": 0
+        "net_sentiment": 1
       }
     }
   },
   "options_flow": {
     "total_unusual_contracts": 25,
-    "call_put_ratio": "4:21",
+    "call_put_ratio": "3:22",
     "top_overbought_calls": [
       {
         "ticker": "JNJ",
@@ -293,14 +301,6 @@
         "premium": 1695600
       },
       {
-        "ticker": "CAT",
-        "strike": 815.0,
-        "expiration": "2026-08-28",
-        "volume": 621,
-        "vol_oi_ratio": 621.0,
-        "premium": 512325
-      },
-      {
         "ticker": "JNJ",
         "strike": 250.0,
         "expiration": "2026-08-28",
@@ -309,12 +309,12 @@
         "premium": 1232280
       },
       {
-        "ticker": "CAT",
-        "strike": 850.0,
+        "ticker": "JNJ",
+        "strike": 220.0,
         "expiration": "2026-08-28",
-        "volume": 375,
-        "vol_oi_ratio": 375.0,
-        "premium": 8250
+        "volume": 203,
+        "vol_oi_ratio": 203.0,
+        "premium": 1074885
       }
     ],
     "top_overbought_puts": [
