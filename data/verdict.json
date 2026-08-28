@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-08-27T11:30:01.986877+00:00",
-  "signal": "bullish",
-  "conviction": 0.65,
+  "generated_at": "2026-08-28T11:30:01.728951+00:00",
+  "signal": "neutral",
+  "conviction": 0.61,
   "conviction_source": "model",
-  "narrative": "Indices are flat with low VIX (14.92) and elevated 10Y (4.66%), while options flow concentrates in META/PLTR calls and Canadian trade risk keeps a range-bound tone.",
+  "narrative": "Indices advance with Nasdaq +1.57% and VIX at 14.47, but heavy put option flow reveals underlying hedging demand.",
   "narrative_source": "llm",
   "model_features": {
-    "vix": 14.89,
+    "vix": 14.49,
     "vix_score": 0.7,
-    "sleeve_a_signals": 1,
-    "avg_signal_score": 6.0,
-    "max_signal_score": 6,
-    "recent_hit_rate": 0.38,
-    "recent_trades": 8,
+    "sleeve_a_signals": 0,
+    "avg_signal_score": 0,
+    "max_signal_score": 0,
+    "recent_hit_rate": 0.6,
+    "recent_trades": 10,
     "breadth": 1.0,
-    "vix_contango": 4.76,
+    "vix_contango": 4.66,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.4,
-      0.9
+      0.36,
+      0.86
     ]
   },
   "confidence_interval": [
-    0.4,
-    0.9
+    0.36,
+    0.86
   ]
 }
