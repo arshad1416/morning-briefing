@@ -1,9 +1,9 @@
 {
  "ticker": "HRMY",
  "name": "Harmony Biosciences Holdings, I",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 39.63,
- "change_pct": 1.75,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 39.57,
+ "change_pct": -0.23,
  "sector": "Healthcare",
  "signals": [
   "above_ma",
@@ -12,12 +12,12 @@
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 60.2,
-  "sma_20": 38.3,
-  "sma_50": 36.57
+  "rsi_14": 59.7,
+  "sma_20": 38.49,
+  "sma_50": 36.68
  },
  "fundamentals": {
-  "pe_ratio": 12.825212,
+  "pe_ratio": 12.805825,
   "market_cap": "2.3B",
   "beta": 0.913,
   "dividend_yield": null
@@ -25,7 +25,57 @@
  "council_analysis": {
   "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "HRMY",
+   "date": "2026-11-03",
+   "epsEstimate": 1.47,
+   "epsActual": null
+  },
+  {
+   "ticker": "HRMY",
+   "date": "2026-08-04",
+   "epsEstimate": 1.15,
+   "epsActual": 1.5
+  },
+  {
+   "ticker": "HRMY",
+   "date": "2026-05-07",
+   "epsEstimate": 0.93,
+   "epsActual": 0.79
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "HRMY",
+   "date": "2026-08-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465926090090/hrmy-20260630x10q.htm"
+  },
+  {
+   "ticker": "HRMY",
+   "date": "2026-05-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465926056720/hrmy-20260331x10q.htm"
+  },
+  {
+   "ticker": "HRMY",
+   "date": "2026-02-24",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465926018859/hrmy-20251231x10k.htm"
+  },
+  {
+   "ticker": "HRMY",
+   "date": "2025-11-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1802665/000110465925105962/hrmy-20250930x10q.htm"
+  },
+  {
+   "ticker": "HRMY",
+   "date": "2025-08-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1802665/000155837025010185/hrmy-20250630x10q.htm"
+  }
+ ],
  "reddit_mentions": []
 }

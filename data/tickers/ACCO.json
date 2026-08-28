@@ -1,29 +1,81 @@
 {
  "ticker": "ACCO",
  "name": "Acco Brands Corporation",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 4.2,
- "change_pct": -0.12,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 4.26,
+ "change_pct": 1.67,
  "sector": "Industrials",
  "signals": [
+  "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 52.7,
+  "rsi_14": 56.0,
   "sma_20": 4.23,
-  "sma_50": 4.07
+  "sma_50": 4.08
  },
  "fundamentals": {
-  "pe_ratio": 6.782258,
-  "market_cap": "388M",
+  "pe_ratio": 6.870968,
+  "market_cap": "393M",
   "beta": 1.181,
-  "dividend_yield": 0.0713
+  "dividend_yield": 0.0716
  },
  "council_analysis": {
-  "score": 7
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "ACCO",
+   "date": "2026-10-29",
+   "epsEstimate": 0.19,
+   "epsActual": null
+  },
+  {
+   "ticker": "ACCO",
+   "date": "2026-07-30",
+   "epsEstimate": 0.27,
+   "epsActual": 0.29
+  },
+  {
+   "ticker": "ACCO",
+   "date": "2026-04-30",
+   "epsEstimate": -0.05,
+   "epsActual": 0.02
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "ACCO",
+   "date": "2026-07-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/712034/000119312526328057/acco-20260630.htm"
+  },
+  {
+   "ticker": "ACCO",
+   "date": "2026-05-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/712034/000119312526201006/acco-20260331.htm"
+  },
+  {
+   "ticker": "ACCO",
+   "date": "2026-03-09",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/712034/000119312526098616/acco-20251231.htm"
+  },
+  {
+   "ticker": "ACCO",
+   "date": "2025-10-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/712034/000119312525260601/acco-20250930.htm"
+  },
+  {
+   "ticker": "ACCO",
+   "date": "2025-08-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/712034/000095017025101292/acco-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

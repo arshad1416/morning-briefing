@@ -1,24 +1,28 @@
 {
  "ticker": "MOV",
  "name": "Movado Group Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 36.83,
- "change_pct": 5.32,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 33.78,
+ "change_pct": -3.49,
  "sector": "Consumer Cyclical",
- "signals": [],
+ "signals": [
+  "oversold_rsi",
+  "below_ma",
+  "analyst_buy"
+ ],
  "technical": {
-  "rsi_14": 52.0,
-  "sma_20": 36.75,
-  "sma_50": 37.55
+  "rsi_14": 31.7,
+  "sma_20": 36.44,
+  "sma_50": 37.44
  },
  "fundamentals": {
-  "pe_ratio": 26.12057,
-  "market_cap": null,
-  "beta": 0.96,
-  "dividend_yield": 0.0458
+  "pe_ratio": 18.662983,
+  "market_cap": "754M",
+  "beta": null,
+  "dividend_yield": 0.045700000000000005
  },
  "council_analysis": {
-  "score": 5
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

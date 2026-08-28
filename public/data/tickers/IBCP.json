@@ -1,21 +1,23 @@
 {
  "ticker": "IBCP",
  "name": "Independent Bank Corporation",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 36.95,
- "change_pct": 0.65,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 36.45,
+ "change_pct": -0.71,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 45.6,
-  "sma_20": 37.84,
-  "sma_50": 36.66
+  "rsi_14": 39.8,
+  "sma_20": 37.76,
+  "sma_50": 36.69
  },
  "fundamentals": {
-  "pe_ratio": 10.710145,
-  "market_cap": "761M",
+  "pe_ratio": 10.565217,
+  "market_cap": "751M",
   "beta": 0.704,
   "dividend_yield": 0.0305
  },

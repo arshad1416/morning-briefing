@@ -1,26 +1,27 @@
 {
  "ticker": "SYBT",
  "name": "Stock Yards Bancorp, Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 80.69,
- "change_pct": 0.69,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 79.0,
+ "change_pct": -1.23,
  "sector": "Financial Services",
  "signals": [
-  "rsi_dip"
+  "rsi_dip",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 43.1,
-  "sma_20": 83.58,
-  "sma_50": 80.25
+  "rsi_14": 36.0,
+  "sma_20": 83.18,
+  "sma_50": 80.34
  },
  "fundamentals": {
-  "pe_ratio": 16.073706,
+  "pe_ratio": 15.737052,
   "market_cap": "2.5B",
   "beta": 0.68,
   "dividend_yield": 0.0165
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

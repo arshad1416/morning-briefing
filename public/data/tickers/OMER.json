@@ -1,29 +1,30 @@
 {
  "ticker": "OMER",
  "name": "Omeros Corporation",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 18.6,
- "change_pct": -3.53,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 18.77,
+ "change_pct": 3.02,
  "sector": "Healthcare",
  "signals": [
-  "overbought_rsi",
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 76.8,
-  "sma_20": 15.59,
-  "sma_50": 12.29
+  "rsi_14": 74.8,
+  "sma_20": 15.91,
+  "sma_50": 12.47
  },
  "fundamentals": {
-  "pe_ratio": 11.272728,
-  "market_cap": "1.3B",
+  "pe_ratio": 11.375758,
+  "market_cap": "1.4B",
   "beta": 2.538,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

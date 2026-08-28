@@ -1,26 +1,25 @@
 {
  "ticker": "FHN",
  "name": "First Horizon Corporation",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 24.65,
- "change_pct": 0.92,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 24.25,
+ "change_pct": -1.28,
  "sector": "Financial Services",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
-  "value_pe",
-  "analyst_buy"
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 39.8,
-  "sma_20": 25.42,
-  "sma_50": 25.46
+  "rsi_14": 34.9,
+  "sma_20": 25.36,
+  "sma_50": 25.45
  },
  "fundamentals": {
-  "pe_ratio": 11.848558,
-  "market_cap": "11.7B",
+  "pe_ratio": 11.661057,
+  "market_cap": "11.5B",
   "beta": 0.622,
-  "dividend_yield": 0.0278
+  "dividend_yield": 0.0277
  },
  "council_analysis": {
   "score": 7

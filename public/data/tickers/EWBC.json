@@ -1,28 +1,29 @@
 {
  "ticker": "EWBC",
  "name": "East West Bancorp, Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 131.02,
- "change_pct": 1.23,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 128.35,
+ "change_pct": -1.59,
  "sector": "Financial Services",
  "signals": [
-  "near_high",
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.4,
-  "sma_20": 132.27,
-  "sma_50": 130.89
+  "rsi_14": 40.4,
+  "sma_20": 132.15,
+  "sma_50": 130.85
  },
  "fundamentals": {
-  "pe_ratio": 12.550287,
-  "market_cap": "18.0B",
+  "pe_ratio": 12.329492,
+  "market_cap": "17.6B",
   "beta": 0.933,
-  "dividend_yield": 0.024700000000000003
+  "dividend_yield": 0.0245
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,19 +1,22 @@
 {
  "ticker": "NATH",
  "name": "Nathan's Famous, Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 98.0,
- "change_pct": 0.15,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 96.81,
+ "change_pct": -0.89,
  "sector": "Consumer Cyclical",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.6,
-  "sma_20": 97.8,
-  "sma_50": 99.19
+  "rsi_14": 39.6,
+  "sma_20": 97.7,
+  "sma_50": 99.09
  },
  "fundamentals": {
-  "pe_ratio": 20.289856,
-  "market_cap": "402M",
+  "pe_ratio": 20.043478,
+  "market_cap": "397M",
   "beta": 0.285,
   "dividend_yield": 0.020499999999999997
  },

@@ -1,28 +1,29 @@
 {
  "ticker": "SMA",
  "name": "SmartStop Self Storage REIT, In",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 34.06,
- "change_pct": 0.04,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 33.17,
+ "change_pct": -2.33,
  "sector": "Real Estate",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 51.7,
-  "sma_20": 34.01,
-  "sma_50": 33.53
+  "rsi_14": 41.3,
+  "sma_20": 34.0,
+  "sma_50": 33.55
  },
  "fundamentals": {
-  "pe_ratio": 56.75833,
-  "market_cap": "1.9B",
+  "pe_ratio": 55.28333,
+  "market_cap": "1.8B",
   "beta": null,
-  "dividend_yield": 0.047
+  "dividend_yield": 0.0471
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

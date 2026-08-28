@@ -1,21 +1,24 @@
 {
  "ticker": "SPOK",
  "name": "Spok Holdings, Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 10.51,
- "change_pct": -0.71,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 10.35,
+ "change_pct": -0.67,
  "sector": "Healthcare",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 47.5,
-  "sma_20": 10.71,
+  "rsi_14": 43.3,
+  "sma_20": 10.7,
   "sma_50": 10.43
  },
  "fundamentals": {
-  "pe_ratio": 18.429825,
-  "market_cap": "220M",
+  "pe_ratio": 18.157896,
+  "market_cap": "217M",
   "beta": 0.427,
-  "dividend_yield": 0.1182
+  "dividend_yield": 0.12
  },
  "council_analysis": {
   "score": 5

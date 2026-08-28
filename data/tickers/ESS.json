@@ -1,28 +1,29 @@
 {
  "ticker": "ESS",
  "name": "Essex Property Trust, Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 289.64,
- "change_pct": -0.81,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 283.92,
+ "change_pct": -1.47,
  "sector": "Real Estate",
  "signals": [
-  "above_ma",
-  "near_high",
-  "premium_pe"
+  "rsi_dip",
+  "below_ma",
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 52.4,
-  "sma_20": 286.41,
-  "sma_50": 288.7
+  "rsi_14": 44.8,
+  "sma_20": 286.44,
+  "sma_50": 288.78
  },
  "fundamentals": {
-  "pe_ratio": 45.114487,
-  "market_cap": "20.0B",
+  "pe_ratio": 44.155525,
+  "market_cap": "19.6B",
   "beta": 0.708,
-  "dividend_yield": 0.0355
+  "dividend_yield": 0.036000000000000004
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

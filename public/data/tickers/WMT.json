@@ -1,29 +1,29 @@
 {
  "ticker": "WMT",
  "name": "Walmart Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 104.78,
- "change_pct": -0.57,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 102.47,
+ "change_pct": -1.79,
  "sector": "Consumer Defensive",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 35.5,
-  "sma_20": 110.87,
-  "sma_50": 112.43
+  "rsi_14": 32.0,
+  "sma_20": 110.43,
+  "sma_50": 112.06
  },
  "fundamentals": {
-  "pe_ratio": 37.963768,
-  "market_cap": "833.8B",
+  "pe_ratio": 36.992817,
+  "market_cap": "815.5B",
   "beta": 0.605,
-  "dividend_yield": 0.009399999999999999
+  "dividend_yield": 0.0095
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

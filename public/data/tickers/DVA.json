@@ -1,28 +1,28 @@
 {
  "ticker": "DVA",
  "name": "DaVita Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 181.16,
- "change_pct": 1.89,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 178.31,
+ "change_pct": -0.97,
  "sector": "Healthcare",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
-  "analyst_buy"
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 35.1,
-  "sma_20": 190.65,
-  "sma_50": 212.66
+  "rsi_14": 32.3,
+  "sma_20": 187.56,
+  "sma_50": 212.03
  },
  "fundamentals": {
-  "pe_ratio": 15.339542,
-  "market_cap": "11.6B",
+  "pe_ratio": 14.908863,
+  "market_cap": "11.4B",
   "beta": 0.87,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

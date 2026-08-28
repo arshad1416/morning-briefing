@@ -1,21 +1,23 @@
 {
  "ticker": "FRSH",
  "name": "Freshworks Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 12.82,
- "change_pct": -0.27,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 13.49,
+ "change_pct": 4.49,
  "sector": "Technology",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 62.1,
-  "sma_20": 12.27,
-  "sma_50": 11.02
+  "rsi_14": 68.6,
+  "sma_20": 12.38,
+  "sma_50": 11.1
  },
  "fundamentals": {
-  "pe_ratio": 20.357143,
-  "market_cap": "3.3B",
+  "pe_ratio": 21.412699,
+  "market_cap": "3.5B",
   "beta": 0.865,
   "dividend_yield": null
  },

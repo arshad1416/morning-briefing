@@ -1,27 +1,28 @@
 {
  "ticker": "REX",
  "name": "REX American Resources Corporat",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 42.12,
- "change_pct": 1.48,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 41.39,
+ "change_pct": -2.7,
  "sector": "Basic Materials",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 40.5,
-  "sma_20": 43.57,
-  "sma_50": 44.51
+  "rsi_14": 38.3,
+  "sma_20": 43.47,
+  "sma_50": 44.48
  },
  "fundamentals": {
-  "pe_ratio": 15.044643,
+  "pe_ratio": 14.782143,
   "market_cap": "1.4B",
   "beta": 0.639,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

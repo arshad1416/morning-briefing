@@ -1,26 +1,29 @@
 {
  "ticker": "CBL",
  "name": "CBL & Associates Properties, In",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 55.12,
- "change_pct": -1.23,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 54.86,
+ "change_pct": -0.44,
  "sector": "Real Estate",
  "signals": [
-  "value_pe"
+  "rsi_dip",
+  "below_ma",
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 45.7,
-  "sma_20": 56.73,
-  "sma_50": 54.75
+  "rsi_14": 44.6,
+  "sma_20": 56.56,
+  "sma_50": 54.88
  },
  "fundamentals": {
-  "pe_ratio": 7.9416428,
+  "pe_ratio": 7.904899,
   "market_cap": "1.7B",
   "beta": 1.425,
-  "dividend_yield": 0.044800000000000006
+  "dividend_yield": 0.0454
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

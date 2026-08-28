@@ -1,24 +1,26 @@
 {
  "ticker": "PNFP",
  "name": "Pinnacle Financial Partners, In",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 101.82,
- "change_pct": 1.04,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 100.29,
+ "change_pct": -1.27,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 45.6,
-  "sma_20": 104.8,
-  "sma_50": 101.54
+  "rsi_14": 41.2,
+  "sma_20": 104.59,
+  "sma_50": 101.58
  },
  "fundamentals": {
-  "pe_ratio": 14.024104,
-  "market_cap": "15.4B",
+  "pe_ratio": 13.81405,
+  "market_cap": "15.2B",
   "beta": 1.023,
-  "dividend_yield": 0.019799999999999998
+  "dividend_yield": 0.0197
  },
  "council_analysis": {
   "score": 7

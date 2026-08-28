@@ -1,23 +1,25 @@
 {
  "ticker": "IIPR",
  "name": "Innovative Industrial Propertie",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 57.78,
- "change_pct": 0.27,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 57.14,
+ "change_pct": 0.18,
  "sector": "Real Estate",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 47.1,
-  "sma_20": 57.68,
-  "sma_50": 60.03
+  "rsi_14": 43.9,
+  "sma_20": 57.46,
+  "sma_50": 60.0
  },
  "fundamentals": {
-  "pe_ratio": 13.073529,
+  "pe_ratio": 13.075515,
   "market_cap": "1.6B",
   "beta": 1.401,
-  "dividend_yield": 0.1319
+  "dividend_yield": 0.1332
  },
  "council_analysis": {
   "score": 6

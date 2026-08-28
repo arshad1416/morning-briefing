@@ -1,23 +1,25 @@
 {
  "ticker": "FERG",
  "name": "Ferguson Enterprises Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 236.78,
- "change_pct": 1.77,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 232.42,
+ "change_pct": -1.4,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.8,
-  "sma_20": 244.53,
-  "sma_50": 236.35
+  "rsi_14": 42.8,
+  "sma_20": 244.82,
+  "sma_50": 236.29
  },
  "fundamentals": {
-  "pe_ratio": 23.282202,
-  "market_cap": "45.8B",
+  "pe_ratio": 22.565048,
+  "market_cap": "45.0B",
   "beta": 1.121,
-  "dividend_yield": 0.015300000000000001
+  "dividend_yield": 0.0151
  },
  "council_analysis": {
   "score": 6

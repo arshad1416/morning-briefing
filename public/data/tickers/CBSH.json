@@ -1,27 +1,28 @@
 {
  "ticker": "CBSH",
  "name": "Commerce Bancshares, Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 58.59,
- "change_pct": 0.62,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 57.82,
+ "change_pct": -1.16,
  "sector": "Financial Services",
  "signals": [
-  "near_high",
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 47.6,
-  "sma_20": 59.23,
-  "sma_50": 58.45
+  "rsi_14": 41.1,
+  "sma_20": 59.14,
+  "sma_50": 58.5
  },
  "fundamentals": {
-  "pe_ratio": 14.360294,
-  "market_cap": "8.4B",
+  "pe_ratio": 14.171569,
+  "market_cap": "8.3B",
   "beta": 0.583,
-  "dividend_yield": 0.0189
+  "dividend_yield": 0.018799999999999997
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

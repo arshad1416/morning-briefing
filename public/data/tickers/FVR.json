@@ -1,24 +1,26 @@
 {
  "ticker": "FVR",
  "name": "FrontView REIT, Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 19.93,
- "change_pct": -0.1,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 19.67,
+ "change_pct": 0.2,
  "sector": "Real Estate",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.7,
-  "sma_20": 19.88,
+  "rsi_14": 43.6,
+  "sma_20": 19.83,
   "sma_50": 20.33
  },
  "fundamentals": {
-  "pe_ratio": 664.3334,
-  "market_cap": "602M",
+  "pe_ratio": 655.6667,
+  "market_cap": "594M",
   "beta": null,
-  "dividend_yield": 0.0431
+  "dividend_yield": 0.0438
  },
  "council_analysis": {
   "score": 5

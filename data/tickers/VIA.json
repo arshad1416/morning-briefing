@@ -1,22 +1,23 @@
 {
  "ticker": "VIA",
  "name": "Via Transportation, Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 27.16,
- "change_pct": -2.64,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 28.62,
+ "change_pct": 3.68,
  "sector": "Technology",
  "signals": [
-  "extended_rsi",
-  "above_ma"
+  "overbought_rsi",
+  "above_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 71.6,
-  "sma_20": 24.36,
-  "sma_50": 20.36
+  "rsi_14": 78.4,
+  "sma_20": 24.81,
+  "sma_50": 20.66
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "2.3B",
+  "market_cap": "2.4B",
   "beta": null,
   "dividend_yield": null
  },

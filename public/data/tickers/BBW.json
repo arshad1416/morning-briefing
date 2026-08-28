@@ -1,25 +1,28 @@
 {
  "ticker": "BBW",
  "name": "Build-A-Bear Workshop, Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 38.88,
- "change_pct": -1.23,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 30.31,
+ "change_pct": -22.49,
  "sector": "Consumer Cyclical",
  "signals": [
-  "above_ma",
+  "oversold_rsi",
+  "below_ma",
+  "volume_surge",
+  "near_low",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 61.5,
-  "sma_20": 36.99,
-  "sma_50": 34.35
+  "rsi_14": 32.0,
+  "sma_20": 36.76,
+  "sma_50": 34.32
  },
  "fundamentals": {
-  "pe_ratio": 9.106557,
+  "pe_ratio": 7.0978923,
   "market_cap": null,
   "beta": 1.033,
-  "dividend_yield": 0.023399999999999997
+  "dividend_yield": 0.0235
  },
  "council_analysis": {
   "score": 8

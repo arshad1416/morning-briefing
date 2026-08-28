@@ -1,27 +1,28 @@
 {
  "ticker": "CVBF",
  "name": "CVB Financial Corporation",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 22.46,
- "change_pct": 0.31,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 22.05,
+ "change_pct": -1.56,
  "sector": "Financial Services",
  "signals": [
-  "near_high",
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.7,
-  "sma_20": 22.76,
-  "sma_50": 22.43
+  "rsi_14": 38.8,
+  "sma_20": 22.72,
+  "sma_50": 22.45
  },
  "fundamentals": {
-  "pe_ratio": 15.597221,
-  "market_cap": "4.0B",
+  "pe_ratio": 15.312499,
+  "market_cap": "3.9B",
   "beta": 0.654,
   "dividend_yield": 0.035699999999999996
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,23 +1,24 @@
 {
  "ticker": "SARO",
  "name": "StandardAero, Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 25.55,
- "change_pct": 2.36,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 24.89,
+ "change_pct": -1.13,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
+  "near_low",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 38.7,
-  "sma_20": 27.71,
-  "sma_50": 27.99
+  "rsi_14": 34.3,
+  "sma_20": 27.49,
+  "sma_50": 27.94
  },
  "fundamentals": {
-  "pe_ratio": 26.340204,
-  "market_cap": "8.5B",
+  "pe_ratio": 25.654638,
+  "market_cap": "8.2B",
   "beta": null,
   "dividend_yield": null
  },

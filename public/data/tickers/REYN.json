@@ -1,27 +1,28 @@
 {
  "ticker": "REYN",
  "name": "Reynolds Consumer Products Inc.",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 24.69,
- "change_pct": 0.53,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 24.37,
+ "change_pct": -0.98,
  "sector": "Consumer Cyclical",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 39.1,
-  "sma_20": 25.64,
-  "sma_50": 25.6
+  "rsi_14": 35.5,
+  "sma_20": 25.61,
+  "sma_50": 25.62
  },
  "fundamentals": {
-  "pe_ratio": 15.14724,
-  "market_cap": "5.2B",
+  "pe_ratio": 14.950921,
+  "market_cap": "5.1B",
   "beta": 0.542,
   "dividend_yield": 0.0374
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

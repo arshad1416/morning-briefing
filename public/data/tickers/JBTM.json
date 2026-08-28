@@ -1,25 +1,27 @@
 {
  "ticker": "JBTM",
  "name": "JBT Marel Corporation",
- "generated_at": "2026-08-27T14:45:01.185588+00:00",
- "price": 119.02,
- "change_pct": 0.92,
+ "generated_at": "2026-08-28T11:45:01.707152+00:00",
+ "price": 118.25,
+ "change_pct": -1.4,
  "sector": "Industrials",
  "signals": [
   "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "near_low",
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 41.4,
-  "sma_20": 122.7,
-  "sma_50": 131.58
+  "rsi_14": 40.8,
+  "sma_20": 121.65,
+  "sma_50": 131.35
  },
  "fundamentals": {
-  "pe_ratio": 32.08086,
-  "market_cap": "6.2B",
+  "pe_ratio": 31.873316,
+  "market_cap": "6.1B",
   "beta": 0.944,
-  "dividend_yield": 0.0034000000000000002
+  "dividend_yield": 0.0033
  },
  "council_analysis": {
   "score": 4
