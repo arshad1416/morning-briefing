@@ -1,18 +1,18 @@
 {
  "ticker": "VSTS",
  "name": "Vestis Corporation",
- "generated_at": "2026-08-28T14:45:01.953548+00:00",
- "price": 12.86,
- "change_pct": -1.3,
+ "generated_at": "2026-08-31T11:45:01.994859+00:00",
+ "price": 12.67,
+ "change_pct": -0.63,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma"
  ],
  "technical": {
-  "rsi_14": 35.8,
-  "sma_20": 13.51,
-  "sma_50": 14.21
+  "rsi_14": 33.5,
+  "sma_20": 13.41,
+  "sma_50": 14.2
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -21,7 +21,7 @@
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

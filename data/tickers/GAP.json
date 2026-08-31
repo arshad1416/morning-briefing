@@ -1,25 +1,27 @@
 {
  "ticker": "GAP",
  "name": "Gap, Inc. (The)",
- "generated_at": "2026-08-28T14:45:01.953548+00:00",
- "price": 20.95,
- "change_pct": -0.92,
+ "generated_at": "2026-08-31T11:45:01.994859+00:00",
+ "price": 23.76,
+ "change_pct": 14.3,
  "sector": "Consumer Cyclical",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "volume_surge",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 56.7,
-  "sma_20": 20.44,
-  "sma_50": 20.0
+  "rsi_14": 72.2,
+  "sma_20": 20.62,
+  "sma_50": 20.06
  },
  "fundamentals": {
-  "pe_ratio": 7.907547,
-  "market_cap": null,
-  "beta": 2.051,
-  "dividend_yield": 0.0331
+  "pe_ratio": 9.582661,
+  "market_cap": "8.6B",
+  "beta": null,
+  "dividend_yield": 0.0337
  },
  "council_analysis": {
   "score": 8

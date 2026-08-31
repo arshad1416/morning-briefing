@@ -1,19 +1,22 @@
 {
  "ticker": "FLYX",
  "name": "flyExclusive, Inc.",
- "generated_at": "2026-08-28T14:45:01.953548+00:00",
- "price": 1.3,
- "change_pct": 0.0,
+ "generated_at": "2026-08-31T11:45:01.994859+00:00",
+ "price": 1.25,
+ "change_pct": -2.73,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.6,
+  "rsi_14": 44.5,
   "sma_20": 1.25,
-  "sma_50": 1.47
+  "sma_50": 1.45
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "198M",
+  "market_cap": "189M",
   "beta": 0.248,
   "dividend_yield": null
  },

@@ -1,21 +1,24 @@
 {
  "ticker": "ENSG",
  "name": "The Ensign Group, Inc.",
- "generated_at": "2026-08-28T14:45:01.953548+00:00",
- "price": 177.07,
- "change_pct": -1.97,
+ "generated_at": "2026-08-31T11:45:01.994859+00:00",
+ "price": 171.93,
+ "change_pct": -0.93,
  "sector": "Healthcare",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 47.4,
-  "sma_20": 180.3,
-  "sma_50": 172.83
+  "rsi_14": 38.4,
+  "sma_20": 179.81,
+  "sma_50": 173.08
  },
  "fundamentals": {
-  "pe_ratio": 27.75392,
-  "market_cap": "10.3B",
+  "pe_ratio": 26.947493,
+  "market_cap": "10.0B",
   "beta": 0.694,
-  "dividend_yield": 0.0014000000000000002
+  "dividend_yield": 0.0015
  },
  "council_analysis": {
   "score": 5

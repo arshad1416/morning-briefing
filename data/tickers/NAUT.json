@@ -1,21 +1,22 @@
 {
  "ticker": "NAUT",
  "name": "Nautilus Biotechnology, Inc.",
- "generated_at": "2026-08-28T14:45:01.953548+00:00",
- "price": 0.96,
- "change_pct": 2.43,
+ "generated_at": "2026-08-31T11:45:01.994859+00:00",
+ "price": 0.88,
+ "change_pct": -2.32,
  "sector": "Healthcare",
  "signals": [
-  "rsi_dip"
+  "oversold_rsi",
+  "below_ma"
  ],
  "technical": {
-  "rsi_14": 38.3,
+  "rsi_14": 33.0,
   "sma_20": 0.91,
-  "sma_50": 1.45
+  "sma_50": 1.42
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "122M",
+  "market_cap": "112M",
   "beta": 0.871,
   "dividend_yield": null
  },

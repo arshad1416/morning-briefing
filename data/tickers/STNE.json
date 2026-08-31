@@ -1,29 +1,30 @@
 {
  "ticker": "STNE",
  "name": "StoneCo Ltd.",
- "generated_at": "2026-08-28T14:45:01.953548+00:00",
- "price": 9.74,
- "change_pct": 0.2,
+ "generated_at": "2026-08-31T11:45:01.994859+00:00",
+ "price": 9.49,
+ "change_pct": -0.68,
  "sector": "Technology",
  "signals": [
   "rsi_dip",
   "below_ma",
+  "near_low",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 42.6,
-  "sma_20": 10.1,
-  "sma_50": 10.63
+  "rsi_14": 39.0,
+  "sma_20": 10.0,
+  "sma_50": 10.61
  },
  "fundamentals": {
-  "pe_ratio": 3.689053,
+  "pe_ratio": 3.5830188,
   "market_cap": "2.2B",
   "beta": 1.638,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

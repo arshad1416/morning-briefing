@@ -1,21 +1,24 @@
 {
  "ticker": "BCO",
  "name": "Brinks Company (The)",
- "generated_at": "2026-08-28T14:45:01.953548+00:00",
- "price": 110.33,
- "change_pct": -1.06,
+ "generated_at": "2026-08-31T11:45:01.994859+00:00",
+ "price": 109.16,
+ "change_pct": -0.3,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.6,
-  "sma_20": 112.99,
-  "sma_50": 109.72
+  "rsi_14": 43.4,
+  "sma_20": 112.49,
+  "sma_50": 109.94
  },
  "fundamentals": {
-  "pe_ratio": 25.540508,
+  "pe_ratio": 25.268518,
   "market_cap": "4.5B",
   "beta": 1.038,
-  "dividend_yield": 0.0091
+  "dividend_yield": 0.009300000000000001
  },
  "council_analysis": {
   "score": 5

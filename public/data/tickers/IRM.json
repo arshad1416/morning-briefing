@@ -1,24 +1,26 @@
 {
  "ticker": "IRM",
  "name": "Iron Mountain Incorporated (Del",
- "generated_at": "2026-08-28T14:45:01.953548+00:00",
- "price": 124.08,
- "change_pct": 2.19,
+ "generated_at": "2026-08-31T11:45:01.994859+00:00",
+ "price": 121.0,
+ "change_pct": -1.38,
  "sector": "Real Estate",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.7,
-  "sma_20": 123.89,
-  "sma_50": 124.26
+  "rsi_14": 44.3,
+  "sma_20": 123.75,
+  "sma_50": 124.15
  },
  "fundamentals": {
-  "pe_ratio": 88.00355,
-  "market_cap": "36.9B",
+  "pe_ratio": 85.815605,
+  "market_cap": "36.0B",
   "beta": 1.217,
-  "dividend_yield": 0.0285
+  "dividend_yield": 0.0282
  },
  "council_analysis": {
   "score": 5

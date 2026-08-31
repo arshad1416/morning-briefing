@@ -1,30 +1,81 @@
 {
  "ticker": "PCG",
  "name": "Pacific Gas & Electric Co.",
- "generated_at": "2026-08-28T14:45:01.953548+00:00",
- "price": 17.74,
- "change_pct": -2.66,
+ "generated_at": "2026-08-31T11:45:01.994859+00:00",
+ "price": 18.29,
+ "change_pct": 1.89,
  "sector": "Utilities",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 51.4,
-  "sma_20": 17.59,
-  "sma_50": 17.38
+  "rsi_14": 58.7,
+  "sma_20": 17.65,
+  "sma_50": 17.42
  },
  "fundamentals": {
-  "pe_ratio": 12.758993,
-  "market_cap": "39.1B",
+  "pe_ratio": 13.158275,
+  "market_cap": "40.3B",
   "beta": 0.278,
   "dividend_yield": 0.011000000000000001
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "PCG",
+   "date": "2026-10-22",
+   "epsEstimate": 0.42,
+   "epsActual": null
+  },
+  {
+   "ticker": "PCG",
+   "date": "2026-07-23",
+   "epsEstimate": 0.36,
+   "epsActual": 0.4
+  },
+  {
+   "ticker": "PCG",
+   "date": "2026-04-23",
+   "epsEstimate": 0.4,
+   "epsActual": 0.43
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "PCG",
+   "date": "2026-07-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1004980/000100498026000048/pcg-20260630.htm"
+  },
+  {
+   "ticker": "PCG",
+   "date": "2026-04-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1004980/000100498026000033/pcg-20260331.htm"
+  },
+  {
+   "ticker": "PCG",
+   "date": "2026-02-12",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1004980/000100498026000009/pcg-20251231.htm"
+  },
+  {
+   "ticker": "PCG",
+   "date": "2025-10-23",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1004980/000100498025000148/pcg-20250930.htm"
+  },
+  {
+   "ticker": "PCG",
+   "date": "2025-07-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1004980/000100498025000132/pcg-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

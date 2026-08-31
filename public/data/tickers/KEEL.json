@@ -1,19 +1,22 @@
 {
  "ticker": "KEEL",
  "name": "Keel Infrastructure Corp.",
- "generated_at": "2026-08-28T14:45:01.953548+00:00",
- "price": 3.72,
- "change_pct": 10.86,
+ "generated_at": "2026-08-31T11:45:01.994859+00:00",
+ "price": 3.27,
+ "change_pct": -6.84,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 49.7,
-  "sma_20": 3.58,
-  "sma_50": 4.38
+  "rsi_14": 42.5,
+  "sma_20": 3.54,
+  "sma_50": 4.32
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "2.3B",
+  "market_cap": "2.0B",
   "beta": 4.113,
   "dividend_yield": null
  },

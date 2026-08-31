@@ -1,31 +1,36 @@
 {
  "ticker": "CRM",
  "name": "Salesforce, Inc.",
- "generated_at": "2026-08-28T14:45:01.953548+00:00",
- "price": 247.29,
- "change_pct": 20.27,
+ "generated_at": "2026-08-31T11:45:01.994859+00:00",
+ "price": 258.18,
+ "change_pct": 2.43,
  "sector": "Technology",
  "signals": [
   "overbought_rsi",
   "above_ma",
-  "volume_surge",
+  "near_high",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 79.0,
-  "sma_20": 199.74,
-  "sma_50": 178.78
+  "rsi_14": 81.2,
+  "sma_20": 203.69,
+  "sma_50": 180.93
  },
  "fundamentals": {
-  "pe_ratio": 22.641941,
-  "market_cap": null,
+  "pe_ratio": 23.664528,
+  "market_cap": "212.5B",
   "beta": 1.152,
-  "dividend_yield": 0.0086
+  "dividend_yield": 0.006999999999999999
  },
  "council_analysis": {
   "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
- "reddit_mentions": []
+ "reddit_mentions": [
+  {
+   "sub": "wsb",
+   "count": 1
+  }
+ ]
 }

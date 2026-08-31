@@ -1,21 +1,24 @@
 {
  "ticker": "AOS",
  "name": "A.O. Smith Corporation",
- "generated_at": "2026-08-28T14:45:01.953548+00:00",
- "price": 61.67,
- "change_pct": -1.3,
+ "generated_at": "2026-08-31T11:45:01.994859+00:00",
+ "price": 59.91,
+ "change_pct": -3.29,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 49.1,
+  "rsi_14": 42.7,
   "sma_20": 62.42,
-  "sma_50": 61.01
+  "sma_50": 61.06
  },
  "fundamentals": {
-  "pe_ratio": 17.178272,
-  "market_cap": "8.4B",
+  "pe_ratio": 16.688023,
+  "market_cap": "8.1B",
   "beta": 1.157,
-  "dividend_yield": 0.023
+  "dividend_yield": 0.0232
  },
  "council_analysis": {
   "score": 5

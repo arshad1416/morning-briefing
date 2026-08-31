@@ -1,21 +1,24 @@
 {
  "ticker": "BCC",
  "name": "Boise Cascade, L.L.C.",
- "generated_at": "2026-08-28T14:45:01.953548+00:00",
- "price": 79.34,
- "change_pct": -0.75,
+ "generated_at": "2026-08-31T11:45:01.994859+00:00",
+ "price": 77.9,
+ "change_pct": -1.1,
  "sector": "Basic Materials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 46.1,
-  "sma_20": 82.78,
-  "sma_50": 78.73
+  "rsi_14": 42.9,
+  "sma_20": 82.82,
+  "sma_50": 78.86
  },
  "fundamentals": {
-  "pe_ratio": 26.894913,
-  "market_cap": "2.8B",
+  "pe_ratio": 26.408474,
+  "market_cap": "2.7B",
   "beta": 1.051,
-  "dividend_yield": 0.0111
+  "dividend_yield": 0.0113
  },
  "council_analysis": {
   "score": 5
