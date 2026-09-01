@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-08-31T11:30:01.877703+00:00",
+  "generated_at": "2026-09-01T11:30:01.926598+00:00",
   "signal": "neutral",
-  "conviction": 0.51,
+  "conviction": 0.54,
   "conviction_source": "model",
-  "narrative": "Mixed tape with defensive healthcare outperforming while small caps slide; heavy call flow in MSFT/META contrasts with put flow in IWM/SPY.",
+  "narrative": "Broad equity losses with small caps down hardest (Russell 2000 -1.92%) while VIX at 15.85 signals contained fear.",
   "narrative_source": "llm",
   "model_features": {
-    "vix": 15.2,
+    "vix": 15.85,
     "vix_score": 0.5,
     "sleeve_a_signals": 0,
     "avg_signal_score": 0,
     "max_signal_score": 0,
-    "recent_hit_rate": 0.38,
-    "recent_trades": 8,
+    "recent_hit_rate": 0.5,
+    "recent_trades": 10,
     "breadth": 1.0,
-    "vix_contango": 5.46,
+    "vix_contango": 6.26,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.26,
-      0.76
+      0.29,
+      0.79
     ]
   },
   "confidence_interval": [
-    0.26,
-    0.76
+    0.29,
+    0.79
   ]
 }
