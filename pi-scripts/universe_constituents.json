@@ -1,12 +1,12 @@
 {
   "_note": "Index membership cache for generate-screener-data.py. Regenerate with fetch_universe_constituents.py \u2014 do not hand-edit; membership changes several times a year and a stale hand-edit becomes wrong silently.",
-  "generated_at": "2026-08-29",
+  "generated_at": "2026-09-01",
   "indices": {
     "S&P 500": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
       "source_note": "Wikipedia 'List of S&P 500 companies', table#constituents.",
-      "fetched_at": "2026-08-29",
-      "as_of": "2026-08-29",
+      "fetched_at": "2026-09-01",
+      "as_of": "2026-09-01",
       "member_count": 503,
       "members": [
         {
@@ -2026,8 +2026,8 @@
     "S&P 400": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies",
       "source_note": "S&P MidCap 400. Wikipedia 'List of S&P 400 companies', table#constituents.",
-      "fetched_at": "2026-08-29",
-      "as_of": "2026-08-29",
+      "fetched_at": "2026-09-01",
+      "as_of": "2026-09-01",
       "member_count": 400,
       "members": [
         {
@@ -3635,8 +3635,8 @@
     "S&P 600": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_600_companies",
       "source_note": "S&P SmallCap 600. Wikipedia 'List of S&P 600 companies', table#constituents.",
-      "fetched_at": "2026-08-29",
-      "as_of": "2026-08-29",
+      "fetched_at": "2026-09-01",
+      "as_of": "2026-09-01",
       "member_count": 603,
       "members": [
         {
@@ -6056,8 +6056,8 @@
     "Russell 2000": {
       "source_url": "https://www.blackrock.com/varnish-api/blk-one01-product-data/product-data/api/v2/get-product-data?appSubType=ISHARES&appType=PRODUCT_PAGE&component=holdings&locale=en_US&portfolioId=239710&targetSite=us-ishares&userType=individual&excludeContent=true&includeConfig=true",
       "source_note": "Proxy: holdings of the iShares Russell 2000 ETF (IWM), not the index itself. Non-equity balances, contingent value rights and escrow stubs are excluded. Refreshed each business day, and membership can differ slightly from the index.",
-      "fetched_at": "2026-08-29",
-      "as_of": "2026-08-27",
+      "fetched_at": "2026-09-01",
+      "as_of": "2026-08-31",
       "member_count": 1952,
       "members": [
         {
@@ -6130,7 +6130,7 @@
         },
         {
           "symbol": "ACEL",
-          "name": "ACCEL ENTERTAINMENT INC CLASS A"
+          "name": "ACCEL ENTERTAINMENT CLASS A"
         },
         {
           "symbol": "ACH",
@@ -6278,7 +6278,7 @@
         },
         {
           "symbol": "AGNT",
-          "name": "AGNT INC"
+          "name": "AGNT"
         },
         {
           "symbol": "AGX",
@@ -6598,7 +6598,7 @@
         },
         {
           "symbol": "AQST",
-          "name": "AQUESTIVE THERAPEUTICS INC"
+          "name": "AQUESTIVE THERAPEUTICS"
         },
         {
           "symbol": "ARCB",
@@ -6666,7 +6666,7 @@
         },
         {
           "symbol": "ARVN",
-          "name": "ARVINAS INC"
+          "name": "ARVINAS"
         },
         {
           "symbol": "ARX",
@@ -6918,7 +6918,7 @@
         },
         {
           "symbol": "BBNX",
-          "name": "BETA BIONICS INC"
+          "name": "BETA BIONICS"
         },
         {
           "symbol": "BBSI",
@@ -7382,7 +7382,7 @@
         },
         {
           "symbol": "CATX",
-          "name": "PERSPECTIVE THERAPEUTICS INC"
+          "name": "PERSPECTIVE THERAPEUTICS"
         },
         {
           "symbol": "CATY",
@@ -7462,7 +7462,7 @@
         },
         {
           "symbol": "CCOI",
-          "name": "COGENT COMMUNICATIONS HOLDINGS INC"
+          "name": "COGENT COMMUNICATIONS HOLDINGS"
         },
         {
           "symbol": "CCS",
@@ -8194,7 +8194,7 @@
         },
         {
           "symbol": "DJT",
-          "name": "TRUMP MEDIA TECHNOLOGY GROUP CORP"
+          "name": "TRUMP MEDIA TECHNOLOGY GROUP"
         },
         {
           "symbol": "DK",
@@ -8978,7 +8978,7 @@
         },
         {
           "symbol": "GBX",
-          "name": "GREENBRIER INC"
+          "name": "GREENBRIER"
         },
         {
           "symbol": "GCBC",
@@ -9814,7 +9814,7 @@
         },
         {
           "symbol": "JBIO",
-          "name": "JADE BIOSCIENCES INC"
+          "name": "JADE BIOSCIENCES"
         },
         {
           "symbol": "JBLU",
@@ -9890,7 +9890,7 @@
         },
         {
           "symbol": "KFRC",
-          "name": "KFORCE INC"
+          "name": "KFORCE"
         },
         {
           "symbol": "KFY",
@@ -10346,7 +10346,7 @@
         },
         {
           "symbol": "MAN",
-          "name": "MANPOWER INC"
+          "name": "MANPOWER"
         },
         {
           "symbol": "MANE",
@@ -11406,7 +11406,7 @@
         },
         {
           "symbol": "PARR",
-          "name": "PAR PACIFIC HOLDINGS INC"
+          "name": "PAR PACIFIC HOLDINGS"
         },
         {
           "symbol": "PATK",
@@ -11706,11 +11706,11 @@
         },
         {
           "symbol": "PRCH",
-          "name": "PORCH GROUP INC"
+          "name": "PORCH GROUP"
         },
         {
           "symbol": "PRCT",
-          "name": "PROCEPT BIOROBOTICS CORP"
+          "name": "PROCEPT BIOROBOTICS"
         },
         {
           "symbol": "PRDO",
@@ -12182,7 +12182,7 @@
         },
         {
           "symbol": "RVLV",
-          "name": "REVOLVE GROUP CLASS A INC"
+          "name": "REVOLVE GROUP CLASS A"
         },
         {
           "symbol": "RWT",
@@ -12258,7 +12258,7 @@
         },
         {
           "symbol": "SB",
-          "name": "SAFE BULKERS INC"
+          "name": "SAFE BULKERS"
         },
         {
           "symbol": "SBC",
@@ -12342,7 +12342,7 @@
         },
         {
           "symbol": "SERV",
-          "name": "SERVE ROBOTICS INC"
+          "name": "SERVE ROBOTICS"
         },
         {
           "symbol": "SES",
@@ -12662,7 +12662,7 @@
         },
         {
           "symbol": "SRCE",
-          "name": "1ST SOURCE CORP"
+          "name": "1ST SOURCE"
         },
         {
           "symbol": "SRI",
@@ -13042,7 +13042,7 @@
         },
         {
           "symbol": "TPB",
-          "name": "TURNING POINT BRANDS INC"
+          "name": "TURNING POINT BRANDS"
         },
         {
           "symbol": "TPC",
@@ -13246,7 +13246,7 @@
         },
         {
           "symbol": "UMBF",
-          "name": "UMB FINANCIAL CORP"
+          "name": "UMB FINANCIAL"
         },
         {
           "symbol": "UMH",
@@ -13402,7 +13402,7 @@
         },
         {
           "symbol": "VECO",
-          "name": "VEECO INSTRUMENTS INC"
+          "name": "VEECO INSTRUMENTS"
         },
         {
           "symbol": "VEL",
@@ -13873,8 +13873,8 @@
     "Nasdaq-100": {
       "source_url": "https://api.nasdaq.com/api/quote/list-type/nasdaq100",
       "source_note": "Nasdaq's own index-membership endpoint (the Wikipedia article no longer carries a components table).",
-      "fetched_at": "2026-08-29",
-      "as_of": "2026-08-29",
+      "fetched_at": "2026-09-01",
+      "as_of": "2026-09-01",
       "member_count": 102,
       "members": [
         {
