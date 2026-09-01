@@ -1,23 +1,25 @@
 {
  "ticker": "FRBA",
  "name": "First Bank",
- "generated_at": "2026-08-31T14:45:01.633510+00:00",
- "price": 17.99,
- "change_pct": 0.71,
+ "generated_at": "2026-09-01T11:45:01.309765+00:00",
+ "price": 17.8,
+ "change_pct": -0.5,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 45.0,
-  "sma_20": 18.48,
-  "sma_50": 17.92
+  "rsi_14": 40.6,
+  "sma_20": 18.43,
+  "sma_50": 17.94
  },
  "fundamentals": {
-  "pe_ratio": 10.519005,
-  "market_cap": "445M",
+  "pe_ratio": 10.409356,
+  "market_cap": "441M",
   "beta": 0.527,
-  "dividend_yield": 0.018500000000000003
+  "dividend_yield": 0.0184
  },
  "council_analysis": {
   "score": 6

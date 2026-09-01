@@ -1,28 +1,29 @@
 {
  "ticker": "RM",
  "name": "Regional Management Corp.",
- "generated_at": "2026-08-31T14:45:01.633510+00:00",
- "price": 33.21,
- "change_pct": 1.62,
+ "generated_at": "2026-09-01T11:45:01.309765+00:00",
+ "price": 32.22,
+ "change_pct": -1.01,
  "sector": "Financial Services",
  "signals": [
   "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 42.8,
-  "sma_20": 33.0,
-  "sma_50": 37.45
+  "rsi_14": 37.8,
+  "sma_20": 32.86,
+  "sma_50": 37.34
  },
  "fundamentals": {
-  "pe_ratio": 6.9915786,
-  "market_cap": "306M",
+  "pe_ratio": 6.7831583,
+  "market_cap": "297M",
   "beta": 0.989,
-  "dividend_yield": 0.036699999999999997
+  "dividend_yield": 0.0369
  },
  "council_analysis": {
-  "score": 8
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

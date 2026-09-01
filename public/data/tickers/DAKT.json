@@ -1,26 +1,28 @@
 {
  "ticker": "DAKT",
  "name": "Daktronics, Inc.",
- "generated_at": "2026-08-31T14:45:01.633510+00:00",
- "price": 19.72,
- "change_pct": 0.56,
+ "generated_at": "2026-09-01T11:45:01.309765+00:00",
+ "price": 19.44,
+ "change_pct": 0.73,
  "sector": "Technology",
  "signals": [
-  "below_ma"
+  "rsi_dip",
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.3,
-  "sma_20": 20.28,
-  "sma_50": 20.01
+  "rsi_14": 44.2,
+  "sma_20": 20.19,
+  "sma_50": 19.97
  },
  "fundamentals": {
-  "pe_ratio": 21.434782,
-  "market_cap": "953M",
+  "pe_ratio": 21.130434,
+  "market_cap": "939M",
   "beta": 1.693,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 4
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

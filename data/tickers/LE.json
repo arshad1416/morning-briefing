@@ -1,22 +1,24 @@
 {
  "ticker": "LE",
  "name": "Lands' End, Inc.",
- "generated_at": "2026-08-31T14:45:01.633510+00:00",
- "price": 12.01,
- "change_pct": 1.01,
+ "generated_at": "2026-09-01T11:45:01.309765+00:00",
+ "price": 11.85,
+ "change_pct": -1.66,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.8,
-  "sma_20": 12.47,
-  "sma_50": 11.98
+  "rsi_14": 44.6,
+  "sma_20": 12.44,
+  "sma_50": 11.97
  },
  "fundamentals": {
-  "pe_ratio": 1.0908265,
-  "market_cap": "369M",
+  "pe_ratio": 1.0762943,
+  "market_cap": "364M",
   "beta": 2.338,
   "dividend_yield": null
  },

@@ -1,24 +1,26 @@
 {
  "ticker": "SON",
  "name": "Sonoco Products Company",
- "generated_at": "2026-08-31T14:45:01.633510+00:00",
- "price": 56.6,
- "change_pct": -0.19,
+ "generated_at": "2026-09-01T11:45:01.309765+00:00",
+ "price": 55.85,
+ "change_pct": -1.1,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 47.9,
-  "sma_20": 57.61,
-  "sma_50": 56.0
+  "rsi_14": 44.5,
+  "sma_20": 57.6,
+  "sma_50": 56.11
  },
  "fundamentals": {
-  "pe_ratio": 8.748841,
-  "market_cap": "5.6B",
+  "pe_ratio": 8.632149,
+  "market_cap": "5.5B",
   "beta": 0.353,
-  "dividend_yield": 0.0381
+  "dividend_yield": 0.0383
  },
  "council_analysis": {
   "score": 7

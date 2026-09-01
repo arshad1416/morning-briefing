@@ -1,31 +1,81 @@
 {
  "ticker": "HST",
  "name": "Host Hotels & Resorts, Inc.",
- "generated_at": "2026-08-31T14:45:01.633510+00:00",
- "price": 22.32,
- "change_pct": -0.09,
+ "generated_at": "2026-09-01T11:45:01.309765+00:00",
+ "price": 21.88,
+ "change_pct": -1.82,
  "sector": "Real Estate",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 35.2,
-  "sma_20": 23.19,
-  "sma_50": 23.67
+  "rsi_14": 30.8,
+  "sma_20": 23.02,
+  "sma_50": 23.62
  },
  "fundamentals": {
-  "pe_ratio": 14.979865,
-  "market_cap": "15.5B",
+  "pe_ratio": 14.681208,
+  "market_cap": "15.2B",
   "beta": 1.122,
-  "dividend_yield": 0.0358
+  "dividend_yield": 0.0359
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "HST",
+   "date": "2026-11-04",
+   "epsEstimate": 0.08,
+   "epsActual": null
+  },
+  {
+   "ticker": "HST",
+   "date": "2026-08-05",
+   "epsEstimate": 0.34,
+   "epsActual": 0.35
+  },
+  {
+   "ticker": "HST",
+   "date": "2026-05-06",
+   "epsEstimate": 0.33,
+   "epsActual": 0.72
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "HST",
+   "date": "2026-08-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1070750/000107075026000126/hst-20260630.htm"
+  },
+  {
+   "ticker": "HST",
+   "date": "2026-05-08",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1070750/000107075026000080/hst-20260331.htm"
+  },
+  {
+   "ticker": "HST",
+   "date": "2026-02-25",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1070750/000107075026000054/hst-20251231.htm"
+  },
+  {
+   "ticker": "HST",
+   "date": "2025-11-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1070750/000107075025000168/hst-20250930.htm"
+  },
+  {
+   "ticker": "HST",
+   "date": "2025-08-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1070750/000107075025000139/hst-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }
