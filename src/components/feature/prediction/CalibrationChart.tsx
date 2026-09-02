@@ -17,9 +17,10 @@
 'use client';
 
 import React from 'react';
-import { Surface, SurfaceHeader, InfoTip } from '@/components/primitives';
+import { Surface, SurfaceHeader, InfoTip, DataFreshness } from '@/components/primitives';
 import { useQuery } from '@tanstack/react-query';
 import { accuracyQuery } from '@/lib/query/options';
+import { STALE_AFTER } from '@/lib/query/policy';
 import { GateError } from '@/lib/api/gated';
 
 export function CalibrationChart() {
@@ -60,7 +61,10 @@ export function CalibrationChart() {
   const closedTrades = data.total_signals;
   return (
     <Surface span="half">
-      <SurfaceHeader title={<InfoTip term="calibration">Calibration Chart</InfoTip>} />
+      <SurfaceHeader
+        title={<InfoTip term="calibration">Calibration Chart</InfoTip>}
+        right={<DataFreshness timestamp={data.generated_at} staleAfterMs={STALE_AFTER.models} />}
+      />
       <div className="p-6 flex flex-col items-center justify-center text-center min-h-[200px]">
         <svg
           viewBox="0 0 24 24"

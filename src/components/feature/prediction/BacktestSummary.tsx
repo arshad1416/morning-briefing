@@ -4,9 +4,10 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { predictionEngineQuery } from '@/lib/query/options';
-import { Surface, SurfaceHeader, InfoTip } from '@/components/primitives';
+import { Surface, SurfaceHeader, InfoTip, DataFreshness } from '@/components/primitives';
 import type { GlossaryTerm } from '@/lib/glossary';
 import { GateError } from '@/lib/api/gated';
+import { STALE_AFTER } from '@/lib/query/policy';
 
 /**
  * Backtest corpus summary from prediction-engine.json (Pro-gated) — the
@@ -65,7 +66,10 @@ export function BacktestSummary() {
 
   return (
     <Surface span="half">
-      <SurfaceHeader title="Backtest Summary" />
+      <SurfaceHeader
+        title="Backtest Summary"
+        right={<DataFreshness timestamp={data.generated_at} staleAfterMs={STALE_AFTER.models} />}
+      />
       <div className="p-4">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {cells.map((c) => (
