@@ -1,46 +1,46 @@
 {
-  "generated_at": "2026-09-02T10:07:31-04:00",
+  "generated_at": "2026-09-02T10:30:48-04:00",
   "market_overview": {
-    "total_net_gex": 3342005,
-    "total_oi": 3183851,
-    "current_price": 764.07,
-    "change_pct": 0.3
+    "total_net_gex": 3334251,
+    "total_oi": 3166998,
+    "current_price": 765.18,
+    "change_pct": 0.45
   },
   "tickers": {
     "SPY": {
-      "current_price": 764.07,
-      "change_pct": 0.3,
+      "current_price": 765.18,
+      "change_pct": 0.45,
       "gamma_regime": "bullish",
-      "total_gex": 3342005,
-      "total_dex": 61569883,
-      "total_vex": 968621875,
-      "total_vanna": 8114530,
-      "total_charm": -2203545,
-      "total_dealer_gex": -803893,
-      "gamma_flip": 768.67,
+      "total_gex": 3334251,
+      "total_dex": 68868889,
+      "total_vex": 964847830,
+      "total_vanna": 8191867,
+      "total_charm": -2227736,
+      "total_dealer_gex": -864852,
+      "gamma_flip": 769.36,
       "max_pain": 754.0,
       "max_gex_strike": 765.0,
-      "max_gex_value": 434150,
+      "max_gex_value": 527528,
       "neutral_range": [],
       "floor_zone": {
-        "strike": 760.0,
-        "net_gex": 502938,
-        "total_gex": 502938,
-        "range_start": 755.0,
-        "range_end": 765.0,
-        "strength": "strong",
-        "narrative": "Gamma floor at $760"
-      },
-      "ceiling_zone": {
         "strike": 765.0,
-        "net_gex": 605919,
-        "total_gex": 605919,
+        "net_gex": 688225,
+        "total_gex": 688225,
         "range_start": 760.0,
         "range_end": 770.0,
         "strength": "strong",
-        "narrative": "Gamma ceiling at $765"
+        "narrative": "Gamma floor at $765"
       },
-      "narrative": "Net GEX: $+3,342,005 \u2014 dealers are long gamma (range-bound)"
+      "ceiling_zone": {
+        "strike": 770.0,
+        "net_gex": 334880,
+        "total_gex": 334880,
+        "range_start": 765.0,
+        "range_end": 775.0,
+        "strength": "strong",
+        "narrative": "Gamma ceiling at $770"
+      },
+      "narrative": "Net GEX: $+3,334,251 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
