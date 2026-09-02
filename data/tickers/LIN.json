@@ -1,22 +1,24 @@
 {
  "ticker": "LIN",
  "name": "Linde plc",
- "generated_at": "2026-09-01T14:45:02.028537+00:00",
- "price": 489.91,
- "change_pct": 0.08,
+ "generated_at": "2026-09-02T11:45:01.397519+00:00",
+ "price": 484.28,
+ "change_pct": -1.08,
  "sector": "Basic Materials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 48.6,
-  "sma_20": 485.72,
-  "sma_50": 504.18
+  "rsi_14": 44.2,
+  "sma_20": 485.45,
+  "sma_50": 504.07
  },
  "fundamentals": {
-  "pe_ratio": 31.566366,
-  "market_cap": "225.8B",
+  "pe_ratio": 31.203608,
+  "market_cap": "223.2B",
   "beta": 0.726,
   "dividend_yield": 0.0131
  },

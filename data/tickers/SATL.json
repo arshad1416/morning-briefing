@@ -1,19 +1,22 @@
 {
  "ticker": "SATL",
  "name": "Satellogic Inc.",
- "generated_at": "2026-09-01T14:45:02.028537+00:00",
- "price": 4.82,
- "change_pct": -0.52,
+ "generated_at": "2026-09-02T11:45:01.397519+00:00",
+ "price": 4.67,
+ "change_pct": -4.11,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.1,
-  "sma_20": 5.37,
-  "sma_50": 4.78
+  "rsi_14": 42.9,
+  "sma_20": 5.38,
+  "sma_50": 4.76
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "742M",
+  "market_cap": "718M",
   "beta": 1.316,
   "dividend_yield": null
  },

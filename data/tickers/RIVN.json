@@ -1,19 +1,22 @@
 {
  "ticker": "RIVN",
  "name": "Rivian Automotive, Inc.",
- "generated_at": "2026-09-01T14:45:02.028537+00:00",
- "price": 16.23,
- "change_pct": 1.0,
+ "generated_at": "2026-09-02T11:45:01.397519+00:00",
+ "price": 15.54,
+ "change_pct": -3.24,
  "sector": "Consumer Cyclical",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 50.2,
-  "sma_20": 15.98,
-  "sma_50": 16.44
+  "rsi_14": 44.9,
+  "sma_20": 15.96,
+  "sma_50": 16.45
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "23.5B",
+  "market_cap": "22.5B",
   "beta": 1.612,
   "dividend_yield": null
  },

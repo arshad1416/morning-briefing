@@ -1,18 +1,21 @@
 {
  "ticker": "ROCK",
  "name": "Gibraltar Industries, Inc.",
- "generated_at": "2026-09-01T14:45:02.028537+00:00",
- "price": 45.35,
- "change_pct": 0.19,
+ "generated_at": "2026-09-02T11:45:01.397519+00:00",
+ "price": 44.06,
+ "change_pct": -2.06,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 46.1,
-  "sma_20": 47.91,
-  "sma_50": 45.27
+  "rsi_14": 41.9,
+  "sma_20": 47.83,
+  "sma_50": 45.24
  },
  "fundamentals": {
-  "pe_ratio": 22.45297,
+  "pe_ratio": 21.814356,
   "market_cap": "1.3B",
   "beta": 1.221,
   "dividend_yield": null

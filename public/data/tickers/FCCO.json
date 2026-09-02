@@ -1,21 +1,23 @@
 {
  "ticker": "FCCO",
  "name": "First Community Corporation",
- "generated_at": "2026-09-01T14:45:02.028537+00:00",
- "price": 33.35,
- "change_pct": -0.85,
+ "generated_at": "2026-09-02T11:45:01.397519+00:00",
+ "price": 32.94,
+ "change_pct": -0.47,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 46.0,
-  "sma_20": 33.99,
-  "sma_50": 33.3
+  "rsi_14": 41.8,
+  "sma_20": 33.95,
+  "sma_50": 33.29
  },
  "fundamentals": {
-  "pe_ratio": 12.442164,
-  "market_cap": "313M",
+  "pe_ratio": 12.29291,
+  "market_cap": "310M",
   "beta": 0.344,
   "dividend_yield": 0.0202
  },

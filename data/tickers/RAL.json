@@ -1,19 +1,19 @@
 {
  "ticker": "RAL",
  "name": "Ralliant Corporation",
- "generated_at": "2026-09-01T14:45:02.028537+00:00",
- "price": 61.53,
- "change_pct": -0.3,
+ "generated_at": "2026-09-02T11:45:01.397519+00:00",
+ "price": 61.08,
+ "change_pct": -1.05,
  "sector": "Technology",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 35.8,
-  "sma_20": 66.73,
-  "sma_50": 68.24
+  "rsi_14": 34.9,
+  "sma_20": 66.71,
+  "sma_50": 68.23
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -22,7 +22,7 @@
   "dividend_yield": 0.0032
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,18 +1,21 @@
 {
  "ticker": "BOBS",
  "name": "Bob's Discount Furniture, Inc.",
- "generated_at": "2026-09-01T14:45:02.028537+00:00",
- "price": 16.86,
- "change_pct": -2.6,
+ "generated_at": "2026-09-02T11:45:01.397519+00:00",
+ "price": 16.5,
+ "change_pct": -1.96,
  "sector": "Consumer Cyclical",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.2,
-  "sma_20": 18.05,
-  "sma_50": 16.67
+  "rsi_14": 42.0,
+  "sma_20": 18.0,
+  "sma_50": 16.65
  },
  "fundamentals": {
-  "pe_ratio": 16.529413,
+  "pe_ratio": 16.176472,
   "market_cap": "2.2B",
   "beta": null,
   "dividend_yield": null

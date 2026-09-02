@@ -1,31 +1,80 @@
 {
  "ticker": "MA",
  "name": "Mastercard Incorporated",
- "generated_at": "2026-09-01T14:45:02.028537+00:00",
- "price": 593.57,
- "change_pct": -0.29,
+ "generated_at": "2026-09-02T11:45:01.397519+00:00",
+ "price": 591.55,
+ "change_pct": 0.38,
  "sector": "Financial Services",
  "signals": [
-  "extended_rsi",
   "above_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 65.8,
-  "sma_20": 577.21,
-  "sma_50": 550.02
+  "rsi_14": 64.8,
+  "sma_20": 576.81,
+  "sma_50": 549.86
  },
  "fundamentals": {
-  "pe_ratio": 32.685574,
-  "market_cap": "520.0B",
+  "pe_ratio": 32.592285,
+  "market_cap": "518.2B",
   "beta": 0.735,
   "dividend_yield": 0.0058
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "MA",
+   "date": "2026-10-29",
+   "epsEstimate": 5.15,
+   "epsActual": null
+  },
+  {
+   "ticker": "MA",
+   "date": "2026-07-30",
+   "epsEstimate": 4.78,
+   "epsActual": 5.04
+  },
+  {
+   "ticker": "MA",
+   "date": "2026-04-30",
+   "epsEstimate": 4.41,
+   "epsActual": 4.6
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "MA",
+   "date": "2026-07-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000083/ma-20260630.htm"
+  },
+  {
+   "ticker": "MA",
+   "date": "2026-04-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000031/ma-20260331.htm"
+  },
+  {
+   "ticker": "MA",
+   "date": "2026-02-11",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000013/ma-20251231.htm"
+  },
+  {
+   "ticker": "MA",
+   "date": "2025-10-30",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139125000193/ma-20250930.htm"
+  },
+  {
+   "ticker": "MA",
+   "date": "2025-07-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139125000172/ma-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }
