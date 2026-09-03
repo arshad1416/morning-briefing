@@ -1,46 +1,46 @@
 {
-  "generated_at": "2026-09-03T10:37:27-04:00",
+  "generated_at": "2026-09-03T11:07:29-04:00",
   "market_overview": {
-    "total_net_gex": 3297824,
-    "total_oi": 3480816,
-    "current_price": 768.2,
-    "change_pct": 0.4
+    "total_net_gex": 3251445,
+    "total_oi": 3125893,
+    "current_price": 770.5,
+    "change_pct": 0.7
   },
   "tickers": {
     "SPY": {
-      "current_price": 768.2,
-      "change_pct": 0.4,
+      "current_price": 770.5,
+      "change_pct": 0.7,
       "gamma_regime": "bullish",
-      "total_gex": 3297824,
-      "total_dex": 85738117,
-      "total_vex": 953264876,
-      "total_vanna": 8230535,
-      "total_charm": -1768400,
-      "total_dealer_gex": -274780,
-      "gamma_flip": 770.31,
+      "total_gex": 3251445,
+      "total_dex": 97206736,
+      "total_vex": 944746781,
+      "total_vanna": 8048467,
+      "total_charm": -1840943,
+      "total_dealer_gex": 218759,
+      "gamma_flip": 768.71,
       "max_pain": 750.0,
       "max_gex_strike": 760.0,
-      "max_gex_value": 290720,
+      "max_gex_value": 250212,
       "neutral_range": [],
       "floor_zone": {
         "strike": 760.0,
-        "net_gex": 368583,
-        "total_gex": 368583,
+        "net_gex": 327941,
+        "total_gex": 327941,
         "range_start": 755.0,
         "range_end": 765.0,
         "strength": "strong",
         "narrative": "Gamma floor at $760"
       },
       "ceiling_zone": {
-        "strike": 770.0,
-        "net_gex": 266145,
-        "total_gex": 266145,
-        "range_start": 765.0,
-        "range_end": 775.0,
+        "strike": 775.0,
+        "net_gex": 251777,
+        "total_gex": 251777,
+        "range_start": 770.0,
+        "range_end": 780.0,
         "strength": "strong",
-        "narrative": "Gamma ceiling at $770"
+        "narrative": "Gamma ceiling at $775"
       },
-      "narrative": "Net GEX: $+3,297,824 \u2014 dealers are long gamma (range-bound)"
+      "narrative": "Net GEX: $+3,251,445 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
