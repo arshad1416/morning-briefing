@@ -1,12 +1,12 @@
 {
   "_note": "Index membership cache for generate-screener-data.py. Regenerate with fetch_universe_constituents.py \u2014 do not hand-edit; membership changes several times a year and a stale hand-edit becomes wrong silently.",
-  "generated_at": "2026-09-02",
+  "generated_at": "2026-09-03",
   "indices": {
     "S&P 500": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
       "source_note": "Wikipedia 'List of S&P 500 companies', table#constituents.",
-      "fetched_at": "2026-09-02",
-      "as_of": "2026-09-02",
+      "fetched_at": "2026-09-03",
+      "as_of": "2026-09-03",
       "member_count": 503,
       "members": [
         {
@@ -2026,8 +2026,8 @@
     "S&P 400": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies",
       "source_note": "S&P MidCap 400. Wikipedia 'List of S&P 400 companies', table#constituents.",
-      "fetched_at": "2026-09-02",
-      "as_of": "2026-09-02",
+      "fetched_at": "2026-09-03",
+      "as_of": "2026-09-03",
       "member_count": 400,
       "members": [
         {
@@ -3635,8 +3635,8 @@
     "S&P 600": {
       "source_url": "https://en.wikipedia.org/wiki/List_of_S%26P_600_companies",
       "source_note": "S&P SmallCap 600. Wikipedia 'List of S&P 600 companies', table#constituents.",
-      "fetched_at": "2026-09-02",
-      "as_of": "2026-09-02",
+      "fetched_at": "2026-09-03",
+      "as_of": "2026-09-03",
       "member_count": 603,
       "members": [
         {
@@ -6056,8 +6056,8 @@
     "Russell 2000": {
       "source_url": "https://www.blackrock.com/varnish-api/blk-one01-product-data/product-data/api/v2/get-product-data?appSubType=ISHARES&appType=PRODUCT_PAGE&component=holdings&locale=en_US&portfolioId=239710&targetSite=us-ishares&userType=individual&excludeContent=true&includeConfig=true",
       "source_note": "Proxy: holdings of the iShares Russell 2000 ETF (IWM), not the index itself. Non-equity balances, contingent value rights and escrow stubs are excluded. Refreshed each business day, and membership can differ slightly from the index.",
-      "fetched_at": "2026-09-02",
-      "as_of": "2026-08-31",
+      "fetched_at": "2026-09-03",
+      "as_of": "2026-09-01",
       "member_count": 1952,
       "members": [
         {
@@ -6298,7 +6298,7 @@
         },
         {
           "symbol": "AI",
-          "name": "C3 AI INC CLASS A"
+          "name": "C3 AI CLASS A"
         },
         {
           "symbol": "AII",
@@ -6554,7 +6554,7 @@
         },
         {
           "symbol": "AORT",
-          "name": "ARTIVION INC"
+          "name": "ARTIVION"
         },
         {
           "symbol": "AOSL",
@@ -6746,7 +6746,7 @@
         },
         {
           "symbol": "ATEN",
-          "name": "A10 NETWORKS INC"
+          "name": "A10 NETWORKS"
         },
         {
           "symbol": "ATEX",
@@ -7222,7 +7222,7 @@
         },
         {
           "symbol": "BRZE",
-          "name": "BRAZE INC CLASS A"
+          "name": "BRAZE CLASS A"
         },
         {
           "symbol": "BSRR",
@@ -7782,7 +7782,7 @@
         },
         {
           "symbol": "COLL",
-          "name": "COLLEGIUM PHARMACEUTICAL INC"
+          "name": "COLLEGIUM PHARMACEUTICAL"
         },
         {
           "symbol": "COMP",
@@ -7846,7 +7846,7 @@
         },
         {
           "symbol": "CRCT",
-          "name": "CRICUT INC CLASS A"
+          "name": "CRICUT CLASS A"
         },
         {
           "symbol": "CRD-A",
@@ -9530,7 +9530,7 @@
         },
         {
           "symbol": "IBRX",
-          "name": "IMMUNITYBIO INC"
+          "name": "IMMUNITYBIO"
         },
         {
           "symbol": "IBTA",
@@ -9602,7 +9602,7 @@
         },
         {
           "symbol": "IMAX",
-          "name": "IMAX CORP"
+          "name": "IMAX"
         },
         {
           "symbol": "IMKTA",
@@ -11126,7 +11126,7 @@
         },
         {
           "symbol": "OCFC",
-          "name": "OCEANFIRST FINANCIAL CORP"
+          "name": "OCEANFIRST FINANCIAL"
         },
         {
           "symbol": "OCGN",
@@ -11370,7 +11370,7 @@
         },
         {
           "symbol": "PACK",
-          "name": "RANPAK HOLDINGS CORP CLASS A"
+          "name": "RANPAK HOLDINGS CLASS A"
         },
         {
           "symbol": "PACS",
@@ -12278,7 +12278,7 @@
         },
         {
           "symbol": "SBH",
-          "name": "SALLY BEAUTY HOLDINGS INC"
+          "name": "SALLY BEAUTY HOLDINGS"
         },
         {
           "symbol": "SBMT",
@@ -12378,7 +12378,7 @@
         },
         {
           "symbol": "SG",
-          "name": "SWEETGREEN INC CLASS A"
+          "name": "SWEETGREEN CLASS A"
         },
         {
           "symbol": "SGC",
@@ -13346,7 +13346,7 @@
         },
         {
           "symbol": "UTZ",
-          "name": "UTZ BRANDS INC CLASS A"
+          "name": "UTZ BRANDS CLASS A"
         },
         {
           "symbol": "UUUU",
@@ -13873,8 +13873,8 @@
     "Nasdaq-100": {
       "source_url": "https://api.nasdaq.com/api/quote/list-type/nasdaq100",
       "source_note": "Nasdaq's own index-membership endpoint (the Wikipedia article no longer carries a components table).",
-      "fetched_at": "2026-09-02",
-      "as_of": "2026-09-02",
+      "fetched_at": "2026-09-03",
+      "as_of": "2026-09-03",
       "member_count": 102,
       "members": [
         {
