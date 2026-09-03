@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-09-02T11:30:01.497514+00:00",
+  "generated_at": "2026-09-03T11:30:02.290135+00:00",
   "signal": "neutral",
-  "conviction": 0.53,
+  "conviction": 0.6,
   "conviction_source": "model",
-  "narrative": "Broad market sell-off with indices down 0.7-1.2%, VIX at 16.81, and 10Y yields elevated at 4.8% signaling risk aversion.",
+  "narrative": "Broad equity bid with Russell +1.13% and S&P +0.46% but 10Y at 4.8% and heavy AMZN put/call flow warrant selective risk.",
   "narrative_source": "llm",
   "model_features": {
-    "vix": 16.63,
+    "vix": 15.27,
     "vix_score": 0.5,
     "sleeve_a_signals": 0,
     "avg_signal_score": 0,
     "max_signal_score": 0,
-    "recent_hit_rate": 0.44,
-    "recent_trades": 9,
+    "recent_hit_rate": 0.75,
+    "recent_trades": 8,
     "breadth": 1.0,
-    "vix_contango": 5.19,
+    "vix_contango": 4.0,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.28,
-      0.78
+      0.35,
+      0.85
     ]
   },
   "confidence_interval": [
-    0.28,
-    0.78
+    0.35,
+    0.85
   ]
 }
