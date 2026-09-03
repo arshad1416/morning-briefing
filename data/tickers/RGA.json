@@ -1,80 +1,32 @@
 {
  "ticker": "RGA",
  "name": "Reinsurance Group of America, I",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 249.87,
- "change_pct": 1.56,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 252.12,
+ "change_pct": 1.78,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 65.0,
-  "sma_20": 243.72,
-  "sma_50": 234.27
+  "rsi_14": 67.8,
+  "sma_20": 244.97,
+  "sma_50": 235.8
  },
  "fundamentals": {
-  "pe_ratio": 11.002643,
-  "market_cap": "16.3B",
+  "pe_ratio": 11.096831,
+  "market_cap": "16.5B",
   "beta": 0.461,
-  "dividend_yield": 0.016
+  "dividend_yield": 0.0158
  },
  "council_analysis": {
   "score": 8
  },
- "upcoming_earnings": [
-  {
-   "ticker": "RGA",
-   "date": "2026-10-29",
-   "epsEstimate": 6.88,
-   "epsActual": null
-  },
-  {
-   "ticker": "RGA",
-   "date": "2026-08-06",
-   "epsEstimate": 6.49,
-   "epsActual": 8.89
-  },
-  {
-   "ticker": "RGA",
-   "date": "2026-05-07",
-   "epsEstimate": 6.01,
-   "epsActual": 6.97
-  }
- ],
- "recent_sec_filings": [
-  {
-   "ticker": "RGA",
-   "date": "2026-08-07",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/898174/000089817426000034/rga-20260630.htm"
-  },
-  {
-   "ticker": "RGA",
-   "date": "2026-05-08",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/898174/000089817426000025/rga-20260331.htm"
-  },
-  {
-   "ticker": "RGA",
-   "date": "2026-02-20",
-   "form": "Annual Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/898174/000089817426000006/rga-20251231.htm"
-  },
-  {
-   "ticker": "RGA",
-   "date": "2025-10-31",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/898174/000089817425000137/rga-20250930.htm"
-  },
-  {
-   "ticker": "RGA",
-   "date": "2025-08-01",
-   "form": "Quarterly Report",
-   "url": "https://www.sec.gov/Archives/edgar/data/898174/000089817425000130/rga-20250630.htm"
-  }
- ],
+ "upcoming_earnings": [],
+ "recent_sec_filings": [],
  "reddit_mentions": []
 }

@@ -1,24 +1,25 @@
 {
  "ticker": "ATRC",
  "name": "AtriCure, Inc.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 48.38,
- "change_pct": 0.06,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 50.99,
+ "change_pct": 4.23,
  "sector": "Healthcare",
  "signals": [
-  "extended_rsi",
+  "overbought_rsi",
   "above_ma",
+  "near_high",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 72.5,
-  "sma_20": 45.1,
-  "sma_50": 38.22
+  "rsi_14": 78.3,
+  "sma_20": 46.18,
+  "sma_50": 39.08
  },
  "fundamentals": {
-  "pe_ratio": 230.38097,
-  "market_cap": "2.5B",
+  "pe_ratio": 242.80954,
+  "market_cap": "2.6B",
   "beta": 1.229,
   "dividend_yield": null
  },

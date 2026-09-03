@@ -1,30 +1,81 @@
 {
  "ticker": "INSW",
  "name": "International Seaways, Inc.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 100.5,
- "change_pct": 1.89,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 100.46,
+ "change_pct": 0.7,
  "sector": "Energy",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 60.8,
-  "sma_20": 95.99,
-  "sma_50": 90.93
+  "rsi_14": 61.0,
+  "sma_20": 96.75,
+  "sma_50": 91.33
  },
  "fundamentals": {
-  "pe_ratio": 6.426151,
+  "pe_ratio": 6.4232736,
   "market_cap": "5.0B",
   "beta": -0.1,
-  "dividend_yield": 0.0828
+  "dividend_yield": 0.08199999999999999
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "INSW",
+   "date": "2026-11-05",
+   "epsEstimate": 2.77,
+   "epsActual": null
+  },
+  {
+   "ticker": "INSW",
+   "date": "2026-08-10",
+   "epsEstimate": 5.27,
+   "epsActual": 5.91
+  },
+  {
+   "ticker": "INSW",
+   "date": "2026-05-07",
+   "epsEstimate": 2.72,
+   "epsActual": 3.9
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "INSW",
+   "date": "2026-08-10",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1679049/000110465926093061/insw-20260630x10q.htm"
+  },
+  {
+   "ticker": "INSW",
+   "date": "2026-05-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1679049/000110465926056721/insw-20260331x10q.htm"
+  },
+  {
+   "ticker": "INSW",
+   "date": "2026-02-26",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1679049/000110465926020113/insw-20251231x10k.htm"
+  },
+  {
+   "ticker": "INSW",
+   "date": "2025-11-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1679049/000110465925107428/insw-20250930x10q.htm"
+  },
+  {
+   "ticker": "INSW",
+   "date": "2025-08-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/1679049/000155837025010411/insw-20250630x10q.htm"
+  }
+ ],
  "reddit_mentions": []
 }

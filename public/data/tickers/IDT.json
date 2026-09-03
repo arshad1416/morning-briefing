@@ -1,21 +1,23 @@
 {
  "ticker": "IDT",
  "name": "IDT Corporation",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 68.04,
- "change_pct": -0.26,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 69.06,
+ "change_pct": 1.04,
  "sector": "Communication Services",
  "signals": [
-  "above_ma"
+  "extended_rsi",
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 60.8,
-  "sma_20": 67.0,
-  "sma_50": 63.61
+  "rsi_14": 65.2,
+  "sma_20": 67.26,
+  "sma_50": 64.25
  },
  "fundamentals": {
-  "pe_ratio": 20.871166,
-  "market_cap": null,
+  "pe_ratio": 21.184048,
+  "market_cap": "1.7B",
   "beta": 0.622,
   "dividend_yield": 0.0038
  },

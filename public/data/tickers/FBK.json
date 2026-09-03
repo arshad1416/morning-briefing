@@ -1,29 +1,28 @@
 {
  "ticker": "FBK",
  "name": "FB Financial Corporation",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 56.52,
- "change_pct": -0.77,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 56.99,
+ "change_pct": 2.67,
  "sector": "Financial Services",
  "signals": [
-  "oversold_rsi",
+  "rsi_dip",
   "below_ma",
-  "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 33.4,
-  "sma_20": 59.79,
-  "sma_50": 58.37
+  "rsi_14": 41.0,
+  "sma_20": 59.31,
+  "sma_50": 58.49
  },
  "fundamentals": {
-  "pe_ratio": 14.952381,
+  "pe_ratio": 15.07672,
   "market_cap": "2.8B",
   "beta": 0.932,
-  "dividend_yield": 0.014499999999999999
+  "dividend_yield": 0.0151
  },
  "council_analysis": {
-  "score": 8
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,22 +1,24 @@
 {
  "ticker": "BRBS",
  "name": "Blue Ridge Bankshares, Inc.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 3.9,
- "change_pct": 0.0,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 3.96,
+ "change_pct": 1.54,
  "sector": "Financial Services",
  "signals": [
+  "extended_rsi",
   "above_ma",
+  "near_high",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 62.6,
-  "sma_20": 3.83,
-  "sma_50": 3.63
+  "rsi_14": 65.3,
+  "sma_20": 3.86,
+  "sma_50": 3.65
  },
  "fundamentals": {
-  "pe_ratio": 43.333332,
-  "market_cap": "350M",
+  "pe_ratio": 44.0,
+  "market_cap": "355M",
   "beta": 0.537,
   "dividend_yield": 0.6818000000000001
  },

@@ -1,28 +1,29 @@
 {
  "ticker": "VSEC",
  "name": "VSE Corporation",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 201.9,
- "change_pct": -3.25,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 199.0,
+ "change_pct": 0.38,
  "sector": "Industrials",
  "signals": [
   "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 41.5,
-  "sma_20": 224.23,
-  "sma_50": 215.18
+  "rsi_14": 40.0,
+  "sma_20": 223.29,
+  "sma_50": 214.82
  },
  "fundamentals": {
-  "pe_ratio": 64.50479,
-  "market_cap": "5.7B",
+  "pe_ratio": 66.77853,
+  "market_cap": "5.6B",
   "beta": 1.236,
-  "dividend_yield": 0.0019
+  "dividend_yield": 0.002
  },
  "council_analysis": {
-  "score": 4
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

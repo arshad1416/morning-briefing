@@ -1,27 +1,28 @@
 {
  "ticker": "NRC",
  "name": "NRC Health",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 21.04,
- "change_pct": 0.48,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 20.08,
+ "change_pct": -1.76,
  "sector": "Healthcare",
  "signals": [
+  "rsi_dip",
   "below_ma",
   "premium_pe"
  ],
  "technical": {
-  "rsi_14": 48.0,
-  "sma_20": 21.2,
-  "sma_50": 21.18
+  "rsi_14": 39.4,
+  "sma_20": 21.31,
+  "sma_50": 21.22
  },
  "fundamentals": {
-  "pe_ratio": 87.66667,
-  "market_cap": "465M",
+  "pe_ratio": 83.66667,
+  "market_cap": "445M",
   "beta": 0.367,
-  "dividend_yield": 0.0305
+  "dividend_yield": 0.0313
  },
  "council_analysis": {
-  "score": 3
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

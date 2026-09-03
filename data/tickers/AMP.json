@@ -1,29 +1,81 @@
 {
  "ticker": "AMP",
  "name": "Ameriprise Financial, Inc.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 553.68,
- "change_pct": 0.1,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 560.64,
+ "change_pct": 3.32,
  "sector": "Financial Services",
  "signals": [
+  "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 54.4,
-  "sma_20": 559.13,
-  "sma_50": 527.03
+  "rsi_14": 56.9,
+  "sma_20": 558.85,
+  "sma_50": 530.52
  },
  "fundamentals": {
-  "pe_ratio": 13.383612,
-  "market_cap": "48.9B",
+  "pe_ratio": 13.542028,
+  "market_cap": "49.6B",
   "beta": 1.137,
-  "dividend_yield": 0.012199999999999999
+  "dividend_yield": 0.0125
  },
  "council_analysis": {
-  "score": 7
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "AMP",
+   "date": "2026-10-29",
+   "epsEstimate": 11.8,
+   "epsActual": null
+  },
+  {
+   "ticker": "AMP",
+   "date": "2026-07-23",
+   "epsEstimate": 10.81,
+   "epsActual": 11.07
+  },
+  {
+   "ticker": "AMP",
+   "date": "2026-04-23",
+   "epsEstimate": 10.21,
+   "epsActual": 11.26
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "AMP",
+   "date": "2026-08-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/820027/000082002726000043/amp-20260630.htm"
+  },
+  {
+   "ticker": "AMP",
+   "date": "2026-05-07",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/820027/000082002726000027/amp-20260331.htm"
+  },
+  {
+   "ticker": "AMP",
+   "date": "2026-02-19",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/820027/000082002726000011/amp-20251231.htm"
+  },
+  {
+   "ticker": "AMP",
+   "date": "2025-10-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/820027/000082002725000080/amp-20250930.htm"
+  },
+  {
+   "ticker": "AMP",
+   "date": "2025-08-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/820027/000082002725000066/amp-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

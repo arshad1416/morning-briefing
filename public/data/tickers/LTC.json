@@ -1,30 +1,81 @@
 {
  "ticker": "LTC",
  "name": "LTC Properties, Inc.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 41.16,
- "change_pct": 2.08,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 41.2,
+ "change_pct": -0.48,
  "sector": "Real Estate",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 59.7,
-  "sma_20": 39.76,
-  "sma_50": 39.67
+  "rsi_14": 59.4,
+  "sma_20": 40.02,
+  "sma_50": 39.85
  },
  "fundamentals": {
-  "pe_ratio": 14.7,
+  "pe_ratio": 14.714286,
   "market_cap": "2.2B",
   "beta": 0.578,
-  "dividend_yield": 0.056100000000000004
+  "dividend_yield": 0.055099999999999996
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "LTC",
+   "date": "2026-11-03",
+   "epsEstimate": 0.48,
+   "epsActual": null
+  },
+  {
+   "ticker": "LTC",
+   "date": "2026-08-05",
+   "epsEstimate": 0.44,
+   "epsActual": 0.47
+  },
+  {
+   "ticker": "LTC",
+   "date": "2026-05-06",
+   "epsEstimate": 0.44,
+   "epsActual": 0.46
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "LTC",
+   "date": "2026-08-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/887905/000110465926091183/ltc-20260630x10q.htm"
+  },
+  {
+   "ticker": "LTC",
+   "date": "2026-05-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/887905/000110465926056329/ltc-20260331x10q.htm"
+  },
+  {
+   "ticker": "LTC",
+   "date": "2026-02-24",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/887905/000110465926019178/ltc-20251231x10k.htm"
+  },
+  {
+   "ticker": "LTC",
+   "date": "2025-11-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/887905/000110465925106323/ltc-20250930x10q.htm"
+  },
+  {
+   "ticker": "LTC",
+   "date": "2025-08-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/887905/000155837025010115/ltc-20250630x10q.htm"
+  }
+ ],
  "reddit_mentions": []
 }

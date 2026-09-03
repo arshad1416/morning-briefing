@@ -1,19 +1,22 @@
 {
  "ticker": "BLND",
  "name": "Blend Labs, Inc.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 1.56,
- "change_pct": 0.65,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 1.51,
+ "change_pct": -2.26,
  "sector": "Technology",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 47.9,
-  "sma_20": 1.55,
+  "rsi_14": 44.6,
+  "sma_20": 1.53,
   "sma_50": 1.68
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "369M",
+  "market_cap": "358M",
   "beta": 1.109,
   "dividend_yield": null
  },

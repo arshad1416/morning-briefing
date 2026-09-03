@@ -1,21 +1,24 @@
 {
  "ticker": "NSC",
  "name": "Norfolk Southern Corporation",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 339.03,
- "change_pct": -1.1,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 331.53,
+ "change_pct": -0.43,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.5,
-  "sma_20": 342.09,
-  "sma_50": 332.18
+  "rsi_14": 40.9,
+  "sma_20": 341.78,
+  "sma_50": 333.56
  },
  "fundamentals": {
-  "pe_ratio": 29.429686,
-  "market_cap": "76.1B",
+  "pe_ratio": 28.287542,
+  "market_cap": "74.5B",
   "beta": 1.269,
-  "dividend_yield": 0.0155
+  "dividend_yield": 0.016200000000000003
  },
  "council_analysis": {
   "score": 5

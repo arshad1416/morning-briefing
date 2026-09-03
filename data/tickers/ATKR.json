@@ -1,18 +1,19 @@
 {
  "ticker": "ATKR",
  "name": "Atkore Inc.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 93.68,
- "change_pct": -0.01,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 93.66,
+ "change_pct": 0.03,
  "sector": "Industrials",
  "signals": [
   "extended_rsi",
-  "above_ma"
+  "above_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 72.4,
-  "sma_20": 93.49,
-  "sma_50": 81.99
+  "rsi_14": 71.9,
+  "sma_20": 93.52,
+  "sma_50": 82.55
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -21,7 +22,7 @@
   "dividend_yield": 0.0141
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

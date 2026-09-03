@@ -1,25 +1,27 @@
 {
  "ticker": "SHOE",
  "name": "Shoe Station Group, Inc.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 13.64,
- "change_pct": -0.44,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 13.24,
+ "change_pct": 3.15,
  "sector": "Consumer Cyclical",
  "signals": [
   "oversold_rsi",
   "below_ma",
-  "value_pe"
+  "near_low",
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 34.1,
-  "sma_20": 15.17,
-  "sma_50": 15.13
+  "rsi_14": 34.4,
+  "sma_20": 14.92,
+  "sma_50": 15.03
  },
  "fundamentals": {
-  "pe_ratio": 10.1037035,
-  "market_cap": "370M",
+  "pe_ratio": 9.8111105,
+  "market_cap": "360M",
   "beta": 1.406,
-  "dividend_yield": 0.049699999999999994
+  "dividend_yield": 0.053
  },
  "council_analysis": {
   "score": 7

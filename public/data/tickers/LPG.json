@@ -1,28 +1,30 @@
 {
  "ticker": "LPG",
  "name": "Dorian LPG Ltd.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 51.62,
- "change_pct": 3.16,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 51.42,
+ "change_pct": 1.09,
  "sector": "Energy",
  "signals": [
   "extended_rsi",
   "above_ma",
-  "value_pe"
+  "near_high",
+  "value_pe",
+  "analyst_buy"
  ],
  "technical": {
   "rsi_14": 65.3,
-  "sma_20": 47.52,
-  "sma_50": 43.25
+  "sma_20": 48.22,
+  "sma_50": 43.68
  },
  "fundamentals": {
-  "pe_ratio": 6.8461404,
+  "pe_ratio": 6.8189654,
   "market_cap": "2.2B",
   "beta": 0.76,
-  "dividend_yield": 0.0673
+  "dividend_yield": 0.0659
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

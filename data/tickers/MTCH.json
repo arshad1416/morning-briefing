@@ -1,30 +1,81 @@
 {
  "ticker": "MTCH",
  "name": "Match Group, Inc.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 41.57,
- "change_pct": 2.26,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 41.62,
+ "change_pct": -0.69,
  "sector": "Communication Services",
  "signals": [
   "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 61.0,
-  "sma_20": 39.24,
-  "sma_50": 38.63
+  "rsi_14": 59.7,
+  "sma_20": 39.45,
+  "sma_50": 38.9
  },
  "fundamentals": {
-  "pe_ratio": 14.741135,
-  "market_cap": "9.7B",
+  "pe_ratio": 14.758865,
+  "market_cap": "9.6B",
   "beta": 1.32,
-  "dividend_yield": 0.0192
+  "dividend_yield": 0.0191
  },
  "council_analysis": {
-  "score": 8
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "MTCH",
+   "date": "2026-11-03",
+   "epsEstimate": 1.01,
+   "epsActual": null
+  },
+  {
+   "ticker": "MTCH",
+   "date": "2026-08-04",
+   "epsEstimate": 0.96,
+   "epsActual": 0.91
+  },
+  {
+   "ticker": "MTCH",
+   "date": "2026-05-05",
+   "epsEstimate": 0.86,
+   "epsActual": 0.97
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "MTCH",
+   "date": "2026-08-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/891103/000089110326000130/mtch-20260630.htm"
+  },
+  {
+   "ticker": "MTCH",
+   "date": "2026-05-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/891103/000089110326000073/mtch-20260331.htm"
+  },
+  {
+   "ticker": "MTCH",
+   "date": "2026-02-26",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/891103/000089110326000025/mtch-20251231.htm"
+  },
+  {
+   "ticker": "MTCH",
+   "date": "2025-11-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/891103/000089110325000180/mtch-20250930.htm"
+  },
+  {
+   "ticker": "MTCH",
+   "date": "2025-08-06",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/891103/000089110325000124/mtch-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

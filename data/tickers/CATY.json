@@ -1,25 +1,25 @@
 {
  "ticker": "CATY",
  "name": "Cathay General Bancorp",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 61.25,
- "change_pct": 0.07,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 62.16,
+ "change_pct": 2.35,
  "sector": "Financial Services",
  "signals": [
-  "rsi_dip",
   "below_ma",
+  "near_high",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 43.8,
-  "sma_20": null,
-  "sma_50": null
+  "rsi_14": 49.7,
+  "sma_20": 62.61,
+  "sma_50": 62.27
  },
  "fundamentals": {
-  "pe_ratio": 11.986301,
+  "pe_ratio": 12.164383,
   "market_cap": "4.1B",
   "beta": 0.85,
-  "dividend_yield": 0.0246
+  "dividend_yield": 0.025
  },
  "council_analysis": {
   "score": 6

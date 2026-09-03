@@ -1,18 +1,19 @@
 {
  "ticker": "VCSH",
  "name": "Vanguard Short-Term Corporate B",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 78.18,
- "change_pct": -0.44,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 78.11,
+ "change_pct": 0.04,
  "sector": null,
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 36.2,
-  "sma_20": 78.59,
-  "sma_50": 78.45
+  "rsi_14": 44.1,
+  "sma_20": 78.29,
+  "sma_50": 78.16
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -21,7 +22,7 @@
   "dividend_yield": 0.0446
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

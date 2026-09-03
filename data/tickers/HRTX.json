@@ -1,22 +1,23 @@
 {
  "ticker": "HRTX",
  "name": "Heron Therapeutics, Inc.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 0.32,
- "change_pct": -0.03,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 0.31,
+ "change_pct": -1.87,
  "sector": "Healthcare",
  "signals": [
-  "rsi_dip",
-  "below_ma"
+  "oversold_rsi",
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 35.0,
-  "sma_20": 0.36,
+  "rsi_14": 33.6,
+  "sma_20": 0.34,
   "sma_50": 0.41
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "61M",
+  "market_cap": "60M",
   "beta": 1.665,
   "dividend_yield": null
  },

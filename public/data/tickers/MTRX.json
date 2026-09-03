@@ -1,22 +1,23 @@
 {
  "ticker": "MTRX",
  "name": "Matrix Service Company",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 10.7,
- "change_pct": -1.02,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 10.8,
+ "change_pct": 0.93,
  "sector": "Industrials",
  "signals": [
-  "oversold_rsi",
-  "below_ma"
+  "rsi_dip",
+  "below_ma",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 34.8,
-  "sma_20": 11.4,
-  "sma_50": 12.14
+  "rsi_14": 37.3,
+  "sma_20": 11.29,
+  "sma_50": 12.02
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "301M",
+  "market_cap": "304M",
   "beta": 0.998,
   "dividend_yield": null
  },

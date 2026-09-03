@@ -1,22 +1,23 @@
 {
  "ticker": "GTLB",
  "name": "GitLab Inc.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 45.26,
- "change_pct": -2.75,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 50.68,
+ "change_pct": 12.4,
  "sector": "Technology",
  "signals": [
-  "extended_rsi",
-  "above_ma"
+  "overbought_rsi",
+  "above_ma",
+  "volume_surge"
  ],
  "technical": {
-  "rsi_14": 67.1,
-  "sma_20": 41.34,
-  "sma_50": 35.58
+  "rsi_14": 75.5,
+  "sma_20": 42.48,
+  "sma_50": 36.44
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "7.6B",
+  "market_cap": "8.6B",
   "beta": 0.944,
   "dividend_yield": null
  },

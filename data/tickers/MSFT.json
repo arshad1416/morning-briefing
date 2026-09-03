@@ -1,30 +1,79 @@
 {
  "ticker": "MSFT",
  "name": "Microsoft Corporation",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 504.17,
- "change_pct": -0.62,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 497.63,
+ "change_pct": -0.68,
  "sector": "Technology",
  "signals": [
-  "extended_rsi",
   "above_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 66.3,
-  "sma_20": 494.39,
-  "sma_50": 435.3
+  "rsi_14": 61.7,
+  "sma_20": 494.79,
+  "sma_50": 437.72
  },
  "fundamentals": {
-  "pe_ratio": 28.071829,
-  "market_cap": "3.74T",
+  "pe_ratio": 27.738573,
+  "market_cap": "3.70T",
   "beta": 1.099,
-  "dividend_yield": 0.0070999999999999995
+  "dividend_yield": 0.0073
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "MSFT",
+   "date": "2026-10-28",
+   "epsEstimate": 4.72,
+   "epsActual": null
+  },
+  {
+   "ticker": "MSFT",
+   "date": "2026-07-29",
+   "epsEstimate": 4.24,
+   "epsActual": 4.74
+  },
+  {
+   "ticker": "MSFT",
+   "date": "2026-04-29",
+   "epsEstimate": 4.07,
+   "epsActual": 4.27
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "MSFT",
+   "date": "2026-07-29",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm"
+  },
+  {
+   "ticker": "MSFT",
+   "date": "2026-04-29",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526191507/msft-20260331.htm"
+  },
+  {
+   "ticker": "MSFT",
+   "date": "2026-01-28",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526027207/msft-20251231.htm"
+  },
+  {
+   "ticker": "MSFT",
+   "date": "2025-10-29",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312525256321/msft-20250930.htm"
+  },
+  {
+   "ticker": "MSFT",
+   "date": "2025-07-30",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

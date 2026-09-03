@@ -1,29 +1,81 @@
 {
  "ticker": "MATX",
  "name": "Matson, Inc.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 223.61,
- "change_pct": -0.53,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 219.15,
+ "change_pct": -0.05,
  "sector": "Industrials",
  "signals": [
   "above_ma",
+  "near_high",
+  "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 63.0,
-  "sma_20": 216.18,
-  "sma_50": 209.53
+  "rsi_14": 55.0,
+  "sma_20": 217.22,
+  "sma_50": 210.47
  },
  "fundamentals": {
-  "pe_ratio": 15.04788,
-  "market_cap": "6.7B",
+  "pe_ratio": 14.787112,
+  "market_cap": "6.6B",
   "beta": 1.256,
-  "dividend_yield": 0.0068000000000000005
+  "dividend_yield": 0.0069
  },
  "council_analysis": {
-  "score": 7
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "MATX",
+   "date": "2026-11-04",
+   "epsEstimate": 6.12,
+   "epsActual": null
+  },
+  {
+   "ticker": "MATX",
+   "date": "2026-08-03",
+   "epsEstimate": 3.82,
+   "epsActual": 4.27
+  },
+  {
+   "ticker": "MATX",
+   "date": "2026-05-04",
+   "epsEstimate": 1.61,
+   "epsActual": 1.85
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "MATX",
+   "date": "2026-08-04",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/3453/000110465926090003/matx-20260630x10q.htm"
+  },
+  {
+   "ticker": "MATX",
+   "date": "2026-05-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/3453/000110465926055178/matx-20260331x10q.htm"
+  },
+  {
+   "ticker": "MATX",
+   "date": "2026-02-27",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/3453/000110465926020944/matx-20251231x10k.htm"
+  },
+  {
+   "ticker": "MATX",
+   "date": "2025-11-05",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/3453/000110465925106604/matx-20250930x10q.htm"
+  },
+  {
+   "ticker": "MATX",
+   "date": "2025-08-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/3453/000155837025009928/matx-20250630x10q.htm"
+  }
+ ],
  "reddit_mentions": []
 }

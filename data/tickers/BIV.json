@@ -1,18 +1,19 @@
 {
  "ticker": "BIV",
  "name": "Vanguard Intermediate-Term Bond",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 75.03,
- "change_pct": -0.44,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 74.85,
+ "change_pct": 0.02,
  "sector": null,
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_high"
  ],
  "technical": {
-  "rsi_14": 39.2,
-  "sma_20": 75.57,
-  "sma_50": 75.67
+  "rsi_14": 40.5,
+  "sma_20": 75.24,
+  "sma_50": 75.37
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -21,7 +22,7 @@
   "dividend_yield": 0.0429
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

@@ -1,27 +1,28 @@
 {
  "ticker": "FLO",
  "name": "Flowers Foods, Inc.",
- "generated_at": "2026-09-02T14:45:01.454787+00:00",
- "price": 6.83,
- "change_pct": -1.3,
+ "generated_at": "2026-09-03T11:45:01.678075+00:00",
+ "price": 6.7,
+ "change_pct": 0.17,
  "sector": "Consumer Defensive",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 37.7,
-  "sma_20": 7.22,
-  "sma_50": 7.68
+  "rsi_14": 36.5,
+  "sma_20": 7.17,
+  "sma_50": 7.66
  },
  "fundamentals": {
-  "pe_ratio": 26.269232,
+  "pe_ratio": 25.773848,
   "market_cap": "1.4B",
   "beta": 0.402,
-  "dividend_yield": 0.0704
+  "dividend_yield": 0.0747
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
