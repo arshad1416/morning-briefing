@@ -1,46 +1,38 @@
 {
-  "generated_at": "2026-09-04T09:07:32-04:00",
+  "generated_at": "2026-09-04T09:37:32-04:00",
   "market_overview": {
-    "total_net_gex": 2088939,
-    "total_oi": 1940372,
-    "current_price": 773.17,
-    "change_pct": 1.05
+    "total_net_gex": 1499851,
+    "total_oi": 1957806,
+    "current_price": 772.46,
+    "change_pct": -0.09
   },
   "tickers": {
     "SPY": {
-      "current_price": 773.17,
-      "change_pct": 1.05,
+      "current_price": 772.46,
+      "change_pct": -0.09,
       "gamma_regime": "bullish",
-      "total_gex": 2088939,
-      "total_dex": 150484352,
-      "total_vex": 36217212,
-      "total_vanna": 41311,
-      "total_charm": -211174,
-      "total_dealer_gex": 1989084,
-      "gamma_flip": 769.9,
+      "total_gex": 1499851,
+      "total_dex": 156958113,
+      "total_vex": 39009688,
+      "total_vanna": 2335087,
+      "total_charm": -479703,
+      "total_dealer_gex": 4594299,
+      "gamma_flip": 766.84,
       "max_pain": 755.0,
-      "max_gex_strike": 775.0,
-      "max_gex_value": 924070,
+      "max_gex_strike": 773.0,
+      "max_gex_value": 1523409,
       "neutral_range": [],
-      "floor_zone": {
-        "strike": 772.0,
-        "net_gex": 830924,
-        "total_gex": 830924,
-        "range_start": 767.0,
-        "range_end": 777.0,
-        "strength": "strong",
-        "narrative": "Gamma floor at $772"
-      },
+      "floor_zone": null,
       "ceiling_zone": {
-        "strike": 775.0,
-        "net_gex": 924070,
-        "total_gex": 924070,
-        "range_start": 770.0,
-        "range_end": 780.0,
+        "strike": 773.0,
+        "net_gex": 1523409,
+        "total_gex": 1523409,
+        "range_start": 768.0,
+        "range_end": 778.0,
         "strength": "strong",
-        "narrative": "Gamma ceiling at $775"
+        "narrative": "Gamma ceiling at $773"
       },
-      "narrative": "Net GEX: $+2,088,939 \u2014 dealers are long gamma (range-bound)"
+      "narrative": "Net GEX: $+1,499,851 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
