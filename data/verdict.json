@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-09-03T11:30:02.290135+00:00",
+  "generated_at": "2026-09-04T11:30:01.334145+00:00",
   "signal": "neutral",
-  "conviction": 0.6,
+  "conviction": 0.62,
   "conviction_source": "model",
-  "narrative": "Broad equity bid with Russell +1.13% and S&P +0.46% but 10Y at 4.8% and heavy AMZN put/call flow warrant selective risk.",
+  "narrative": "Equities are gapping up with broad index gains and low VIX, but options flow is heavily put-skewed in QQQ and GLD, signaling near-term hedging under the surface.",
   "narrative_source": "llm",
   "model_features": {
-    "vix": 15.27,
-    "vix_score": 0.5,
+    "vix": 14.16,
+    "vix_score": 0.7,
     "sleeve_a_signals": 0,
     "avg_signal_score": 0,
     "max_signal_score": 0,
-    "recent_hit_rate": 0.75,
+    "recent_hit_rate": 0.62,
     "recent_trades": 8,
     "breadth": 1.0,
-    "vix_contango": 4.0,
+    "vix_contango": 5.16,
     "calibration_source": "heuristic_fallback",
     "confidence_interval": [
-      0.35,
-      0.85
+      0.37,
+      0.87
     ]
   },
   "confidence_interval": [
-    0.35,
-    0.85
+    0.37,
+    0.87
   ]
 }
