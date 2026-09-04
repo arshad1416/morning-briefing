@@ -1,46 +1,46 @@
 {
-  "generated_at": "2026-09-04T10:37:28-04:00",
+  "generated_at": "2026-09-04T11:07:30-04:00",
   "market_overview": {
-    "total_net_gex": 3524815,
+    "total_net_gex": 3565680,
     "total_oi": 3069129,
-    "current_price": 770.81,
-    "change_pct": -0.31
+    "current_price": 769.67,
+    "change_pct": -0.45
   },
   "tickers": {
     "SPY": {
-      "current_price": 770.81,
-      "change_pct": -0.31,
+      "current_price": 769.67,
+      "change_pct": -0.45,
       "gamma_regime": "bullish",
-      "total_gex": 3524815,
-      "total_dex": 97745670,
-      "total_vex": 953945183,
-      "total_vanna": 8617360,
-      "total_charm": -1860124,
-      "total_dealer_gex": -154355,
-      "gamma_flip": 771.65,
+      "total_gex": 3565680,
+      "total_dex": 90929230,
+      "total_vex": 955036894,
+      "total_vanna": 8627251,
+      "total_charm": -1866581,
+      "total_dealer_gex": -352558,
+      "gamma_flip": 771.66,
       "max_pain": 755.0,
       "max_gex_strike": 760.0,
-      "max_gex_value": 310158,
+      "max_gex_value": 335711,
       "neutral_range": [],
       "floor_zone": {
         "strike": 760.0,
-        "net_gex": 388874,
-        "total_gex": 388874,
+        "net_gex": 417402,
+        "total_gex": 417402,
         "range_start": 755.0,
         "range_end": 765.0,
         "strength": "strong",
         "narrative": "Gamma floor at $760"
       },
       "ceiling_zone": {
-        "strike": 775.0,
-        "net_gex": 291129,
-        "total_gex": 291129,
-        "range_start": 770.0,
-        "range_end": 780.0,
+        "strike": 770.0,
+        "net_gex": 389068,
+        "total_gex": 389068,
+        "range_start": 765.0,
+        "range_end": 775.0,
         "strength": "strong",
-        "narrative": "Gamma ceiling at $775"
+        "narrative": "Gamma ceiling at $770"
       },
-      "narrative": "Net GEX: $+3,524,815 \u2014 dealers are long gamma (range-bound)"
+      "narrative": "Net GEX: $+3,565,680 \u2014 dealers are long gamma (range-bound)"
     }
   }
 }
