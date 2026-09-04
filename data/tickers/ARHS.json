@@ -1,27 +1,28 @@
 {
  "ticker": "ARHS",
  "name": "Arhaus, Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 8.48,
- "change_pct": 1.5,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 8.45,
+ "change_pct": 0.24,
  "sector": "Consumer Cyclical",
  "signals": [
   "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 44.4,
-  "sma_20": 9.33,
-  "sma_50": 8.48
+  "rsi_14": 43.8,
+  "sma_20": 9.27,
+  "sma_50": 8.49
  },
  "fundamentals": {
-  "pe_ratio": 16.97,
+  "pe_ratio": 16.9,
   "market_cap": "1.2B",
   "beta": 2.304,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

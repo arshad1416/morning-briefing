@@ -1,24 +1,26 @@
 {
  "ticker": "MKC",
  "name": "McCormick & Company, Incorporat",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 53.88,
- "change_pct": -0.69,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 52.41,
+ "change_pct": -2.58,
  "sector": "Consumer Defensive",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.6,
-  "sma_20": 54.38,
-  "sma_50": 52.62
+  "rsi_14": 43.8,
+  "sma_20": 54.23,
+  "sma_50": 52.56
  },
  "fundamentals": {
-  "pe_ratio": 8.96589,
-  "market_cap": "14.5B",
+  "pe_ratio": 8.793624,
+  "market_cap": "14.1B",
   "beta": 0.627,
-  "dividend_yield": 0.0354
+  "dividend_yield": 0.035699999999999996
  },
  "council_analysis": {
   "score": 7

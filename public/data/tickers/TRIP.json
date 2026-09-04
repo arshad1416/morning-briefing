@@ -1,18 +1,19 @@
 {
  "ticker": "TRIP",
  "name": "TripAdvisor, Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 9.72,
- "change_pct": 2.75,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 9.44,
+ "change_pct": -1.72,
  "sector": "Consumer Cyclical",
  "signals": [
   "oversold_rsi",
-  "below_ma"
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 33.5,
-  "sma_20": 10.23,
-  "sma_50": 12.5
+  "rsi_14": 30.2,
+  "sma_20": 10.18,
+  "sma_50": 12.42
  },
  "fundamentals": {
   "pe_ratio": null,
@@ -21,7 +22,7 @@
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

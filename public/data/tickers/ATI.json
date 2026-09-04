@@ -1,22 +1,24 @@
 {
  "ticker": "ATI",
  "name": "ATI Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 204.68,
- "change_pct": 1.86,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 201.38,
+ "change_pct": -0.16,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.1,
-  "sma_20": 217.96,
-  "sma_50": 202.11
+  "rsi_14": 43.5,
+  "sma_20": 217.34,
+  "sma_50": 201.86
  },
  "fundamentals": {
-  "pe_ratio": 59.84795,
-  "market_cap": "27.9B",
+  "pe_ratio": 58.70991,
+  "market_cap": "27.4B",
   "beta": 1.008,
   "dividend_yield": null
  },

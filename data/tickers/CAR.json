@@ -1,19 +1,22 @@
 {
  "ticker": "CAR",
  "name": "Avis Budget Group, Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 141.54,
- "change_pct": 0.6,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 139.44,
+ "change_pct": 1.16,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 45.9,
-  "sma_20": 141.43,
-  "sma_50": 150.46
+  "rsi_14": 44.3,
+  "sma_20": 141.3,
+  "sma_50": 149.67
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "5.0B",
+  "market_cap": "4.9B",
   "beta": 1.901,
   "dividend_yield": null
  },

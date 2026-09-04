@@ -1,27 +1,28 @@
 {
  "ticker": "TTC",
  "name": "Toro Company (The)",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 98.82,
- "change_pct": 0.87,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 92.72,
+ "change_pct": -6.48,
  "sector": "Industrials",
  "signals": [
-  "above_ma",
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 55.0,
-  "sma_20": 98.46,
-  "sma_50": 96.29
+  "rsi_14": 37.0,
+  "sma_20": 98.21,
+  "sma_50": 96.26
  },
  "fundamentals": {
-  "pe_ratio": 28.476946,
-  "market_cap": "9.4B",
+  "pe_ratio": 26.41738,
+  "market_cap": null,
   "beta": 0.699,
-  "dividend_yield": 0.0159
+  "dividend_yield": 0.015700000000000002
  },
  "council_analysis": {
-  "score": 7
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

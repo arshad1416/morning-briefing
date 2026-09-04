@@ -1,27 +1,28 @@
 {
  "ticker": "ETD",
  "name": "Ethan Allen Interiors Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 24.88,
- "change_pct": 3.88,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 22.1,
+ "change_pct": -10.56,
  "sector": "Consumer Cyclical",
  "signals": [
-  "extended_rsi",
-  "above_ma"
+  "rsi_dip",
+  "below_ma",
+  "value_pe"
  ],
  "technical": {
-  "rsi_14": 70.7,
-  "sma_20": 23.21,
-  "sma_50": 22.46
+  "rsi_14": 43.1,
+  "sma_20": 23.14,
+  "sma_50": 22.43
  },
  "fundamentals": {
-  "pe_ratio": 15.948718,
-  "market_cap": "633M",
+  "pe_ratio": 14.166667,
+  "market_cap": "562M",
   "beta": 1.017,
-  "dividend_yield": 0.06509999999999999
+  "dividend_yield": 0.06309999999999999
  },
  "council_analysis": {
-  "score": 5
+  "score": 6
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

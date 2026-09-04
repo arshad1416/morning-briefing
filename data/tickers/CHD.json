@@ -1,22 +1,24 @@
 {
  "ticker": "CHD",
  "name": "Church & Dwight Company, Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 99.21,
- "change_pct": -0.22,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 98.11,
+ "change_pct": -1.22,
  "sector": "Consumer Defensive",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.6,
-  "sma_20": 100.85,
-  "sma_50": 99.05
+  "rsi_14": 43.6,
+  "sma_20": 100.7,
+  "sma_50": 98.99
  },
  "fundamentals": {
-  "pe_ratio": 31.798079,
-  "market_cap": "23.5B",
+  "pe_ratio": 31.443913,
+  "market_cap": "23.3B",
   "beta": 0.471,
   "dividend_yield": 0.0124
  },

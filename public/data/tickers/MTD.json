@@ -1,26 +1,29 @@
 {
  "ticker": "MTD",
  "name": "Mettler-Toledo International, I",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 1385.35,
- "change_pct": 0.68,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 1339.31,
+ "change_pct": -2.08,
  "sector": "Healthcare",
  "signals": [
-  "premium_pe"
+  "rsi_dip",
+  "below_ma",
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.3,
-  "sma_20": 1410.32,
-  "sma_50": 1355.85
+  "rsi_14": 37.8,
+  "sma_20": 1406.48,
+  "sma_50": 1354.31
  },
  "fundamentals": {
-  "pe_ratio": 31.26495,
-  "market_cap": "27.8B",
+  "pe_ratio": 30.225908,
+  "market_cap": "26.8B",
   "beta": 1.224,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 4
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

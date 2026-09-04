@@ -1,24 +1,26 @@
 {
  "ticker": "SLVM",
  "name": "Sylvamo Corporation",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 36.12,
- "change_pct": 4.65,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 35.09,
+ "change_pct": -2.01,
  "sector": "Basic Materials",
  "signals": [
   "rsi_dip",
-  "below_ma"
+  "below_ma",
+  "near_low",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 43.9,
-  "sma_20": 37.43,
-  "sma_50": 37.91
+  "rsi_14": 38.9,
+  "sma_20": 37.35,
+  "sma_50": 37.88
  },
  "fundamentals": {
-  "pe_ratio": 20.069445,
+  "pe_ratio": 18.764706,
   "market_cap": "1.4B",
   "beta": 0.766,
-  "dividend_yield": 0.0521
+  "dividend_yield": 0.050300000000000004
  },
  "council_analysis": {
   "score": 5

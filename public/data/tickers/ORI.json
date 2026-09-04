@@ -1,29 +1,81 @@
 {
  "ticker": "ORI",
  "name": "Old Republic International Corp",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 42.24,
- "change_pct": 1.25,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 42.54,
+ "change_pct": 1.07,
  "sector": "Financial Services",
  "signals": [
+  "above_ma",
+  "near_high",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 50.8,
-  "sma_20": 42.31,
-  "sma_50": 42.13
+  "rsi_14": 54.4,
+  "sma_20": 42.25,
+  "sma_50": 42.17
  },
  "fundamentals": {
-  "pe_ratio": 9.263159,
-  "market_cap": "10.2B",
+  "pe_ratio": 9.328948,
+  "market_cap": "10.3B",
   "beta": 0.622,
   "dividend_yield": 0.0302
  },
  "council_analysis": {
-  "score": 7
+  "score": 9
  },
- "upcoming_earnings": [],
- "recent_sec_filings": [],
+ "upcoming_earnings": [
+  {
+   "ticker": "ORI",
+   "date": "2026-10-22",
+   "epsEstimate": 0.8,
+   "epsActual": null
+  },
+  {
+   "ticker": "ORI",
+   "date": "2026-07-22",
+   "epsEstimate": 0.79,
+   "epsActual": 0.76
+  },
+  {
+   "ticker": "ORI",
+   "date": "2026-04-23",
+   "epsEstimate": 0.79,
+   "epsActual": 0.68
+  }
+ ],
+ "recent_sec_filings": [
+  {
+   "ticker": "ORI",
+   "date": "2026-07-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/74260/000007426026000092/ori-20260630.htm"
+  },
+  {
+   "ticker": "ORI",
+   "date": "2026-05-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/74260/000007426026000072/ori-20260331.htm"
+  },
+  {
+   "ticker": "ORI",
+   "date": "2026-02-26",
+   "form": "Annual Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/74260/000007426026000008/ori-20251231.htm"
+  },
+  {
+   "ticker": "ORI",
+   "date": "2025-10-31",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/74260/000007426025000153/ori-20250930.htm"
+  },
+  {
+   "ticker": "ORI",
+   "date": "2025-08-01",
+   "form": "Quarterly Report",
+   "url": "https://www.sec.gov/Archives/edgar/data/74260/000007426025000133/ori-20250630.htm"
+  }
+ ],
  "reddit_mentions": []
 }

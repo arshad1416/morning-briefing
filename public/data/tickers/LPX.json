@@ -1,25 +1,27 @@
 {
  "ticker": "LPX",
  "name": "Louisiana-Pacific Corporation",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 69.5,
- "change_pct": 1.0,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 67.3,
+ "change_pct": -1.48,
  "sector": "Industrials",
  "signals": [
   "rsi_dip",
   "below_ma",
-  "premium_pe"
+  "near_low",
+  "premium_pe",
+  "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 41.2,
-  "sma_20": 72.88,
-  "sma_50": 74.18
+  "rsi_14": 35.7,
+  "sma_20": 72.4,
+  "sma_50": 73.92
  },
  "fundamentals": {
-  "pe_ratio": 90.25974,
-  "market_cap": "4.9B",
+  "pe_ratio": 87.4026,
+  "market_cap": "4.7B",
   "beta": 1.594,
-  "dividend_yield": 0.0174
+  "dividend_yield": 0.0176
  },
  "council_analysis": {
   "score": 4

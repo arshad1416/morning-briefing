@@ -1,21 +1,23 @@
 {
  "ticker": "LCII",
  "name": "LCI Industries",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 102.99,
- "change_pct": 2.2,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 100.32,
+ "change_pct": -2.3,
  "sector": "Consumer Cyclical",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "value_pe"
  ],
  "technical": {
-  "rsi_14": 49.3,
-  "sma_20": 103.94,
-  "sma_50": 102.97
+  "rsi_14": 43.7,
+  "sma_20": 103.8,
+  "sma_50": 102.91
  },
  "fundamentals": {
-  "pe_ratio": 11.933372,
-  "market_cap": "2.5B",
+  "pe_ratio": 11.625144,
+  "market_cap": "2.4B",
   "beta": 1.185,
   "dividend_yield": 0.045599999999999995
  },

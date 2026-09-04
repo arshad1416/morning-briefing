@@ -1,21 +1,24 @@
 {
  "ticker": "JAKK",
  "name": "JAKKS Pacific, Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 25.04,
- "change_pct": 1.34,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 24.12,
+ "change_pct": -1.67,
  "sector": "Consumer Cyclical",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 50.4,
-  "sma_20": 25.22,
-  "sma_50": 24.44
+  "rsi_14": 39.4,
+  "sma_20": 25.14,
+  "sma_50": 24.46
  },
  "fundamentals": {
-  "pe_ratio": 17.758867,
-  "market_cap": "287M",
+  "pe_ratio": 17.106384,
+  "market_cap": "276M",
   "beta": 1.397,
-  "dividend_yield": 0.0405
+  "dividend_yield": 0.0407
  },
  "council_analysis": {
   "score": 5

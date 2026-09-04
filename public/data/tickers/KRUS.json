@@ -1,22 +1,23 @@
 {
  "ticker": "KRUS",
  "name": "Kura Sushi USA, Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 45.48,
- "change_pct": 2.94,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 43.0,
+ "change_pct": -4.25,
  "sector": "Consumer Cyclical",
  "signals": [
-  "rsi_dip",
-  "below_ma"
+  "oversold_rsi",
+  "below_ma",
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 41.2,
-  "sma_20": 48.74,
-  "sma_50": 49.8
+  "rsi_14": 34.5,
+  "sma_20": 48.44,
+  "sma_50": 49.6
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "553M",
+  "market_cap": "522M",
   "beta": 1.328,
   "dividend_yield": null
  },

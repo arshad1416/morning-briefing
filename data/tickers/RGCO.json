@@ -1,21 +1,24 @@
 {
  "ticker": "RGCO",
  "name": "RGC Resources Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 21.74,
- "change_pct": 0.79,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 21.59,
+ "change_pct": -0.37,
  "sector": "Utilities",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 46.1,
-  "sma_20": 21.73,
-  "sma_50": 22.73
+  "rsi_14": 44.0,
+  "sma_20": 21.71,
+  "sma_50": 22.66
  },
  "fundamentals": {
-  "pe_ratio": 15.985293,
-  "market_cap": "227M",
+  "pe_ratio": 15.992593,
+  "market_cap": "225M",
   "beta": 0.51,
-  "dividend_yield": 0.039900000000000005
+  "dividend_yield": 0.0397
  },
  "council_analysis": {
   "score": 5

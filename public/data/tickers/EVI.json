@@ -1,29 +1,28 @@
 {
  "ticker": "EVI",
  "name": "EVI Industries, Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 13.56,
- "change_pct": 1.12,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 12.91,
+ "change_pct": -1.15,
  "sector": "Industrials",
  "signals": [
-  "rsi_dip",
+  "oversold_rsi",
   "below_ma",
-  "near_low",
-  "premium_pe"
+  "near_low"
  ],
  "technical": {
-  "rsi_14": 37.3,
-  "sma_20": 14.8,
-  "sma_50": 15.04
+  "rsi_14": 32.6,
+  "sma_20": 14.71,
+  "sma_50": 15.0
  },
  "fundamentals": {
-  "pe_ratio": 30.133335,
-  "market_cap": "175M",
+  "pe_ratio": 28.688889,
+  "market_cap": "166M",
   "beta": 0.085,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 3
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

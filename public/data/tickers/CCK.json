@@ -1,19 +1,22 @@
 {
  "ticker": "CCK",
  "name": "Crown Holdings, Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 116.55,
- "change_pct": -0.09,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 115.61,
+ "change_pct": -1.19,
  "sector": "Consumer Cyclical",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 47.2,
-  "sma_20": 118.58,
-  "sma_50": 116.01
+  "rsi_14": 44.4,
+  "sma_20": 118.32,
+  "sma_50": 116.16
  },
  "fundamentals": {
-  "pe_ratio": 16.769785,
-  "market_cap": "12.7B",
+  "pe_ratio": 16.586084,
+  "market_cap": "12.6B",
   "beta": 0.578,
   "dividend_yield": 0.011200000000000002
  },

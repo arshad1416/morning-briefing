@@ -1,23 +1,25 @@
 {
  "ticker": "UPS",
  "name": "United Parcel Service, Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 103.42,
- "change_pct": 0.74,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 102.57,
+ "change_pct": -0.43,
  "sector": "Industrials",
  "signals": [
+  "rsi_dip",
+  "below_ma",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 46.2,
-  "sma_20": 103.28,
-  "sma_50": 106.65
+  "rsi_14": 43.4,
+  "sma_20": 103.31,
+  "sma_50": 106.61
  },
  "fundamentals": {
-  "pe_ratio": 19.222118,
-  "market_cap": "88.0B",
+  "pe_ratio": 19.064127,
+  "market_cap": "87.3B",
   "beta": 1.038,
-  "dividend_yield": 0.0639
+  "dividend_yield": 0.0637
  },
  "council_analysis": {
   "score": 6

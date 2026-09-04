@@ -1,28 +1,29 @@
 {
  "ticker": "EMR",
  "name": "Emerson Electric Company",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 149.85,
- "change_pct": 1.51,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 148.08,
+ "change_pct": -0.6,
  "sector": "Industrials",
  "signals": [
   "rsi_dip",
+  "below_ma",
   "premium_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 43.8,
-  "sma_20": 157.46,
-  "sma_50": 148.76
+  "rsi_14": 41.1,
+  "sma_20": 157.0,
+  "sma_50": 148.89
  },
  "fundamentals": {
-  "pe_ratio": 32.719433,
-  "market_cap": "83.9B",
+  "pe_ratio": 32.05195,
+  "market_cap": "82.6B",
   "beta": 1.235,
-  "dividend_yield": 0.015
+  "dividend_yield": 0.0149
  },
  "council_analysis": {
-  "score": 6
+  "score": 5
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

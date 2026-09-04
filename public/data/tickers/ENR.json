@@ -1,21 +1,24 @@
 {
  "ticker": "ENR",
  "name": "Energizer Holdings, Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 21.3,
- "change_pct": 2.53,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 20.6,
+ "change_pct": -1.53,
  "sector": "Industrials",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.0,
-  "sma_20": 21.82,
-  "sma_50": 21.23
+  "rsi_14": 42.0,
+  "sma_20": 21.72,
+  "sma_50": 21.19
  },
  "fundamentals": {
-  "pe_ratio": 17.894957,
-  "market_cap": "1.5B",
+  "pe_ratio": 17.310925,
+  "market_cap": "1.4B",
   "beta": 0.753,
-  "dividend_yield": 0.057800000000000004
+  "dividend_yield": 0.0574
  },
  "council_analysis": {
   "score": 5

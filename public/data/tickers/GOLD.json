@@ -1,27 +1,30 @@
 {
  "ticker": "GOLD",
  "name": "Gold.com, Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 43.81,
- "change_pct": 1.51,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 39.75,
+ "change_pct": -9.29,
  "sector": "Financial Services",
  "signals": [
+  "rsi_dip",
+  "below_ma",
+  "volume_surge",
   "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 49.6,
-  "sma_20": 44.56,
-  "sma_50": 42.38
+  "rsi_14": 38.6,
+  "sma_20": 44.27,
+  "sma_50": 42.26
  },
  "fundamentals": {
-  "pe_ratio": 14.270359,
-  "market_cap": "1.3B",
+  "pe_ratio": 12.947883,
+  "market_cap": "1.2B",
   "beta": 0.616,
   "dividend_yield": 0.018500000000000003
  },
  "council_analysis": {
-  "score": 7
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

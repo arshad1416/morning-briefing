@@ -1,29 +1,30 @@
 {
  "ticker": "TXT",
  "name": "Textron Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 80.3,
- "change_pct": 0.74,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 78.45,
+ "change_pct": -1.0,
  "sector": "Industrials",
  "signals": [
   "oversold_rsi",
   "below_ma",
   "near_low",
+  "value_pe",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 34.0,
-  "sma_20": 85.11,
-  "sma_50": 88.23
+  "rsi_14": 29.2,
+  "sma_20": 84.59,
+  "sma_50": 88.05
  },
  "fundamentals": {
-  "pe_ratio": 15.122412,
-  "market_cap": "14.0B",
+  "pe_ratio": 14.774011,
+  "market_cap": "13.5B",
   "beta": 0.908,
   "dividend_yield": 0.001
  },
  "council_analysis": {
-  "score": 6
+  "score": 7
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],

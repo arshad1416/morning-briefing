@@ -1,28 +1,37 @@
 {
  "ticker": "SNOW",
  "name": "Snowflake Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 316.16,
- "change_pct": -1.14,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 371.26,
+ "change_pct": 21.39,
  "sector": "Technology",
  "signals": [
+  "extended_rsi",
+  "above_ma",
+  "volume_surge",
+  "near_high",
   "analyst_buy"
  ],
  "technical": {
-  "rsi_14": 51.6,
-  "sma_20": 326.5,
-  "sma_50": 292.72
+  "rsi_14": 69.5,
+  "sma_20": 328.65,
+  "sma_50": 295.41
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "109.6B",
+  "market_cap": "128.7B",
   "beta": 1.315,
   "dividend_yield": null
  },
  "council_analysis": {
-  "score": 6
+  "score": 8
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
- "reddit_mentions": []
+ "reddit_mentions": [
+  {
+   "sub": "wsb",
+   "count": 1
+  }
+ ]
 }

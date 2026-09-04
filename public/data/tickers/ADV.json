@@ -1,19 +1,22 @@
 {
  "ticker": "ADV",
  "name": "Advantage Solutions Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 33.79,
- "change_pct": 3.56,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 31.89,
+ "change_pct": -0.09,
  "sector": "Communication Services",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma"
+ ],
  "technical": {
-  "rsi_14": 48.8,
-  "sma_20": 32.25,
-  "sma_50": 36.85
+  "rsi_14": 43.2,
+  "sma_20": 32.02,
+  "sma_50": 36.76
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "433M",
+  "market_cap": "424M",
   "beta": 2.134,
   "dividend_yield": null
  },

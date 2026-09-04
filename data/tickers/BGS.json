@@ -1,24 +1,28 @@
 {
  "ticker": "BGS",
  "name": "B&G Foods, Inc.",
- "generated_at": "2026-09-03T14:45:01.728482+00:00",
- "price": 3.5,
- "change_pct": 0.29,
+ "generated_at": "2026-09-04T11:45:01.220971+00:00",
+ "price": 3.34,
+ "change_pct": -3.22,
  "sector": "Consumer Defensive",
- "signals": [],
+ "signals": [
+  "rsi_dip",
+  "below_ma",
+  "near_low"
+ ],
  "technical": {
-  "rsi_14": 47.4,
-  "sma_20": 3.49,
+  "rsi_14": 39.3,
+  "sma_20": 3.48,
   "sma_50": 3.66
  },
  "fundamentals": {
   "pe_ratio": null,
-  "market_cap": "284M",
+  "market_cap": "271M",
   "beta": 0.537,
-  "dividend_yield": 0.10890000000000001
+  "dividend_yield": 0.1101
  },
  "council_analysis": {
-  "score": 5
+  "score": 4
  },
  "upcoming_earnings": [],
  "recent_sec_filings": [],
